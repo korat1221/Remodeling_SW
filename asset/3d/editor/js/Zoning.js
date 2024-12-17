@@ -205,6 +205,31 @@ Zoning.prototype = {
 
             return lines;
         };
+        let _getWallType = (cardi) => {
+            let types = {
+                "UP_NW":"RF",
+                "UP_N":"RF",
+                "UP_NE":"RF",
+                "UP_E":"RF",
+                "UP_SE":"RF",
+                "UP_S":"RF",
+                "UP_SW":"RF",
+                "UP_W":"RF",
+                "UP":"RF",
+                "DOWN":"FL",
+                "NW":"WL",
+                "N":"WL",
+                "NE":"WL",
+                "E":"WL",
+                "SE":"WL",
+                "S":"WL",
+                "SW":"WL",
+                "W":"WL",
+            };
+
+            return types[cardi];
+        };
+
         let _collPositions = (pos, nor) => {
             let poss = [];
 
@@ -234,7 +259,7 @@ Zoning.prototype = {
 
                         _slope /= 3;
 
-                        poss.push({ cardi: _cardinal, slope: _slope, pos: _pos });
+                        poss.push({ cardi: _cardinal, type: _getWallType(_cardinal), slope: _slope, pos: _pos });
                     }
                 }
             }
@@ -455,9 +480,10 @@ Zoning.prototype = {
                 }
             }
             else {
-                el.material.color.set(0x191919);
+                el.material.color.set(this.editor.colors["SD"]);
                 el.material.transparent = true;
                 el.material.opacity = 0.9;
+                el.userData.color = this.editor.colors["SD"];
             }
         }
 
@@ -483,7 +509,7 @@ Zoning.prototype = {
                             el2.userData.structures.push({ type: type, obj: el });
                             el.material.side = THREE.DoubleSide;
                             el2.userData.poss = el2.userData.poss.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal")));
-                            _addMeshObject(_asLines(el.geometry.getAttribute("position")), { color: 0xff0000, opacity: 0.9, duplicate: true });
+                            _addMeshObject(_asLines(el.geometry.getAttribute("position")), this.editor.colors["WN"]);
                             el.visible = false;
                         }
                     }
@@ -517,7 +543,7 @@ Zoning.prototype = {
 
                 while (++j < el.userData.poss.length) {
                     //          if (el.userData.poss[j].cardi == 'S')
-                    _addMeshObject(el.userData.poss[j].pos, { color: 0x00ff00, opacity: 0.3, duplicate: false });
+                    _addMeshObject(el.userData.poss[j].pos, this.editor.colors[el.userData.poss[j].type]);
                 }
             }
 
@@ -541,7 +567,7 @@ Zoning.prototype = {
                                     }
                                     el2.userData.windows.push(o);
 
-                                    _addMeshObject(o, { color: 0xff0000, opacity: 1.0, duplicate: true });
+                                    _addMeshObject(o, this.editor.colors["WN"]);
                                 }
                             }
                         }

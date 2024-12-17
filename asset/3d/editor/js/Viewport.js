@@ -408,7 +408,11 @@ function Viewport( editor ) {
 		// selectionBox.visible = false;
 		// transformControls.detach();
 
-		 if ( object !== null && object !== scene && object !== camera ) {
+		 if ( object !== null && object !== scene && object !== camera && object.material) {
+
+			editor.resetColors();
+			object.material.color.set(0xff0000);
+			object.material.opacity = 0.9;
 
 		// 	box.setFromObject( object, true );
 

@@ -167,6 +167,18 @@ Editor.prototype = {
 		this.signals.sceneGraphChanged.active = true;
 		this.signals.sceneGraphChanged.dispatch();
 
+		this.colors = {
+			"SD":{ color: 0x191919, opacity: 0.9 },
+			"GW":{ color: 0xaaaaaa, opacity: 0.9 },
+			"WL":{ color: 0xe2e2e2, opacity: 0.9 },
+			"RF":{ color: 0x3a3a3a, opacity: 0.9 },
+			"FL":{ color: 0xaaaaaa, opacity: 0.9 },
+			"WN":{ color: 0x6495ed, opacity: 0.7, duplicate: true },
+			"CW1":{ color: 0x505edb, opacity: 0.7, duplicate: true },
+			"CW2":{ color: 0xfcde00, opacity: 0.7, duplicate: true },
+			"CW3":{ color: 0x0014be, opacity: 0.7, duplicate: true },
+			"DR":{ color: 0x553830, opacity: 0.7, duplicate: true },
+		};
 	},
 
 	//
@@ -826,8 +838,19 @@ Editor.prototype = {
 		saveString: saveString,
 		formatNumber: formatNumber
 
-	}
+	},
 
+	resetColors: function () {
+		let i = -1;
+		while ( ++i < objects.length ) {
+			let el = objects[i];
+
+			if (el.userData.color) {
+				el.material.color = el.userData.color;
+				el.material.opacity = el.userData.opacity;
+			}
+		}
+	}
 };
 
 const link = document.createElement( 'a' );
