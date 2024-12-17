@@ -267,18 +267,26 @@ Zoning.prototype = {
             return poss;
         };
         let _addLineObject = (pos, color) => {
+            let clr = new THREE.Color().setHex(color);
+
             obj.add(new THREE.Line(
                 new THREE.BufferGeometry().setFromPoints(pos),
                 new THREE.LineBasicMaterial({
-                    color: new THREE.Color().setHex(color),
+                    color: clr,
                     opacity: 1.0,
                     transparent: false,
                     visible: false
                 })
             ));
+            let o = obj.children[obj.children.length - 1];
+
+            if (o) {
+                o.userData.color = clr;
+            }
         };
 
         let _addMeshObject = (pos, opt) => {
+            let clr = new THREE.Color().setHex(opt.color);
 
             if (opt.duplicate && pos.length > 2) {
                 const dup_offset = 0.007;
@@ -293,7 +301,7 @@ Zoning.prototype = {
             }
 
             obj.add(new THREE.Mesh(new THREE.BufferGeometry().setFromPoints(pos), new THREE.MeshBasicMaterial({
-                color: new THREE.Color().setHex(opt.color),
+                color: clr,
                 wireframe: false,
                 shading: THREE.FlatShading,
                 roughness: 1,
@@ -302,6 +310,12 @@ Zoning.prototype = {
                 opacity: opt.opacity,
                 transparent: true,
             })));
+
+            let o = obj.children[obj.children.length - 1];
+
+            if (o) {
+                o.userData.color = clr;
+            }
         };
         let _equalLine = (a, b) => {
             return (_equalPoint(a[0], b[0]) && _equalPoint(a[1], b[1])) ||
@@ -483,7 +497,7 @@ Zoning.prototype = {
                 el.material.color.set(this.editor.colors["SD"]);
                 el.material.transparent = true;
                 el.material.opacity = 0.9;
-                el.userData.color = this.editor.colors["SD"];
+                el.userData.color = el.material.color;
             }
         }
 

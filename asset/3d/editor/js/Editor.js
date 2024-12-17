@@ -842,6 +842,8 @@ Editor.prototype = {
 
 	resetColors: function () {
 		let i = -1;
+		let objects = this.scene.getObjectByName("__OBJ_MODEL__").children;
+
 		while ( ++i < objects.length ) {
 			let el = objects[i];
 
