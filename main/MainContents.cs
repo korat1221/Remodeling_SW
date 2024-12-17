@@ -597,6 +597,12 @@ namespace main
                         timer1.Tick += new EventHandler(timer1_Tick);
                         timer1.Enabled = true;
                     }
+                    else if (formParam.formID == 8)
+                    {
+                        Program.UTIL.setObjInfo(ProjectList.CurProjID);
+
+                        DoLoadForm(8, OnLoadProc);
+                    }
                     else if (formParam.formID >= 0 && formParam.formID < 100)
                     {
                         DoLoadForm(formParam.formID, OnLoadProc);

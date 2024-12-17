@@ -120,11 +120,17 @@ class MainTree {
                 let id = data.instance.get_node(data.selected[0]).id;
                 if (id.indexOf('detail-') >= 0) id = data.instance.get_node(data.selected[0]).text;
                 else if (id.indexOf('space-') >= 0) id += "$$$" + data.instance.get_node(data.selected[0]).text;
+
+                d3Flag = !!(id.indexOf('"dummy":true') >= 0);
+
                 that.onSelect(id);
             }
         }).on('loaded.jstree', function() {
             $(this).jstree('select_node', sel);
             $(this).jstree('open_node', sel);
+
+            d3Flag = !!(sel.indexOf('"dummy":true') >= 0);
+
             that.onSelect(sel);
 
             setTimeout(() => {
