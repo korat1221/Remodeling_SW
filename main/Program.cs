@@ -44,7 +44,8 @@ namespace main
             gPath = str.Substring(0, str.IndexOf("\\main") + 1) + "asset\\";
 #endif
 
-            Directory.SetCurrentDirectory(gPath + "threejs\\");
+            Directory.SetCurrentDirectory(gPath);
+//            Directory.SetCurrentDirectory(gPath + "threejs\\");
             {
                 // create the command-line process
                 var cmdProcess = new Process
@@ -79,7 +80,7 @@ namespace main
                 //            startInfo.FileName = "start.bat";
                 //          Process.Start(startInfo);
             }
-            Directory.SetCurrentDirectory(gPath);
+//            Directory.SetCurrentDirectory(gPath);
 
           //  CALC.init();
 

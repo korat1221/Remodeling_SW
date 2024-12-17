@@ -65,6 +65,7 @@ namespace main.contents
         };
         Form[] forms = new Form[] { new sub3dZoneInfo(), new sub3dBridgeInfo(), new sub3dSpaceInfo(), new sub3dCWInfo(), new sub3dWLInfo(), new sub3dRFInfo(), new sub3dFRInfo(), new sub3dWINInfo(), new sub3dDRInfo(), new sub3dIWInfo(), new sub3dSLInfo(), new TB_List(), new TB_property() };
         bool ticked = false;
+        string sURLOld = "";
 
         public Model()
         {
@@ -681,6 +682,30 @@ namespace main.contents
         private void Model_VisibleChanged(object sender, EventArgs e)
         {
             tmSQLExec.Enabled = Visible;
+
+            if (Visible)
+            {
+                CalculateModel();
+            }
+        }
+        private void WebView21_SizeChanged(object sender, EventArgs e)
+        {
+            CalculateModel();
+        }
+
+        public void CalculateModel()
+        {
+            string url = "http://localhost:3000/3d/editor/?pid=" + ProjectList.CurProjID;
+
+            if (sURLOld != url)
+            {
+                webView21.Source = new Uri(url, true);
+                sURLOld = url;
+            }
+            else
+            {
+                runScript("location.reload();");
+            }
         }
     }
 }

@@ -63,9 +63,9 @@
             webView21.Location = new Point(0, 0);
             webView21.Name = "webView21";
             webView21.Size = new Size(971, 385);
-            webView21.Source = new Uri("http://localhost:3000/anal3d/editor/", UriKind.Absolute);
             webView21.TabIndex = 97;
             webView21.ZoomFactor = 1D;
+            webView21.SizeChanged += WebView21_SizeChanged;
             // 
             // splitContainer1
             // 

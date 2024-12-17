@@ -4,19 +4,18 @@ using main.contents;
 using System;
 using System.Data;
 using System.Drawing.Text;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Xml.Schema;
-using System.Windows.Forms;
 
 namespace main
 {
     internal class UTIL
     {
         int NumberDecimal = 0;
-        int script_columnIndex = -1;
-        private WebBrowser webBrowser;
         private TextBox textBox;
         private DataGridView dataGridView;
         public double textdouble = 0;
@@ -50,116 +49,6 @@ namespace main
 
             return Value;
         }
-        public void ApplyHTMLSuperscriptAndSubscript(Control targetControl, string text, int columnIndex = -1)
-        {
-            // HTML로 변환된 텍스트 준비
-            string htmlContent = text;
-
-            // Label 또는 TextBox에 HTML 텍스트 적용 (WebBrowser로 덮어씌우기)
-            if (targetControl is Label label || targetControl is TextBox)
-            {
-                // WebBrowser 컨트롤 생성
-               webBrowser = new WebBrowser
-                {
-                    Name = "webBrowser_" + targetControl.Name,
-                    Width = targetControl.Width,
-                    Height = targetControl.Height,
-                    Location = targetControl.Location,
-                    ScrollBarsEnabled = false,
-                    DocumentText = @"
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <meta charset='UTF-8'>
-                    <style>
-                        html, body {
-                            margin: 0;
-                            padding: 0;
-                            font-family: Arial, sans-serif;
-                            font-size: 9px;
-                            white-space: nowrap;
-                        }
-                        * {
-                            margin: 0;
-                            padding: 0;
-                        }
-                    </style>
-                </head>
-                <body>" + htmlContent + @"</body>
-                </html>",
-                    Visible = true // WebBrowser를 보이게 설정
-                };
-
-                // WebBrowser를 해당 컨트롤의 부모 컨트롤에 추가
-                targetControl.Parent.Controls.Add(webBrowser);
-
-                // 기존의 Label이나 TextBox를 숨기기 (필요시 숨길 수도 있음)
-                targetControl.Visible = false;
-            }
-            // DataGridView의 특정 컬럼 헤더에 HTML 표시
-            else if (targetControl is DataGridView dataGridView && columnIndex >= 0 && columnIndex < dataGridView.ColumnCount)
-            {
-                this.dataGridView = dataGridView;
-                script_columnIndex = columnIndex;
-                // WebBrowser 컨트롤을 컬럼 헤더에 덮어씁니다
-                this.dataGridView.CellPainting += dataGridView_CellPainting;
-                webBrowser = new WebBrowser
-                {
-                    Name = "webBrowser_" + columnIndex,
-                    ScrollBarsEnabled = false,
-                    DocumentText = @"
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <meta charset='UTF-8'>
-                    <style>
-                        html, body {
-                            margin: 0;
-                            padding: 0;
-                            font-family: Arial, sans-serif;
-                            font-size: 9.75px;
-                            white-space: nowrap;
-                        }
-                        * {
-                            margin: 0;
-                            padding: 0;
-                        }
-                    </style>
-                </head>
-                <body>" + htmlContent + @"</body>
-                </html>",
-                    Visible = true // WebBrowser를 보이게 설정
-                };
-
-
-                // WebBrowser를 DataGridView의 부모 컨트롤에 추가
-                this.dataGridView.Parent.Controls.Add(webBrowser);
-
-                // WebBrowser를 다른 컨트롤들보다 상위에 배치
-                webBrowser.BringToFront();
-
-                // 기존의 컬럼 헤더 텍스트는 숨기지 않음 (필요시 숨길 수 있음)
-                this.dataGridView.Columns[columnIndex].HeaderText = ""; // 이 줄을 사용하여 WebBrowser를 덮어쓰기
-            }
-        }
-
-
-        private void dataGridView_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
-        {
-            if (e.ColumnIndex == script_columnIndex)
-            {
-                int cellX = dataGridView.Location.X + e.CellBounds.X;
-                int cellY = dataGridView.Location.Y + e.CellBounds.Y;
-                if (!webBrowser.Visible)
-                {
-                    webBrowser.Location = new Point(cellX, cellY);
-                    webBrowser.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
-                    webBrowser.Show();
-                }
-            }
-        }
-
-
         public String Subscript(int num, bool SuperSub)
         {
             //SuperSub 위첨자 : true, 아래첨자 : false
@@ -454,27 +343,19 @@ namespace main
                 if (openForm.Name == "Model")
                 {
                     Model f = (Model)openForm;
-                    string p = "model" + Path.GetExtension(path);
-                    string path2 = Program.gPath + "threejs\\public\\models\\" + ProjectList.CurProjID;
+                    string p = ProjectList.CurProjID + Path.GetExtension(path);
 
-                    DirectoryInfo di = new DirectoryInfo(path2);  //Create Directoryinfo value by sDirPath  
+                    File.Delete(Program.gPath + "projects\\" + p);
+                    File.Copy(path, Program.gPath + "projects\\" + p);
 
-                    if (di.Exists == false)   //If New Folder not exits  
-                    {
-                        di.Create();             //create Folder  
-                    }
-
-                    File.Delete(path2 + "\\" + p);
-                    File.Copy(path, path2 + "\\" + p);
-
-                    if (File.Exists(path2 + "\\" + p))
+                    if (File.Exists(Program.gPath + "projects\\" + p))
                     {
                         Program.DB.deleteValue(DB.type.ProjDB, "Blind_3D", "");
                         Program.DB.deleteValue(DB.type.ProjDB, "Shade_3D", "");
                         Program.DB.deleteValue(DB.type.ProjDB, "ThermalBridge_3D", "");
                         Program.DB.deleteValue(DB.type.ProjDB, "ZoneGeneral_Form", "");
                         Program.DB.deleteValue(DB.type.ProjDB, "ZoneLighting_form", "");
-                        f.runScript("open3DModel('/models/" + ProjectList.CurProjID + "/" + p + "','" + ProjectList.CurProjID + "')");
+                        f.CalculateModel();
                     }
                     return;
                 }
