@@ -290,20 +290,21 @@ Zoning.prototype = {
         };
 
         let _addMeshObject = (pos, opt, pid) => {
+            let _pos = [].concat(pos);
 
-            if (opt.duplicate && pos.length > 2) {
+            if (opt.duplicate && _pos.length > 2) {
                 const dup_offset = 0.007;
                 let pos2 = [], i = -1;
-                let n = _getNormal([pos[0], pos[1], pos[2]]);
+                let n = _getNormal([_pos[0], _pos[1], _pos[2]]);
 
-                while (++i < pos.length) {
-                    pos2.push(new Vector3(pos[i].x + n.x * dup_offset, pos[i].y + n.y * dup_offset, pos[i].z + n.z * dup_offset));
-                    pos[i] = (new Vector3(pos[i].x - n.x * dup_offset, pos[i].y - n.y * dup_offset, pos[i].z - n.z * dup_offset));
+                while (++i < _pos.length) {
+                    pos2.push(new Vector3(_pos[i].x + n.x * dup_offset, _pos[i].y + n.y * dup_offset, _pos[i].z + n.z * dup_offset));
+                    _pos[i] = (new Vector3(_pos[i].x - n.x * dup_offset, _pos[i].y - n.y * dup_offset, _pos[i].z - n.z * dup_offset));
                 }
-                pos = pos.concat(pos2);
+                _pos = _pos.concat(pos2);
             }
 
-            obj.add(new THREE.Mesh(new THREE.BufferGeometry().setFromPoints(pos), new THREE.MeshBasicMaterial({
+            obj.add(new THREE.Mesh(new THREE.BufferGeometry().setFromPoints(_pos), new THREE.MeshBasicMaterial({
                 color: new THREE.Color().setHex(opt.color),
                 wireframe: false,
                 shading: THREE.FlatShading,
@@ -517,6 +518,39 @@ Zoning.prototype = {
         let _getTitle = (type) => {
             return { "GWL": "지중벽", "DR": "외부출입문", "CW": "커튼월창", "RF": "지붕", "WL": "외벽" }[type];
         };
+        let _getCardinal = (pos, walls) => {
+            let i = -1, j;
+			var P = new THREE.Plane();
+            let v2 = new THREE.Vector3();
+            let center = new THREE.Vector3();
+
+            while(++i < pos.length) {
+                center.x += pos[i].x;
+                center.y += pos[i].y;
+                center.z += pos[i].z;
+            }
+            center.x /= pos.length;
+            center.y /= pos.length;
+            center.z /= pos.length;
+    
+            i = -1;
+            while (++i < walls.length) {
+                let po = walls[i];
+
+                j = 0;
+                while(j < po.pos.length) {
+                    let T = (new THREE.Triangle(po.pos[j], po.pos[j + 1], po.pos[j + 2]));
+
+                    T.getPlane(P);
+                    if (Math.abs(P.distanceToPoint(center)) < 0.001 && T.containsPoint(P.projectPoint(center, v2))) {
+                        return {cardi:po.cardi, slope:po.slope};
+                    }
+                    j += 3;
+                }
+            }    
+            return null;
+        }
+
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -585,7 +619,7 @@ Zoning.prototype = {
                                 el2.userData.children = [];
                             }
                             let o = _asLines(el.geometry.getAttribute("position"));
-                            el2.userData.children.push({ type: type, uuid: el.uuid, area: _getArea(o) });
+                            el2.userData.children.push({ type: type, uuid: el.uuid, area: _getArea(o), pos:o });
                             el.material.side = THREE.DoubleSide;
                             el2.userData.walls = el2.userData.walls.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal")));
                             _addMeshObject(o, this.colors[_getTypeColor(type)], zk);
@@ -646,6 +680,7 @@ Zoning.prototype = {
                                     stru.uuid = _addMeshObject(o, this.colors["WN"], zk);
                                     stru.type = "WN";
                                     stru.area = _getArea(o);
+                                    stru.pos = o;
                                     el2.userData.children.push(stru);
                                 }
                             }
@@ -671,8 +706,6 @@ Zoning.prototype = {
                     }
                 }
             }
-
-            console.log(zones);
 
             for (const [id, el] of Object.entries(zones)) {
                 let nm = _getName(id);
@@ -730,8 +763,23 @@ Zoning.prototype = {
             }
 
             for (const [id, el] of Object.entries(zones)) {
+                if (el.userData.children) {
+                    i = -1;
+                    while(++i < el.userData.children.length) {
+                        let el2 = el.userData.children[i];
+    
+                        let o = _getCardinal(el2.pos, el.userData.walls);
+                        if (o) {
+                            el2.cardi = o.cardi;
+                            el2.slope = o.slope;
+                        }
+                    }
+                }
+
                 zones[id] = el.userData;
             }
+
+            console.log(zones);
 
             i = obj.children.length;
             while (--i >= 0) {
