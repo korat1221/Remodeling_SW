@@ -102,20 +102,20 @@ Zoning.prototype = {
             return ret;
         };
 
-        let _findWalls = (poss) => {
+        let _findWalls = (walls) => {
             let i = -1, j, done = false;
 
-            while (++i < poss.length) {
-                let po = poss[i];
+            while (++i < walls.length) {
+                let po = walls[i];
 
-                j = poss.length;
+                j = walls.length;
                 while (--j > i) {
-                    let po2 = poss[j];
+                    let po2 = walls[j];
                     let p = _getSamePoints(po.pos, po2.pos);
 
                     if (p.length > 0 && po.cardi == po2.cardi) {
                         po.pos = po.pos.concat(po2.pos);
-                        poss.splice(j, 1);
+                        walls.splice(j, 1);
                         done = true;
                     }
                 }
@@ -135,8 +135,8 @@ Zoning.prototype = {
         let _isWin = (pos, pa) => {
             let box = _getBoundingBox(pos), i = -1, j;
 
-            while(++i < pa.userData.poss.length) {
-                let el = pa.userData.poss[i].edges;
+            while(++i < pa.userData.walls.length) {
+                let el = pa.userData.walls[i].edges;
 
                 j = -1;
                 while(++j < el.length) {
@@ -243,7 +243,7 @@ Zoning.prototype = {
         };
 
         let _collPositions = (pos, nor) => {
-            let poss = [];
+            let walls = [];
 
             if (pos && nor) {
                 for (let i = 0; i < pos.array.length; i += 9) {
@@ -271,12 +271,12 @@ Zoning.prototype = {
 
                         _slope /= 3;
 
-                        poss.push({ cardi: _cardinal, type: _getWallType(_cardinal), slope: _slope, pos: _pos });
+                        walls.push({ cardi: _cardinal, type: _getWallType(_cardinal), slope: _slope, pos: _pos });
                     }
                 }
             }
 
-            return poss;
+            return walls;
         };
         let _addLineObject = (pos, color) => {
             obj.add(new THREE.Line(
@@ -289,7 +289,7 @@ Zoning.prototype = {
             ));
         };
 
-        let _addMeshObject = (pos, opt) => {
+        let _addMeshObject = (pos, opt, pid) => {
 
             if (opt.duplicate && pos.length > 2) {
                 const dup_offset = 0.007;
@@ -319,7 +319,12 @@ Zoning.prototype = {
             if (o) {
                 o.userData.color = opt.color;
                 o.userData.opacity = opt.opacity;
+
+                if (pid) {
+                    o.userData.pid = pid;
+                }
             }
+            return o.uuid;
         };
         let _equalLine = (a, b) => {
             return (_equalPoint(a[0], b[0]) && _equalPoint(a[1], b[1])) ||
@@ -426,11 +431,11 @@ Zoning.prototype = {
         let _updateNearWall = (po, id) => {
 
             for (const [id, el] of Object.entries(zones)) {
-                if (el.userData.poss) {
+                if (el.userData.walls) {
                     let i = -1;
 
-                    while (++i < el.userData.poss.length) {
-                        let el2 = el.userData.poss[i];
+                    while (++i < el.userData.walls.length) {
+                        let el2 = el.userData.walls[i];
 
                         if (_counterCardi(po.cardi, el2.cardi) && _wallConnected(po.edges, el2.edges)) {
                             po.near = id;
@@ -446,29 +451,26 @@ Zoning.prototype = {
 
             for (const [id, el] of Object.entries(zones)) {
                 n = -1;
-                while (++n < zones[id].userData.poss.length) {
-                    zones[id].userData.poss[n].edges = [];
+                while (++n < zones[id].userData.walls.length) {
+                    zones[id].userData.walls[n].edges = [];
 
                     if (!lines[id]) lines[id] = {};
-                    lines[id][n] = _getLines(zones[id].userData.poss[n].pos);
+                    lines[id][n] = _getLines(zones[id].userData.walls[n].pos);
                 }
             }
 
             for (const [id1, el1] of Object.entries(lines)) {
-                //       if (id1.indexOf("B1F_Zone1+지하존+10.92+4.4") < 0) continue;
                 for (const [id2, el2] of Object.entries(lines[id1])) {
-                    let edges = zones[id1].userData.poss[id2].edges;
-                    let cardi = zones[id1].userData.poss[id2].cardi;
+                    let edges = zones[id1].userData.walls[id2].edges;
+                    let cardi = zones[id1].userData.walls[id2].cardi;
 
-                    //      if (cardi != 'N') continue;
                     for (const [id4, el4] of Object.entries(lines[id1])) {
-                        if (id2 != id4 && _compareCardi(cardi, zones[id1].userData.poss[id4].cardi)) {
+                        if (id2 != id4 && _compareCardi(cardi, zones[id1].userData.walls[id4].cardi)) {
                             a = -1;
                             while (++a < el2.length) {
                                 b = -1;
                                 while (++b < el4.length) {
                                     if ((c = _unionLine(el2[a], el4[b])) !== null && !edges.find(el5 => _equalLine(el5, c))) {
-                                        //             console.log(cardi, zones[id1].userData.poss[id4].cardi);
                                         edges.push(c);
                                     }
                                 }
@@ -526,9 +528,9 @@ Zoning.prototype = {
         obj.position.copy(offset);
         obj.updateMatrixWorld(true);
 
-        obj.userData.zones = {};
+        obj.userData = {};
         
-        let zones = obj.userData.zones;
+        let zones = obj.userData;
 
         while (++i < obj.children.length) {
             let el = obj.children[i];
@@ -551,7 +553,7 @@ Zoning.prototype = {
                             el.visible = false;
                         }
                     }
-                    el.userData.poss = _collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal"));
+                    el.userData.walls = _collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal"));
                 }
             }
             else {
@@ -579,13 +581,14 @@ Zoning.prototype = {
                         if (el.name.indexOf(zk) >= 0 && (type = _getSubType(el.name)) !== "") {
                             let el2 = zones[zk];
 
-                            if (!el2.userData.structures) {
-                                el2.userData.structures = [];
+                            if (!el2.userData.children) {
+                                el2.userData.children = [];
                             }
-                            el2.userData.structures.push({ type: type, obj: el });
+                            let o = _asLines(el.geometry.getAttribute("position"));
+                            el2.userData.children.push({ type: type, uuid: el.uuid, area: _getArea(o) });
                             el.material.side = THREE.DoubleSide;
-                            el2.userData.poss = el2.userData.poss.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal")));
-                            _addMeshObject(_asLines(el.geometry.getAttribute("position")), this.colors[_getTypeColor(type)]);
+                            el2.userData.walls = el2.userData.walls.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal")));
+                            _addMeshObject(o, this.colors[_getTypeColor(type)], zk);
                             el.visible = false;
                         }
                     }
@@ -599,10 +602,8 @@ Zoning.prototype = {
                     while (++j < zkeys.length) {
                         let zk = zkeys[j];
 
-                        //        if (zk != 'B1F_Zone1+지하존+10.92+4.4') continue;
-
                         if (el.name.indexOf(zk) >= 0) {
-                            _findWalls(el.userData.poss);
+                            _findWalls(el.userData.walls);
                             break;
                         }
                     }
@@ -611,15 +612,14 @@ Zoning.prototype = {
 
             for (const [id, el] of Object.entries(zones)) {
 
-                //       if (id != 'B1F_Zone1+지하존+10.92+4.4') continue;
-
-                while (_findWalls(el.userData.poss));
+                while (_findWalls(el.userData.walls));
 
                 j = -1;
 
-                while (++j < el.userData.poss.length) {
-                    //          if (el.userData.poss[j].cardi == 'S')
-                    _addMeshObject(el.userData.poss[j].pos, this.colors[el.userData.poss[j].type]);
+                while (++j < el.userData.walls.length) {
+                    let el2 = el.userData.walls[j];
+                    el2.uuid = _addMeshObject(el2.pos, this.colors[el2.type], id);
+                    el2.area = _getArea(el2.pos);
                 }
             }
 
@@ -638,12 +638,15 @@ Zoning.prototype = {
                             if (el.name.indexOf(zk) >= 0 && _getSubType(el.name) === "" && _isWin(pos, el2)) {
                                 let o = _asWinPoly(pos);
                                 if (o) {
-                                    if (!el2.userData.windows) {
-                                        el2.userData.windows = [];
+                                    if (!el2.userData.children) {
+                                        el2.userData.children = [];
                                     }
-                                    el2.userData.windows.push(o);
-
-                                    _addMeshObject(o, this.colors["WN"]);
+                                    
+                                    let stru = {}
+                                    stru.uuid = _addMeshObject(o, this.colors["WN"], zk);
+                                    stru.type = "WN";
+                                    stru.area = _getArea(o);
+                                    el2.userData.children.push(stru);
                                 }
                             }
                         }
@@ -661,8 +664,8 @@ Zoning.prototype = {
                         let zk = zkeys[j];
                         if (el.name.indexOf(zk) >= 0 && (type = _getSubType(el.name)) !== "") {
                             k = -1;
-                            while (++k < el.userData.poss.length) {
-                                el.userData.poss[k].area = _getArea(el.userData.poss[k].pos);
+                            while (++k < el.userData.walls.length) {
+                                el.userData.walls[k].area = _getArea(el.userData.walls[k].pos);
                             }
                         }
                     }
@@ -675,18 +678,18 @@ Zoning.prototype = {
                 let nm = _getName(id);
                 let stru = {};
 
-                if (el.userData.structures) {
+                if (el.userData.children) {
                     let i = -1;
 
-                    while (++i < el.userData.structures.length) {
-                        let el2 = el.userData.structures[i];
+                    while (++i < el.userData.children.length) {
+                        let el2 = el.userData.children[i];
 
                         if (!stru[el2.type]) {
                             stru[el2.type] = [];
                         }
                         stru[el2.type].push({
                             "text": nm + "_" + el2.type + "_" + (stru[el2.type].length + 1),
-                            "id": el2.obj.uuid
+                            "id": el2.uuid
                         });
                     }
                 }
@@ -717,13 +720,17 @@ Zoning.prototype = {
             }
 
             for (const [id, el] of Object.entries(zones)) {
-                if (el.userData.poss) {
+                if (el.userData.walls) {
                     i = -1;
 
-                    while (++i < el.userData.poss.length) {
-                        _updateNearWall(el.userData.poss[i], id);
+                    while (++i < el.userData.walls.length) {
+                        _updateNearWall(el.userData.walls[i], id);
                     }
                 }
+            }
+
+            for (const [id, el] of Object.entries(zones)) {
+                zones[id] = el.userData;
             }
 
             i = obj.children.length;
