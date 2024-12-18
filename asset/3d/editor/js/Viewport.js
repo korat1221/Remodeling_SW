@@ -32,7 +32,6 @@ function Viewport( editor ) {
 //	container.add( new ViewportInfo( editor ) );
 
 	//
-	let selOld = {obj:null,color:null,opacity:null};
 
 	let renderer = null;
 	let pmremGenerator = null;
@@ -203,14 +202,8 @@ function Viewport( editor ) {
 			while(++i < intersects.length) {
 				let object = intersects[i].object;
 				if (object instanceof THREE.Mesh && object !== scene && object !== camera && object.material && object.name.indexOf("DUMMY_BUILDING") < 0) {
-					if (selOld.obj) {
-						selOld.obj.material.color.set(selOld.obj.userData.color);
-						selOld.obj.material.opacity = selOld.obj.userData.opacity;
-					}
-		
-					object.material.color.set(0xff0000);
-					object.material.opacity = 0.9;
-					selOld.obj = object;
+					editor.restoreSelect();
+					editor.markSelect([object]);
 					break;
 				}
 			}

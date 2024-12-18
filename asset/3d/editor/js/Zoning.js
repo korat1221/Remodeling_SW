@@ -2,6 +2,18 @@ import { Box3, Vector3 } from 'three';
 
 function Zoning(editor) {
     this.editor = editor;
+    this.colors = {
+        "SD":{ color: 0x191919, opacity: 0.9 },
+        "GW":{ color: 0xaaaaaa, opacity: 0.9 },
+        "WL":{ color: 0xe2e2e2, opacity: 0.9 },
+        "RF":{ color: 0x3a3a3a, opacity: 0.9 },
+        "FL":{ color: 0xaaaaaa, opacity: 0.9 },
+        "WN":{ color: 0x6495ed, opacity: 0.7, duplicate: true },
+        "CW1":{ color: 0x505edb, opacity: 0.7, duplicate: true },
+        "CW2":{ color: 0xfcde00, opacity: 0.7, duplicate: true },
+        "CW3":{ color: 0x0014be, opacity: 0.7, duplicate: true },
+        "DR":{ color: 0x553830, opacity: 0.7, duplicate: true },
+    };
 }
 
 Zoning.prototype = {
@@ -384,6 +396,50 @@ Zoning.prototype = {
         let _compareCardi = (a, b) => {
             return (a !== b && !_counterCardi(a, b));
         };
+        let _wallConnected = (a,b) => {
+            let i = -1, j, meets = [];
+
+            while(++i < a.length) {
+                let A = a[i];
+
+                j = -1;
+
+                while(++j < b.length) {
+                    let B = b[j];
+
+                    if (_equalPoint(A[0],B[0]) || _equalPoint(A[0],B[1])) {
+                        if (!meets.find(el => _equalPoint(el, A[0]))) {
+                            meets.push(A[0]);
+                        }
+                    } 
+                    if (_equalPoint(A[1],B[0]) || _equalPoint(A[1],B[1])) {
+                        if (!meets.find(el => _equalPoint(el, A[0]))) {
+                            meets.push(A[1]);
+                        }
+                    }    
+
+                    if (meets.length > 1) return true;
+                }    
+            }
+            return false;
+        };
+        let _updateNearWall = (po, id) => {
+
+            for (const [id, el] of Object.entries(zones)) {
+                if (el.userData.poss) {
+                    let i = -1;
+
+                    while (++i < el.userData.poss.length) {
+                        let el2 = el.userData.poss[i];
+
+                        if (_counterCardi(po.cardi, el2.cardi) && _wallConnected(po.edges, el2.edges)) {
+                            po.near = id;
+                            el2.near = id;
+                        }
+                    }
+                }
+            }
+        };
         let _collectLines = () => {
             let n = -1, a, b, c;
             let lines = {};
@@ -437,6 +493,15 @@ Zoning.prototype = {
             }
             return "";
         };
+        let _getTypeColor = (type) => {
+            return {
+                "GWL":"GW", 
+                "DR":"DR", 
+                "CW":"CW1", 
+                "RF":"RF", 
+                "WL":"WL"}[type];
+
+        };
         let _pad = (num, size) => {
             num = num.toString();
             while (num.length < size) num = "0" + num;
@@ -456,10 +521,14 @@ Zoning.prototype = {
         const box = new Box3().setFromObject(obj);
         const center = box.getCenter(new Vector3());
         const offset = new Vector3(obj.position.x - center.x, 0, obj.position.z - center.z);
-        let zones = {}, i = -1, j, k;
+        let i = -1, j, k;
 
         obj.position.copy(offset);
         obj.updateMatrixWorld(true);
+
+        obj.userData.zones = {};
+        
+        let zones = obj.userData.zones;
 
         while (++i < obj.children.length) {
             let el = obj.children[i];
@@ -486,10 +555,10 @@ Zoning.prototype = {
                 }
             }
             else {
-                el.material.color.set(this.editor.colors["SD"]);
+                el.material.color.set(this.colors["SD"]);
                 el.material.transparent = true;
                 el.material.opacity = 0.9;
-                el.userData.color = this.editor.colors["SD"];
+                el.userData.color = this.colors["SD"];
                 el.userData.opacity = 0.9;
             }
         }
@@ -516,7 +585,7 @@ Zoning.prototype = {
                             el2.userData.structures.push({ type: type, obj: el });
                             el.material.side = THREE.DoubleSide;
                             el2.userData.poss = el2.userData.poss.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal")));
-                            _addMeshObject(_asLines(el.geometry.getAttribute("position")), this.editor.colors["WN"]);
+                            _addMeshObject(_asLines(el.geometry.getAttribute("position")), this.colors[_getTypeColor(type)]);
                             el.visible = false;
                         }
                     }
@@ -550,7 +619,7 @@ Zoning.prototype = {
 
                 while (++j < el.userData.poss.length) {
                     //          if (el.userData.poss[j].cardi == 'S')
-                    _addMeshObject(el.userData.poss[j].pos, this.editor.colors[el.userData.poss[j].type]);
+                    _addMeshObject(el.userData.poss[j].pos, this.colors[el.userData.poss[j].type]);
                 }
             }
 
@@ -574,7 +643,7 @@ Zoning.prototype = {
                                     }
                                     el2.userData.windows.push(o);
 
-                                    _addMeshObject(o, this.editor.colors["WN"]);
+                                    _addMeshObject(o, this.colors["WN"]);
                                 }
                             }
                         }
@@ -622,6 +691,8 @@ Zoning.prototype = {
                     }
                 }
 
+                el.userData.floor = nm.split('_')[0].replace("F", "");
+
                 let children = [];
 
                 for (const [id2, el2] of Object.entries(stru)) {
@@ -640,9 +711,19 @@ Zoning.prototype = {
                     "text": nm,
                     "id": el.uuid,
                     "skey": parseInt(nm.split('_')[1].replace("Zone", "")),
-                    "floor": nm.split('_')[0].replace("F", ""),
+                    "floor": el.userData.floor,
                     "children": children
                 });
+            }
+
+            for (const [id, el] of Object.entries(zones)) {
+                if (el.userData.poss) {
+                    i = -1;
+
+                    while (++i < el.userData.poss.length) {
+                        _updateNearWall(el.userData.poss[i], id);
+                    }
+                }
             }
 
             i = obj.children.length;
