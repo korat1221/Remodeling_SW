@@ -805,7 +805,7 @@ namespace main.contents
             {
                 MainpictureBox.Visible = true;
                 MainpictureBox.Load(Program.gPath + Image[0][0]);
-                MainpictureBox.Location = new Point(10, 0);
+                MainpictureBox.Location = new Point(0, 0);
                 MainpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 MainpictureBox.BackColor = Color.Transparent;
                 MainpictureBox.Parent = LocationpictureBox;
@@ -879,7 +879,7 @@ namespace main.contents
                 {
                     PrehPrecpictureBox.Visible = true;
                     PrehPrecpictureBox.Load(Program.gPath + Image[0][0]);
-                    PrehPrecpictureBox.Location = new Point(-20, 0);
+                    PrehPrecpictureBox.Location = new Point(2, 0);
                     PrehPrecpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     PrehPrecpictureBox.Parent = VAVpictureBox;
                 }
@@ -952,6 +952,7 @@ namespace main.contents
                     {
                         HumidifierpictureBox.Visible = true;
                         HumidifierpictureBox.Load(Program.gPath + Image[0][0]);
+                        HumidifierpictureBox.Location = new Point(0, 0);
                         HumidifierpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                         HumidifierpictureBox.Parent = CoilpictureBox;
                     }
@@ -964,6 +965,7 @@ namespace main.contents
                 {
                     HumidifierpictureBox.Visible = true;
                     HumidifierpictureBox.Load(Program.gPath + Image[0][0]);
+                    HumidifierpictureBox.Location = new Point(0, 0);
                     HumidifierpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     HumidifierpictureBox.Parent = CoilpictureBox;
                 }
@@ -982,6 +984,7 @@ namespace main.contents
                     {
                         VAVpictureBox.Visible = true;
                         VAVpictureBox.Load(Program.gPath + Image[0][0]);
+                        HumidifierpictureBox.Location = new Point(-23, 0);
                         VAVpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                         VAVpictureBox.Parent = HumidifierpictureBox;
                     }
@@ -993,6 +996,7 @@ namespace main.contents
                     {
                         VAVpictureBox.Visible = true;
                         VAVpictureBox.Load(Program.gPath + Image[0][0]);
+                        HumidifierpictureBox.Location = new Point(-23, 0);
                         VAVpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                         VAVpictureBox.Parent = HumidifierpictureBox;
                     }
@@ -1005,6 +1009,7 @@ namespace main.contents
                 {
                     VAVpictureBox.Visible = true;
                     VAVpictureBox.Load(Program.gPath + Image[0][0]);
+                    HumidifierpictureBox.Location = new Point(-23, 0);
                     VAVpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     VAVpictureBox.Parent = HumidifierpictureBox;
                 }

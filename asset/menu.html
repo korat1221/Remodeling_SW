@@ -6,6 +6,7 @@
 <script type='text/javascript' src="js/util.js"></script>
 <script type='text/javascript' src="js/main.js"></script>
 <script>
+    let d3Flag = false;
     let gTreeData = [
         [
             { "type": "General", "text": "일반정보", "id": "{\"formID\":0}" },
@@ -14,56 +15,58 @@
         ],
         [
             { "type": "CW", "text": "커튼월창", "id": "{\"formID\":30}", "children": [{ "text": "CW01", "id": "{\"formID\":2}" }] },
-            { "type": "Wall", "text":  "외벽", "id": "{\"formID\":34}", "children": [{ "text": "WL01", "id": "{\"formID\":3}" }] },
+            { "type": "Wall", "text": "외벽", "id": "{\"formID\":34}", "children": [{ "text": "WL01", "id": "{\"formID\":3}" }] },
             { "type": "Roof", "text": "지붕", "id": "{\"formID\":35}", "children": [{ "text": "RF01", "id": "{\"formID\":4}" }] },
             { "type": "Floor", "text": "최하층바닥", "id": "{\"formID\":36}", "children": [{ "text": "FR01", "id": "{\"formID\":5}" }] },
             { "type": "Window", "text": "창호", "id": "{\"formID\":29}", "children": [{ "text": "WN01", "id": "{\"formID\":6}" }], "children": [{ "text": "WN01_1", "id": "{\"formID\":31}" }] },
             { "type": "Door", "text": "외부출입문", "id": "{\"formID\":51}", "children": [{ "text": "DR01", "id": "{\"formID\":7}" }] },
-            { "type": "Blind", "text":  "차양", "id": "{\"formID\":50}", "children": [{ "text": "BL01", "id": "{\"formID\":10}" }] },
+            { "type": "Blind", "text": "차양", "id": "{\"formID\":50}", "children": [{ "text": "BL01", "id": "{\"formID\":10}" }] },
         ],
         [
-            { "type": "Model", "text": "3D 모델", "id": "{\"formID\":8,\"ID\":\"0\"}", "children": [{ "text": "열기", "id": "{\"formID\":99999991}" }]},
-            { "type": "Shade", "text": "존 정보", "id": "{\"formID\": 8,\"ID\":\"0\"}", "children": []},
+            { "type": "Model", "text": "3D 모델", "id": "{\"formID\":8,\"ID\":\"0\",\"dummy\":true}", "children": [{ "text": "열기", "id": "{\"formID\":99999991}" }] },
+            { "type": "Shade", "text": "존 정보", "id": "{\"formID\": 8,\"ID\":\"0\"}", "children": [] },
             { "type": "ThermalBridge", "text": "열교정보", "id": "{\"formID\":8,\"ID\":\"1\"}", "children": [] }
         ],
-        [   { "type": "Floor", "text": "층별 정보", "id": "{\"formID\":32}"}
+        [{ "type": "Floor", "text": "층별 정보", "id": "{\"formID\":32}" }
 
         ],
         [
             { "type": "AHUSystem", "text": "공조/열회수기", "id": "{\"formID\":57}", "children": [{ "text": "AHU01", "id": "{\"formID\":17}" }] },
             { "type": "DHWSystem", "text": "급탕시스템", "id": "{\"formID\":49}" },
             { "type": "HeatingSystem", "text": "난방시스템", "id": "{\"formID\":39}", "children": [{ "text": "HS01", "id": "{\"formID\":19}" }] },
-            { "type":  "CoolingSystem", "text": "냉방시스템", "id": "{\"formID\":38}", "children": [{ "text": "CW01", "id": "{\"formID\":20}" }] },
-            { "type": "RENSystem", "text": "신재생시스템", "id": "{\"formID\": 43,\"ID\":\"0\"}", "children": []},
-        ],       
+            { "type": "CoolingSystem", "text": "냉방시스템", "id": "{\"formID\":38}", "children": [{ "text": "CW01", "id": "{\"formID\":20}" }] },
+            { "type": "RENSystem", "text": "신재생시스템", "id": "{\"formID\": 43,\"ID\":\"0\"}", "children": [] },
+        ],
         [
             { "type": "BuildingReport", "text": "건물전체 레포트", "id": "{\"formID\":56}" },
             { "type": "ElementReport", "text": "요소기술 레포트", "id": "{\"formID\":26}" },
             { "type": "AlgorithmReport", "text": "알고리즘 레포트", "id": "{\"formID\":27}" },
         ],
         [
-            { "type": "Remodeling",  "text": "리모델링안", "id": "{\"formID\":58}", "children": [{ "text": "Alt01", "id": "{\"formID\":59}" }] }
+            { "type": "Remodeling", "text": "리모델링안", "id": "{\"formID\":58}", "children": [{ "text": "Alt01", "id": "{\"formID\":59}" }] }
         ],
     ];
-    let gDefaultSelect = ["0", "3", "8", "12", "16", "56","59"];
+    let gDefaultSelect = ["0", "3", "8", "12", "16", "56", "59"];
     let first = true;
 
     function setObjInfo(pid) {
-        $.ajax({
-            url: "http://localhost:3000/projects/" + pid + ".tree",
-            type: 'GET',
-            dataType : 'json',
-            async: true,
-            success: function (o) {
-                gTreeData[2][1].children = o[0];
-                gTreeData[2][2].children = o[1];
-                load(2, true);
-            },
-            error: function () {
-            }
-        });
+        if (d3Flag) {
+            $.ajax({
+	            url: "http://localhost:3000/projects/" + pid + ".tree",
+	            type: 'GET',
+	            dataType : 'json',
+	            async: true,
+	            success: function (o) {
+	                gTreeData[2][1].children = o[0];
+	                gTreeData[2][2].children = o[1];
+	                load(2);
+	            },
+                error: function () {
+                }
+            });
+        }
     }
-    
+
     function resetMainTree(id, subid, tree, select_id) {
         if (subid !== null) {
             gTreeData[id][subid].children = JSON.parse(tree);
@@ -73,12 +76,12 @@
         }
         if (select_id) gDefaultSelect[id] = select_id;
         if (!first) {
-            load(id);
+            load(id, subid ? subid : 0);
         }
     }
 
-    function load(menuID, not_open_all = false, defSelect = '') {
-        gMainTree.load(gTreeData[menuID], defSelect !== '' ? defSelect : gDefaultSelect[menuID],not_open_all);
+    function load(menuID, subsel = 0) {
+        gMainTree.load(gTreeData[menuID], subsel);
 
         let icons = [
             { "normal": "url(images/1sticon/1.Building.png)", "active": "url(images/1sticon/1.Building_on2.png)" },
@@ -112,38 +115,40 @@
         else {
             load(n);
         }
-        setTimeout(()=>{first = false;},5000);
+        setTimeout(() => { first = false; }, 5000);
     }
 
 </script>
+
 <body onload="init()">
     <div id="cont-left" class="split split-horizontal" style="width:400px;padding:4px">
-        <div id="cont-menu" style="width:125px;float:left;height: calc(100% - 16px);background-color: #204d70;padding-top: 16px;border-radius: 4px;box-shadow: 2px 2px 2px 2px #eee;color:#fff">
-            <div class="cont-item" onclick="first = false;load(0, false, '0')">
+        <div id="cont-menu"
+            style="width:125px;float:left;height: calc(100% - 16px);background-color: #204d70;padding-top: 16px;border-radius: 4px;box-shadow: 2px 2px 2px 2px #eee;color:#fff">
+            <div class="cont-item" onclick="first = false;load(0)">
                 <div class="cont-icon item0" style="background-image: url('images/1sticon/1.Building.png');"></div>
                 <div class="cont-title">건물 정보</div>
             </div>
-            <div class="cont-item" onclick="first = false;load(1, false, '30')">
+            <div class="cont-item" onclick="first = false;load(1)">
                 <div class="cont-icon item1" style="background-image: url('images/1sticon/2.Construction.png');"></div>
                 <div class="cont-title">구조체 정보</div>
             </div>
-            <div class="cont-item" onclick="first = false;load(2, false, '8')">
+            <div class="cont-item" onclick="first = false;load(2)">
                 <div class="cont-icon item2" style="background-image: url('images/1sticon/3.3D.png');"></div>
                 <div class="cont-title">3D 정보</div>
             </div>
-            <div class="cont-item" onclick="first = false;load(3, false, '32')">
+            <div class="cont-item" onclick="first = false;load(3)">
                 <div class="cont-icon item3" style="background-image: url('images/1sticon/4.Zone.png');"></div>
                 <div class="cont-title">층별 존 정보</div>
             </div>
-            <div class="cont-item" onclick="first = false;load(4, false, '16')">
+            <div class="cont-item" onclick="first = false;load(4)">
                 <div class="cont-icon item4" style="background-image: url('images/1sticon/5.System.png');"></div>
                 <div class="cont-title">설비 정보</div>
             </div>
-            <div class="cont-item" onclick="first = false;load(5, false, '56')">
+            <div class="cont-item" onclick="first = false;load(5)">
                 <div class="cont-icon item5" style="background-image: url('images/1sticon/7.Result.png');"></div>
                 <div class="cont-title">결과 정보</div>
             </div>
-            <div class="cont-item" onclick="first = false;load(6, false, '58')">
+            <div class="cont-item" onclick="first = false;load(6)">
                 <div class="cont-icon item6" style="background-image: url('images/1sticon/8.Remodeling.png');"></div>
                 <div class="cont-title">리모델링안</div>
             </div>
@@ -151,7 +156,9 @@
                 <div class="cont-title">디버그</div>
             </div>
         </div>
-        <div id="cont-tree" style="width:calc(100% - 125px); float:left; height:100%; padding-top: 16px; padding-bottom: 16px; overflow:auto; outline:none; font-size: 14px; font-family: 'Nanum Gothic', sans-serif;"></div>
+        <div id="cont-tree"
+            style="width:calc(100% - 125px); float:left; height:100%; padding-top: 16px; padding-bottom: 16px; overflow:auto; outline:none; font-size: 14px; font-family: 'Nanum Gothic', sans-serif;">
+        </div>
     </div>
     <input type="file" id="upfile" onchange="load3d(this)" style="display:none">
 </body>
