@@ -55,7 +55,7 @@ function Viewport( editor ) {
 
 	const grid2 = new THREE.GridHelper( 25, 2.5, 0xDEE2E6 );
 	grid2.material.color.setHex( 0x222222 );
-	grid2.material.depthFunc = THREE.AlwaysDepth;
+//	grid2.material.depthFunc = THREE.AlwaysDepth;
 	grid2.material.vertexColors = false;
 	grid.add( grid2 );
 

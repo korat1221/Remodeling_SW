@@ -56,8 +56,8 @@ app.post('/upload', (req, res) => {
       fs.access(path2, fs.constants.F_OK, (err) => { // A
         if (err) return console.log('access denied.');
       
-     //   fs.unlink(path2, (err) => err ?  
-       //   console.log(err) : console.log(`${path2} deleted.`));
+        fs.unlink(path2, (err) => err ?  
+          console.log(err) : console.log(`${path2} deleted.`));
       });
       fs.writeFile(__dirname + "/projects/execute.sql",Buffer.from(_getParam("sql"),'base64').toString('utf8'),function(err){
         if (err === null) {

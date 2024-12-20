@@ -584,20 +584,20 @@ namespace main
 
             selID = args.TryGetWebMessageAsString();
 
-            if (selID != selID_old)
+            if (selID == "{\"formID\":99999991}") // 3D 파일 열기
+            {
+                DoLoadForm(8, OnLoadProc);
+
+                ticked = false;
+                timer1.Interval = 200;
+                timer1.Tick += new EventHandler(timer1_Tick);
+                timer1.Enabled = true;
+            }
+            else if (selID != selID_old)
             {
                 if (Deserialize(selID))
                 {
-                    if (formParam.formID == 99999991)
-                    {
-                        DoLoadForm(8, OnLoadProc);
-
-                        ticked = false;
-                        timer1.Interval = 200;
-                        timer1.Tick += new EventHandler(timer1_Tick);
-                        timer1.Enabled = true;
-                    }
-                    else if (formParam.formID == 8)
+                    if (formParam.formID == 8)
                     {
                         Program.UTIL.setObjInfo(ProjectList.CurProjID);
 
