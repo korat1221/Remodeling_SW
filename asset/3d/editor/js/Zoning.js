@@ -516,7 +516,8 @@ Zoning.prototype = {
             return b[0] + "_Zone" + _pad(parseInt(b[1].replace("Zone", "")), 3);
         };
         let _getTitle = (type) => {
-            return { "GWL": "지중벽", "DR": "외부출입문", "CW": "커튼월창", "RF": "지붕", "WL": "외벽" }[type];
+            console.log(">>>",type);
+            return { "GWL": "지중벽", "DR": "외부출입문", "CW": "커튼월창", "WN": "창호", "RF": "지붕", "WL": "외벽" }[type];
         };
         let _getCardinal = (pos, walls) => {
             let i = -1, j;
@@ -728,6 +729,8 @@ Zoning.prototype = {
                 }
 
                 el.userData.floor = nm.split('_')[0].replace("F", "");
+
+                console.log(stru);
 
                 let children = [];
 

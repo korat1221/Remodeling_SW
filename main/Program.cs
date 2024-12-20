@@ -73,7 +73,7 @@ namespace main
                 cmdProcess.BeginOutputReadLine();
 
                 // execute your command
-                cmdProcess.StandardInput.WriteLine("node app.js");
+                cmdProcess.StandardInput.WriteLine("node node_modules\\pm2\\bin\\pm2 start app.js");
 
                 //                ProcessStartInfo startInfo = new ProcessStartInfo();
                 //              startInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -91,14 +91,42 @@ namespace main
         }
         public static void killServer()
         {
-            Process[] processes = Process.GetProcessesByName("node");
-            Process currentProcess = Process.GetCurrentProcess();
 
-            foreach (Process proc in processes)
+            Directory.SetCurrentDirectory(gPath);
+            var cmdProcess = new Process
             {
-                if (proc.Id != currentProcess.Id)
-                    proc.Kill();
-            }
+                StartInfo =
+                {
+                    FileName = "cmd.exe",
+                    UseShellExecute = false,
+                    CreateNoWindow = true, // this is probably optional
+                    ErrorDialog = false, // this is probably optional
+                    RedirectStandardOutput = true,
+                    RedirectStandardInput = true
+                }
+            };
+
+            // register for the output (for reading the output)
+            cmdProcess.OutputDataReceived += (object sender, DataReceivedEventArgs e) =>
+            {
+                string output = e.Data;
+                // inspect the output text here ...
+            };
+
+            // start the cmd process
+            cmdProcess.Start();
+            cmdProcess.BeginOutputReadLine();
+
+            // execute your command
+            cmdProcess.StandardInput.WriteLine("node node_modules\\pm2\\bin\\pm2 stop app.js");
+//            Process[] processes = Process.GetProcessesByName("node");
+  //          Process currentProcess = Process.GetCurrentProcess();
+
+    //        foreach (Process proc in processes)
+     //       {
+       //         if (proc.Id != currentProcess.Id)
+         //           proc.Kill();
+           // }
         }
 
         public static string get_virtual_store_path()
