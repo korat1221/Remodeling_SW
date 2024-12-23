@@ -123,6 +123,7 @@ namespace main.contents
 
                     File.Delete(path);
 
+                    sql = sql.Replace("__PROJ_TYPE__", ProjectList.ProjectType);
                     Program.DB.executeSQL(DB.type.ProjDB, sql);
                     Program.DB.deleteTable(DB.type.ProjDB, "Shade_3D");
 

@@ -516,8 +516,7 @@ Zoning.prototype = {
             return b[0] + "_Zone" + _pad(parseInt(b[1].replace("Zone", "")), 3);
         };
         let _getTitle = (type) => {
-            console.log(">>>",type);
-            return { "GWL": "지중벽", "DR": "외부출입문", "CW": "커튼월창", "WN": "창호", "RF": "지붕", "WL": "외벽" }[type];
+            return { "GWL": "지중벽", "DR": "외부출입문", "CW": "커튼월창", "WN": "창호", "RF": "지붕", "FL": "바닥", "WL": "외벽" }[type];
         };
         let _getCardinal = (pos, walls) => {
             let i = -1, j;
@@ -710,7 +709,7 @@ Zoning.prototype = {
 
             for (const [id, el] of Object.entries(zones)) {
                 let nm = _getName(id);
-                let stru = {};
+                let stru = {}, struCW = [];
 
                 if (el.userData.children) {
                     let i = -1;
@@ -718,9 +717,36 @@ Zoning.prototype = {
                     while (++i < el.userData.children.length) {
                         let el2 = el.userData.children[i];
 
+                        if (el2.type === 'CW') {
+                            struCW.push({
+                                "text": nm + "_" + el2.type + "_" + (struCW.length + 1),
+                                "id": el2.uuid
+                            });
+                        }
+                        else {
+                            if (!stru[el2.type]) {
+                                stru[el2.type] = [];
+                            }
+    
+                            stru[el2.type].push({
+                                "text": nm + "_" + el2.type + "_" + (stru[el2.type].length + 1),
+                                "id": el2.uuid
+                            });
+                        }
+                    }
+                }
+
+
+                if (el.userData.walls) {
+                    let i = -1;
+
+                    while (++i < el.userData.walls.length) {
+                        let el2 = el.userData.walls[i];
+
                         if (!stru[el2.type]) {
                             stru[el2.type] = [];
                         }
+
                         stru[el2.type].push({
                             "text": nm + "_" + el2.type + "_" + (stru[el2.type].length + 1),
                             "id": el2.uuid
@@ -743,6 +769,21 @@ Zoning.prototype = {
                             "children": el2,
                         });
                     }
+                }
+
+                if (struCW.length > 0) {
+    
+                    children.push({
+                        "type": 'CW',
+                        "text": '커튼월창',
+                        "id": nm + "_CW",
+                        "children": [{
+                            "type": 'CW1',
+                            "text": '유리부분',
+                            "id": nm + "_CW1",
+                            "children": struCW 
+                        }],
+                    });
                 }
 
                 tree[0].push({
@@ -801,11 +842,11 @@ Zoning.prototype = {
             while (++i < tree[0].length) {
                 let el2 = tree[0][i];
                 sql +=
-                    "INSERT INTO ZoneGeneral_3D (ID,존번호,층,지면접합유형,바닥면적,주향,주광너비,주광깊이,상인방높이) VALUES (" +
+                    "INSERT INTO ZoneGeneral_3D (ID,존번호,프로젝트유형,층,지면접합유형,바닥면적,주향,주광너비,주광깊이,상인방높이) VALUES (" +
                     el2.skey +
                     ",'" +
                     el2.text +
-                    "','" +
+                    "','__PROJ_TYPE__','" +
                     el2.floor +
                     "','" +
                     "" + //(floor.type == "FLOOR" ? "지면위" : "층간슬라브") +
