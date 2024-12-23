@@ -6,8 +6,10 @@ function Zoning(editor) {
         "SD":{ color: 0x191919, opacity: 0.9 },
         "GW":{ color: 0xaaaaaa, opacity: 0.9 },
         "WL":{ color: 0xe2e2e2, opacity: 0.9 },
+        "IW":{ color: 0xe2e2e2, opacity: 0.9 },
         "RF":{ color: 0x3a3a3a, opacity: 0.9 },
         "FL":{ color: 0xaaaaaa, opacity: 0.9 },
+        "SL":{ color: 0xaaaaaa, opacity: 0.9 },
         "WN":{ color: 0x6495ed, opacity: 0.7, duplicate: true },
         "CW1":{ color: 0x505edb, opacity: 0.7, duplicate: true },
         "CW2":{ color: 0xfcde00, opacity: 0.7, duplicate: true },
@@ -201,6 +203,29 @@ Zoning.prototype = {
                 if (box[1][0] < el[i]) box[1][0] = el[i];
                 if (box[1][1] < el[i + 1]) box[1][1] = el[i + 1];
                 if (box[1][2] < el[i + 2]) box[1][2] = el[i + 2];
+
+                i += 3;
+            }
+
+            return box;
+        };
+
+        let _getBoundingBox2 = (vtx) => {
+            let box = [
+                [99999999, 99999999, 99999999],
+                [-99999999, -99999999, -99999999],
+            ], i = 0;
+
+            while (i < vtx.length) {
+                let el = vtx[i];
+
+                if (box[0][0] > el.x) box[0][0] = el.x;
+                if (box[0][1] > el.y) box[0][1] = el.y;
+                if (box[0][2] > el.z) box[0][2] = el.z;
+
+                if (box[1][0] < el.x) box[1][0] = el.x;
+                if (box[1][1] < el.y) box[1][1] = el.y;
+                if (box[1][2] < el.z) box[1][2] = el.z;
 
                 i += 3;
             }
@@ -441,6 +466,19 @@ Zoning.prototype = {
                         if (_counterCardi(po.cardi, el2.cardi) && _wallConnected(po.edges, el2.edges)) {
                             po.near = id;
                             el2.near = id;
+
+                            if (po.cardi === 'DOWN') {
+                                po.type = 'SL';
+                            }
+                            else {
+                                po.type = 'IW';
+                            }
+                            if (el2.cardi === 'DOWN') {
+                                el2.type = 'SL';
+                            }
+                            else {
+                                el2.type = 'IW';
+                            }
                         }
                     }
                 }
@@ -516,7 +554,7 @@ Zoning.prototype = {
             return b[0] + "_Zone" + _pad(parseInt(b[1].replace("Zone", "")), 3);
         };
         let _getTitle = (type) => {
-            return { "GWL": "지중벽", "DR": "외부출입문", "CW": "커튼월창", "WN": "창호", "RF": "지붕", "FL": "바닥", "WL": "외벽" }[type];
+            return { "GWL": "지중벽", "DR": "외부출입문", "CW": "커튼월창", "WN": "창호", "RF": "지붕", "FL": "최하층바닥", "SL": "층간바닥", "IW": "내벽", "WL": "외벽" }[type];
         };
         let _getCardinal = (pos, walls) => {
             let i = -1, j;
@@ -676,10 +714,12 @@ Zoning.prototype = {
                                         el2.userData.children = [];
                                     }
                                     
-                                    let stru = {}
+                                    let stru = {};
+
                                     stru.uuid = _addMeshObject(o, this.colors["WN"], zk);
                                     stru.type = "WN";
                                     stru.area = _getArea(o);
+                                    stru.bbox = _getBoundingBox(pos);
                                     stru.pos = o;
                                     el2.userData.children.push(stru);
                                 }
@@ -706,13 +746,40 @@ Zoning.prototype = {
                     }
                 }
             }
+            
+            for (const [id, el] of Object.entries(zones)) {
+                if (el.userData.walls) {
+                    i = -1;
+
+                    while (++i < el.userData.walls.length) {
+                        _updateNearWall(el.userData.walls[i], id);
+                    }
+                }
+            }
+
+            for (const [id, el] of Object.entries(zones)) {
+                if (el.userData.children) {
+                    i = -1;
+                    while(++i < el.userData.children.length) {
+                        let el2 = el.userData.children[i];
+    
+                        let o = _getCardinal(el2.pos, el.userData.walls);
+                        if (o) {
+                            el2.cardi = o.cardi;
+                            el2.slope = o.slope;
+                        }
+                    }
+                }
+            }
 
             for (const [id, el] of Object.entries(zones)) {
                 let nm = _getName(id);
                 let stru = {}, struCW = [];
+                let floorType = "", floorArea = 0, mainCardi = "", mainWidth = 0, mainHeight = 0, mainDepth = 0;
 
                 if (el.userData.children) {
                     let i = -1;
+                    let winArea = 0, mainWin = null;
 
                     while (++i < el.userData.children.length) {
                         let el2 = el.userData.children[i];
@@ -733,9 +800,23 @@ Zoning.prototype = {
                                 "id": el2.uuid
                             });
                         }
+                        if (el2.type === 'WN') {
+                            if (winArea < el2.area) {
+                                winArea = el2.area;
+                                mainWin = el2;
+                            }
+                        }
+                    }
+                    if (mainWin) {
+                        mainCardi = mainWin.cardi;
+                        mainWidth = (new THREE.Vector3(mainWin.bbox[0][0],mainWin.bbox[1][1],mainWin.bbox[0][2])).distanceTo(new THREE.Vector3(mainWin.bbox[1][0],mainWin.bbox[1][1],mainWin.bbox[1][2]));
+                        mainHeight = (mainWin.bbox[0][1] > mainWin.bbox[1][1] ? mainWin.bbox[0][1] : mainWin.bbox[1][1]);
+          
+                        if (mainWidth > 0) {
+                            mainDepth = mainWin.area / mainWidth;
+                        }
                     }
                 }
-
 
                 if (el.userData.walls) {
                     let i = -1;
@@ -751,6 +832,17 @@ Zoning.prototype = {
                             "text": nm + "_" + el2.type + "_" + (stru[el2.type].length + 1),
                             "id": el2.uuid
                         });
+
+                        if (el2.cardi === 'DOWN') {
+                            floorType = (el2.type === 'SL') ? "층간슬라브":"지면위";
+                            floorArea = el2.area;
+
+                            if (mainHeight > 0) {
+                                let bbox = _getBoundingBox2(el2.pos);
+                                mainHeight -= bbox[0][1];
+                            }
+                        }
+
                     }
                 }
 
@@ -792,34 +884,14 @@ Zoning.prototype = {
                     "id": el.uuid,
                     "skey": parseInt(nm.split('_')[1].replace("Zone", "")),
                     "floor": el.userData.floor,
+                    "floorType": floorType,
+                    "floorArea": floorArea,
+                    "mainWidth": mainWidth,
+                    "mainCardi": mainCardi,
+                    "mainDepth": mainDepth,
+                    "mainHeight": mainHeight,
                     "children": children
                 });
-            }
-
-            for (const [id, el] of Object.entries(zones)) {
-                if (el.userData.walls) {
-                    i = -1;
-
-                    while (++i < el.userData.walls.length) {
-                        _updateNearWall(el.userData.walls[i], id);
-                    }
-                }
-            }
-
-            for (const [id, el] of Object.entries(zones)) {
-                if (el.userData.children) {
-                    i = -1;
-                    while(++i < el.userData.children.length) {
-                        let el2 = el.userData.children[i];
-    
-                        let o = _getCardinal(el2.pos, el.userData.walls);
-                        if (o) {
-                            el2.cardi = o.cardi;
-                            el2.slope = o.slope;
-                        }
-                    }
-                }
-
                 zones[id] = el.userData;
             }
 
@@ -848,18 +920,12 @@ Zoning.prototype = {
                     el2.text +
                     "','__PROJ_TYPE__','" +
                     el2.floor +
-                    "','" +
-                    "" + //(floor.type == "FLOOR" ? "지면위" : "층간슬라브") +
-                    "','" +
-                    "" + //floor.area +
-                    "','" +
-                    "" + //(cardi != "" ? cardinal[cardi] : "") +
-                    "','" +
-                    "" + //wall_length +
-                    "','" +
-                    "" + //depth +
-                    "','" +
-                    "" + //height +
+                    "','" + el2.floorType + 
+                    "','" + el2.floorArea + 
+                    "','" + el2.mainCardi + 
+                    "','" + el2.mainWidth + 
+                    "','" + el2.mainDepth + 
+                    "','" + el2.mainHeight + 
                     "');";
             }
         }
