@@ -589,6 +589,29 @@ Zoning.prototype = {
             return null;
         }
 
+        let _asVal = (v, def = "") => {
+            return v ? v : def;
+          };
+          let cardinal = {
+            N: "북",
+            S: "남",
+            E: "동",
+            W: "서",
+            NE: "북동",
+            NW: "북서",
+            SE: "남동",
+            SW: "남서",
+            UP: "수평",
+            DOWN: "수평",
+            UP_N: "북쪽위",
+            UP_S: "남쪽위",
+            UP_E: "동쪽위",
+            UP_W: "서쪽위",
+            UP_NE: "북동쪽위",
+            UP_NW: "북서쪽위",
+            UP_SE: "남동쪽위",
+            UP_SW: "남서쪽위",
+          };
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -638,7 +661,7 @@ Zoning.prototype = {
         }
 
         let zkeys = Object.keys(zones);
-        let tree = [[], []], sql = "DELETE FROM ZoneGeneral_3D;";
+        let tree = [[], []], sql = "DELETE FROM ZoneGeneral_3D;DELETE FROM ZoneEnvelope_3D;";
 
         if (zkeys.length > 0) {
             let type;
@@ -720,6 +743,10 @@ Zoning.prototype = {
                                     stru.type = "WN";
                                     stru.area = _getArea(o);
                                     stru.bbox = _getBoundingBox(pos);
+
+                                    stru.width = (new THREE.Vector3(stru.bbox[0][0],stru.bbox[1][1],stru.bbox[0][2])).distanceTo(new THREE.Vector3(stru.bbox[1][0],stru.bbox[1][1],stru.bbox[1][2]));
+                                    stru.height = (new THREE.Vector3(stru.bbox[0][0],stru.bbox[0][1],stru.bbox[0][2])).distanceTo(new THREE.Vector3(stru.bbox[0][0],stru.bbox[1][1],stru.bbox[0][2]));
+
                                     stru.pos = o;
                                     el2.userData.children.push(stru);
                                 }
@@ -785,8 +812,9 @@ Zoning.prototype = {
                         let el2 = el.userData.children[i];
 
                         if (el2.type === 'CW') {
+                            el2.id = nm + "_" + el2.type + "_" + (struCW.length + 1);
                             struCW.push({
-                                "text": nm + "_" + el2.type + "_" + (struCW.length + 1),
+                                "text": el2.id,
                                 "id": el2.uuid
                             });
                         }
@@ -795,8 +823,10 @@ Zoning.prototype = {
                                 stru[el2.type] = [];
                             }
     
+                            el2.id = nm + "_" + el2.type + "_" + (stru[el2.type].length + 1);
+
                             stru[el2.type].push({
-                                "text": nm + "_" + el2.type + "_" + (stru[el2.type].length + 1),
+                                "text": el2.id,
                                 "id": el2.uuid
                             });
                         }
@@ -828,8 +858,10 @@ Zoning.prototype = {
                             stru[el2.type] = [];
                         }
 
+                        el2.id = nm + "_" + el2.type + "_" + (stru[el2.type].length + 1);
+
                         stru[el2.type].push({
-                            "text": nm + "_" + el2.type + "_" + (stru[el2.type].length + 1),
+                            "text": el2.id,
                             "id": el2.uuid
                         });
 
@@ -892,7 +924,6 @@ Zoning.prototype = {
                     "mainHeight": mainHeight,
                     "children": children
                 });
-                zones[id] = el.userData;
             }
 
             console.log(zones);
@@ -927,6 +958,106 @@ Zoning.prototype = {
                     "','" + el2.mainDepth + 
                     "','" + el2.mainHeight + 
                     "');";
+            }
+
+            for (const [id, el] of Object.entries(zones)) {
+
+                if (el.userData.children) {
+                    let i = -1;
+
+                    while (++i < el.userData.children.length) {
+                        let el2 = el.userData.children[i];
+
+                        sql += "INSERT INTO ZoneEnvelope_3D (아이디, 번호,프로젝트유형,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이) VALUES ('" +
+                        el2.id +
+                        "','" + el2.id + "','__PROJ_TYPE__','" +
+                        el.userData.floor +
+                        "F','" +
+                        id +
+                        "','" +
+                        _getTitle(el2.type) +
+                        "','" +
+                        (el2.type === 'CW' ? '유리부분' : '') +
+                        "','" +
+                        el2.area +
+                        "','" +
+                        _asVal(el2.near, "") + 
+//                        _getInwalledId(el.inwalled) +
+                        "','" +
+                        cardinal[el2.cardi] +
+                        "','" +
+                        el2.slope +
+                        "','" +
+                  //      _asVal(el.right_shadow_angle, "0") +
+                        "','" +
+                  //      _asVal(el.left_shadow_angle, "0") +
+                        "','" +
+                  //      _asVal(el.up_shadow_angle, "0") +
+                        "','" +
+                 //       _asVal(el.shadow_angle, "0") +
+                        "','','" +
+                //        _asVal(el.right_shadow_height, "0") +
+                        "','" +
+                 //       _asVal(el.left_shadow_height, "0") +
+                        "','" +
+                   //     _asVal(el.up_shadow_height, "0") +
+                        "','" +
+                  //      _asVal(el.shadow_height, "0") +
+                        "','" + _asVal(el2.width,"") + 
+                        "','" + _asVal(el2.width,"") + 
+                        "','" + _asVal(el2.height,"") + 
+                        "');";
+                    }
+                }
+
+                if (el.userData.walls) {
+                    let i = -1;
+
+                    while (++i < el.userData.walls.length) {
+                        let el2 = el.userData.walls[i];
+
+                        
+                        sql += "INSERT INTO ZoneEnvelope_3D (아이디, 번호,프로젝트유형,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이) VALUES ('" +
+                        el2.id +
+                        "','" + el2.id + "','__PROJ_TYPE__','" +
+                        el.userData.floor +
+                        "F','" +
+                        id +
+                        "','" +
+                        _getTitle(el2.type) +
+                        "','" +
+                        (el2.type === 'CW' ? '유리부분' : '') +
+                        "','" +
+                        el2.area +
+                        "','" +
+                        _asVal(el2.near, "") + 
+                        "','" +
+                        cardinal[el2.cardi] +
+                        "','" +
+                        el2.slope +
+                        "','" +
+                  //      _asVal(el.right_shadow_angle, "0") +
+                        "','" +
+                  //      _asVal(el.left_shadow_angle, "0") +
+                        "','" +
+                  //      _asVal(el.up_shadow_angle, "0") +
+                        "','" +
+                 //       _asVal(el.shadow_angle, "0") +
+                        "','','" +
+                //        _asVal(el.right_shadow_height, "0") +
+                        "','" +
+                 //       _asVal(el.left_shadow_height, "0") +
+                        "','" +
+                   //     _asVal(el.up_shadow_height, "0") +
+                        "','" +
+                  //      _asVal(el.shadow_height, "0") +
+                        "','" + _asVal(el2.width,"") + 
+                        "','" + _asVal(el2.width,"") + 
+                        "','" + _asVal(el2.height,"") + 
+                        "');";
+                    }
+                }
+                zones[id] = el.userData;
             }
         }
 
