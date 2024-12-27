@@ -4,10 +4,6 @@ function Bridges( editor ) {
 
 Bridges.prototype = {
 	calc: function(obj) {
-		if (!obj.userData.bridges) {
-			obj.userData.bridges = [];
-		}
-        let bridges = obj.userData.bridges;
 		let _getCriteria = (kind) => {
 			let o = {kind:kind, data:[], excludes:[]};
 
@@ -411,8 +407,13 @@ Bridges.prototype = {
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		let i = -1, o;
-		i = 0;
+		let zones = obj.userData.zones;
+		if (!obj.userData.bridges) {
+			obj.userData.bridges = {};
+		}
+        let bridges = obj.userData.bridges;
+		let i = 0, o;
+
 		while(++i <= 14) {
 			if (i != 10) {
 				_pushBridges(i);
@@ -423,19 +424,15 @@ Bridges.prototype = {
 		}
 
 		for (const [id, el] of Object.entries(zones)) {
-			if (el.userData.children) {
-				i = -1;
+			i = -1;
 
-				while (++i < el.userData.children.length) {
-					let el2 = el.userData.children[i];
+			while (++i < el.userData.walls.length) {
+				let el2 = el.userData.walls[i];
 
-					if (el2.type === 'CW' || el2.type === 'DR' || el2.type === 'WN') {
-						bridges[10].items.push({line:[[el2.bbox[0][0],el2.bbox[0][1],el2.bbox[0][2]],[el2.bbox[0][0],el2.bbox[1][1],el2.bbox[0][2]]]});
-						bridges[10].items.push({line:[[el2.bbox[0][0],el2.bbox[1][1],el2.bbox[0][2]],[el2.bbox[1][0],el2.bbox[1][1],el2.bbox[1][2]]]});
-						bridges[10].items.push({line:[[el2.bbox[1][0],el2.bbox[1][1],el2.bbox[1][2]],[el2.bbox[1][0],el2.bbox[0][1],el2.bbox[1][2]]]});
-						bridges[10].items.push({line:[[el2.bbox[1][0],el2.bbox[0][1],el2.bbox[1][2]],[el2.bbox[0][0],el2.bbox[0][1],el2.bbox[0][2]]]});
-					}
-				}
+				bridges[10].items.push({line:[[el2.bbox[0][0],el2.bbox[0][1],el2.bbox[0][2]],[el2.bbox[0][0],el2.bbox[1][1],el2.bbox[0][2]]]});
+				bridges[10].items.push({line:[[el2.bbox[0][0],el2.bbox[1][1],el2.bbox[0][2]],[el2.bbox[1][0],el2.bbox[1][1],el2.bbox[1][2]]]});
+				bridges[10].items.push({line:[[el2.bbox[1][0],el2.bbox[1][1],el2.bbox[1][2]],[el2.bbox[1][0],el2.bbox[0][1],el2.bbox[1][2]]]});
+				bridges[10].items.push({line:[[el2.bbox[1][0],el2.bbox[0][1],el2.bbox[1][2]],[el2.bbox[0][0],el2.bbox[0][1],el2.bbox[0][2]]]});
 			}
 		}
 

@@ -303,6 +303,137 @@ SQLExport.prototype = {
                 }
             //    zones[id] = el.userData;
             }
+
+            let bridges = obj.userData.bridges;
+
+            let _bridges = {
+                1: "평지붕+외벽[90]",
+                2: "평지붕+내벽",
+                3: "경사지붕",
+                4: "경사지붕+외벽[수평]",
+                5: "경사지붕+외벽[경사]",
+                6: "층간슬라브+외벽",
+                7: "외벽+내벽",
+                8: "외벽+외벽[90]",
+                9: "외벽+외벽[270]",
+                10: "바닥+외벽[90]",
+                11: "바닥+외벽[270]",
+            };
+            let _codes = {
+                1: "RTB1",
+                2: "RTB3",
+                3: "RTB4",
+                4: "RTB5",
+                5: "RTB6",
+                6: "WTB1",
+                7: "WTB2",
+                8: "WTB3",
+                9: "WTB4",
+                10: "WTB5",
+                11: "WTB6",
+            };
+            let _getDistance = (line) => {
+                let a = new THREE.Vector3(line[0][0], line[0][1], line[0][2]);
+                let b = new THREE.Vector3(line[1][0], line[1][1], line[1][2]);
+                return a.distanceTo(b);
+            };
+        
+            let _is2FOutwall = (edge) => {
+                let infloor = false;
+                let outerwall = false;
+        
+                edge.walls.forEach((el, idx) => {
+                    let el2 = this.wall[el.cardi][el.id];
+                    if (el2.type == 'IW' && (el2.cardinal ===  'DOWN' || el2.cardinal ===  'UP')) {
+                    infloor = true;
+                    }
+                    else if (el2.type == 'WL') {
+                    outerwall = true;
+                    }
+                });
+        
+                return (infloor && outerwall);
+            };
+        
+            let _is270Outwall = (edge) => {
+                let rf_y = null;
+                let ot_y = null;
+            
+                edge.walls.forEach((el, idx) => {
+                    let el2 = this.wall[el.cardi][el.id];
+                    if (el2.type == 'RF') {
+                    rf_y = el2.center[1];
+                    }
+                    else if (el2.type == 'WsL') {
+                    ot_y = el2.center[1];
+                    }
+                });
+            
+                return (rf_y && ot_y && rf_y < ot_y);
+            };
+            
+            let m = 0;
+            bridges["11"].items.forEach((el2, idx) => {
+                ++m;
+                let n = m <= 9 ? "0" + m : m;
+                sql +=
+                    "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('RTB2_" +
+                    n +
+                    "','__PROJ_TYPE__','평지붕+외벽[270]','" +
+                    _getDistance(el2.line) +
+                    "');";
+            });
+            bridges["12"].items.forEach((el2, idx) => {
+                if (_is270Outwall(el2.edge)) {
+                    ++m;
+                    let n = m <= 9 ? "0" + m : m;
+                    sql +=
+                    "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('RTB2_" +
+                    n +
+                    "','__PROJ_TYPE__','평지붕+외벽[270]','" +
+                    _getDistance(el2.line) +
+                    "');";
+                }
+            });
+        
+            bridges["13"].items.forEach((el2, idx) => {
+                let n = idx <= 8 ? "0" + (idx + 1) : idx + 1;
+                sql +=
+                    "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('WTB5_" +
+                    n +
+                    "','__PROJ_TYPE__','바닥+외벽[90]','" +
+                    _getDistance(el2.line) +
+                    "');";
+                });
+            bridges["14"].items.forEach((el2, idx) => {
+                if (_is2FOutwall(el2.edge)) {
+                    let n = idx <= 8 ? "0" + (idx + 1) : idx + 1;
+                    sql +=
+                    "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('WTB6_" +
+                    n +
+                    "','__PROJ_TYPE__','바닥+외벽[270]','" +
+                    _getDistance(el2.line) +
+                    "');";
+                }
+            });
+        
+            Object.keys(bridges).forEach((el) => {
+                if (parseInt(el) < 10) {
+                    bridges[el].items.forEach((el2, idx) => {
+                        let n = idx <= 8 ? "0" + (idx + 1) : idx + 1;
+                        sql +=
+                            "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('" +
+                            _codes[el] +
+                            "_" +
+                            n +
+                            "','__PROJ_TYPE__','" +
+                            _bridges[el] +
+                            "','" +
+                            _getDistance(el2.line) +
+                            "');";
+                    });
+                }
+            });
         }
         
 		$.ajax ({
