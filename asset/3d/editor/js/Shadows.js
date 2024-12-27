@@ -1,31 +1,95 @@
-import { Utility } from './Utility.js';
+import { Box3, Vector3 } from 'three';
 
 function Shadows( editor ) {
     this.editor = editor;
-	this.util = new Utility();
 }
 
 Shadows.prototype = {
 	calc: function (obj) {
-		let _getBoundingBox = (position) => {
-			var box = [
-				[99999999,99999999,99999999],
-				[-99999999,-99999999,-99999999],
-			];
-		
-			position.forEach(el => {
-		
-				if (box[0][0] > el[0]) box[0][0] = el[0];
-				if (box[0][1] > el[1]) box[0][1] = el[1];
-				if (box[0][2] > el[2]) box[0][2] = el[2];
-		
-				if (box[1][0] < el[0]) box[1][0] = el[0];
-				if (box[1][1] < el[1]) box[1][1] = el[1];
-				if (box[1][2] < el[2]) box[1][2] = el[2];
-			});
-		
-			return box;
+		let _asSlope = (x, y, z) => {
+			return (Math.acos(y / Math.sqrt(x * x + y * y + z * z)) * 180) / Math.PI;
 		};
+		let _asCardinal = (x, y, z) => {
+			let slope = _asSlope(x, y, z);
+	
+			if (slope < 70) {
+				if (slope >= 10) {
+					let cardi = (Math.atan2(z, x) * 180 / Math.PI) + 180;
+	
+					if (cardi <= 68 && cardi > 23) {
+						return 'UP_NW';
+					}
+					else if (cardi <= 113 && cardi > 68) {
+						return 'UP_N';
+					}
+					else if (cardi <= 158 && cardi > 113) {
+						return 'UP_NE';
+					}
+					else if (cardi <= 203 && cardi > 158) {
+						return 'UP_E';
+					}
+					else if (cardi <= 248 && cardi > 203) {
+						return 'UP_SE';
+					}
+					else if (cardi <= 293 && cardi > 248) {
+						return 'UP_S';
+					}
+					else if (cardi <= 338 && cardi > 293) {
+						return 'UP_SW';
+					}
+					else {
+						return 'UP_W';
+					}	
+				}
+				return 'UP';
+			}
+			else if (slope > 135) {
+				return 'DOWN';
+			}
+			else {
+				let cardi = (Math.atan2(z, x) * 180 / Math.PI) + 180;
+	
+				if (cardi <= 68 && cardi > 23) {
+					return 'NW';
+				}
+				else if (cardi <= 113 && cardi > 68) {
+					return 'N';
+				}
+				else if (cardi <= 158 && cardi > 113) {
+					return 'NE';
+				}
+				else if (cardi <= 203 && cardi > 158) {
+					return 'E';
+				}
+				else if (cardi <= 248 && cardi > 203) {
+					return 'SE';
+				}
+				else if (cardi <= 293 && cardi > 248) {
+					return 'S';
+				}
+				else if (cardi <= 338 && cardi > 293) {
+					return 'SW';
+				}
+				else {
+					return 'W';
+				}
+			}
+		};
+        let _equalPoint = (a, b) => {
+            return a.distanceTo(b) < 0.00000001;
+        };
+        let _getSamePoints = (a, b) => {
+            var ret = [];
+
+            for (var i = 0; i < a.length; i++) {
+                for (var j = 0; j < b.length; j++) {
+                    if (_equalPoint(a[i], b[j]) && !ret.find(el => _equalPoint(el, a[i]))) ret.push(a[i]);
+                }
+            }
+
+            return ret;
+        };
+	
 		let _isCounterWall = (a, b, pos0, pos) => {
 			let c = pos0.clone();
 
@@ -103,42 +167,26 @@ Shadows.prototype = {
 			return plane.intersectLine(line, tgt);
 		};
 
-		let _horzEdgeIntersect = function (position, line) {
-			let center = [0,0,0];
+		let _horzEdgeIntersect = function (pos, line) {
+			const box = new Box3().setFromPoints(pos);
+			const center = box.getCenter(new Vector3());
 			let tgt = new THREE.Vector3();
 			let plane = new THREE.Plane();
-			let i = -1, j, cnt = position.length, a = [];
 			const geometry = new THREE.PlaneGeometry();
 	
-			while(++i < cnt) {
-				j = -1;
-				while(++j < 3) {
-					center[j] += position[i][j];
-				}
-			}
-
-			j = -1;
-			while(++j < 4) {
-				if (j < 3) {
-					center[j] /= cnt;
-				}
-				a.push(new THREE.Vector3(position[j][0],position[j][1],position[j][2]));
-			}
-
-			geometry.setFromPoints(a);
-			geometry.translate(-center[0],-center[1],-center[2]);
+			geometry.setFromPoints(pos);
+			geometry.translate(-center.x,-center.y,-center.z);
 			geometry.rotateY(Math.PI/2);
-			geometry.translate(center[0],center[1],center[2]);
+			geometry.translate(center.x,center.y,center.z);
 
 			geometry.normalizeNormals ();
 			geometry.computeVertexNormals ();
 
 			let position2 = geometry.getAttribute('position');
+			let i = -1, a = [];
 
-			a = [];
-			j = -1;
-			while(++j < 3) {
-				a.push(new THREE.Vector3(position2.array[3 * j],position2.array[3 * j + 1],position2.array[3 * j + 2]));
+			while(++i < 3) {
+				a.push(new THREE.Vector3(position2.array[3 * i],position2.array[3 * i + 1],position2.array[3 * i + 2]));
 			}
 
 			plane.setFromCoplanarPoints(a[0],a[1],a[2]);
@@ -147,10 +195,10 @@ Shadows.prototype = {
 		}
 
 		let _linkedPoint = (a, b) => {
-			if (a[0] === b[0] || a[0] == b[1]) {
+			if (_equalPoint(a[0],b[0]) || _equalPoint(a[0],b[1])) {
 				return a[0];
 			}
-			else if (a[1] == b[0] || a[1] == b[1]) {
+			else if (_equalPoint(a[1],b[0]) || _equalPoint(a[1],b[1])) {
 				return a[1];
 			}
 			else {
@@ -161,7 +209,7 @@ Shadows.prototype = {
 		let _getCrossProduct = (center, dist, val2) => {
 			let a, b, c = center.clone();
 
-			if (dist == val2[0]) {
+			if (_equalPoint(dist,val2[0])) {
 				a = val2[0].clone();
 				b = val2[1].clone();
 			}
@@ -180,23 +228,43 @@ Shadows.prototype = {
 			return !!((!isRight && sign) || (isRight && !sign));
 		};
 
-		let _unionLine = (a, b) => {
-			let dist = a[0].distanceTo(a[1]) + b[0].distanceTo(b[1]);
+		let _maxLine = (a, b, c) => {
+            let arr = [a.distanceTo(b), b.distanceTo(c), a.distanceTo(c)], i = -1, n = -1, m = 0;
+            let ret = [[a, b], [b, c], [a, c]];
 
-			if (a[0] === b[0]) {
-				if (Math.abs(dist - a[1].distanceTo(b[1])) < 0.00000001) return [a[1],b[1]];
-			}
-			else if (a[0] == b[1]) {
-				if (Math.abs(dist - a[0].distanceTo(b[1])) < 0.00000001) return [a[0],b[1]];
-			}
-			else if (a[1] == b[0]) {
-				if (Math.abs(dist - a[1].distanceTo(b[0])) < 0.00000001) return [a[1],b[0]];
-			}
-			else if (a[1] == b[1]) {
-				if (Math.abs(dist - a[0].distanceTo(b[0])) < 0.00000001) return [a[0],b[0]];
-			}
-			return a;
-		};
+            while (++i < arr.length) {
+                if (arr[i] > n) {
+                    n = arr[i];
+                    m = i;
+                }
+            }
+
+            return ret[m];
+        };
+
+        let _unionLine = (a, b) => {
+            if (_equalPoint(a[0], b[0])) {
+                if ((new THREE.Triangle(a[1], a[0], b[1])).getArea() < 0.00001) {
+                    return _maxLine(a[1], a[0], b[1]);
+                }
+            }
+            else if (_equalPoint(a[0], b[1])) {
+                if ((new THREE.Triangle(a[1], a[0], b[0])).getArea() < 0.00001) {
+                    return _maxLine(a[1], a[0], b[0]);
+                }
+            }
+            else if (_equalPoint(a[1], b[0])) {
+                if ((new THREE.Triangle(a[0], a[1], b[1])).getArea() < 0.00001) {
+                    return _maxLine(a[0], a[1], b[1]);
+                }
+            }
+            else if (_equalPoint(a[1], b[1])) {
+                if ((new THREE.Triangle(a[0], a[1], b[0])).getArea() < 0.00001) {
+                    return _maxLine(a[0], a[1], b[0]);
+                }
+            }
+            return a;
+        };
 
 		let _getProjWall = (verts, cardi, idx, isRight, center) => {
 			let key = cardi + '__' + idx;
@@ -223,177 +291,226 @@ Shadows.prototype = {
 			return null;
 		};
 
-		for (const [cardi, value] of Object.entries(this.editor.wall)) {
-			for (const [idx, el] of Object.entries(value)) {
-				if (el.type === 'WIN') {
-					let edges = [];
-					let edges2 = [];
-					let position = el.vertices[0].position;
-					el.box = _getBoundingBox(el.vertices[0].position);
-					let pos0 = new THREE.Vector3((el.box[0][0] + el.box[1][0]) / 2, el.box[0][1], (el.box[0][2] + el.box[1][2]) / 2);
-					let ctr = new THREE.Vector3((el.box[0][0] + el.box[1][0]) / 2, (el.box[0][1] + el.box[1][1]) / 2, (el.box[0][2] + el.box[1][2]) / 2);
-					let i = -1, pnt;
+		let _addLineObject = (pos, color, opacity) => {
+			obj.add(new THREE.Line(
+				new THREE.BufferGeometry().setFromPoints(pos),
+				new THREE.LineBasicMaterial({
+					color: new THREE.Color().setHex(color),
+					opacity: opacity,
+					transparent: true,
+				})
+			));
+            return obj.children[obj.children.length - 1].uuid;
+		};
+		let _getPID = (cardi, pos, walls) => {
+			let i = -1;
 
-					while(++i < this.editor.edges.length) {
-						let el2 = this.editor.edges[i];
-						const line = new THREE.Line3(new THREE.Vector3(el2.line[0][0],el2.line[0][1],el2.line[0][2]), new THREE.Vector3(el2.line[1][0],el2.line[1][1],el2.line[1][2]));
+			while(++i < walls.length) {
+				let po = walls[i];
+				let p = _getSamePoints(po.pos, pos);
 
-						if ((pnt = _horzEdgeIntersect(position, line)) != null) {
-							edges.push({line:el2.line, walls:el2.walls, pos:pnt, vert:false});
-						}
-						else if ((pnt = _vertEdgeIntersect(pos0, line)) != null) {
-							edges.push({line:el2.line, walls:el2.walls, pos:pnt, vert:true});
-						}
+				if (p.length > 2 && po.cardi === cardi) {
+					return po.id;
+				}
+			}
+			return null;
+		};
 
-						if ((pnt = _vertEdgeIntersect(ctr, line)) != null) {
-							edges2.push({line:el2.line, walls:el2.walls, pos:pnt, vert:true});
-						}
-					}
-					let horzs = {}, verts = {}, verts2 = {}, upPoint = null, upLength = 0, upHeight = 99999999;
-					let centers = {}, angle = 0;
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-					edges.forEach(el2 => {
-						el2.walls.forEach(el3 => {
-							if (el3.cardi !== 'DOWN' && el3.cardi.indexOf('UP') < 0) {
-								if (!el2.vert) {
-									if (!horzs[el3.cardi + "__" + el3.id]) horzs[el3.cardi + "__" + el3.id] = [];
-									horzs[el3.cardi + "__" + el3.id].push(el2.pos);
-								}
-								else {
-									if (!verts[el3.cardi + "__" + el3.id]) verts[el3.cardi + "__" + el3.id] = [];
-									verts[el3.cardi + "__" + el3.id].push(el2.pos);
+		let zones = obj.userData.zones;
+		let h, i, j, k, pnt;
+
+		for (const [id, el] of Object.entries(zones)) {
+
+			if (el.userData.children) {
+				i = -1;
+
+				while (++i < el.userData.children.length) {
+					let el2 = el.userData.children[i];
+
+					if (el2.type === 'CW' || el2.type === 'DR' || el2.type === 'WN') {
+						let edges = [];
+						let edges2 = [];
+						let pos0 = new THREE.Vector3((el2.bbox[0][0] + el2.bbox[1][0]) / 2, el2.bbox[0][1], (el2.bbox[0][2] + el2.bbox[1][2]) / 2);
+						let ctr = new THREE.Vector3((el2.bbox[0][0] + el2.bbox[1][0]) / 2, (el2.bbox[0][1] + el2.bbox[1][1]) / 2, (el2.bbox[0][2] + el2.bbox[1][2]) / 2);
+
+						for (const [id3, el3] of Object.entries(zones)) {
+							j = -1;
+
+							while (++j < el3.userData.walls.length) {
+								let el4 = el3.userData.walls[j];
+								k = -1;
+								while(++k < el4.edges.length) {
+									const line = new THREE.Line3(el4.edges[k][0], el4.edges[k][1]);
+		
+									if ((pnt = _horzEdgeIntersect(el2.pos, line)) != null) {
+										edges.push({cardi:el4.cardi, id:el4.id, pos:pnt, vert:false});
+									}
+									else if ((pnt = _vertEdgeIntersect(pos0, line)) != null) {
+										edges.push({cardi:el4.cardi, id:el4.id, pos:pnt, vert:true});
+									}
+			
+									if ((pnt = _vertEdgeIntersect(ctr, line)) != null) {
+										edges2.push({cardi:el4.cardi, id:el4.id, pos:pnt, vert:true});
+									}
 								}
 							}
-							if (!el2.vert && ctr.y < el2.pos.y && el3.cardi === 'DOWN') {
-								let up = ctr.clone();
-								let pos2 = el2.pos.clone();
+						}
 
-								up.y = el2.pos.y;
+						h = -1;
+
+						while (++h < obj.userData.dummy.length) {
+							let el3 = obj.userData.dummy[h];
+
+							j = -1;
+
+							while (++j < el3.userData.walls.length) {
+								let el4 = el3.userData.walls[j];
+								k = -1;
+								while(++k < el4.edges.length) {
+									const line = new THREE.Line3(el4.edges[k][0], el4.edges[k][1]);
+		
+									if ((pnt = _horzEdgeIntersect(el2.pos, line)) != null) {
+										edges.push({cardi:el4.cardi, id:el4.id, pos:pnt, vert:false});
+									}
+									else if ((pnt = _vertEdgeIntersect(pos0, line)) != null) {
+										edges.push({cardi:el4.cardi, id:el4.id, pos:pnt, vert:true});
+									}
+			
+									if ((pnt = _vertEdgeIntersect(ctr, line)) != null) {
+										edges2.push({cardi:el4.cardi, id:el4.id, pos:pnt, vert:true});
+									}
+								}
+							}
+						}
+
+						let horzs = {}, verts = {}, verts2 = {}, upPoint = null, upLength = 0, upHeight = 99999999;
+						let centers = {}, angle = 0;
+	
+						edges.forEach(_el2 => {
+							if (_el2.cardi !== 'DOWN' && _el2.cardi.indexOf('UP') < 0) {
+								if (!_el2.vert) {
+									if (!horzs[_el2.cardi + "__" + _el2.id]) horzs[_el2.cardi + "__" + _el2.id] = [];
+									horzs[_el2.cardi + "__" + _el2.id].push(_el2.pos);
+								}
+								else {
+									if (!verts[_el2.cardi + "__" + _el2.id]) verts[_el2.cardi + "__" + _el2.id] = [];
+									verts[_el2.cardi + "__" + _el2.id].push(_el2.pos);
+								}
+							}
+							if (!_el2.vert && ctr.y < _el2.pos.y && _el2.cardi === 'DOWN') {
+								let up = ctr.clone();
+								let pos2 = _el2.pos.clone();
+
+								up.y = _el2.pos.y;
 						
 								let p = pos2.sub(up);
 								let l = up.distanceTo(pos2);
-								let h = el2.pos.y - ctr.y;
-								let agl = Math.atan2(up.distanceTo(el2.pos),ctr.distanceTo(up)) * 180 / Math.PI;
+								let h = _el2.pos.y - ctr.y;
+								let agl = Math.atan2(up.distanceTo(_el2.pos),ctr.distanceTo(up)) * 180 / Math.PI;
 
-								if (h > 0 && this.util.asCardinal(p.x, p.y, p.z) == cardi && angle < agl) {
+								if (h > 0 && _asCardinal(p.x, p.y, p.z) == el2.cardi && angle < agl) {
 									upHeight = h;
 									upLength = l;
-									upPoint = el2.pos;
+									upPoint = _el2.pos;
 									angle = agl;
 								}
 							}
 						});
-					});
-
-					edges2.forEach(el2 => {
-						el2.walls.forEach(el3 => {
-							if (el3.cardi !== 'DOWN' && el3.cardi.indexOf('UP') < 0) {
-								if (el2.vert) {
-									if (!verts2[el3.cardi + "__" + el3.id]) verts2[el3.cardi + "__" + el3.id] = [];
-									verts2[el3.cardi + "__" + el3.id].push(el2.pos);
+	
+						edges2.forEach(_el2 => {
+							if (_el2.cardi !== 'DOWN' && _el2.cardi.indexOf('UP') < 0) {
+								if (_el2.vert) {
+									if (!verts2[_el2.cardi + "__" + _el2.id]) verts2[_el2.cardi + "__" + _el2.id] = [];
+									verts2[_el2.cardi + "__" + _el2.id].push(_el2.pos);
 								}
 							}
 						});
-					});
-
-					Object.keys(horzs).forEach(key => {
-						if (verts[key] && verts[key].length == 2 && horzs[key].length == 2) {
-							centers[key] = new THREE.Vector3(0,0,0);
-							let center = centers[key];
-
-							center.x = horzs[key][0].x;
-							center.y = verts[key][0].y;
-							center.z = horzs[key][0].z;
-
-							center.x += horzs[key][1].x;
-							center.y += verts[key][1].y;
-							center.z += horzs[key][1].z;
-
-							center.x /= 2;
-							center.y /= 2;
-							center.z /= 2;
-						}
-					});
-
-					let dist = 99999999, a, pkey = '';
-
-					for (const [key, val] of Object.entries(centers)) {
-						if (_isCounterWall(cardi, key.substring(0,key.indexOf('__')), pos0, val) && (a = pos0.distanceTo(val)) < dist && a > 0) {
-							dist = a;
-							pkey = key;
-						}
-					}
-
-					el.lines = [];
-
-					if (pkey !== '') {
-						let y = -99999999;
-						let pos2 = new THREE.Vector3(0,0,0);
-
-						horzs[pkey].forEach(el2 => {
-							if (el2.y > y) {
-								y = el2.y;
-								pos2 = el2;
+	
+						Object.keys(horzs).forEach(key => {
+							if (verts[key] && verts[key].length == 2 && horzs[key].length == 2) {
+								centers[key] = new THREE.Vector3(0,0,0);
+								let center = centers[key];
+	
+								center.x = horzs[key][0].x;
+								center.y = verts[key][0].y;
+								center.z = horzs[key][0].z;
+	
+								center.x += horzs[key][1].x;
+								center.y += verts[key][1].y;
+								center.z += horzs[key][1].z;
+	
+								center.x /= 2;
+								center.y /= 2;
+								center.z /= 2;
 							}
 						});
+	
+						let dist = 99999999, a, pkey = '';
+	
+						for (const [key, val] of Object.entries(centers)) {
+							if (_isCounterWall(el2.cardi, key.substring(0,key.indexOf('__')), pos0, val) && (a = pos0.distanceTo(val)) < dist && a > 0) {
+								dist = a;
+								pkey = key;
+							}
+						}
+	
+						el2.shadows = [];
 
-						if (y > -99999999) {
-							el.shadow_base = pos0.distanceTo(centers[pkey]);
-							el.shadow_height = centers[pkey].distanceTo(pos2);
-							el.shadow_angle = Math.atan2(centers[pkey].distanceTo(pos2), pos0.distanceTo(centers[pkey])) * 180 / Math.PI;
-							el.lines.push({points:[pos0, pos2],color:0x0000FF, opacity:0.5});
-							//				this.editor.lines.push([pos0, centers[pkey]]);
-			//				this.editor.lines.push([pos0, pos2]);
-
-//							console.log(el.shadow_angle);
+						if (pkey !== '') {
+							let y = -99999999;
+							let pos2 = new THREE.Vector3(0,0,0);
+	
+							horzs[pkey].forEach(_el2 => {
+								if (_el2.y > y) {
+									y = _el2.y;
+									pos2 = _el2;
+								}
+							});
+	
+							if (y > -99999999) {
+								el2.shadow_base = pos0.distanceTo(centers[pkey]);
+								el2.shadow_height = centers[pkey].distanceTo(pos2);
+								el2.shadow_angle = Math.atan2(centers[pkey].distanceTo(pos2), pos0.distanceTo(centers[pkey])) * 180 / Math.PI;
+								el2.shadows.push(_addLineObject([pos0, pos2],0x0000FF, 0.5));
+							}
+						}
+	
+						let pid = _getPID(el2.cardi, el2.pos, el.userData.walls);
+						if (pid) {
+							let left = _getProjWall(verts2, el2.cardi, pid, false, ctr);
+	
+							if (left) {
+								el2.left_shadow_base = left.base;
+								el2.left_shadow_height = left.height;
+								el2.left_shadow_angle = Math.atan2(left.height, left.base) * 180 / Math.PI;
+								el2.shadows.push(_addLineObject([ctr, left.point],0xFF00, 0.5));
+							}
+		
+							let right = _getProjWall(verts2, el2.cardi, pid, true, ctr);
+		
+							if (right) {
+								el2.right_shadow_base = right.base;
+								el2.right_shadow_height = right.height;
+								el2.right_shadow_angle = Math.atan2(right.height, right.base) * 180 / Math.PI;
+								el2.shadows.push(_addLineObject([ctr, right.point], 0x00FF00, 0.5));
+							}
+		
+							if (upPoint) {
+								let up = ctr.clone();
+								up.y = upPoint.y;
+		
+								el2.up_shadow_base = ctr.distanceTo(up);
+								el2.up_shadow_height = up.distanceTo(upPoint);
+								el2.up_shadow_angle = Math.atan2(up.distanceTo(upPoint),ctr.distanceTo(up)) * 180 / Math.PI;
+								el2.shadows.push(_addLineObject([ctr, upPoint],0xFF00FF, 0.5));
+							}
 						}
 					}
-
-					let left = _getProjWall(verts2, cardi, el.parent, false, ctr);
-
-					if (left) {
-//						this.editor.lines.push([ctr, left.points[0]]);
-//						this.editor.lines.push([ctr, left.points[1]]);
-						el.left_shadow_base = left.base;
-						el.left_shadow_height = left.height;
-						el.left_shadow_angle = Math.atan2(left.height, left.base) * 180 / Math.PI;
-						el.lines.push({points:[ctr, left.point],color:0xFF00, opacity:0.5});
-						//						console.log("left" + el.left_shadow_angle);
-					}
-
-					let right = _getProjWall(verts2, cardi, el.parent, true, ctr);
-
-					if (right) {
-//						this.editor.lines.push([ctr, right.points[0]]);
-//						this.editor.lines.push([ctr, right.points[1]]);
-						el.right_shadow_base = right.base;
-						el.right_shadow_height = right.height;
-						el.right_shadow_angle = Math.atan2(right.height, right.base) * 180 / Math.PI;
-						el.lines.push({points:[ctr, right.point],color:0x00FF00, opacity:0.5});
-//						console.log("right" + el.right_shadow_angle);
-					}
-
-					if (upPoint) {
-						let up = ctr.clone();
-						up.y = upPoint.y;
-
-						el.up_shadow_base = ctr.distanceTo(up);
-						el.up_shadow_height = up.distanceTo(upPoint);
-						el.up_shadow_angle = Math.atan2(up.distanceTo(upPoint),ctr.distanceTo(up)) * 180 / Math.PI;
-							el.lines.push({points:[ctr, upPoint],color:0xFF00FF, opacity:0.5});
-				//		console.log("up " + el.up_shadow_angle);
-					}
 				}
 			}
-		}	
-		for (const [cardi, value] of Object.entries(this.editor.wall)) {
-			for (const [idx, el] of Object.entries(value)) {
-				if (cardi !== 'DOWN' && cardi.indexOf('UP') < 0 && el.bbox) {
-					el.wall_length = (new THREE.Vector3(el.bbox[0][0],el.bbox[1][1],el.bbox[0][2])).distanceTo(new THREE.Vector3(el.bbox[1][0],el.bbox[1][1],el.bbox[1][2]));
-				}
-				else el.wall_length = 0;
-			}
-		}		
+		}
 	},
 };
 

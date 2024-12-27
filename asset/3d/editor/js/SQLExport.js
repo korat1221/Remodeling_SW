@@ -71,9 +71,9 @@ SQLExport.prototype = {
 
         let i = -1;
 
-        let zones = obj.userData;
+        let zones = obj.userData.zones;
         let zkeys = Object.keys(zones);
-        let tree = [[], []], sql = "DELETE FROM ZoneGeneral_3D;DELETE FROM ZoneEnvelope_3D;";
+        let tree = [[], []], sql = "DELETE FROM ZoneGeneral_3D;DELETE FROM ZoneEnvelope_3D;DELETE FROM ThermalBridge_3D;DELETE FROM Blind_3D;DELETE FROM ZoneGeneral_Form;DELETE FROM ZoneLighting_Form;DELETE FROM Shade_3D;";
 
         if (zkeys.length > 0) {
 
@@ -245,21 +245,21 @@ SQLExport.prototype = {
                         "','" +
                         el2.slope +
                         "','" +
-                  //      _asVal(el.right_shadow_angle, "0") +
+                        _asVal(el2.right_shadow_angle, "0") +
                         "','" +
-                  //      _asVal(el.left_shadow_angle, "0") +
+                        _asVal(el2.left_shadow_angle, "0") +
                         "','" +
-                  //      _asVal(el.up_shadow_angle, "0") +
+                        _asVal(el2.up_shadow_angle, "0") +
                         "','" +
-                 //       _asVal(el.shadow_angle, "0") +
+                        _asVal(el2.shadow_angle, "0") +
                         "','','" +
-                //        _asVal(el.right_shadow_height, "0") +
+                        _asVal(el2.right_shadow_height, "0") +
                         "','" +
-                 //       _asVal(el.left_shadow_height, "0") +
+                        _asVal(el2.left_shadow_height, "0") +
                         "','" +
-                   //     _asVal(el.up_shadow_height, "0") +
+                        _asVal(el2.up_shadow_height, "0") +
                         "','" +
-                  //      _asVal(el.shadow_height, "0") +
+                        _asVal(el2.shadow_height, "0") +
                         "','" + _asVal(el2.width,"") + 
                         "','" + _asVal(el2.width,"") + 
                         "','" + _asVal(el2.height,"") + 
@@ -291,25 +291,17 @@ SQLExport.prototype = {
                         "','" +
                         el2.slope +
                         "','" +
-                  //      _asVal(el.right_shadow_angle, "0") +
                         "','" +
-                  //      _asVal(el.left_shadow_angle, "0") +
                         "','" +
-                  //      _asVal(el.up_shadow_angle, "0") +
                         "','" +
-                 //       _asVal(el.shadow_angle, "0") +
                         "','','" +
-                //        _asVal(el.right_shadow_height, "0") +
                         "','" +
-                 //       _asVal(el.left_shadow_height, "0") +
                         "','" +
-                   //     _asVal(el.up_shadow_height, "0") +
                         "','" +
-                  //      _asVal(el.shadow_height, "0") +
                         "','','','');";
                     }
                 }
-                zones[id] = el.userData;
+            //    zones[id] = el.userData;
             }
         }
         

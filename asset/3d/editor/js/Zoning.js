@@ -225,6 +225,28 @@ Zoning.prototype = {
 
             return ret.length == 4 ? [ret[0], ret[1], ret[2], ret[2], ret[3], ret[0]] : null;
         };
+        let _getBoundingBox2 = (vtx) => {
+            let box = [
+                [99999999, 99999999, 99999999],
+                [-99999999, -99999999, -99999999],
+            ], i = 0;
+
+            while (i < vtx.length) {
+                let el = vtx[i];
+
+                if (box[0][0] > el.x) box[0][0] = el.x;
+                if (box[0][1] > el.y) box[0][1] = el.y;
+                if (box[0][2] > el.z) box[0][2] = el.z;
+
+                if (box[1][0] < el.x) box[1][0] = el.x;
+                if (box[1][1] < el.y) box[1][1] = el.y;
+                if (box[1][2] < el.z) box[1][2] = el.z;
+
+                i += 3;
+            }
+
+            return box;
+        };
         let _getBoundingBox = (vtx) => {
             let box = [
                 [99999999, 99999999, 99999999],
@@ -558,6 +580,55 @@ Zoning.prototype = {
                 }
             }
         };
+        let _collectLines_SD = () => {
+            let a, b, c, d, e, i, j, k = -1;
+            let lines = {};
+
+            while(++k < obj.userData.dummy.length) {
+                let el = obj.userData.dummy[k].userData;
+
+                i = -1;
+
+                while (++i < el.walls.length) {
+                    el.walls[i].edges = [];
+
+                    if (!lines[k]) lines[k] = [];
+                    lines[k].push(_getLines(el.walls[i].pos));
+                }
+            }
+
+            for (const [id1, el1] of Object.entries(lines)) {
+                i = -1;
+                while(++i < el1.length) {
+                    let edges = obj.userData.dummy[id1].userData.walls[i].edges;
+                    let cardi = obj.userData.dummy[id1].userData.walls[i].cardi;
+
+                    j = -1;
+                    while(++j < el1.length) {
+                        if (i != j && _compareCardi(cardi, obj.userData.dummy[id1].userData.walls[j].cardi)) {
+                            a = -1;
+                            while (++a < el1[i].length) {
+                                b = -1;
+                                while (++b < el1[j].length) {
+                                    if ((c = _unionLine(el1[i][a], el1[j][b])) !== null && !edges.find(el5 => _equalLine(el5, c))) {
+                                        d = -1;
+                                        while(++d < edges.length) {
+                                            if ((e = _unionLine(edges[d], c)) !== null) {
+                                                edges[d] = e;
+                                                break;
+                                            }
+                                        }
+                                        if (d >= edges.length) {
+                                            edges.push(c);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
         let _getSubType = (name) => {
             let arr = ["+GWL ", "+DR ", "+CW ", "+RF ", "+WL "], _i = -1, n;
 
@@ -629,15 +700,16 @@ Zoning.prototype = {
 
         obj.position.copy(offset);
         obj.updateMatrixWorld(true);
-
-        obj.userData = {};
         
-        let zones = obj.userData;
+        obj.userData.zones = {};
+        obj.userData.dummy = [];
+
+        let zones = obj.userData.zones;
 
         while (++i < obj.children.length) {
             let el = obj.children[i];
-            if (el.name.indexOf("DUMMY_BUILDING") < 0) {
-                if (el instanceof THREE.Mesh) {
+            if (el instanceof THREE.Mesh) {
+                if (el.name.indexOf("DUMMY_BUILDING") < 0) {
                     if (el.name.trim() !== "" && _getSubType(el.name) === '') {
                         let a = el.name.split(' ');
 
@@ -657,13 +729,16 @@ Zoning.prototype = {
                     }
                     el.userData.walls = _collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal"));
                 }
-            }
-            else {
-                el.material.color.set(this.colors["SD"]);
-                el.material.transparent = true;
-                el.material.opacity = 0.9;
-                el.userData.color = this.colors["SD"];
-                el.userData.opacity = 0.9;
+                else {
+                    el.material.color.set(this.colors["SD"]);
+                    el.material.transparent = true;
+                    el.material.opacity = 0.9;
+                    el.userData.color = this.colors["SD"];
+                    el.userData.opacity = 0.9;
+                    el.userData.walls = _collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal"));
+                    el.userData.id = el.uuid;
+                    obj.userData.dummy.push(el);
+                }
             }
         }
 
@@ -681,17 +756,14 @@ Zoning.prototype = {
                         let zk = zkeys[j];
                         if (el.name.indexOf(zk) >= 0 && (type = _getSubType(el.name)) !== "") {
                             let el2 = zones[zk];
-
-                            if (zk.indexOf("1F_Zone5++3.72+3.7") >= 0) {
-                                let aa = 1;
-                                aa = aa;
-                            }
                 
                             if (!el2.userData.children) {
                                 el2.userData.children = [];
                             }
                             let o = _asLines(el.geometry.getAttribute("position"));
-                            el2.userData.children.push({ type: type, uuid: el.uuid, area: _getArea(o), pos:o });
+                            let bbox = _getBoundingBox2(o);
+                            el2.userData.children.push({ type: type, uuid: el.uuid, area: _getArea(o), pos:o, bbox: bbox, width:(new THREE.Vector3(bbox[0][0],bbox[1][1],bbox[0][2])).distanceTo(new THREE.Vector3(bbox[1][0],bbox[1][1],bbox[1][2])), height:(new THREE.Vector3(bbox[0][0],bbox[0][1],bbox[0][2])).distanceTo(new THREE.Vector3(bbox[0][0],bbox[1][1],bbox[0][2]))});
+
                             el2.userData.walls = el2.userData.walls.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal")));
                             
                             _addMeshObject(o, this.colors[_getTypeColor(type)], zk);
@@ -731,11 +803,25 @@ Zoning.prototype = {
                 }
             }
 
+            i = -1;
+            while(++i < obj.userData.dummy.length) {
+                let el = obj.userData.dummy[i].userData.walls;
+                let id = obj.userData.dummy[i].uuid;
+
+                while (_findWalls(el));
+                j = -1;
+
+                while (++j < el.length) {
+                    el[j].id = id;
+                }
+            }
+
             // for (const [id, el] of Object.entries(zones)) {
             //     _removeIntraWalls(el.userData.walls);
             // }
 
             _collectLines();
+            _collectLines_SD();
 
             i = -1;
             while (++i < obj.children.length) {
@@ -784,8 +870,10 @@ Zoning.prototype = {
                         if (el.name.indexOf(zk) >= 0 && (type = _getSubType(el.name)) !== "") {
                             k = -1;
                             while (++k < el.userData.walls.length) {
-                                el.userData.walls[k].area = _getArea(el.userData.walls[k].pos);
-                            }
+                                let el2 = el.userData.walls[k];
+
+                                el2.area = _getArea(el2.pos);
+                        }
                         }
                     }
                 }

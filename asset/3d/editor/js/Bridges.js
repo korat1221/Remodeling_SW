@@ -1,28 +1,28 @@
-import { Utility } from './Utility.js';
-
 function Bridges( editor ) {
     this.editor = editor;
-	this.util = new Utility();
 }
 
 Bridges.prototype = {
 	calc: function(obj) {
-		let i = -1, o;
+		if (!obj.userData.bridges) {
+			obj.userData.bridges = [];
+		}
+        let bridges = obj.userData.bridges;
 		let _getCriteria = (kind) => {
 			let o = {kind:kind, data:[], excludes:[]};
 
 			switch(kind) {
 				case 1:
 					o.map = [{dir:0, wall:false},{dir:1, wall:false}];
-					o.data.push({type:'ROOF', dir:1, wall:false});
-					o.data.push({type:'WALL', dir:0, wall:false});
-					o.excludes = ['INWALL','FLOOR'];
+					o.data.push({type:'RF', dir:1, wall:false});
+					o.data.push({type:'WL', dir:0, wall:false});
+					o.excludes = ['IW','FL'];
 					break;
 				case 2:
 					o.map = [{dir:0, wall:false},{dir:1, wall:false},{dir:1, wall:false}];
-					o.data.push({type:'ROOF', dir:1, wall:false});
-					o.data.push({type:'INWALL', dir:0, wall:false});
-					o.excludes = ['WALL','FLOOR'];
+					o.data.push({type:'RF', dir:1, wall:false});
+					o.data.push({type:'IW', dir:0, wall:false});
+					o.excludes = ['WL','FL'];
 					break;
 				case 3:
 					o.map = [{dir:1, wall:false},{dir:1, wall:false}];
@@ -31,59 +31,54 @@ Bridges.prototype = {
 				case 4:
 					o.map = [{dir:0, wall:false},{dir:1, wall:false}];
 					o.data.push({type:'', dir:1, wall:false});
-					o.data.push({type:'WALL', dir:0, wall:false});
+					o.data.push({type:'WL', dir:0, wall:false});
 					break;
 				case 5: 
 					o.map = [{dir:0, wall:false},{dir:1, wall:false}];
 					o.data.push({type:'', dir:1, wall:false});
-					o.data.push({type:'WALL', dir:0, wall:false});
+					o.data.push({type:'WL', dir:0, wall:false});
 					break;
 				case 6:
 					o.map = [{dir:0, wall:false},{dir:0, wall:false},{dir:1, wall:false}];
-					o.data.push({type:'INWALL', dir:1, wall:false});
-					o.data.push({type:'WALL', dir:0, wall:false});
+					o.data.push({type:'IW', dir:1, wall:false});
+					o.data.push({type:'WL', dir:0, wall:false});
 					break;
 				case 7:
 					o.map = [{dir:0, wall:false},{dir:0, wall:false},{dir:0, wall:false}];
-					o.data.push({type:'INWALL', dir:0, wall:false});
-					o.data.push({type:'WALL', dir:0, wall:false});//180
+					o.data.push({type:'IW', dir:0, wall:false});
+					o.data.push({type:'WL', dir:0, wall:false});//180
 					break;
 				case 8:
 					o.map = [{dir:0, wall:false},{dir:0, wall:false}];
-					o.data.push({type:'WALL', dir:0, wall:false});
-					o.excludes = ['INWALL','ROOF','FLOOR'];
+					o.data.push({type:'WL', dir:0, wall:false});
+					o.excludes = ['IW','RF','FL'];
 					break;
 				case 9:
 					o.map = [{dir:0, wall:false},{dir:0, wall:false},{dir:0, wall:false}];
-					o.data.push({type:'INWALL', dir:0, wall:false});
-					o.data.push({type:'WALL', dir:0, wall:false});//90
+					o.data.push({type:'IW', dir:0, wall:false});
+					o.data.push({type:'WL', dir:0, wall:false});//90
 					break;
 				case 11:
 					o.map = [{dir:2, wall:false},{dir:1, wall:false}];
-					o.data.push({type:'ROOF', dir:1, wall:false});
-					o.data.push({type:'INWALL', dir:2, wall:false});
-					o.data.push({type:'INWALL', dir:0, wall:false});
+					o.data.push({type:'RF', dir:1, wall:false});
+					o.data.push({type:'IW', dir:2, wall:false});
+					o.data.push({type:'IW', dir:0, wall:false});
 					break;
 				case 12:
 					o.map = [{dir:1, wall:false},{dir:0, wall:false}];
-					o.data.push({type:'ROOF', dir:1, wall:false});
-					o.data.push({type:'WALL', dir:0, wall:false});
-//					o.map = [{dir:1, wall:false},{dir:0, wall:false},{dir:0, wall:false},{dir:2, wall:false}];
-//					o.data.push({type:'ROOF', dir:1, wall:false});
-//					o.data.push({type:'WALL', dir:0, wall:false});
-//					o.data.push({type:'INWALL', dir:0, wall:false});
-//					o.data.push({type:'INWALL', dir:2, wall:false});
+					o.data.push({type:'RF', dir:1, wall:false});
+					o.data.push({type:'WL', dir:0, wall:false});
 					break;
 				case 13:
 					o.map = [{dir:2, wall:false}];
-					o.data.push({type:'FLOOR', dir:2, wall:false});
-					o.excludes = ['INWALL','ROOF'];
+					o.data.push({type:'FL', dir:2, wall:false});
+					o.excludes = ['IW','RF'];
 					break;
 				case 14:
 					o.map = [{dir:2, wall:false}];
-					o.data.push({type:'FLOOR', dir:2, wall:false});
-					o.data.push({type:'WALL', dir:0, wall:false});
-					o.excludes = ['ROOF'];
+					o.data.push({type:'FL', dir:2, wall:false});
+					o.data.push({type:'WL', dir:0, wall:false});
+					o.excludes = ['RF'];
 					break;
 			}
 			return o;
@@ -96,7 +91,7 @@ Bridges.prototype = {
 					ret = !!(cardi.indexOf('UP') < 0 && cardi !== 'DOWN');
 					break;
 				case 1:
-					ret = !!((criteria.type == 'INWALL' && cardi == 'UP') || (criteria.type == 'ROOF' && cardi == 'UP') || (criteria.type == '' && cardi !== 'UP' && cardi.indexOf('UP') >= 0));
+					ret = !!((criteria.type == 'IW' && cardi == 'UP') || (criteria.type == 'RF' && cardi == 'UP') || (criteria.type == '' && cardi !== 'UP' && cardi.indexOf('UP') >= 0));
 					break;
 				case 2:
 					ret = !!(cardi == 'DOWN');
@@ -193,17 +188,17 @@ Bridges.prototype = {
 
 				switch(kind) {
 				case 1:
-					if (!centers['ROOF'] || !centers['WALL'] || centers['ROOF'][1] <= centers['WALL'][1]) {
+					if (!centers['RF'] || !centers['WL'] || centers['RF'][1] <= centers['WL'][1]) {
 						return false;
 					}
 					break;
 				case 2:
-					if (!centers['ROOF'] || !centers['INWALL'] || centers['ROOF'][1] <= centers['INWALL'][1]) {
+					if (!centers['RF'] || !centers['IW'] || centers['RF'][1] <= centers['IW'][1]) {
 						return false;
 					}
 					break;
 				case 8:
-					if (centers['INWALL']) { 
+					if (centers['IW']) { 
 						return false;
 					}
 					break;
@@ -215,7 +210,7 @@ Bridges.prototype = {
 						i = -1;
 						while(++i < out.length) {
 							let el = out[i];
-							if (el.type == 'WALL') {
+							if (el.type == 'WL') {
 								done = true;
 								cardinals[el.cardinal] = true;
 							}
@@ -230,21 +225,21 @@ Bridges.prototype = {
 					i = -1;
 					while(++i < out.length) {
 						let el = out[i];
-						if (el.type == 'INWALL' && el.cardinal.indexOf('UP') < 0 && el.cardinal !== 'DOWN') {
+						if (el.type == 'IW' && el.cardinal.indexOf('UP') < 0 && el.cardinal !== 'DOWN') {
 							return false;
 						}
 					}
 					break;
 				case 13:
 				case 14:
-					if (!centers['FLOOR']) {
+					if (!centers['FL']) {
 						return false;
 					}
 
 					i = -1;
 					while(++i < out.length) {
 						let el = out[i];
-						if (el.type == 'WALL') {
+						if (el.type == 'WL') {
 							if (kind === 13) {
 								if (el.center[1] < line[0][1]) {
 									return false;
@@ -284,12 +279,28 @@ Bridges.prototype = {
 			return  _validCriteria(kind, cri, ret, line) ? {kind:kind, data:ret} : null;
 		};
 
+		let _equalPoint = (a, b) => {
+            return a.distanceTo(b) < 0.00000001;
+        };
+
+		let _isSamePoints = (a, b) => {
+			var cnt = 0;
+	
+			for(var i = 0; i < a.length; i++) {
+				for(var j = 0; j < b.length; j++) {
+					if (_equalPoint(new THREE.Vector3(a[i][0], a[i][1], a[i][2]), new THREE.Vector3(b[j][0], b[j][1], b[j][2]))) cnt++;
+				}
+			}
+	
+			return !!(cnt == a.length);
+		};
+	
 		let _findBridge = (kind, line) => {
 			let i = -1, j;
-			let arr = this.editor.bridges[kind].items;
+			let arr = bridges[kind].items;
 
 			while(++i < arr.length) {
-				if (this.util.isSamePoints(arr[i].line, line)) return true;
+				if (_isSamePoints(arr[i].line, line)) return true;
 			}
 			return false;
 		};
@@ -300,10 +311,10 @@ Bridges.prototype = {
 	
 			edge.walls.forEach((el, idx) => {
 			  let el2 = this.editor.wall[el.cardi][el.id];
-			  if (el2.type == 'INWALL' && (el2.cardinal ===  'DOWN' || el2.cardinal ===  'UP')) {
+			  if (el2.type == 'IW' && (el2.cardinal ===  'DOWN' || el2.cardinal ===  'UP')) {
 				infloor = true;
 			  }
-			  else if (el2.type == 'WALL') {
+			  else if (el2.type == 'WL') {
 				outerwall = true;
 			  }
 			});
@@ -317,10 +328,10 @@ Bridges.prototype = {
 	
 			edge.walls.forEach((el, idx) => {
 			  let el2 = this.editor.wall[el.cardi][el.id];
-			  if (el2.type == 'ROOF') {
+			  if (el2.type == 'RF') {
 				rf_y = el2.center[1];
 			  }
-			  else if (el2.type == 'WALL') {
+			  else if (el2.type == 'WL') {
 				ot_y = el2.center[1];
 			  }
 			});
@@ -331,40 +342,17 @@ Bridges.prototype = {
 		let _pushBridges = (kind) => {
 			let i = -1;
 
-			this.editor.bridges[kind] = {dist:0,items:[]};
+			bridges[kind] = {dist:0,items:[]};
 
 			while(++i < this.editor.edges.length) {
 				let el = this.editor.edges[i];
 
 				if ((o = _getBridgeKind(kind, el, el.line)) !== null && !_findBridge(kind, el.line) && (kind !== 14 || _is2FOutwall(el)) && (kind !== 12 || _is270Outwall(el))) {
-					this.editor.bridges[kind].items.push({line:el.line, data:o.data, edge:el});
+					bridges[kind].items.push({line:el.line, data:o.data, edge:el});
 				}
 			}
 		};
 
-		i = 0;
-		while(++i <= 14) {
-			if (i != 10) {
-				_pushBridges(i);
-			}
-			else {
-				this.editor.bridges[i] = {dist:0,items:[]};
-			}
-		}
-
-		for (const [cardi, value] of Object.entries(this.editor.wall)) {
-			for (const [idx, el] of Object.entries(value)) {
-				if (el.type === 'WIN') {
-					this.editor.bridges[10].items.push({line:[[el.box[0][0],el.box[0][1],el.box[0][2]],[el.box[0][0],el.box[1][1],el.box[0][2]]]});
-					this.editor.bridges[10].items.push({line:[[el.box[0][0],el.box[1][1],el.box[0][2]],[el.box[1][0],el.box[1][1],el.box[1][2]]]});
-					this.editor.bridges[10].items.push({line:[[el.box[1][0],el.box[1][1],el.box[1][2]],[el.box[1][0],el.box[0][1],el.box[1][2]]]});
-					this.editor.bridges[10].items.push({line:[[el.box[1][0],el.box[0][1],el.box[1][2]],[el.box[0][0],el.box[0][1],el.box[0][2]]]});
-				}
-			}
-		}
-	},
-
-	calcBridges: function() {
 		let _getDistance = (line) => {
 			let a = new THREE.Vector3(line[0][0], line[0][1], line[0][2]);
 			let b = new THREE.Vector3(line[1][0], line[1][1], line[1][2]);
@@ -373,15 +361,92 @@ Bridges.prototype = {
 		let _asNumeric = (obj) => {
 			return (!obj || isNaN(obj)) ? 0 : obj;
 		};
+		let _addLineObject = (pos, color) => {
+			obj.add(new THREE.Line(
+				new THREE.BufferGeometry().setFromPoints(pos),
+				new THREE.LineBasicMaterial({
+					color: new THREE.Color().setHex(color),
+					opacity: 1.0,
+					transparent: true,
+				})
+			));
+            return obj.children[obj.children.length - 1].uuid;
+		};
+
+		let __drawBridges = (knd) => {
+			let i = -1;
+			let bridge = bridges[knd];
+	  
+			// while (++i < this.drawing_line.length) {
+			//   this.drawing_line[i].mesh.material.opacity = 0;
+			// }
+	  
+			if (bridge) {
+			  i = -1;
+			  while (++i < bridge.items.length) {
+				let el = bridge.items[i];
+				_addLineObject(el.line, 0xff0000, 2);
+			  }
+			}
+		};
+		let _drawBridges = (kind) => {
 		
-		Object.values(this.editor.bridges).forEach(el => {
+			if (kind === "2") {
+			  __drawBridges("11");
+			  __drawBridges("12");
+			} else if (kind === "1") {
+			  __drawBridges("1");
+			} else {
+			  let n = parseInt(kind);
+		
+			  if (n <= 10) {
+				__drawBridges(n - 1 + "");
+			  } else if (n === 11) {
+				__drawBridges("13");
+			  } else if (n === 12) {
+				__drawBridges("14");
+			  }
+			}
+		  };
+		
+		//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		let i = -1, o;
+		i = 0;
+		while(++i <= 14) {
+			if (i != 10) {
+				_pushBridges(i);
+			}
+			else {
+				bridges[i] = {dist:0,items:[]};
+			}
+		}
+
+		for (const [id, el] of Object.entries(zones)) {
+			if (el.userData.children) {
+				i = -1;
+
+				while (++i < el.userData.children.length) {
+					let el2 = el.userData.children[i];
+
+					if (el2.type === 'CW' || el2.type === 'DR' || el2.type === 'WN') {
+						bridges[10].items.push({line:[[el2.bbox[0][0],el2.bbox[0][1],el2.bbox[0][2]],[el2.bbox[0][0],el2.bbox[1][1],el2.bbox[0][2]]]});
+						bridges[10].items.push({line:[[el2.bbox[0][0],el2.bbox[1][1],el2.bbox[0][2]],[el2.bbox[1][0],el2.bbox[1][1],el2.bbox[1][2]]]});
+						bridges[10].items.push({line:[[el2.bbox[1][0],el2.bbox[1][1],el2.bbox[1][2]],[el2.bbox[1][0],el2.bbox[0][1],el2.bbox[1][2]]]});
+						bridges[10].items.push({line:[[el2.bbox[1][0],el2.bbox[0][1],el2.bbox[1][2]],[el2.bbox[0][0],el2.bbox[0][1],el2.bbox[0][2]]]});
+					}
+				}
+			}
+		}
+
+		Object.values(bridges).forEach(el => {
 			let d = 0;
 			el.items.forEach(el2 => {
 				d += _getDistance(el2.line);
 			});
 			el.dist = _asNumeric(d).toFixed(2);
+			_drawBridges(el);
 		});
-	//	console.log('stop');
 	},
 };
 
