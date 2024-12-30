@@ -340,24 +340,24 @@ Zoning.prototype = {
 
             return walls;
         };
-        let _addLineObject = (pos, color) => {
-            let i = -1, p1 = [];
+        // let _addLineObject = (pos, color) => {
+        //     let i = -1, p1 = [];
 
-            while(++i < pos.length) {
-                p1[i] = new Vector3(pos[i].x + dup_offset, pos[i].y + dup_offset, pos[i].z + dup_offset);
-                pos[i] = new Vector3(pos[i].x - dup_offset, pos[i].y - dup_offset, pos[i].z - dup_offset);
-            }
-            pos = pos.concat(p1);
+        //     while(++i < pos.length) {
+        //         p1[i] = new Vector3(pos[i].x + dup_offset, pos[i].y + dup_offset, pos[i].z + dup_offset);
+        //         pos[i] = new Vector3(pos[i].x - dup_offset, pos[i].y - dup_offset, pos[i].z - dup_offset);
+        //     }
+        //     pos = pos.concat(p1);
 
-            obj.add(new THREE.Line(
-                new THREE.BufferGeometry().setFromPoints(pos),
-                new THREE.LineBasicMaterial({
-                    color: new THREE.Color().setHex(color),
-                    opacity: 1.0,
-                    transparent: true,
-                })
-            ));
-        };
+        //     obj.add(new THREE.Line(
+        //         new THREE.BufferGeometry().setFromPoints(pos),
+        //         new THREE.LineBasicMaterial({
+        //             color: new THREE.Color().setHex(color),
+        //             opacity: 1.0,
+        //             transparent: true,
+        //         })
+        //     ));
+        // };
 
         let _addMeshObject = (pos, opt, pid, wired) => {
             let _pos = [].concat(pos);
@@ -400,42 +400,41 @@ Zoning.prototype = {
             return (_equalPoint(a[0], b[0]) && _equalPoint(a[1], b[1])) ||
                 (_equalPoint(a[0], b[1]) && _equalPoint(a[1], b[0]));
         };
-        let _maxLine = (a, b, c) => {
-            let arr = [a.distanceTo(b), b.distanceTo(c), a.distanceTo(c)], i = -1, n = -1, m = 0;
-            let ret = [[a, b], [b, c], [a, c]];
+        // let _maxLine = (a, b, c) => {
+        //     let arr = [a.distanceTo(b), b.distanceTo(c), a.distanceTo(c)], i = -1, n = -1, m = 0;
+        //     let ret = [[a, b], [b, c], [a, c]];
 
-            while (++i < arr.length) {
-                if (arr[i] > n) {
-                    n = arr[i];
-                    m = i;
-                }
-            }
+        //     while (++i < arr.length) {
+        //         if (arr[i] > n) {
+        //             n = arr[i];
+        //             m = i;
+        //         }
+        //     }
 
-            return ret[m];
-        };
-
-        let _unionLine = (a, b) => {
+        //     return ret[m];
+        // };
+        let _unionableLine = (a, b) => {
             if (_equalPoint(a[0], b[0])) {
                 if ((new THREE.Triangle(a[1], a[0], b[1])).getArea() < 0.00001) {
-                    return _maxLine(a[1], a[0], b[1]);
+                    return true;//_maxLine(a[1], a[0], b[1]);
                 }
             }
             else if (_equalPoint(a[0], b[1])) {
                 if ((new THREE.Triangle(a[1], a[0], b[0])).getArea() < 0.00001) {
-                    return _maxLine(a[1], a[0], b[0]);
+                    return true;//_maxLine(a[1], a[0], b[0]);
                 }
             }
             else if (_equalPoint(a[1], b[0])) {
                 if ((new THREE.Triangle(a[0], a[1], b[1])).getArea() < 0.00001) {
-                    return _maxLine(a[0], a[1], b[1]);
+                    return true;//_maxLine(a[0], a[1], b[1]);
                 }
             }
             else if (_equalPoint(a[1], b[1])) {
                 if ((new THREE.Triangle(a[0], a[1], b[0])).getArea() < 0.00001) {
-                    return _maxLine(a[0], a[1], b[0]);
+                    return true;//_maxLine(a[0], a[1], b[0]);
                 }
             }
-            return null;
+            return false;//null;
         };
         let _addLine = (ret, line) => {
             if (!ret.find(_el => _equalLine(_el, line))) {
@@ -528,8 +527,55 @@ Zoning.prototype = {
                 }
             }
         };
+        // let _overlappedLine = (a, b) =>{
+        //     let _isOnLine = (A, B, P) => {
+        //         if ((new THREE.Vector3()).crossVectors(A.clone().sub(P), B.clone().sub(P)).length() >= 0.01) {
+        //             return false;
+        //         }
+            
+        //         let L = A.distanceTo(B);
+        
+        //         return A.distanceTo(P) <= L && B.distanceTo(P) <= L;
+        //     };
+        
+        //     return !!(_isOnLine(a[0], a[1], b[0]) && _isOnLine(a[0], a[1], b[1]));
+        // };    
+        // let _isConnectedLines = (a, b) => {
+        //     let i = -1, j;
+
+        //     while (++i < a.length) {
+        //         let A = a[i];
+
+        //         j = -1;
+        //         while (++j < b.length) {
+        //             let B = b[j];
+
+        //             if (_equalLine(A, B)) {
+        //                 return true;
+        //             }
+        //         }
+        //     }
+        //     return false;
+        // };
+        let _collectLinks = (edge, id0, i0, j0) => {
+            let links = [], i, j;
+
+            for (const [id, el] of Object.entries(zones)) {
+                i = -1;
+
+                while (++i < el.userData.walls.length) {
+                    j = -1;
+                    while(++j < el.userData.walls[i].edges.length) {
+                        if ((id !== id0 || i !== i0 || j !== j0) && _equalLine(edge, el.userData.walls[i].edges[j])) {
+                            links.push(el.userData.walls[i]);
+                        }
+                    }
+                }
+            }
+            return links;
+        };
         let _collectLines = () => {
-            let a, b, c, d, e, i, j;
+            let a, b, i, j;
             let lines = {};
 
             for (const [id, el] of Object.entries(zones)) {
@@ -537,6 +583,8 @@ Zoning.prototype = {
 
                 while (++i < zones[id].userData.walls.length) {
                     zones[id].userData.walls[i].edges = [];
+                    zones[id].userData.walls[i].links = [];
+              //      zones[id].userData.walls[i].edges2 = [];
 
                     if (!lines[id]) lines[id] = [];
                     lines[id].push(_getLines(zones[id].userData.walls[i].pos));
@@ -547,6 +595,7 @@ Zoning.prototype = {
                 i = -1;
                 while(++i < el1.length) {
                     let edges = zones[id1].userData.walls[i].edges;
+               //     let edges2 = zones[id1].userData.walls[i].edges2;
                     let cardi = zones[id1].userData.walls[i].cardi;
 
                     j = -1;
@@ -556,16 +605,24 @@ Zoning.prototype = {
                             while (++a < el1[i].length) {
                                 b = -1;
                                 while (++b < el1[j].length) {
-                                    if ((c = _unionLine(el1[i][a], el1[j][b])) !== null && !edges.find(el5 => _equalLine(el5, c))) {
-                                        d = -1;
-                                        while(++d < edges.length) {
-                                            if ((e = _unionLine(edges[d], c)) !== null) {
-                                                edges[d] = e;
-                                                break;
-                                            }
+                                    if (/*(c = */_unionableLine(el1[i][a], el1[j][b])/*) !== null*/) {
+                                        // if (!edges.find(el5 => _equalLine(el5, c))) {
+                                        //     d = -1;
+                                        //     while(++d < edges.length) {
+                                        //         if ((e = _unionLine(edges[d], c)) !== null) {
+                                        //             edges[d] = e;
+                                        //             break;
+                                        //         }
+                                        //     }
+                                        //     if (d >= edges.length) {
+                                        //         edges.push(c);
+                                        //     }
+                                        // }
+                                        if (!edges.find(el5 => _equalLine(el5, el1[i][a]))) {
+                                            edges.push(el1[i][a]);
                                         }
-                                        if (d >= edges.length) {
-                                            edges.push(c);
+                                        if (!edges.find(el5 => _equalLine(el5, el1[j][b]))) {
+                                            edges.push(el1[j][b]);
                                         }
                                     }
                                 }
@@ -573,9 +630,19 @@ Zoning.prototype = {
                         }
                     }
 
+           //         j = -1;
+             //       while (++j < edges.length) {
+               //         _addLineObject(edges[j], 0xff0000);
+                 //   }
+                }
+            }
+            for (const [id, el] of Object.entries(zones)) {
+                i = -1;
+
+                while (++i < el.userData.walls.length) {
                     j = -1;
-                    while (++j < edges.length) {
-                        _addLineObject(edges[j], 0xff0000);
+                    while(++j < el.userData.walls[i].edges.length) {
+                        el.userData.walls[i].links.push(_collectLinks(el.userData.walls[i].edges[j], id, i, j));
                     }
                 }
             }
@@ -610,16 +677,22 @@ Zoning.prototype = {
                             while (++a < el1[i].length) {
                                 b = -1;
                                 while (++b < el1[j].length) {
-                                    if ((c = _unionLine(el1[i][a], el1[j][b])) !== null && !edges.find(el5 => _equalLine(el5, c))) {
-                                        d = -1;
-                                        while(++d < edges.length) {
-                                            if ((e = _unionLine(edges[d], c)) !== null) {
-                                                edges[d] = e;
-                                                break;
-                                            }
+                                    if (/*(c = */_unionableLine(el1[i][a], el1[j][b])/*) !== null && !edges.find(el5 => _equalLine(el5, c))*/) {
+                                        // d = -1;
+                                        // while(++d < edges.length) {
+                                        //     if ((e = _unionLine(edges[d], c)) !== null) {
+                                        //         edges[d] = e;
+                                        //         break;
+                                        //     }
+                                        // }
+                                        // if (d >= edges.length) {
+                                        //     edges.push(c);
+                                        // }
+                                        if (!edges.find(el5 => _equalLine(el5, el1[i][a]))) {
+                                            edges.push(el1[i][a]);
                                         }
-                                        if (d >= edges.length) {
-                                            edges.push(c);
+                                        if (!edges.find(el5 => _equalLine(el5, el1[j][b]))) {
+                                            edges.push(el1[j][b]);
                                         }
                                     }
                                 }
@@ -689,8 +762,30 @@ Zoning.prototype = {
                 }
             }    
             return null;
-        }
+        };
 
+        let _getCenterPosition = (pos) => {
+            var center = [0,0,0], n = 0, i;
+    
+            pos.forEach((el) => {
+                i = -1;
+                while(++i < el.length) {
+                    center[0] += el.x;
+                    center[1] += el.y;
+                    center[2] += el.z;
+                    n++;
+                }
+            });
+    
+            if (n > 0) {
+                center[0] /= n;
+                center[1] /= n;
+                center[2] /= n;
+            }
+    
+            return center;
+        };
+    
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         const box = new Box3().setFromObject(obj);
@@ -800,6 +895,7 @@ Zoning.prototype = {
                     let el2 = el.userData.walls[j];
                     el2.uuid = _addMeshObject(el2.pos, this.colors[el2.type], id);
                     el2.area = _getArea(el2.pos);
+                    el2.center = _getCenterPosition(el2.pos);
                 }
             }
 

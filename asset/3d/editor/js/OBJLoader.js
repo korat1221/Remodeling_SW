@@ -905,7 +905,7 @@ class OBJLoader extends Loader {
 
 		(new Zoning(editor)).calc(container);
 		(new Shadows( editor )).calc(container);
-	//	(new Bridges( editor )).calc(container);
+		(new Bridges( editor )).calc(container);
 		(new SQLExport( editor )).calc(container);
 
 		return container;

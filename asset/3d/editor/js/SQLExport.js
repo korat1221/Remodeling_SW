@@ -332,12 +332,6 @@ SQLExport.prototype = {
                 10: "WTB5",
                 11: "WTB6",
             };
-            let _getDistance = (line) => {
-                let a = new THREE.Vector3(line[0][0], line[0][1], line[0][2]);
-                let b = new THREE.Vector3(line[1][0], line[1][1], line[1][2]);
-                return a.distanceTo(b);
-            };
-        
             let _is2FOutwall = (edge) => {
                 let infloor = false;
                 let outerwall = false;
@@ -380,7 +374,7 @@ SQLExport.prototype = {
                     "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('RTB2_" +
                     n +
                     "','__PROJ_TYPE__','평지붕+외벽[270]','" +
-                    _getDistance(el2.line) +
+                    el2.line[0].distanceTo(el2.line[1]) +
                     "');";
             });
             bridges["12"].items.forEach((el2, idx) => {
@@ -391,7 +385,7 @@ SQLExport.prototype = {
                     "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('RTB2_" +
                     n +
                     "','__PROJ_TYPE__','평지붕+외벽[270]','" +
-                    _getDistance(el2.line) +
+                    el2.line[0].distanceTo(el2.line[1]) +
                     "');";
                 }
             });
@@ -402,7 +396,7 @@ SQLExport.prototype = {
                     "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('WTB5_" +
                     n +
                     "','__PROJ_TYPE__','바닥+외벽[90]','" +
-                    _getDistance(el2.line) +
+                    el2.line[0].distanceTo(el2.line[1]) +
                     "');";
                 });
             bridges["14"].items.forEach((el2, idx) => {
@@ -412,7 +406,7 @@ SQLExport.prototype = {
                     "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('WTB6_" +
                     n +
                     "','__PROJ_TYPE__','바닥+외벽[270]','" +
-                    _getDistance(el2.line) +
+                    el2.line[0].distanceTo(el2.line[1]) +
                     "');";
                 }
             });
@@ -429,7 +423,7 @@ SQLExport.prototype = {
                             "','__PROJ_TYPE__','" +
                             _bridges[el] +
                             "','" +
-                            _getDistance(el2.line) +
+                            el2.line[0].distanceTo(el2.line[1]) +
                             "');";
                     });
                 }

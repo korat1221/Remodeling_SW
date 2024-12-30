@@ -115,19 +115,15 @@ Bridges.prototype = {
 
 			return ret;
 		};
-		let _doCriteria = (kind, criteria, cardi, id, line) => {
-			let wall = this.editor.wall[cardi][id];
-
-			if (wall && wall.sid && !this.editor.shadows["space-" + wall.sid]) {
-				let j = -1;
-				
-				while(++j < criteria.data.length) {
-					let el = criteria.data[j];
-					if (_validCardi(kind, el, cardi, line) && (el.type === '' || el.type === wall.type)) {
-						return wall;
-					} 
-				}	
-			}
+		let _doCriteria = (kind, criteria, wall, line) => {
+			let j = -1;
+			
+			while(++j < criteria.data.length) {
+				let el = criteria.data[j];
+				if (_validCardi(kind, el, wall.cardi, line) && (el.type === '' || el.type === wall.type)) {
+					return wall;
+				} 
+			}	
 			return null;
 		};
 		let _findDir = (dir, out) => {
@@ -137,17 +133,17 @@ Bridges.prototype = {
 
 				switch(dir) {
 					case 0:
-						if(el.cardinal.indexOf('UP') < 0 && el.cardinal !== 'DOWN') {
+						if(el.cardi.indexOf('UP') < 0 && el.cardi !== 'DOWN') {
 							return true;
 						}
 						break;
 					case 1:
-						if (el.cardinal.indexOf('UP') >= 0) {
+						if (el.cardi.indexOf('UP') >= 0) {
 							return true;
 						}
 						break;
 					case 2:
-						if (el.cardinal == 'DOWN') {
+						if (el.cardi == 'DOWN') {
 							return true;
 						}
 						break;
@@ -208,7 +204,7 @@ Bridges.prototype = {
 							let el = out[i];
 							if (el.type == 'WL') {
 								done = true;
-								cardinals[el.cardinal] = true;
+								cardinals[el.cardi] = true;
 							}
 						}
 
@@ -221,7 +217,7 @@ Bridges.prototype = {
 					i = -1;
 					while(++i < out.length) {
 						let el = out[i];
-						if (el.type == 'IW' && el.cardinal.indexOf('UP') < 0 && el.cardinal !== 'DOWN') {
+						if (el.type == 'IW' && el.cardi.indexOf('UP') < 0 && el.cardi !== 'DOWN') {
 							return false;
 						}
 					}
@@ -255,19 +251,16 @@ Bridges.prototype = {
 			}
 			return false;
 		};
-		let _getBridgeKind = (kind, edge, line) => {
+		let _getBridgeKind = (kind, link, line) => {
 			let j = -1;
 			let cri = _getCriteria(kind), r, ret = [];
 
-			while(++j < edge.walls.length) {
-				let el = edge.walls[j];
-				if (cri.excludes && cri.excludes.find(el2 => {
-					let wall = this.editor.wall[el.cardi][el.id];
-					return !!(wall && el2 == wall.type);
-				})) {
+			while(++j < link.length) {
+				let el = link[j];
+				if (cri.excludes && cri.excludes.find(el2 => el2 == el.type)) {
 					return null;
 				}
-				else if ((r = _doCriteria(kind, cri, el.cardi, el.id, line)) !== null) {
+				else if ((r = _doCriteria(kind, cri, el, line)) !== null) {
 					ret.push(r);
 				}
 			}
@@ -301,16 +294,15 @@ Bridges.prototype = {
 			return false;
 		};
 
-		let _is2FOutwall = (edge) => {
+		let _is2FOutwall = (link) => {
 			let infloor = false;
 			let outerwall = false;
 	
-			edge.walls.forEach((el, idx) => {
-			  let el2 = this.editor.wall[el.cardi][el.id];
-			  if (el2.type == 'IW' && (el2.cardinal ===  'DOWN' || el2.cardinal ===  'UP')) {
+			link.forEach((el, idx) => {
+			  if (el.type == 'IW' && (el.cardi ===  'DOWN' || el.cardi ===  'UP')) {
 				infloor = true;
 			  }
-			  else if (el2.type == 'WL') {
+			  else if (el.type == 'WL') {
 				outerwall = true;
 			  }
 			});
@@ -318,17 +310,16 @@ Bridges.prototype = {
 			return (infloor && outerwall);
 		  };
 	
-		  let _is270Outwall = (edge) => {
+		  let _is270Outwall = (link) => {
 			let rf_y = null;
 			let ot_y = null;
 	
-			edge.walls.forEach((el, idx) => {
-			  let el2 = this.editor.wall[el.cardi][el.id];
-			  if (el2.type == 'RF') {
-				rf_y = el2.center[1];
+			link.forEach((el, idx) => {
+			  if (el.type == 'RF') {
+				rf_y = el.center[1];
 			  }
-			  else if (el2.type == 'WL') {
-				ot_y = el2.center[1];
+			  else if (el.type == 'WL') {
+				ot_y = el.center[1];
 			  }
 			});
 	
@@ -336,24 +327,36 @@ Bridges.prototype = {
 		  };
 	
 		let _pushBridges = (kind) => {
-			let i = -1;
+			let i = -1, j;
 
 			bridges[kind] = {dist:0,items:[]};
 
-			while(++i < this.editor.edges.length) {
-				let el = this.editor.edges[i];
+			for (const [id, el] of Object.entries(zones)) {
+                i = -1;
 
-				if ((o = _getBridgeKind(kind, el, el.line)) !== null && !_findBridge(kind, el.line) && (kind !== 14 || _is2FOutwall(el)) && (kind !== 12 || _is270Outwall(el))) {
-					bridges[kind].items.push({line:el.line, data:o.data, edge:el});
+                while (++i < el.userData.walls.length) {
+					let line = el.userData.walls[i].edges;
+					let link = el.userData.walls[i].links;
+
+					j = -1;
+
+					while(++j < line.length) {
+						if ((o = _getBridgeKind(kind, link[j], line[j])) !== null && !_findBridge(kind, line[j]) && (kind !== 14 || _is2FOutwall(link[j])) && (kind !== 12 || _is270Outwall(link[j]))) {
+							bridges[kind].items.push({line:line[j], data:o.data, edge:link[j]});
+						}
+					}
 				}
-			}
+            }
+
+			// while(++i < this.editor.edges.length) {
+			// 	let el = this.editor.edges[i];
+
+			// 	if ((o = _getBridgeKind(kind, el, el.line)) !== null && !_findBridge(kind, el.line) && (kind !== 14 || _is2FOutwall(el)) && (kind !== 12 || _is270Outwall(el))) {
+			// 		bridges[kind].items.push({line:el.line, data:o.data, edge:el});
+			// 	}
+			// }
 		};
 
-		let _getDistance = (line) => {
-			let a = new THREE.Vector3(line[0][0], line[0][1], line[0][2]);
-			let b = new THREE.Vector3(line[1][0], line[1][1], line[1][2]);
-			return a.distanceTo(b);			
-		};
 		let _asNumeric = (obj) => {
 			return (!obj || isNaN(obj)) ? 0 : obj;
 		};
@@ -426,20 +429,34 @@ Bridges.prototype = {
 		for (const [id, el] of Object.entries(zones)) {
 			i = -1;
 
-			while (++i < el.userData.walls.length) {
-				let el2 = el.userData.walls[i];
+			if (el.userData.children) {
+				while (++i < el.userData.children.length) {
+					let el2 = el.userData.children[i];
+	
+					if (el2.type === 'CW' || el2.type === 'DR' || el2.type === 'WN') {
+						bridges[10].items.push({line:[new THREE.Vector3(el2.bbox[0][0],el2.bbox[0][1],el2.bbox[0][2]),new THREE.Vector3(el2.bbox[0][0],el2.bbox[1][1],el2.bbox[0][2])]});
+						bridges[10].items.push({line:[new THREE.Vector3(el2.bbox[0][0],el2.bbox[1][1],el2.bbox[0][2]),new THREE.Vector3(el2.bbox[1][0],el2.bbox[1][1],el2.bbox[1][2])]});
+						bridges[10].items.push({line:[new THREE.Vector3(el2.bbox[1][0],el2.bbox[1][1],el2.bbox[1][2]),new THREE.Vector3(el2.bbox[1][0],el2.bbox[0][1],el2.bbox[1][2])]});
+						bridges[10].items.push({line:[new THREE.Vector3(el2.bbox[1][0],el2.bbox[0][1],el2.bbox[1][2]),new THREE.Vector3(el2.bbox[0][0],el2.bbox[0][1],el2.bbox[0][2])]});
+					}
+				}
+			}
+		}
 
-				bridges[10].items.push({line:[[el2.bbox[0][0],el2.bbox[0][1],el2.bbox[0][2]],[el2.bbox[0][0],el2.bbox[1][1],el2.bbox[0][2]]]});
-				bridges[10].items.push({line:[[el2.bbox[0][0],el2.bbox[1][1],el2.bbox[0][2]],[el2.bbox[1][0],el2.bbox[1][1],el2.bbox[1][2]]]});
-				bridges[10].items.push({line:[[el2.bbox[1][0],el2.bbox[1][1],el2.bbox[1][2]],[el2.bbox[1][0],el2.bbox[0][1],el2.bbox[1][2]]]});
-				bridges[10].items.push({line:[[el2.bbox[1][0],el2.bbox[0][1],el2.bbox[1][2]],[el2.bbox[0][0],el2.bbox[0][1],el2.bbox[0][2]]]});
+		for (const [id, el] of Object.entries(zones)) {
+			i = -1;
+
+			while (++i < el.userData.walls.length) {
+				delete el.userData.walls[i].links;
 			}
 		}
 
 		Object.values(bridges).forEach(el => {
 			let d = 0;
+			console.log(el);
 			el.items.forEach(el2 => {
-				d += _getDistance(el2.line);
+				console.log(el2);
+				d += el2.line[0].distanceTo(el2.line[1]);
 			});
 			el.dist = _asNumeric(d).toFixed(2);
 			_drawBridges(el);
