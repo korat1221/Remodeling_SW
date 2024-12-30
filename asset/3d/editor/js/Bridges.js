@@ -453,9 +453,7 @@ Bridges.prototype = {
 
 		Object.values(bridges).forEach(el => {
 			let d = 0;
-			console.log(el);
 			el.items.forEach(el2 => {
-				console.log(el2);
 				d += el2.line[0].distanceTo(el2.line[1]);
 			});
 			el.dist = _asNumeric(d).toFixed(2);

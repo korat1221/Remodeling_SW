@@ -557,7 +557,7 @@ Zoning.prototype = {
         //     }
         //     return false;
         // };
-        let _collectLinks = (edge, id0, i0, j0) => {
+        let _collectLinks = (edge) => {
             let links = [], i, j;
 
             for (const [id, el] of Object.entries(zones)) {
@@ -566,7 +566,7 @@ Zoning.prototype = {
                 while (++i < el.userData.walls.length) {
                     j = -1;
                     while(++j < el.userData.walls[i].edges.length) {
-                        if ((id !== id0 || i !== i0 || j !== j0) && _equalLine(edge, el.userData.walls[i].edges[j])) {
+                        if (el.userData.walls[i].edges[j] !== edge && _equalLine(edge, el.userData.walls[i].edges[j])) {
                             links.push(el.userData.walls[i]);
                         }
                     }
@@ -642,7 +642,7 @@ Zoning.prototype = {
                 while (++i < el.userData.walls.length) {
                     j = -1;
                     while(++j < el.userData.walls[i].edges.length) {
-                        el.userData.walls[i].links.push(_collectLinks(el.userData.walls[i].edges[j], id, i, j));
+                        el.userData.walls[i].links.push(_collectLinks(el.userData.walls[i].edges[j]));
                     }
                 }
             }
