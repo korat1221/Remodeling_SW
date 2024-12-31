@@ -584,7 +584,6 @@ Zoning.prototype = {
                 while (++i < zones[id].userData.walls.length) {
                     zones[id].userData.walls[i].edges = [];
                     zones[id].userData.walls[i].links = [];
-              //      zones[id].userData.walls[i].edges2 = [];
 
                     if (!lines[id]) lines[id] = [];
                     lines[id].push(_getLines(zones[id].userData.walls[i].pos));
@@ -594,9 +593,9 @@ Zoning.prototype = {
             for (const [id1, el1] of Object.entries(lines)) {
                 i = -1;
                 while(++i < el1.length) {
-                    let edges = zones[id1].userData.walls[i].edges;
-               //     let edges2 = zones[id1].userData.walls[i].edges2;
-                    let cardi = zones[id1].userData.walls[i].cardi;
+                    let el2 = zones[id1].userData.walls[i];
+                    let edges = el2.edges;
+                    let cardi = el2.cardi;
 
                     j = -1;
                     while(++j < el1.length) {
@@ -648,7 +647,7 @@ Zoning.prototype = {
             }
         };
         let _collectLines_SD = () => {
-            let a, b, c, d, e, i, j, k = -1;
+            let a, b, i, j, k = -1;
             let lines = {};
 
             while(++k < obj.userData.dummy.length) {
