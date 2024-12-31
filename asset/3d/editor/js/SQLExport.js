@@ -199,7 +199,7 @@ SQLExport.prototype = {
                 tree[0].push({
                     "type": "space",
                     "text": nm,
-                    "id": "selectspc::" + nm + "::" + el.uuid,
+                    "id": "selectspc::" + id + "::" + el.uuid,
                     "skey": parseInt(nm.split('_')[1].replace("Zone", "")),
                     "floor": el.userData.floor,
                     "floorType": floorType,

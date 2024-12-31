@@ -386,14 +386,14 @@ namespace main
                 }
             }
         }
-        public void sendMessage(string msg)
+        public void select3DObject(string msg)
         {
             foreach (Form openForm in Application.OpenForms)
             {
                 if (openForm.Name == "Model")
                 {
                     Model f = (Model)openForm;
-                    f.runScript("sendMessage('" + msg + "')");
+                    f.runScript("selectObject('" + msg + "')");
                     return;
                 }
             }

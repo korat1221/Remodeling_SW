@@ -365,8 +365,8 @@ Shadows.prototype = {
 
 							j = -1;
 
-							while (++j < el3.userData.walls.length) {
-								let el4 = el3.userData.walls[j];
+							while (++j < el3.walls.length) {
+								let el4 = el3.walls[j];
 								k = -1;
 								while(++k < el4.edges.length) {
 									const line = new THREE.Line3(el4.edges[k][0], el4.edges[k][1]);

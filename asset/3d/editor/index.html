@@ -341,5 +341,20 @@
 			// }
 
 		</script>
+		<script>
+
+			function selectObject(id) {
+				let arr = id.split('::');
+				if (arr.length > 2) {
+					if (arr[2] === '---') {
+						editor.selectByZoneid(arr[1]);
+					}
+					else {
+						editor.selectByUuid(arr[2]);
+					}
+				}
+			}
+
+		</script>
 	</body>
 </html>

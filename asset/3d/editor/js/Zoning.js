@@ -387,6 +387,7 @@ Zoning.prototype = {
 
             mesh.userData.color = opt.color;
             mesh.userData.opacity = opt.opacity;
+            mesh.userData.uuid = mesh.uuid;
 
             if (pid) {
                 mesh.userData.pid = pid;
@@ -648,7 +649,7 @@ Zoning.prototype = {
             let lines = {};
 
             while(++k < obj.userData.dummy.length) {
-                let el = obj.userData.dummy[k].userData;
+                let el = obj.userData.dummy[k];
 
                 i = -1;
 
@@ -663,12 +664,12 @@ Zoning.prototype = {
             for (const [id1, el1] of Object.entries(lines)) {
                 i = -1;
                 while(++i < el1.length) {
-                    let edges = obj.userData.dummy[id1].userData.walls[i].edges;
-                    let cardi = obj.userData.dummy[id1].userData.walls[i].cardi;
+                    let edges = obj.userData.dummy[id1].walls[i].edges;
+                    let cardi = obj.userData.dummy[id1].walls[i].cardi;
 
                     j = -1;
                     while(++j < el1.length) {
-                        if (i != j && _compareCardi(cardi, obj.userData.dummy[id1].userData.walls[j].cardi)) {
+                        if (i != j && _compareCardi(cardi, obj.userData.dummy[id1].walls[j].cardi)) {
                             a = -1;
                             while (++a < el1[i].length) {
                                 b = -1;
@@ -828,7 +829,8 @@ Zoning.prototype = {
                     el.userData.opacity = 0.9;
                     el.userData.walls = _collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal"));
                     el.userData.id = el.uuid;
-                    obj.userData.dummy.push(el);
+                    el.userData.uuid = el.uuid;
+                    obj.userData.dummy.push(el.userData);
                 }
             }
         }
@@ -857,8 +859,17 @@ Zoning.prototype = {
 
                             el2.userData.walls = el2.userData.walls.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal")));
                             
-                            _addMeshObject(o, this.colors[_getTypeColor(type)], zk);
-                            el.visible = false;
+                            let opt = this.colors[_getTypeColor(type)];
+
+                            el.userData.color = opt.color;
+                            el.userData.opacity = opt.opacity;
+                            el.userData.pid = zk;
+                            el.userData.uuid = el.uuid;
+
+                            el.material = el.material.clone();
+
+                       //     _addMeshObject(o, this.colors[_getTypeColor(type)], zk);
+                         //   el.visible = false;
                         }
                     }
                 }
@@ -898,7 +909,7 @@ Zoning.prototype = {
 
             i = -1;
             while(++i < obj.userData.dummy.length) {
-                let el = obj.userData.dummy[i].userData.walls;
+                let el = obj.userData.dummy[i].walls;
                 let id = obj.userData.dummy[i].uuid;
 
                 while (_findWalls(el));
@@ -1046,7 +1057,7 @@ Zoning.prototype = {
 
             i = obj.children.length;
             while (--i >= 0) {
-                if (!obj.visible) {
+                if (!obj.children[i].visible) {
                     obj.children.splice(i, 1);
                 } 
             }

@@ -633,12 +633,17 @@ namespace main
                     else
                     {
                         selectInfo = selID.Split("::");
-
-                        Program.UTIL.sendMessage(selID);
-
-                        if (selectInfo.Length < 3 || selectInfo[0] == "---")
-                        {
+                        if (selectInfo.Length < 3 || selectInfo[0] == "---") {
                             return;
+                        }
+
+                        if (selectInfo[0] == "selectspc")
+                        {
+                            Program.UTIL.select3DObject("---::" + selectInfo[1] + "::---");
+                        }
+                        else
+                        {
+                            Program.UTIL.select3DObject("---::---::" + selectInfo[2]);
                         }
 
                         if (selID.IndexOf("::CW") >= 0)

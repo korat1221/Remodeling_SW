@@ -557,19 +557,73 @@ Editor.prototype = {
 
 	},
 
-	selectByUuid: function ( uuid ) {
+	selectByZoneid: function ( zid ) {
+		let i = -1, j;
+		let arr = [];
 
-		var scope = this;
+		while(++i < this.scene.children.length) {
+			if (this.scene.children[i] instanceof THREE.Group) {
+				let el = this.scene.children[i];
+				for (const [id2, el2] of Object.entries(el.userData.zones)) {
+					if (id2 == zid) {
+						if (el2.object.userData.children) {
+							j = -1;
+							while(++j < el2.object.userData.children.length) {
+								let el3 = el2.object.userData.children[j];
+								let o = this.getByUuid(el3.uuid);
+	
+								if (o) {
+									arr.push(o);
+								}
+							}
+						}
+						j = -1;
+						while(++j < el2.object.userData.walls.length) {
+							let el3 = el2.object.userData.walls[j];
+							let o = this.getByUuid(el3.uuid);
+
+							if (o) {
+								arr.push(o);
+							}
+						}
+					}
+				}
+				break;
+			}
+		}
+		this.restoreSelect();
+		this.markSelect(arr);
+		this.signals.sceneGraphChanged.dispatch();
+	},
+
+	getByUuid: function ( uuid ) {
+
+		let ret= null;
 
 		this.scene.traverse( function ( child ) {
 
 			if ( child.uuid === uuid ) {
-
-				scope.select( child );
-
+				ret = child;
 			}
-
 		} );
+
+		return ret;
+
+	},
+
+	selectByUuid: function ( uuid ) {
+
+		let arr = [];
+
+		this.scene.traverse( function ( child ) {
+
+			if ( child.uuid === uuid ) {
+				arr.push(child);
+			}
+		} );
+		this.restoreSelect();
+		this.markSelect(arr);
+		this.signals.sceneGraphChanged.dispatch();
 
 	},
 
