@@ -92,7 +92,7 @@ SQLExport.prototype = {
                         if (el2.type === 'CW') {
                             struCW.push({
                                 "text": el2.id,
-                                "id": el2.uuid
+                                "id": "selectwin::" + el2.type + "::" + el2.uuid
                             });
                         }
                         else {
@@ -102,7 +102,7 @@ SQLExport.prototype = {
     
                             stru[el2.type].push({
                                 "text": el2.id,
-                                "id": el2.uuid
+                                "id": "selectwin::" + el2.type + "::" + el2.uuid
                             });
                         }
                         if (el2.type === 'WN') {
@@ -135,7 +135,7 @@ SQLExport.prototype = {
 
                         stru[el2.type].push({
                             "text": el2.id,
-                            "id": el2.uuid
+                            "id": "selectwal::" + el2.type + "::" + el2.uuid
                         });
 
                         if (el2.cardi === 'DOWN') {
@@ -158,7 +158,7 @@ SQLExport.prototype = {
                         children.push({
                             "type": id2,
                             "text": _getTitle(id2),
-                            "id": nm + "_" + id2,
+                            "id": "---::" + id2 + "::" + nm,
                             "children": el2,
                         });
                     }
@@ -169,11 +169,11 @@ SQLExport.prototype = {
                     children.push({
                         "type": 'CW',
                         "text": '커튼월창',
-                        "id": nm + "_CW",
+                        "id": "---::CW::" + nm,
                         "children": [{
                             "type": 'CW1',
                             "text": '유리부분',
-                            "id": nm + "_CW1",
+                            "id": "---::CW1::" + nm,
                             "children": struCW 
                         }],
                     });
@@ -182,7 +182,7 @@ SQLExport.prototype = {
                 tree[0].push({
                     "type": "space",
                     "text": nm,
-                    "id": el.uuid,
+                    "id": "selectspc::" + nm + "::" + el.uuid,
                     "skey": parseInt(nm.split('_')[1].replace("Zone", "")),
                     "floor": el.userData.floor,
                     "floorType": floorType,
@@ -229,7 +229,7 @@ SQLExport.prototype = {
                         let el2 = el.userData.children[i];
 
                         sql += "INSERT INTO ZoneEnvelope_3D (아이디, 번호,프로젝트유형,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이) VALUES ('" +
-                        el2.id +
+                        el2.uuid +
                         "','" + el2.id + "','__PROJ_TYPE__','" +
                         el.userData.floor +
                         "F','" +
@@ -275,7 +275,7 @@ SQLExport.prototype = {
 
                         
                         sql += "INSERT INTO ZoneEnvelope_3D (아이디, 번호,프로젝트유형,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이) VALUES ('" +
-                        el2.id +
+                        el2.uuid +
                         "','" + el2.id + "','__PROJ_TYPE__','" +
                         el.userData.floor +
                         "F','" +
@@ -430,7 +430,75 @@ SQLExport.prototype = {
             });
         }
         
-		$.ajax ({
+        let _bridges = {
+            1: "평지붕+외벽[90]",
+            2: "평지붕+외벽[270]",
+            3: "평지붕+내벽",
+            4: "경사지붕",
+            5: "경사지붕+외벽[수평]",
+            6: "경사지붕+외벽[경사]",
+            7: "층간슬라브+외벽",
+            8: "외벽+내벽",
+            9: "외벽+외벽[90]",
+            10: "외벽+외벽[270]",
+            11: "바닥+외벽[90]",
+            12: "바닥+외벽[270]",
+        };
+        let _codes = {
+            1: "RTB1",
+            2: "RTB2",
+            3: "RTB3",
+            4: "RTB4",
+            5: "RTB5",
+            6: "RTB6",
+            7: "WTB1",
+            8: "WTB2",
+            9: "WTB3",
+            10: "WTB4",
+            11: "WTB5",
+            12: "WTB6",
+        };
+        let _getBridgeInfo = (src, tgt, _arr, _m) => {
+            obj.userData.bridges[src].items.forEach(() => {
+                ++_m;
+                let n = _m <= 9 ? "0" + _m : _m;
+                _arr.push({
+                type: "detail",
+                text: _codes[tgt] + "_" + n,
+                id: "selectedg::" + _codes[tgt] + "::" + n,
+                });
+            });
+            return _m;
+        };
+
+        for (const [key, value] of Object.entries(_bridges)) {
+            let arr = [];
+
+            if (key == "1") {
+                _getBridgeInfo("1", "1", arr, 0);
+            } else if (key == "2") {
+                let m = _getBridgeInfo("11", "2", arr, 0);
+
+                _getBridgeInfo("12", "2", arr, m);
+            } else if (key == "11") {
+                _getBridgeInfo("13", "11", arr, 0);
+            } else if (key == "12") {
+                _getBridgeInfo("14", "12", arr, 0);
+            } else {
+                _getBridgeInfo(parseInt(key) - 1, key, arr, 0);
+            }
+
+            if (arr.length > 0) {
+                tree[1].push({
+                type: "bridge",
+                text: value,
+                id: "selectbdg::---::" + key,
+                children: arr,
+                });
+            }
+        }
+
+        $.ajax ({
             type:"POST",
             url:"/upload",
             async: true,

@@ -121,6 +121,7 @@ namespace main
         }
         static FormParam? formParam;
         static public String? selID;
+        static public String[]? selectInfo;
         static public FormID currentForm = FormID.General;
         static public string selID_old = "";
         int tick_old = 0;
@@ -632,47 +633,52 @@ namespace main
                     }
                     else
                     {
-                        int n = selID.IndexOf("$$$");
+                        selectInfo = selID.Split("::");
 
-                        Program.UTIL.sendMessage(n > 0 ? selID.Substring(0, n) : selID);
+                        Program.UTIL.sendMessage(selID);
 
-                        if (selID.IndexOf("_win2") >= 0 || selID.IndexOf("_win3") >= 0 || selID.IndexOf("_win4") >= 0 || selID.IndexOf("_CW_") >= 0)
+                        if (selectInfo.Length != 3 || selectInfo[0] == "---")
+                        {
+                            return;
+                        }
+
+                        if (selID.IndexOf("::CW") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"3\"}");
                         }
-                        else if (selID.IndexOf("_WALL_") >= 0 || selID.IndexOf("_WL_") >= 0)
+                        else if (selID.IndexOf("::WL::") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"4\"}");
                         }
-                        else if (selID.IndexOf("_ROOF_") >= 0 || selID.IndexOf("_RF_") >= 0)
+                        else if (selID.IndexOf("::RF::") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"5\"}");
                         }
-                        else if (selID.IndexOf("_FLOOR_") >= 0 || selID.IndexOf("_FR_") >= 0)
+                        else if (selID.IndexOf("::FL::") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"6\"}");
                         }
-                        else if (selID.IndexOf("_win1") >= 0 || selID.IndexOf("_WIN_") >= 0)
+                        else if (selID.IndexOf("::WN::") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"7\"}");
                         }
-                        else if (selID.IndexOf("_win5") >= 0 || selID.IndexOf("_DR_") >= 0)   
+                        else if (selID.IndexOf("::DR::") >= 0)   
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"8\"}");
                         }
-                        else if (selID.IndexOf("_INWALL_") >= 0 || selID.IndexOf("_IW_") >= 0)
+                        else if (selID.IndexOf("::IW::") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"9\"}");
                         }
-                        else if (selID.IndexOf("_INFLOOR_") >= 0 || selID.IndexOf("_SL_") >= 0)
+                        else if (selID.IndexOf("::SL::") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"10\"}");
                         }
-                        else if (selID.IndexOf("space-") >= 0)
+                        else if (selID.IndexOf("selectspc::") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"2\"}");
                         }
-                        else if (selID.IndexOf("bridge-") >= 0)
+                        else if (selID.IndexOf("selectbdg::") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"11\"}");
                         }                        

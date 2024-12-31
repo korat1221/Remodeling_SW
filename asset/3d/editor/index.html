@@ -19,9 +19,9 @@
 	<body>
 		<div style="width:32px;height:32px"></div>
 		<div id="view-cont" style="width:100%;height:100%"></div>
-		<!-- <div id="dlgProgress" title="" style="overflow: hidden;background-color:#fff;padding:0">
+		<div id="dlgProgress" title="" style="overflow: hidden;background-color:#fff;padding:0">
 			<span id="progress" style="display: table-cell;text-align: center;vertical-align: middle;overflow: hidden;"></span>
-		</div> -->
+		</div>
 	
 		<script type="importmap">
 			{
@@ -70,9 +70,9 @@
 		<script src="js/libs/signals.min.js"></script>
 		<script src="/js/jquery-3.6.0.min.js"></script>
 		<script src="/js/b64.js"></script>
-		<!-- <link rel="stylesheet" href="/js/jquery-ui/jquery-ui.min.css?v=1.0.1">
+ 		<link rel="stylesheet" href="/js/jquery-ui/jquery-ui.min.css?v=1.0.1">
 		<script type="text/javascript" src="/js/jquery-ui/jquery-ui.min.js"></script>
-	  <script src="/js/progress.js"></script> -->
+	  <script src="/js/progress.js"></script> 
 	
 		<script type="module">
 
@@ -143,7 +143,7 @@
 
 				} );
 */
-				// initProgress();
+				initProgress();
 
 				//
 				var loader = new THREE.FileLoader();
@@ -164,8 +164,6 @@
 
 				editor.pid = pid;
 
-				// openProgressDlg("모델 로딩중...");
-
 				loader.load(
 					"app.json",
 					function (text) {
@@ -175,6 +173,9 @@
 						loader.load(
 							objFile,
 							function (text) {
+
+								openProgressDlg("3D모델을 분석합니다...");
+
 								let _getFileBlobUsingURL = function (url, convertBlob) {
 									var xhr = new XMLHttpRequest();
 									xhr.open("GET", url);
@@ -195,11 +196,14 @@
 										convertBlob(_blobToFile(blob, 'model.obj'));
 									});
 								};
-								_getFileObjectFromURL(objFile, function (fileObject) {
-									editor.loader.loadFile(fileObject);
-									editor.cardinalMark.draw();
-									// closeProgressDlg();
-								});
+
+								setTimeout(() => {
+									_getFileObjectFromURL(objFile, function (fileObject) {
+										editor.loader.loadFile(fileObject);
+										editor.cardinalMark.draw();
+										closeProgressDlg();
+									});
+								},100);
 							},null, function () {
 
 								loader.load(
@@ -207,13 +211,10 @@
 									function (text) {
 										editor.loadJSON(JSON.parse(text));
 										editor.cardinalMark.draw();
-										// closeProgressDlg();
 									},null, function () {
-										// closeProgressDlg();
 									});
 							});
 					}, null, function () {
-						// closeProgressDlg();
 					});
 
 				// let timeout;
