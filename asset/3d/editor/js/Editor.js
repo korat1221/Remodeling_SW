@@ -851,7 +851,7 @@ Editor.prototype = {
 			el.material.opacity = 0.9;
 			this.selectOld.push(el);
 		}
-	}
+	},
 };
 
 const link = document.createElement( 'a' );

@@ -204,6 +204,7 @@ function Viewport( editor ) {
 				if (object instanceof THREE.Mesh && object !== scene && object !== camera && object.material && object.name.indexOf("DUMMY_BUILDING") < 0) {
 					editor.restoreSelect();
 					editor.markSelect([object]);
+					window.chrome.webview.postMessage(object.userData.tkey);
 					break;
 				}
 			}

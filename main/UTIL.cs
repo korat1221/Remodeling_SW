@@ -355,7 +355,7 @@ namespace main
                         Program.DB.deleteValue(DB.type.ProjDB, "ThermalBridge_3D", "");
                         Program.DB.deleteValue(DB.type.ProjDB, "ZoneGeneral_Form", "");
                         Program.DB.deleteValue(DB.type.ProjDB, "ZoneLighting_form", "");
-                        f.CalculateModel();
+                        f.CalculateModel(true);
                     }
                     return;
                 }
@@ -373,6 +373,7 @@ namespace main
                 }
             }
         }
+
         public void modelScript(string scr)
         {
             foreach (Form openForm in Application.OpenForms)

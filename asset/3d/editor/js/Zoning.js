@@ -373,7 +373,7 @@ Zoning.prototype = {
                 _pos = _pos.concat(pos2);
             }
 
-            obj.add(new THREE.Mesh(new THREE.BufferGeometry().setFromPoints(_pos), new THREE.MeshBasicMaterial({
+            let mesh = new THREE.Mesh(new THREE.BufferGeometry().setFromPoints(_pos), new THREE.MeshBasicMaterial({
                 color: new THREE.Color().setHex(opt.color),
                 wireframe: wired,
                 shading: THREE.FlatShading,
@@ -382,19 +382,16 @@ Zoning.prototype = {
                 side: THREE.DoubleSide,
                 opacity: opt.opacity,
                 transparent: true,
-            })));
+            }));
+            let o = obj.add(mesh);
 
-            let o = obj.children[obj.children.length - 1];
+            mesh.userData.color = opt.color;
+            mesh.userData.opacity = opt.opacity;
 
-            if (o) {
-                o.userData.color = opt.color;
-                o.userData.opacity = opt.opacity;
-
-                if (pid) {
-                    o.userData.pid = pid;
-                }
+            if (pid) {
+                mesh.userData.pid = pid;
             }
-            return o.uuid;
+            return mesh.uuid;
         };
         let _equalLine = (a, b) => {
             return (_equalPoint(a[0], b[0]) && _equalPoint(a[1], b[1])) ||
@@ -893,6 +890,7 @@ Zoning.prototype = {
                 while (++j < el.userData.walls.length) {
                     let el2 = el.userData.walls[j];
                     el2.uuid = _addMeshObject(el2.pos, this.colors[el2.type], id);
+                    console.log("uuid: " + el2.uuid);
                     el2.area = _getArea(el2.pos);
                     el2.center = _getCenterPosition(el2.pos);
                 }

@@ -631,7 +631,7 @@ namespace main.contents
             CalculateModel();
         }
 
-        public void CalculateModel()
+        public void CalculateModel(bool force = false)
         {
             string url = "http://localhost:3000/3d/editor/?pid=" + ProjectList.CurProjID;
 
@@ -640,7 +640,7 @@ namespace main.contents
                 webView21.Source = new Uri(url, true);
                 sURLOld = url;
             }
-            else
+            else if (force)
             {
                 runScript("location.reload();");
             }

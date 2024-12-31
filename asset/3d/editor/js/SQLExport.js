@@ -67,6 +67,18 @@ SQLExport.prototype = {
             UP_SW: "남서쪽위",
           };
 
+          let _getObjectByUuid = ( uuid ) => {
+            let i = -1;
+
+            while(++i < obj.children.length) {
+                let el = obj.children[i];
+                if ( el.uuid === uuid ) {
+                    return el;
+                }
+            }
+            return null;
+        }
+    
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         let i = -1;
@@ -88,12 +100,14 @@ SQLExport.prototype = {
 
                     while (++i < el.userData.children.length) {
                         let el2 = el.userData.children[i];
+                        let o = _getObjectByUuid(el2.uuid);
 
                         if (el2.type === 'CW') {
                             struCW.push({
                                 "text": el2.id,
                                 "id": "selectwin::" + el2.type + "::" + el2.uuid
                             });
+                            o.userData.tkey = "selectwin::" + el2.type + "::" + el2.uuid;
                         }
                         else {
                             if (!stru[el2.type]) {
@@ -104,6 +118,7 @@ SQLExport.prototype = {
                                 "text": el2.id,
                                 "id": "selectwin::" + el2.type + "::" + el2.uuid
                             });
+                            o.userData.tkey = "selectwin::" + el2.type + "::" + el2.uuid;
                         }
                         if (el2.type === 'WN') {
                             if (winArea < el2.area) {
@@ -128,6 +143,7 @@ SQLExport.prototype = {
 
                     while (++i < el.userData.walls.length) {
                         let el2 = el.userData.walls[i];
+                        let o = _getObjectByUuid(el2.uuid);
 
                         if (!stru[el2.type]) {
                             stru[el2.type] = [];
@@ -137,6 +153,7 @@ SQLExport.prototype = {
                             "text": el2.id,
                             "id": "selectwal::" + el2.type + "::" + el2.uuid
                         });
+                        o.userData.tkey = "selectwal::" + el2.type + "::" + el2.uuid;
 
                         if (el2.cardi === 'DOWN') {
                             floorType = (el2.type === 'SL') ? "층간슬라브":"지면위";

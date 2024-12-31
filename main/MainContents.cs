@@ -601,7 +601,6 @@ namespace main
                     if (formParam.formID == 8)
                     {
                         Program.UTIL.setObjInfo(ProjectList.CurProjID);
-
                         DoLoadForm(8, OnLoadProc);
                     }
                     else if (formParam.formID >= 0 && formParam.formID < 100)
@@ -637,7 +636,7 @@ namespace main
 
                         Program.UTIL.sendMessage(selID);
 
-                        if (selectInfo.Length != 3 || selectInfo[0] == "---")
+                        if (selectInfo.Length < 3 || selectInfo[0] == "---")
                         {
                             return;
                         }
