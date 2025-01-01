@@ -947,6 +947,7 @@ Zoning.prototype = {
                                     let stru = {};
 
                                     stru.uuid = _addMeshObject(o, this.colors["WN"], zk);
+                                    console.log("uuid: " + stru.uuid);
                                     stru.type = "WN";
                                     stru.area = _getArea(o);
                                     stru.bbox = _getBoundingBox(pos);

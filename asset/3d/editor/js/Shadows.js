@@ -292,15 +292,16 @@ Shadows.prototype = {
 		};
 
 		let _addLineObject = (pos, color, opacity) => {
-			obj.add(new THREE.Line(
+			let mesh = new THREE.Line(
 				new THREE.BufferGeometry().setFromPoints(pos),
 				new THREE.LineBasicMaterial({
 					color: new THREE.Color().setHex(color),
 					opacity: opacity,
 					transparent: true,
-				})
-			));
-            return obj.children[obj.children.length - 1].uuid;
+				}));
+			mesh.visible = false;
+			obj.add(mesh);
+            return mesh.uuid;
 		};
 		let _getPID = (cardi, pos, walls) => {
 			let i = -1;
@@ -316,6 +317,17 @@ Shadows.prototype = {
 			return null;
 		};
 
+		let _getObjectByUuid = ( uuid ) => {
+            let i = -1;
+
+            while(++i < obj.children.length) {
+                let el = obj.children[i];
+                if ( el.uuid === uuid ) {
+                    return el;
+                }
+            }
+            return null;
+        }
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		let zones = obj.userData.zones;
@@ -455,8 +467,9 @@ Shadows.prototype = {
 								pkey = key;
 							}
 						}
-	
-						el2.shadows = [];
+
+						let win = _getObjectByUuid(el2.uuid); 
+						win.userData.shadows = [];
 
 						if (pkey !== '') {
 							let y = -99999999;
@@ -473,7 +486,8 @@ Shadows.prototype = {
 								el2.shadow_base = pos0.distanceTo(centers[pkey]);
 								el2.shadow_height = centers[pkey].distanceTo(pos2);
 								el2.shadow_angle = Math.atan2(centers[pkey].distanceTo(pos2), pos0.distanceTo(centers[pkey])) * 180 / Math.PI;
-								el2.shadows.push(_addLineObject([pos0, pos2],0x0000FF, 0.5));
+
+								win.userData.shadows.push(_addLineObject([pos0, pos2],0x0000FF, 0.5));
 							}
 						}
 	
@@ -485,7 +499,7 @@ Shadows.prototype = {
 								el2.left_shadow_base = left.base;
 								el2.left_shadow_height = left.height;
 								el2.left_shadow_angle = Math.atan2(left.height, left.base) * 180 / Math.PI;
-								el2.shadows.push(_addLineObject([ctr, left.point],0xFF00, 0.5));
+								win.userData.shadows.push(_addLineObject([ctr, left.point],0xFF00, 0.5));
 							}
 		
 							let right = _getProjWall(verts2, el2.cardi, pid, true, ctr);
@@ -494,7 +508,7 @@ Shadows.prototype = {
 								el2.right_shadow_base = right.base;
 								el2.right_shadow_height = right.height;
 								el2.right_shadow_angle = Math.atan2(right.height, right.base) * 180 / Math.PI;
-								el2.shadows.push(_addLineObject([ctr, right.point], 0x00FF00, 0.5));
+								win.userData.shadows.push(_addLineObject([ctr, right.point], 0x00FF00, 0.5));
 							}
 		
 							if (upPoint) {
@@ -504,7 +518,7 @@ Shadows.prototype = {
 								el2.up_shadow_base = ctr.distanceTo(up);
 								el2.up_shadow_height = up.distanceTo(upPoint);
 								el2.up_shadow_angle = Math.atan2(up.distanceTo(upPoint),ctr.distanceTo(up)) * 180 / Math.PI;
-								el2.shadows.push(_addLineObject([ctr, upPoint],0xFF00FF, 0.5));
+								win.userData.shadows.push(_addLineObject([ctr, upPoint],0xFF00FF, 0.5));
 							}
 						}
 					}

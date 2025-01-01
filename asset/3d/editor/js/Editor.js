@@ -885,24 +885,38 @@ Editor.prototype = {
 	},
 
 	restoreSelect: function () {
-		let i = -1;
+		let i = -1, j;
 
 		while(++i < this.selectOld.length) {
 			let el = this.selectOld[i];
 			el.material.color.set(el.userData.color);
 			el.material.opacity = el.userData.opacity;
+			if (el.userData.shadows) {
+				j = -1;
+				while(++j < el.userData.shadows.length) {
+					this.getByUuid(el.userData.shadows[j]).visible = false;
+				}
+			}
 		}
 		this.selectOld = [];
 	},
 
 	markSelect: function (arr) {
-		let i = -1;
+		let i = -1, j;
 
 		while(++i < arr.length) {
 			let el = arr[i];
 
 			el.material.color.set(0xff0000);
 			el.material.opacity = 0.9;
+
+			if (el.userData.shadows) {
+				j = -1;
+				while(++j < el.userData.shadows.length) {
+					this.getByUuid(el.userData.shadows[j]).visible = true;
+				}
+			}
+
 			this.selectOld.push(el);
 		}
 	},
