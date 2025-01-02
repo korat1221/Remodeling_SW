@@ -719,6 +719,13 @@ namespace main
                     {
                         LoadCalc_AirHP_Heating(Heating1);
                     }
+                    if (검토유형 != "흡수식냉온수기")
+                    { Heating1.LoadCalc_ABS(ProjNum); }
+                    else
+                    {
+                        LoadCalc_ABS_Heating(Heating1);
+                    }
+                    Heating1.LoadCalc_DH(ProjNum);
                     Heating1.nan();
                 }
             }
@@ -744,13 +751,31 @@ namespace main
                     Heating1.Calc_Qh_gen_Boiler(Num, Combi, Type, Power, eta_Pn, eta_Pint, W, W_0, count);
                 }
             }
-        }       
+        }
+        public void LoadCalc_ABS_Heating(Heating Heating1)
+        {
+            double Optimal = 1.2;//EPI 1점 
+            for (int n = 0; n < Heating1.SelectABS_split.Count; n++)
+            {
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "번호,연료,난방용량,난방성능,대기전력", "번호 = '" + Heating1.SelectABS_split[n] + "'");
+                if (Value.Length > 0)
+                {
+                    String Num = Value[0][0];
+                    Heating1.Carrier = Value[0][1];
+                    double Power = Convert.ToDouble(Value[0][2]) * Convert.ToDouble(Heating1.ABSNum_split[n]);
+                    double cop = Optimal;
+                    double W_0 = Convert.ToDouble(Value[0][4]);
+                    double count = Convert.ToDouble(Heating1.ABSNum_split[n]);
+                    Heating1.Calc_Qh_ABS(Num, Power, cop, W_0, count);
+                }
+            }
+        }
         public void LoadCalc_AirHP_Heating(Heating Heating1)
         {
             double Rule_nom = 3.8; double Rule_7 = 2.8;  double Rule_15 = (Rule_nom - Rule_7) / (7 - (-7)) * (-15 - 7) + Rule_nom; //DIN V 18599-5 C.1
             for (int n = 0; n < Heating1.SelectAirHP_split.Count; n++)
             {
-                string[][] airHP = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "번호,연료,공급유형,난방정격용량,난방정격COP,난방정격소비전력,한랭지용량,한랭지COP,한랭지소비전력", "번호 = '" + Heating1.SelectAirHP_split[n] + "'");
+                string[][] airHP = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "번호,연료,공급유형,난방정격용량,난방정격COP,난방정격소비전력,한랭지용량,한랭지COP,한랭지소비전력,대기전력", "번호 = '" + Heating1.SelectAirHP_split[n] + "'");
                 String Num = null;
                 Heating1.Carrier = null;
                 String SupplyType = null;
@@ -760,6 +785,7 @@ namespace main
                 double Pi_15 = 0; //정격용량
                 double COP_15 = 0; //정격COP
                 double W_15 = 0; //정격소비전력 
+                double W_0 = 0; //대기전력 
                 if (airHP.Length > 0)
                 {
                     Num = airHP[0][0];
@@ -771,7 +797,8 @@ namespace main
                     Pi_15 = Convert.ToDouble(airHP[0][6]) * Convert.ToDouble(Heating1.AirHPNum_split[n]); //정격용량
                     COP_15 = Rule_15; //정격COP
                     W_15 = Pi_15 / COP_15;
-                    Heating1.Calc_Q_Air_HP(Num, SupplyType, Pi_nom, COP_nom, W_nom, Pi_15, COP_15, W_15);
+                    W_0 = Convert.ToDouble(airHP[0][9]);
+                    Heating1.Calc_Q_Air_HP(Num, SupplyType, Pi_nom, COP_nom, W_nom, Pi_15, COP_15, W_15,W_0);
                 }
             }
         }       
@@ -811,6 +838,18 @@ namespace main
                         if (Cooling1.SelectCG.Count > 0)
                         {
                             string[][] Value = Program.DB.getValue(ProjNum, "User_AirCooler", "번호", "번호 = '" + Cooling1.SelectCG[0] + "'");
+                            if (Value.Length > 0)
+                            {
+                                Cal_CS(Cooling1);
+                            }
+                            else { Cooling1.Cal_CS(); }
+                        }
+                    }
+                    else if (검토유형 == "흡수식냉온수기" && Cooling1.CG == "흡수식냉동기")
+                    {
+                        if (Cooling1.SelectCG.Count > 0)
+                        {
+                            string[][] Value = Program.DB.getValue(ProjNum, "User_ABS", "번호", "번호 = '" + Cooling1.SelectCG[0] + "'");
                             if (Value.Length > 0)
                             {
                                 Cal_CS(Cooling1);
@@ -866,6 +905,10 @@ namespace main
             else if(Cooling1.CG == "수냉식냉동기")
             {
                 kkk = Program.DB.getValue(DB.type.BaseDB_Cooling, "WaterCooler", "EER", "압축기= '" + Cooling1.Comp_f + "' And 냉매='R134a' And 냉수출구온도 = '14' And 냉각수입구온도='27'");
+            }
+            else if (Cooling1.CG == "흡수식냉동기")
+            {
+                Rule = 1.2;
             }
             else
             {

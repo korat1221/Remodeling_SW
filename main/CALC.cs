@@ -998,6 +998,8 @@ namespace main
             Heating1.Load_AirHP_general(ProjNum);
             Heating1.Load_GroundHP_general(ProjNum);
             Heating1.Load_GWHP_general(ProjNum);
+            Heating1.Load_ABS_general(ProjNum);
+            Heating1.Load_DH_general(ProjNum);
             Heating1.Load_ce(ProjNum);
         }
         public static void Heating_Calc(Heating Heating1,string ProjNum)
@@ -1013,6 +1015,8 @@ namespace main
             Heating1.LoadCalc_Solar(ProjNum);
             Heating1.LoadCalc_Boiler(ProjNum);
             Heating1.LoadCalc_AirHP(ProjNum);
+            Heating1.LoadCalc_ABS(ProjNum);
+            Heating1.LoadCalc_DH(ProjNum);
             Heating1.nan();
         }
         public static void Heating_Save(Heating Heating1)
@@ -1347,6 +1351,7 @@ namespace main
             DHW1.Load_Boiler_general(ProjNum);
             DHW1.Load_Solar_general(ProjNum);
             DHW1.Load_HP_general(ProjNum);
+            DHW1.Load_DH_general(ProjNum);
             DHW1.Load_PumpData(ProjNum);
             DHW1.Load_StorageData(ProjNum);
             DHW1.Load_PipeData(ProjNum);
@@ -1358,6 +1363,7 @@ namespace main
             DHW1.LoadCalc_Solar(ProjNum);
             DHW1.LoadCalc_Boiler(ProjNum);
             DHW1.LoadCalc_HP(ProjNum);
+            DHW1.LoadCalc_DH(ProjNum);
             DHW1.nan();
         }
         private static void DHW_Save(DHW DHW1)
