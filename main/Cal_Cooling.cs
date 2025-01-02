@@ -1446,7 +1446,55 @@ namespace main
                 else QC_f[i] = QC_out[i] / SEER_c[i];
                 a += QC_f[i];
             }
-            a = a;
+            LoadCalc_DH();
+        }
+
+
+        public void LoadCalc_DH()
+        {
+            if(CG == "흡수식냉동기")
+            {
+                if (SelectCG.Count > 0) 
+                {
+                    string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "a.번호,a.용량,a.공급온도1차,a.환수온도1차,a.공급온도2차,a.환수온도2차 From User_DH as a Inner Join User_ABS as b on a.번호=b.지역난방  Where b.번호 = '" + SelectCG[0] + "'");
+                    if (Value.Length > 0)
+                    {
+                        String Num = Value[0][0];
+                        Carrier = "지역난방";
+                        double Power = Convert.ToDouble(Value[0][1]);
+                        double SL_1 = Convert.ToDouble(Value[0][2]);
+                        double RL_1 = Convert.ToDouble(Value[0][3]);
+                        double SL_2 = Convert.ToDouble(Value[0][4]);
+                        double RL_2 = Convert.ToDouble(Value[0][5]);
+                        Calc_Qc_DH(Num, Power, SL_1, SL_2);
+                    }
+                }
+            }
+            
+        }
+        public void Calc_Qc_DH(String Num, double Power, double theta_prime, double theta_sek)
+        {
+            // theta_prime = 105 > D_DS =0.6, theta_prime = 150 > D_DS =0.4 //DIN V 18599-5 table 58
+            double D_DS = (0.4 - 0.6) / (150 - 105) * (theta_prime - 105) + 0.6;
+            // theta_prime = 105 > B_DS =3.5, theta_prime = 150 > B_DS =3.1 //DIN V 18599-5 table 59
+            double B_DS = (3.1 - 3.5) / (150 - 105) * (theta_prime - 105) + 3.5;
+            double theta_DS = D_DS * theta_prime + (1 - D_DS) * theta_sek;
+            double H_DS = B_DS * Math.Pow(Power, 1.0 / 3.0);
+            double QC_outg_a = 0;
+            double[] theta_i = new double[12];
+            double[] Q_gen_DH = new double[12];
+            for (int mth = 0; mth < 12; mth++)
+            {
+                QC_outg_a += QC_out[mth];
+            }
+            for (int mth = 0; mth < 12; mth++)
+            {
+                Q_gen_DH[mth] = H_DS * QC_out[mth] / QC_outg_a * (theta_DS - OutdoorTemperature[mth]);
+            }
+            for (int mth = 0; mth < 12; mth++)
+            {
+                QC_f[mth] = QC_f[mth] + Q_gen_DH[mth];
+            }
         }
         public void Cal_feerCorr()
         { 

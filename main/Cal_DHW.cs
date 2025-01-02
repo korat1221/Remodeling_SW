@@ -14,6 +14,7 @@ namespace main
         String SelectBoiler_nonsplit, BoilerNum_nonsplit;
         String SelectSolar_nonsplit, SolarNum_nonsplit, SolarDirection_nonsplit, SolarDegree_nonsplit;
         String SelectHP_nonsplit, HPNum_nonsplit, HPControl_nonsplit;
+        String SelectDH_nonsplit;
         String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; int Pump1Count, Pump2Count;
         public ArrayList Pump = new ArrayList();
         String StorageUse, StoragePumpUse, StoragePump,StorageType; public double Vs;
@@ -21,7 +22,7 @@ namespace main
         double PipeD, PipeInsD, PipeIns_Ramda;
         String PipeIns;
         int ZoneCount;
-        public ArrayList SelectZone_split = new ArrayList(); public ArrayList SelectBoiler_split = new ArrayList(); public ArrayList BoilerNum_split = new ArrayList();
+        public ArrayList SelectZone_split = new ArrayList(); public ArrayList SelectBoiler_split = new ArrayList(); public ArrayList BoilerNum_split = new ArrayList(); public ArrayList SelectDH_split = new ArrayList();
         public double[] Qwb_mth_sum = new double[12]; public double[] theta_ih_avg = new double[12]; public double[] theta_e = new double[12]; public double[] theta_u = new double[12];
         public double Qw_a_sum, th_op_day_avg, theta_i_h_set_avg; public double[] dop_mth_avg = new double[12];
         double SL, RL;
@@ -258,6 +259,15 @@ namespace main
 
             }
         }
+        public void Load_DH_general(string ProjNum)
+        {
+            string[][] Value = Program.DB.getValue(ProjNum, "DHWSystem_Form", "지역난방번호", "번호 = '" + DHWNum + "'");
+            if (Value.Length > 0)
+            {
+                SelectDH_nonsplit = Value[0][0];
+                SelectDH_split = Split_(SelectDH_nonsplit);
+            }
+        }
         public void Load_PumpData(string ProjNum)
         {
             string[][] Value = Program.DB.getValue(ProjNum, "DHWSystem_Form", "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수", "번호 = '" + DHWNum + "'");
@@ -308,8 +318,6 @@ namespace main
        
         public void Calc_Qd(string ProjNum)
         {
-            
-
             double R_pipe, R_se, Ramda_se, L1 = 0, L2 = 0;
 
             //배관 열저항
@@ -632,6 +640,67 @@ namespace main
                 tw_gen_op_sng[mth] = Math.Min((Qw_outg[mth] - Qw_outg_bu[mth] - Pi_gen_combi_corr * tw_gen_op_combi[mth]) / Pi_gen_sng_corr, top_max[mth]);
                 Qw_outg_bu_t[mth] = Math.Max(0, Qw_outg[mth] - Qw_outg_bu[mth] - Pi_gen_sng_corr * tw_gen_op_sng[mth] - Pi_gen_combi_corr * tw_gen_op_combi[mth]);
                 Qw_f[mth] = Pi_gen_combi_corr * tw_gen_op_sng[mth] / COPw_sng_corr + Pi_gen_combi_corr * tw_gen_op_combi[mth] / COPw_combi_corr;
+            }
+        }
+
+        public void LoadCalc_DH(string ProjNum)
+        {
+            for (int n = 0; n < SelectDH_split.Count; n++)
+            {
+                string[][] Value = Program.DB.getValue(ProjNum, "User_DH", "번호,용량,공급온도1차,환수온도1차,공급온도2차,환수온도2차", "번호 = '" + SelectDH_split[n] + "'");
+                if (Value.Length > 0)
+                {
+                    String Num = Value[0][0];
+                    Carrier = "지역난방";
+                    double Power = Convert.ToDouble(Value[0][1]);
+                    double SL_1 = Convert.ToDouble(Value[0][2]);
+                    double RL_1 = Convert.ToDouble(Value[0][3]);
+                    double SL_2 = Convert.ToDouble(Value[0][4]);
+                    double RL_2 = Convert.ToDouble(Value[0][5]);
+                    Calc_Qw_DH(Num, Power, SL_1, SL_2);
+                }
+            }
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                Qw_f[mth] = Qw_outg[mth] + Qw_gen[mth];
+            }
+        }
+        public void Calc_Qw_DH(String Num, double Power, double theta_prime, double theta_sek)
+        {
+            // theta_prime = 105 > D_DS =0.6, theta_prime = 150 > D_DS =0.4 //DIN V 18599-5 table 58
+            double D_DS = (0.4 - 0.6) / (150 - 105) * (theta_prime - 105) + 0.6;
+            // theta_prime = 105 > B_DS =3.5, theta_prime = 150 > B_DS =3.1 //DIN V 18599-5 table 59
+            double B_DS = (3.1 - 3.5) / (150 - 105) * (theta_prime - 105) + 3.5;
+            double theta_DS = D_DS * theta_prime + (1 - D_DS) * theta_sek;
+            double H_DS = B_DS * Math.Pow(Power, 1.0 / 3.0);
+            double Qh_outg_a = 0;
+            double[] theta_i = new double[12];
+            double[] Qh_gen_DH = new double[12];
+            for (int mth = 0; mth < 12; mth++)
+            {
+                Qh_outg_a += Qw_outg[mth];
+                if (SystemLoacation == "단열외피 외부")
+                {
+                    theta_i[mth] = theta_u[mth];
+                }
+                else if (SystemLoacation == "외기")
+                {
+                    theta_i[mth] = theta_e[mth];
+                }
+                else
+                {
+                    theta_i[mth] = theta_ih_avg[mth];
+                }
+            }
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                Qh_gen_DH[mth] = H_DS * Qw_outg[mth] / Qh_outg_a * (theta_DS - theta_i[mth]);
+            }
+            for (int mth = 0; mth < 12; mth++)
+            {
+                Qw_gen[mth] = Qw_gen[mth] + Qh_gen_DH[mth];
             }
         }
         public void nan()
