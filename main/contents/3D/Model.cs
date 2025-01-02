@@ -628,7 +628,7 @@ namespace main.contents
         }
         private void WebView21_SizeChanged(object sender, EventArgs e)
         {
-            CalculateModel();
+            CalculateModel(true);
         }
 
         public void CalculateModel(bool force = false)

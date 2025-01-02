@@ -556,7 +556,63 @@ Editor.prototype = {
 		this.select( this.scene.getObjectById( id ) );
 
 	},
+	resetBridgesSelection: function () {
+		let _hideBridges = (bridges) => {
+			let i;
 
+			for (const [id2, el] of Object.entries(bridges)) {
+				i = -1;
+				while(++i < el.bridges.length) {
+					let o = this.getByUuid(el.bridges[i]);
+
+					if (o) {
+						o.visible = false;
+					}
+				}
+			}
+		};
+
+		let i = -1;
+		while(++i < this.scene.children.length) {
+			if (this.scene.children[i] instanceof THREE.Group) {
+				let el = this.scene.children[i];
+				if (el.userData.bridges) {
+					_hideBridges(el.userData.bridges);
+				}
+
+				break;
+			}
+		}
+	},
+	selectByBridgeID: function ( id ) {
+		let _showBridges = (bridges, id) => {
+			let i;
+
+			for (const [id2, el] of Object.entries(bridges)) {
+				i = -1;
+				while(++i < el.bridges.length) {
+					let o = this.getByUuid(el.bridges[i]);
+
+					if (o) {
+						o.visible = !!(id == id2);
+					}
+				}
+			}
+		};
+
+		let i = -1;
+		while(++i < this.scene.children.length) {
+			if (this.scene.children[i] instanceof THREE.Group) {
+				let el = this.scene.children[i];
+				if (el.userData.bridges) {
+					_showBridges(el.userData.bridges, id);
+				}
+
+				break;
+			}
+		}
+		this.signals.sceneGraphChanged.dispatch();
+	},
 	selectByZoneid: function ( zid ) {
 		let i = -1, j;
 		let arr = [];
@@ -886,6 +942,8 @@ Editor.prototype = {
 
 	restoreSelect: function () {
 		let i = -1, j;
+
+		this.resetBridgesSelection();
 
 		while(++i < this.selectOld.length) {
 			let el = this.selectOld[i];

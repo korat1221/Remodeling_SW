@@ -329,7 +329,7 @@ Bridges.prototype = {
 		let _pushBridges = (kind) => {
 			let i = -1, j;
 
-			bridges[kind] = {dist:0,items:[]};
+			bridges[kind] = {dist:0,items:[],bridges:[]};
 
 			for (const [id, el] of Object.entries(zones)) {
                 i = -1;
@@ -343,6 +343,7 @@ Bridges.prototype = {
 					while(++j < line.length) {
 						if ((o = _getBridgeKind(kind, link[j], line[j])) !== null && !_findBridge(kind, line[j]) && (kind !== 14 || _is2FOutwall(link[j])) && (kind !== 12 || _is270Outwall(link[j]))) {
 							bridges[kind].items.push({line:line[j], data:o.data, edge:link[j]});
+							bridges[kind].bridges.push(_addLineObject(line[j],0xFF0000, 1));
 						}
 					}
 				}
@@ -357,56 +358,53 @@ Bridges.prototype = {
 			// }
 		};
 
-		let _asNumeric = (obj) => {
-			return (!obj || isNaN(obj)) ? 0 : obj;
-		};
-		let _addLineObject = (pos, color) => {
-			obj.add(new THREE.Line(
+		let _addLineObject = (pos, color, opacity) => {
+			let mesh = new THREE.Line(
 				new THREE.BufferGeometry().setFromPoints(pos),
 				new THREE.LineBasicMaterial({
 					color: new THREE.Color().setHex(color),
-					opacity: 1.0,
+					opacity: opacity,
 					transparent: true,
-				})
-			));
-            return obj.children[obj.children.length - 1].uuid;
+				}));
+			mesh.visible = false;
+			obj.add(mesh);
+            return mesh.uuid;
 		};
-
-		let __drawBridges = (knd) => {
-			let i = -1;
-			let bridge = bridges[knd];
+		// let __drawBridges = (knd) => {
+		// 	let i = -1;
+		// 	let bridge = bridges[knd];
 	  
-			// while (++i < this.drawing_line.length) {
-			//   this.drawing_line[i].mesh.material.opacity = 0;
-			// }
+		// 	// while (++i < this.drawing_line.length) {
+		// 	//   this.drawing_line[i].mesh.material.opacity = 0;
+		// 	// }
 	  
-			if (bridge) {
-			  i = -1;
-			  while (++i < bridge.items.length) {
-				let el = bridge.items[i];
-				_addLineObject(el.line, 0xff0000, 2);
-			  }
-			}
-		};
-		let _drawBridges = (kind) => {
+		// 	if (bridge) {
+		// 	  i = -1;
+		// 	  while (++i < bridge.items.length) {
+		// 		let el = bridge.items[i];
+		// 		_addLineObject(el.line, 0xff0000, 2);
+		// 	  }
+		// 	}
+		// };
+		// let _drawBridges = (kind) => {
 		
-			if (kind === "2") {
-			  __drawBridges("11");
-			  __drawBridges("12");
-			} else if (kind === "1") {
-			  __drawBridges("1");
-			} else {
-			  let n = parseInt(kind);
+		// 	if (kind === "2") {
+		// 	  __drawBridges("11");
+		// 	  __drawBridges("12");
+		// 	} else if (kind === "1") {
+		// 	  __drawBridges("1");
+		// 	} else {
+		// 	  let n = parseInt(kind);
 		
-			  if (n <= 10) {
-				__drawBridges(n - 1 + "");
-			  } else if (n === 11) {
-				__drawBridges("13");
-			  } else if (n === 12) {
-				__drawBridges("14");
-			  }
-			}
-		  };
+		// 	  if (n <= 10) {
+		// 		__drawBridges(n - 1 + "");
+		// 	  } else if (n === 11) {
+		// 		__drawBridges("13");
+		// 	  } else if (n === 12) {
+		// 		__drawBridges("14");
+		// 	  }
+		// 	}
+		//   };
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -415,14 +413,14 @@ Bridges.prototype = {
 			obj.userData.bridges = {};
 		}
         let bridges = obj.userData.bridges;
-		let i = 0, o;
+		let i = 0, o, k;
 
 		while(++i <= 14) {
 			if (i != 10) {
 				_pushBridges(i);
 			}
 			else {
-				bridges[i] = {dist:0,items:[]};
+				bridges[i] = {dist:0,items:[],bridges:[]};
 			}
 		}
 
@@ -434,10 +432,16 @@ Bridges.prototype = {
 					let el2 = el.userData.children[i];
 	
 					if (el2.type === 'CW' || el2.type === 'DR' || el2.type === 'WN') {
-						bridges[10].items.push({line:[new THREE.Vector3(el2.bbox[0][0],el2.bbox[0][1],el2.bbox[0][2]),new THREE.Vector3(el2.bbox[0][0],el2.bbox[1][1],el2.bbox[0][2])]});
-						bridges[10].items.push({line:[new THREE.Vector3(el2.bbox[0][0],el2.bbox[1][1],el2.bbox[0][2]),new THREE.Vector3(el2.bbox[1][0],el2.bbox[1][1],el2.bbox[1][2])]});
-						bridges[10].items.push({line:[new THREE.Vector3(el2.bbox[1][0],el2.bbox[1][1],el2.bbox[1][2]),new THREE.Vector3(el2.bbox[1][0],el2.bbox[0][1],el2.bbox[1][2])]});
-						bridges[10].items.push({line:[new THREE.Vector3(el2.bbox[1][0],el2.bbox[0][1],el2.bbox[1][2]),new THREE.Vector3(el2.bbox[0][0],el2.bbox[0][1],el2.bbox[0][2])]});
+						let line = [[new THREE.Vector3(el2.bbox[0][0],el2.bbox[0][1],el2.bbox[0][2]),new THREE.Vector3(el2.bbox[0][0],el2.bbox[1][1],el2.bbox[0][2])],
+							[new THREE.Vector3(el2.bbox[0][0],el2.bbox[1][1],el2.bbox[0][2]),new THREE.Vector3(el2.bbox[1][0],el2.bbox[1][1],el2.bbox[1][2])],
+							[new THREE.Vector3(el2.bbox[1][0],el2.bbox[1][1],el2.bbox[1][2]),new THREE.Vector3(el2.bbox[1][0],el2.bbox[0][1],el2.bbox[1][2])],
+							[new THREE.Vector3(el2.bbox[1][0],el2.bbox[0][1],el2.bbox[1][2]),new THREE.Vector3(el2.bbox[0][0],el2.bbox[0][1],el2.bbox[0][2])]
+						];
+						k = -1;
+						while(++k < line.length) {
+							bridges[10].items.push({line:line[k]});
+							bridges[10].bridges.push(_addLineObject(line[k],0xFF0000, 1));
+						}
 					}
 				}
 			}
@@ -451,14 +455,14 @@ Bridges.prototype = {
 			}
 		}
 
-		Object.values(bridges).forEach(el => {
-			let d = 0;
-			el.items.forEach(el2 => {
-				d += el2.line[0].distanceTo(el2.line[1]);
-			});
-			el.dist = _asNumeric(d).toFixed(2);
-			_drawBridges(el);
-		});
+//		Object.values(bridges).forEach(el => {
+//			let d = 0;
+//			el.items.forEach(el2 => {
+//				d += el2.line[0].distanceTo(el2.line[1]);
+//			});
+//			el.dist = _asNumeric(d).toFixed(2);
+//			_drawBridges(el);
+//		});
 	},
 };
 

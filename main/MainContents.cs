@@ -641,6 +641,10 @@ namespace main
                         {
                             Program.UTIL.select3DObject("---::" + selectInfo[1] + "::---");
                         }
+                        else if (selectInfo[0] == "selectbdg")
+                        {
+                            Program.UTIL.select3DObject(selID);
+                        }
                         else
                         {
                             Program.UTIL.select3DObject("---::---::" + selectInfo[2]);
