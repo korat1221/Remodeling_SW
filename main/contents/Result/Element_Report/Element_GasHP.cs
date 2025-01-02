@@ -788,12 +788,12 @@ namespace main.contents.Result
 
                             if (ghp_COP_Old_H[a] != 0)
                             { ghp_data[108 + a].Add(new { idx = i, val = ghp_COP_Old_H[a].ToString("0.0") }); }//난방 기존 COP
-                            else { ghp_data[108 + a].Add(new { idx = i, val = "Not EHP" }); }
+                            else { ghp_data[108 + a].Add(new { idx = i, val = "Not GHP" }); }
                             data.Add(new { cname = "ghp_cop_old_h" + a, data = ghp_data[108 + a] });
 
                             if (ghp_COP_Old_C[a] != 0)
                             { ghp_data[126 + a].Add(new { idx = i, val = ghp_COP_Old_C[a].ToString("0.0") }); }//냉방 기존 COP
-                            else { ghp_data[126 + a].Add(new { idx = i, val = "Not EHP" }); }
+                            else { ghp_data[126 + a].Add(new { idx = i, val = "Not GHP" }); }
                             data.Add(new { cname = "ghp_cop_old_c" + a, data = ghp_data[126 + a] });
 
                             ghp_data[144 + a].Add(new { idx = i, val = (ghp_Saving_H[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//난방 절감률
@@ -1081,12 +1081,12 @@ namespace main.contents.Result
 
                             if (abs_COP_Old_H[a] != 0)
                             { abs_data[108 + a].Add(new { idx = i, val = abs_COP_Old_H[a].ToString("0.0") }); }//난방 기존 COP
-                            else { abs_data[108 + a].Add(new { idx = i, val = "Not EHP" }); }
+                            else { abs_data[108 + a].Add(new { idx = i, val = "Not ABS" }); }
                             data.Add(new { cname = "abs_cop_old_h" + a, data = abs_data[108 + a] });
 
                             if (abs_COP_Old_C[a] != 0)
                             { abs_data[126 + a].Add(new { idx = i, val = abs_COP_Old_C[a].ToString("0.0") }); }//냉방 기존 COP
-                            else { abs_data[126 + a].Add(new { idx = i, val = "Not EHP" }); }
+                            else { abs_data[126 + a].Add(new { idx = i, val = "Not ABS" }); }
                             data.Add(new { cname = "abs_cop_old_c" + a, data = abs_data[126 + a] });
 
                             abs_data[144 + a].Add(new { idx = i, val = (abs_Saving_H[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//난방 절감률

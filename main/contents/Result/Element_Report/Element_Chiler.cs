@@ -583,7 +583,7 @@ namespace main.contents.Result
 
                             if (Air_COP_Old[a] != 0)
                             { Air_data[126 + a].Add(new { idx = i, val = Air_COP_Old[a].ToString("0.0") }); }//냉방 기존 COP
-                            else { Air_data[126 + a].Add(new { idx = i, val = "Not EHP" }); }
+                            else { Air_data[126 + a].Add(new { idx = i, val = "Not Chiler" }); }
                             data.Add(new { cname = "air_cop_old" + a, data = Air_data[126 + a] });
                             Air_data[162 + a].Add(new { idx = i, val = (Air_Saving[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//냉방 절감률
                             data.Add(new { cname = "air_saving" + a, data = Air_data[162 + a] });
@@ -763,7 +763,7 @@ namespace main.contents.Result
 
                             if (Water_COP_Old[a] != 0)
                             { Water_data[126 + a].Add(new { idx = i, val = Water_COP_Old[a].ToString("0.0") }); }//냉방 기존 COP
-                            else { Water_data[126 + a].Add(new { idx = i, val = "Not EHP" }); }
+                            else { Water_data[126 + a].Add(new { idx = i, val = "Not Chiler" }); }
                             data.Add(new { cname = "water_cop_old" + a, data = Water_data[126 + a] });
                             Water_data[162 + a].Add(new { idx = i, val = (Water_Saving[a] / Total_Energy_pre * 100).ToString("0.0") + " %" });//냉방 절감률            
                             data.Add(new { cname = "water_saving" + a, data = Water_data[162 + a] });

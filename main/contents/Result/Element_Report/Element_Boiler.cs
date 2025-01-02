@@ -840,9 +840,13 @@ namespace main.contents.Result
                     for (int aa = 0; aa < HeatingGroup.Count; aa++)
                     {
                         Heating_New_Old hh = (Heating_New_Old)HeatingGroup[aa];
-                        heating_element_saving[aa] = heating_saving * (hh.Before_Energy() - hh.After_Energy()) / heating_saving_total;
-                        heating_element_saving_elec[aa] = heating_saving_elec * (hh.Before_Energy() - hh.After_Energy()) / heating_saving_total;
-                        heating_element_saving_gas[aa] = heating_saving_noelec * (hh.Before_Energy() - hh.After_Energy()) / heating_saving_total;
+                        if(heating_saving_total >0)
+                        {
+                            heating_element_saving[aa] = heating_saving * (hh.Before_Energy() - hh.After_Energy()) / heating_saving_total;
+                            heating_element_saving_elec[aa] = heating_saving_elec * (hh.Before_Energy() - hh.After_Energy()) / heating_saving_total;
+                            heating_element_saving_gas[aa] = heating_saving_noelec * (hh.Before_Energy() - hh.After_Energy()) / heating_saving_total;
+                        }
+                       
                     }
                     #endregion
 
@@ -860,9 +864,13 @@ namespace main.contents.Result
                     for (int aa = 0; aa < DHWGroup.Count; aa++)
                     {
                         DHW_New_Old ww = (DHW_New_Old)DHWGroup[aa];
-                        dhw_element_saving[aa] = dhw_saving * (ww.Before_Energy() - ww.After_Energy()) / dhw_saving_total;
-                        dhw_element_saving_elec[aa] = dhw_saving_elec * (ww.Before_Energy() - ww.After_Energy()) / dhw_saving_total;
-                        dhw_element_saving_gas[aa] = dhw_saving_noelec * (ww.Before_Energy() - ww.After_Energy()) / dhw_saving_total;
+                        if(dhw_saving_total >0)
+                        {
+                            dhw_element_saving[aa] = dhw_saving * (ww.Before_Energy() - ww.After_Energy()) / dhw_saving_total;
+                            dhw_element_saving_elec[aa] = dhw_saving_elec * (ww.Before_Energy() - ww.After_Energy()) / dhw_saving_total;
+                            dhw_element_saving_gas[aa] = dhw_saving_noelec * (ww.Before_Energy() - ww.After_Energy()) / dhw_saving_total;
+                        }
+                        
                     }
                     #endregion
 
