@@ -118,6 +118,9 @@
     <Compile Update="subcontents\Alt\AltFloor.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\Alt\AltWin.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\Alt\AltRoof.cs">
       <SubType>Form</SubType>
     </Compile>

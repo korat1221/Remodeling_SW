@@ -41,6 +41,7 @@ namespace main.contents.Alt
         string SelectAlt_Wall;
         string SelectAlt_Roof;
         string SelectAlt_Floor;
+        string SelectAlt_Win;
         public AltMain()
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
@@ -75,7 +76,7 @@ namespace main.contents.Alt
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-            if(AltNum ==null || AltName == null || Cost_Total == 0 || Cost_Net == 0 || TotalPoint == 0 )
+            if (AltNum == null || AltName == null || Cost_Total == 0 || Cost_Net == 0 || TotalPoint == 0)
             {
                 MessageBox.Show("필수 입력항목들을 입력하세요.");
             }
@@ -83,7 +84,7 @@ namespace main.contents.Alt
             {
                 Save();
             }
-               
+
         }
 
         private void Save()
@@ -143,9 +144,10 @@ namespace main.contents.Alt
             Create_Wall_Old_table();
             Create_Roof_Old_table();
             Create_Floor_Old_table();
+            Create_Win_Old_table();
 
             String[][] Load = Program.DB.getValue(DB.type.ProjDB, "Optimal_Form", "명칭,총공사비,순공사비,종합점수", "번호 = '" + AltNum + "'");
-            if(Load.Length > 0)
+            if (Load.Length > 0)
             {
                 Name_textBox.Text = Load[0][0];
                 AltName = Load[0][0];
@@ -162,13 +164,13 @@ namespace main.contents.Alt
                 "요소기술6,리모델링안6,요소기술7,리모델링안7,요소기술8,리모델링안8,요소기술9,리모델링안9,요소기술10,리모델링안10", "번호 = '" + AltNum + "'");
             if (Load.Length > 0)
             {
-               for(int a= 0; a < 10; a++)
+                for (int a = 0; a < 10; a++)
                 {
-                    if (Load[0][a*2]!=null && Load[0][a*2] != "")
+                    if (Load[0][a * 2] != null && Load[0][a * 2] != "")
                     {
                         Add_Alt();
-                        Alt_dataGridView.Rows[a].Cells[2].Value = Load[0][a*2];
-                        Alt_dataGridView.Rows[a].Cells[4].Value = Load[0][a*2+1];
+                        Alt_dataGridView.Rows[a].Cells[2].Value = Load[0][a * 2];
+                        Alt_dataGridView.Rows[a].Cells[4].Value = Load[0][a * 2 + 1];
                     }
                     else
                     {
@@ -177,7 +179,7 @@ namespace main.contents.Alt
                 }
                 for (int a = 0; a < Alt_dataGridView.Rows.Count; a++)
                 {
-                   if(Alt_dataGridView.Rows[a].Cells[2].Value != null)
+                    if (Alt_dataGridView.Rows[a].Cells[2].Value != null)
                     {
                         if (Alt_dataGridView.Rows[a].Cells[2].Value.ToString() == "외벽")
                         {
@@ -191,10 +193,10 @@ namespace main.contents.Alt
                         {
                             Create_Floor_New_table(Alt_dataGridView.Rows[a].Cells[4].Value.ToString());
                         }
-                    }                   
+                    }
                 }
             }
-           
+
         }
 
         private void AltMainPanel_Paint(object sender, PaintEventArgs e)
@@ -220,8 +222,8 @@ namespace main.contents.Alt
 
         private void Calc_TotalPoint()
         {
-            double point = 0;  int count = 0;
-            if(WallPoint_textBox.Text != null && WallPoint_textBox.Text.ToString().Contains(" 점"))
+            double point = 0; int count = 0;
+            if (WallPoint_textBox.Text != null && WallPoint_textBox.Text.ToString().Contains(" 점"))
             {
                 string a = WallPoint_textBox.Text.ToString().Substring(0, WallPoint_textBox.Text.ToString().IndexOf(" 점"));
                 point += Convert.ToDouble(a);
@@ -239,7 +241,7 @@ namespace main.contents.Alt
                 point += Convert.ToDouble(a);
                 count = count + 1;
             }
-            if(count >0)
+            if (count > 0)
             {
                 TotalPoint_label.Visible = true;
                 TotalPoint_textBox.Visible = true;
@@ -345,6 +347,9 @@ namespace main.contents.Alt
                                 break;
                             case "최하층바닥":
                                 Open_FloorAlt();
+                                break;
+                            case "창호":
+                                Open_WinAlt();
                                 break;
 
                         }
@@ -463,7 +468,7 @@ namespace main.contents.Alt
         }
         private void CostTotal_textBox_TextChanged(object sender, EventArgs e)
         {
-            Cost_Total =  Program.UTIL.textBox_doubleComa(CostTotal_textBox, false, 0);
+            Cost_Total = Program.UTIL.textBox_doubleComa(CostTotal_textBox, false, 0);
         }
         private void Calc_NetCost(double CostTotal)
         {
@@ -637,7 +642,7 @@ namespace main.contents.Alt
 
                 SelectAlt_Wall = form.SelectName;
                 Create_Wall_New_table(SelectAlt_Wall);
-               
+
             }
         }
         private void WallCheck_button_Click(object sender, EventArgs e)
@@ -654,10 +659,10 @@ namespace main.contents.Alt
             Wall_Old_dataGridView.Columns.Clear();
             Wall_Old_dataGridView.Columns.Add("A0", "번호");
             Wall_Old_dataGridView.Columns.Add("A1", "명칭");
-            string unit =  "W/m" +  Program.UTIL.Subscript(2, true) + "·K";
-            Wall_Old_dataGridView.Columns.Add("A2", "유효열관류율.["+ unit +"]");
-            unit =  "m" +  Program.UTIL.Subscript(2, true);
-            Wall_Old_dataGridView.Columns.Add("A3", "면적.["+ unit +"]");
+            string unit = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
+            Wall_Old_dataGridView.Columns.Add("A2", "유효열관류율.[" + unit + "]");
+            unit = "m" + Program.UTIL.Subscript(2, true);
+            Wall_Old_dataGridView.Columns.Add("A3", "면적.[" + unit + "]");
             Wall_Old_dataGridView.Columns[0].Width = 40;
 
             string[][] List = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.번호,a.명칭,a.유효열관류율 From ConstructionWall as a  Inner Join ZoneEnvelope_3D as b on a.번호=b.구조체번호");
@@ -695,10 +700,10 @@ namespace main.contents.Alt
 
             Wall_New_dataGridView.Columns.Add("A1", "번호");
             Wall_New_dataGridView.Columns.Add("A2", "명칭");
-            string unit =  "W/m" +  Program.UTIL.Subscript(2, true) + "·K";
-            Wall_New_dataGridView.Columns.Add("A2", "유효열관류율.["+ unit +"]");
-            unit =  "m" +  Program.UTIL.Subscript(2, true);
-            Wall_New_dataGridView.Columns.Add("A3", "면적.["+ unit +"]");
+            string unit = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
+            Wall_New_dataGridView.Columns.Add("A2", "유효열관류율.[" + unit + "]");
+            unit = "m" + Program.UTIL.Subscript(2, true);
+            Wall_New_dataGridView.Columns.Add("A3", "면적.[" + unit + "]");
             Wall_New_dataGridView.Columns[0].Width = 40;
             Wall_New_dataGridView.Columns[1].Width = 40;
 
@@ -990,7 +995,7 @@ namespace main.contents.Alt
             {
 
                 SelectAlt_Roof = form.SelectName;
-                Create_Roof_New_table(SelectAlt_Roof);              
+                Create_Roof_New_table(SelectAlt_Roof);
             }
         }
 
@@ -1008,10 +1013,10 @@ namespace main.contents.Alt
             Roof_Old_dataGridView.Columns.Clear();
             Roof_Old_dataGridView.Columns.Add("A0", "번호");
             Roof_Old_dataGridView.Columns.Add("A1", "명칭");
-            string unit =  "W/m" +  Program.UTIL.Subscript(2, true) + "·K";
-            Roof_Old_dataGridView.Columns.Add("A2", "유효열관류율.["+ unit +"]");
-            unit =  "m" +  Program.UTIL.Subscript(2, true);
-            Roof_Old_dataGridView.Columns.Add("A3", "면적.["+ unit +"]");
+            string unit = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
+            Roof_Old_dataGridView.Columns.Add("A2", "유효열관류율.[" + unit + "]");
+            unit = "m" + Program.UTIL.Subscript(2, true);
+            Roof_Old_dataGridView.Columns.Add("A3", "면적.[" + unit + "]");
             Roof_Old_dataGridView.Columns[0].Width = 40;
 
             string[][] List = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.번호,a.명칭,a.유효열관류율 From ConstructionRoof as a  Inner Join ZoneEnvelope_3D as b on a.번호=b.구조체번호");
@@ -1049,10 +1054,10 @@ namespace main.contents.Alt
 
             Roof_New_dataGridView.Columns.Add("A1", "번호");
             Roof_New_dataGridView.Columns.Add("A2", "명칭");
-            string unit =  "W/m" +  Program.UTIL.Subscript(2, true) + "·K";
-            Roof_New_dataGridView.Columns.Add("A2", "유효열관류율.["+ unit +"]");
-            unit =  "m" +  Program.UTIL.Subscript(2, true);
-            Roof_New_dataGridView.Columns.Add("A3", "면적.["+ unit +"]");
+            string unit = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
+            Roof_New_dataGridView.Columns.Add("A2", "유효열관류율.[" + unit + "]");
+            unit = "m" + Program.UTIL.Subscript(2, true);
+            Roof_New_dataGridView.Columns.Add("A3", "면적.[" + unit + "]");
             Roof_New_dataGridView.Columns[0].Width = 40;
             Roof_New_dataGridView.Columns[1].Width = 40;
 
@@ -1326,6 +1331,7 @@ namespace main.contents.Alt
         }
         #endregion
 
+
         #region 최하층바닥
         private void Open_FloorAlt()
         {
@@ -1335,7 +1341,7 @@ namespace main.contents.Alt
             {
 
                 SelectAlt_Floor = form.SelectName;
-                Create_Floor_New_table(SelectAlt_Floor);               
+                Create_Floor_New_table(SelectAlt_Floor);
             }
         }
 
@@ -1353,10 +1359,10 @@ namespace main.contents.Alt
             Floor_Old_dataGridView.Columns.Clear();
             Floor_Old_dataGridView.Columns.Add("A0", "번호");
             Floor_Old_dataGridView.Columns.Add("A1", "명칭");
-            string unit =  "W/m" +  Program.UTIL.Subscript(2, true) + "·K";
-            Floor_Old_dataGridView.Columns.Add("A2", "유효열관류율.["+ unit +"]");
-            unit =  "m" +  Program.UTIL.Subscript(2, true);
-            Floor_Old_dataGridView.Columns.Add("A3", "면적.["+ unit +"]");
+            string unit = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
+            Floor_Old_dataGridView.Columns.Add("A2", "유효열관류율.[" + unit + "]");
+            unit = "m" + Program.UTIL.Subscript(2, true);
+            Floor_Old_dataGridView.Columns.Add("A3", "면적.[" + unit + "]");
             Floor_Old_dataGridView.Columns[0].Width = 40;
 
             string[][] List = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.번호,a.명칭,a.유효열관류율 From ConstructionFloor as a  Inner Join ZoneEnvelope_3D as b on a.번호=b.구조체번호");
@@ -1394,10 +1400,10 @@ namespace main.contents.Alt
 
             Floor_New_dataGridView.Columns.Add("A1", "번호");
             Floor_New_dataGridView.Columns.Add("A2", "명칭");
-            string unit =  "W/m" +  Program.UTIL.Subscript(2, true) + "·K";
-            Floor_New_dataGridView.Columns.Add("A2", "유효열관류율.["+ unit +"]");
-            unit =  "m" +  Program.UTIL.Subscript(2, true);
-            Floor_New_dataGridView.Columns.Add("A3", "면적.["+ unit +"]");
+            string unit = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
+            Floor_New_dataGridView.Columns.Add("A2", "유효열관류율.[" + unit + "]");
+            unit = "m" + Program.UTIL.Subscript(2, true);
+            Floor_New_dataGridView.Columns.Add("A3", "면적.[" + unit + "]");
             Floor_New_dataGridView.Columns[0].Width = 40;
             Floor_New_dataGridView.Columns[1].Width = 40;
 
@@ -1655,6 +1661,182 @@ namespace main.contents.Alt
         }
         #endregion
 
+        #region 창호
+        private void Open_WinAlt()
+        {
+            AltWin form = new AltWin("");
+            DialogResult result = form.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+
+                SelectAlt_Win = form.SelectName;
+                Create_Win_New_table(SelectAlt_Win);
+            }
+        }
+
+        private void WInCheck_button_Click(object sender, EventArgs e)
+        {
+            ////AltWin form = new AltWin(SelectAlt_Win);
+            //DialogResult result = form.ShowDialog();
+            //if (result == DialogResult.OK)
+            //{
+            //}
+        }
+        private void Create_Win_Old_table()
+        {
+            new StackedHeaderDecorator(Win_Old_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            Win_Old_dataGridView.Columns.Clear();
+            Win_Old_dataGridView.Columns.Add("A0", "번호");
+            Win_Old_dataGridView.Columns.Add("A1", "명칭");
+            string unit = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
+            Win_Old_dataGridView.Columns.Add("A2", "유효열관류율.[" + unit + "]");
+            unit = "m" + Program.UTIL.Subscript(2, true);
+            Win_Old_dataGridView.Columns.Add("A3", "면적.[" + unit + "]");
+            Win_Old_dataGridView.Columns.Add("A4", "개수.[EA]");
+            Win_Old_dataGridView.Columns[0].Width = 50;
+            Win_Old_dataGridView.Columns[4].Width = 50;
+
+            string[][] List = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.번호,a.창호명칭 From ConstructionWindow as a  Inner Join SubWindow as b on a.번호=b.상위창호번호 Inner Join ZoneEnvelope_3D as c on b.번호=c.구조체번호");
+            if (List.Length > 0)
+            {
+                Win_Old_dataGridView.Rows.Clear();
+                for (int n = 0; n < List.Length; n++)
+                {
+                    int nRow = Win_Old_dataGridView.Rows.Add();
+                    Win_Old_dataGridView.Rows[nRow].Cells[0].Value = List[n][0];
+                    Win_Old_dataGridView.Rows[nRow].Cells[1].Value = List[n][1];
+                    string[][] value = Program.DB.querySQL(DB.type.ProjDB, "Select a.창호유효열관류율,b.면적 From SubWindow as a Inner Join ZoneEnvelope_3D as b on a.번호=b.구조체번호 where a.상위창호번호='"+List[n][0]+"'");
+                    if (value.Length > 0)
+                    {
+                        double Ueff = 0;
+                        double Area_sum = 0;
+                        for(int a =0; a< value.Length; a++)
+                        {
+                            Ueff += Convert.ToDouble(value[a][0]) * Convert.ToDouble(value[a][1]);
+                            Area_sum += Convert.ToDouble(value[a][1]);
+                        }
+                        Ueff = Ueff / Area_sum;
+                        Win_Old_dataGridView.Rows[nRow].Cells[2].Value = Ueff.ToString("0.00");
+                        Win_Old_dataGridView.Rows[nRow].Cells[3].Value = Area_sum.ToString("0.00");
+                        Win_Old_dataGridView.Rows[nRow].Cells[4].Value = value.Length;
+                    }                    
+                }
+            }
+        }
+        private void Create_Win_New_table(string SelectAlt_Win)
+        {
+            new StackedHeaderDecorator(Win_New_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+
+            DataGridViewCheckBoxColumn Win_New_checkBoxColumn = new DataGridViewCheckBoxColumn();
+            Win_New_dataGridView.Columns.Clear();
+            Win_New_checkBoxColumn.HeaderText = "선택";
+            Win_New_checkBoxColumn.Name = "check";
+            Win_New_dataGridView.Columns.Add(Win_New_checkBoxColumn);
+
+            Win_New_dataGridView.Columns.Add("A1", "번호");
+            Win_New_dataGridView.Columns.Add("A2", "명칭");
+            string unit = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
+            Win_New_dataGridView.Columns.Add("A2", "유효열관류율.[" + unit + "]");
+            unit = "m" + Program.UTIL.Subscript(2, true);
+            Win_New_dataGridView.Columns.Add("A3", "면적.[" + unit + "]");
+            Win_New_dataGridView.Columns.Add("A4", "개수.[EA]");
+            Win_New_dataGridView.Columns[0].Width = 40;
+            Win_New_dataGridView.Columns[1].Width = 40;
+
+            string[][] List = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.번호,a.창호명칭 From ConstructionWindow as a  Inner Join SubWindow as b on a.번호=b.상위창호번호 Inner Join ZoneEnvelope_3D as c on b.번호=c.구조체번호");
+            if (List.Length > 0)
+            {
+                Win_New_dataGridView.Rows.Clear();
+                for (int n = 0; n < List.Length; n++)
+                {
+                    int nRow = Win_New_dataGridView.Rows.Add();
+                    Win_New_dataGridView.Rows[nRow].Cells[1].Value = List[n][0];
+                    Win_New_dataGridView.Rows[nRow].Cells[2].Value = List[n][1];
+
+                    string[][] value = Program.DB.querySQL(DB.type.ProjDB, "Select a.창호유효열관류율,b.면적 From SubWindow as a Inner Join ZoneEnvelope_3D as b on a.번호=b.구조체번호 where a.상위창호번호='" + List[n][0] + "'");
+                    if (value.Length > 0)
+                    {
+                        double Area_sum = 0;
+                        for (int a = 0; a < value.Length; a++)
+                        {
+                            Area_sum += Convert.ToDouble(value[a][1]);
+                        }
+                        double Ueff_new = Get_Win_Ueff(SelectAlt_Win, Convert.ToDouble(List[n][2]), List[n][3]);
+                        Win_New_dataGridView.Rows[nRow].Cells[3].Value = Ueff_new.ToString("0.00");
+                        Win_New_dataGridView.Rows[nRow].Cells[4].Value = Area_sum.ToString("0.00");
+                        Win_New_dataGridView.Rows[nRow].Cells[5].Value = value.Length;
+                    }
+                }
+                tabConrol.SelectedTab = tabConrol.TabPages["Win_tabPage"];
+            }
+            if (Win_New_dataGridView.Rows.Count > 0)
+            {
+                for (int i = 0; i < Win_New_dataGridView.Rows.Count; i++)
+                {
+                    Win_New_dataGridView.Rows[i].Cells[0].Value = false;
+                }
+            }
+            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 리모델링값,순공사비,에너지절감량,에너지절감률,종합점수 From Optimal_PreResult Where 검토유형='창호' and 리모델링안='" + SelectAlt_Win + "'");
+            if (Value.Length > 0)
+            {
+                WinCost_textBox.Text = Convert.ToDouble(Value[0][1]).ToString("#,##0") + " 원";
+                WinSavingPercent_textBox.Text = Convert.ToDouble(Value[0][3]).ToString("0.0") + " %";
+                WinPoint_textBox.Text = Convert.ToDouble(Value[0][4]).ToString("0.0") + " 점";
+                Calc_TotalPoint();
+            }
+
+            for (int a = 0; a < Alt_dataGridView.Rows.Count; a++)
+            {
+                if (Alt_dataGridView.Rows[a].Cells[2].Value != null && Alt_dataGridView.Rows[a].Cells[2].Value.ToString() == "지붕")
+                {
+                    Alt_dataGridView.Rows[a].Cells[4].Value = SelectAlt_Win;
+                    Alt_dataGridView.Rows[a].Cells[5].Value = Convert.ToDouble(Value[0][1]).ToString("#,##0");
+                }
+            }
+            Cal_BalanceCost(Cost_Net);
+            string[][] Value2 = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select a.리모델링유형,b.마감재분류 From 불투명최적안 as a Inner Join 마감재 as b on a.마감재=b.마감재 where a.구조체='지붕' and a.최적안='" + SelectAlt_Win + "'");
+            if (Value2.Length > 0)
+            {
+                Win_new_label.Text = SelectAlt_Win + ": " + Value2[0][0];
+            }
+        }
+        private double Get_Win_Ueff(string 리모델링안, double Uold, string 직접간접)
+        {
+            double Ueff = 0; double dU = 0;
+            double R = 0;
+            string[][] Value = Program.DB.getValue(DB.type.BaseDB_Optimal, "불투명최적안", "열저항합계, 열교가산치,리모델링유형", "최적안='" + 리모델링안 + "'");
+            if (Value.Length > 0)
+            {
+                R = Convert.ToDouble(Value[0][0]);
+                dU = Convert.ToDouble(Value[0][1]);
+                if (직접간접 == "지면")
+                {
+                    if (Value[0][2] == "내부덧댐")
+                    {
+                        Ueff = 1 / (1 / Uold + R) + dU;
+                    }
+                    else
+                    {
+                        Ueff = Uold;
+                    }
+                }
+                else
+                {
+                    if (Value[0][2] == "철거 후 신규")
+                    {
+                        Ueff = 1 / R + dU;
+                    }
+                    else
+                    {
+                        Ueff = 1 / (1 / Uold + R) + dU;
+                    }
+
+                }
+            }
+            return Ueff;
+        }
+        
+        #endregion
     }
     public class Material_Wall
     {

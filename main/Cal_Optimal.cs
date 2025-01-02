@@ -2,6 +2,7 @@
 using Eagle._Constants;
 using Eagle._Interfaces.Public;
 using main.subcontents.Alt;
+using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,8 +13,10 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Security.Policy;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace main
 {
@@ -68,6 +71,21 @@ namespace main
             Program.DB.UseCaches(false);
             return true;
         }
+        public bool Calc_Optimal_Win()
+        {
+            Program.DB.deleteValue(DB.type.ProjDB, "FinalEnergy_Result_Optimal", "검토유형 ='창호'");
+            Program.DB.UseCaches(true);
+            string[][] Value = Program.DB.getValue_SameCheck(DB.type.BaseDB_Optimal, "투명최적안", "최적안", "구조체='창호'");
+            if (Value.Length > 0)
+            {
+                for (int a = 0; a < Value.Length; a++)
+                {
+                    Calc_Optimal("창호", Value[a][0]);
+                }
+            }
+            Program.DB.UseCaches(false);
+            return true;
+        }
 
         public void Calc_Optimal(string 검토유형,string 리모델링안)
         {
@@ -96,7 +114,7 @@ namespace main
                         Load_Optimal_Floor(zone1, 리모델링안);
                         break;
                     case "창호":
-                        Load_Optimal_Win(zone1);
+                        Load_Optimal_Win(zone1, 리모델링안);
                         break;
                     case "커튼월창":
                         Load_Optimal_CW(zone1);
@@ -299,33 +317,131 @@ namespace main
             }
         }
         #endregion
-        private void Load_Optimal_Win(Zone zone1)
+
+        #region 창호
+        private void Load_Optimal_Win(Zone zone1, string 리모델링안)
         {
+            double[] WinValue = LoadData_Win(리모델링안);
+            double ug = WinValue[0], g = WinValue[1], tao = WinValue[2];
+            double Uf_open = WinValue[3], Uf_fix = WinValue[4], Uf_btw = WinValue[5];
+            double Psi_g_fix = WinValue[6], Psi_g_open = WinValue[7];
+            double Psi_InstallTop = WinValue[8], Psi_InstallSide = WinValue[9], Psi_InstallButtom = WinValue[10];
             zone1.zoneWin.Clear();
-            String[][] ZoneWin = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.법규열관류율,b.설치열교가산치,b.창호유효열관류율,b.유리면적비,b.상위창호번호,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN SubWindow AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "'");
+            String[][] ZoneWin = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.창호열관류율,b.설치열교가산치,b.창호유효열관류율,b.유리면적비,b.상위창호번호,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN SubWindow AS b ON a.구조체번호 = b.번호 where a.존 = '" + zone1.ZoneNum + "'");
             if (ZoneWin.Length > 0)
             {
                 int i = -1;
                 while (++i < ZoneWin.Length)
                 {
+                    double Uw = 0, dU = 0, Ueff = 0;
                     String[][] ZoneWin_P = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "직접간접,태양열취득률,빛투과율", "번호='" + ZoneWin[i][7] + "'");
-                    string[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "번호='" + ZoneWin[i][0] + "'");
                     if (ZoneWin_P.Length > 0)
                     {
-                        if (Blind.Length > 0)
+                        string[][] size = Program.DB.querySQL(DB.type.ProjDB, "Select  a.창호면적,a.창호너비,a.창호높이,a.고정유리면적,a.개폐유리면적,a.개폐프레임면적,a.고정프레임면적,a.중간프레임면적,a.고정유리둘레길이,a.개폐유리둘레길이,a.유리면적비 FROM SubWindow AS a INNER JOIN ZoneEnvelope_3D AS b ON b.구조체번호 = a.번호 where b.번호 = '" + ZoneWin[i][0] + "'");
+                        if (size.Length > 0)
                         {
-                            Window win = new Window(ZoneWin[i][0], ZoneWin[i][7], ZoneWin[i][2], Convert.ToDouble(ZoneWin[i][1]), Convert.ToDouble(ZoneWin[i][3]), Convert.ToDouble(ZoneWin[i][4]), ZoneWin_P[0][0], Convert.ToDouble(ZoneWin[i][6]), Convert.ToDouble(ZoneWin_P[0][1]), Convert.ToDouble(ZoneWin_P[0][2]), Convert.ToDouble(Blind[0][0]), Convert.ToDouble(Blind[0][1]), ZoneWin[i][8], ZoneWin[i][9]);
-                            zone1.zoneWin.Add(win);
+                            Uw = Calc_Uw(size, ug, Uf_open, Uf_fix, Uf_btw, Psi_g_fix, Psi_g_open);
+                            string[][] value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select 리모델링유형 From 투명최적안 where 최적안='" + 리모델링안 + "' and 구조체='창호'");
+                            if (value.Length > 0 && value[0][0] == "내부덧댐")
+                            {
+                                double[] v = Calc_AdditionalWindow(Uw, Convert.ToDouble(ZoneWin[0][3]), g, Convert.ToDouble(ZoneWin_P[0][1]), tao, Convert.ToDouble(ZoneWin_P[0][2]));
+                                Uw = v[0]; g = v[1]; tao = v[2];
+                            }
+                            dU = Calc_dUinst(size, Psi_InstallTop, Psi_InstallButtom, Psi_InstallSide);
+                            Ueff = Uw + dU;
                         }
-                        else
-                        {
-                            Window win = new Window(ZoneWin[i][0], ZoneWin[i][7], ZoneWin[i][2], Convert.ToDouble(ZoneWin[i][1]), Convert.ToDouble(ZoneWin[i][3]), Convert.ToDouble(ZoneWin[i][4]), ZoneWin_P[0][0], Convert.ToDouble(ZoneWin[i][6]), Convert.ToDouble(ZoneWin_P[0][1]), Convert.ToDouble(ZoneWin_P[0][2]), 0, 0, ZoneWin[i][8], ZoneWin[i][9]);
-                            zone1.zoneWin.Add(win);
-                        }
+                        Window win = new Window(ZoneWin[i][0], ZoneWin[i][7], ZoneWin[i][2], Convert.ToDouble(ZoneWin[i][1]), Uw, dU, ZoneWin_P[0][0], Convert.ToDouble(ZoneWin[i][6]), g, tao, 0, 0, ZoneWin[i][8], ZoneWin[i][9]);
+                        zone1.zoneWin.Add(win);
                     }
                 }
             }
         }
+        private double[] LoadData_Win(string 리모델링안)
+        {
+            double[] WinValue = new double[11];
+            //열관류율, 설치열교가산치, 유효열관류율,  태양열취득률, 빛투과율 
+            double ug = 0, g = 0, tao = 0;
+            double Uf_open = 0, Uf_fix = 0, Uf_btw = 0;
+            double Psi_g_fix = 0, Psi_g_open = 0;
+            double Psi_InstallTop = 0, Psi_InstallSide = 0, Psi_InstallButtom = 0;
+            string[][] value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select 최적안구분,프레임,유리 From 투명최적안 where 최적안='" + 리모델링안 + "' and 구조체='창호'");
+            if (value.Length > 0)
+            {
+                string 프레임재료 = value[0][1]; string 단창이중창 = "단창"; string 유리 = value[0][2];
+                if (value[0][0] == "이중창_SL") { 단창이중창 = "이중창"; 유리 = "LE/12R/CL"; }
+                if (value[0][1] == "금속_단열바") { 프레임재료 = "금속"; }
+                string[][] frameValue = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select 개폐부프레임열관류율,고정부프레임열관류율,중간바프레임열관류율  From 창호프레임  where 프레임종류='" + value[0][0] + "' and 프레임재료='" + value[0][1] + "' and DB유형='표준'");
+                if (frameValue.Length > 0)
+                {
+                    Uf_open = Convert.ToDouble(frameValue[0][0]); Uf_fix = Convert.ToDouble(frameValue[0][1]); Uf_btw = Convert.ToDouble(frameValue[0][2]);
+                }
+                string[][] glassValue = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select 번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율  From 유리  where 제품명='" + 유리 + "'and DB유형='표준'");
+                if (glassValue.Length > 0)
+                {
+                    ug = Convert.ToDouble(glassValue[0][7]); g = Convert.ToDouble(glassValue[0][8]); tao = Convert.ToDouble(glassValue[0][9]);
+                }
+                if (value[0][0] == "이중창_SL")
+                {
+                    double[] v = Calc_DoubleGlass(glassValue); ug = v[0]; g = v[1]; tao = v[2];
+                }
+                string[][] TBValue = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select 상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율  From 창호설치열교  where 구분1='외단열'and 구분2='" + 프레임재료 + "'and 구분3='" + 단창이중창 + "'and 구분4='외부측'");
+                if(TBValue.Length > 0) 
+                {
+                    Psi_InstallTop = Convert.ToDouble(TBValue[0][0]); Psi_InstallSide =  Convert.ToDouble(TBValue[0][1]); Psi_InstallButtom = Convert.ToDouble(TBValue[0][2]); 
+                }
+                string[][] Spacer = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select 고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율  From 창호간봉  where 구분1='단열간봉'and 구분2='" + 단창이중창 + "'and 구분3='" + 프레임재료 + "'");
+                if(Spacer.Length > 0) { Psi_g_fix = Convert.ToDouble(Spacer[0][0]); Psi_g_open = Convert.ToDouble(Spacer[0][1]); }
+
+                WinValue[0] = ug; WinValue[1] = g; WinValue[2] = tao;
+                WinValue[3] = Uf_open; WinValue[4] = Uf_fix; WinValue[5] = Uf_btw;
+                WinValue[6] = Psi_g_fix; WinValue[7] = Psi_g_open;
+                WinValue[8] = Psi_InstallTop; WinValue[9] = Psi_InstallSide; WinValue[10] = Psi_InstallButtom;
+            }
+            return WinValue;
+        }
+        private double Calc_Uw(string[][] Size,double Ug,double Uf_open, double Uf_fix,double Uf_btw, double Psi_g_fix,double Psi_g_open)
+        {
+            double Area= Convert.ToDouble(Size[0][0]), Width = Convert.ToDouble(Size[0][1]), Height = Convert.ToDouble(Size[0][2]), Ag_fix = Convert.ToDouble(Size[0][3]), Ag_open = Convert.ToDouble(Size[0][4]), Af_open = Convert.ToDouble(Size[0][5]), Af_fix = Convert.ToDouble(Size[0][6]), Af_btw = Convert.ToDouble(Size[0][7]), Lg_fix = Convert.ToDouble(Size[0][8]), Lg_open = Convert.ToDouble(Size[0][0]);
+            double Uw = (Ug * (Ag_fix + Ag_open) + (Uf_open * Af_open) + (Uf_fix * Af_fix) + (Uf_btw * Af_btw) + (Psi_g_fix * Lg_fix) + (Psi_g_open * Lg_open)) / Area;
+            return Uw;
+        }
+        private double[] Calc_AdditionalWindow(double NewUw, double OldUw, double Newg, double Oldg, double Newtao, double Oldtao)
+        {
+            double[] value = new double[3];
+            double Uw = 1 / (0.019 + 1 / OldUw + 1 / NewUw); double g=0, tao = 0;
+            String 조합구성 ="LE+LE" ;
+            string[][] f_shgc = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '태양열취득률'");
+            string[][] f_τ = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '빛투과율'");
+            if (f_shgc.Length > 0)
+            { g = Convert.ToDouble(f_shgc[0][0]) * Oldg * Newg; }
+            if (f_τ.Length > 0)
+            {  tao = Convert.ToDouble(f_τ[0][0]) * Oldtao * Newtao; }
+            value[0] = Uw; value[1] = g; value[2] = tao;
+            return value;
+        }
+        public double Calc_dUinst(string[][] Size, double Psi_InstallTop,double Psi_InstallButtom,double Psi_InstallSide)
+        {
+            double Area = Convert.ToDouble(Size[0][0]), Width = Convert.ToDouble(Size[0][1]), Height = Convert.ToDouble(Size[0][2]), Ag_fix = Convert.ToDouble(Size[0][3]), Ag_open = Convert.ToDouble(Size[0][4]), Af_open = Convert.ToDouble(Size[0][5]), Af_fix = Convert.ToDouble(Size[0][6]), Af_btw = Convert.ToDouble(Size[0][7]), Lg_fix = Convert.ToDouble(Size[0][8]), Lg_open = Convert.ToDouble(Size[0][0]);
+            double dUinst = ((Psi_InstallTop * Width) + (Psi_InstallButtom * Width) + (Psi_InstallSide * Height * 2)) / Area;
+            return dUinst;
+        }
+        private double[] Calc_DoubleGlass(string[][] GlassValue)
+        {
+            String LE_CL_V = GlassValue[0][6] + "+" + GlassValue[0][6];
+            double[] value = new double[3];// Ug, g, Tao;
+            value[0] = 1 / ((1 / Convert.ToDouble(GlassValue[0][7])) - 0.04 + 0.189 - 0.13 + (1 / Convert.ToDouble(GlassValue[0][7])));
+            String[][] f_shgc = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + LE_CL_V + "' AND 보정유형 = '태양열취득률'");
+            String[][] f_τ = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + LE_CL_V + "' AND 보정유형 = '빛투과율'");
+            if (f_shgc.Length > 0)
+            {
+                value[1] = Convert.ToDouble(f_shgc[0][0]) * Convert.ToDouble(GlassValue[0][8]) * Convert.ToDouble(GlassValue[0][8]);
+            }
+            if (f_τ.Length > 0)
+            { value[2] = Convert.ToDouble(f_τ[0][0]) * Convert.ToDouble(GlassValue[0][9]) * Convert.ToDouble(GlassValue[0][9]); }
+            return value;
+        }
+        #endregion
+
         private void Load_Optimal_CW(Zone zone1)
         {
             zone1.zoneCW.Clear();
@@ -600,6 +716,12 @@ namespace main
                     {
                         LoadCalc_Boiler_Heating(Heating1);
                     }
+                    if (검토유형 != "흡수식냉온수기")
+                    { Heating1.LoadCalc_ABS(ProjNum); }
+                    else
+                    {
+                        LoadCalc_ABS_Heating(Heating1);
+                    }
                     if (검토유형 != "냉난방EHP")
                     {
                         Heating1.LoadCalc_AirHP(ProjNum);
@@ -634,12 +756,30 @@ namespace main
                 }
             }
         }
+        public void LoadCalc_ABS_Heating(Heating Heating1)
+        {
+            double Optimal = 1.2;
+            for (int n = 0; n < Heating1.SelectABS_split.Count; n++)
+            {
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "번호,연료,난방용량,난방성능,대기전력", "번호 = '" + Heating1.SelectABS_split[n] + "'");
+                if (Value.Length > 0)
+                {
+                    String Num = Value[0][0];
+                    Heating1.Carrier = Value[0][1];
+                    double Power = Convert.ToDouble(Value[0][2]) * Convert.ToDouble(Heating1.ABSNum_split[n]);
+                    double cop = Optimal;                   
+                    double W_0 = Convert.ToDouble(Value[0][4]);
+                    double count = Convert.ToDouble(Heating1.ABSNum_split[n]);
+                    Heating1.Calc_Qh_ABS(Num, Power, cop, W_0, count);
+                }
+            }
+        }
         public void LoadCalc_AirHP_Heating(Heating Heating1)
         {
             double Optimal = 5.5;
             for (int n = 0; n < Heating1.SelectAirHP_split.Count; n++)
             {
-                string[][] airHP = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "번호,연료,공급유형,난방정격용량,난방정격COP,난방정격소비전력,한랭지용량,한랭지COP,한랭지소비전력", "번호 = '" + Heating1.SelectAirHP_split[n] + "'");
+                string[][] airHP = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "번호,연료,공급유형,난방정격용량,난방정격COP,난방정격소비전력,한랭지용량,한랭지COP,한랭지소비전력,대기전력", "번호 = '" + Heating1.SelectAirHP_split[n] + "'");
                 String Num = null;
                 Heating1.Carrier = null;
                 String SupplyType = null;
@@ -649,6 +789,7 @@ namespace main
                 double Pi_15 = 0; //정격용량
                 double COP_15 = 0; //정격COP
                 double W_15 = 0; //정격소비전력 
+                double W_0 = 0;//대기전력
                 if (airHP.Length > 0)
                 {
                     Num = airHP[0][0];
@@ -660,7 +801,8 @@ namespace main
                     Pi_15 = Convert.ToDouble(airHP[0][6]) * Convert.ToDouble(Heating1.AirHPNum_split[n]); //정격용량
                     COP_15 = Optimal; //정격COP
                     W_15 = Pi_15 / COP_15;
-                    Heating1.Calc_Q_Air_HP(Num, SupplyType, Pi_nom, COP_nom, W_nom, Pi_15, COP_15, W_15);
+                    W_0 = Convert.ToDouble(airHP[0][9]);
+                    Heating1.Calc_Q_Air_HP(Num, SupplyType, Pi_nom, COP_nom, W_nom, Pi_15, COP_15, W_15, W_0);
                 }
             }
         }
