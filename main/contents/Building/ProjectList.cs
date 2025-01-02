@@ -165,7 +165,7 @@ namespace main.contents
             foreach (FileInfo file in dir.GetFiles())
             {
                 string targetFilePath = Path.Combine(destinationDir, file.Name);
-                file.CopyTo(targetFilePath);
+                file.CopyTo(targetFilePath, overwrite: true);
             }
 
             // If recursive and copying subdirectories, recursively call this method
@@ -221,6 +221,8 @@ namespace main.contents
                     Directory.CreateDirectory(Program.gPath + "threejs\\public\\models\\" + pid);
 
                     CopyDirectory(Program.gPath + "threejs\\public\\models\\" + pid0, Program.gPath + "threejs\\public\\models\\" + pid, true);
+
+                    CopyDirectory(Program.gPath + "threejs\\public\\print\\img\\" + pid0, Program.gPath + "threejs\\public\\print\\img\\" + pid, true);
                 }
 
                 drawList(ProjectType.ToString());
@@ -276,6 +278,7 @@ namespace main.contents
                         Directory.CreateDirectory(Program.gPath + "threejs\\public\\models\\" + pid);
 
                         CopyDirectory(Program.gPath + "threejs\\public\\models\\" + pid0, Program.gPath + "threejs\\public\\models\\" + pid, true);
+                        CopyDirectory(Program.gPath + "threejs\\public\\print\\img\\" + pid0, Program.gPath + "threejs\\public\\print\\img\\" + pid, true);
                     }
 
                     drawList(ProjectType.ToString());

@@ -58,6 +58,7 @@ namespace main.contents
                 tables.Add("User_PVBattery");
                 tables.Add("User_FC");
                 tables.Add("User_WP");
+                tables.Add("User_WPInverte");
                 tables.Add("User_Boiler");
                 tables.Add("User_AirHP");
                 tables.Add("User_GroundHP");

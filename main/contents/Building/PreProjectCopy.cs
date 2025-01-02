@@ -169,7 +169,9 @@ namespace main.contents
                     tables.Add("User_AHU");
                     tables.Add("User_HRV");
                     tables.Add("User_DHWHP");
-
+                    tables.Add("User_AirCooler");
+                    tables.Add("User_WaterCooler");
+                    tables.Add("User_CoolingTop");
                 }
                 if (Construction_checkBox.Checked)
                 {
@@ -223,9 +225,6 @@ namespace main.contents
                     tables.Add("AHUSystem_Form");
                     tables.Add("PV_Form");
                     tables.Add("PV_Result");
-                    tables.Add("User_AirCooler");
-                    tables.Add("User_WaterCooler");
-                    tables.Add("User_CoolerTop");
                 }
 
                 this.DialogResult = DialogResult.OK;
