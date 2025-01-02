@@ -171,7 +171,6 @@ namespace main.contents
             panel2 = new Panel();
             panel5 = new Panel();
             panel6 = new Panel();
-            panel7 = new Panel();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -1042,7 +1041,7 @@ namespace main.contents
             StoragePump_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
             StoragePump_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             StoragePump_dataGridView.Dock = DockStyle.Bottom;
-            StoragePump_dataGridView.Location = new Point(3, 54);
+            StoragePump_dataGridView.Location = new Point(3, 95);
             StoragePump_dataGridView.Name = "StoragePump_dataGridView";
             dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle17.BackColor = SystemColors.Control;
@@ -1060,7 +1059,7 @@ namespace main.contents
             dataGridViewCellStyle18.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle18.SelectionForeColor = Color.Black;
             StoragePump_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle18;
-            StoragePump_dataGridView.Size = new Size(986, 218);
+            StoragePump_dataGridView.Size = new Size(986, 177);
             StoragePump_dataGridView.TabIndex = 186;
             // 
             // label12
@@ -1371,7 +1370,7 @@ namespace main.contents
             Pump_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle19;
             Pump_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Pump_dataGridView.Dock = DockStyle.Bottom;
-            Pump_dataGridView.Location = new Point(3, 80);
+            Pump_dataGridView.Location = new Point(3, 126);
             Pump_dataGridView.Name = "Pump_dataGridView";
             dataGridViewCellStyle20.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle20.BackColor = SystemColors.Control;
@@ -1389,7 +1388,7 @@ namespace main.contents
             dataGridViewCellStyle21.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle21.SelectionForeColor = Color.Black;
             Pump_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle21;
-            Pump_dataGridView.Size = new Size(986, 192);
+            Pump_dataGridView.Size = new Size(986, 146);
             Pump_dataGridView.TabIndex = 185;
             // 
             // Pump2_textBox
@@ -1568,7 +1567,7 @@ namespace main.contents
             ce_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
             ce_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             ce_dataGridView.Dock = DockStyle.Bottom;
-            ce_dataGridView.Location = new Point(3, 48);
+            ce_dataGridView.Location = new Point(3, 89);
             ce_dataGridView.Name = "ce_dataGridView";
             dataGridViewCellStyle23.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle23.BackColor = SystemColors.Control;
@@ -1586,7 +1585,7 @@ namespace main.contents
             dataGridViewCellStyle24.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle24.SelectionForeColor = Color.Black;
             ce_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle24;
-            ce_dataGridView.Size = new Size(986, 224);
+            ce_dataGridView.Size = new Size(986, 183);
             ce_dataGridView.TabIndex = 193;
             ce_dataGridView.CellContentClick += ce_dataGridView_CellContentClick;
             // 
@@ -1895,14 +1894,6 @@ namespace main.contents
             panel6.Size = new Size(1000, 291);
             panel6.TabIndex = 127;
             // 
-            // panel7
-            // 
-            panel7.BackColor = Color.White;
-            panel7.Location = new Point(1088, 160);
-            panel7.Name = "panel7";
-            panel7.Size = new Size(1000, 304);
-            panel7.TabIndex = 128;
-            // 
             // HeatingSystem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1910,7 +1901,6 @@ namespace main.contents
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(panel7);
             Controls.Add(Previous_button);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
@@ -2088,6 +2078,5 @@ namespace main.contents
         private Panel panel2;
         private Panel panel5;
         private Panel panel6;
-        private Panel panel7;
     }
 }

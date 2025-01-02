@@ -1006,7 +1006,7 @@ namespace main.contents
         /////////////////////////////////////////////////////지역난방///////////////////////////////////////////////////////////////////
         private void Load_DHForm()
         {
-            DH_DB heating_DH = new DH_DB("장비일람표 적용", SelectDH_nonsplit);
+            DH_DB heating_DH = new DH_DB("장비일람표 적용", SelectDH_nonsplit,"난방");
             DialogResult result = heating_DH.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -2436,7 +2436,7 @@ namespace main.contents
         {
             BoilerNum_nonsplit = "";
             SolarNum_nonsplit = ""; SolarDirection_nonsplit = ""; SolarDegree_nonsplit = "";
-            ASNum_nonsplit = ""; SelectDH_nonsplit = "";
+            ASNum_nonsplit = ""; 
             HPNum_nonsplit[0] = ""; HPNum_nonsplit[1] = ""; HPNum_nonsplit[2] = "";
             HPSupply_nonsplit[0] = ""; HPSupply_nonsplit[1] = ""; HPSupply_nonsplit[2] = "";
             HPControl_nonsplit[0] = ""; HPControl_nonsplit[1] = ""; HPControl_nonsplit[2] = ""; //외기/지열/지하수 순 

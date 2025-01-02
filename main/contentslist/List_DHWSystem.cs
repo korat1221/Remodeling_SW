@@ -102,7 +102,7 @@ namespace main.contentslist
         public void load_List()
         {
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
-            string[][] List = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호,명칭,주요설비,보일러종류,태양열번호,히트펌프번호", "");
+            string[][] List = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호,명칭,주요설비,보일러종류,태양열번호,히트펌프번호,지역난방번호", "");
             if (List.Length > 0)
             {
                 String Blank = "";
@@ -135,6 +135,14 @@ namespace main.contentslist
                         if (num.Length > 0 && SystemValue.Length > 0)
                         {
                             this.List.Rows.Add(List[n][0], List[n][1], List[n][2], (Convert.ToDouble(num[0][0]) * Convert.ToDouble(SystemValue[0][0])).ToString("0.0"), Convert.ToDouble(SystemValue[0][1]).ToString("0.0"));
+                        }
+                    }
+                    else if (List[n][2] == "지역난방")
+                    {
+                        SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DH", "용량", "번호 ='" + List[n][6] + "'");
+                        if (SystemValue.Length > 0)
+                        {
+                            this.List.Rows.Add(List[n][0], List[n][1], List[n][2], Convert.ToDouble(SystemValue[0][0]).ToString("0.0"), "-");
                         }
                     }
                     mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":18,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당

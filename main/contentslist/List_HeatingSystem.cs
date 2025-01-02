@@ -97,32 +97,58 @@ namespace main.contentslist
         public void load_List()
         {
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
-            string[][] List = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭,주요설비,보일러종류,외기히트펌프번호", "");
-            if (List.Length > 0)
+            string[][] List = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭,주요설비,보일러종류,외기히트펌프번호,흡수식온수기번호,지역난방번호,태양열번호", "");
+            string[][] count_ = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭,주요설비,보일러대수,외기히트펌프대수,흡수식온수기대수,지역난방번호,모듈개수", "");
+            if (List.Length > 0&& count_.Length>0)
             {
                 String Blank = "";
                 this.List.Rows.Clear();
                 string[][] SystemValue;
                 for (int n = 0; n < List.Length; n++)
                 {
-                    
+                    //"보일러", "외기 히트펌프", "지열 히트펌프", "지하수 히트펌프", "태양열 융합 히트펌프", "흡수식온수기", "지역난방", "태양열시스템" 
                     if (List[n][2] == "보일러") 
                     { 
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "용량,전부하효율", "번호 ='" + List[n][3] + "'");
                         if (SystemValue.Length > 0)
                         {
-                            this.List.Rows.Add(List[n][0], List[n][1], List[n][2], Convert.ToDouble(SystemValue[0][0]).ToString("0.0"), Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " %") ;
+                            this.List.Rows.Add(List[n][0], List[n][1], List[n][2],(Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][3])).ToString("0.0"), Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " %") ;
                         }
                     }
-                    else 
+                    else if (List[n][2] =="외기 히트펌프")
                     { 
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "난방정격용량,난방정격COP", "번호 ='" + List[n][4] + "'");
                         if (SystemValue.Length > 0)
                         {
-                            this.List.Rows.Add(List[n][0], List[n][1], List[n][2], Convert.ToDouble(SystemValue[0][0]).ToString("0.0"), Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " [kW/kW]");
+                            this.List.Rows.Add(List[n][0], List[n][1], List[n][2], (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][4])).ToString("0.0"), Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " [kW/kW]");
                         }
                     }
-                                      
+                    else if(List[n][2] == "흡수식온수기")
+                    {
+                        SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "난방용량,난방성능", "번호 ='" + List[n][5] + "'");
+                        if (SystemValue.Length > 0)
+                        {
+                            this.List.Rows.Add(List[n][0], List[n][1], List[n][2], (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][5])).ToString("0.0"), Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " [kW/kW]");
+                        }
+                    }
+                    else if (List[n][2] == "지역난방")
+                    {
+                        SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DH", "용량", "번호 ='" + List[n][6] + "'");
+                        if (SystemValue.Length > 0)
+                        {
+                            this.List.Rows.Add(List[n][0], List[n][1], List[n][2], Convert.ToDouble(SystemValue[0][0]).ToString("0.0"), "-");
+                        }
+                    }
+                    else if (List[n][2] == "태양열시스템")
+                    {
+                        
+                        SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "모듈면적,효율", "번호 ='" + List[n][7] + "'");
+                        if (SystemValue.Length > 0)
+                        {
+                            this.List.Rows.Add(List[n][0], List[n][1], List[n][2], (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][7])).ToString("0.0") + "m2", Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " %");
+                        }
+                    }
+
                     mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":19,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
                 }
                 dataGridView1.DataSource = this.List;
