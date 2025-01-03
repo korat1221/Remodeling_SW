@@ -172,29 +172,6 @@ Zoning.prototype = {
             }
             return ret;
         };
-        let _isWin = (pos, pa) => {
-            let box = _getBoundingBox(pos), i = -1, j;
-
-            while(++i < pa.userData.walls.length) {
-                let el = pa.userData.walls[i].edges;
-
-                j = -1;
-                while(++j < el.length) {
-                    let ln = el[j];
-
-                    if (
-                        _equalPoint(new Vector3(box[0][0],box[0][1],box[0][2]), ln[0]) || 
-                        _equalPoint(new Vector3(box[1][0],box[1][1],box[1][2]), ln[0]) || 
-                        _equalPoint(new Vector3(box[0][0],box[0][1],box[0][2]), ln[1]) || 
-                        _equalPoint(new Vector3(box[1][0],box[1][1],box[1][2]), ln[1])
-                    ) {
-                        return false;
-                    }
-                }
-            }
-            
-            return box[0][0] == box[1][0] || box[0][1] == box[1][1] || box[0][2] == box[1][2];
-        };
         let _getNormal = (T) => {
             return (new THREE.Triangle(T[0], T[1], T[2])).getNormal(new Vector3());
         };
@@ -225,51 +202,10 @@ Zoning.prototype = {
 
             return ret.length == 4 ? [ret[0], ret[1], ret[2], ret[2], ret[3], ret[0]] : null;
         };
-        let _getBoundingBox2 = (vtx) => {
-            let box = [
-                [99999999, 99999999, 99999999],
-                [-99999999, -99999999, -99999999],
-            ], i = 0;
-
-            while (i < vtx.length) {
-                let el = vtx[i];
-
-                if (box[0][0] > el.x) box[0][0] = el.x;
-                if (box[0][1] > el.y) box[0][1] = el.y;
-                if (box[0][2] > el.z) box[0][2] = el.z;
-
-                if (box[1][0] < el.x) box[1][0] = el.x;
-                if (box[1][1] < el.y) box[1][1] = el.y;
-                if (box[1][2] < el.z) box[1][2] = el.z;
-
-                i += 3;
-            }
-
-            return box;
+        let _asRectangle = (pos) => {
+            let a = [pos[0].distanceTo(pos[1]),pos[0].distanceTo(pos[2]),pos[0].distanceTo(pos[3])];
+            return [pos[0],pos[a[0] > a[1] ? (a[0] > a[2] ? 0 : 2) : (a[1] > a[2] ? 1 : 2)]];
         };
-        let _getBoundingBox = (vtx) => {
-            let box = [
-                [99999999, 99999999, 99999999],
-                [-99999999, -99999999, -99999999],
-            ], i = 0;
-
-            while (i < vtx.array.length) {
-                let el = vtx.array;
-
-                if (box[0][0] > el[i]) box[0][0] = el[i];
-                if (box[0][1] > el[i + 1]) box[0][1] = el[i + 1];
-                if (box[0][2] > el[i + 2]) box[0][2] = el[i + 2];
-
-                if (box[1][0] < el[i]) box[1][0] = el[i];
-                if (box[1][1] < el[i + 1]) box[1][1] = el[i + 1];
-                if (box[1][2] < el[i + 2]) box[1][2] = el[i + 2];
-
-                i += 3;
-            }
-
-            return box;
-        };
-
         let _asLines = (pos) => {
             let lines = [];
 
@@ -854,8 +790,8 @@ Zoning.prototype = {
                                 el2.userData.children = [];
                             }
                             let o = _asLines(el.geometry.getAttribute("position"));
-                            let bbox = _getBoundingBox2(o);
-                            el2.userData.children.push({ type: type, uuid: el.uuid, area: _getArea(o), pos:o, bbox: bbox, width:(new THREE.Vector3(bbox[0][0],bbox[1][1],bbox[0][2])).distanceTo(new THREE.Vector3(bbox[1][0],bbox[1][1],bbox[1][2])), height:(new THREE.Vector3(bbox[0][0],bbox[0][1],bbox[0][2])).distanceTo(new THREE.Vector3(bbox[0][0],bbox[1][1],bbox[0][2]))});
+                            let bbox = _asRectangle(o);
+                            el2.userData.children.push({ type: type, uuid: el.uuid, area: _getArea(o), pos:o, bbox: bbox, width:(new THREE.Vector3(bbox[0].x,bbox[1].y,bbox[0].z)).distanceTo(bbox[1]), height:bbox[0].distanceTo(new THREE.Vector3(bbox[0].x,bbox[1].y,bbox[0].z))});
 
                             el2.userData.walls = el2.userData.walls.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal")));
                             
@@ -901,7 +837,6 @@ Zoning.prototype = {
                 while (++j < el.userData.walls.length) {
                     let el2 = el.userData.walls[j];
                     el2.uuid = _addMeshObject(el2.pos, this.colors[el2.type], id);
-                    console.log("uuid: " + el2.uuid);
                     el2.area = _getArea(el2.pos);
                     el2.center = _getCenterPosition(el2.pos);
                 }
@@ -936,28 +871,26 @@ Zoning.prototype = {
                         while (++j < zkeys.length) {
                             let zk = zkeys[j];
                             let el2 = zones[zk];
-                            let pos = el.geometry.getAttribute("position");
-                            if (el.name.indexOf(zk) >= 0 && _getSubType(el.name) === "" && _isWin(pos, el2)) {
-                                let o = _asWinPoly(pos);
-                                if (o) {
-                                    if (!el2.userData.children) {
-                                        el2.userData.children = [];
-                                    }
-                                    
-                                    let stru = {};
+                            let pos = el.geometry.getAttribute("position"), o;
 
-                                    stru.uuid = _addMeshObject(o, this.colors["WN"], zk);
-                                    console.log("uuid: " + stru.uuid);
-                                    stru.type = "WN";
-                                    stru.area = _getArea(o);
-                                    stru.bbox = _getBoundingBox(pos);
-
-                                    stru.width = (new THREE.Vector3(stru.bbox[0][0],stru.bbox[1][1],stru.bbox[0][2])).distanceTo(new THREE.Vector3(stru.bbox[1][0],stru.bbox[1][1],stru.bbox[1][2]));
-                                    stru.height = (new THREE.Vector3(stru.bbox[0][0],stru.bbox[0][1],stru.bbox[0][2])).distanceTo(new THREE.Vector3(stru.bbox[0][0],stru.bbox[1][1],stru.bbox[0][2]));
-
-                                    stru.pos = o;
-                                    el2.userData.children.push(stru);
+                            if (el.name.indexOf(zk) >= 0 && _getSubType(el.name) === "" && (o = _asWinPoly(pos)) !== null) {
+                                if (!el2.userData.children) {
+                                    el2.userData.children = [];
                                 }
+                                
+                                let stru = {};
+
+                                stru.uuid = _addMeshObject(o, this.colors["WN"], zk);
+                                console.log("uuid: " + stru.uuid);
+                                stru.type = "WN";
+                                stru.area = _getArea(o);
+                                stru.bbox = _asRectangle(o);
+
+                                stru.width = (new THREE.Vector3(stru.bbox[0].x,stru.bbox[1].y,stru.bbox[0].z)).distanceTo(stru.bbox[1]);
+                                stru.height = stru.bbox[0].distanceTo(new THREE.Vector3(stru.bbox[0].x,stru.bbox[1].x,stru.bbox[0].z));
+
+                                stru.pos = o;
+                                el2.userData.children.push(stru);
                             }
                         }
                     }

@@ -344,8 +344,8 @@ Shadows.prototype = {
 					if (el2.type === 'CW' || el2.type === 'DR' || el2.type === 'WN') {
 						let edges = [];
 						let edges2 = [];
-						let pos0 = new THREE.Vector3((el2.bbox[0][0] + el2.bbox[1][0]) / 2, el2.bbox[0][1], (el2.bbox[0][2] + el2.bbox[1][2]) / 2);
-						let ctr = new THREE.Vector3((el2.bbox[0][0] + el2.bbox[1][0]) / 2, (el2.bbox[0][1] + el2.bbox[1][1]) / 2, (el2.bbox[0][2] + el2.bbox[1][2]) / 2);
+						let pos0 = new THREE.Vector3((el2.bbox[0].x + el2.bbox[1].x) / 2, el2.bbox[0].y, (el2.bbox[0].z + el2.bbox[1].z) / 2);
+						let ctr = new THREE.Vector3((el2.bbox[0].x + el2.bbox[1].x) / 2, (el2.bbox[0].y + el2.bbox[1].y) / 2, (el2.bbox[0].z + el2.bbox[1].z) / 2);
 
 						for (const [id3, el3] of Object.entries(zones)) {
 							j = -1;

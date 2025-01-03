@@ -432,10 +432,10 @@ Bridges.prototype = {
 					let el2 = el.userData.children[i];
 	
 					if (el2.type === 'CW' || el2.type === 'DR' || el2.type === 'WN') {
-						let line = [[new THREE.Vector3(el2.bbox[0][0],el2.bbox[0][1],el2.bbox[0][2]),new THREE.Vector3(el2.bbox[0][0],el2.bbox[1][1],el2.bbox[0][2])],
-							[new THREE.Vector3(el2.bbox[0][0],el2.bbox[1][1],el2.bbox[0][2]),new THREE.Vector3(el2.bbox[1][0],el2.bbox[1][1],el2.bbox[1][2])],
-							[new THREE.Vector3(el2.bbox[1][0],el2.bbox[1][1],el2.bbox[1][2]),new THREE.Vector3(el2.bbox[1][0],el2.bbox[0][1],el2.bbox[1][2])],
-							[new THREE.Vector3(el2.bbox[1][0],el2.bbox[0][1],el2.bbox[1][2]),new THREE.Vector3(el2.bbox[0][0],el2.bbox[0][1],el2.bbox[0][2])]
+						let line = [[el2.bbox[0],new THREE.Vector3(el2.bbox[0].x,el2.bbox[1].y,el2.bbox[0].z)],
+							[new THREE.Vector3(el2.bbox[0].x,el2.bbox[1].y,el2.bbox[0].z),el2.bbox[1]],
+							[el2.bbox[1],new THREE.Vector3(el2.bbox[1].x,el2.bbox[0].y,el2.bbox[1].z)],
+							[new THREE.Vector3(el2.bbox[1].x,el2.bbox[0].y,el2.bbox[1].z),el2.bbox[0]]
 						];
 						k = -1;
 						while(++k < line.length) {
