@@ -151,12 +151,14 @@ Zoning.prototype = {
                 j = walls.length;
                 while (--j > i) {
                     let po2 = walls[j];
-                    let p = _getSamePoints(po.pos, po2.pos);
+                    if (!po.invisible && !po2.invisible) {
+                        let p = _getSamePoints(po.pos, po2.pos);
 
-                    if (p.length > 0 && po.cardi == po2.cardi) {
-                        po.pos = po.pos.concat(po2.pos);
-                        walls.splice(j, 1);
-                        done = true;
+                        if (p.length > 0 && po.cardi == po2.cardi) {
+                            po.pos = po.pos.concat(po2.pos);
+                            walls.splice(j, 1);
+                            done = true;
+                        }
                     }
                 }
             }
@@ -240,7 +242,7 @@ Zoning.prototype = {
             return types[cardi];
         };
 
-        let _collPositions = (pos, nor) => {
+        let _collPositions = (pos, nor, invisible = false) => {
             let walls = [];
 
             if (pos && nor) {
@@ -269,12 +271,30 @@ Zoning.prototype = {
 
                         _slope /= 3;
 
-                        walls.push({ cardi: _cardinal, type: _getWallType(_cardinal), slope: _slope, pos: _pos });
+                        walls.push({ cardi: _cardinal, type: _getWallType(_cardinal), slope: _slope, pos: _pos, invisible:invisible });
                     }
                 }
             }
 
             return walls;
+        };
+        let _asPos = (pos) => {
+            let ret = [];
+
+            if (pos) {
+                for (let i = 0; i < pos.array.length; i += 9) {
+                    let _pos = [];
+                    for (let j = 0; j < 9; j += 3) {
+                        _pos.push(new THREE.Vector3(pos.array[i + j], pos.array[i + j + 1], pos.array[i + j + 2]));
+                    }
+
+                    if ((new THREE.Triangle(_pos[0], _pos[1], _pos[2])).getArea() > 0) {
+                        ret = ret.concat(_pos);
+                    }
+                }
+            }
+
+            return ret;
         };
         // let _addLineObject = (pos, color) => {
         //     let i = -1, p1 = [];
@@ -395,6 +415,7 @@ Zoning.prototype = {
                 (a === 'S' && b === 'N') ||
                 (a === 'N' && b === 'S') ||
                 (a === 'E' && b === 'W') ||
+                (a === 'W' && b === 'E') ||
                 (a === 'NW' && b === 'SE') ||
                 (a === 'SE' && b === 'NW') ||
                 (a === 'NE' && b === 'SW') ||
@@ -404,34 +425,7 @@ Zoning.prototype = {
         let _compareCardi = (a, b) => {
             return (a !== b && !_counterCardi(a, b));
         };
-        let _wallConnected = (a,b) => {
-            let i = -1, j, meets = [];
-
-            while(++i < a.length) {
-                let A = a[i];
-
-                j = -1;
-
-                while(++j < b.length) {
-                    let B = b[j];
-
-                    if (_equalPoint(A[0],B[0]) || _equalPoint(A[0],B[1])) {
-                        if (!meets.find(el => _equalPoint(el, A[0]))) {
-                            meets.push(A[0]);
-                        }
-                    } 
-                    if (_equalPoint(A[1],B[0]) || _equalPoint(A[1],B[1])) {
-                        if (!meets.find(el => _equalPoint(el, A[0]))) {
-                            meets.push(A[1]);
-                        }
-                    }    
-
-                    if (meets.length > 1) return true;
-                }    
-            }
-            return false;
-        };
-        let _updateNearWall = (po, id) => {
+        let _updateNearWall = (po, id0) => {
 
             for (const [id, el] of Object.entries(zones)) {
                 if (el.userData.walls) {
@@ -440,17 +434,17 @@ Zoning.prototype = {
                     while (++i < el.userData.walls.length) {
                         let el2 = el.userData.walls[i];
 
-                        if (_counterCardi(po.cardi, el2.cardi) && _wallConnected(po.edges, el2.edges)) {
+                         if (_counterCardi(po.cardi, el2.cardi) && _isInterscect(el2.pos, po.pos)) {
                             po.near = id;
-                            el2.near = id;
+                            el2.near = id0;
 
-                            if (po.cardi === 'DOWN') {
+                            if (po.cardi === 'DOWN' || po.cardi === 'UP') {
                                 po.type = 'SL';
                             }
                             else {
                                 po.type = 'IW';
                             }
-                            if (el2.cardi === 'DOWN') {
+                            if (el2.cardi === 'DOWN' || el2.cardi === 'UP') {
                                 el2.type = 'SL';
                             }
                             else {
@@ -466,12 +460,12 @@ Zoning.prototype = {
         //         if ((new THREE.Vector3()).crossVectors(A.clone().sub(P), B.clone().sub(P)).length() >= 0.01) {
         //             return false;
         //         }
-            
+
         //         let L = A.distanceTo(B);
-        
+
         //         return A.distanceTo(P) <= L && B.distanceTo(P) <= L;
         //     };
-        
+
         //     return !!(_isOnLine(a[0], a[1], b[0]) && _isOnLine(a[0], a[1], b[1]));
         // };    
         // let _isConnectedLines = (a, b) => {
@@ -563,10 +557,10 @@ Zoning.prototype = {
                         }
                     }
 
-           //         j = -1;
-             //       while (++j < edges.length) {
-               //         _addLineObject(edges[j], 0xff0000);
-                 //   }
+                    //         j = -1;
+                    //       while (++j < edges.length) {
+                    //         _addLineObject(edges[j], 0xff0000);
+                    //   }
                 }
             }
             for (const [id, el] of Object.entries(zones)) {
@@ -666,7 +660,7 @@ Zoning.prototype = {
         };
         let _getCardinal = (pos, walls) => {
             let i = -1, j;
-			var P = new THREE.Plane();
+            var P = new THREE.Plane();
             let v2 = new THREE.Vector3();
             let center = new THREE.Vector3();
 
@@ -678,7 +672,7 @@ Zoning.prototype = {
             center.x /= pos.length;
             center.y /= pos.length;
             center.z /= pos.length;
-    
+
             i = -1;
             while (++i < walls.length) {
                 let po = walls[i];
@@ -693,13 +687,13 @@ Zoning.prototype = {
                     }
                     j += 3;
                 }
-            }    
+            }
             return null;
         };
 
         let _getCenterPosition = (pos) => {
             var center = [0,0,0], n = 0, i;
-    
+
             pos.forEach((el) => {
                 i = -1;
                 while(++i < el.length) {
@@ -709,16 +703,97 @@ Zoning.prototype = {
                     n++;
                 }
             });
-    
+
             if (n > 0) {
                 center[0] /= n;
                 center[1] /= n;
                 center[2] /= n;
             }
-    
+
             return center;
         };
-    
+        let _getCenterPosition2 = (pos) => {
+            var center = new THREE.Vector3(), i=-1;
+
+            while(++i < pos.length) {
+                let el = pos[i];
+                center.x += el.x;
+                center.y += el.y;
+                center.z += el.z;
+            }
+
+            if (i > 0) {
+                center.x /= i;
+                center.y /= i;
+                center.z /= i;
+            }
+
+            return center;
+        };
+        let _isInterscect = (a, b) => {
+            let i = 0, v = new THREE.Vector3(), P = new THREE.Plane(), c = _getCenterPosition2(a);
+
+            while (i < b.length) {
+                let T = new THREE.Triangle(b[i], b[i + 1], b[i + 2]);
+
+                T.getPlane(P);
+                P.projectPoint(c, v);
+
+                if (_equalPoint(c,v) && T.containsPoint(v)) {
+                    return true;
+                }
+                i += 3;
+            }
+
+            return false;
+        };
+        let _doCSG = (a, b, op) => {
+            let bspA = CSG.fromMesh(a);
+            let bspB = CSG.fromMesh(b);
+            let bspC = bspA[op](bspB);
+            let result = CSG.toMesh(bspC, a.matrix);
+            result.castShadow = result.receiveShadow = true;
+            return result;
+        };
+
+
+        let _splitMesh = (a, b) => {
+            let gA = new THREE.BufferGeometry().setFromPoints(a);
+            let gB = new THREE.BufferGeometry().setFromPoints(b);
+
+            gA.computeVertexNormals();
+            gB.computeVertexNormals();
+
+            let mA = new THREE.Mesh(gA);
+            let mB = new THREE.Mesh(gB);
+
+            let rA = _doCSG(mA, mB, 'subtract');
+            let rB = _doCSG(mA, mB, 'intersect');
+
+            if (rA && rB) {
+                return [_asPos(rA.geometry.getAttribute("position")), _asPos(rB.geometry.getAttribute("position"))];
+            }
+            else {
+                return null;
+            }
+        };
+        let _splitWall = (wall) => {
+            let i;
+
+            for (const [id, el] of Object.entries(zones)) {
+
+                i = -1;
+                while (++i < el.userData.walls.length) {
+                    let po = el.userData.walls[i];
+                    if (po !== wall && _counterCardi(wall.cardi, po.cardi) && (_isInterscect(wall.pos, po.pos) || _isInterscect(po.pos, wall.pos))) {
+                        return _splitMesh(wall.pos, po.pos);
+                    }
+                }
+            }
+
+            return null;
+        };
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         const box = new Box3().setFromObject(obj);
@@ -728,7 +803,7 @@ Zoning.prototype = {
 
         obj.position.copy(offset);
         obj.updateMatrixWorld(true);
-        
+
         obj.userData.zones = {};
         obj.userData.dummy = [];
 
@@ -785,7 +860,7 @@ Zoning.prototype = {
                         let zk = zkeys[j];
                         if (el.name.indexOf(zk) >= 0 && (type = _getSubType(el.name)) !== "") {
                             let el2 = zones[zk];
-                
+
                             if (!el2.userData.children) {
                                 el2.userData.children = [];
                             }
@@ -793,8 +868,8 @@ Zoning.prototype = {
                             let bbox = _asRectangle(o);
                             el2.userData.children.push({ type: type, uuid: el.uuid, area: _getArea(o), pos:o, bbox: bbox, width:(new THREE.Vector3(bbox[0].x,bbox[1].y,bbox[0].z)).distanceTo(bbox[1]), height:bbox[0].distanceTo(new THREE.Vector3(bbox[0].x,bbox[1].y,bbox[0].z))});
 
-                            el2.userData.walls = el2.userData.walls.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal")));
-                            
+                            el2.userData.walls = el2.userData.walls.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal"), true));
+
                             let opt = this.colors[_getTypeColor(type)];
 
                             el.userData.color = opt.color;
@@ -804,29 +879,29 @@ Zoning.prototype = {
 
                             el.material = el.material.clone();
 
-                       //     _addMeshObject(o, this.colors[_getTypeColor(type)], zk);
-                         //   el.visible = false;
+                            //     _addMeshObject(o, this.colors[_getTypeColor(type)], zk);
+                            //   el.visible = false;
                         }
                     }
                 }
             }
-            i = -1;
-            while (++i < obj.children.length) {
-                let el = obj.children[i];
-                if (el instanceof THREE.Mesh && el.name.indexOf("DUMMY_BUILDING") < 0) {
+            // i = -1;
+            // while (++i < obj.children.length) {
+            //     let el = obj.children[i];
+            //     if (el instanceof THREE.Mesh && el.name.indexOf("DUMMY_BUILDING") < 0) {
 
-                        j = -1;
-                    while (++j < zkeys.length) {
-                        let zk = zkeys[j];
+            //         j = -1;
+            //         while (++j < zkeys.length) {
+            //             let zk = zkeys[j];
 
-                        if (el.name.indexOf(zk) >= 0) {
-                    
-                            while (_findWalls(el.userData.walls));
-                            break;
-                        }
-                    }
-                }
-            }
+            //             if (el.name.indexOf(zk) >= 0) {
+
+            //                 while (_findWalls(el.userData.walls));
+            //                 break;
+            //             }
+            //         }
+            //     }
+            // }
 
             for (const [id, el] of Object.entries(zones)) {
 
@@ -836,9 +911,11 @@ Zoning.prototype = {
 
                 while (++j < el.userData.walls.length) {
                     let el2 = el.userData.walls[j];
-                    el2.uuid = _addMeshObject(el2.pos, this.colors[el2.type], id);
-                    el2.area = _getArea(el2.pos);
-                    el2.center = _getCenterPosition(el2.pos);
+                    if (!el2.invisible) {
+                        el2.uuid = _addMeshObject(el2.pos, this.colors[el2.type], id);
+                        el2.area = _getArea(el2.pos);
+                        el2.center = _getCenterPosition(el2.pos);
+                    }
                 }
             }
 
@@ -854,7 +931,58 @@ Zoning.prototype = {
                     el[j].id = id;
                 }
             }
-
+     
+                // i = -1;
+                // while (++i < obj.children.length) {
+                //     let el = obj.children[i];
+                //     if (el instanceof THREE.Mesh && el.name.indexOf("DUMMY_BUILDING") < 0) {
+                //         j = -1;
+                //         while (++j < zkeys.length) {
+                //             let zk = zkeys[j];
+                //             if (el.name.indexOf(zk) >= 0 && (type = _getSubType(el.name)) !== "") {
+                //                 let el2 = zones[zk];
+                    
+                //                 if (!el2.userData.children) {
+                //                     el2.userData.children = [];
+                //                 }
+                //                 let o = _asLines(el.geometry.getAttribute("position"));
+                //                 let bbox = _asRectangle(o);
+                //                 el2.userData.children.push({ type: type, uuid: el.uuid, area: _getArea(o), pos:o, bbox: bbox, width:(new THREE.Vector3(bbox[0].x,bbox[1].y,bbox[0].z)).distanceTo(bbox[1]), height:bbox[0].distanceTo(new THREE.Vector3(bbox[0].x,bbox[1].y,bbox[0].z))});
+    
+                //                 el2.userData.walls = el2.userData.walls.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal")));
+                                
+                //                 let opt = this.colors[_getTypeColor(type)];
+    
+                //                 el.userData.color = opt.color;
+                //                 el.userData.opacity = opt.opacity;
+                //                 el.userData.pid = zk;
+                //                 el.userData.uuid = el.uuid;
+    
+                //                 el.material = el.material.clone();
+    
+                //            //     _addMeshObject(o, this.colors[_getTypeColor(type)], zk);
+                //              //   el.visible = false;
+                //             }
+                //         }
+                //     }
+                // }
+    
+                // for (const [id, el] of Object.entries(zones)) {
+    
+                //     j = el.userData.walls.length;
+        
+                //     while (--j >= 0) {
+                //         let el2 = el.userData.walls[j];
+                //         let arr = _splitWall(el2);
+                //         if (arr) {
+                //             k = -1;
+                //             while(++k < arr.length) {
+                //                 el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k] });
+                //             }
+                //             el.userData.walls.splice(j, 1);
+                //         }
+                //     }
+                // }
             // for (const [id, el] of Object.entries(zones)) {
             //     _removeIntraWalls(el.userData.walls);
             // }
@@ -877,17 +1005,16 @@ Zoning.prototype = {
                                 if (!el2.userData.children) {
                                     el2.userData.children = [];
                                 }
-                                
+
                                 let stru = {};
 
                                 stru.uuid = _addMeshObject(o, this.colors["WN"], zk);
-                                console.log("uuid: " + stru.uuid);
                                 stru.type = "WN";
                                 stru.area = _getArea(o);
                                 stru.bbox = _asRectangle(o);
 
-                                stru.width = (new THREE.Vector3(stru.bbox[0].x,stru.bbox[1].y,stru.bbox[0].z)).distanceTo(stru.bbox[1]);
-                                stru.height = stru.bbox[0].distanceTo(new THREE.Vector3(stru.bbox[0].x,stru.bbox[1].x,stru.bbox[0].z));
+                                stru.width = (new THREE.Vector3(stru.bbox[0].x, stru.bbox[1].y, stru.bbox[0].z)).distanceTo(stru.bbox[1]);
+                                stru.height = stru.bbox[0].distanceTo(new THREE.Vector3(stru.bbox[0].x, stru.bbox[1].x, stru.bbox[0].z));
 
                                 stru.pos = o;
                                 el2.userData.children.push(stru);
@@ -911,12 +1038,12 @@ Zoning.prototype = {
                                 let el2 = el.userData.walls[k];
 
                                 el2.area = _getArea(el2.pos);
-                        }
+                            }
                         }
                     }
                 }
             }
-            
+
             for (const [id, el] of Object.entries(zones)) {
                 if (el.userData.walls) {
                     i = -1;
@@ -930,9 +1057,9 @@ Zoning.prototype = {
             for (const [id, el] of Object.entries(zones)) {
                 if (el.userData.children) {
                     i = -1;
-                    while(++i < el.userData.children.length) {
+                    while (++i < el.userData.children.length) {
                         let el2 = el.userData.children[i];
-    
+
                         let o = _getCardinal(el2.pos, el.userData.walls);
                         if (o) {
                             el2.cardi = o.cardi;
@@ -960,7 +1087,7 @@ Zoning.prototype = {
                             if (!stru[el2.type]) {
                                 stru[el2.type] = [];
                             }
-    
+
                             el2.id = nm + "_" + el2.type + "_" + (stru[el2.type].length + 1);
 
                             stru[el2.type].push({});
@@ -993,7 +1120,7 @@ Zoning.prototype = {
             while (--i >= 0) {
                 if (!obj.children[i].visible) {
                     obj.children.splice(i, 1);
-                } 
+                }
             }
         }
     },

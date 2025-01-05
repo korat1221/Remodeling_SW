@@ -335,6 +335,9 @@ Bridges.prototype = {
                 i = -1;
 
                 while (++i < el.userData.walls.length) {
+
+					if (el.userData.walls[i].invisible) continue;
+					
 					let line = el.userData.walls[i].edges;
 					let link = el.userData.walls[i].links;
 
