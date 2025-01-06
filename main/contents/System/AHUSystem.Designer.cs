@@ -1023,7 +1023,7 @@ namespace main.contents
             PipeIns_textBox.Enabled = false;
             PipeIns_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             PipeIns_textBox.ForeColor = SystemColors.ControlDark;
-            PipeIns_textBox.Location = new Point(590, 79);
+            PipeIns_textBox.Location = new Point(591, 79);
             PipeIns_textBox.Name = "PipeIns_textBox";
             PipeIns_textBox.Size = new Size(120, 15);
             PipeIns_textBox.TabIndex = 214;
@@ -1035,7 +1035,7 @@ namespace main.contents
             PipeIns_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             PipeIns_button.FlatStyle = FlatStyle.System;
             PipeIns_button.Font = new Font(UTIL.Families[0], 12F);
-            PipeIns_button.Location = new Point(712, 75);
+            PipeIns_button.Location = new Point(568, 75);
             PipeIns_button.Margin = new Padding(0);
             PipeIns_button.Name = "PipeIns_button";
             PipeIns_button.Size = new Size(23, 23);
@@ -1152,7 +1152,7 @@ namespace main.contents
             DuctLength_label.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             DuctLength_label.Location = new Point(31, 12);
             DuctLength_label.Name = "DuctLength_label";
-            DuctLength_label.Size = new Size(151, 20);
+            DuctLength_label.Size = new Size(153, 20);
             DuctLength_label.TabIndex = 197;
             DuctLength_label.Text = "공조기부터 외피라인까지\r\n";
             DuctLength_label.UseCompatibleTextRendering = true;
