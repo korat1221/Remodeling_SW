@@ -117,7 +117,7 @@
             CSVImport_button.BackColor = SystemColors.ControlLight;
             CSVImport_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             CSVImport_button.FlatStyle = FlatStyle.System;
-            CSVImport_button.Font = new System.Drawing.Font("나눔고딕 ExtraBold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            CSVImport_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             CSVImport_button.Location = new Point(212, 13);
             CSVImport_button.Margin = new Padding(0);
             CSVImport_button.Name = "CSVImport_button";
@@ -292,7 +292,7 @@
             Calc_button.BackColor = SystemColors.ControlLight;
             Calc_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Calc_button.FlatStyle = FlatStyle.System;
-            Calc_button.Font = new System.Drawing.Font("나눔고딕 ExtraBold", 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Calc_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
             Calc_button.Location = new Point(212, 45);
             Calc_button.Margin = new Padding(0);
             Calc_button.Name = "Calc_button";
