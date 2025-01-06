@@ -55,6 +55,14 @@ namespace main.contents.Alt
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
             create_Alt_Table();
+            tabControl.TabPages.Remove(Wall_tabPage);
+            tabControl.TabPages.Remove(Roof_tabPage);
+            tabControl.TabPages.Remove(Floor_tabPage);
+            tabControl.TabPages.Remove(Win_tabPage);
+            Create_Wall_Old_table();
+            Create_Roof_Old_table();
+            Create_Floor_Old_table();
+            Create_Win_Old_table();
         }
         async void InitializeAsync()
         {
@@ -266,54 +274,7 @@ namespace main.contents.Alt
                 count = count + 1;
             }
             #endregion
-            /*
-            #region 비용
-            double cost = 0; 
-            if (WallCost_textBox.Text != null && WallCost_textBox.Text.ToString().Contains(" 천원"))
-            {
-                string a = WallCost_textBox.Text.ToString().Substring(0, WallCost_textBox.Text.ToString().IndexOf(" 천원"));
-                cost += Convert.ToDouble(a);
-            }
-            if (RoofCost_textBox.Text != null && RoofCost_textBox.Text.ToString().Contains(" 천원"))
-            {
-                string a = RoofCost_textBox.Text.ToString().Substring(0, RoofCost_textBox.Text.ToString().IndexOf(" 천원"));
-                cost += Convert.ToDouble(a);
-            }
-            if (FloorCost_textBox.Text != null && FloorCost_textBox.Text.ToString().Contains(" 천원"))
-            {
-                string a = FloorCost_textBox.Text.ToString().Substring(0, FloorCost_textBox.Text.ToString().IndexOf(" 천원"));
-                cost += Convert.ToDouble(a);
-            }
-            if (WinCost_textBox.Text != null && WinCost_textBox.Text.ToString().Contains(" 천원"))
-            {
-                string a = WinCost_textBox.Text.ToString().Substring(0, WinCost_textBox.Text.ToString().IndexOf(" 천원"));
-                cost += Convert.ToDouble(a);
-            }
-            #region 
-            #region 절감률
-            double saving = 0;
-            if (WallSavingPercent_textBox.Text != null && WallSavingPercent_textBox.Text.ToString().Contains(" %"))
-            {
-                string a = WallSavingPercent_textBox.Text.ToString().Substring(0, WallSavingPercent_textBox.Text.ToString().IndexOf(" %"));
-                saving += Convert.ToDouble(a);
-            }
-            if (RoofSavingPercent_textBox.Text != null && RoofSavingPercent_textBox.Text.ToString().Contains(" %"))
-            {
-                string a = RoofSavingPercent_textBox.Text.ToString().Substring(0, RoofSavingPercent_textBox.Text.ToString().IndexOf(" %"));
-                saving += Convert.ToDouble(a);
-            }
-            if (FloorSavingPercent_textBox.Text != null && FloorSavingPercent_textBox.Text.ToString().Contains(" %"))
-            {
-                string a = FloorSavingPercent_textBox.Text.ToString().Substring(0, FloorSavingPercent_textBox.Text.ToString().IndexOf(" %"));
-                saving += Convert.ToDouble(a);
-            }
-            if (WinSavingPercent_textBox.Text != null && WinSavingPercent_textBox.Text.ToString().Contains(" %"))
-            {
-                string a = WinSavingPercent_textBox.Text.ToString().Substring(0, WinSavingPercent_textBox.Text.ToString().IndexOf(" %"));
-                saving += Convert.ToDouble(a);
-            }
-            #region 
-            */
+          
             if (count > 0)
             {
                 TotalPoint_label.Visible = true;
