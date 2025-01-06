@@ -227,7 +227,6 @@ namespace main.subcontents.Alt
         private void Load_Select_Remodling(string 리모델링안)
         {
             GeneralPanel.Visible = true;
-            Load_Graph(리모델링안);
             string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select 리모델링유형,최적안구분, 프레임 From 투명최적안  where 구조체='창호' and 최적안='" + 리모델링안 + "'");
             if (Value.Length > 0)
             {
@@ -260,15 +259,6 @@ namespace main.subcontents.Alt
                 Spacer_textBox.Text = "단열간봉";
 
             }
-        }
-        private void Load_Graph(string 리모델링안)
-        {
-            string SelectNum = "";
-            string[][] WList = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호", "");
-            if (WList.Length > 0)
-            {
-            }
-
         }
         private void Load_WindowImage(string WindowType, string FrameType, string FrameMaterial)
         {

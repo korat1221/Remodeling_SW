@@ -35,7 +35,7 @@ namespace main.contents.Alt
     public partial class AltMain : Form
     {
         string AltNum, AltName;
-        double TotalPoint;
+        double TotalPoint; double TotalSavingPercent;
         double Cost_Total; double Cost_Net = 0;//총공사비, 순공사비
         bool scriptable = false;
         string SelectAlt_Wall;
@@ -87,9 +87,14 @@ namespace main.contents.Alt
 
         }
 
+        public static bool OnLoadListProc(Form form)
+        {
+            List_Alt f = (List_Alt)form;
+            f.load_List();
+            return true;
+        }
         private void Save()
         {
-            AltNum = "Alt01";
             Program.DB.setValue(DB.type.ProjDB, "Optimal_Form", "번호,명칭,총공사비,순공사비,종합점수",
                 "'" + AltNum + "','" + AltName + "','" + Cost_Total.ToString() + "','" + Cost_Net.ToString() + "','" + TotalPoint.ToString()
                   + "'", "번호");
@@ -120,26 +125,30 @@ namespace main.contents.Alt
                   요소기술[9] + "','" + 리모델링안[9]
                   + "'", "번호");
             MessageBox.Show(AltNum + "." + AltName + "이 저장되었습니다.");
+            this.DialogResult = DialogResult.OK;
+            this.Hide();
+            Program.getMenuForm().DoLoadForm(58, OnLoadListProc);
         }
 
         private void reset()
         {
             Alt_dataGridView.Rows.Clear();
+            tabControl.TabPages.Remove(Wall_tabPage);
+            tabControl.TabPages.Remove(Roof_tabPage);
+            tabControl.TabPages.Remove(Floor_tabPage);
+            tabControl.TabPages.Remove(Win_tabPage);
+
         }
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
         {
             AltNum_textBox.Text = ID;
             AltNum = ID;
-            AltNum_textBox.Text = "Alt01";
-            AltNum = "Alt01";
         }
 
         public void LoadData(String ID)
         {
             AltNum_textBox.Text = ID;
             AltNum = ID;
-            AltNum_textBox.Text = "Alt01";
-            AltNum = "Alt01";
             reset();
             Create_Wall_Old_table();
             Create_Roof_Old_table();
@@ -183,15 +192,23 @@ namespace main.contents.Alt
                     {
                         if (Alt_dataGridView.Rows[a].Cells[2].Value.ToString() == "외벽")
                         {
-                            Create_Wall_New_table(Alt_dataGridView.Rows[a].Cells[4].Value.ToString());
+                            SelectAlt_Wall = Alt_dataGridView.Rows[a].Cells[4].Value.ToString();
+                            Create_Wall_New_table(SelectAlt_Wall);
                         }
                         else if (Alt_dataGridView.Rows[a].Cells[2].Value.ToString() == "지붕")
                         {
-                            Create_Roof_New_table(Alt_dataGridView.Rows[a].Cells[4].Value.ToString());
+                            SelectAlt_Roof = Alt_dataGridView.Rows[a].Cells[4].Value.ToString();
+                            Create_Roof_New_table(SelectAlt_Roof);
                         }
                         else if (Alt_dataGridView.Rows[a].Cells[2].Value.ToString() == "최하층바닥")
                         {
-                            Create_Floor_New_table(Alt_dataGridView.Rows[a].Cells[4].Value.ToString());
+                            SelectAlt_Floor = Alt_dataGridView.Rows[a].Cells[4].Value.ToString();
+                            Create_Floor_New_table(SelectAlt_Floor);
+                        }
+                        else if (Alt_dataGridView.Rows[a].Cells[2].Value.ToString() == "창호")
+                        {
+                            SelectAlt_Win = Alt_dataGridView.Rows[a].Cells[4].Value.ToString();
+                            Create_Win_New_table(SelectAlt_Win);
                         }
                     }
                 }
@@ -222,6 +239,7 @@ namespace main.contents.Alt
 
         private void Calc_TotalPoint()
         {
+            #region 점수
             double point = 0; int count = 0;
             if (WallPoint_textBox.Text != null && WallPoint_textBox.Text.ToString().Contains(" 점"))
             {
@@ -241,6 +259,61 @@ namespace main.contents.Alt
                 point += Convert.ToDouble(a);
                 count = count + 1;
             }
+            if (WinPoint_textBox.Text != null && WinPoint_textBox.Text.ToString().Contains(" 점"))
+            {
+                string a = WinPoint_textBox.Text.ToString().Substring(0, WinPoint_textBox.Text.ToString().IndexOf(" 점"));
+                point += Convert.ToDouble(a);
+                count = count + 1;
+            }
+            #endregion
+            /*
+            #region 비용
+            double cost = 0; 
+            if (WallCost_textBox.Text != null && WallCost_textBox.Text.ToString().Contains(" 천원"))
+            {
+                string a = WallCost_textBox.Text.ToString().Substring(0, WallCost_textBox.Text.ToString().IndexOf(" 천원"));
+                cost += Convert.ToDouble(a);
+            }
+            if (RoofCost_textBox.Text != null && RoofCost_textBox.Text.ToString().Contains(" 천원"))
+            {
+                string a = RoofCost_textBox.Text.ToString().Substring(0, RoofCost_textBox.Text.ToString().IndexOf(" 천원"));
+                cost += Convert.ToDouble(a);
+            }
+            if (FloorCost_textBox.Text != null && FloorCost_textBox.Text.ToString().Contains(" 천원"))
+            {
+                string a = FloorCost_textBox.Text.ToString().Substring(0, FloorCost_textBox.Text.ToString().IndexOf(" 천원"));
+                cost += Convert.ToDouble(a);
+            }
+            if (WinCost_textBox.Text != null && WinCost_textBox.Text.ToString().Contains(" 천원"))
+            {
+                string a = WinCost_textBox.Text.ToString().Substring(0, WinCost_textBox.Text.ToString().IndexOf(" 천원"));
+                cost += Convert.ToDouble(a);
+            }
+            #region 
+            #region 절감률
+            double saving = 0;
+            if (WallSavingPercent_textBox.Text != null && WallSavingPercent_textBox.Text.ToString().Contains(" %"))
+            {
+                string a = WallSavingPercent_textBox.Text.ToString().Substring(0, WallSavingPercent_textBox.Text.ToString().IndexOf(" %"));
+                saving += Convert.ToDouble(a);
+            }
+            if (RoofSavingPercent_textBox.Text != null && RoofSavingPercent_textBox.Text.ToString().Contains(" %"))
+            {
+                string a = RoofSavingPercent_textBox.Text.ToString().Substring(0, RoofSavingPercent_textBox.Text.ToString().IndexOf(" %"));
+                saving += Convert.ToDouble(a);
+            }
+            if (FloorSavingPercent_textBox.Text != null && FloorSavingPercent_textBox.Text.ToString().Contains(" %"))
+            {
+                string a = FloorSavingPercent_textBox.Text.ToString().Substring(0, FloorSavingPercent_textBox.Text.ToString().IndexOf(" %"));
+                saving += Convert.ToDouble(a);
+            }
+            if (WinSavingPercent_textBox.Text != null && WinSavingPercent_textBox.Text.ToString().Contains(" %"))
+            {
+                string a = WinSavingPercent_textBox.Text.ToString().Substring(0, WinSavingPercent_textBox.Text.ToString().IndexOf(" %"));
+                saving += Convert.ToDouble(a);
+            }
+            #region 
+            */
             if (count > 0)
             {
                 TotalPoint_label.Visible = true;
@@ -263,12 +336,12 @@ namespace main.contents.Alt
             Alt_dataGridView.Columns.Add("A2", "요소기술");
             Alt_dataGridView.Columns.Add("A3", "+");
             Alt_dataGridView.Columns.Add("A4", "리모델링안");
-            Alt_dataGridView.Columns.Add("A5", "예상 순공사비.[원]");
+            Alt_dataGridView.Columns.Add("A5", "예상 순공사비.[천원]");
             Alt_dataGridView.Columns[0].Width = 40;
             Alt_dataGridView.Columns[1].Width = 50;
             Alt_dataGridView.Columns[2].Width = 70;
             Alt_dataGridView.Columns[3].Width = 30;
-            Alt_dataGridView.Columns[5].Width = 75;
+            Alt_dataGridView.Columns[4].Width = 150;
         }
 
         private void Alt_Add_button_Click(object sender, EventArgs e)
@@ -487,7 +560,7 @@ namespace main.contents.Alt
 
             if (폐기물처리비 > CostTotal)
             {
-                MessageBox.Show("예상 폐기물처리비(" + 폐기물처리비.ToString("#,##0") + "원) 보다 많은 예산을 입력해주세요.");
+                MessageBox.Show("예상 폐기물처리비(" + (폐기물처리비 / 1000).ToString("#,##0") + "천원) 보다 많은 예산을 입력해주세요.");
             }
             else
             {
@@ -525,31 +598,31 @@ namespace main.contents.Alt
             Cost_dataGridView.Columns.Clear();
             Cost_dataGridView.Rows.Clear();
             Cost_dataGridView.Columns.Add("A0", "항목");
-            Cost_dataGridView.Columns.Add("A1", "예상비용[원]");
+            Cost_dataGridView.Columns.Add("A1", "예상비용[천원]");
 
             int nRow = Cost_dataGridView.Rows.Add();
             Cost_dataGridView.Rows[nRow].Cells[0].Value = "순공사비";
-            Cost_dataGridView.Rows[nRow].Cells[1].Value = 순공사비.ToString("#,##0");
+            Cost_dataGridView.Rows[nRow].Cells[1].Value = (순공사비 / 1000).ToString("#,##0");
 
             nRow = Cost_dataGridView.Rows.Add();
             Cost_dataGridView.Rows[nRow].Cells[0].Value = "일반관리비";
-            Cost_dataGridView.Rows[nRow].Cells[1].Value = 일반관리비.ToString("#,##0");
+            Cost_dataGridView.Rows[nRow].Cells[1].Value = (일반관리비 / 1000).ToString("#,##0");
 
             nRow = Cost_dataGridView.Rows.Add();
             Cost_dataGridView.Rows[nRow].Cells[0].Value = "이윤";
-            Cost_dataGridView.Rows[nRow].Cells[1].Value = 이윤.ToString("#,##0");
+            Cost_dataGridView.Rows[nRow].Cells[1].Value = (이윤 / 1000).ToString("#,##0");
 
             nRow = Cost_dataGridView.Rows.Add();
             Cost_dataGridView.Rows[nRow].Cells[0].Value = "부가가치세";
-            Cost_dataGridView.Rows[nRow].Cells[1].Value = 부가가치세.ToString("#,##0");
+            Cost_dataGridView.Rows[nRow].Cells[1].Value = (부가가치세 / 1000).ToString("#,##0");
 
             nRow = Cost_dataGridView.Rows.Add();
             Cost_dataGridView.Rows[nRow].Cells[0].Value = "폐기물처리비";
-            Cost_dataGridView.Rows[nRow].Cells[1].Value = 폐기물처리비.ToString("#,##0");
+            Cost_dataGridView.Rows[nRow].Cells[1].Value = (폐기물처리비 / 1000).ToString("#,##0");
 
             nRow = Cost_dataGridView.Rows.Add();
             Cost_dataGridView.Rows[nRow].Cells[0].Value = "합계";
-            Cost_dataGridView.Rows[nRow].Cells[1].Value = 합계.ToString("#,##0");
+            Cost_dataGridView.Rows[nRow].Cells[1].Value = (합계 / 1000).ToString("#,##0");
         }
         private double Cal_CostWaste(double Area)
         {
@@ -620,7 +693,7 @@ namespace main.contents.Alt
                 }
                 BalanceCost_label.Visible = true;
                 BalanceCost_textBox.Visible = true;
-                BalanceCost_textBox.Text = (순공사비 - sum).ToString("#,##0") + " 원";
+                BalanceCost_textBox.Text = (순공사비 / 1000 - sum).ToString("#,##0") + " 천원";
 
                 return 순공사비 - sum;
             }
@@ -690,6 +763,7 @@ namespace main.contents.Alt
         }
         private void Create_Wall_New_table(string SelectAlt_Wall)
         {
+            tabControl.TabPages.Add(Wall_tabPage);
             new StackedHeaderDecorator(Wall_New_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
 
             DataGridViewCheckBoxColumn Wall_New_checkBoxColumn = new DataGridViewCheckBoxColumn();
@@ -729,7 +803,7 @@ namespace main.contents.Alt
                         Wall_New_dataGridView.Rows[nRow].Cells[4].Value = String.Format("{0:F2}", A);
                     }
                 }
-                tabConrol.SelectedTab = tabConrol.TabPages["Wall_tabPage"];
+                tabControl.SelectedTab = tabControl.TabPages["Wall_tabPage"];
 
             }
             if (Wall_New_dataGridView.Rows.Count > 0)
@@ -752,7 +826,7 @@ namespace main.contents.Alt
             string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 리모델링값,순공사비,에너지절감량,에너지절감률,종합점수 From Optimal_PreResult Where 검토유형='외벽' and 리모델링안='" + SelectAlt_Wall + "'");
             if (Value.Length > 0)
             {
-                WallCost_textBox.Text = Convert.ToDouble(Value[0][1]).ToString("#,##0") + " 원";
+                WallCost_textBox.Text = (Convert.ToDouble(Value[0][1]) / 1000).ToString("#,##0") + " 천원";
                 WallSavingPercent_textBox.Text = Convert.ToDouble(Value[0][3]).ToString("0.0") + " %";
                 WallPoint_textBox.Text = Convert.ToDouble(Value[0][4]).ToString("0.0") + " 점";
                 Calc_TotalPoint();
@@ -763,7 +837,7 @@ namespace main.contents.Alt
                 if (Alt_dataGridView.Rows[a].Cells[2].Value != null && Alt_dataGridView.Rows[a].Cells[2].Value.ToString() == "외벽")
                 {
                     Alt_dataGridView.Rows[a].Cells[4].Value = SelectAlt_Wall;
-                    Alt_dataGridView.Rows[a].Cells[5].Value = Convert.ToDouble(Value[0][1]).ToString("#,##0");
+                    Alt_dataGridView.Rows[a].Cells[5].Value = (Convert.ToDouble(Value[0][1]) / 1000).ToString("#,##0");
                 }
             }
             Cal_BalanceCost(Cost_Net);
@@ -1044,6 +1118,7 @@ namespace main.contents.Alt
         }
         private void Create_Roof_New_table(string SelectAlt_Roof)
         {
+            tabControl.TabPages.Add(Roof_tabPage);
             new StackedHeaderDecorator(Roof_New_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
 
             DataGridViewCheckBoxColumn Roof_New_checkBoxColumn = new DataGridViewCheckBoxColumn();
@@ -1083,7 +1158,7 @@ namespace main.contents.Alt
                         Roof_New_dataGridView.Rows[nRow].Cells[4].Value = String.Format("{0:F2}", A);
                     }
                 }
-                tabConrol.SelectedTab = tabConrol.TabPages["Roof_tabPage"];
+                tabControl.SelectedTab = tabControl.TabPages["Roof_tabPage"];
             }
             if (Roof_New_dataGridView.Rows.Count > 0)
             {
@@ -1105,7 +1180,7 @@ namespace main.contents.Alt
             string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 리모델링값,순공사비,에너지절감량,에너지절감률,종합점수 From Optimal_PreResult Where 검토유형='지붕' and 리모델링안='" + SelectAlt_Roof + "'");
             if (Value.Length > 0)
             {
-                RoofCost_textBox.Text = Convert.ToDouble(Value[0][1]).ToString("#,##0") + " 원";
+                RoofCost_textBox.Text = (Convert.ToDouble(Value[0][1]) / 1000).ToString("#,##0") + " 천원";
                 RoofSavingPercent_textBox.Text = Convert.ToDouble(Value[0][3]).ToString("0.0") + " %";
                 RoofPoint_textBox.Text = Convert.ToDouble(Value[0][4]).ToString("0.0") + " 점";
                 Calc_TotalPoint();
@@ -1116,7 +1191,7 @@ namespace main.contents.Alt
                 if (Alt_dataGridView.Rows[a].Cells[2].Value != null && Alt_dataGridView.Rows[a].Cells[2].Value.ToString() == "지붕")
                 {
                     Alt_dataGridView.Rows[a].Cells[4].Value = SelectAlt_Roof;
-                    Alt_dataGridView.Rows[a].Cells[5].Value = Convert.ToDouble(Value[0][1]).ToString("#,##0");
+                    Alt_dataGridView.Rows[a].Cells[5].Value = (Convert.ToDouble(Value[0][1]) / 1000).ToString("#,##0");
                 }
             }
             Cal_BalanceCost(Cost_Net);
@@ -1390,6 +1465,7 @@ namespace main.contents.Alt
         }
         private void Create_Floor_New_table(string SelectAlt_Floor)
         {
+            tabControl.TabPages.Add(Floor_tabPage);
             new StackedHeaderDecorator(Floor_New_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
 
             DataGridViewCheckBoxColumn Floor_New_checkBoxColumn = new DataGridViewCheckBoxColumn();
@@ -1429,7 +1505,7 @@ namespace main.contents.Alt
                         Floor_New_dataGridView.Rows[nRow].Cells[4].Value = String.Format("{0:F2}", A);
                     }
                 }
-                tabConrol.SelectedTab = tabConrol.TabPages["Floor_tabPage"];
+                tabControl.SelectedTab = tabControl.TabPages["Floor_tabPage"];
             }
             if (Floor_New_dataGridView.Rows.Count > 0)
             {
@@ -1451,7 +1527,7 @@ namespace main.contents.Alt
             string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 리모델링값,순공사비,에너지절감량,에너지절감률,종합점수 From Optimal_PreResult Where 검토유형='최하층바닥' and 리모델링안='" + SelectAlt_Floor + "'");
             if (Value.Length > 0)
             {
-                FloorCost_textBox.Text = Convert.ToDouble(Value[0][1]).ToString("#,##0") + " 원";
+                FloorCost_textBox.Text = (Convert.ToDouble(Value[0][1]) / 1000).ToString("#,##0") + " 천원";
                 FloorSavingPercent_textBox.Text = Convert.ToDouble(Value[0][3]).ToString("0.0") + " %";
                 FloorPoint_textBox.Text = Convert.ToDouble(Value[0][4]).ToString("0.0") + " 점";
                 Calc_TotalPoint();
@@ -1462,7 +1538,7 @@ namespace main.contents.Alt
                 if (Alt_dataGridView.Rows[a].Cells[2].Value != null && Alt_dataGridView.Rows[a].Cells[2].Value.ToString() == "최하층바닥")
                 {
                     Alt_dataGridView.Rows[a].Cells[4].Value = SelectAlt_Floor;
-                    Alt_dataGridView.Rows[a].Cells[5].Value = Convert.ToDouble(Value[0][1]).ToString("#,##0");
+                    Alt_dataGridView.Rows[a].Cells[5].Value = (Convert.ToDouble(Value[0][1]) / 1000).ToString("#,##0");
                 }
             }
             Cal_BalanceCost(Cost_Net);
@@ -1674,13 +1750,62 @@ namespace main.contents.Alt
             }
         }
 
-        private void WInCheck_button_Click(object sender, EventArgs e)
+        private void Win_New_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            ////AltWin form = new AltWin(SelectAlt_Win);
-            //DialogResult result = form.ShowDialog();
-            //if (result == DialogResult.OK)
-            //{
-            //}
+            if (e.RowIndex >= 0)
+            {
+                Win_New_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                for (int i = 0; i < Win_New_dataGridView.Rows.Count; i++)
+                {
+                    if (i != e.RowIndex) { Win_New_dataGridView.Rows[i].Cells[0].Value = false; }
+                    else { Win_New_dataGridView.Rows[i].Cells[0].Value = true; }
+                }
+                int row = -1;
+                for (int k = 0; k < Win_New_dataGridView.Rows.Count; k++)
+                {
+                    if (Convert.ToBoolean(Win_New_dataGridView.Rows[k].Cells[0].Value) == true)
+                    {
+                        row = k;
+                    }
+                }
+                if (row > -1)
+                {
+                    string Select = Win_New_dataGridView.Rows[row].Cells[1].Value.ToString();
+                    if (Select != null && Select != "" && SelectAlt_Win != "" && SelectAlt_Win != null)
+                    {
+                        Load_Image_Win(Select, SelectAlt_Win, row);
+                    }
+                }
+            }
+        }
+
+        private void Load_Image_Win(string SelectNum, string 리모델링안, int row)
+        {
+            string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select 리모델링유형 From 투명최적안 where 구조체='창호' and 최적안='" + 리모델링안 + "'");
+            if (Value.Length > 0)
+            {
+                string WinRemodelingType = Value[0][0];
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호구조유형이미지", "이미지", "구조유형 = '" + WinRemodelingType + "'");
+                if (Image.Length > 0)
+                {
+                    WindowType_pictureBox.Visible = true;
+                    WindowType_pictureBox.Load(Program.gPath + Image[0][0]);
+                    WindowType_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+
+                Ueff_textBox.Text = Win_New_dataGridView.Rows[row].Cells[3].Value.ToString();
+                Program.UTIL.textBox_doubleComa(Ueff_textBox, true, 2);
+                dU_textBox.Text = Win_New_dataGridView.Rows[row].Cells[6].Value.ToString();
+                Program.UTIL.textBox_doubleComa(dU_textBox, true, 2);
+            }
+        }
+        private void WinCheck_button_Click(object sender, EventArgs e)
+        {
+            AltWin form = new AltWin(SelectAlt_Win);
+            DialogResult result = form.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+            }
         }
         private void Create_Win_Old_table()
         {
@@ -1691,7 +1816,7 @@ namespace main.contents.Alt
             string unit = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             Win_Old_dataGridView.Columns.Add("A2", "유효열관류율.[" + unit + "]");
             unit = "m" + Program.UTIL.Subscript(2, true);
-            Win_Old_dataGridView.Columns.Add("A3", "면적.[" + unit + "]");
+            Win_Old_dataGridView.Columns.Add("A3", "면적합.[" + unit + "]");
             Win_Old_dataGridView.Columns.Add("A4", "개수.[EA]");
             Win_Old_dataGridView.Columns[0].Width = 50;
             Win_Old_dataGridView.Columns[4].Width = 50;
@@ -1705,12 +1830,12 @@ namespace main.contents.Alt
                     int nRow = Win_Old_dataGridView.Rows.Add();
                     Win_Old_dataGridView.Rows[nRow].Cells[0].Value = List[n][0];
                     Win_Old_dataGridView.Rows[nRow].Cells[1].Value = List[n][1];
-                    string[][] value = Program.DB.querySQL(DB.type.ProjDB, "Select a.창호유효열관류율,b.면적 From SubWindow as a Inner Join ZoneEnvelope_3D as b on a.번호=b.구조체번호 where a.상위창호번호='"+List[n][0]+"'");
+                    string[][] value = Program.DB.querySQL(DB.type.ProjDB, "Select a.창호유효열관류율,b.면적 From SubWindow as a Inner Join ZoneEnvelope_3D as b on a.번호=b.구조체번호 where a.상위창호번호='" + List[n][0] + "'");
                     if (value.Length > 0)
                     {
                         double Ueff = 0;
                         double Area_sum = 0;
-                        for(int a =0; a< value.Length; a++)
+                        for (int a = 0; a < value.Length; a++)
                         {
                             Ueff += Convert.ToDouble(value[a][0]) * Convert.ToDouble(value[a][1]);
                             Area_sum += Convert.ToDouble(value[a][1]);
@@ -1719,12 +1844,37 @@ namespace main.contents.Alt
                         Win_Old_dataGridView.Rows[nRow].Cells[2].Value = Ueff.ToString("0.00");
                         Win_Old_dataGridView.Rows[nRow].Cells[3].Value = Area_sum.ToString("0.00");
                         Win_Old_dataGridView.Rows[nRow].Cells[4].Value = value.Length;
-                    }                    
+                    }
                 }
             }
         }
+
         private void Create_Win_New_table(string SelectAlt_Win)
         {
+            tabControl.TabPages.Add(Win_tabPage);
+            tabControl.SelectedTab = tabControl.TabPages["Win_tabPage"];
+
+            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 리모델링값,순공사비,에너지절감량,에너지절감률,종합점수 From Optimal_PreResult Where 검토유형='창호' and 리모델링안='" + SelectAlt_Win + "'");
+            if (Value.Length > 0)
+            {
+                Win_new_label.Text = SelectAlt_Win;
+                WinCost_textBox.Text = (Convert.ToDouble(Value[0][1]) / 1000).ToString("#,##0") + " 천원";
+                WinSavingPercent_textBox.Text = Convert.ToDouble(Value[0][3]).ToString("0.0") + " %";
+                WinPoint_textBox.Text = Convert.ToDouble(Value[0][4]).ToString("0.0") + " 점";
+                Calc_TotalPoint();
+
+                for (int a = 0; a < Alt_dataGridView.Rows.Count; a++)
+                {
+                    if (Alt_dataGridView.Rows[a].Cells[2].Value != null && Alt_dataGridView.Rows[a].Cells[2].Value.ToString() == "창호")
+                    {
+                        Alt_dataGridView.Rows[a].Cells[4].Value = SelectAlt_Win;
+                        Alt_dataGridView.Rows[a].Cells[5].Value = (Convert.ToDouble(Value[0][1]) / 1000).ToString("#,##0");
+                    }
+                }
+                Cal_BalanceCost(Cost_Net);
+            }
+
+            //테이블 생성 
             new StackedHeaderDecorator(Win_New_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
 
             DataGridViewCheckBoxColumn Win_New_checkBoxColumn = new DataGridViewCheckBoxColumn();
@@ -1736,107 +1886,206 @@ namespace main.contents.Alt
             Win_New_dataGridView.Columns.Add("A1", "번호");
             Win_New_dataGridView.Columns.Add("A2", "명칭");
             string unit = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
-            Win_New_dataGridView.Columns.Add("A2", "유효열관류율.[" + unit + "]");
+            Win_New_dataGridView.Columns.Add("A3", "유효열관류율.[" + unit + "]");
             unit = "m" + Program.UTIL.Subscript(2, true);
-            Win_New_dataGridView.Columns.Add("A3", "면적.[" + unit + "]");
-            Win_New_dataGridView.Columns.Add("A4", "개수.[EA]");
+            Win_New_dataGridView.Columns.Add("A4", "면적합.[" + unit + "]");
+            Win_New_dataGridView.Columns.Add("A5", "개수.[EA]");
+            Win_New_dataGridView.Columns.Add("A6", "설치열교가산치.[" + unit + "]");
+            Win_New_dataGridView.Columns[6].Visible = false;
             Win_New_dataGridView.Columns[0].Width = 40;
-            Win_New_dataGridView.Columns[1].Width = 40;
-
-            string[][] List = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.번호,a.창호명칭 From ConstructionWindow as a  Inner Join SubWindow as b on a.번호=b.상위창호번호 Inner Join ZoneEnvelope_3D as c on b.번호=c.구조체번호");
-            if (List.Length > 0)
+            Win_New_dataGridView.Columns[1].Width = 50;
+            Win_New_dataGridView.Columns[5].Width = 50;
+            string[][] ALT = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select 리모델링유형 From 투명최적안 where 구조체='창호' and 최적안='" + SelectAlt_Win + "'");
+            if (ALT.Length > 0)
             {
-                Win_New_dataGridView.Rows.Clear();
-                for (int n = 0; n < List.Length; n++)
+                string WinRemodelingType = ALT[0][0];
+                string[][] List = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.번호,a.창호명칭 From ConstructionWindow as a  Inner Join SubWindow as b on a.번호=b.상위창호번호 Inner Join ZoneEnvelope_3D as c on b.번호=c.구조체번호");
+                if (List.Length > 0)
                 {
-                    int nRow = Win_New_dataGridView.Rows.Add();
-                    Win_New_dataGridView.Rows[nRow].Cells[1].Value = List[n][0];
-                    Win_New_dataGridView.Rows[nRow].Cells[2].Value = List[n][1];
-
-                    string[][] value = Program.DB.querySQL(DB.type.ProjDB, "Select a.창호유효열관류율,b.면적 From SubWindow as a Inner Join ZoneEnvelope_3D as b on a.번호=b.구조체번호 where a.상위창호번호='" + List[n][0] + "'");
-                    if (value.Length > 0)
+                    Win_New_dataGridView.Rows.Clear();
+                    for (int n = 0; n < List.Length; n++)
                     {
-                        double Area_sum = 0;
-                        for (int a = 0; a < value.Length; a++)
+                        int nRow = Win_New_dataGridView.Rows.Add();
+                        Win_New_dataGridView.Rows[nRow].Cells[1].Value = List[n][0];
+                        Win_New_dataGridView.Rows[nRow].Cells[2].Value = List[n][1];
+                        string[][] value = Program.DB.querySQL(DB.type.ProjDB, "Select b.번호,b.면적 From SubWindow as a Inner Join ZoneEnvelope_3D as b on a.번호=b.구조체번호 where a.상위창호번호='" + List[n][0] + "'");
+                        if (value.Length > 0)
                         {
-                            Area_sum += Convert.ToDouble(value[a][1]);
+                            double Ueff = 0; double dU = 0, g = 0, tao = 0;
+                            double Area_sum = 0;
+                            for (int a = 0; a < value.Length; a++)
+                            {
+                                string 외피번호 = value[a][0];
+
+                                double[] result = Cal_Win_Ueff(SelectAlt_Win, WinRemodelingType, 외피번호);////유효열관류율, 태양열취득률, 빛투과율, 설치열교가산치
+                                Ueff += result[0] * Convert.ToDouble(value[a][1]);
+                                g = result[1];
+                                tao = result[2];
+                                dU += result[3] * Convert.ToDouble(value[a][1]);
+                                Area_sum += Convert.ToDouble(value[a][1]);
+                            }
+                            Ueff = Ueff / Area_sum;
+                            dU = dU / Area_sum;
+                            g_textBox.Text = g.ToString();
+                            Program.UTIL.textBox_doubleComa(g_textBox, true, 3);
+                            tao_textBox.Text = tao.ToString();
+                            Program.UTIL.textBox_doubleComa(tao_textBox, true, 3);
+                            Win_New_dataGridView.Rows[nRow].Cells[3].Value = Ueff.ToString("0.00");
+                            Win_New_dataGridView.Rows[nRow].Cells[4].Value = Area_sum.ToString("0.00");
+                            Win_New_dataGridView.Rows[nRow].Cells[5].Value = value.Length;
+                            Win_New_dataGridView.Rows[nRow].Cells[6].Value = dU.ToString("0.00");
                         }
-                        double Ueff_new = Get_Win_Ueff(SelectAlt_Win, Convert.ToDouble(List[n][2]), List[n][3]);
-                        Win_New_dataGridView.Rows[nRow].Cells[3].Value = Ueff_new.ToString("0.00");
-                        Win_New_dataGridView.Rows[nRow].Cells[4].Value = Area_sum.ToString("0.00");
-                        Win_New_dataGridView.Rows[nRow].Cells[5].Value = value.Length;
                     }
                 }
-                tabConrol.SelectedTab = tabConrol.TabPages["Win_tabPage"];
             }
+
             if (Win_New_dataGridView.Rows.Count > 0)
             {
                 for (int i = 0; i < Win_New_dataGridView.Rows.Count; i++)
                 {
                     Win_New_dataGridView.Rows[i].Cells[0].Value = false;
                 }
-            }
-            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 리모델링값,순공사비,에너지절감량,에너지절감률,종합점수 From Optimal_PreResult Where 검토유형='창호' and 리모델링안='" + SelectAlt_Win + "'");
-            if (Value.Length > 0)
-            {
-                WinCost_textBox.Text = Convert.ToDouble(Value[0][1]).ToString("#,##0") + " 원";
-                WinSavingPercent_textBox.Text = Convert.ToDouble(Value[0][3]).ToString("0.0") + " %";
-                WinPoint_textBox.Text = Convert.ToDouble(Value[0][4]).ToString("0.0") + " 점";
-                Calc_TotalPoint();
-            }
-
-            for (int a = 0; a < Alt_dataGridView.Rows.Count; a++)
-            {
-                if (Alt_dataGridView.Rows[a].Cells[2].Value != null && Alt_dataGridView.Rows[a].Cells[2].Value.ToString() == "지붕")
+                if (Win_New_dataGridView.Columns.Count > 1 && Win_New_dataGridView.Rows[0].Cells[1].Value != null)
                 {
-                    Alt_dataGridView.Rows[a].Cells[4].Value = SelectAlt_Win;
-                    Alt_dataGridView.Rows[a].Cells[5].Value = Convert.ToDouble(Value[0][1]).ToString("#,##0");
+                    Win_New_dataGridView.Rows[0].Cells[0].Value = true;
+                    Win_New_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                    string Select = Win_New_dataGridView.Rows[0].Cells[1].Value.ToString();
+                    if (Select != null && Select != "" && SelectAlt_Win != "" && SelectAlt_Win != null)
+                    {
+                        Load_Image_Win(Select, SelectAlt_Win, 0);
+                    }
                 }
             }
-            Cal_BalanceCost(Cost_Net);
-            string[][] Value2 = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select a.리모델링유형,b.마감재분류 From 불투명최적안 as a Inner Join 마감재 as b on a.마감재=b.마감재 where a.구조체='지붕' and a.최적안='" + SelectAlt_Win + "'");
-            if (Value2.Length > 0)
-            {
-                Win_new_label.Text = SelectAlt_Win + ": " + Value2[0][0];
-            }
         }
-        private double Get_Win_Ueff(string 리모델링안, double Uold, string 직접간접)
+
+
+        private double[] Cal_Win_Ueff(string 리모델링안, string WinRemodelingType, string 외피번호)
         {
-            double Ueff = 0; double dU = 0;
-            double R = 0;
-            string[][] Value = Program.DB.getValue(DB.type.BaseDB_Optimal, "불투명최적안", "열저항합계, 열교가산치,리모델링유형", "최적안='" + 리모델링안 + "'");
-            if (Value.Length > 0)
+            double[] result = new double[4]; //유효열관류율, 태양열취득률, 빛투과율, 설치열교가산치
+            double Uw = 0, dU = 0, Ueff = 0;
+            double[] WinValue = LoadData_Win(리모델링안);
+            double ug = WinValue[0], g = WinValue[1], tao = WinValue[2];
+            double Uf_open = WinValue[3], Uf_fix = WinValue[4], Uf_btw = WinValue[5];
+            double Psi_g_fix = WinValue[6], Psi_g_open = WinValue[7];
+            double Psi_InstallTop = WinValue[8], Psi_InstallSide = WinValue[9], Psi_InstallButtom = WinValue[10];
+            String[][] ZoneWin = Program.DB.querySQL(DB.type.ProjDB, "select a.번호 As 번호a ,a.면적,b.번호 As 번호b ,b.창호열관류율,b.설치열교가산치,b.창호유효열관류율,b.유리면적비,b.상위창호번호,a.방위,a.기울기 FROM ZoneEnvelope_3D AS a INNER JOIN SubWindow AS b ON a.구조체번호 = b.번호  Where a.번호='" + 외피번호 + "'");
+            if (ZoneWin.Length > 0)
             {
-                R = Convert.ToDouble(Value[0][0]);
-                dU = Convert.ToDouble(Value[0][1]);
-                if (직접간접 == "지면")
+                String[][] ZoneWin_P = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "직접간접,태양열취득률,빛투과율", "번호='" + ZoneWin[0][7] + "'");
+                if (ZoneWin_P.Length > 0)
                 {
-                    if (Value[0][2] == "내부덧댐")
+                    string[][] size = Program.DB.querySQL(DB.type.ProjDB, "Select  a.창호면적,a.창호너비,a.창호높이,a.고정유리면적,a.개폐유리면적,a.개폐프레임면적,a.고정프레임면적,a.중간프레임면적,a.고정유리둘레길이,a.개폐유리둘레길이,a.유리면적비 FROM SubWindow AS a INNER JOIN ZoneEnvelope_3D AS b ON b.구조체번호 = a.번호 where b.번호 = '" + ZoneWin[0][0] + "'");
+                    if (size.Length > 0)
                     {
-                        Ueff = 1 / (1 / Uold + R) + dU;
+                        double NewUw = Calc_Uw(size, ug, Uf_open, Uf_fix, Uf_btw, Psi_g_fix, Psi_g_open);
+                        double Newg = WinValue[1];
+                        double Newtao = WinValue[2];
+                        if (WinRemodelingType == "내부덧댐")
+                        {
+                            double[] v = Calc_AdditionalWindow(NewUw, Convert.ToDouble(ZoneWin[0][3]), Newg, Convert.ToDouble(ZoneWin_P[0][1]), Newtao, Convert.ToDouble(ZoneWin_P[0][2])); //double NewUw, double OldUw, double Newg, double Oldg, double Newtao, double Oldtao
+                            Uw = v[0]; g = v[1]; tao = v[2];
+                        }
+                        else
+                        {
+                            Uw = NewUw; g = Newg; tao = Newtao;
+                        }
+                        dU = Calc_dUinst(size, Psi_InstallTop, Psi_InstallButtom, Psi_InstallSide);
+                        Ueff = Uw + dU;
                     }
-                    else
-                    {
-                        Ueff = Uold;
-                    }
-                }
-                else
-                {
-                    if (Value[0][2] == "철거 후 신규")
-                    {
-                        Ueff = 1 / R + dU;
-                    }
-                    else
-                    {
-                        Ueff = 1 / (1 / Uold + R) + dU;
-                    }
-
                 }
             }
-            return Ueff;
+            result[0] = Ueff;
+            result[1] = g;
+            result[2] = tao;
+            result[3] = dU;
+            return result;
         }
-        
+        private double[] LoadData_Win(string 리모델링안)
+        {
+            double[] WinValue = new double[11];
+            double ug = 0, g = 0, tao = 0;
+            double Uf_open = 0, Uf_fix = 0, Uf_btw = 0;
+            double Psi_g_fix = 0, Psi_g_open = 0;
+            double Psi_InstallTop = 0, Psi_InstallSide = 0, Psi_InstallButtom = 0;
+            string[][] value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select 최적안구분,프레임,유리 From 투명최적안 where 최적안='" + 리모델링안 + "' and 구조체='창호'");
+            if (value.Length > 0)
+            {
+                string 프레임재료 = value[0][1]; string 단창이중창 = "단창"; string 유리 = value[0][2];
+                if (value[0][0] == "이중창_SL") { 단창이중창 = "이중창"; 유리 = "LE/12R/CL"; }
+                if (value[0][1] == "금속_단열바") { 프레임재료 = "금속"; }
+                string[][] frameValue = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select 개폐부프레임열관류율,고정부프레임열관류율,중간바프레임열관류율  From 창호프레임  where 프레임종류='" + value[0][0] + "' and 프레임재료='" + value[0][1] + "' and DB유형='표준'");
+                if (frameValue.Length > 0)
+                {
+                    Uf_open = Convert.ToDouble(frameValue[0][0]); Uf_fix = Convert.ToDouble(frameValue[0][1]); Uf_btw = Convert.ToDouble(frameValue[0][2]);
+                }
+                string[][] glassValue = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select 번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율  From 유리  where 제품명='" + 유리 + "'and DB유형='표준'");
+                if (glassValue.Length > 0)
+                {
+                    ug = Convert.ToDouble(glassValue[0][7]); g = Convert.ToDouble(glassValue[0][8]); tao = Convert.ToDouble(glassValue[0][9]);
+                }
+                if (value[0][0] == "이중창_SL")
+                {
+                    double[] v = Calc_DoubleGlass(glassValue); ug = v[0]; g = v[1]; tao = v[2];
+                }
+                string[][] TBValue = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select 상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율  From 창호설치열교  where 구분1='외단열'and 구분2='" + 프레임재료 + "'and 구분3='" + 단창이중창 + "'and 구분4='외부측'");
+                if (TBValue.Length > 0)
+                {
+                    Psi_InstallTop = Convert.ToDouble(TBValue[0][0]); Psi_InstallSide = Convert.ToDouble(TBValue[0][1]); Psi_InstallButtom = Convert.ToDouble(TBValue[0][2]);
+                }
+                string[][] Spacer = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select 고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율  From 창호간봉  where 구분1='단열간봉'and 구분2='" + 단창이중창 + "'and 구분3='" + 프레임재료 + "'");
+                if (Spacer.Length > 0) { Psi_g_fix = Convert.ToDouble(Spacer[0][0]); Psi_g_open = Convert.ToDouble(Spacer[0][1]); }
+
+                WinValue[0] = ug; WinValue[1] = g; WinValue[2] = tao;
+                WinValue[3] = Uf_open; WinValue[4] = Uf_fix; WinValue[5] = Uf_btw;
+                WinValue[6] = Psi_g_fix; WinValue[7] = Psi_g_open;
+                WinValue[8] = Psi_InstallTop; WinValue[9] = Psi_InstallSide; WinValue[10] = Psi_InstallButtom;
+            }
+            return WinValue;
+        }
+        private double Calc_Uw(string[][] Size, double Ug, double Uf_open, double Uf_fix, double Uf_btw, double Psi_g_fix, double Psi_g_open)
+        {
+            double Area = Convert.ToDouble(Size[0][0]), Width = Convert.ToDouble(Size[0][1]), Height = Convert.ToDouble(Size[0][2]), Ag_fix = Convert.ToDouble(Size[0][3]), Ag_open = Convert.ToDouble(Size[0][4]), Af_open = Convert.ToDouble(Size[0][5]), Af_fix = Convert.ToDouble(Size[0][6]), Af_btw = Convert.ToDouble(Size[0][7]), Lg_fix = Convert.ToDouble(Size[0][8]), Lg_open = Convert.ToDouble(Size[0][0]);
+            double Uw = (Ug * (Ag_fix + Ag_open) + (Uf_open * Af_open) + (Uf_fix * Af_fix) + (Uf_btw * Af_btw) + (Psi_g_fix * Lg_fix) + (Psi_g_open * Lg_open)) / Area;
+            return Uw;
+        }
+        private double[] Calc_AdditionalWindow(double NewUw, double OldUw, double Newg, double Oldg, double Newtao, double Oldtao)
+        {
+            double[] value = new double[3];
+            double Uw = 1 / (0.019 + 1 / OldUw + 1 / NewUw); double g = 0, tao = 0;
+            String 조합구성 = "LE+LE";
+            string[][] f_shgc = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '태양열취득률'");
+            string[][] f_τ = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '빛투과율'");
+            if (f_shgc.Length > 0)
+            { g = Convert.ToDouble(f_shgc[0][0]) * Oldg * Newg; }
+            if (f_τ.Length > 0)
+            { tao = Convert.ToDouble(f_τ[0][0]) * Oldtao * Newtao; }
+            value[0] = Uw; value[1] = g; value[2] = tao;
+            return value;
+        }
+        public double Calc_dUinst(string[][] Size, double Psi_InstallTop, double Psi_InstallButtom, double Psi_InstallSide)
+        {
+            double Area = Convert.ToDouble(Size[0][0]), Width = Convert.ToDouble(Size[0][1]), Height = Convert.ToDouble(Size[0][2]), Ag_fix = Convert.ToDouble(Size[0][3]), Ag_open = Convert.ToDouble(Size[0][4]), Af_open = Convert.ToDouble(Size[0][5]), Af_fix = Convert.ToDouble(Size[0][6]), Af_btw = Convert.ToDouble(Size[0][7]), Lg_fix = Convert.ToDouble(Size[0][8]), Lg_open = Convert.ToDouble(Size[0][0]);
+            double dUinst = ((Psi_InstallTop * Width) + (Psi_InstallButtom * Width) + (Psi_InstallSide * Height * 2)) / Area;
+            return dUinst;
+        }
+        private double[] Calc_DoubleGlass(string[][] GlassValue)
+        {
+            String LE_CL_V = GlassValue[0][6] + "+" + GlassValue[0][6];
+            double[] value = new double[3];// Ug, g, Tao;
+            value[0] = 1 / ((1 / Convert.ToDouble(GlassValue[0][7])) - 0.04 + 0.189 - 0.13 + (1 / Convert.ToDouble(GlassValue[0][7])));
+            String[][] f_shgc = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + LE_CL_V + "' AND 보정유형 = '태양열취득률'");
+            String[][] f_τ = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + LE_CL_V + "' AND 보정유형 = '빛투과율'");
+            if (f_shgc.Length > 0)
+            {
+                value[1] = Convert.ToDouble(f_shgc[0][0]) * Convert.ToDouble(GlassValue[0][8]) * Convert.ToDouble(GlassValue[0][8]);
+            }
+            if (f_τ.Length > 0)
+            { value[2] = Convert.ToDouble(f_τ[0][0]) * Convert.ToDouble(GlassValue[0][9]) * Convert.ToDouble(GlassValue[0][9]); }
+            return value;
+        }
+
         #endregion
+
     }
     public class Material_Wall
     {

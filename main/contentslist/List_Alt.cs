@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,6 @@ namespace main.contentslist
         String Num;
         double CountDB;
         int SelectRow;
-        //DataTable WallList = new DataTable();
         DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
 
         public List_Alt()
@@ -90,22 +90,20 @@ namespace main.contentslist
             checkBoxColumn.Name = "check";
             dataGridView1.Columns.Add(checkBoxColumn);
             dataGridView1.Columns.Add("A1", "번호");
-            dataGridView1.Columns.Add("A2", "적용 요소기술");
-            dataGridView1.Columns.Add("A3", "에너지절감량.[kWh]");
-            dataGridView1.Columns.Add("A4", "예상 순공사비.[원]");
-            dataGridView1.Columns.Add("A5", "점수.에너지");
-            dataGridView1.Columns.Add("A6", "점수.법규");
-            dataGridView1.Columns.Add("A7", "점수.쾌적성");
-            dataGridView1.Columns.Add("A8", "점수.경제성");
-            dataGridView1.Columns.Add("A9", "점수.종합점수");
+            dataGridView1.Columns.Add("A2", "명칭");
+            dataGridView1.Columns.Add("A3", "적용 기술");
+            dataGridView1.Columns.Add("A4", "에너지절감률.[%]");
+            dataGridView1.Columns.Add("A5", "예상 순공사비.[천원]");
+            dataGridView1.Columns.Add("A6", "종합점수.[점]");
+            dataGridView1.Columns.Add("A7", "");
             dataGridView1.Columns[0].Width = 40;
-            dataGridView1.Columns[1].Width = 60;
-            dataGridView1.Columns[2].Width = 250;
-            dataGridView1.Columns[5].Width = 40;
-            dataGridView1.Columns[6].Width = 40;
-            dataGridView1.Columns[7].Width = 40;
-            dataGridView1.Columns[8].Width = 40;
-            dataGridView1.Columns[9].Width = 60;
+            dataGridView1.Columns[1].Width = 50;
+            dataGridView1.Columns[2].Width = 60;
+            dataGridView1.Columns[4].Width = 60;
+            dataGridView1.Columns[5].Width = 60;
+            dataGridView1.Columns[6].Width = 60;
+            dataGridView1.Columns[7].Width = 5;
+            dataGridView1.Columns[7].Visible = false;
         }
 
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
@@ -129,8 +127,59 @@ namespace main.contentslist
         }
         public void load_List()
         {
+            List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
+            string[][] List = Program.DB.getValue(DB.type.ProjDB, "Optimal_Form", "번호,명칭,종합점수", "");
+            if (List.Length > 0)
+            {
+                String Blank = "";
+                dataGridView1.Rows.Clear();
+                for (int n = 0; n < List.Length; n++)
+                {
+                    dataGridView1.Rows.Add();
+                    int nRow = dataGridView1.Rows.Count - 1;
+                    dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];
+                    dataGridView1.Rows[nRow].Cells[2].Value = List[n][1];
+                    Load_alt(List[n][0], nRow);
+                    dataGridView1.Rows[nRow].Cells[6].Value = Convert.ToDouble(List[n][2]).ToString("0.0") + " 점";
+                    mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":59,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+                }
+
+            }
+            CountDB = List.Length;
+            Program.UTIL.resetMainTree(6, 0, mainMenu.ToArray(), "58"); // 예시 코드: 메인 메뉴 동적 할당
         }
 
+        private void Load_alt(string AltNum, int row )
+        {
+            double TotalCost = 0, TotalSaving = 0, TotalSavingPercent = 0; 
+           string[][] Load = Program.DB.getValue(DB.type.ProjDB, "Optimal_Form", "요소기술1,리모델링안1,요소기술2,리모델링안2,요소기술3,리모델링안3,요소기술4,리모델링안4,요소기술5,리모델링안5," +
+               "요소기술6,리모델링안6,요소기술7,리모델링안7,요소기술8,리모델링안8,요소기술9,리모델링안9,요소기술10,리모델링안10", "번호 = '" + AltNum + "'");
+            if (Load.Length > 0)
+            {
+                for (int a = 0; a < 10; a++)
+                {
+                    if (Load[0][a * 2] != null && Load[0][a * 2] != "")
+                    {
+                       if(a == 0) { dataGridView1.Rows[row].Cells[3].Value = Load[0][a * 2] + "[" + Load[0][a * 2 + 1] + "]"; }
+                        else { dataGridView1.Rows[row].Cells[3].Value = dataGridView1.Rows[row].Cells[3].Value.ToString()+ ", " + Load[0][a * 2] + "[" + Load[0][a * 2 + 1] + "]"; }
+                        string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 리모델링값,순공사비,에너지절감량,에너지절감률,종합점수 From Optimal_PreResult Where 검토유형='"+ Load[0][a * 2] + "' and 리모델링안='" + Load[0][a * 2  + 1] + "'");
+                        if (Value.Length > 0)
+                        {
+                            TotalCost += Convert.ToDouble(Value[0][1]);
+                            TotalSaving += Convert.ToDouble(Value[0][3]);
+                        }
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                dataGridView1.Rows[row].Cells[4].Value = TotalSaving.ToString("0.0") + " %";
+                dataGridView1.Rows[row].Cells[5].Value = (TotalCost / 1000).ToString("#,##0");
+            }
+
+        }
         private void Remove_button_Click(object sender, EventArgs e)
         {
             int k = dataGridView1.CurrentCell.RowIndex;
@@ -139,7 +188,7 @@ namespace main.contentslist
                 if (k > -1)
                 {
                     String Delete_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
-                    Program.DB.deleteValue(DB.type.ProjDB, "ConstructionWall", "번호 ='" + Delete_Num + "'");
+                    Program.DB.deleteValue(DB.type.ProjDB, "Optimal_Form", "번호 ='" + Delete_Num + "'");
                     load_List();
 
                 }

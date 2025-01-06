@@ -85,7 +85,7 @@ namespace main.subcontents.Alt
             Alt_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -96,7 +96,7 @@ namespace main.subcontents.Alt
             Alt_dataGridView.Name = "Alt_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle2.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -105,7 +105,7 @@ namespace main.subcontents.Alt
             Alt_dataGridView.RowHeadersVisible = false;
             Alt_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle3.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
@@ -117,7 +117,7 @@ namespace main.subcontents.Alt
             // WinRemodelingType_comboBox
             // 
             WinRemodelingType_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            WinRemodelingType_comboBox.Font = new Font("나눔바른고딕", 9.75F);
+            WinRemodelingType_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             WinRemodelingType_comboBox.FormattingEnabled = true;
             WinRemodelingType_comboBox.Location = new Point(113, 11);
             WinRemodelingType_comboBox.Name = "WinRemodelingType_comboBox";
@@ -128,7 +128,7 @@ namespace main.subcontents.Alt
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new Font("나눔바른고딕", 9.75F);
+            label11.Font = new Font(UTIL.Families[0], 9.75F);
             label11.Location = new Point(12, 15);
             label11.Name = "label11";
             label11.Size = new Size(82, 15);
@@ -138,7 +138,7 @@ namespace main.subcontents.Alt
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("나눔바른고딕", 9.75F);
+            label1.Font = new Font(UTIL.Families[0], 9.75F);
             label1.Location = new Point(8, 527);
             label1.Name = "label1";
             label1.Size = new Size(236, 15);
@@ -175,7 +175,7 @@ namespace main.subcontents.Alt
             dU_textBox.BackColor = Color.White;
             dU_textBox.BorderStyle = BorderStyle.None;
             dU_textBox.Enabled = false;
-            dU_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            dU_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             dU_textBox.ForeColor = SystemColors.ControlDark;
             dU_textBox.Location = new Point(342, 268);
             dU_textBox.Name = "dU_textBox";
@@ -195,7 +195,7 @@ namespace main.subcontents.Alt
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font("나눔바른고딕", 9.75F);
+            label4.Font = new Font(UTIL.Families[0], 9.75F);
             label4.ForeColor = SystemColors.ControlDark;
             label4.Location = new Point(242, 268);
             label4.Name = "label4";
@@ -214,7 +214,7 @@ namespace main.subcontents.Alt
             // Ueff_label
             // 
             Ueff_label.AutoSize = true;
-            Ueff_label.Font = new Font("나눔바른고딕", 9.75F);
+            Ueff_label.Font = new Font(UTIL.Families[0], 9.75F);
             Ueff_label.ForeColor = SystemColors.ControlDark;
             Ueff_label.Location = new Point(254, 247);
             Ueff_label.Name = "Ueff_label";
@@ -227,7 +227,7 @@ namespace main.subcontents.Alt
             Ueff_textBox.BackColor = Color.White;
             Ueff_textBox.BorderStyle = BorderStyle.None;
             Ueff_textBox.Enabled = false;
-            Ueff_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            Ueff_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             Ueff_textBox.ForeColor = SystemColors.ControlDark;
             Ueff_textBox.Location = new Point(342, 247);
             Ueff_textBox.Name = "Ueff_textBox";
@@ -239,7 +239,7 @@ namespace main.subcontents.Alt
             // label13
             // 
             label13.AutoSize = true;
-            label13.Font = new Font("나눔바른고딕", 9.75F);
+            label13.Font = new Font(UTIL.Families[0], 9.75F);
             label13.ForeColor = SystemColors.ControlDark;
             label13.Location = new Point(267, 12);
             label13.Name = "label13";
@@ -252,7 +252,7 @@ namespace main.subcontents.Alt
             g_textBox.BackColor = Color.White;
             g_textBox.BorderStyle = BorderStyle.None;
             g_textBox.Enabled = false;
-            g_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            g_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             g_textBox.ForeColor = SystemColors.ControlDark;
             g_textBox.Location = new Point(342, 12);
             g_textBox.Name = "g_textBox";
@@ -264,7 +264,7 @@ namespace main.subcontents.Alt
             // label27
             // 
             label27.AutoSize = true;
-            label27.Font = new Font("나눔바른고딕", 9.75F);
+            label27.Font = new Font(UTIL.Families[0], 9.75F);
             label27.ForeColor = SystemColors.ControlDark;
             label27.Location = new Point(279, 33);
             label27.Name = "label27";
@@ -277,7 +277,7 @@ namespace main.subcontents.Alt
             tao_textBox.BackColor = Color.White;
             tao_textBox.BorderStyle = BorderStyle.None;
             tao_textBox.Enabled = false;
-            tao_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            tao_textBox.Font = new Font(UTIL.Families[0], 9.75F);
             tao_textBox.ForeColor = SystemColors.ControlDark;
             tao_textBox.Location = new Point(342, 33);
             tao_textBox.Name = "tao_textBox";
@@ -326,7 +326,7 @@ namespace main.subcontents.Alt
             glass_textBox.Location = new Point(782, 139);
             glass_textBox.Name = "glass_textBox";
             glass_textBox.ReadOnly = true;
-            glass_textBox.Size = new Size(100, 16);
+            glass_textBox.Size = new Size(164, 16);
             glass_textBox.TabIndex = 176;
             glass_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -337,7 +337,7 @@ namespace main.subcontents.Alt
             Spacer_textBox.Location = new Point(782, 178);
             Spacer_textBox.Name = "Spacer_textBox";
             Spacer_textBox.ReadOnly = true;
-            Spacer_textBox.Size = new Size(100, 16);
+            Spacer_textBox.Size = new Size(164, 16);
             Spacer_textBox.TabIndex = 178;
             Spacer_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -348,7 +348,7 @@ namespace main.subcontents.Alt
             frame_textBox.Location = new Point(782, 100);
             frame_textBox.Name = "frame_textBox";
             frame_textBox.ReadOnly = true;
-            frame_textBox.Size = new Size(100, 16);
+            frame_textBox.Size = new Size(164, 16);
             frame_textBox.TabIndex = 177;
             frame_textBox.TextAlign = HorizontalAlignment.Center;
             // 
