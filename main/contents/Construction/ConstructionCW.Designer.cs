@@ -283,7 +283,7 @@ namespace main.contents
             AdditionalCW_textBox.BackColor = SystemColors.GradientActiveCaption;
             AdditionalCW_textBox.BorderStyle = BorderStyle.None;
             AdditionalCW_textBox.Enabled = false;
-            AdditionalCW_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            AdditionalCW_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             AdditionalCW_textBox.ForeColor = Color.Black;
             AdditionalCW_textBox.Location = new Point(699, 28);
             AdditionalCW_textBox.Name = "AdditionalCW_textBox";
@@ -307,7 +307,7 @@ namespace main.contents
             Type_textBox.BackColor = SystemColors.GradientActiveCaption;
             Type_textBox.BorderStyle = BorderStyle.None;
             Type_textBox.Enabled = false;
-            Type_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Type_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Type_textBox.ForeColor = Color.Black;
             Type_textBox.Location = new Point(177, 50);
             Type_textBox.Name = "Type_textBox";
@@ -419,7 +419,7 @@ namespace main.contents
             CWNum_textBox.BackColor = SystemColors.GradientActiveCaption;
             CWNum_textBox.BorderStyle = BorderStyle.None;
             CWNum_textBox.Enabled = false;
-            CWNum_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            CWNum_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             CWNum_textBox.ForeColor = Color.Black;
             CWNum_textBox.Location = new Point(72, 32);
             CWNum_textBox.Name = "CWNum_textBox";
@@ -432,8 +432,8 @@ namespace main.contents
             ImportSize_button.BackColor = SystemColors.ControlLight;
             ImportSize_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ImportSize_button.FlatStyle = FlatStyle.System;
-            ImportSize_button.Font = new Font(UTIL.Families[0], 12F);
-            ImportSize_button.Location = new Point(296, 300);
+            ImportSize_button.Font =new Font(UTIL.Families[0], 12F);
+            ImportSize_button.Location = new Point(173, 300);
             ImportSize_button.Margin = new Padding(0);
             ImportSize_button.Name = "ImportSize_button";
             ImportSize_button.Size = new Size(23, 23);
@@ -447,7 +447,7 @@ namespace main.contents
             Size_textBox.BackColor = Color.White;
             Size_textBox.BorderStyle = BorderStyle.None;
             Size_textBox.Enabled = false;
-            Size_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Size_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Size_textBox.ForeColor = SystemColors.ControlDark;
             Size_textBox.Location = new Point(26, 14);
             Size_textBox.Name = "Size_textBox";
@@ -484,9 +484,9 @@ namespace main.contents
             SpacerName_textBox.BackColor = Color.White;
             SpacerName_textBox.BorderStyle = BorderStyle.None;
             SpacerName_textBox.Enabled = false;
-            SpacerName_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            SpacerName_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             SpacerName_textBox.ForeColor = SystemColors.ControlDark;
-            SpacerName_textBox.Location = new Point(351, 137);
+            SpacerName_textBox.Location = new Point(374, 137);
             SpacerName_textBox.Name = "SpacerName_textBox";
             SpacerName_textBox.Size = new Size(120, 15);
             SpacerName_textBox.TabIndex = 93;
@@ -497,8 +497,8 @@ namespace main.contents
             Spacer_button.BackColor = SystemColors.ControlLight;
             Spacer_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Spacer_button.FlatStyle = FlatStyle.System;
-            Spacer_button.Font = new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
-            Spacer_button.Location = new Point(473, 133);
+            Spacer_button.Font =new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
+            Spacer_button.Location = new Point(352, 133);
             Spacer_button.Margin = new Padding(0);
             Spacer_button.Name = "Spacer_button";
             Spacer_button.Size = new Size(23, 23);
@@ -512,9 +512,9 @@ namespace main.contents
             FixGlassName_textBox.BackColor = Color.White;
             FixGlassName_textBox.BorderStyle = BorderStyle.None;
             FixGlassName_textBox.Enabled = false;
-            FixGlassName_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            FixGlassName_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             FixGlassName_textBox.ForeColor = SystemColors.ControlDark;
-            FixGlassName_textBox.Location = new Point(175, 105);
+            FixGlassName_textBox.Location = new Point(198, 105);
             FixGlassName_textBox.Name = "FixGlassName_textBox";
             FixGlassName_textBox.Size = new Size(120, 15);
             FixGlassName_textBox.TabIndex = 91;
@@ -525,8 +525,8 @@ namespace main.contents
             FixGlassDB_button.BackColor = SystemColors.ControlLight;
             FixGlassDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             FixGlassDB_button.FlatStyle = FlatStyle.System;
-            FixGlassDB_button.Font = new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
-            FixGlassDB_button.Location = new Point(296, 101);
+            FixGlassDB_button.Font =new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
+            FixGlassDB_button.Location = new Point(173, 101);
             FixGlassDB_button.Margin = new Padding(0);
             FixGlassDB_button.Name = "FixGlassDB_button";
             FixGlassDB_button.Size = new Size(23, 23);
@@ -538,9 +538,9 @@ namespace main.contents
             // Install_comboBox
             // 
             Install_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Install_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Install_comboBox.Font =new Font(UTIL.Families[0], 9.75F);
             Install_comboBox.FormattingEnabled = true;
-            Install_comboBox.Location = new Point(175, 337);
+            Install_comboBox.Location = new Point(198, 337);
             Install_comboBox.Name = "Install_comboBox";
             Install_comboBox.Size = new Size(120, 23);
             Install_comboBox.TabIndex = 52;
@@ -549,8 +549,8 @@ namespace main.contents
             // label16
             // 
             label16.AutoSize = true;
-            label16.Font = new Font(UTIL.Families[0], 9.75F);
-            label16.Location = new Point(45, 341);
+            label16.Font =new Font(UTIL.Families[0], 9.75F);
+            label16.Location = new Point(39, 341);
             label16.Name = "label16";
             label16.Size = new Size(31, 15);
             label16.TabIndex = 51;
@@ -559,8 +559,8 @@ namespace main.contents
             // Spacer_label
             // 
             Spacer_label.AutoSize = true;
-            Spacer_label.Font = new Font(UTIL.Families[0], 9.75F);
-            Spacer_label.Location = new Point(322, 137);
+            Spacer_label.Font =new Font(UTIL.Families[0], 9.75F);
+            Spacer_label.Location = new Point(321, 137);
             Spacer_label.Name = "Spacer_label";
             Spacer_label.Size = new Size(31, 15);
             Spacer_label.TabIndex = 45;
@@ -569,8 +569,8 @@ namespace main.contents
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new Font(UTIL.Families[0], 9.75F);
-            label11.Location = new Point(45, 105);
+            label11.Font =new Font(UTIL.Families[0], 9.75F);
+            label11.Location = new Point(39, 105);
             label11.Name = "label11";
             label11.Size = new Size(31, 15);
             label11.TabIndex = 41;
@@ -579,9 +579,9 @@ namespace main.contents
             // Frame_comboBox
             // 
             Frame_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Frame_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Frame_comboBox.Font =new Font(UTIL.Families[0], 9.75F);
             Frame_comboBox.FormattingEnabled = true;
-            Frame_comboBox.Location = new Point(175, 65);
+            Frame_comboBox.Location = new Point(198, 65);
             Frame_comboBox.Name = "Frame_comboBox";
             Frame_comboBox.Size = new Size(120, 23);
             Frame_comboBox.TabIndex = 40;
@@ -590,8 +590,8 @@ namespace main.contents
             // Frame_label
             // 
             Frame_label.AutoSize = true;
-            Frame_label.Font = new Font(UTIL.Families[0], 9.75F);
-            Frame_label.Location = new Point(45, 69);
+            Frame_label.Font =new Font(UTIL.Families[0], 9.75F);
+            Frame_label.Location = new Point(39, 69);
             Frame_label.Name = "Frame_label";
             Frame_label.Size = new Size(43, 15);
             Frame_label.TabIndex = 39;
@@ -600,9 +600,9 @@ namespace main.contents
             // Ucw_comboBox
             // 
             Ucw_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Ucw_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Ucw_comboBox.Font =new Font(UTIL.Families[0], 9.75F);
             Ucw_comboBox.FormattingEnabled = true;
-            Ucw_comboBox.Location = new Point(175, 25);
+            Ucw_comboBox.Location = new Point(198, 25);
             Ucw_comboBox.Name = "Ucw_comboBox";
             Ucw_comboBox.Size = new Size(120, 23);
             Ucw_comboBox.TabIndex = 38;
@@ -611,8 +611,8 @@ namespace main.contents
             // label25
             // 
             label25.AutoSize = true;
-            label25.Font = new Font(UTIL.Families[0], 9.75F);
-            label25.Location = new Point(45, 29);
+            label25.Font =new Font(UTIL.Families[0], 9.75F);
+            label25.Location = new Point(39, 29);
             label25.Name = "label25";
             label25.Size = new Size(83, 15);
             label25.TabIndex = 37;
@@ -665,7 +665,6 @@ namespace main.contents
             panel2.Controls.Add(UCW_p_textBox);
             panel2.Controls.Add(label27);
             panel2.Controls.Add(label8);
-            panel2.Controls.Add(label7);
             panel2.Controls.Add(OpenGlassName_textBox);
             panel2.Controls.Add(OpenGlassDB_button);
             panel2.Controls.Add(label12);
@@ -696,6 +695,7 @@ namespace main.contents
             panel2.Controls.Add(Frame_label);
             panel2.Controls.Add(Ucw_comboBox);
             panel2.Controls.Add(label25);
+            panel2.Controls.Add(label7);
             panel2.Location = new Point(0, 84);
             panel2.Name = "panel2";
             panel2.Size = new Size(1000, 620);
@@ -705,7 +705,7 @@ namespace main.contents
             // label83
             // 
             label83.BorderStyle = BorderStyle.Fixed3D;
-            label83.Font = new Font(UTIL.Families[0], 9.75F);
+            label83.Font =new Font(UTIL.Families[0], 9.75F);
             label83.Location = new Point(22, 231);
             label83.Name = "label83";
             label83.Size = new Size(956, 2);
@@ -714,7 +714,7 @@ namespace main.contents
             // label4
             // 
             label4.BorderStyle = BorderStyle.Fixed3D;
-            label4.Font = new Font(UTIL.Families[0], 9.75F);
+            label4.Font =new Font(UTIL.Families[0], 9.75F);
             label4.Location = new Point(22, 159);
             label4.Name = "label4";
             label4.Size = new Size(956, 2);
@@ -725,9 +725,9 @@ namespace main.contents
             Area_textBox2.BackColor = Color.White;
             Area_textBox2.BorderStyle = BorderStyle.None;
             Area_textBox2.Enabled = false;
-            Area_textBox2.Font = new Font(UTIL.Families[0], 9.75F);
+            Area_textBox2.Font =new Font(UTIL.Families[0], 9.75F);
             Area_textBox2.ForeColor = SystemColors.ControlDark;
-            Area_textBox2.Location = new Point(175, 305);
+            Area_textBox2.Location = new Point(198, 305);
             Area_textBox2.Name = "Area_textBox2";
             Area_textBox2.Size = new Size(120, 15);
             Area_textBox2.TabIndex = 148;
@@ -795,7 +795,7 @@ namespace main.contents
             // label60
             // 
             label60.AutoSize = true;
-            label60.Font = new Font(UTIL.Families[0], 9.75F);
+            label60.Font =new Font(UTIL.Families[0], 9.75F);
             label60.ForeColor = SystemColors.ControlDark;
             label60.Location = new Point(391, 29);
             label60.Name = "label60";
@@ -806,7 +806,7 @@ namespace main.contents
             // label31
             // 
             label31.AutoSize = true;
-            label31.Font = new Font(UTIL.Families[0], 9.75F);
+            label31.Font =new Font(UTIL.Families[0], 9.75F);
             label31.ForeColor = SystemColors.ControlDark;
             label31.Location = new Point(837, 160);
             label31.Name = "label31";
@@ -819,7 +819,7 @@ namespace main.contents
             df_door_textBox.BackColor = Color.White;
             df_door_textBox.BorderStyle = BorderStyle.None;
             df_door_textBox.Enabled = false;
-            df_door_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            df_door_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             df_door_textBox.ForeColor = SystemColors.ControlDark;
             df_door_textBox.Location = new Point(712, 161);
             df_door_textBox.Name = "df_door_textBox";
@@ -830,7 +830,7 @@ namespace main.contents
             // label55
             // 
             label55.AutoSize = true;
-            label55.Font = new Font(UTIL.Families[0], 9.75F);
+            label55.Font =new Font(UTIL.Families[0], 9.75F);
             label55.ForeColor = SystemColors.ControlDark;
             label55.Location = new Point(756, 58);
             label55.Name = "label55";
@@ -841,7 +841,7 @@ namespace main.contents
             // label56
             // 
             label56.AutoSize = true;
-            label56.Font = new Font(UTIL.Families[0], 9.75F);
+            label56.Font =new Font(UTIL.Families[0], 9.75F);
             label56.ForeColor = SystemColors.ControlDark;
             label56.Location = new Point(511, 59);
             label56.Name = "label56";
@@ -852,7 +852,7 @@ namespace main.contents
             // label36
             // 
             label36.AutoSize = true;
-            label36.Font = new Font(UTIL.Families[0], 9.75F);
+            label36.Font =new Font(UTIL.Families[0], 9.75F);
             label36.ForeColor = SystemColors.ControlDark;
             label36.Location = new Point(837, 127);
             label36.Name = "label36";
@@ -863,7 +863,7 @@ namespace main.contents
             // label37
             // 
             label37.AutoSize = true;
-            label37.Font = new Font(UTIL.Families[0], 9.75F);
+            label37.Font =new Font(UTIL.Families[0], 9.75F);
             label37.ForeColor = SystemColors.ControlDark;
             label37.Location = new Point(837, 92);
             label37.Name = "label37";
@@ -874,42 +874,39 @@ namespace main.contents
             // label35
             // 
             label35.AutoSize = true;
-            label35.Font = new Font(UTIL.Families[0], 9.75F);
+            label35.Font =new Font(UTIL.Families[0], 9.75F);
             label35.ForeColor = SystemColors.ControlDark;
             label35.Location = new Point(616, 161);
             label35.Name = "label35";
-            label35.Size = new Size(58, 15);
+            label35.Size = new Size(0, 15);
             label35.TabIndex = 129;
-            label35.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // label32
             // 
             label32.AutoSize = true;
-            label32.Font = new Font(UTIL.Families[0], 9.75F);
+            label32.Font =new Font(UTIL.Families[0], 9.75F);
             label32.ForeColor = SystemColors.ControlDark;
             label32.Location = new Point(616, 127);
             label32.Name = "label32";
-            label32.Size = new Size(58, 15);
+            label32.Size = new Size(0, 15);
             label32.TabIndex = 127;
-            label32.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // label34
             // 
             label34.AutoSize = true;
-            label34.Font = new Font(UTIL.Families[0], 9.75F);
+            label34.Font =new Font(UTIL.Families[0], 9.75F);
             label34.ForeColor = SystemColors.ControlDark;
             label34.Location = new Point(616, 93);
             label34.Name = "label34";
-            label34.Size = new Size(58, 15);
+            label34.Size = new Size(0, 15);
             label34.TabIndex = 126;
-            label34.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // Uf_door_textBox
             // 
             Uf_door_textBox.BackColor = Color.White;
             Uf_door_textBox.BorderStyle = BorderStyle.None;
             Uf_door_textBox.Enabled = false;
-            Uf_door_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Uf_door_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Uf_door_textBox.ForeColor = SystemColors.ControlDark;
             Uf_door_textBox.Location = new Point(496, 162);
             Uf_door_textBox.Name = "Uf_door_textBox";
@@ -922,7 +919,7 @@ namespace main.contents
             df_open_textBox.BackColor = Color.White;
             df_open_textBox.BorderStyle = BorderStyle.None;
             df_open_textBox.Enabled = false;
-            df_open_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            df_open_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             df_open_textBox.ForeColor = SystemColors.ControlDark;
             df_open_textBox.Location = new Point(712, 127);
             df_open_textBox.Name = "df_open_textBox";
@@ -935,7 +932,7 @@ namespace main.contents
             df_mt_textBox.BackColor = Color.White;
             df_mt_textBox.BorderStyle = BorderStyle.None;
             df_mt_textBox.Enabled = false;
-            df_mt_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            df_mt_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             df_mt_textBox.ForeColor = SystemColors.ControlDark;
             df_mt_textBox.Location = new Point(712, 93);
             df_mt_textBox.Name = "df_mt_textBox";
@@ -948,7 +945,7 @@ namespace main.contents
             Uf_open_textBox.BackColor = Color.White;
             Uf_open_textBox.BorderStyle = BorderStyle.None;
             Uf_open_textBox.Enabled = false;
-            Uf_open_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Uf_open_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Uf_open_textBox.ForeColor = SystemColors.ControlDark;
             Uf_open_textBox.Location = new Point(496, 128);
             Uf_open_textBox.Name = "Uf_open_textBox";
@@ -961,7 +958,7 @@ namespace main.contents
             Uf_mt_textBox.BackColor = Color.White;
             Uf_mt_textBox.BorderStyle = BorderStyle.None;
             Uf_mt_textBox.Enabled = false;
-            Uf_mt_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Uf_mt_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Uf_mt_textBox.ForeColor = SystemColors.ControlDark;
             Uf_mt_textBox.Location = new Point(496, 94);
             Uf_mt_textBox.Name = "Uf_mt_textBox";
@@ -974,7 +971,7 @@ namespace main.contents
             FrameName2_textBox.BackColor = Color.White;
             FrameName2_textBox.BorderStyle = BorderStyle.None;
             FrameName2_textBox.Enabled = false;
-            FrameName2_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            FrameName2_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             FrameName2_textBox.ForeColor = SystemColors.ControlDark;
             FrameName2_textBox.Location = new Point(496, 30);
             FrameName2_textBox.Name = "FrameName2_textBox";
@@ -985,7 +982,7 @@ namespace main.contents
             // label19
             // 
             label19.AutoSize = true;
-            label19.Font = new Font(UTIL.Families[0], 9.75F);
+            label19.Font =new Font(UTIL.Families[0], 9.75F);
             label19.ForeColor = SystemColors.ControlDark;
             label19.Location = new Point(366, 161);
             label19.Name = "label19";
@@ -996,7 +993,7 @@ namespace main.contents
             // label17
             // 
             label17.AutoSize = true;
-            label17.Font = new Font(UTIL.Families[0], 9.75F);
+            label17.Font =new Font(UTIL.Families[0], 9.75F);
             label17.ForeColor = SystemColors.ControlDark;
             label17.Location = new Point(372, 127);
             label17.Name = "label17";
@@ -1007,7 +1004,7 @@ namespace main.contents
             // label15
             // 
             label15.AutoSize = true;
-            label15.Font = new Font(UTIL.Families[0], 9.75F);
+            label15.Font =new Font(UTIL.Families[0], 9.75F);
             label15.ForeColor = SystemColors.ControlDark;
             label15.Location = new Point(364, 93);
             label15.Name = "label15";
@@ -1058,18 +1055,17 @@ namespace main.contents
             // label21
             // 
             label21.AutoSize = true;
-            label21.Font = new Font(UTIL.Families[0], 9.75F);
+            label21.Font =new Font(UTIL.Families[0], 9.75F);
             label21.ForeColor = SystemColors.ControlDark;
             label21.Location = new Point(649, 127);
             label21.Name = "label21";
-            label21.Size = new Size(58, 15);
+            label21.Size = new Size(0, 15);
             label21.TabIndex = 144;
-            label21.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // label43
             // 
             label43.AutoSize = true;
-            label43.Font = new Font(UTIL.Families[0], 9.75F);
+            label43.Font =new Font(UTIL.Families[0], 9.75F);
             label43.ForeColor = SystemColors.ControlDark;
             label43.Location = new Point(696, 25);
             label43.Name = "label43";
@@ -1080,7 +1076,7 @@ namespace main.contents
             // label39
             // 
             label39.AutoSize = true;
-            label39.Font = new Font(UTIL.Families[0], 9.75F);
+            label39.Font =new Font(UTIL.Families[0], 9.75F);
             label39.ForeColor = SystemColors.ControlDark;
             label39.Location = new Point(397, 25);
             label39.Name = "label39";
@@ -1093,7 +1089,7 @@ namespace main.contents
             DoorGlass2_textBox.BackColor = Color.White;
             DoorGlass2_textBox.BorderStyle = BorderStyle.None;
             DoorGlass2_textBox.Enabled = false;
-            DoorGlass2_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            DoorGlass2_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             DoorGlass2_textBox.ForeColor = SystemColors.ControlDark;
             DoorGlass2_textBox.Location = new Point(351, 129);
             DoorGlass2_textBox.Name = "DoorGlass2_textBox";
@@ -1106,7 +1102,7 @@ namespace main.contents
             OpenGlassName2_textBox.BackColor = Color.White;
             OpenGlassName2_textBox.BorderStyle = BorderStyle.None;
             OpenGlassName2_textBox.Enabled = false;
-            OpenGlassName2_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            OpenGlassName2_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             OpenGlassName2_textBox.ForeColor = SystemColors.ControlDark;
             OpenGlassName2_textBox.Location = new Point(351, 95);
             OpenGlassName2_textBox.Name = "OpenGlassName2_textBox";
@@ -1119,7 +1115,7 @@ namespace main.contents
             FixGlassName2_textBox.BackColor = Color.White;
             FixGlassName2_textBox.BorderStyle = BorderStyle.None;
             FixGlassName2_textBox.Enabled = false;
-            FixGlassName2_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            FixGlassName2_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             FixGlassName2_textBox.ForeColor = SystemColors.ControlDark;
             FixGlassName2_textBox.Location = new Point(351, 61);
             FixGlassName2_textBox.Name = "FixGlassName2_textBox";
@@ -1130,7 +1126,7 @@ namespace main.contents
             // label50
             // 
             label50.AutoSize = true;
-            label50.Font = new Font(UTIL.Families[0], 9.75F);
+            label50.Font =new Font(UTIL.Families[0], 9.75F);
             label50.ForeColor = SystemColors.ControlDark;
             label50.Location = new Point(534, 25);
             label50.Name = "label50";
@@ -1141,7 +1137,7 @@ namespace main.contents
             // label48
             // 
             label48.AutoSize = true;
-            label48.Font = new Font(UTIL.Families[0], 9.75F);
+            label48.Font =new Font(UTIL.Families[0], 9.75F);
             label48.ForeColor = SystemColors.ControlDark;
             label48.Location = new Point(826, 128);
             label48.Name = "label48";
@@ -1154,7 +1150,7 @@ namespace main.contents
             Psi_g_Door_textBox.BackColor = Color.White;
             Psi_g_Door_textBox.BorderStyle = BorderStyle.None;
             Psi_g_Door_textBox.Enabled = false;
-            Psi_g_Door_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Psi_g_Door_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Psi_g_Door_textBox.ForeColor = SystemColors.ControlDark;
             Psi_g_Door_textBox.Location = new Point(699, 129);
             Psi_g_Door_textBox.Name = "Psi_g_Door_textBox";
@@ -1165,7 +1161,7 @@ namespace main.contents
             // label13
             // 
             label13.AutoSize = true;
-            label13.Font = new Font(UTIL.Families[0], 9.75F);
+            label13.Font =new Font(UTIL.Families[0], 9.75F);
             label13.ForeColor = SystemColors.ControlDark;
             label13.Location = new Point(826, 95);
             label13.Name = "label13";
@@ -1176,7 +1172,7 @@ namespace main.contents
             // label20
             // 
             label20.AutoSize = true;
-            label20.Font = new Font(UTIL.Families[0], 9.75F);
+            label20.Font =new Font(UTIL.Families[0], 9.75F);
             label20.ForeColor = SystemColors.ControlDark;
             label20.Location = new Point(826, 60);
             label20.Name = "label20";
@@ -1187,31 +1183,29 @@ namespace main.contents
             // label28
             // 
             label28.AutoSize = true;
-            label28.Font = new Font(UTIL.Families[0], 9.75F);
+            label28.Font =new Font(UTIL.Families[0], 9.75F);
             label28.ForeColor = SystemColors.ControlDark;
             label28.Location = new Point(649, 93);
             label28.Name = "label28";
-            label28.Size = new Size(58, 15);
+            label28.Size = new Size(0, 15);
             label28.TabIndex = 143;
-            label28.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // label30
             // 
             label30.AutoSize = true;
-            label30.Font = new Font(UTIL.Families[0], 9.75F);
+            label30.Font =new Font(UTIL.Families[0], 9.75F);
             label30.ForeColor = SystemColors.ControlDark;
             label30.Location = new Point(649, 59);
             label30.Name = "label30";
-            label30.Size = new Size(58, 15);
+            label30.Size = new Size(0, 15);
             label30.TabIndex = 142;
-            label30.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // Ug_Door_textBox
             // 
             Ug_Door_textBox.BackColor = Color.White;
             Ug_Door_textBox.BorderStyle = BorderStyle.None;
             Ug_Door_textBox.Enabled = false;
-            Ug_Door_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Ug_Door_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Ug_Door_textBox.ForeColor = SystemColors.ControlDark;
             Ug_Door_textBox.Location = new Point(525, 128);
             Ug_Door_textBox.Name = "Ug_Door_textBox";
@@ -1224,7 +1218,7 @@ namespace main.contents
             Psi_g_open_textBox.BackColor = Color.White;
             Psi_g_open_textBox.BorderStyle = BorderStyle.None;
             Psi_g_open_textBox.Enabled = false;
-            Psi_g_open_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Psi_g_open_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Psi_g_open_textBox.ForeColor = SystemColors.ControlDark;
             Psi_g_open_textBox.Location = new Point(699, 95);
             Psi_g_open_textBox.Name = "Psi_g_open_textBox";
@@ -1237,7 +1231,7 @@ namespace main.contents
             Psi_g_fix_textBox.BackColor = Color.White;
             Psi_g_fix_textBox.BorderStyle = BorderStyle.None;
             Psi_g_fix_textBox.Enabled = false;
-            Psi_g_fix_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Psi_g_fix_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Psi_g_fix_textBox.ForeColor = SystemColors.ControlDark;
             Psi_g_fix_textBox.Location = new Point(699, 61);
             Psi_g_fix_textBox.Name = "Psi_g_fix_textBox";
@@ -1250,7 +1244,7 @@ namespace main.contents
             Ug_Open_textBox.BackColor = Color.White;
             Ug_Open_textBox.BorderStyle = BorderStyle.None;
             Ug_Open_textBox.Enabled = false;
-            Ug_Open_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Ug_Open_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Ug_Open_textBox.ForeColor = SystemColors.ControlDark;
             Ug_Open_textBox.Location = new Point(525, 94);
             Ug_Open_textBox.Name = "Ug_Open_textBox";
@@ -1263,7 +1257,7 @@ namespace main.contents
             Ug_Fix_textBox.BackColor = Color.White;
             Ug_Fix_textBox.BorderStyle = BorderStyle.None;
             Ug_Fix_textBox.Enabled = false;
-            Ug_Fix_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Ug_Fix_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Ug_Fix_textBox.ForeColor = SystemColors.ControlDark;
             Ug_Fix_textBox.Location = new Point(525, 60);
             Ug_Fix_textBox.Name = "Ug_Fix_textBox";
@@ -1274,7 +1268,7 @@ namespace main.contents
             // label42
             // 
             label42.AutoSize = true;
-            label42.Font = new Font(UTIL.Families[0], 9.75F);
+            label42.Font =new Font(UTIL.Families[0], 9.75F);
             label42.ForeColor = SystemColors.ControlDark;
             label42.Location = new Point(267, 128);
             label42.Name = "label42";
@@ -1285,7 +1279,7 @@ namespace main.contents
             // label46
             // 
             label46.AutoSize = true;
-            label46.Font = new Font(UTIL.Families[0], 9.75F);
+            label46.Font =new Font(UTIL.Families[0], 9.75F);
             label46.ForeColor = SystemColors.ControlDark;
             label46.Location = new Point(267, 94);
             label46.Name = "label46";
@@ -1296,7 +1290,7 @@ namespace main.contents
             // label47
             // 
             label47.AutoSize = true;
-            label47.Font = new Font(UTIL.Families[0], 9.75F);
+            label47.Font =new Font(UTIL.Families[0], 9.75F);
             label47.ForeColor = SystemColors.ControlDark;
             label47.Location = new Point(267, 60);
             label47.Name = "label47";
@@ -1345,7 +1339,7 @@ namespace main.contents
             // label49
             // 
             label49.AutoSize = true;
-            label49.Font = new Font(UTIL.Families[0], 9.75F);
+            label49.Font =new Font(UTIL.Families[0], 9.75F);
             label49.ForeColor = SystemColors.ControlDark;
             label49.Location = new Point(744, 166);
             label49.Name = "label49";
@@ -1358,7 +1352,7 @@ namespace main.contents
             d_InstallButtom_textBox.BackColor = Color.White;
             d_InstallButtom_textBox.BorderStyle = BorderStyle.None;
             d_InstallButtom_textBox.Enabled = false;
-            d_InstallButtom_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            d_InstallButtom_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             d_InstallButtom_textBox.ForeColor = SystemColors.ControlDark;
             d_InstallButtom_textBox.Location = new Point(590, 167);
             d_InstallButtom_textBox.Name = "d_InstallButtom_textBox";
@@ -1370,7 +1364,7 @@ namespace main.contents
             // label51
             // 
             label51.AutoSize = true;
-            label51.Font = new Font(UTIL.Families[0], 9.75F);
+            label51.Font =new Font(UTIL.Families[0], 9.75F);
             label51.ForeColor = SystemColors.ControlDark;
             label51.Location = new Point(744, 130);
             label51.Name = "label51";
@@ -1381,7 +1375,7 @@ namespace main.contents
             // label52
             // 
             label52.AutoSize = true;
-            label52.Font = new Font(UTIL.Families[0], 9.75F);
+            label52.Font =new Font(UTIL.Families[0], 9.75F);
             label52.ForeColor = SystemColors.ControlDark;
             label52.Location = new Point(744, 94);
             label52.Name = "label52";
@@ -1394,7 +1388,7 @@ namespace main.contents
             d_InstallSide_textBox.BackColor = Color.White;
             d_InstallSide_textBox.BorderStyle = BorderStyle.None;
             d_InstallSide_textBox.Enabled = false;
-            d_InstallSide_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            d_InstallSide_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             d_InstallSide_textBox.ForeColor = SystemColors.ControlDark;
             d_InstallSide_textBox.Location = new Point(590, 131);
             d_InstallSide_textBox.Name = "d_InstallSide_textBox";
@@ -1406,7 +1400,7 @@ namespace main.contents
             // label53
             // 
             label53.AutoSize = true;
-            label53.Font = new Font(UTIL.Families[0], 9.75F);
+            label53.Font =new Font(UTIL.Families[0], 9.75F);
             label53.ForeColor = SystemColors.ControlDark;
             label53.Location = new Point(621, 58);
             label53.Name = "label53";
@@ -1419,7 +1413,7 @@ namespace main.contents
             d_InstallTop_textBox.BackColor = Color.White;
             d_InstallTop_textBox.BorderStyle = BorderStyle.None;
             d_InstallTop_textBox.Enabled = false;
-            d_InstallTop_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            d_InstallTop_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             d_InstallTop_textBox.ForeColor = SystemColors.ControlDark;
             d_InstallTop_textBox.Location = new Point(590, 95);
             d_InstallTop_textBox.Name = "d_InstallTop_textBox";
@@ -1433,7 +1427,7 @@ namespace main.contents
             dUinst_textBox.BackColor = Color.White;
             dUinst_textBox.BorderStyle = BorderStyle.None;
             dUinst_textBox.Enabled = false;
-            dUinst_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            dUinst_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             dUinst_textBox.ForeColor = SystemColors.ControlDark;
             dUinst_textBox.Location = new Point(349, 22);
             dUinst_textBox.Name = "dUinst_textBox";
@@ -1445,7 +1439,7 @@ namespace main.contents
             // label54
             // 
             label54.AutoSize = true;
-            label54.Font = new Font(UTIL.Families[0], 9.75F);
+            label54.Font =new Font(UTIL.Families[0], 9.75F);
             label54.ForeColor = SystemColors.ControlDark;
             label54.Location = new Point(257, 21);
             label54.Name = "label54";
@@ -1456,7 +1450,7 @@ namespace main.contents
             // label44
             // 
             label44.AutoSize = true;
-            label44.Font = new Font(UTIL.Families[0], 9.75F);
+            label44.Font =new Font(UTIL.Families[0], 9.75F);
             label44.ForeColor = SystemColors.ControlDark;
             label44.Location = new Point(473, 166);
             label44.Name = "label44";
@@ -1467,7 +1461,7 @@ namespace main.contents
             // label45
             // 
             label45.AutoSize = true;
-            label45.Font = new Font(UTIL.Families[0], 9.75F);
+            label45.Font =new Font(UTIL.Families[0], 9.75F);
             label45.ForeColor = SystemColors.ControlDark;
             label45.Location = new Point(293, 166);
             label45.Name = "label45";
@@ -1480,7 +1474,7 @@ namespace main.contents
             Psi_InstallButtom_textBox.BackColor = Color.White;
             Psi_InstallButtom_textBox.BorderStyle = BorderStyle.None;
             Psi_InstallButtom_textBox.Enabled = false;
-            Psi_InstallButtom_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Psi_InstallButtom_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Psi_InstallButtom_textBox.ForeColor = SystemColors.ControlDark;
             Psi_InstallButtom_textBox.Location = new Point(353, 167);
             Psi_InstallButtom_textBox.Name = "Psi_InstallButtom_textBox";
@@ -1493,7 +1487,7 @@ namespace main.contents
             Psi_InstallSide_textBox.BackColor = Color.White;
             Psi_InstallSide_textBox.BorderStyle = BorderStyle.None;
             Psi_InstallSide_textBox.Enabled = false;
-            Psi_InstallSide_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Psi_InstallSide_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Psi_InstallSide_textBox.ForeColor = SystemColors.ControlDark;
             Psi_InstallSide_textBox.Location = new Point(353, 131);
             Psi_InstallSide_textBox.Name = "Psi_InstallSide_textBox";
@@ -1506,7 +1500,7 @@ namespace main.contents
             Psi_InstallTop_textBox.BackColor = Color.White;
             Psi_InstallTop_textBox.BorderStyle = BorderStyle.None;
             Psi_InstallTop_textBox.Enabled = false;
-            Psi_InstallTop_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Psi_InstallTop_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Psi_InstallTop_textBox.ForeColor = SystemColors.ControlDark;
             Psi_InstallTop_textBox.Location = new Point(353, 95);
             Psi_InstallTop_textBox.Name = "Psi_InstallTop_textBox";
@@ -1517,7 +1511,7 @@ namespace main.contents
             // label41
             // 
             label41.AutoSize = true;
-            label41.Font = new Font(UTIL.Families[0], 9.75F);
+            label41.Font =new Font(UTIL.Families[0], 9.75F);
             label41.ForeColor = SystemColors.ControlDark;
             label41.Location = new Point(473, 130);
             label41.Name = "label41";
@@ -1528,7 +1522,7 @@ namespace main.contents
             // label40
             // 
             label40.AutoSize = true;
-            label40.Font = new Font(UTIL.Families[0], 9.75F);
+            label40.Font =new Font(UTIL.Families[0], 9.75F);
             label40.ForeColor = SystemColors.ControlDark;
             label40.Location = new Point(473, 94);
             label40.Name = "label40";
@@ -1539,7 +1533,7 @@ namespace main.contents
             // label24
             // 
             label24.AutoSize = true;
-            label24.Font = new Font(UTIL.Families[0], 9.75F);
+            label24.Font =new Font(UTIL.Families[0], 9.75F);
             label24.ForeColor = SystemColors.ControlDark;
             label24.Location = new Point(293, 130);
             label24.Name = "label24";
@@ -1550,7 +1544,7 @@ namespace main.contents
             // label33
             // 
             label33.AutoSize = true;
-            label33.Font = new Font(UTIL.Families[0], 9.75F);
+            label33.Font =new Font(UTIL.Families[0], 9.75F);
             label33.ForeColor = SystemColors.ControlDark;
             label33.Location = new Point(293, 94);
             label33.Name = "label33";
@@ -1561,7 +1555,7 @@ namespace main.contents
             // label38
             // 
             label38.AutoSize = true;
-            label38.Font = new Font(UTIL.Families[0], 9.75F);
+            label38.Font =new Font(UTIL.Families[0], 9.75F);
             label38.ForeColor = SystemColors.ControlDark;
             label38.Location = new Point(375, 58);
             label38.Name = "label38";
@@ -1632,7 +1626,7 @@ namespace main.contents
             // label81
             // 
             label81.AutoSize = true;
-            label81.Font = new Font(UTIL.Families[0], 9.75F);
+            label81.Font =new Font(UTIL.Families[0], 9.75F);
             label81.ForeColor = SystemColors.ControlDark;
             label81.Location = new Point(694, 14);
             label81.Name = "label81";
@@ -1645,7 +1639,7 @@ namespace main.contents
             Width_textBox.BackColor = Color.White;
             Width_textBox.BorderStyle = BorderStyle.None;
             Width_textBox.Enabled = false;
-            Width_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Width_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Width_textBox.ForeColor = SystemColors.ControlDark;
             Width_textBox.Location = new Point(602, 14);
             Width_textBox.Name = "Width_textBox";
@@ -1656,7 +1650,7 @@ namespace main.contents
             // label67
             // 
             label67.AutoSize = true;
-            label67.Font = new Font(UTIL.Families[0], 9.75F);
+            label67.Font =new Font(UTIL.Families[0], 9.75F);
             label67.ForeColor = SystemColors.ControlDark;
             label67.Location = new Point(822, 187);
             label67.Name = "label67";
@@ -1667,20 +1661,19 @@ namespace main.contents
             // label68
             // 
             label68.AutoSize = true;
-            label68.Font = new Font(UTIL.Families[0], 9.75F);
+            label68.Font =new Font(UTIL.Families[0], 9.75F);
             label68.ForeColor = SystemColors.ControlDark;
             label68.Location = new Point(822, 158);
             label68.Name = "label68";
-            label68.Size = new Size(25, 15);
+            label68.Size = new Size(0, 15);
             label68.TabIndex = 174;
-            label68.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // Lg_d_textBox
             // 
             Lg_d_textBox.BackColor = Color.White;
             Lg_d_textBox.BorderStyle = BorderStyle.None;
             Lg_d_textBox.Enabled = false;
-            Lg_d_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Lg_d_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Lg_d_textBox.ForeColor = SystemColors.ControlDark;
             Lg_d_textBox.Location = new Point(697, 188);
             Lg_d_textBox.Name = "Lg_d_textBox";
@@ -1693,7 +1686,7 @@ namespace main.contents
             Ag_d_textBox.BackColor = Color.White;
             Ag_d_textBox.BorderStyle = BorderStyle.None;
             Ag_d_textBox.Enabled = false;
-            Ag_d_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Ag_d_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Ag_d_textBox.ForeColor = SystemColors.ControlDark;
             Ag_d_textBox.Location = new Point(697, 159);
             Ag_d_textBox.Name = "Ag_d_textBox";
@@ -1704,7 +1697,7 @@ namespace main.contents
             // label69
             // 
             label69.AutoSize = true;
-            label69.Font = new Font(UTIL.Families[0], 9.75F);
+            label69.Font =new Font(UTIL.Families[0], 9.75F);
             label69.ForeColor = SystemColors.ControlDark;
             label69.Location = new Point(539, 187);
             label69.Name = "label69";
@@ -1715,7 +1708,7 @@ namespace main.contents
             // label70
             // 
             label70.AutoSize = true;
-            label70.Font = new Font(UTIL.Families[0], 9.75F);
+            label70.Font =new Font(UTIL.Families[0], 9.75F);
             label70.ForeColor = SystemColors.ControlDark;
             label70.Location = new Point(539, 158);
             label70.Name = "label70";
@@ -1726,7 +1719,7 @@ namespace main.contents
             // label71
             // 
             label71.AutoSize = true;
-            label71.Font = new Font(UTIL.Families[0], 9.75F);
+            label71.Font =new Font(UTIL.Families[0], 9.75F);
             label71.ForeColor = SystemColors.ControlDark;
             label71.Location = new Point(822, 129);
             label71.Name = "label71";
@@ -1737,20 +1730,19 @@ namespace main.contents
             // label72
             // 
             label72.AutoSize = true;
-            label72.Font = new Font(UTIL.Families[0], 9.75F);
+            label72.Font =new Font(UTIL.Families[0], 9.75F);
             label72.ForeColor = SystemColors.ControlDark;
             label72.Location = new Point(822, 100);
             label72.Name = "label72";
-            label72.Size = new Size(25, 15);
+            label72.Size = new Size(0, 15);
             label72.TabIndex = 168;
-            label72.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // Lp_textBox
             // 
             Lp_textBox.BackColor = Color.White;
             Lp_textBox.BorderStyle = BorderStyle.None;
             Lp_textBox.Enabled = false;
-            Lp_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Lp_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Lp_textBox.ForeColor = SystemColors.ControlDark;
             Lp_textBox.Location = new Point(697, 130);
             Lp_textBox.Name = "Lp_textBox";
@@ -1763,7 +1755,7 @@ namespace main.contents
             Af_open_textBox.BackColor = Color.White;
             Af_open_textBox.BorderStyle = BorderStyle.None;
             Af_open_textBox.Enabled = false;
-            Af_open_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Af_open_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Af_open_textBox.ForeColor = SystemColors.ControlDark;
             Af_open_textBox.Location = new Point(697, 101);
             Af_open_textBox.Name = "Af_open_textBox";
@@ -1774,7 +1766,7 @@ namespace main.contents
             // label73
             // 
             label73.AutoSize = true;
-            label73.Font = new Font(UTIL.Families[0], 9.75F);
+            label73.Font =new Font(UTIL.Families[0], 9.75F);
             label73.ForeColor = SystemColors.ControlDark;
             label73.Location = new Point(822, 71);
             label73.Name = "label73";
@@ -1785,7 +1777,7 @@ namespace main.contents
             // label74
             // 
             label74.AutoSize = true;
-            label74.Font = new Font(UTIL.Families[0], 9.75F);
+            label74.Font =new Font(UTIL.Families[0], 9.75F);
             label74.ForeColor = SystemColors.ControlDark;
             label74.Location = new Point(822, 42);
             label74.Name = "label74";
@@ -1796,7 +1788,7 @@ namespace main.contents
             // label75
             // 
             label75.AutoSize = true;
-            label75.Font = new Font(UTIL.Families[0], 9.75F);
+            label75.Font =new Font(UTIL.Families[0], 9.75F);
             label75.ForeColor = SystemColors.ControlDark;
             label75.Location = new Point(539, 129);
             label75.Name = "label75";
@@ -1807,7 +1799,7 @@ namespace main.contents
             // label76
             // 
             label76.AutoSize = true;
-            label76.Font = new Font(UTIL.Families[0], 9.75F);
+            label76.Font =new Font(UTIL.Families[0], 9.75F);
             label76.ForeColor = SystemColors.ControlDark;
             label76.Location = new Point(539, 100);
             label76.Name = "label76";
@@ -1820,7 +1812,7 @@ namespace main.contents
             Lg_open_textBox.BackColor = Color.White;
             Lg_open_textBox.BorderStyle = BorderStyle.None;
             Lg_open_textBox.Enabled = false;
-            Lg_open_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Lg_open_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Lg_open_textBox.ForeColor = SystemColors.ControlDark;
             Lg_open_textBox.Location = new Point(697, 72);
             Lg_open_textBox.Name = "Lg_open_textBox";
@@ -1831,7 +1823,7 @@ namespace main.contents
             // label77
             // 
             label77.AutoSize = true;
-            label77.Font = new Font(UTIL.Families[0], 9.75F);
+            label77.Font =new Font(UTIL.Families[0], 9.75F);
             label77.ForeColor = SystemColors.ControlDark;
             label77.Location = new Point(539, 71);
             label77.Name = "label77";
@@ -1844,7 +1836,7 @@ namespace main.contents
             Lg_fix_textBox.BackColor = Color.White;
             Lg_fix_textBox.BorderStyle = BorderStyle.None;
             Lg_fix_textBox.Enabled = false;
-            Lg_fix_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Lg_fix_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Lg_fix_textBox.ForeColor = SystemColors.ControlDark;
             Lg_fix_textBox.Location = new Point(697, 43);
             Lg_fix_textBox.Name = "Lg_fix_textBox";
@@ -1855,7 +1847,7 @@ namespace main.contents
             // label78
             // 
             label78.AutoSize = true;
-            label78.Font = new Font(UTIL.Families[0], 9.75F);
+            label78.Font =new Font(UTIL.Families[0], 9.75F);
             label78.ForeColor = SystemColors.ControlDark;
             label78.Location = new Point(539, 42);
             label78.Name = "label78";
@@ -1866,7 +1858,7 @@ namespace main.contents
             // label79
             // 
             label79.AutoSize = true;
-            label79.Font = new Font(UTIL.Families[0], 9.75F);
+            label79.Font =new Font(UTIL.Families[0], 9.75F);
             label79.ForeColor = SystemColors.ControlDark;
             label79.Location = new Point(822, 13);
             label79.Name = "label79";
@@ -1879,7 +1871,7 @@ namespace main.contents
             Height_textBox.BackColor = Color.White;
             Height_textBox.BorderStyle = BorderStyle.None;
             Height_textBox.Enabled = false;
-            Height_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Height_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Height_textBox.ForeColor = SystemColors.ControlDark;
             Height_textBox.Location = new Point(757, 14);
             Height_textBox.Name = "Height_textBox";
@@ -1890,7 +1882,7 @@ namespace main.contents
             // label80
             // 
             label80.AutoSize = true;
-            label80.Font = new Font(UTIL.Families[0], 9.75F);
+            label80.Font =new Font(UTIL.Families[0], 9.75F);
             label80.ForeColor = SystemColors.ControlDark;
             label80.Location = new Point(539, 13);
             label80.Name = "label80";
@@ -1901,31 +1893,29 @@ namespace main.contents
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font = new Font(UTIL.Families[0], 9.75F);
+            label10.Font =new Font(UTIL.Families[0], 9.75F);
             label10.ForeColor = SystemColors.ControlDark;
             label10.Location = new Point(474, 158);
             label10.Name = "label10";
-            label10.Size = new Size(25, 15);
+            label10.Size = new Size(0, 15);
             label10.TabIndex = 154;
-            label10.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // label14
             // 
             label14.AutoSize = true;
-            label14.Font = new Font(UTIL.Families[0], 9.75F);
+            label14.Font =new Font(UTIL.Families[0], 9.75F);
             label14.ForeColor = SystemColors.ControlDark;
             label14.Location = new Point(474, 129);
             label14.Name = "label14";
-            label14.Size = new Size(25, 15);
+            label14.Size = new Size(0, 15);
             label14.TabIndex = 153;
-            label14.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // Af_d_textBox
             // 
             Af_d_textBox.BackColor = Color.White;
             Af_d_textBox.BorderStyle = BorderStyle.None;
             Af_d_textBox.Enabled = false;
-            Af_d_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Af_d_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Af_d_textBox.ForeColor = SystemColors.ControlDark;
             Af_d_textBox.Location = new Point(349, 159);
             Af_d_textBox.Name = "Af_d_textBox";
@@ -1938,7 +1928,7 @@ namespace main.contents
             Ap_textBox.BackColor = Color.White;
             Ap_textBox.BorderStyle = BorderStyle.None;
             Ap_textBox.Enabled = false;
-            Ap_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Ap_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Ap_textBox.ForeColor = SystemColors.ControlDark;
             Ap_textBox.Location = new Point(349, 130);
             Ap_textBox.Name = "Ap_textBox";
@@ -1949,7 +1939,7 @@ namespace main.contents
             // label18
             // 
             label18.AutoSize = true;
-            label18.Font = new Font(UTIL.Families[0], 9.75F);
+            label18.Font =new Font(UTIL.Families[0], 9.75F);
             label18.ForeColor = SystemColors.ControlDark;
             label18.Location = new Point(189, 158);
             label18.Name = "label18";
@@ -1960,7 +1950,7 @@ namespace main.contents
             // label22
             // 
             label22.AutoSize = true;
-            label22.Font = new Font(UTIL.Families[0], 9.75F);
+            label22.Font =new Font(UTIL.Families[0], 9.75F);
             label22.ForeColor = SystemColors.ControlDark;
             label22.Location = new Point(189, 129);
             label22.Name = "label22";
@@ -1971,31 +1961,29 @@ namespace main.contents
             // label57
             // 
             label57.AutoSize = true;
-            label57.Font = new Font(UTIL.Families[0], 9.75F);
+            label57.Font =new Font(UTIL.Families[0], 9.75F);
             label57.ForeColor = SystemColors.ControlDark;
             label57.Location = new Point(474, 100);
             label57.Name = "label57";
-            label57.Size = new Size(25, 15);
+            label57.Size = new Size(0, 15);
             label57.TabIndex = 148;
-            label57.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // label58
             // 
             label58.AutoSize = true;
-            label58.Font = new Font(UTIL.Families[0], 9.75F);
+            label58.Font =new Font(UTIL.Families[0], 9.75F);
             label58.ForeColor = SystemColors.ControlDark;
             label58.Location = new Point(474, 71);
             label58.Name = "label58";
-            label58.Size = new Size(25, 15);
+            label58.Size = new Size(0, 15);
             label58.TabIndex = 147;
-            label58.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // Af_mt_textBox
             // 
             Af_mt_textBox.BackColor = Color.White;
             Af_mt_textBox.BorderStyle = BorderStyle.None;
             Af_mt_textBox.Enabled = false;
-            Af_mt_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Af_mt_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Af_mt_textBox.ForeColor = SystemColors.ControlDark;
             Af_mt_textBox.Location = new Point(349, 101);
             Af_mt_textBox.Name = "Af_mt_textBox";
@@ -2008,7 +1996,7 @@ namespace main.contents
             Ag_open_textBox.BackColor = Color.White;
             Ag_open_textBox.BorderStyle = BorderStyle.None;
             Ag_open_textBox.Enabled = false;
-            Ag_open_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Ag_open_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Ag_open_textBox.ForeColor = SystemColors.ControlDark;
             Ag_open_textBox.Location = new Point(349, 72);
             Ag_open_textBox.Name = "Ag_open_textBox";
@@ -2019,18 +2007,17 @@ namespace main.contents
             // label59
             // 
             label59.AutoSize = true;
-            label59.Font = new Font(UTIL.Families[0], 9.75F);
+            label59.Font =new Font(UTIL.Families[0], 9.75F);
             label59.ForeColor = SystemColors.ControlDark;
             label59.Location = new Point(474, 42);
             label59.Name = "label59";
-            label59.Size = new Size(25, 15);
+            label59.Size = new Size(0, 15);
             label59.TabIndex = 144;
-            label59.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // label61
             // 
             label61.AutoSize = true;
-            label61.Font = new Font(UTIL.Families[0], 9.75F);
+            label61.Font =new Font(UTIL.Families[0], 9.75F);
             label61.ForeColor = SystemColors.ControlDark;
             label61.Location = new Point(189, 100);
             label61.Name = "label61";
@@ -2041,7 +2028,7 @@ namespace main.contents
             // label62
             // 
             label62.AutoSize = true;
-            label62.Font = new Font(UTIL.Families[0], 9.75F);
+            label62.Font =new Font(UTIL.Families[0], 9.75F);
             label62.ForeColor = SystemColors.ControlDark;
             label62.Location = new Point(189, 71);
             label62.Name = "label62";
@@ -2054,7 +2041,7 @@ namespace main.contents
             Ag_fix_textBox.BackColor = Color.White;
             Ag_fix_textBox.BorderStyle = BorderStyle.None;
             Ag_fix_textBox.Enabled = false;
-            Ag_fix_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Ag_fix_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Ag_fix_textBox.ForeColor = SystemColors.ControlDark;
             Ag_fix_textBox.Location = new Point(349, 43);
             Ag_fix_textBox.Name = "Ag_fix_textBox";
@@ -2065,7 +2052,7 @@ namespace main.contents
             // label63
             // 
             label63.AutoSize = true;
-            label63.Font = new Font(UTIL.Families[0], 9.75F);
+            label63.Font =new Font(UTIL.Families[0], 9.75F);
             label63.ForeColor = SystemColors.ControlDark;
             label63.Location = new Point(189, 42);
             label63.Name = "label63";
@@ -2076,20 +2063,19 @@ namespace main.contents
             // label65
             // 
             label65.AutoSize = true;
-            label65.Font = new Font(UTIL.Families[0], 9.75F);
+            label65.Font =new Font(UTIL.Families[0], 9.75F);
             label65.ForeColor = SystemColors.ControlDark;
             label65.Location = new Point(474, 13);
             label65.Name = "label65";
-            label65.Size = new Size(25, 15);
+            label65.Size = new Size(0, 15);
             label65.TabIndex = 134;
-            label65.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // Area_textBox
             // 
             Area_textBox.BackColor = Color.White;
             Area_textBox.BorderStyle = BorderStyle.None;
             Area_textBox.Enabled = false;
-            Area_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Area_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Area_textBox.ForeColor = SystemColors.ControlDark;
             Area_textBox.Location = new Point(349, 14);
             Area_textBox.Name = "Area_textBox";
@@ -2100,7 +2086,7 @@ namespace main.contents
             // label66
             // 
             label66.AutoSize = true;
-            label66.Font = new Font(UTIL.Families[0], 9.75F);
+            label66.Font =new Font(UTIL.Families[0], 9.75F);
             label66.ForeColor = SystemColors.ControlDark;
             label66.Location = new Point(189, 13);
             label66.Name = "label66";
@@ -2111,8 +2097,8 @@ namespace main.contents
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font(UTIL.Families[0], 9.75F);
-            label1.Location = new Point(45, 305);
+            label1.Font =new Font(UTIL.Families[0], 9.75F);
+            label1.Location = new Point(39, 305);
             label1.Name = "label1";
             label1.Size = new Size(82, 15);
             label1.TabIndex = 146;
@@ -2123,9 +2109,9 @@ namespace main.contents
             DoorSpacer_textBox.BackColor = Color.White;
             DoorSpacer_textBox.BorderStyle = BorderStyle.None;
             DoorSpacer_textBox.Enabled = false;
-            DoorSpacer_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            DoorSpacer_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             DoorSpacer_textBox.ForeColor = SystemColors.ControlDark;
-            DoorSpacer_textBox.Location = new Point(351, 273);
+            DoorSpacer_textBox.Location = new Point(374, 273);
             DoorSpacer_textBox.Name = "DoorSpacer_textBox";
             DoorSpacer_textBox.Size = new Size(120, 15);
             DoorSpacer_textBox.TabIndex = 145;
@@ -2136,8 +2122,8 @@ namespace main.contents
             DoorSpacerDB_button.BackColor = SystemColors.ControlLight;
             DoorSpacerDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DoorSpacerDB_button.FlatStyle = FlatStyle.System;
-            DoorSpacerDB_button.Font = new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
-            DoorSpacerDB_button.Location = new Point(473, 269);
+            DoorSpacerDB_button.Font =new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
+            DoorSpacerDB_button.Location = new Point(352, 269);
             DoorSpacerDB_button.Margin = new Padding(0);
             DoorSpacerDB_button.Name = "DoorSpacerDB_button";
             DoorSpacerDB_button.Size = new Size(23, 23);
@@ -2149,9 +2135,9 @@ namespace main.contents
             // τd_label2
             // 
             τd_label2.AutoSize = true;
-            τd_label2.Font = new Font(UTIL.Families[0], 9.75F);
+            τd_label2.Font =new Font(UTIL.Families[0], 9.75F);
             τd_label2.ForeColor = SystemColors.ControlDark;
-            τd_label2.Location = new Point(862, 305);
+            τd_label2.Location = new Point(885, 305);
             τd_label2.Name = "τd_label2";
             τd_label2.Size = new Size(15, 15);
             τd_label2.TabIndex = 143;
@@ -2162,9 +2148,9 @@ namespace main.contents
             τd_textBox.BackColor = Color.White;
             τd_textBox.BorderStyle = BorderStyle.None;
             τd_textBox.Enabled = false;
-            τd_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            τd_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             τd_textBox.ForeColor = SystemColors.ControlDark;
-            τd_textBox.Location = new Point(716, 305);
+            τd_textBox.Location = new Point(739, 305);
             τd_textBox.Name = "τd_textBox";
             τd_textBox.Size = new Size(116, 15);
             τd_textBox.TabIndex = 142;
@@ -2173,9 +2159,9 @@ namespace main.contents
             // τd_label
             // 
             τd_label.AutoSize = true;
-            τd_label.Font = new Font(UTIL.Families[0], 9.75F);
+            τd_label.Font =new Font(UTIL.Families[0], 9.75F);
             τd_label.ForeColor = SystemColors.ControlDark;
-            τd_label.Location = new Point(539, 305);
+            τd_label.Location = new Point(562, 305);
             τd_label.Name = "τd_label";
             τd_label.Size = new Size(144, 15);
             τd_label.TabIndex = 141;
@@ -2184,8 +2170,8 @@ namespace main.contents
             // DoorSpacer_label
             // 
             DoorSpacer_label.AutoSize = true;
-            DoorSpacer_label.Font = new Font(UTIL.Families[0], 9.75F);
-            DoorSpacer_label.Location = new Point(322, 273);
+            DoorSpacer_label.Font =new Font(UTIL.Families[0], 9.75F);
+            DoorSpacer_label.Location = new Point(321, 273);
             DoorSpacer_label.Name = "DoorSpacer_label";
             DoorSpacer_label.Size = new Size(31, 15);
             DoorSpacer_label.TabIndex = 140;
@@ -2194,8 +2180,8 @@ namespace main.contents
             // Door_checkBox
             // 
             Door_checkBox.AutoSize = true;
-            Door_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
-            Door_checkBox.Location = new Point(88, 239);
+            Door_checkBox.Font =new Font(UTIL.Families[0], 9.75F);
+            Door_checkBox.Location = new Point(82, 239);
             Door_checkBox.Name = "Door_checkBox";
             Door_checkBox.Size = new Size(50, 19);
             Door_checkBox.TabIndex = 139;
@@ -2206,7 +2192,7 @@ namespace main.contents
             // DoorGlass_label
             // 
             DoorGlass_label.AutoSize = true;
-            DoorGlass_label.Font = new Font(UTIL.Families[0], 9.75F);
+            DoorGlass_label.Font =new Font(UTIL.Families[0], 9.75F);
             DoorGlass_label.Location = new Point(140, 273);
             DoorGlass_label.Name = "DoorGlass_label";
             DoorGlass_label.Size = new Size(31, 15);
@@ -2216,8 +2202,8 @@ namespace main.contents
             // DoorFrame_label
             // 
             DoorFrame_label.AutoSize = true;
-            DoorFrame_label.Font = new Font(UTIL.Families[0], 9.75F);
-            DoorFrame_label.Location = new Point(140, 241);
+            DoorFrame_label.Font =new Font(UTIL.Families[0], 9.75F);
+            DoorFrame_label.Location = new Point(131, 241);
             DoorFrame_label.Name = "DoorFrame_label";
             DoorFrame_label.Size = new Size(43, 15);
             DoorFrame_label.TabIndex = 136;
@@ -2228,9 +2214,9 @@ namespace main.contents
             DoorGlass_textBox.BackColor = Color.White;
             DoorGlass_textBox.BorderStyle = BorderStyle.None;
             DoorGlass_textBox.Enabled = false;
-            DoorGlass_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            DoorGlass_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             DoorGlass_textBox.ForeColor = SystemColors.ControlDark;
-            DoorGlass_textBox.Location = new Point(175, 273);
+            DoorGlass_textBox.Location = new Point(198, 273);
             DoorGlass_textBox.Name = "DoorGlass_textBox";
             DoorGlass_textBox.Size = new Size(120, 15);
             DoorGlass_textBox.TabIndex = 135;
@@ -2241,8 +2227,8 @@ namespace main.contents
             DoorGlassDB_button.BackColor = SystemColors.ControlLight;
             DoorGlassDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DoorGlassDB_button.FlatStyle = FlatStyle.System;
-            DoorGlassDB_button.Font = new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
-            DoorGlassDB_button.Location = new Point(296, 269);
+            DoorGlassDB_button.Font =new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
+            DoorGlassDB_button.Location = new Point(173, 269);
             DoorGlassDB_button.Margin = new Padding(0);
             DoorGlassDB_button.Name = "DoorGlassDB_button";
             DoorGlassDB_button.Size = new Size(23, 23);
@@ -2254,9 +2240,9 @@ namespace main.contents
             // gd_label2
             // 
             gd_label2.AutoSize = true;
-            gd_label2.Font = new Font(UTIL.Families[0], 9.75F);
+            gd_label2.Font =new Font(UTIL.Families[0], 9.75F);
             gd_label2.ForeColor = SystemColors.ControlDark;
-            gd_label2.Location = new Point(862, 273);
+            gd_label2.Location = new Point(885, 273);
             gd_label2.Name = "gd_label2";
             gd_label2.Size = new Size(15, 15);
             gd_label2.TabIndex = 133;
@@ -2265,22 +2251,21 @@ namespace main.contents
             // UCW_d_label2
             // 
             UCW_d_label2.AutoSize = true;
-            UCW_d_label2.Font = new Font(UTIL.Families[0], 9.75F);
+            UCW_d_label2.Font =new Font(UTIL.Families[0], 9.75F);
             UCW_d_label2.ForeColor = SystemColors.ControlDark;
-            UCW_d_label2.Location = new Point(841, 241);
+            UCW_d_label2.Location = new Point(864, 241);
             UCW_d_label2.Name = "UCW_d_label2";
-            UCW_d_label2.Size = new Size(58, 15);
+            UCW_d_label2.Size = new Size(0, 15);
             UCW_d_label2.TabIndex = 132;
-            UCW_d_label2.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // DoorFrame_textBox
             // 
             DoorFrame_textBox.BackColor = Color.White;
             DoorFrame_textBox.BorderStyle = BorderStyle.None;
             DoorFrame_textBox.Enabled = false;
-            DoorFrame_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            DoorFrame_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             DoorFrame_textBox.ForeColor = SystemColors.ControlDark;
-            DoorFrame_textBox.Location = new Point(175, 240);
+            DoorFrame_textBox.Location = new Point(198, 240);
             DoorFrame_textBox.Name = "DoorFrame_textBox";
             DoorFrame_textBox.Size = new Size(120, 15);
             DoorFrame_textBox.TabIndex = 131;
@@ -2291,8 +2276,8 @@ namespace main.contents
             DoorFrameDB_button.BackColor = SystemColors.ControlLight;
             DoorFrameDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DoorFrameDB_button.FlatStyle = FlatStyle.System;
-            DoorFrameDB_button.Font = new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
-            DoorFrameDB_button.Location = new Point(296, 237);
+            DoorFrameDB_button.Font =new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
+            DoorFrameDB_button.Location = new Point(173, 237);
             DoorFrameDB_button.Margin = new Padding(0);
             DoorFrameDB_button.Name = "DoorFrameDB_button";
             DoorFrameDB_button.Size = new Size(23, 23);
@@ -2306,9 +2291,9 @@ namespace main.contents
             gd_textBox.BackColor = Color.White;
             gd_textBox.BorderStyle = BorderStyle.None;
             gd_textBox.Enabled = false;
-            gd_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            gd_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             gd_textBox.ForeColor = SystemColors.ControlDark;
-            gd_textBox.Location = new Point(716, 273);
+            gd_textBox.Location = new Point(739, 273);
             gd_textBox.Name = "gd_textBox";
             gd_textBox.Size = new Size(116, 15);
             gd_textBox.TabIndex = 129;
@@ -2319,9 +2304,9 @@ namespace main.contents
             UCW_d_textBox.BackColor = Color.White;
             UCW_d_textBox.BorderStyle = BorderStyle.None;
             UCW_d_textBox.Enabled = false;
-            UCW_d_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            UCW_d_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             UCW_d_textBox.ForeColor = SystemColors.ControlDark;
-            UCW_d_textBox.Location = new Point(716, 241);
+            UCW_d_textBox.Location = new Point(739, 241);
             UCW_d_textBox.Name = "UCW_d_textBox";
             UCW_d_textBox.Size = new Size(116, 15);
             UCW_d_textBox.TabIndex = 128;
@@ -2331,8 +2316,8 @@ namespace main.contents
             // label29
             // 
             label29.AutoSize = true;
-            label29.Font = new Font(UTIL.Families[0], 9.75F);
-            label29.Location = new Point(45, 241);
+            label29.Font =new Font(UTIL.Families[0], 9.75F);
+            label29.Location = new Point(39, 241);
             label29.Name = "label29";
             label29.Size = new Size(43, 15);
             label29.TabIndex = 127;
@@ -2341,9 +2326,9 @@ namespace main.contents
             // gd_label
             // 
             gd_label.AutoSize = true;
-            gd_label.Font = new Font(UTIL.Families[0], 9.75F);
+            gd_label.Font =new Font(UTIL.Families[0], 9.75F);
             gd_label.ForeColor = SystemColors.ControlDark;
-            gd_label.Location = new Point(539, 273);
+            gd_label.Location = new Point(562, 273);
             gd_label.Name = "gd_label";
             gd_label.Size = new Size(173, 15);
             gd_label.TabIndex = 126;
@@ -2352,9 +2337,9 @@ namespace main.contents
             // UCW_d_label
             // 
             UCW_d_label.AutoSize = true;
-            UCW_d_label.Font = new Font(UTIL.Families[0], 9.75F);
+            UCW_d_label.Font =new Font(UTIL.Families[0], 9.75F);
             UCW_d_label.ForeColor = SystemColors.ControlDark;
-            UCW_d_label.Location = new Point(539, 241);
+            UCW_d_label.Location = new Point(562, 241);
             UCW_d_label.Name = "UCW_d_label";
             UCW_d_label.Size = new Size(170, 15);
             UCW_d_label.TabIndex = 125;
@@ -2363,7 +2348,7 @@ namespace main.contents
             // PanelColor_label
             // 
             PanelColor_label.AutoSize = true;
-            PanelColor_label.Font = new Font(UTIL.Families[0], 9.75F);
+            PanelColor_label.Font =new Font(UTIL.Families[0], 9.75F);
             PanelColor_label.Location = new Point(145, 205);
             PanelColor_label.Name = "PanelColor_label";
             PanelColor_label.Size = new Size(19, 15);
@@ -2373,8 +2358,8 @@ namespace main.contents
             // dPanel_label
             // 
             dPanel_label.AutoSize = true;
-            dPanel_label.Font = new Font(UTIL.Families[0], 9.75F);
-            dPanel_label.Location = new Point(320, 169);
+            dPanel_label.Font =new Font(UTIL.Families[0], 9.75F);
+            dPanel_label.Location = new Point(319, 169);
             dPanel_label.Name = "dPanel_label";
             dPanel_label.Size = new Size(31, 15);
             dPanel_label.TabIndex = 123;
@@ -2383,8 +2368,8 @@ namespace main.contents
             // Panel_checkBox
             // 
             Panel_checkBox.AutoSize = true;
-            Panel_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
-            Panel_checkBox.Location = new Point(88, 167);
+            Panel_checkBox.Font =new Font(UTIL.Families[0], 9.75F);
+            Panel_checkBox.Location = new Point(82, 167);
             Panel_checkBox.Name = "Panel_checkBox";
             Panel_checkBox.Size = new Size(50, 19);
             Panel_checkBox.TabIndex = 122;
@@ -2395,9 +2380,9 @@ namespace main.contents
             // PanelColor_comboBox
             // 
             PanelColor_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            PanelColor_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            PanelColor_comboBox.Font =new Font(UTIL.Families[0], 9.75F);
             PanelColor_comboBox.FormattingEnabled = true;
-            PanelColor_comboBox.Location = new Point(175, 201);
+            PanelColor_comboBox.Location = new Point(198, 201);
             PanelColor_comboBox.Name = "PanelColor_comboBox";
             PanelColor_comboBox.Size = new Size(120, 23);
             PanelColor_comboBox.TabIndex = 121;
@@ -2406,9 +2391,9 @@ namespace main.contents
             // dPanel_label2
             // 
             dPanel_label2.AutoSize = true;
-            dPanel_label2.Font = new Font(UTIL.Families[0], 9.75F);
+            dPanel_label2.Font =new Font(UTIL.Families[0], 9.75F);
             dPanel_label2.ForeColor = SystemColors.ControlDark;
-            dPanel_label2.Location = new Point(473, 169);
+            dPanel_label2.Location = new Point(496, 169);
             dPanel_label2.Name = "dPanel_label2";
             dPanel_label2.Size = new Size(31, 15);
             dPanel_label2.TabIndex = 120;
@@ -2417,7 +2402,7 @@ namespace main.contents
             // dPanel_textBox
             // 
             dPanel_textBox.BorderStyle = BorderStyle.FixedSingle;
-            dPanel_textBox.Location = new Point(351, 165);
+            dPanel_textBox.Location = new Point(374, 165);
             dPanel_textBox.Name = "dPanel_textBox";
             dPanel_textBox.Size = new Size(120, 23);
             dPanel_textBox.TabIndex = 119;
@@ -2426,8 +2411,8 @@ namespace main.contents
             // PanelGlass_label
             // 
             PanelGlass_label.AutoSize = true;
-            PanelGlass_label.Font = new Font(UTIL.Families[0], 9.75F);
-            PanelGlass_label.Location = new Point(322, 205);
+            PanelGlass_label.Font =new Font(UTIL.Families[0], 9.75F);
+            PanelGlass_label.Location = new Point(321, 205);
             PanelGlass_label.Name = "PanelGlass_label";
             PanelGlass_label.Size = new Size(31, 15);
             PanelGlass_label.TabIndex = 118;
@@ -2436,7 +2421,7 @@ namespace main.contents
             // Panel_label
             // 
             Panel_label.AutoSize = true;
-            Panel_label.Font = new Font(UTIL.Families[0], 9.75F);
+            Panel_label.Font =new Font(UTIL.Families[0], 9.75F);
             Panel_label.Location = new Point(140, 169);
             Panel_label.Name = "Panel_label";
             Panel_label.Size = new Size(31, 15);
@@ -2448,9 +2433,9 @@ namespace main.contents
             PanelGlass_textBox.BackColor = Color.White;
             PanelGlass_textBox.BorderStyle = BorderStyle.None;
             PanelGlass_textBox.Enabled = false;
-            PanelGlass_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            PanelGlass_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             PanelGlass_textBox.ForeColor = SystemColors.ControlDark;
-            PanelGlass_textBox.Location = new Point(351, 205);
+            PanelGlass_textBox.Location = new Point(374, 205);
             PanelGlass_textBox.Name = "PanelGlass_textBox";
             PanelGlass_textBox.Size = new Size(120, 15);
             PanelGlass_textBox.TabIndex = 116;
@@ -2461,8 +2446,8 @@ namespace main.contents
             PanelGlassDB_button.BackColor = SystemColors.ControlLight;
             PanelGlassDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             PanelGlassDB_button.FlatStyle = FlatStyle.System;
-            PanelGlassDB_button.Font = new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
-            PanelGlassDB_button.Location = new Point(473, 201);
+            PanelGlassDB_button.Font =new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
+            PanelGlassDB_button.Location = new Point(352, 201);
             PanelGlassDB_button.Margin = new Padding(0);
             PanelGlassDB_button.Name = "PanelGlassDB_button";
             PanelGlassDB_button.Size = new Size(23, 23);
@@ -2474,9 +2459,9 @@ namespace main.contents
             // αp_label2
             // 
             αp_label2.AutoSize = true;
-            αp_label2.Font = new Font(UTIL.Families[0], 9.75F);
+            αp_label2.Font =new Font(UTIL.Families[0], 9.75F);
             αp_label2.ForeColor = SystemColors.ControlDark;
-            αp_label2.Location = new Point(862, 205);
+            αp_label2.Location = new Point(885, 205);
             αp_label2.Name = "αp_label2";
             αp_label2.Size = new Size(15, 15);
             αp_label2.TabIndex = 114;
@@ -2485,22 +2470,21 @@ namespace main.contents
             // UCW_p_label2
             // 
             UCW_p_label2.AutoSize = true;
-            UCW_p_label2.Font = new Font(UTIL.Families[0], 9.75F);
+            UCW_p_label2.Font =new Font(UTIL.Families[0], 9.75F);
             UCW_p_label2.ForeColor = SystemColors.ControlDark;
-            UCW_p_label2.Location = new Point(841, 169);
+            UCW_p_label2.Location = new Point(864, 169);
             UCW_p_label2.Name = "UCW_p_label2";
-            UCW_p_label2.Size = new Size(58, 15);
+            UCW_p_label2.Size = new Size(0, 15);
             UCW_p_label2.TabIndex = 113;
-            UCW_p_label2.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // Panel_textBox
             // 
             Panel_textBox.BackColor = Color.White;
             Panel_textBox.BorderStyle = BorderStyle.None;
             Panel_textBox.Enabled = false;
-            Panel_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Panel_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Panel_textBox.ForeColor = SystemColors.ControlDark;
-            Panel_textBox.Location = new Point(175, 169);
+            Panel_textBox.Location = new Point(198, 169);
             Panel_textBox.Name = "Panel_textBox";
             Panel_textBox.Size = new Size(120, 15);
             Panel_textBox.TabIndex = 112;
@@ -2511,8 +2495,8 @@ namespace main.contents
             PanelDB_button.BackColor = SystemColors.ControlLight;
             PanelDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             PanelDB_button.FlatStyle = FlatStyle.System;
-            PanelDB_button.Font = new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
-            PanelDB_button.Location = new Point(296, 164);
+            PanelDB_button.Font =new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
+            PanelDB_button.Location = new Point(173, 164);
             PanelDB_button.Margin = new Padding(0);
             PanelDB_button.Name = "PanelDB_button";
             PanelDB_button.Size = new Size(23, 23);
@@ -2526,9 +2510,9 @@ namespace main.contents
             αp_textBox.BackColor = Color.White;
             αp_textBox.BorderStyle = BorderStyle.None;
             αp_textBox.Enabled = false;
-            αp_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            αp_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             αp_textBox.ForeColor = SystemColors.ControlDark;
-            αp_textBox.Location = new Point(716, 205);
+            αp_textBox.Location = new Point(739, 205);
             αp_textBox.Name = "αp_textBox";
             αp_textBox.Size = new Size(116, 15);
             αp_textBox.TabIndex = 110;
@@ -2539,9 +2523,9 @@ namespace main.contents
             UCW_p_textBox.BackColor = Color.White;
             UCW_p_textBox.BorderStyle = BorderStyle.None;
             UCW_p_textBox.Enabled = false;
-            UCW_p_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            UCW_p_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             UCW_p_textBox.ForeColor = SystemColors.ControlDark;
-            UCW_p_textBox.Location = new Point(716, 169);
+            UCW_p_textBox.Location = new Point(739, 169);
             UCW_p_textBox.Name = "UCW_p_textBox";
             UCW_p_textBox.Size = new Size(116, 15);
             UCW_p_textBox.TabIndex = 109;
@@ -2551,8 +2535,8 @@ namespace main.contents
             // label27
             // 
             label27.AutoSize = true;
-            label27.Font = new Font(UTIL.Families[0], 9.75F);
-            label27.Location = new Point(45, 169);
+            label27.Font =new Font(UTIL.Families[0], 9.75F);
+            label27.Location = new Point(39, 169);
             label27.Name = "label27";
             label27.Size = new Size(31, 15);
             label27.TabIndex = 108;
@@ -2561,7 +2545,7 @@ namespace main.contents
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font(UTIL.Families[0], 9.75F);
+            label8.Font =new Font(UTIL.Families[0], 9.75F);
             label8.Location = new Point(140, 137);
             label8.Name = "label8";
             label8.Size = new Size(31, 15);
@@ -2571,7 +2555,7 @@ namespace main.contents
             // label7
             // 
             label7.AutoSize = true;
-            label7.Font = new Font(UTIL.Families[0], 9.75F);
+            label7.Font =new Font(UTIL.Families[0], 9.75F);
             label7.Location = new Point(140, 105);
             label7.Name = "label7";
             label7.Size = new Size(31, 15);
@@ -2583,9 +2567,9 @@ namespace main.contents
             OpenGlassName_textBox.BackColor = Color.White;
             OpenGlassName_textBox.BorderStyle = BorderStyle.None;
             OpenGlassName_textBox.Enabled = false;
-            OpenGlassName_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            OpenGlassName_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             OpenGlassName_textBox.ForeColor = SystemColors.ControlDark;
-            OpenGlassName_textBox.Location = new Point(175, 137);
+            OpenGlassName_textBox.Location = new Point(198, 137);
             OpenGlassName_textBox.Name = "OpenGlassName_textBox";
             OpenGlassName_textBox.Size = new Size(120, 15);
             OpenGlassName_textBox.TabIndex = 105;
@@ -2596,8 +2580,8 @@ namespace main.contents
             OpenGlassDB_button.BackColor = SystemColors.ControlLight;
             OpenGlassDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             OpenGlassDB_button.FlatStyle = FlatStyle.System;
-            OpenGlassDB_button.Font = new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
-            OpenGlassDB_button.Location = new Point(296, 133);
+            OpenGlassDB_button.Font =new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
+            OpenGlassDB_button.Location = new Point(173, 133);
             OpenGlassDB_button.Margin = new Padding(0);
             OpenGlassDB_button.Name = "OpenGlassDB_button";
             OpenGlassDB_button.Size = new Size(23, 23);
@@ -2609,9 +2593,9 @@ namespace main.contents
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font = new Font(UTIL.Families[0], 9.75F);
+            label12.Font =new Font(UTIL.Families[0], 9.75F);
             label12.ForeColor = SystemColors.ControlDark;
-            label12.Location = new Point(862, 137);
+            label12.Location = new Point(885, 137);
             label12.Name = "label12";
             label12.Size = new Size(15, 15);
             label12.TabIndex = 97;
@@ -2620,9 +2604,9 @@ namespace main.contents
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font(UTIL.Families[0], 9.75F);
+            label9.Font =new Font(UTIL.Families[0], 9.75F);
             label9.ForeColor = SystemColors.ControlDark;
-            label9.Location = new Point(862, 105);
+            label9.Location = new Point(885, 105);
             label9.Name = "label9";
             label9.Size = new Size(15, 15);
             label9.TabIndex = 96;
@@ -2633,9 +2617,9 @@ namespace main.contents
             Install_textBox.BackColor = Color.White;
             Install_textBox.BorderStyle = BorderStyle.None;
             Install_textBox.Enabled = false;
-            Install_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Install_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             Install_textBox.ForeColor = SystemColors.ControlDark;
-            Install_textBox.Location = new Point(351, 341);
+            Install_textBox.Location = new Point(374, 341);
             Install_textBox.Name = "Install_textBox";
             Install_textBox.Size = new Size(120, 15);
             Install_textBox.TabIndex = 95;
@@ -2646,8 +2630,8 @@ namespace main.contents
             Install_button.BackColor = SystemColors.ControlLight;
             Install_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Install_button.FlatStyle = FlatStyle.System;
-            Install_button.Font = new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
-            Install_button.Location = new Point(473, 337);
+            Install_button.Font =new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
+            Install_button.Location = new Point(352, 337);
             Install_button.Margin = new Padding(0);
             Install_button.Name = "Install_button";
             Install_button.Size = new Size(23, 23);
@@ -2661,9 +2645,9 @@ namespace main.contents
             FrameName_textBox.BackColor = Color.White;
             FrameName_textBox.BorderStyle = BorderStyle.None;
             FrameName_textBox.Enabled = false;
-            FrameName_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            FrameName_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             FrameName_textBox.ForeColor = SystemColors.ControlDark;
-            FrameName_textBox.Location = new Point(351, 69);
+            FrameName_textBox.Location = new Point(375, 69);
             FrameName_textBox.Name = "FrameName_textBox";
             FrameName_textBox.Size = new Size(120, 15);
             FrameName_textBox.TabIndex = 89;
@@ -2674,8 +2658,8 @@ namespace main.contents
             FrameDB_button.BackColor = SystemColors.ControlLight;
             FrameDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             FrameDB_button.FlatStyle = FlatStyle.System;
-            FrameDB_button.Font = new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
-            FrameDB_button.Location = new Point(473, 65);
+            FrameDB_button.Font =new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
+            FrameDB_button.Location = new Point(352, 65);
             FrameDB_button.Margin = new Padding(0);
             FrameDB_button.Name = "FrameDB_button";
             FrameDB_button.Size = new Size(23, 23);
@@ -2687,9 +2671,9 @@ namespace main.contents
             // αp_label
             // 
             αp_label.AutoSize = true;
-            αp_label.Font = new Font(UTIL.Families[0], 9.75F);
+            αp_label.Font =new Font(UTIL.Families[0], 9.75F);
             αp_label.ForeColor = SystemColors.ControlDark;
-            αp_label.Location = new Point(539, 205);
+            αp_label.Location = new Point(562, 205);
             αp_label.Name = "αp_label";
             αp_label.Size = new Size(125, 15);
             αp_label.TabIndex = 77;
@@ -2698,9 +2682,9 @@ namespace main.contents
             // UCW_p_label
             // 
             UCW_p_label.AutoSize = true;
-            UCW_p_label.Font = new Font(UTIL.Families[0], 9.75F);
+            UCW_p_label.Font =new Font(UTIL.Families[0], 9.75F);
             UCW_p_label.ForeColor = SystemColors.ControlDark;
-            UCW_p_label.Location = new Point(539, 169);
+            UCW_p_label.Location = new Point(562, 169);
             UCW_p_label.Name = "UCW_p_label";
             UCW_p_label.Size = new Size(158, 15);
             UCW_p_label.TabIndex = 74;
@@ -2711,9 +2695,9 @@ namespace main.contents
             τg_textBox.BackColor = Color.White;
             τg_textBox.BorderStyle = BorderStyle.None;
             τg_textBox.Enabled = false;
-            τg_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            τg_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             τg_textBox.ForeColor = SystemColors.ControlDark;
-            τg_textBox.Location = new Point(716, 137);
+            τg_textBox.Location = new Point(739, 137);
             τg_textBox.Name = "τg_textBox";
             τg_textBox.Size = new Size(116, 15);
             τg_textBox.TabIndex = 72;
@@ -2722,9 +2706,9 @@ namespace main.contents
             // label26
             // 
             label26.AutoSize = true;
-            label26.Font = new Font(UTIL.Families[0], 9.75F);
+            label26.Font =new Font(UTIL.Families[0], 9.75F);
             label26.ForeColor = SystemColors.ControlDark;
-            label26.Location = new Point(539, 137);
+            label26.Location = new Point(562, 137);
             label26.Name = "label26";
             label26.Size = new Size(144, 15);
             label26.TabIndex = 71;
@@ -2735,9 +2719,9 @@ namespace main.contents
             g_textBox.BackColor = Color.White;
             g_textBox.BorderStyle = BorderStyle.None;
             g_textBox.Enabled = false;
-            g_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            g_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             g_textBox.ForeColor = SystemColors.ControlDark;
-            g_textBox.Location = new Point(716, 105);
+            g_textBox.Location = new Point(739, 105);
             g_textBox.Name = "g_textBox";
             g_textBox.Size = new Size(116, 15);
             g_textBox.TabIndex = 69;
@@ -2746,9 +2730,9 @@ namespace main.contents
             // label23
             // 
             label23.AutoSize = true;
-            label23.Font = new Font(UTIL.Families[0], 9.75F);
+            label23.Font =new Font(UTIL.Families[0], 9.75F);
             label23.ForeColor = SystemColors.ControlDark;
-            label23.Location = new Point(539, 105);
+            label23.Location = new Point(562, 105);
             label23.Name = "label23";
             label23.Size = new Size(128, 15);
             label23.TabIndex = 68;
@@ -2757,22 +2741,21 @@ namespace main.contents
             // Ug_unit_label
             // 
             Ug_unit_label.AutoSize = true;
-            Ug_unit_label.Font = new Font(UTIL.Families[0], 9.75F);
+            Ug_unit_label.Font =new Font(UTIL.Families[0], 9.75F);
             Ug_unit_label.ForeColor = SystemColors.ControlDark;
-            Ug_unit_label.Location = new Point(841, 69);
+            Ug_unit_label.Location = new Point(864, 69);
             Ug_unit_label.Name = "Ug_unit_label";
-            Ug_unit_label.Size = new Size(60, 15);
+            Ug_unit_label.Size = new Size(0, 15);
             Ug_unit_label.TabIndex = 64;
-            Ug_unit_label.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // UCW_g_textBox
             // 
             UCW_g_textBox.BackColor = Color.White;
             UCW_g_textBox.BorderStyle = BorderStyle.None;
             UCW_g_textBox.Enabled = false;
-            UCW_g_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            UCW_g_textBox.Font =new Font(UTIL.Families[0], 9.75F);
             UCW_g_textBox.ForeColor = SystemColors.ControlDark;
-            UCW_g_textBox.Location = new Point(716, 69);
+            UCW_g_textBox.Location = new Point(739, 69);
             UCW_g_textBox.Name = "UCW_g_textBox";
             UCW_g_textBox.Size = new Size(116, 15);
             UCW_g_textBox.TabIndex = 66;
@@ -2782,9 +2765,9 @@ namespace main.contents
             // UCW_g_label
             // 
             UCW_g_label.AutoSize = true;
-            UCW_g_label.Font = new Font(UTIL.Families[0], 9.75F);
+            UCW_g_label.Font =new Font(UTIL.Families[0], 9.75F);
             UCW_g_label.ForeColor = SystemColors.ControlDark;
-            UCW_g_label.Location = new Point(539, 69);
+            UCW_g_label.Location = new Point(562, 69);
             UCW_g_label.Name = "UCW_g_label";
             UCW_g_label.Size = new Size(158, 15);
             UCW_g_label.TabIndex = 65;
@@ -2793,9 +2776,9 @@ namespace main.contents
             // DiIndi_comboBox
             // 
             DiIndi_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            DiIndi_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            DiIndi_comboBox.Font =new Font(UTIL.Families[0], 9.75F);
             DiIndi_comboBox.FormattingEnabled = true;
-            DiIndi_comboBox.Location = new Point(351, 25);
+            DiIndi_comboBox.Location = new Point(374, 25);
             DiIndi_comboBox.Name = "DiIndi_comboBox";
             DiIndi_comboBox.Size = new Size(120, 23);
             DiIndi_comboBox.TabIndex = 55;
