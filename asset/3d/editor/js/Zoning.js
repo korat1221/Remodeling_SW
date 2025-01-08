@@ -91,7 +91,7 @@ Zoning.prototype = {
             }
         };
         let _equalPoint = (a, b) => {
-            return a.distanceTo(b) < 0.00000001;
+            return a.distanceTo(b) < 0.0001;
         };
         let _getSamePoints = (a, b) => {
             var ret = [];
@@ -526,7 +526,7 @@ Zoning.prototype = {
             }
             return pnts;
         };
-        let _collectLines = () => {
+        let _collectLines = (final = false) => {
             let a, b, i, j;
             let lines = {};
 
@@ -596,13 +596,16 @@ Zoning.prototype = {
                     walls[i].pnts = _asPoints(edges);
                 }
             }
-            for (const [id, el] of Object.entries(zones)) {
-                i = -1;
 
-                while (++i < el.userData.walls.length) {
-                    j = -1;
-                    while (++j < el.userData.walls[i].edges.length) {
-                        el.userData.walls[i].links.push(_collectLinks(el.userData.walls[i].edges[j]));
+            if (final) {
+                for (const [id, el] of Object.entries(zones)) {
+                    i = -1;
+    
+                    while (++i < el.userData.walls.length) {
+                        j = -1;
+                        while (++j < el.userData.walls[i].edges.length) {
+                            el.userData.walls[i].links.push(_collectLinks(el.userData.walls[i].edges[j]));
+                        }
                     }
                 }
             }
@@ -807,7 +810,7 @@ Zoning.prototype = {
                 i = -1;
                 while (++i < el.userData.walls.length) {
                     let po = el.userData.walls[i];
-                    if (!po.invisible) {
+                    if (!po.invisible && !po.working) {
 
                         j = -1;
                         while (++j < po.edges.length) {
@@ -825,7 +828,7 @@ Zoning.prototype = {
             return false;
         };
         let _splitWall = (wall) => {
-            let i = -1, j, done = false;
+            let i = -1, j, k, done = false;
             let arr = [].concat(wall.pnts);
 
             for (const [id, el] of Object.entries(zones)) {
@@ -834,7 +837,7 @@ Zoning.prototype = {
                 while (++i < el.userData.walls.length) {
                     let po = el.userData.walls[i];
                     j = -1;
-                    if (!po.invisible) {
+                    if (!po.invisible && !po.working) {
                         while (++j < po.pnts.length) {
                             let pt = po.pnts[j];
                             if (wall !== po && !arr.find(el => _equalPoint(el, pt)) && _isInterscect2(wall.pos, pt)) {
@@ -934,11 +937,75 @@ Zoning.prototype = {
                     }
                 }
 
-                //                console.log(graph);
+                i = graph.length;
+                while (--i >= 0) {
+                    let arr = [];
+                    let g = graph[i];
+                    let o = _flat(g);
+                    if (o) {
+                        o.idxes = earcut(o.idxes, null, 2);
 
-                return graph;
+                        if (o.idxes.length > 0) {
+                            k = 0;
+                            while(k < o.idxes.length) {
+                                arr.push(g[o.idxes[k]]);
+                                arr.push(g[o.idxes[k + 1]]);
+                                arr.push(g[o.idxes[k + 2]]);
+                                k += 3;
+                            }
+                            graph[i] = {area:_getArea(arr),graph:arr};
+                        }
+                        else {
+                            graph.splice(i, 1);
+                        }
+                    }
+                    else {
+                        graph.splice(i, 1);
+                    }
+                }
+
+                if (graph.length > 0) {
+                    return graph;
+                }
             }
             return [];
+        };
+        let _flat = (pos) => {
+            let i = 0, j, nom = pos[0].clone(), nom2 = pos[0].clone(), ret = [];
+
+            while(++i < pos.length) {
+                let el = pos[i];
+                j = -1;
+                if (el.x !== nom.x) {
+                    nom2.x = el.x;
+                }
+                if (el.y !== nom.y) {
+                    nom2.y = el.y;
+                }
+                if (el.z !== nom.z) {
+                    nom2.z = el.z;
+                }
+            }
+            if ((nom2.x === nom.x && nom2.y === nom.y) || (nom2.y === nom.y && nom2.z === nom.z) || (nom2.x === nom.x && nom2.z === nom.z)) {
+                return null;
+            }
+
+            i = -1;
+            while(++i < pos.length) {
+                let el = pos[i];
+
+                if (nom.x !== nom2.x) {
+                    ret.push(el.x);
+                }
+                if (nom.y !== nom2.y) {
+                    ret.push(el.y);
+                }
+                if (nom.z !== nom2.z) {
+                    ret.push(el.z);
+                }
+            }
+
+            return {idxes:ret, nom:nom};
         };
         let _drawPolygon = (a, color) => {
             const geometry = new THREE.BufferGeometry();
@@ -1127,10 +1194,34 @@ Zoning.prototype = {
                     let el2 = el.userData.walls[j];
                     if (!el2.invisible) {
                         let arr = _splitWall(el2);
+
+                        if (arr.length > 0) {
+                            arr.sort((a, b) => {
+                                return b.area - a.area;
+                            });
+                            k = -1;
+                            while (++k < arr.length) {
+                                let pos = arr[k].graph;
+                                //_drawPolygon(arr[k].graph, '#ff0000');
+                                el2.uuid = _addMeshObject(pos, this.colors[el2.type], id);
+                                el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: pos, uuid:_addMeshObject(pos, this.colors[el2.type], id), area:arr[k].area, working:true, center: _getCenterPosition(pos) });
+                            }
+                            el.userData.walls.splice(j, 1);
+                        }
+            
+/*
+                        const geometry = new THREE.BufferGeometry();
+                        geometry.setFromPoints(arr[k]);
+                        const mesh = new THREE.Line(geometry,
+                            new THREE.LineBasicMaterial({
+                                color: new THREE.Color(color),
+                                opacity: 1.0,
+                                transparent: true,
+                            })
+                        );
+                        this.editor.addObject(mesh);
+  */          
                         //                      _drawPoint(arr, '#ff0000');
-                        //                        k = -1;
-                        //                            while (++k < arr.length) {
-                        //                            _drawPolygon(arr[k], '#ff0000');
                         //                    console.log(id, arr);
                         //                            k = -1;
                         //                          while(++k < arr.length) {
@@ -1139,11 +1230,11 @@ Zoning.prototype = {
                         //         el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k] });
                         //                      }                            
                         //   el.userData.walls.splice(j, 1);
-                        //                         }
                     }
                 }
             }
 
+            _collectLines(true);
             _collectLines_SD();
 
             i = -1;
