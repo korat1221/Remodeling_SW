@@ -1204,7 +1204,7 @@ Zoning.prototype = {
                                 let pos = arr[k].graph;
                                 //_drawPolygon(arr[k].graph, '#ff0000');
                                 el2.uuid = _addMeshObject(pos, this.colors[el2.type], id);
-                                el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: pos, uuid:_addMeshObject(pos, this.colors[el2.type], id), area:arr[k].area, working:true, center: _getCenterPosition(pos) });
+                                el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: pos, invisible: false, uuid:_addMeshObject(pos, this.colors[el2.type], id), area:arr[k].area, working:true, center: _getCenterPosition(pos) });
                             }
                             el.userData.walls.splice(j, 1);
                         }
