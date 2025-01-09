@@ -91,7 +91,7 @@ Zoning.prototype = {
             }
         };
         let _equalPoint = (a, b) => {
-            return a.distanceTo(b) < 0.0001;
+            return a.distanceTo(b) < 0.00000001;
         };
         let _getSamePoints = (a, b) => {
             var ret = [];
@@ -1031,6 +1031,58 @@ Zoning.prototype = {
 
             this.editor.scene.add(points);
         };
+        let _isOverlappedPoint = (a, b) => {
+            let i = -1;
+            while(++i < 3) {
+                if (_equalPoint(a[i], b)) {
+                    return false;
+                }
+            }
+
+            let T = new THREE.Triangle(a[i], a[i + 1], a[i + 2]), v = new THREE.Vector3(), P = new THREE.Plane();
+
+            T.getPlane(P);
+
+            return T.containsPoint(P.projectPoint(b, v));
+        };
+        let _isOverlappedTriangle = (a, b) => {
+            let v = new THREE.Vector3(), P = new THREE.Plane();
+
+            a.getPlane(P);
+
+            return !!(!_equalPoint(a.a, b.a) && !_equalPoint(a.b, b.a) && !_equalPoint(a.c, b.a) && a.containsPoint(P.projectPoint(b.a, v))) ||
+            !!(!_equalPoint(a.a, b.b) && !_equalPoint(a.b, b.b) && !_equalPoint(a.c, b.b) && a.containsPoint(P.projectPoint(b.b, v))) ||
+            !!(!_equalPoint(a.a, b.c) && !_equalPoint(a.b, b.c) && !_equalPoint(a.c, b.c) && a.containsPoint(P.projectPoint(b.c, v)));
+
+        };
+        let _isOverlapped = (a, b) => {
+            let i = 0, j;
+
+            while(i < a.length) {
+                j = 0;
+                while(j < b.length) {
+                    if (_isOverlappedTriangle((new THREE.Triangle(a[i], a[i + 1], a[i + 2])), (new THREE.Triangle(b[j], b[j + 1], b[j + 2])))) { 
+                        return true;
+                    }
+                    j += 3;
+                }
+                i += 3;
+            }
+
+            return false;
+        };
+        let _isAvailable = (arr, idx) => {
+            let i = -1;
+            while(++i < idx) {
+                let el = arr[i];
+                
+                if (_isOverlapped(arr[i].graph, arr[idx].graph)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1116,6 +1168,9 @@ Zoning.prototype = {
                             el.userData.uuid = el.uuid;
 
                             el.material = el.material.clone();
+                            el.material.side = THREE.DoubleSide;
+                            el.material.color.set(el.userData.color);
+                            el.material.opacity = el.userData.opacity;
 
                             //     _addMeshObject(o, this.colors[_getTypeColor(type)], zk);
                             //   el.visible = false;
@@ -1199,14 +1254,30 @@ Zoning.prototype = {
                             arr.sort((a, b) => {
                                 return b.area - a.area;
                             });
-                            k = -1;
-                            while (++k < arr.length) {
-                                let pos = arr[k].graph;
-                                //_drawPolygon(arr[k].graph, '#ff0000');
-                                el2.uuid = _addMeshObject(pos, this.colors[el2.type], id);
-                                el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: pos, invisible: false, uuid:_addMeshObject(pos, this.colors[el2.type], id), area:arr[k].area, working:true, center: _getCenterPosition(pos) });
-                            }
-                            el.userData.walls.splice(j, 1);
+
+                            // console.log("before:" + arr.length);
+                            // k = arr.length;
+                            // while (--k >= 0) {
+                            //     if (!_isAvailable(arr, k)) {
+                            //         arr.splice(k,1);
+                            //     }
+                            // }
+                            // console.log("after:" + arr.length);
+
+//                            k = -1;
+  //                          while (++k < arr.length) {
+    //                            let pos = arr[k].graph;
+      //                          _drawPolygon(arr[k].graph, '#ff0000');
+//                                el2.uuid = _addMeshObject(pos, this.colors[el2.type], id);
+  //                              el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: pos, invisible: false, uuid:_addMeshObject(pos, this.colors[el2.type], id), area:arr[k].area, working:true, center: _getCenterPosition(pos) });
+        //                    }
+
+    //                        let n = obj.children.findIndex(el2 => el2.uuid === el.userData.walls[j].uuid)
+//
+  //                          if (n >= 0) {
+    //                            obj.children.splice(n, 1);
+      //                      }
+        //                    el.userData.walls.splice(j, 1);
                         }
             
 /*
