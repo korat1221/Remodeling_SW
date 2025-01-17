@@ -238,6 +238,9 @@
     <Compile Update="subcontents\EquipmentList\CTopCal.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\Info\Info_Roof.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\RESystem_FC\FC.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -279,13 +282,70 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="contents\Alt\AltMain.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Update="contents\Construction\ConstructionBlind.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="contents\Result\Algorithm_Report\Algorithm_AHU.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="contents\Result\Algorithm_Report\Algorithm_Cooling.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="contents\Result\Algorithm_Report\Algorithm_DHW.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="contents\Result\Algorithm_Report\Algorithm_EnergyNeed.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="contents\Result\Algorithm_Report\Algorithm_Heating.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="contents\Result\Algorithm_Report\Algorithm_Lighting.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="contents\Result\Algorithm_Report\Algorithm_Report.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="contents\System\AHUSystem.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Update="FormMain.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Update="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="subcontents\ABS_DB.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="subcontents\AHUSystem\AHU_HRV.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="subcontents\AirHP_DB.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="subcontents\Alt\AltFloor.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="subcontents\Alt\AltRoof.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="subcontents\Alt\AltWall.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="subcontents\Alt\AltWin.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="subcontents\BuildingGeneral\BlowDoorTest.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="subcontents\ConstructionBlind\BlindDB.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Update="subcontents\CoolingSystem\AirCooler_DB.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

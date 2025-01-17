@@ -91,6 +91,9 @@
     <Compile Update="contents\Building\ProjectCopy.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="contents\Result\Building_Report\Report_Gas.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="contents\Result\Element_Report\Element_Chiler.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +136,9 @@
     <Compile Update="subcontents\EquipmentList\ZoneResult.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\Info\ssss.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\ZoneGeneral\PreZone.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,7 +160,7 @@
     <Compile Update="contents\Result\Building_Report\Building_Report.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\Result\Building_Report\PrintReport_Final.cs">
+    <Compile Update="contents\Result\Building_Report\Report_Elec.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="contents\Result\Algorithm_Report\Algorithm_Cooling.cs" />

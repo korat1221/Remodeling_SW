@@ -58,16 +58,22 @@ namespace main.contents.Result.Building_Report
         {
             List<object> MainMenu = new List<object>();
 
-            MainMenu.Add(new { text = "연료별소요량", id = "{\\\"formID\\\":52,\\\"ID\\\":\\\"Result_6\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            MainMenu.Add(new { text = "전기소요량", id = "{\\\"formID\\\":52,\\\"ID\\\":\\\"Result_6\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            string[][] Final = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "연료", "not 연료='전기'");
+            if (Final.Length > 0)
+            {
+                MainMenu.Add(new { text = Final[0][0]+"소요량", id = "{\\\"formID\\\":68,\\\"ID\\\":\\\"Result_7\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            }
 
             Program.UTIL.resetMainTree(5, 0, MainMenu.ToArray(), "56"); // 예시 코드: 메인 메뉴 동적 할당
+           
         }
 
         public void LoadData(string ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             load_List();
             string[][] 프로젝트유형 = Program.DB.querySQL(DB.type.ProjListDB, "Select type from projects where current = '1'");
-            if (프로젝트유형[0][0] == "1")
+            if (프로젝트유형[0][0] == "1" || 프로젝트유형[0][0] == "4")
             {
                 Report_Before();
             }
@@ -124,7 +130,7 @@ namespace main.contents.Result.Building_Report
                     __data[10].Add(new { idx = i, val = Value[0][10] }); //작성자
                     __data[11].Add(new { idx = i, val = Value[0][11] }); //작성시기      
                     __data[136].Add(new { idx = i, val = Value[0][12] }); //프로젝트번호
-                    __data[137].Add(new { idx = i, val = "1F_Zone002" }); //프로젝트번호
+                    __data[137].Add(new { idx = i, val = Value[0][0]+ " 검토보고서" }); //프로젝트 명칭 
                 }
                 ////////////////////////////////////////////////////////////////////
                 data.Add(new { cname = "projectName", data = __data[0] });
@@ -140,7 +146,7 @@ namespace main.contents.Result.Building_Report
                 data.Add(new { cname = "reviewername", data = __data[10] });
                 data.Add(new { cname = "reviewdate", data = __data[11] });
                 data.Add(new { cname = "projectnum", data = __data[136] });
-                data.Add(new { cname = "zonenum", data = __data[137] });
+                data.Add(new { cname = "projectName2", data = __data[137] });
                 #endregion
 
                 #region 외벽정보
@@ -380,7 +386,7 @@ namespace main.contents.Result.Building_Report
                 #endregion
 
                 #region 소요량
-                double[] 난방 = new double[12], 냉방 = new double[12], 급탕 = new double[12], 조명 = new double[12], 공조 = new double[12], 신재생 = new double[12], 총전기 = new double[12], 총가스 = new double[12], 총소요량 = new double[12];
+                double[] 난방 = new double[12], 냉방 = new double[12], 급탕 = new double[12], 조명 = new double[12], 공조 = new double[12], 기저 = new double[12], 신재생 = new double[12], 총전기 = new double[12], 총가스 = new double[12], 총소요량 = new double[12];
                 double 연간소요량 = 0, 연간전기 = 0, 연간가스 = 0;
                 for (int mth = 0; mth < 12; mth++)
                 {
@@ -393,8 +399,12 @@ namespace main.contents.Result.Building_Report
                         급탕[mth] = Convert.ToDouble(Final1[0][2]);
                         조명[mth] = Convert.ToDouble(Final1[0][3]);
                         공조[mth] = Convert.ToDouble(Final1[0][4]);
+                        if (Final1[0][5] != null && Final1[0][5] != "")
+                        {
+                            기저[mth] = Convert.ToDouble(Final1[0][5]);
+                        }                        
                         신재생[mth] = Convert.ToDouble(Final1[0][6]);
-                        총전기[mth] = Convert.ToDouble(Final1[0][7]) - Convert.ToDouble(Final1[0][5]);
+                        총전기[mth] = Convert.ToDouble(Final1[0][7]) - 기저[mth] ;
                     }
                     if (Final2.Length > 0)
                     {
@@ -403,8 +413,12 @@ namespace main.contents.Result.Building_Report
                         급탕[mth] = 급탕[mth] + Convert.ToDouble(Final2[0][2]);
                         조명[mth] = 조명[mth] + Convert.ToDouble(Final2[0][3]);
                         공조[mth] = 공조[mth] + Convert.ToDouble(Final2[0][4]);
+                        if (Final2[0][5] != null && Final2[0][5] != "")
+                        {
+                            기저[mth] =  Convert.ToDouble(Final2[0][5]);
+                        }
                         신재생[mth] = 신재생[mth] + Convert.ToDouble(Final2[0][6]);
-                        총가스[mth] = Convert.ToDouble(Final2[0][7]) - Convert.ToDouble(Final2[0][5]);
+                        총가스[mth] = Convert.ToDouble(Final2[0][7]) - 기저[mth];
                     }
 
                     총소요량[mth] = 총전기[mth] + 총가스[mth];
@@ -889,7 +903,7 @@ namespace main.contents.Result.Building_Report
                 if (res.Length > 0)
                 {
                     #region 건물정보
-                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,주소,지역,지역구분,준공시기,연면적,건축면적,지상층수,지하층수,작성자회사,작성자,작성시기,프로젝트번호");
+                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,주소,지역,지역구분,준공시기,연면적,건축면적,지상층수,지하층수,작성자회사,작성자,작성시기,프로젝트번호,프로젝트유형");
                     if (Value.Length > 0)
                     {
                         __data[0].Add(new { idx = i, val = Value[0][0] }); //프로젝트명
@@ -905,7 +919,7 @@ namespace main.contents.Result.Building_Report
                         __data[10].Add(new { idx = i, val = Value[0][10] }); //작성자
                         __data[11].Add(new { idx = i, val = Value[0][11] }); //작성시기
                         __data[136].Add(new { idx = i, val = Value[0][12] }); //프로젝트번호
-                        __data[137].Add(new { idx = i, val = "1F_Zone002" }); //프로젝트번호
+                        __data[137].Add(new { idx = i, val = Value[0][0]+" " + Value[0][13] + " 검토보고서" }); //프로젝트 명칭 
 
                     }
                     ////////////////////////////////////////////////////////////////////
@@ -922,7 +936,7 @@ namespace main.contents.Result.Building_Report
                     data.Add(new { cname = "reviewername", data = __data[10] });
                     data.Add(new { cname = "reviewdate", data = __data[11] });
                     data.Add(new { cname = "projectnum", data = __data[136] });
-                    data.Add(new { cname = "zonenum", data = __data[137] });
+                    data.Add(new { cname = "projectName2", data = __data[137] });
                     #endregion
 
                     #region 외벽정보
@@ -1312,7 +1326,7 @@ namespace main.contents.Result.Building_Report
 
                     #region 소요량
                     //리모델링 후 
-                    double[] 난방_후 = new double[12], 냉방_후 = new double[12], 급탕_후 = new double[12], 조명_후 = new double[12], 공조_후 = new double[12], 신재생_후 = new double[12], 총전기_후 = new double[12], 총가스_후 = new double[12], 총소요량_후 = new double[12];
+                    double[] 난방_후 = new double[12], 냉방_후 = new double[12], 급탕_후 = new double[12], 조명_후 = new double[12], 공조_후 = new double[12], 기저_후 = new double[12], 신재생_후 = new double[12], 총전기_후 = new double[12], 총가스_후 = new double[12], 총소요량_후 = new double[12];
                     double 연간소요량_후 = 0, 연간전기_후 = 0, 연간가스_후 = 0;
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -1325,8 +1339,12 @@ namespace main.contents.Result.Building_Report
                             급탕_후[mth] = Convert.ToDouble(Final1[0][2]);
                             조명_후[mth] = Convert.ToDouble(Final1[0][3]);
                             공조_후[mth] = Convert.ToDouble(Final1[0][4]);
-                            신재생_후[mth] = Convert.ToDouble(Final1[0][6]);
-                            총전기_후[mth] = Convert.ToDouble(Final1[0][7]) - Convert.ToDouble(Final1[0][5]);
+                            if (Final1[0][5] != null && Final1[0][5] != "")
+                            {
+                                기저_후[mth] = Convert.ToDouble(Final1[0][5]);
+                            }
+                            신재생_후[mth] = Convert.ToDouble(Final1[0][6]);                            
+                            총전기_후[mth] = Convert.ToDouble(Final1[0][7]) - 기저_후[mth];
                         }
                         if (Final2.Length > 0)
                         {
@@ -1335,8 +1353,12 @@ namespace main.contents.Result.Building_Report
                             급탕_후[mth] = 급탕_후[mth] + Convert.ToDouble(Final2[0][2]);
                             조명_후[mth] = 조명_후[mth] + Convert.ToDouble(Final2[0][3]);
                             공조_후[mth] = 공조_후[mth] + Convert.ToDouble(Final2[0][4]);
-                            신재생_후[mth] = 신재생_후[mth] + Convert.ToDouble(Final2[0][6]);
-                            총가스_후[mth] = Convert.ToDouble(Final2[0][7]) - Convert.ToDouble(Final2[0][5]);
+                            if (Final2[0][5] != null && Final2[0][5] != "")
+                            {
+                                기저_후[mth] = Convert.ToDouble(Final2[0][5]);
+                            }
+                            신재생_후[mth] = 신재생_후[mth] + Convert.ToDouble(Final2[0][6]);                            
+                            총가스_후[mth] = Convert.ToDouble(Final2[0][7]) - 기저_후[mth];
                         }
 
                         총소요량_후[mth] = 총전기_후[mth] + 총가스_후[mth];
@@ -1356,7 +1378,7 @@ namespace main.contents.Result.Building_Report
                     }
 
                     //리모델링 전 
-                    double[] 난방_전 = new double[12], 냉방_전 = new double[12], 급탕_전 = new double[12], 조명_전 = new double[12], 공조_전 = new double[12], 신재생_전 = new double[12], 총전기_전 = new double[12], 총가스_전 = new double[12], 총소요량_전 = new double[12];
+                    double[] 난방_전 = new double[12], 냉방_전 = new double[12], 급탕_전 = new double[12], 조명_전 = new double[12], 공조_전 = new double[12], 신재생_전 = new double[12], 기저_전 = new double[12],총전기_전 = new double[12], 총가스_전 = new double[12], 총소요량_전 = new double[12];
                     double 연간소요량_전 = 0, 연간전기_전 = 0, 연간가스_전 = 0;
                     for (int mth = 0; mth < 12; mth++)
                     {
@@ -1369,8 +1391,12 @@ namespace main.contents.Result.Building_Report
                             급탕_전[mth] = Convert.ToDouble(Final1[0][2]);
                             조명_전[mth] = Convert.ToDouble(Final1[0][3]);
                             공조_전[mth] = Convert.ToDouble(Final1[0][4]);
+                            if(Final1[0][5]!=null && Final1[0][5]!="")
+                            { 
+                                기저_전[mth] = Convert.ToDouble(Final1[0][5]); 
+                            }
                             신재생_전[mth] = Convert.ToDouble(Final1[0][6]);
-                            총전기_전[mth] = Convert.ToDouble(Final1[0][7]) - Convert.ToDouble(Final1[0][5]);
+                            총전기_전[mth] = Convert.ToDouble(Final1[0][7]) - 기저_전[mth];
                         }
                         if (Final2.Length > 0)
                         {
@@ -1379,8 +1405,12 @@ namespace main.contents.Result.Building_Report
                             급탕_전[mth] = 급탕_전[mth] + Convert.ToDouble(Final2[0][2]);
                             조명_전[mth] = 조명_전[mth] + Convert.ToDouble(Final2[0][3]);
                             공조_전[mth] = 공조_전[mth] + Convert.ToDouble(Final2[0][4]);
+                            if (Final2[0][5] != null && Final2[0][5] != "")
+                            { 
+                                기저_전[mth] = Convert.ToDouble(Final2[0][5]); 
+                            }
                             신재생_전[mth] = 신재생_전[mth] + Convert.ToDouble(Final2[0][6]);
-                            총가스_전[mth] =  Convert.ToDouble(Final2[0][7]) - Convert.ToDouble(Final2[0][5]);
+                            총가스_전[mth] =  Convert.ToDouble(Final2[0][7]) -기저_전[mth];
                         }
 
                         총소요량_전[mth] = 총전기_전[mth] + 총가스_전[mth];

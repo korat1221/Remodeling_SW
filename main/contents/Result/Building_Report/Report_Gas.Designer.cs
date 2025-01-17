@@ -1,6 +1,6 @@
 ﻿namespace main.contents.Result.Building_Report
 {
-    partial class PrintReport_Final
+    partial class Report_Gas
     {
         /// <summary>
         /// Required designer variable.

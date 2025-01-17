@@ -73,7 +73,7 @@ namespace main
             List_DHWSystem,
             List_ConstructionBlind,
             List_ConstructionDoor,
-            PrintReport_Final,
+            Report_Elec,
             List_PV,
             List_FuelCell,
             List_WindPower,
@@ -89,6 +89,7 @@ namespace main
             Element_Boiler,
             Element_Chielr,
             Element_RESystem,
+            Report_Gas,
             None
 
         }
@@ -106,12 +107,13 @@ namespace main
             new Intro(), new ProjectList(), new OpenProject(), new List_RESystem(),
             new Algorithm_Lighting(),new Algorithm_Heating(),new Algorithm_Cooling(),new Algorithm_DHW(),new Algorithm_AHU(),
             new List_DHWSystem(),new List_ConstructionBlind(),new List_ConstructionDoor(),
-            new PrintReport_Final(), 
+            new Report_Elec(), 
             new List_PV(),new List_FuelCell(),new List_WindPower(),
             new Building_Report(),
             new List_AHUSystem(),
             new List_Alt(), new AltMain(),
-            new Element_Structure(),new Element_Win(),new Element_Lighting(),new Element_ElecHP(),new Element_GasHP(),new Element_Boiler(),new Element_Chiler(),new Element_RESystem()
+            new Element_Structure(),new Element_Win(),new Element_Lighting(),new Element_ElecHP(),new Element_GasHP(),new Element_Boiler(),new Element_Chiler(),new Element_RESystem(),
+            new Report_Gas()
         }; 
         bool scriptable = false;
         public class FormParam
@@ -442,7 +444,7 @@ namespace main
             }
             else if (formParam.formID == 52)
             {
-                PrintReport_Final f = (PrintReport_Final)form;
+                Report_Elec f = (Report_Elec)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -533,6 +535,12 @@ namespace main
             else if (formParam.formID == 67)
             {
                 Element_RESystem f = (Element_RESystem)form;
+
+                f.LoadData(formParam.ID);
+            }
+            else if (formParam.formID == 68)
+            {
+                Report_Gas f = (Report_Gas)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -982,7 +990,7 @@ namespace main
                     forms[49] = new List_DHWSystem();
                     forms[50] = new List_ConstructionBlind();
                     forms[51] = new List_ConstructionDoor();
-                    forms[52] = new PrintReport_Final();
+                    forms[52] = new Report_Elec();
                     forms[53] = new List_PV();
                     forms[54] = new List_FuelCell();
                     forms[55] = new List_WindPower();
@@ -998,6 +1006,7 @@ namespace main
                     forms[65] = new Element_Boiler();
                     forms[66] = new Element_Chiler();
                     forms[67] = new Element_RESystem();
+                    forms[68] = new Report_Gas();
 
                     i = -1;
                     while (++i < forms.Length)
