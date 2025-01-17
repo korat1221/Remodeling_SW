@@ -1001,14 +1001,15 @@ namespace main.contents.Construction
                 {
                     if (Ucalc_dataGridView.Rows[k].Cells[4].Value != null && Ucalc_dataGridView.Rows[k].Cells[5].Value != null && Ucalc_dataGridView.Rows[k].Cells[6].Value != null)
                     {
+
                         if (Ucalc_dataGridView.Rows[k].Cells[3].Value != null)
                         {
                             Material[k] = Ucalc_dataGridView.Rows[k].Cells[3].Value.ToString();
                         }
                         else { }
-                        Material_d[k] = Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[5].Value);
-                        Material_λ[k] = Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[4].Value);
-                        Material_R[k] = Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[6].Value);
+                        Material_d[k] = !string.IsNullOrWhiteSpace(Ucalc_dataGridView.Rows[k].Cells[5].Value?.ToString()) ? Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[5].Value) : 0;
+                        Material_λ[k] = !string.IsNullOrWhiteSpace(Ucalc_dataGridView.Rows[k].Cells[4].Value?.ToString()) ? Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[4].Value) : 0;
+                        Material_R[k] = !string.IsNullOrWhiteSpace(Ucalc_dataGridView.Rows[k].Cells[6].Value?.ToString()) ? Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[6].Value) : 0;
                         dtot += Material_d[k];
                         Rtot += Material_R[k];
                     }
