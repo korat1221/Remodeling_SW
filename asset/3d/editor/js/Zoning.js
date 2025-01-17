@@ -735,6 +735,7 @@ Zoning.prototype = {
 
             if (loops.length > 0) {
                 let graph = [];
+                let areaW = parseInt(wall.area * 1000);
 
                 i = -1;
                 while (++i < loops.length) {
@@ -766,8 +767,7 @@ Zoning.prototype = {
                                 k += 3;
                             }
                             let area = _getArea(arr);
-                            if(area > 0 && parseInt(area * 1000) < parseInt(wall.area * 1000)) {
-                                console.log(area);
+                            if(area > 0.1 && parseInt(area * 1000) < areaW) {
                                 graph[i] = {area:area,graph:arr,raw:g};
                             }
                             else {
