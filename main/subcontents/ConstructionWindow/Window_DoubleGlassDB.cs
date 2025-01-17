@@ -25,6 +25,7 @@ namespace main.subcontents
         String SelectGlass1, SelectGlass2;
         string[][] Select1_Glass;
         string[][] Select2_Glass;
+        string UserDB_SingleDoubleTriple2="", UserDB_ArAir2="", UserDB_LE_CL_V2="";
 
 
         public Window_DoubleGlassDB()
@@ -35,6 +36,20 @@ namespace main.subcontents
             load_table_DoubleGlassDB();
             UserNum = Program.UTIL.CreateNum("User_DoubleGlass", "번호", "DWG_0");
             UserNum_textBox.Text = UserNum;
+            //복층/삼중/단창 콤보박스
+            SingleDoubleTriple_comboBox.Items.Clear();
+            SingleDoubleTriple_comboBox.Items.Add("단창");
+            SingleDoubleTriple_comboBox.Items.Add("복층");
+            SingleDoubleTriple_comboBox.Items.Add("삼중");
+            //아르곤/공기 콤보박스
+            ArAir_comboBox.Items.Clear();
+            ArAir_comboBox.Items.Add("공기");
+            ArAir_comboBox.Items.Add("아르곤");
+            //LE/CL/V 콤보박스
+            LE_CL_V_comboBox.Items.Clear();
+            LE_CL_V_comboBox.Items.Add("CL");
+            LE_CL_V_comboBox.Items.Add("LE");
+            LE_CL_V_comboBox.Items.Add("V");
         }
         void load_table_GlassDB()
         {
@@ -55,9 +70,9 @@ namespace main.subcontents
             Glass_dataGridView.Columns.Add("A10", "유리성능.빛투과율.τD65,SNA.[-]");
             Glass_dataGridView.Columns.Add("A11", "반사율.외부.ρv.[-]");
             Glass_dataGridView.Columns.Add("A12", "반사율.내부.ρ'v.[-]");
-         
-           string[][] User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "");
-            if(User_WinGlass.Length > 0)
+
+            string[][] User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "");
+            if (User_WinGlass.Length > 0)
             {
                 for (int n = 0; n < User_WinGlass.Length; n++)
                 {
@@ -67,14 +82,14 @@ namespace main.subcontents
                     {
                         Glass_dataGridView.Rows[nRow].Cells[k].Value = User_WinGlass[n][k];
                     }
-               
+
                     GlassList.Add(User_WinGlass[n][2]);
                 }
             }
-                
-          
+
+
             string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "");
-            if(WinGlass.Length > 0)
+            if (WinGlass.Length > 0)
             {
                 for (int n = 0; n < WinGlass.Length; n++)
                 {
@@ -83,10 +98,10 @@ namespace main.subcontents
                     for (int k = 0; k < 12; k++)
                     {
                         Glass_dataGridView.Rows[nRow].Cells[k].Value = WinGlass[n][k];
-                    }                    
+                    }
                     GlassList.Add(WinGlass[n][2]);
                 }
-            }         
+            }
             Count_DB = WinGlass.Length;
         }
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
@@ -154,9 +169,9 @@ namespace main.subcontents
         {
             try
             {
-                if (Select1_Glass != null&& Select1_Glass.Length > 0)
+                if (Select1_Glass != null && Select1_Glass.Length > 0)
                 {
-                    if (Select2_Glass != null&& Select2_Glass.Length > 0)
+                    if (Select2_Glass != null && Select2_Glass.Length > 0)
                     {
                         UserDB_SingleDoubleTriple = Select1_Glass[0][4] + "+" + Select2_Glass[0][4];
                         UserDB_ArAir = Select1_Glass[0][5] + "+" + Select2_Glass[0][5];
@@ -184,7 +199,7 @@ namespace main.subcontents
             if (UserDBName != null && UserDB_SingleDoubleTriple != null && UserDB_ArAir != null && UserDB_LE_CL_V != null && UserDB_Ug != 0 && UserDB_g != 0 && UserDB_Tao != 0 && UserDB_RExternal != 0 && UserDB_RInternal != 0)
             {
                 Program.DB.setValue(DB.type.ProjDB, "User_DoubleGlass", "번호,프로젝트유형,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율",
-                    "'" + UserNum + "','" + 프로젝트유형[0][0] +"','" + "사용자" + "','" + UserDBName + "','" + UserDB_Manufacture + "','" + UserDB_SingleDoubleTriple + "','" + UserDB_ArAir + "','" + UserDB_LE_CL_V + "','" + UserDB_Ug.ToString() + "','" + UserDB_g.ToString() + "','" + UserDB_Tao.ToString() + "','" + UserDB_RExternal.ToString() + "','" + UserDB_RInternal.ToString() + "'", "번호");
+                    "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + UserDBName + "','" + UserDB_Manufacture + "','" + UserDB_SingleDoubleTriple + "','" + UserDB_ArAir + "','" + UserDB_LE_CL_V + "','" + UserDB_Ug.ToString() + "','" + UserDB_g.ToString() + "','" + UserDB_Tao.ToString() + "','" + UserDB_RExternal.ToString() + "','" + UserDB_RInternal.ToString() + "'", "번호");
                 load_table_DoubleGlassDB();
                 UserNum = Program.UTIL.CreateNum("User_DoubleGlass", "번호", "DWG_0");
                 UserNum_textBox.Text = UserNum;
@@ -216,27 +231,27 @@ namespace main.subcontents
             DoubleGlass_dataGridView.Columns.Add("B10", "빛투과율.τD65,SNA[-]");
             DoubleGlass_dataGridView.Columns.Add("B11", "외부반사율.ρv[-]");
             DoubleGlass_dataGridView.Columns.Add("B12", "내부반사율.ρ'v[-]");
-            
-                string[][] User_DGlass = Program.DB.getValue(DB.type.ProjDB, "User_DoubleGlass", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "");
-                if(User_DGlass.Length > 0)
-                {
-                    for (int n = 0; n < User_DGlass.Length; n++)
-                    {
-                        DoubleGlass_dataGridView.Rows.Add();
-                        int nRow = DoubleGlass_dataGridView.Rows.Count - 1;
-                        for (int a = 0; a < 7; a++)
-                        {
-                            DoubleGlass_dataGridView.Rows[nRow].Cells[a + 1].Value = User_DGlass[n][a];
-                        }
-                        for (int a = 7; a < 10; a++)
-                        {
-                            DoubleGlass_dataGridView.Rows[nRow].Cells[a + 1].Value = String.Format("{0:F3}", Convert.ToDouble(User_DGlass[n][a]));
-                        }
-                        DoubleGlass_dataGridView.Rows[nRow].Cells[11].Value = User_DGlass[n][10];
-                        DoubleGlass_dataGridView.Rows[nRow].Cells[12].Value = User_DGlass[n][11];
 
+            string[][] User_DGlass = Program.DB.getValue(DB.type.ProjDB, "User_DoubleGlass", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "");
+            if (User_DGlass.Length > 0)
+            {
+                for (int n = 0; n < User_DGlass.Length; n++)
+                {
+                    DoubleGlass_dataGridView.Rows.Add();
+                    int nRow = DoubleGlass_dataGridView.Rows.Count - 1;
+                    for (int a = 0; a < 7; a++)
+                    {
+                        DoubleGlass_dataGridView.Rows[nRow].Cells[a + 1].Value = User_DGlass[n][a];
                     }
-                }         
+                    for (int a = 7; a < 10; a++)
+                    {
+                        DoubleGlass_dataGridView.Rows[nRow].Cells[a + 1].Value = String.Format("{0:F3}", Convert.ToDouble(User_DGlass[n][a]));
+                    }
+                    DoubleGlass_dataGridView.Rows[nRow].Cells[11].Value = User_DGlass[n][10];
+                    DoubleGlass_dataGridView.Rows[nRow].Cells[12].Value = User_DGlass[n][11];
+
+                }
+            }
         }
 
 
@@ -288,6 +303,99 @@ namespace main.subcontents
             this.DialogResult = DialogResult.OK;
             this.Close();
 
+        }
+
+        private void SingleDoubleTriple_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UserDB_SingleDoubleTriple2 = SingleDoubleTriple_comboBox.SelectedItem.ToString();
+            Filter(UserDB_SingleDoubleTriple2, UserDB_ArAir2, UserDB_LE_CL_V2);
+        }
+
+        private void ArAir_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UserDB_ArAir2 = ArAir_comboBox.SelectedItem.ToString();
+            Filter(UserDB_SingleDoubleTriple2, UserDB_ArAir2, UserDB_LE_CL_V2);
+        }
+
+        private void LE_CL_V_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UserDB_LE_CL_V2 = LE_CL_V_comboBox.SelectedItem.ToString();
+            Filter(UserDB_SingleDoubleTriple2, UserDB_ArAir2, UserDB_LE_CL_V2);
+        }
+        private void Filter(string UserDB_SingleDoubleTriple, string UserDB_ArAir, string UserDB_LE_CL_V)
+        {
+            Glass_dataGridView.Rows.Clear();
+            GlassList.Clear();
+            string[][] User_WinGlass = null;
+            string[][] WinGlass = null;
+
+            if (UserDB_SingleDoubleTriple != "" && UserDB_ArAir != "" && UserDB_LE_CL_V != "")
+            {
+                User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "복층_삼중_단창='" + UserDB_SingleDoubleTriple + "' and 아르곤_공기='" + UserDB_ArAir + "'and LE_CL_V='" + UserDB_LE_CL_V + "'");
+                WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "복층_삼중_단창='" + UserDB_SingleDoubleTriple + "' and 아르곤_공기='" + UserDB_ArAir + "'and LE_CL_V='" + UserDB_LE_CL_V + "'");
+            }
+            else if (UserDB_SingleDoubleTriple != "" && UserDB_ArAir != "" && UserDB_LE_CL_V == "")
+            {
+                User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "복층_삼중_단창='" + UserDB_SingleDoubleTriple + "' and 아르곤_공기='" + UserDB_ArAir + "'");
+                WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "복층_삼중_단창='" + UserDB_SingleDoubleTriple + "' and 아르곤_공기='" + UserDB_ArAir + "'");
+            }
+            else if (UserDB_SingleDoubleTriple != "" && UserDB_ArAir == "" && UserDB_LE_CL_V != "")
+            {
+                User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "복층_삼중_단창='" + UserDB_SingleDoubleTriple + "' and LE_CL_V='" + UserDB_LE_CL_V + "'");
+                WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "복층_삼중_단창='" + UserDB_SingleDoubleTriple + "' and LE_CL_V='" + UserDB_LE_CL_V + "'");
+            }
+            else if (UserDB_SingleDoubleTriple == "" && UserDB_ArAir != "" && UserDB_LE_CL_V != "")
+            {
+                User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "아르곤_공기='" + UserDB_ArAir + "' and LE_CL_V='" + UserDB_LE_CL_V + "'");
+                WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "아르곤_공기='" + UserDB_ArAir + "' and LE_CL_V='" + UserDB_LE_CL_V + "'");
+            }
+            else if (UserDB_SingleDoubleTriple != "" && UserDB_ArAir == "" && UserDB_LE_CL_V == "")
+            {
+                User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "복층_삼중_단창='" + UserDB_SingleDoubleTriple + "'");
+                WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "복층_삼중_단창='" + UserDB_SingleDoubleTriple + "'");
+            }
+            else if (UserDB_SingleDoubleTriple == "" && UserDB_ArAir != "" && UserDB_LE_CL_V == "")
+            {
+                User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "아르곤_공기='" + UserDB_ArAir + "'");
+                WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "아르곤_공기='" + UserDB_ArAir + "'");
+            }
+            else if (UserDB_SingleDoubleTriple == "" && UserDB_ArAir == "" && UserDB_LE_CL_V != "")
+            {
+                User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "LE_CL_V='" + UserDB_LE_CL_V + "'");
+                WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "LE_CL_V='" + UserDB_LE_CL_V + "'");
+            }
+            else
+            {
+
+            }
+
+            if (User_WinGlass.Length > 0)
+            {
+                for (int n = 0; n < User_WinGlass.Length; n++)
+                {
+                    Glass_dataGridView.Rows.Add();
+                    int nRow = Glass_dataGridView.Rows.Count - 1;
+                    for (int k = 0; k < 12; k++)
+                    {
+                        Glass_dataGridView.Rows[nRow].Cells[k].Value = User_WinGlass[n][k];
+                    }
+                    GlassList.Add(User_WinGlass[n][2]);
+                }
+            }
+            if (WinGlass.Length > 0)
+            {
+                for (int n = 0; n < WinGlass.Length; n++)
+                {
+                    Glass_dataGridView.Rows.Add();
+                    int nRow = Glass_dataGridView.Rows.Count - 1;
+                    for (int k = 0; k < 12; k++)
+                    {
+                        Glass_dataGridView.Rows[nRow].Cells[k].Value = WinGlass[n][k];
+                    }
+                    GlassList.Add(WinGlass[n][2]);
+                    load_Glass_comboBox();
+                }
+            }
         }
 
     }

@@ -39,32 +39,12 @@ namespace main.subcontents
             label1 = new Label();
             Save_button = new Button();
             panel1 = new Panel();
-            label29 = new Label();
-            label30 = new Label();
-            UserDB_RInternal_textBox = new TextBox();
-            label31 = new Label();
-            label32 = new Label();
-            UserDB_RExternal_textBox = new TextBox();
-            label6 = new Label();
-            UserDB_Manufacture_textBox = new TextBox();
-            label15 = new Label();
-            UserNum_textBox = new TextBox();
+            label16 = new Label();
             label12 = new Label();
             Deletebutton = new Button();
             AddUserDB_button = new Button();
             LE_CL_V_comboBox = new CustomComboBox();
             label14 = new Label();
-            label3 = new Label();
-            label4 = new Label();
-            UserDB_Tao_textBox = new TextBox();
-            label5 = new Label();
-            label10 = new Label();
-            UserDB_g_textBox = new TextBox();
-            label13 = new Label();
-            UserDBName_textBox = new TextBox();
-            label11 = new Label();
-            label9 = new Label();
-            UserDB_Ug_textBox = new TextBox();
             ArAir_comboBox = new CustomComboBox();
             label8 = new Label();
             SingleDoubleTriple_comboBox = new CustomComboBox();
@@ -84,13 +64,13 @@ namespace main.subcontents
             GeneralPanel.Controls.Add(label1);
             GeneralPanel.Location = new Point(0, -2);
             GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(977, 181);
+            GeneralPanel.Size = new Size(1209, 181);
             GeneralPanel.TabIndex = 18;
             // 
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(631, 12);
+            pictureBox1.Location = new Point(805, 6);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(175, 152);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -100,7 +80,7 @@ namespace main.subcontents
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(500, 6);
+            label2.Location = new Point(566, 6);
             label2.Name = "label2";
             label2.Size = new Size(76, 165);
             label2.TabIndex = 2;
@@ -109,7 +89,7 @@ namespace main.subcontents
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(29, 43);
+            label1.Location = new Point(87, 41);
             label1.Name = "label1";
             label1.Size = new Size(392, 90);
             label1.TabIndex = 0;
@@ -119,7 +99,7 @@ namespace main.subcontents
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(830, 781);
+            Save_button.Location = new Point(1054, 603);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 20;
@@ -130,137 +110,36 @@ namespace main.subcontents
             // panel1
             // 
             panel1.BackColor = SystemColors.GradientInactiveCaption;
-            panel1.Controls.Add(label29);
-            panel1.Controls.Add(label30);
-            panel1.Controls.Add(UserDB_RInternal_textBox);
-            panel1.Controls.Add(label31);
-            panel1.Controls.Add(label32);
-            panel1.Controls.Add(UserDB_RExternal_textBox);
-            panel1.Controls.Add(label6);
-            panel1.Controls.Add(UserDB_Manufacture_textBox);
-            panel1.Controls.Add(label15);
-            panel1.Controls.Add(UserNum_textBox);
+            panel1.Controls.Add(label16);
             panel1.Controls.Add(label12);
             panel1.Controls.Add(Deletebutton);
             panel1.Controls.Add(AddUserDB_button);
             panel1.Controls.Add(LE_CL_V_comboBox);
             panel1.Controls.Add(label14);
-            panel1.Controls.Add(label3);
-            panel1.Controls.Add(label4);
-            panel1.Controls.Add(UserDB_Tao_textBox);
-            panel1.Controls.Add(label5);
-            panel1.Controls.Add(label10);
-            panel1.Controls.Add(UserDB_g_textBox);
-            panel1.Controls.Add(label13);
-            panel1.Controls.Add(UserDBName_textBox);
-            panel1.Controls.Add(label11);
-            panel1.Controls.Add(label9);
-            panel1.Controls.Add(UserDB_Ug_textBox);
             panel1.Controls.Add(ArAir_comboBox);
             panel1.Controls.Add(label8);
             panel1.Controls.Add(SingleDoubleTriple_comboBox);
             panel1.Controls.Add(label7);
             panel1.Location = new Point(0, 172);
             panel1.Name = "panel1";
-            panel1.Size = new Size(977, 123);
+            panel1.Size = new Size(1209, 56);
             panel1.TabIndex = 26;
             // 
-            // label29
+            // label16
             // 
-            label29.AutoSize = true;
-            label29.Location = new Point(883, 97);
-            label29.Name = "label29";
-            label29.Size = new Size(12, 15);
-            label29.TabIndex = 113;
-            label29.Text = "-";
-            // 
-            // label30
-            // 
-            label30.AutoSize = true;
-            label30.Location = new Point(692, 97);
-            label30.Name = "label30";
-            label30.Size = new Size(67, 15);
-            label30.TabIndex = 111;
-            label30.Text = "내부반사율";
-            // 
-            // UserDB_RInternal_textBox
-            // 
-            UserDB_RInternal_textBox.BorderStyle = BorderStyle.FixedSingle;
-            UserDB_RInternal_textBox.Location = new Point(760, 93);
-            UserDB_RInternal_textBox.Name = "UserDB_RInternal_textBox";
-            UserDB_RInternal_textBox.Size = new Size(120, 23);
-            UserDB_RInternal_textBox.TabIndex = 112;
-            UserDB_RInternal_textBox.TextChanged += UserDB_RInternal_textBox_TextChanged;
-            // 
-            // label31
-            // 
-            label31.AutoSize = true;
-            label31.Location = new Point(605, 97);
-            label31.Name = "label31";
-            label31.Size = new Size(12, 15);
-            label31.TabIndex = 110;
-            label31.Text = "-";
-            // 
-            // label32
-            // 
-            label32.AutoSize = true;
-            label32.Location = new Point(401, 97);
-            label32.Name = "label32";
-            label32.Size = new Size(67, 15);
-            label32.TabIndex = 108;
-            label32.Text = "외부반사율";
-            // 
-            // UserDB_RExternal_textBox
-            // 
-            UserDB_RExternal_textBox.BorderStyle = BorderStyle.FixedSingle;
-            UserDB_RExternal_textBox.Location = new Point(481, 93);
-            UserDB_RExternal_textBox.Name = "UserDB_RExternal_textBox";
-            UserDB_RExternal_textBox.Size = new Size(120, 23);
-            UserDB_RExternal_textBox.TabIndex = 109;
-            UserDB_RExternal_textBox.TextChanged += UserDB_RExternal_textBox_TextChanged;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(704, 10);
-            label6.Name = "label6";
-            label6.Size = new Size(43, 15);
-            label6.TabIndex = 106;
-            label6.Text = "제조사";
-            // 
-            // UserDB_Manufacture_textBox
-            // 
-            UserDB_Manufacture_textBox.BorderStyle = BorderStyle.FixedSingle;
-            UserDB_Manufacture_textBox.Location = new Point(760, 6);
-            UserDB_Manufacture_textBox.Name = "UserDB_Manufacture_textBox";
-            UserDB_Manufacture_textBox.Size = new Size(120, 23);
-            UserDB_Manufacture_textBox.TabIndex = 107;
-            UserDB_Manufacture_textBox.TextChanged += UserDB_Manufacture_textBox_TextChanged;
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Location = new Point(143, 10);
-            label15.Name = "label15";
-            label15.Size = new Size(31, 15);
-            label15.TabIndex = 104;
-            label15.Text = "번호";
-            // 
-            // UserNum_textBox
-            // 
-            UserNum_textBox.BackColor = SystemColors.GradientInactiveCaption;
-            UserNum_textBox.BorderStyle = BorderStyle.None;
-            UserNum_textBox.Location = new Point(202, 9);
-            UserNum_textBox.Name = "UserNum_textBox";
-            UserNum_textBox.Size = new Size(120, 16);
-            UserNum_textBox.TabIndex = 105;
-            UserNum_textBox.TextAlign = HorizontalAlignment.Center;
+            label16.AutoSize = true;
+            label16.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            label16.Location = new Point(354, 25);
+            label16.Name = "label16";
+            label16.Size = new Size(58, 15);
+            label16.TabIndex = 116;
+            label16.Text = "필터 기능";
             // 
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
-            label12.Location = new Point(11, 10);
+            label12.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            label12.Location = new Point(1071, 24);
             label12.Name = "label12";
             label12.Size = new Size(60, 15);
             label12.TabIndex = 103;
@@ -271,8 +150,8 @@ namespace main.subcontents
             Deletebutton.BackColor = SystemColors.ControlLight;
             Deletebutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Deletebutton.FlatStyle = FlatStyle.System;
-            Deletebutton.Font = new System.Drawing.Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            Deletebutton.Location = new Point(106, 6);
+            Deletebutton.Font = new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
+            Deletebutton.Location = new Point(1166, 20);
             Deletebutton.Margin = new Padding(0);
             Deletebutton.Name = "Deletebutton";
             Deletebutton.Size = new Size(23, 23);
@@ -286,8 +165,8 @@ namespace main.subcontents
             AddUserDB_button.BackColor = SystemColors.ControlLight;
             AddUserDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AddUserDB_button.FlatStyle = FlatStyle.System;
-            AddUserDB_button.Font = new System.Drawing.Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
-            AddUserDB_button.Location = new Point(79, 6);
+            AddUserDB_button.Font = new Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold);
+            AddUserDB_button.Location = new Point(1139, 20);
             AddUserDB_button.Margin = new Padding(0);
             AddUserDB_button.Name = "AddUserDB_button";
             AddUserDB_button.Size = new Size(23, 23);
@@ -298,9 +177,10 @@ namespace main.subcontents
             // 
             // LE_CL_V_comboBox
             // 
-            LE_CL_V_comboBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            LE_CL_V_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            LE_CL_V_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             LE_CL_V_comboBox.FormattingEnabled = true;
-            LE_CL_V_comboBox.Location = new Point(760, 35);
+            LE_CL_V_comboBox.Location = new Point(670, 21);
             LE_CL_V_comboBox.Name = "LE_CL_V_comboBox";
             LE_CL_V_comboBox.Size = new Size(120, 23);
             LE_CL_V_comboBox.TabIndex = 100;
@@ -309,116 +189,18 @@ namespace main.subcontents
             // label14
             // 
             label14.AutoSize = true;
-            label14.Location = new Point(700, 39);
+            label14.Location = new Point(705, 3);
             label14.Name = "label14";
             label14.Size = new Size(51, 15);
             label14.TabIndex = 99;
             label14.Text = "LE/CL/V";
             // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(883, 68);
-            label3.Name = "label3";
-            label3.Size = new Size(12, 15);
-            label3.TabIndex = 98;
-            label3.Text = "-";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(698, 68);
-            label4.Name = "label4";
-            label4.Size = new Size(55, 15);
-            label4.TabIndex = 96;
-            label4.Text = "빛투과율";
-            // 
-            // UserDB_Tao_textBox
-            // 
-            UserDB_Tao_textBox.BorderStyle = BorderStyle.FixedSingle;
-            UserDB_Tao_textBox.Location = new Point(760, 64);
-            UserDB_Tao_textBox.Name = "UserDB_Tao_textBox";
-            UserDB_Tao_textBox.Size = new Size(120, 23);
-            UserDB_Tao_textBox.TabIndex = 97;
-            UserDB_Tao_textBox.TextChanged += UserDB_Tao_textBox_TextChanged;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(605, 68);
-            label5.Name = "label5";
-            label5.Size = new Size(12, 15);
-            label5.TabIndex = 94;
-            label5.Text = "-";
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Location = new Point(395, 68);
-            label10.Name = "label10";
-            label10.Size = new Size(79, 15);
-            label10.TabIndex = 92;
-            label10.Text = "태양열취득률";
-            // 
-            // UserDB_g_textBox
-            // 
-            UserDB_g_textBox.BorderStyle = BorderStyle.FixedSingle;
-            UserDB_g_textBox.Location = new Point(481, 64);
-            UserDB_g_textBox.Name = "UserDB_g_textBox";
-            UserDB_g_textBox.Size = new Size(120, 23);
-            UserDB_g_textBox.TabIndex = 93;
-            UserDB_g_textBox.TextChanged += UserDB_g_textBox_TextChanged;
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Location = new Point(413, 10);
-            label13.Name = "label13";
-            label13.Size = new Size(43, 15);
-            label13.TabIndex = 90;
-            label13.Text = "제품명";
-            // 
-            // UserDBName_textBox
-            // 
-            UserDBName_textBox.BorderStyle = BorderStyle.FixedSingle;
-            UserDBName_textBox.Location = new Point(481, 6);
-            UserDBName_textBox.Name = "UserDBName_textBox";
-            UserDBName_textBox.Size = new Size(120, 23);
-            UserDBName_textBox.TabIndex = 91;
-            UserDBName_textBox.TextChanged += UserDBName_textBox_TextChanged;
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Location = new Point(325, 68);
-            label11.Name = "label11";
-            label11.Size = new Size(48, 15);
-            label11.TabIndex = 48;
-            label11.Text = "W/m"+Program.UTIL.Subscript(2, true)+"·K";
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Location = new Point(131, 68);
-            label9.Name = "label9";
-            label9.Size = new Size(55, 15);
-            label9.TabIndex = 44;
-            label9.Text = "열관류율";
-            // 
-            // UserDB_Ug_textBox
-            // 
-            UserDB_Ug_textBox.BorderStyle = BorderStyle.FixedSingle;
-            UserDB_Ug_textBox.Location = new Point(202, 64);
-            UserDB_Ug_textBox.Name = "UserDB_Ug_textBox";
-            UserDB_Ug_textBox.Size = new Size(120, 23);
-            UserDB_Ug_textBox.TabIndex = 45;
-            UserDB_Ug_textBox.TextChanged += UserDB_Ug_textBox_TextChanged;
-            // 
             // ArAir_comboBox
             // 
-            ArAir_comboBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            ArAir_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            ArAir_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             ArAir_comboBox.FormattingEnabled = true;
-            ArAir_comboBox.Location = new Point(481, 35);
+            ArAir_comboBox.Location = new Point(544, 21);
             ArAir_comboBox.Name = "ArAir_comboBox";
             ArAir_comboBox.Size = new Size(120, 23);
             ArAir_comboBox.TabIndex = 43;
@@ -427,7 +209,7 @@ namespace main.subcontents
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(398, 39);
+            label8.Location = new Point(568, 4);
             label8.Name = "label8";
             label8.Size = new Size(72, 15);
             label8.TabIndex = 42;
@@ -435,9 +217,10 @@ namespace main.subcontents
             // 
             // SingleDoubleTriple_comboBox
             // 
-            SingleDoubleTriple_comboBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            SingleDoubleTriple_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            SingleDoubleTriple_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
             SingleDoubleTriple_comboBox.FormattingEnabled = true;
-            SingleDoubleTriple_comboBox.Location = new Point(202, 35);
+            SingleDoubleTriple_comboBox.Location = new Point(418, 21);
             SingleDoubleTriple_comboBox.Name = "SingleDoubleTriple_comboBox";
             SingleDoubleTriple_comboBox.Size = new Size(120, 23);
             SingleDoubleTriple_comboBox.TabIndex = 41;
@@ -446,7 +229,7 @@ namespace main.subcontents
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(114, 39);
+            label7.Location = new Point(434, 5);
             label7.Name = "label7";
             label7.Size = new Size(89, 15);
             label7.TabIndex = 40;
@@ -465,18 +248,18 @@ namespace main.subcontents
             Glass_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             Glass_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Glass_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Glass_dataGridView.Location = new Point(0, 294);
+            Glass_dataGridView.Location = new Point(0, 225);
             Glass_dataGridView.Name = "Glass_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -485,13 +268,12 @@ namespace main.subcontents
             Glass_dataGridView.RowHeadersVisible = false;
             Glass_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.Font = new Font(UTIL.Families[0], 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             Glass_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            Glass_dataGridView.RowTemplate.Height = 25;
-            Glass_dataGridView.Size = new Size(977, 481);
+            Glass_dataGridView.Size = new Size(1209, 362);
             Glass_dataGridView.TabIndex = 111;
             Glass_dataGridView.CellContentClick += Glass_dataGridView_CellContentClick;
             // 
@@ -499,7 +281,7 @@ namespace main.subcontents
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(977, 818);
+            ClientSize = new Size(1209, 640);
             Controls.Add(Glass_dataGridView);
             Controls.Add(panel1);
             Controls.Add(Save_button);
@@ -523,36 +305,16 @@ namespace main.subcontents
         private Button Save_button;
         private PictureBox pictureBox1;
         private Panel panel1;
-        private Label label15;
-        private TextBox UserNum_textBox;
         private Label label12;
         private Button Deletebutton;
         private Button AddUserDB_button;
         private CustomComboBox LE_CL_V_comboBox;
         private Label label14;
-        private Label label3;
-        private Label label4;
-        private TextBox UserDB_Tao_textBox;
-        private Label label5;
-        private Label label10;
-        private TextBox UserDB_g_textBox;
-        private Label label13;
-        private TextBox UserDBName_textBox;
-        private Label label11;
-        private Label label9;
-        private TextBox UserDB_Ug_textBox;
         private CustomComboBox ArAir_comboBox;
         private Label label8;
         private CustomComboBox SingleDoubleTriple_comboBox;
         private Label label7;
         private DataGridView Glass_dataGridView;
-        private Label label6;
-        private TextBox UserDB_Manufacture_textBox;
-        private Label label29;
-        private Label label30;
-        private TextBox UserDB_RInternal_textBox;
-        private Label label31;
-        private Label label32;
-        private TextBox UserDB_RExternal_textBox;
+        private Label label16;
     }
 }
