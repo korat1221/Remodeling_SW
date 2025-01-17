@@ -322,7 +322,7 @@ namespace main
                 while (++i < ZoneSL.Length)
                 {
                     Zone zone1 = Program.CALC.getZone(ZoneSL[i][1].ToString());
-                    double R = (0.15 / 2.3) + 0.13 + 0.13;
+                    double R = (0.15 / 2.3) + (30/1000/ 0.035) + 0.13 + 0.13;
                     double U = 1 / R;
                     Slab slab = new Slab(ZoneSL[i][0], ZoneSL[i][1], Convert.ToDouble(ZoneSL[i][2]), U);
                     zoneSlab.Add(slab);
