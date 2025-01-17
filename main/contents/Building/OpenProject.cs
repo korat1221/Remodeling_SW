@@ -57,40 +57,6 @@ namespace main.contents
             catch { }
         }
 
-        private void SelectType()
-        {            
-            int k = GetSelectedIndex();
-            if (k >= 0)
-            {
-                String ProjectType = dataGridView1.Rows[k].Cells[4].Value.ToString();
-                if (ProjectType == null)
-                {
-                }
-                else if (ProjectType == "기존건물")
-                {
-                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0_1.Previous.png");
-                    Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                }
-                else if (ProjectType == "리트로핏")
-                {
-                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0_2.Retrofit.png");
-                    Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                }
-                else if (ProjectType == "리모델링")
-                {
-                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0_3.Remodeling.png");
-                    Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                }
-                else
-                {
-                    Icon_pictureBox.Load(Program.gPath + "images/1sticon/0_4.New.png");
-                    Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                }
-                ProjectType_label.Text = ProjectType;
-
-            }
-        }
-
         private void drawList()
         {
             dataGridView1.Rows.Clear();
@@ -113,7 +79,6 @@ namespace main.contents
                     cell.Value = !!(res[n][1] == ProjectList.CurProjID);
                 }
             }
-            SelectType();
         }
       
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
@@ -200,7 +165,6 @@ namespace main.contents
                         dataGridView1.Rows[k].Cells[0].Value = true;
                     }
                 }
-                SelectType();
             }
 
         }

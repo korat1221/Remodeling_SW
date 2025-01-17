@@ -112,7 +112,7 @@ namespace main.contents
                     PreCopy_button.Visible = false;
                     New_button.Visible = true;
                 }
-                ProjectType_label.Text = types[ProjectType];
+                ProjectType_label.Text = types[ProjectType] +" 생성";
 
             }
             catch { }
@@ -211,7 +211,7 @@ namespace main.contents
                     }
 
                     Program.DB.executeSQL(db, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "', 프로젝트유형='"+ types[ProjectType]+"', 프로젝트유형번호='"+ ProjectType+"'");
-
+                    Program.DB.executeSQL(db, "UPDATE BuildingGeneral SET 기존프로젝트 ='" + pid0 + "' WHERE  프로젝트번호 = '" + pid + "'");
                     db.Close();
                 }
 
@@ -235,9 +235,17 @@ namespace main.contents
 
                 int k_new = dataGridView1.Rows.Count - 1;
                 dataGridView1.Rows[k_new].Cells[0].Value = true;
-                ProjectOpen();
-                Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,기존프로젝트", "'" + pid + "','" + pid0 + "'", "프로젝트번호");
-                Program.getMenuForm().DoLoadFormDirect(0);
+                string[][] pre = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "기존프로젝트", "프로젝트번호 = '" + pid + "'");
+                if(pre.Length > 0)
+                {
+                    ProjectOpen();
+                    Program.getMenuForm().DoLoadFormDirect(0);
+                }
+                else
+                {
+                    MessageBox.Show("기존 프로젝트가 지정되지 않았습니다. 다시 지정 후 Copy 하세요.");
+                }
+               
             }
         }
         private void Copy_button_Click(object sender, EventArgs e)

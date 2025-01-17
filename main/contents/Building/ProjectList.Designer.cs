@@ -30,16 +30,15 @@ namespace main.contents
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
             ProjectType_label = new Label();
             PreCopy_button = new Button();
             Save_button = new Button();
             Copy_button = new Button();
             Delete_button = new Button();
-            New_button = new Button();
             dataGridView1 = new DataGridView();
             chk = new DataGridViewCheckBoxColumn();
             num = new DataGridViewTextBoxColumn();
@@ -48,6 +47,7 @@ namespace main.contents
             type = new DataGridViewTextBoxColumn();
             CreateDate = new DataGridViewTextBoxColumn();
             Icon_pictureBox = new PictureBox();
+            New_button = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -76,9 +76,9 @@ namespace main.contents
             ProjectType_label.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
             ProjectType_label.Location = new Point(207, 106);
             ProjectType_label.Name = "ProjectType_label";
-            ProjectType_label.Size = new Size(57, 19);
+            ProjectType_label.Size = new Size(83, 20);
             ProjectType_label.TabIndex = 108;
-            ProjectType_label.Text = "기존 건물";
+            ProjectType_label.Text = "기존 건물 생성";
             ProjectType_label.UseCompatibleTextRendering = true;
             // 
             // PreCopy_button
@@ -143,21 +143,6 @@ namespace main.contents
             Delete_button.UseVisualStyleBackColor = false;
             Delete_button.Click += Delete_button_Click;
             // 
-            // New_button
-            // 
-            New_button.BackColor = SystemColors.ControlLight;
-            New_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            New_button.FlatStyle = FlatStyle.System;
-            New_button.Font = new Font(UTIL.Families[0], 9.75F);
-            New_button.Location = new Point(596, 105);
-            New_button.Margin = new Padding(0);
-            New_button.Name = "New_button";
-            New_button.Size = new Size(67, 23);
-            New_button.TabIndex = 100;
-            New_button.Text = "New";
-            New_button.UseVisualStyleBackColor = false;
-            New_button.Click += New_button_Click;
-            // 
             // dataGridView1
             // 
             dataGridView1.AllowUserToAddRows = false;
@@ -169,34 +154,34 @@ namespace main.contents
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font = new Font(UTIL.Families[0], 9.75F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle7.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle7.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { chk, num, pnum, pname, type, CreateDate });
             dataGridView1.Location = new Point(151, 142);
             dataGridView1.Name = "dataGridView1";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font(UTIL.Families[0], 9.75F);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = SystemColors.Control;
+            dataGridViewCellStyle8.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
+            dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new Font(UTIL.Families[0], 9.75F);
-            dataGridViewCellStyle6.ForeColor = Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
-            dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle9.ForeColor = Color.Black;
+            dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle9.SelectionForeColor = Color.Black;
+            dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle9;
             dataGridView1.Size = new Size(678, 355);
             dataGridView1.TabIndex = 99;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
@@ -260,6 +245,21 @@ namespace main.contents
             Icon_pictureBox.TabIndex = 98;
             Icon_pictureBox.TabStop = false;
             // 
+            // New_button
+            // 
+            New_button.BackColor = SystemColors.ControlLight;
+            New_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            New_button.FlatStyle = FlatStyle.System;
+            New_button.Font = new Font(UTIL.Families[0], 9.75F);
+            New_button.Location = new Point(596, 105);
+            New_button.Margin = new Padding(0);
+            New_button.Name = "New_button";
+            New_button.Size = new Size(67, 23);
+            New_button.TabIndex = 100;
+            New_button.Text = "New";
+            New_button.UseVisualStyleBackColor = false;
+            New_button.Click += New_button_Click;
+            // 
             // ProjectList
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -282,7 +282,6 @@ namespace main.contents
         private Panel GeneralPanel;
         private Button Copy_button;
         private Button Delete_button;
-        private Button New_button;
         private DataGridView dataGridView1;
         private PictureBox Icon_pictureBox;
         private Button Save_button;
@@ -294,5 +293,6 @@ namespace main.contents
         private DataGridViewTextBoxColumn pname;
         private DataGridViewTextBoxColumn type;
         private DataGridViewTextBoxColumn CreateDate;
+        private Button New_button;
     }
 }
