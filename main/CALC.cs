@@ -1406,7 +1406,7 @@ namespace main
 
             final1.Calc_Qtot();
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
-            if (프로젝트유형[0][0] =="1")
+            if (프로젝트유형[0][0] =="1" || 프로젝트유형[0][0] == "4")
             {
                 final1.Calc_Qbase_elec();
                 final1.Calc_Qbase_gas();
