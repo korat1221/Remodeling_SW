@@ -343,6 +343,10 @@ Zoning.prototype = {
         };
         let _updateNearWall = (po, id0, as_obj = false) => {
 
+            if (as_obj) {
+                po.type = _getWallType(po.cardi);
+            }
+
             for (const [id, el] of Object.entries(zones)) {
                 if (el.userData.walls) {
                     let i = -1;
@@ -563,6 +567,17 @@ Zoning.prototype = {
                 }
             }
             return null;
+        };
+
+        let _overlapInWalls = (walls, pnts, area) => {
+            let i = -1;
+
+            while(++i < walls.length) {
+                if(_getSamePoints(walls[i].pnts, pnts).length >= 3 && walls[i].area == area) {
+                    return true;
+                }
+            }
+            return false;
         };
 
         let _getCenterPosition = (pos) => {
@@ -1084,9 +1099,14 @@ Zoning.prototype = {
                             k = -1;
                             while (++k < arr.length) {
                                 if (arr[k].graph) {
-                                    el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k].graph, invisible: false, working:true, area:arr[k].area, links:[], edges:_asEdges(arr[k].raw), normal:el2.normal});
+            
+                                    let edge = _asEdges(arr[k].raw);
+                                    let pnts = _asPoints(edge);
+                                    if (!_overlapInWalls(el.userData.walls, pnts, arr[k].area)) {
+                                        el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k].graph, invisible: false, working:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, pnts: pnts});
+                                    }
                                 }
-                           }
+                            }
                         }
                     }
                 }
@@ -1169,8 +1189,9 @@ Zoning.prototype = {
                     i = -1;
 
                     while (++i < el.userData.walls.length) {
-                        _updateNearWall(el.userData.walls[i], id);
-                        el.userData.walls[i].near_obj = null;
+                        let el2 = el.userData.walls[i];
+                        _updateNearWall(el2, id);
+                        el2.near_obj = null;
                     }
                 }
             }
