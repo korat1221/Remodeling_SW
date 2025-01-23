@@ -343,7 +343,7 @@ Zoning.prototype = {
         };
         let _updateNearWall = (po, id0, as_obj = false) => {
 
-            if (as_obj) {
+            if (!as_obj) {
                 po.type = _getWallType(po.cardi);
             }
 
@@ -561,7 +561,7 @@ Zoning.prototype = {
 
                     T.getPlane(P);
                     if (Math.abs(P.distanceToPoint(center)) < 0.001 && T.containsPoint(P.projectPoint(center, v2))) {
-                        return { cardi: po.cardi, slope: po.slope };
+                        return { cardi: po.cardi, slope: po.slope, pidx : i };
                     }
                     j += 3;
                 }
@@ -938,6 +938,18 @@ Zoning.prototype = {
             return arr;
         };
 
+        let _getSubArea = (wins, idx) => {
+            let i = -1, area = 0;
+
+            while(++i < wins.length) {
+                if (wins[i].pidx == idx) {
+                    area += wins[i].area;
+                }
+            }
+
+            return area;
+        };
+
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         const box = new Box3().setFromObject(obj);
@@ -1206,6 +1218,7 @@ Zoning.prototype = {
                         if (o) {
                             el2.cardi = o.cardi;
                             el2.slope = o.slope;
+                            el2.pidx = o.pidx;
                         }
                     }
                 }
@@ -1248,6 +1261,10 @@ Zoning.prototype = {
                         }
 
                         el2.id = nm + "_" + el2.type + "_" + (stru[el2.type].length + 1);
+
+                        if (el.userData.children) {
+                            el2.area -= _getSubArea(el.userData.children, i);
+                        }
 
                         stru[el2.type].push({});
                     }
