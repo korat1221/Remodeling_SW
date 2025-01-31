@@ -282,6 +282,22 @@ Zoning.prototype = {
             return (_equalPoint(a[0], b[0]) && _equalPoint(a[1], b[1])) ||
                 (_equalPoint(a[0], b[1]) && _equalPoint(a[1], b[0]));
         };
+        let _overlappedLine = (a, b) => {
+            if ((new THREE.Triangle(a[1], a[0], b[0])).getArea() < 0.00001 && (new THREE.Triangle(a[1], a[0], b[1])).getArea() < 0.00001) {
+                let A = [a[0].distanceTo(b[0]),a[0].distanceTo(b[1]),a[1].distanceTo(b[0]),a[1].distanceTo(b[1])], i = -1, max = -1;
+
+                while(++i < A.length) { 
+                    if (max < A[i]) {
+                        max = A[i];
+                    }
+                }
+    
+                if (max < a[0].distanceTo(a[1]) + b[0].distanceTo(b[1]) - 0.001) {
+                    return true;
+                }
+            }
+            return false;
+        };
 
         let _unionableLine = (a, b) => {
             if (_equalPoint(a[0], b[0])) {
@@ -666,11 +682,25 @@ Zoning.prototype = {
 
                         j = -1;
                         while (++j < po.edges.length) {
-                            let el2 = po.edges[j];
-                            if ((_equalPoint(a, el2[0]) && _equalPoint(b, el2[1])) || (_equalPoint(b, el2[0]) && _equalPoint(a, el2[1]))) {
+                            if (_overlappedLine([a,b], po.edges[j])) {
                                 return true;
                             }
                         }
+                    }
+                }
+            }
+            return false;
+        };
+        let _removableLink = (arr, conn, pnt0, pnt1, idx) => {
+            let i = -1;
+            let ln = [pnt0, pnt1], dist = pnt0.distanceTo(pnt1);
+
+            while(++i < conn.length) {
+                if (i !== idx) {
+                    let ln2 = [pnt0, arr[conn[i]]];
+
+                    if (_overlappedLine(ln, ln2) && dist > pnt0.distanceTo(ln2[1])) {
+                        return true;
                     }
                 }
             }
@@ -708,6 +738,17 @@ Zoning.prototype = {
                         if (connections[j].findIndex(el => el === i) < 0) {
                             connections[j].push(i);
                         }
+                    }
+                }
+            }
+
+            i = -1;
+            while(++i < connections.length) {
+                let conn = connections[i];
+                j = conn.length;
+                while(--j >= 0) {
+                    if (_removableLink(arr, conn, arr[i], arr[conn[j]], j)) {
+                        conn.splice(j, 1);
                     }
                 }
             }
@@ -883,7 +924,7 @@ Zoning.prototype = {
         let _drawPolygon = (a, color) => {
             const geometry = new THREE.BufferGeometry();
             geometry.setFromPoints(a);
-            geometry.translate(offset);
+       //     geometry.translate(offset);
             const mesh = new THREE.Line(geometry,
                 new THREE.LineBasicMaterial({
                     color: new THREE.Color(color),
