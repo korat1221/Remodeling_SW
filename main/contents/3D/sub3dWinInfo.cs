@@ -150,8 +150,8 @@ namespace main.contents
                 Name_textBox.Text = rec[0][9];
                 Area = Convert.ToDouble(rec[0][13]);
                 Area_textBox.Text = String.Format("{0:F2}", Area);
-                Width_textBox.Text = String.Format("{0:F2}", Convert.ToDouble(rec[0][14]));
-                height_textBox.Text = String.Format("{0:F2}", Convert.ToDouble(rec[0][15]));
+                Width_textBox.Text = rec[0][14] == "" ? "0" : String.Format("{0:F2}", Convert.ToDouble(rec[0][14]));
+                height_textBox.Text = rec[0][15] == "" ? "0" : String.Format("{0:F2}", Convert.ToDouble(rec[0][15]));
 
                 if (SubLoad.Length > 0)
                 {

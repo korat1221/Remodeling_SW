@@ -168,8 +168,15 @@ Zoning.prototype = {
             return ret.length == 4 ? [ret[0], ret[1], ret[2], ret[2], ret[3], ret[0]] : null;
         };
         let _asRectangle = (pos) => {
-            let a = [pos[0].distanceTo(pos[1]), pos[0].distanceTo(pos[2]), pos[0].distanceTo(pos[3])];
-            return [pos[0], pos[a[0] > a[1] ? (a[0] > a[2] ? 0 : 2) : (a[1] > a[2] ? 1 : 2)]];
+            let i = 0, d, dist = -1, idx = -1;
+
+            while(++i < pos.length) {
+                if ((d = pos[0].distanceTo(pos[i])) > dist) {
+                    dist = d;
+                    idx = i;
+                }
+            }
+            return idx >= 0 ? [pos[0], pos[idx]] : null;
         };
         let _asLines = (pos) => {
             let lines = [];
@@ -523,7 +530,7 @@ Zoning.prototype = {
             }
         };
         let _getSubType = (name) => {
-            let arr = ["+GWL ", "+DR ", "+CW ", "+RF ", "+WL "], _i = -1, n;
+            let arr = ["+GWL ", "+DR ", "+CW ", "+RF ", "+WL ", "+WN "], _i = -1, n;
 
             while (++_i < arr.length) {
                 if ((n = name.indexOf(arr[_i])) >= 0) {
@@ -538,7 +545,8 @@ Zoning.prototype = {
                 "DR": "DR",
                 "CW": "CW1",
                 "RF": "RF",
-                "WL": "WL"
+                "WL": "WL",
+                "WN": "WN",
             }[type];
 
         };
@@ -1170,9 +1178,9 @@ Zoning.prototype = {
                 j = -1;
                 while (++j < el.userData.walls.length) {
                     let el2 = el.userData.walls[j];
+                    el2.center = _getCenterPosition(el2.pos);
                     if (!el2.invisible) {
                         el2.uuid = _addMeshObject(el2.pos, this.colors[el2.type], id);
-                        el2.center = _getCenterPosition(el2.pos);
                         k = -1;
                         while (++k < el2.edges.length) {
                             el2.links.push(_collectLinks(el2.edges[k]));
