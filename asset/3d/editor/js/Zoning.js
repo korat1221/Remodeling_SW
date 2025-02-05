@@ -547,6 +547,9 @@ Zoning.prototype = {
                 "RF": "RF",
                 "WL": "WL",
                 "WN": "WN",
+                "IW": "IW",
+                "SL": "SL",
+                "FL": "FL",
             }[type];
 
         };
@@ -1268,6 +1271,29 @@ Zoning.prototype = {
                             el2.cardi = o.cardi;
                             el2.slope = o.slope;
                             el2.pidx = o.pidx;
+                        }
+                        let o2 = obj.getObjectByProperty('uuid', el2.uuid);
+                        if (o2) {
+                            let opt = this.colors[_getTypeColor(el2.type)];
+
+                            o2.material.color.set(opt.color);
+                            o2.material.opacity = opt.opacity;
+                            o2.userData.color = opt.color;
+                            o2.userData.opacity = opt.opacity;
+                        }
+                    }
+                    i = -1;
+
+                    while (++i < el.userData.walls.length) {
+                        let el2 = el.userData.walls[i];
+                        let o = obj.getObjectByProperty('uuid', el2.uuid);
+                        if (o) {
+                            let opt = this.colors[_getTypeColor(el2.type)];
+
+                            o.material.color.set(opt.color);
+                            o.material.opacity = opt.opacity;
+                            o.userData.color = opt.color;
+                            o.userData.opacity = opt.opacity;
                         }
                     }
                 }
