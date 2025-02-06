@@ -831,14 +831,14 @@ Zoning.prototype = {
                     let g = graph[i];
                     let o = _flat(angle, g.slice());
                     if (o) {
-                        o.idxes = earcut(o.idxes, null, 2);
+                        o = earcut(o, null, 2);
 
-                        if (o.idxes.length > 0) {
+                        if (o.length > 0) {
                             k = 0;
-                            while(k < o.idxes.length) {
-                                arr.push(g[o.idxes[k]]);
-                                arr.push(g[o.idxes[k + 1]]);
-                                arr.push(g[o.idxes[k + 2]]);
+                            while(k < o.length) {
+                                arr.push(g[o[k]]);
+                                arr.push(g[o[k + 1]]);
+                                arr.push(g[o[k + 2]]);
                                 k += 3;
                             }
                             let area = _getArea(arr);
@@ -874,47 +874,58 @@ Zoning.prototype = {
             return a.toFixed(3) === b.toFixed(3);
         };
         let _flat = (angle, pos) => {
-            let i = -1;
+            let j, nom = pos[0].clone(), nom2 = pos[0].clone(), ret = [], i = -1;
 
             if (!_isRightAngles(angle)) {
+                let distX = 0, distZ = 0, d;
+               
                 while(++i < pos.length) {
-                    let pnt = pos[i].clone();
+                    j = -1;
+                    while(++j < pos.length) {
+                        if (i != j) {
+                            if ((d = (new THREE.Vector3(pos[i].x,0,0)).distanceTo((new THREE.Vector3(pos[j].x,0,0)))) > distX) {
+                                distX = d;
+                            }
+                            if ((d = (new THREE.Vector3(0, 0, pos[i].z)).distanceTo((new THREE.Vector3(0, 0, pos[j].z)))) > distZ) {
+                                distZ = d;
+                            }
+                        } 
+                    }
+                }
+
+                if (distX > distZ) {
+                    nom2.x = nom.x;
+                    nom2.y = 99999999;
+                    nom2.z = 99999999;
+                }
+                else {
+                    nom2.x = 99999999;
+                    nom2.y = 99999999;
+                    nom2.z = nom.z;
+                }
+            }
+            else {
+                i = 0;
     
-                    pnt.applyAxisAngle(baseY, angle.x);    
-                    pnt.applyAxisAngle(baseX, angle.y);  
-                    if (angle.normal.z < 0) {
-                        if (angle.normal.x > 0) {
-                            pnt.applyAxisAngle(baseZ, 2 * (Math.PI - angle.z));  
-                        }
-                        else {
-                            pnt.applyAxisAngle(baseZ, -2 * (Math.PI - angle.z));  
-                        }
-                    }    
+                while(++i < pos.length) {
+                    let el = pos[i];
+                    j = -1;
+                    if (el.x !== nom.x) {
+                        nom2.x = el.x;
+                    }
+                    if (el.y !== nom.y) {
+                        nom2.y = el.y;
+                    }
+                    if (el.z !== nom.z) {
+                        nom2.z = el.z;
+                    }
+                }
+                if ((_equalNumber(nom2.x,nom.x) && _equalNumber(nom2.y,nom.y)) || (_equalNumber(nom2.y,nom.y) && _equalNumber(nom2.z,nom.z)) || (_equalNumber(nom2.x,nom.x) && _equalNumber(nom2.z,nom.z)) || 
+                    (!_equalNumber(nom2.x,nom.x) && !_equalNumber(nom2.y,nom.y) && !_equalNumber(nom2.z,nom.z))) {
+                    return null;
                 }
             }
-
-            let j, nom = pos[0].clone(), nom2 = pos[0].clone(), ret = [];
-
-            i = 0;
-
-            while(++i < pos.length) {
-                let el = pos[i];
-                j = -1;
-                if (el.x !== nom.x) {
-                    nom2.x = el.x;
-                }
-                if (el.y !== nom.y) {
-                    nom2.y = el.y;
-                }
-                if (el.z !== nom.z) {
-                    nom2.z = el.z;
-                }
-            }
-            if ((_equalNumber(nom2.x,nom.x) && _equalNumber(nom2.y,nom.y)) || (_equalNumber(nom2.y,nom.y) && _equalNumber(nom2.z,nom.z)) || (_equalNumber(nom2.x,nom.x) && _equalNumber(nom2.z,nom.z)) || 
-                (!_equalNumber(nom2.x,nom.x) && !_equalNumber(nom2.y,nom.y) && !_equalNumber(nom2.z,nom.z))) {
-                return null;
-            }
-
+    
             i = -1;
             while(++i < pos.length) {
                 let el = pos[i];
@@ -930,7 +941,7 @@ Zoning.prototype = {
                 }
             }
 
-            return {idxes:ret, nom:nom};
+            return ret;
         };
         let _drawPolygon = (a, color) => {
             const geometry = new THREE.BufferGeometry();
