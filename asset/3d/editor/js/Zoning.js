@@ -128,6 +128,21 @@ Zoning.prototype = {
             return done;
         };
 
+        let _trimArea = (pos) => {
+            let i = 0;
+            let ret = [];
+
+            while (i < pos.length) {
+                if ((new THREE.Triangle(pos[i], pos[i + 1], pos[i + 2])).getArea() > 0.0001) {
+                    ret.push(pos[i]);
+                    ret.push(pos[i + 1]);
+                    ret.push(pos[i + 2]);
+                }
+                i += 3;
+            }
+            return ret;
+        };
+
         let _getArea = (pos) => {
             let i = 0, ret = 0;
 
@@ -302,6 +317,15 @@ Zoning.prototype = {
                 if (max < a[0].distanceTo(a[1]) + b[0].distanceTo(b[1]) - 0.001) {
                     return true;
                 }
+            }
+            return false;
+        };
+        let _overlappedPoint = (line, pnt) => {
+            if ((new THREE.Triangle(line[0], line[1], pnt)).getArea() < 0.0001) {
+                let a = line[0].distanceTo(pnt);
+                let b = line[1].distanceTo(pnt);
+    
+                return !!((a > b ? a : b) <= line[0].distanceTo(line[1]));
             }
             return false;
         };
@@ -663,19 +687,13 @@ Zoning.prototype = {
 
             return false;
         };
-        let _isInterscect2 = (pos, pnt) => {
-            let i = 0, v = new THREE.Vector3(), P = new THREE.Plane();
+        let _isInterscect2 = (edges, pnt) => {
+            let i = -1;
 
-            while (i < pos.length) {
-                let T = new THREE.Triangle(pos[i], pos[i + 1], pos[i + 2]);
-
-                T.getPlane(P);
-                P.projectPoint(pnt, v);
-
-                if (_equalPoint(pnt, v) && T.containsPoint(v)) {
+            while (++i < edges.length) {
+                if (_overlappedPoint(edges[i], pnt)) {
                     return true;
                 }
-                i += 3;
             }
 
             return false;
@@ -725,7 +743,7 @@ Zoning.prototype = {
                 i = -1;
                 while(++i < wall.near_obj.pnts.length) {
                     let pt = wall.near_obj.pnts[i];
-                    if (!arr.find(el => _equalPoint(el, pt)) && _isInterscect2(wall.pos, pt)) {
+                    if (!arr.find(el => _equalPoint(el, pt)) && _isInterscect2(wall.edges, pt)) {
                         arr.push(pt);
                     }    
                 }
@@ -810,7 +828,7 @@ Zoning.prototype = {
 
             if (loops.length > 0) {
                 let graph = [];
-                let areaW = parseInt(wall.area * 1000);
+                let areaW = parseInt(wall.area * 100);
 
                 i = -1;
                 while (++i < loops.length) {
@@ -841,8 +859,9 @@ Zoning.prototype = {
                                 arr.push(g[o[k + 2]]);
                                 k += 3;
                             }
+                            arr = _trimArea(arr);
                             let area = _getArea(arr);
-                            if(area > 0.1 && parseInt(area * 1000) < areaW) {
+                            if(area > 0.1 && parseInt(area * 100) < areaW) {
                                 graph[i] = {area:area,graph:arr,raw:g};
                             }
                             else {
@@ -1161,8 +1180,8 @@ Zoning.prototype = {
 
                             k = arr.length;
                             while (--k >= 0) {
-                                if (!_isDupPoints(board, arr[k].raw)) {
-                                    _markPoints(board, arr[k].raw);
+                                if (!_isDupPoints(board, arr[k].graph)) {
+                                    _markPoints(board, arr[k].graph);
                                 }
                                 else {
                                     arr.splice(k, 1);
@@ -1175,7 +1194,7 @@ Zoning.prototype = {
                             while (++k < arr.length) {
                                 if (arr[k].graph) {
             
-                                    let edge = _asEdges(arr[k].raw);
+                                    let edge = _asEdges(arr[k].graph);
                                     let pnts = _asPoints(edge);
                                     if (!_overlapInWalls(el.userData.walls, pnts, arr[k].area)) {
                                         el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k].graph, invisible: false, working:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, pnts: pnts});
