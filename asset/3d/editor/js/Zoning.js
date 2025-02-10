@@ -1261,6 +1261,13 @@ Zoning.prototype = {
 
                                 stru.width = (new THREE.Vector3(stru.bbox[0].x, stru.bbox[1].y, stru.bbox[0].z)).distanceTo(stru.bbox[1]);
                                 stru.height = stru.bbox[0].distanceTo(new THREE.Vector3(stru.bbox[0].x, stru.bbox[1].x, stru.bbox[0].z));
+                                
+                                if( stru.width >  stru.height)
+                                {
+                                    stru.height = _getArea(o)/ stru.width;
+                                }else{
+                                    stru.width =  _getArea(o)/ stru.height;
+                                }
 
                                 stru.pos = o;
                                 el2.userData.children.push(stru);
