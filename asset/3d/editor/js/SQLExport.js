@@ -82,7 +82,6 @@ SQLExport.prototype = {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         let i = -1;
-
         let zones = obj.userData.zones;
         let zkeys = Object.keys(zones);
         let tree = [[], []], sql = "DELETE FROM ZoneGeneral_3D;DELETE FROM ZoneEnvelope_3D;DELETE FROM ThermalBridge_3D;DELETE FROM Blind_3D;DELETE FROM ZoneGeneral_Form;DELETE FROM ZoneLighting_Form;DELETE FROM Shade_3D;";
@@ -222,24 +221,11 @@ SQLExport.prototype = {
             });
 
             i = -1;
-            while (++i < tree[0].length) {
-                let el2 = tree[0][i];
-                sql +=
-                    "INSERT INTO ZoneGeneral_3D (ID,존번호,프로젝트유형,층,지면접합유형,바닥면적,주향,주광너비,주광깊이,상인방높이) VALUES (" +
-                    el2.skey +
-                    ",'" +
-                    el2.text +
-                    "','__PROJ_TYPE__','" +
-                    el2.floor +
-                    "','" + el2.floorType + 
-                    "','" + el2.floorArea + 
-                    "','" + el2.mainCardi + 
-                    "','" + el2.mainWidth + 
-                    "','" + el2.mainDepth + 
-                    "','" + el2.mainHeight + 
-                    "');";
-            }
-
+            
+            let _zoneID ="";
+            let _nearID ="";
+            let _EnvelopeID="";
+            let _ZoneName="";
             for (const [id, el] of Object.entries(zones)) {
 
                 if (el.userData.children) {
@@ -247,13 +233,16 @@ SQLExport.prototype = {
 
                     while (++i < el.userData.children.length) {
                         let el2 = el.userData.children[i];
+                        _zoneID = id.split('+').slice(0, 1).join('+');
+                        _EnvelopeID =_zoneID + "_" + el2.id.split('_').slice(2).join('_');
+                        _EnvelopeID = _EnvelopeID.replace("WN", "WIN");
 
                         sql += "INSERT INTO ZoneEnvelope_3D (아이디, 번호,프로젝트유형,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이) VALUES ('" +
                         el2.uuid +
-                        "','" + el2.id + "','__PROJ_TYPE__','" +
+                        "','" + _EnvelopeID + "','__PROJ_TYPE__','" +
                         el.userData.floor +
                         "F','" +
-                        id +
+                        _zoneID+
                         "','" +
                         _getTitle(el2.type) +
                         "','" +
@@ -292,21 +281,24 @@ SQLExport.prototype = {
 
                     while (++i < el.userData.walls.length) {
                         let el2 = el.userData.walls[i];
-
+                        _zoneID = id.split('+').slice(0, 1).join('+');
+                        _nearID =  _asVal(el2.near, "").split('+').slice(0, 1).join('+');
+                        _EnvelopeID =_zoneID + "_" + el2.id.split('_').slice(2).join('_');
+                        _EnvelopeID = _EnvelopeID.replace("WN", "WIN");
                         if (el2.invisible) continue;
 
                         sql += "INSERT INTO ZoneEnvelope_3D (아이디, 번호,프로젝트유형,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이) VALUES ('" +
                         el2.uuid +
-                        "','" + el2.id + "','__PROJ_TYPE__','" +
+                        "','" + _EnvelopeID+ "','__PROJ_TYPE__','" +
                         el.userData.floor +
                         "F','" +
-                        id +
+                        _zoneID +
                         "','" +
                         _getTitle(el2.type) +
                         "','','" +
                         el2.area +
                         "','" +
-                        _asVal(el2.near, "") + 
+                        _nearID  + 
                         "','" +
                         cardinal[el2.cardi] +
                         "','" +
@@ -319,10 +311,34 @@ SQLExport.prototype = {
                         "','" +
                         "','" +
                         "','" +
-                        "','','','');";
+                        "','"+
+                        el2.width +
+                        "','','');";
                     }
+                    i=i
                 }
             //    zones[id] = el.userData;
+            }
+            
+            while (++i < tree[0].length) {
+                let el2 = tree[0][i];
+                let number1 = el2.text.split('Zone').slice(1).join('Zone');
+                let number2 = parseInt(number1) ; 
+                let _zoneID = el2.text.replace(number1, number2);
+                sql +=
+                    "INSERT INTO ZoneGeneral_3D (ID,존번호,프로젝트유형,층,지면접합유형,바닥면적,주향,주광너비,주광깊이,상인방높이) VALUES (" +
+                    el2.skey +
+                    ",'" +
+                    _zoneID +
+                    "','__PROJ_TYPE__','" +
+                    el2.floor +
+                    "','" + el2.floorType + 
+                    "','" + el2.floorArea + 
+                    "','" + el2.mainCardi + 
+                    "','" + el2.mainWidth + 
+                    "','" + el2.mainDepth + 
+                    "','" + el2.mainHeight + 
+                    "');";
             }
 
             let bridges = obj.userData.bridges;
