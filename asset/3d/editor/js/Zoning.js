@@ -554,7 +554,7 @@ Zoning.prototype = {
             }
         };
         let _getSubType = (name) => {
-            let arr = ["+GWL ", "+DR ", "+CW ", "+RF ", "+WL ", "+WN "], _i = -1, n;
+            let arr = ["+DR ", "+CW ", "+RF ", "+WL ", "+WN "], _i = -1, n;
 
             while (++_i < arr.length) {
                 if ((n = name.indexOf(arr[_i])) >= 0) {
@@ -565,7 +565,6 @@ Zoning.prototype = {
         };
         let _getTypeColor = (type) => {
             return {
-                "GWL": "GW",
                 "DR": "DR",
                 "CW": "CW1",
                 "RF": "RF",
