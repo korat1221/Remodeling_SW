@@ -1105,7 +1105,19 @@ Zoning.prototype = {
                             }
                             let o = _asLines(el.geometry.getAttribute("position"));
                             let bbox = _asRectangle(o);
-                            el2.userData.children.push({ type: type, uuid: el.uuid, area: _getArea(o), pos: o, bbox: bbox, width: (new THREE.Vector3(bbox[0].x, bbox[1].y, bbox[0].z)).distanceTo(bbox[1]), height: bbox[0].distanceTo(new THREE.Vector3(bbox[0].x, bbox[1].y, bbox[0].z)) });
+
+
+                            // 너비와 높이 계산
+                            bbox.width = (new THREE.Vector3(bbox[0].x, bbox[1].y, bbox[0].z)).distanceTo(bbox[1]);
+                            bbox.height= bbox[0].distanceTo(new THREE.Vector3(bbox[0].x, bbox[1].y, bbox[0].z)) 
+                            if ( bbox.width >bbox.height) {
+                                bbox.height= _getArea(o)/ bbox.width;
+                            }else{
+                                bbox.width= _getArea(o)/ bbox.height;
+                            }
+                            
+
+                            el2.userData.children.push({ type: type, uuid: el.uuid, area: _getArea(o), pos: o, bbox: bbox, width: bbox.width, height:bbox.height });
 
                             el2.userData.walls = el2.userData.walls.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal"), true));
 
