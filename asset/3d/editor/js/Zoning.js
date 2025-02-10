@@ -1143,6 +1143,30 @@ Zoning.prototype = {
                     let el2 = el.userData.walls[j];
                     if (!el2.invisible) {
                         el2.area = _getArea(el2.pos);
+                        
+                        // 높이(height) 계산 (최대 y - 최소 y)
+                        let minY = Infinity, maxY = -Infinity;
+                        for (let i = 0; i < el2.pos.length; i++) {
+                            if (el2.pos[i].y < minY) minY = el2.pos[i].y;
+                            if (el2.pos[i].y > maxY) maxY = el2.pos[i].y;
+                        }
+                        el2.height = maxY - minY;
+
+                        // pos.y가 가장 작은 값인 점들만 필터링
+                        let minYPoints = el2.pos.filter(p => p.y === minY);
+
+                        // 최소 y 그룹에서 최대 거리(너비) 찾기
+                        let maxWidth = 0;
+                        for (let i = 0; i < minYPoints.length; i++) {
+                            for (let j = i + 1; j < minYPoints.length; j++) {
+                                let dist = minYPoints[i].distanceTo(minYPoints[j]); // 두 점 사이 거리 계산
+                                if (dist > maxWidth) maxWidth = dist;
+                            }
+                        }
+
+                        el2.width = maxWidth;
+                        if(el2.width >0)
+                        {el2.height = el2.area / maxWidth;}
                     }
                 }
             }
@@ -1208,7 +1232,7 @@ Zoning.prototype = {
                                     let edge = _asEdges(arr[k].graph);
                                     let pnts = _asPoints(edge);
                                     if (!_overlapInWalls(el.userData.walls, pnts, arr[k].area)) {
-                                        el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k].graph, invisible: false, working:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, pnts: pnts});
+                                        el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k].graph, invisible: false, working:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, pnts: pnts, width:arr[k].width, height:arr[k].height});
                                     }
                                 }
                             }
