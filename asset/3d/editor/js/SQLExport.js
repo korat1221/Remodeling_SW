@@ -45,6 +45,7 @@ SQLExport.prototype = {
         };
         let _getZoneArea = (nm) => {
             let b = nm.split('+').slice(2, 3)[0];
+            
             return b;
         };
         let _getTitle = (type) => {
