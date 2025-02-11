@@ -34,10 +34,18 @@ SQLExport.prototype = {
             while (num.length < size) num = "0" + num;
             return num;
         };
-        let _getName = (nm) => {
-            let b = nm.split('+')[0].split('_');
-
-            return b[0] + "_Zone" + _pad(parseInt(b[1].replace("Zone", "")), 3);
+        let _getZoneNum = (nm) => {
+            let b = nm.split('+').slice(0, 1).join('+');
+            return b;
+        };
+        let _getZoneName = (nm) => {
+            let b = nm.split('+').slice(1, 2)[0];
+            b = b.replace(/\$/g, " "); // 모든 '$'를 빈 문자열로 변경
+            return b;
+        };
+        let _getZoneArea = (nm) => {
+            let b = nm.split('+').slice(2, 3)[0];
+            return b;
         };
         let _getTitle = (type) => {
             return { "GWL": "지중벽", "DR": "외부출입문", "CW": "커튼월창", "WN": "창호", "RF": "지붕", "FL": "최하층바닥", "SL": "층간바닥", "IW": "내벽", "WL": "외벽" }[type];
@@ -89,7 +97,9 @@ SQLExport.prototype = {
         if (zkeys.length > 0) {
 
             for (const [id, el] of Object.entries(zones)) {
-                let nm = _getName(id);
+                let num = _getZoneNum(id);
+                let name = _getZoneName(id);
+                let area = _getZoneArea(id);
                 let stru = {}, struCW = [];
                 let floorType = "", floorArea = 0, mainCardi = "", mainWidth = 0, mainHeight = 0, mainDepth = 0;
 
@@ -159,7 +169,7 @@ SQLExport.prototype = {
 
                         if (el2.cardi === 'DOWN') {
                             floorType = (el2.type === 'SL') ? "층간슬라브":"지면위";
-                            floorArea = el2.area;
+                            floorArea += el2.area;
 
                             if (mainHeight > 0) {
                                 let bbox = _getBoundingBox2(el2.pos);
@@ -177,7 +187,7 @@ SQLExport.prototype = {
                         children.push({
                             "type": id2,
                             "text": _getTitle(id2),
-                            "id": "---::" + id2 + "::" + nm,
+                            "id": "---::" + id2 + "::" + num,
                             "children": el2,
                         });
                     }
@@ -188,11 +198,11 @@ SQLExport.prototype = {
                     children.push({
                         "type": 'CW',
                         "text": '커튼월창',
-                        "id": "---::CW::" + nm,
+                        "id": "---::CW::" + num,
                         "children": [{
                             "type": 'CW1',
                             "text": '유리부분',
-                            "id": "---::CW1::" + nm,
+                            "id": "---::CW1::" + num,
                             "children": struCW 
                         }],
                     });
@@ -200,12 +210,13 @@ SQLExport.prototype = {
 
                 tree[0].push({
                     "type": "space",
-                    "text": nm,
+                    "text": num,
+                    "Name": name,
                     "id": "selectspc::" + id + "::" + el.uuid,
-                    "skey": parseInt(nm.split('_')[1].replace("Zone", "")),
+                    "skey": parseInt(num.split('_')[1].replace("Zone", "")),
                     "floor": el.userData.floor,
                     "floorType": floorType,
-                    "floorArea": floorArea,
+                    "floorArea": area,
                     "mainWidth": mainWidth,
                     "mainCardi": mainCardi,
                     "mainDepth": mainDepth,
@@ -225,7 +236,6 @@ SQLExport.prototype = {
             let _zoneID ="";
             let _nearID ="";
             let _EnvelopeID="";
-            let _ZoneName="";
             for (const [id, el] of Object.entries(zones)) {
 
                 if (el.userData.children) {
@@ -322,14 +332,11 @@ SQLExport.prototype = {
             
             while (++i < tree[0].length) {
                 let el2 = tree[0][i];
-                let number1 = el2.text.split('Zone').slice(1).join('Zone');
-                let number2 = parseInt(number1) ; 
-                let _zoneID = el2.text.replace(number1, number2);
                 sql +=
-                    "INSERT INTO ZoneGeneral_3D (ID,존번호,프로젝트유형,층,지면접합유형,바닥면적,주향,주광너비,주광깊이,상인방높이) VALUES (" +
+                    "INSERT INTO ZoneGeneral_3D (ID,존번호,프로젝트유형,층,지면접합유형,바닥면적,주향,주광너비,주광깊이,상인방높이,존이름) VALUES (" +
                     el2.skey +
                     ",'" +
-                    _zoneID +
+                    el2.text +
                     "','__PROJ_TYPE__','" +
                     el2.floor +
                     "','" + el2.floorType + 
@@ -337,7 +344,8 @@ SQLExport.prototype = {
                     "','" + el2.mainCardi + 
                     "','" + el2.mainWidth + 
                     "','" + el2.mainDepth + 
-                    "','" + el2.mainHeight + 
+                    "','" + el2.mainHeight +                     
+                    "','" + el2.Name + 
                     "');";
             }
 
