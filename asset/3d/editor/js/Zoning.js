@@ -93,6 +93,9 @@ Zoning.prototype = {
         let _equalPoint = (a, b) => {
             return a.distanceTo(b) < 0.00000001;
         };
+        let _equalPoint2 = (a, b) => {
+            return a.distanceTo(b) < 0.00001;
+        };
         let _getSamePoints = (a, b) => {
             var ret = [];
 
@@ -320,10 +323,14 @@ Zoning.prototype = {
             }
             return false;
         };
-        let _overlappedPoint = (line, pnt) => {
+        let _overlappedPoint = (line, pnt, included = false) => {
             if ((new THREE.Triangle(line[0], line[1], pnt)).getArea() < 0.0001) {
                 let a = line[0].distanceTo(pnt);
                 let b = line[1].distanceTo(pnt);
+
+                if (included && (a < 0.0001 || b < 0.0001)) {
+                    return false;
+                }
     
                 return !!((a > b ? a : b) <= line[0].distanceTo(line[1]));
             }
@@ -401,7 +408,7 @@ Zoning.prototype = {
                     while (++i < el.userData.walls.length) {
                         let el2 = el.userData.walls[i];
 
-                        if (_counterCardi(po.cardi, el2.cardi) && _isInterscect(el2.pos, po.pos)) {
+                        if (_counterCardi(po.cardi, el2.cardi) && (_isInterscect(el2.pos, po.pos) || _isInterscect(po.pos, el2.pos))) {
                             if (as_obj) {
                                 po.near_obj = el2;
                                 el2.near_obj = po;
@@ -678,7 +685,7 @@ Zoning.prototype = {
                 T.getPlane(P);
                 P.projectPoint(c, v);
 
-                if (_equalPoint(c, v) && T.containsPoint(v)) {
+                if (_equalPoint2(c, v) && T.containsPoint(v)) {
                     return true;
                 }
                 i += 3;
@@ -826,7 +833,7 @@ Zoning.prototype = {
             }
 
             if (loops.length > 0) {
-                let graph = [];
+                let graph = [], area;
                 let areaW = parseInt(wall.area * 100);
 
                 i = -1;
@@ -837,7 +844,6 @@ Zoning.prototype = {
                         el.push(arr[loops[i][j]]);
                     }
 
-                    el.push(arr[loops[i][0]]);
                     graph.push(el);
                 }
 
@@ -858,9 +864,7 @@ Zoning.prototype = {
                                 arr.push(g[o[k + 2]]);
                                 k += 3;
                             }
-                            arr = _trimArea(arr);
-                            let area = _getArea(arr);
-                            if(area > 0.1 && parseInt(area * 100) < areaW) {
+                            if((area = _getArea(_trimArea(arr))) > 0.1 && parseInt(area * 100) < areaW && !graph.find(el => Math.abs(el.area - area) < 0.01)) {
                                 graph[i] = {area:area,graph:arr,raw:g};
                             }
                             else {
@@ -881,6 +885,16 @@ Zoning.prototype = {
                 }
             }
             return {};
+        };
+        let _isOverlappedArea = (arr, idx) => {
+            let i = idx;
+
+            while(++i < arr.length) {
+                if (_isInterscect(arr[i].graph, arr[idx].graph)) {
+                    return true;
+                }
+            }
+            return false;
         };
         let _isRightAngle = (angle) => {
             return !!(Math.abs(parseInt(MathUtils.radToDeg(angle)) % 90) == 0);
@@ -979,35 +993,11 @@ Zoning.prototype = {
             geometry.setFromPoints(a);
     //        geometry.translate(offset);
 
-            const material = new THREE.PointsMaterial({ color: color, size: 0.5 });
+            const material = new THREE.PointsMaterial({ color: color, size: 0.1 });
 
             const points = new THREE.Points(geometry, material);
 
             this.editor.scene.add(points);
-        };
-
-        let _isDupPoints = (board, graph) => {
-            let i = -1;
-
-            while(++i < graph.length) {
-                let pnt = graph[i];
-
-                if (!board.find(el => _equalPoint(el, pnt))) {
-                    return false;
-                }
-            }
-            return true;
-        };
-        let _markPoints = (board, graph) => {
-            let i = -1;
-
-            while(++i < graph.length) {
-                let pnt = graph[i];
-
-                if (!board.find(el => _equalPoint(el, pnt))) {
-                    board.push(pnt);
-                }
-            }
         };
 
         let _asEdges = (raw) => {
@@ -1211,28 +1201,25 @@ Zoning.prototype = {
                                 return b.area - a.area;
                             });
 
-                            let board = [];
-
-                            k = arr.length;
+                            k = arr.length - 1;
                             while (--k >= 0) {
-                                if (!_isDupPoints(board, arr[k].graph)) {
-                                    _markPoints(board, arr[k].graph);
-                                }
-                                else {
+                                if (_isOverlappedArea(arr, k)) {
                                     arr.splice(k, 1);
                                 }
                             }
 
-                            el.userData.walls.splice(j, 1);
+                            if (arr.length > 0) {
+                                el.userData.walls.splice(j, 1);
 
-                            k = -1;
-                            while (++k < arr.length) {
-                                if (arr[k].graph) {
-            
-                                    let edge = _asEdges(arr[k].graph);
-                                    let pnts = _asPoints(edge);
-                                    if (!_overlapInWalls(el.userData.walls, pnts, arr[k].area)) {
-                                        el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k].graph, invisible: false, working:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, pnts: pnts, width:arr[k].width, height:arr[k].height});
+                                k = -1;
+                                while (++k < arr.length) {
+                                    if (arr[k].graph) {
+
+                                        let edge = _asEdges(arr[k].graph);
+                                        let pnts = _asPoints(edge);
+                                        if (!_overlapInWalls(el.userData.walls, pnts, arr[k].area)) {
+                                            el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k].graph, invisible: false, working:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, pnts: pnts, width:arr[k].width, height:arr[k].height});
+                                        }
                                     }
                                 }
                             }
