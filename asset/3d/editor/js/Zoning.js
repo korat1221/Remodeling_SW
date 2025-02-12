@@ -93,9 +93,6 @@ Zoning.prototype = {
         let _equalPoint = (a, b) => {
             return a.distanceTo(b) < 0.00000001;
         };
-        let _equalPoint2 = (a, b) => {
-            return a.distanceTo(b) < 0.00001;
-        };
         let _getSamePoints = (a, b) => {
             var ret = [];
 
@@ -129,21 +126,6 @@ Zoning.prototype = {
                 }
             }
             return done;
-        };
-
-        let _trimArea = (pos) => {
-            let i = 0;
-            let ret = [];
-
-            while (i < pos.length) {
-                if ((new THREE.Triangle(pos[i], pos[i + 1], pos[i + 2])).getArea() > 0.0001) {
-                    ret.push(pos[i]);
-                    ret.push(pos[i + 1]);
-                    ret.push(pos[i + 2]);
-                }
-                i += 3;
-            }
-            return ret;
         };
 
         let _getArea = (pos) => {
@@ -323,19 +305,6 @@ Zoning.prototype = {
             }
             return false;
         };
-        let _overlappedPoint = (line, pnt, included = false) => {
-            if ((new THREE.Triangle(line[0], line[1], pnt)).getArea() < 0.0001) {
-                let a = line[0].distanceTo(pnt);
-                let b = line[1].distanceTo(pnt);
-
-                if (included && (a < 0.0001 || b < 0.0001)) {
-                    return false;
-                }
-    
-                return !!((a > b ? a : b) <= line[0].distanceTo(line[1]));
-            }
-            return false;
-        };
 
         let _unionableLine = (a, b) => {
             if (_equalPoint(a[0], b[0])) {
@@ -408,7 +377,7 @@ Zoning.prototype = {
                     while (++i < el.userData.walls.length) {
                         let el2 = el.userData.walls[i];
 
-                        if (_counterCardi(po.cardi, el2.cardi) && (_isInterscect(el2.pos, po.pos) || _isInterscect(po.pos, el2.pos))) {
+                        if (_counterCardi(po.cardi, el2.cardi) && _isInterscect(el2.pos, po.pos)) {
                             if (as_obj) {
                                 po.near_obj = el2;
                                 el2.near_obj = po;
@@ -561,7 +530,7 @@ Zoning.prototype = {
             }
         };
         let _getSubType = (name) => {
-            let arr = ["+DR ", "+CW ", "+RF ", "+WL ", "+WN "], _i = -1, n;
+            let arr = ["+GWL ", "+DR ", "+CW ", "+RF ", "+WL ", "+WN "], _i = -1, n;
 
             while (++_i < arr.length) {
                 if ((n = name.indexOf(arr[_i])) >= 0) {
@@ -572,6 +541,7 @@ Zoning.prototype = {
         };
         let _getTypeColor = (type) => {
             return {
+                "GWL": "GW",
                 "DR": "DR",
                 "CW": "CW1",
                 "RF": "RF",
@@ -685,7 +655,7 @@ Zoning.prototype = {
                 T.getPlane(P);
                 P.projectPoint(c, v);
 
-                if (_equalPoint2(c, v) && T.containsPoint(v)) {
+                if (_equalPoint(c, v) && T.containsPoint(v)) {
                     return true;
                 }
                 i += 3;
@@ -693,13 +663,19 @@ Zoning.prototype = {
 
             return false;
         };
-        let _isInterscect2 = (edges, pnt) => {
-            let i = -1;
+        let _isInterscect2 = (pos, pnt) => {
+            let i = 0, v = new THREE.Vector3(), P = new THREE.Plane();
 
-            while (++i < edges.length) {
-                if (_overlappedPoint(edges[i], pnt)) {
+            while (i < pos.length) {
+                let T = new THREE.Triangle(pos[i], pos[i + 1], pos[i + 2]);
+
+                T.getPlane(P);
+                P.projectPoint(pnt, v);
+
+                if (_equalPoint(pnt, v) && T.containsPoint(v)) {
                     return true;
                 }
+                i += 3;
             }
 
             return false;
@@ -749,7 +725,7 @@ Zoning.prototype = {
                 i = -1;
                 while(++i < wall.near_obj.pnts.length) {
                     let pt = wall.near_obj.pnts[i];
-                    if (!arr.find(el => _equalPoint(el, pt)) && _isInterscect2(wall.edges, pt)) {
+                    if (!arr.find(el => _equalPoint(el, pt)) && _isInterscect2(wall.pos, pt)) {
                         arr.push(pt);
                     }    
                 }
@@ -833,8 +809,8 @@ Zoning.prototype = {
             }
 
             if (loops.length > 0) {
-                let graph = [], area;
-                let areaW = parseInt(wall.area * 100);
+                let graph = [];
+                let areaW = parseInt(wall.area * 1000);
 
                 i = -1;
                 while (++i < loops.length) {
@@ -844,6 +820,7 @@ Zoning.prototype = {
                         el.push(arr[loops[i][j]]);
                     }
 
+                    el.push(arr[loops[i][0]]);
                     graph.push(el);
                 }
 
@@ -854,17 +831,18 @@ Zoning.prototype = {
                     let g = graph[i];
                     let o = _flat(angle, g.slice());
                     if (o) {
-                        o = earcut(o, null, 2);
+                        o.idxes = earcut(o.idxes, null, 2);
 
-                        if (o.length > 0) {
+                        if (o.idxes.length > 0) {
                             k = 0;
-                            while(k < o.length) {
-                                arr.push(g[o[k]]);
-                                arr.push(g[o[k + 1]]);
-                                arr.push(g[o[k + 2]]);
+                            while(k < o.idxes.length) {
+                                arr.push(g[o.idxes[k]]);
+                                arr.push(g[o.idxes[k + 1]]);
+                                arr.push(g[o.idxes[k + 2]]);
                                 k += 3;
                             }
-                            if((area = _getArea(_trimArea(arr))) > 0.1 && parseInt(area * 100) < areaW && !graph.find(el => Math.abs(el.area - area) < 0.01)) {
+                            let area = _getArea(arr);
+                            if(area > 0.1 && parseInt(area * 1000) < areaW) {
                                 graph[i] = {area:area,graph:arr,raw:g};
                             }
                             else {
@@ -886,16 +864,6 @@ Zoning.prototype = {
             }
             return {};
         };
-        let _isOverlappedArea = (arr, idx) => {
-            let i = idx;
-
-            while(++i < arr.length) {
-                if (_isInterscect(arr[i].graph, arr[idx].graph)) {
-                    return true;
-                }
-            }
-            return false;
-        };
         let _isRightAngle = (angle) => {
             return !!(Math.abs(parseInt(MathUtils.radToDeg(angle)) % 90) == 0);
         };
@@ -906,58 +874,47 @@ Zoning.prototype = {
             return a.toFixed(3) === b.toFixed(3);
         };
         let _flat = (angle, pos) => {
-            let j, nom = pos[0].clone(), nom2 = pos[0].clone(), ret = [], i = -1;
+            let i = -1;
 
             if (!_isRightAngles(angle)) {
-                let distX = 0, distZ = 0, d;
-               
                 while(++i < pos.length) {
-                    j = -1;
-                    while(++j < pos.length) {
-                        if (i != j) {
-                            if ((d = (new THREE.Vector3(pos[i].x,0,0)).distanceTo((new THREE.Vector3(pos[j].x,0,0)))) > distX) {
-                                distX = d;
-                            }
-                            if ((d = (new THREE.Vector3(0, 0, pos[i].z)).distanceTo((new THREE.Vector3(0, 0, pos[j].z)))) > distZ) {
-                                distZ = d;
-                            }
-                        } 
-                    }
+                    let pnt = pos[i].clone();
+    
+                    pnt.applyAxisAngle(baseY, angle.x);    
+                    pnt.applyAxisAngle(baseX, angle.y);  
+                    if (angle.normal.z < 0) {
+                        if (angle.normal.x > 0) {
+                            pnt.applyAxisAngle(baseZ, 2 * (Math.PI - angle.z));  
+                        }
+                        else {
+                            pnt.applyAxisAngle(baseZ, -2 * (Math.PI - angle.z));  
+                        }
+                    }    
                 }
+            }
 
-                if (distX > distZ) {
-                    nom2.x = nom.x;
-                    nom2.y = 99999999;
-                    nom2.z = 99999999;
+            let j, nom = pos[0].clone(), nom2 = pos[0].clone(), ret = [];
+
+            i = 0;
+
+            while(++i < pos.length) {
+                let el = pos[i];
+                j = -1;
+                if (el.x !== nom.x) {
+                    nom2.x = el.x;
                 }
-                else {
-                    nom2.x = 99999999;
-                    nom2.y = 99999999;
-                    nom2.z = nom.z;
+                if (el.y !== nom.y) {
+                    nom2.y = el.y;
                 }
-            }
-            else {
-                i = 0;
-    
-                while(++i < pos.length) {
-                    let el = pos[i];
-                    j = -1;
-                    if (el.x !== nom.x) {
-                        nom2.x = el.x;
-                    }
-                    if (el.y !== nom.y) {
-                        nom2.y = el.y;
-                    }
-                    if (el.z !== nom.z) {
-                        nom2.z = el.z;
-                    }
-                }
-                if ((_equalNumber(nom2.x,nom.x) && _equalNumber(nom2.y,nom.y)) || (_equalNumber(nom2.y,nom.y) && _equalNumber(nom2.z,nom.z)) || (_equalNumber(nom2.x,nom.x) && _equalNumber(nom2.z,nom.z)) || 
-                    (!_equalNumber(nom2.x,nom.x) && !_equalNumber(nom2.y,nom.y) && !_equalNumber(nom2.z,nom.z))) {
-                    return null;
+                if (el.z !== nom.z) {
+                    nom2.z = el.z;
                 }
             }
-    
+            if ((_equalNumber(nom2.x,nom.x) && _equalNumber(nom2.y,nom.y)) || (_equalNumber(nom2.y,nom.y) && _equalNumber(nom2.z,nom.z)) || (_equalNumber(nom2.x,nom.x) && _equalNumber(nom2.z,nom.z)) || 
+                (!_equalNumber(nom2.x,nom.x) && !_equalNumber(nom2.y,nom.y) && !_equalNumber(nom2.z,nom.z))) {
+                return null;
+            }
+
             i = -1;
             while(++i < pos.length) {
                 let el = pos[i];
@@ -973,7 +930,7 @@ Zoning.prototype = {
                 }
             }
 
-            return ret;
+            return {idxes:ret, nom:nom};
         };
         let _drawPolygon = (a, color) => {
             const geometry = new THREE.BufferGeometry();
@@ -993,11 +950,35 @@ Zoning.prototype = {
             geometry.setFromPoints(a);
     //        geometry.translate(offset);
 
-            const material = new THREE.PointsMaterial({ color: color, size: 0.1 });
+            const material = new THREE.PointsMaterial({ color: color, size: 0.5 });
 
             const points = new THREE.Points(geometry, material);
 
             this.editor.scene.add(points);
+        };
+
+        let _isDupPoints = (board, graph) => {
+            let i = -1;
+
+            while(++i < graph.length) {
+                let pnt = graph[i];
+
+                if (!board.find(el => _equalPoint(el, pnt))) {
+                    return false;
+                }
+            }
+            return true;
+        };
+        let _markPoints = (board, graph) => {
+            let i = -1;
+
+            while(++i < graph.length) {
+                let pnt = graph[i];
+
+                if (!board.find(el => _equalPoint(el, pnt))) {
+                    board.push(pnt);
+                }
+            }
         };
 
         let _asEdges = (raw) => {
@@ -1094,19 +1075,7 @@ Zoning.prototype = {
                             }
                             let o = _asLines(el.geometry.getAttribute("position"));
                             let bbox = _asRectangle(o);
-
-
-                            // 너비와 높이 계산
-                            bbox.width = (new THREE.Vector3(bbox[0].x, bbox[1].y, bbox[0].z)).distanceTo(bbox[1]);
-                            bbox.height= bbox[0].distanceTo(new THREE.Vector3(bbox[0].x, bbox[1].y, bbox[0].z)) 
-                            if ( bbox.width >bbox.height) {
-                                bbox.height= _getArea(o)/ bbox.width;
-                            }else{
-                                bbox.width= _getArea(o)/ bbox.height;
-                            }
-                            
-
-                            el2.userData.children.push({ type: type, uuid: el.uuid, area: _getArea(o), pos: o, bbox: bbox, width: bbox.width, height:bbox.height });
+                            el2.userData.children.push({ type: type, uuid: el.uuid, area: _getArea(o), pos: o, bbox: bbox, width: (new THREE.Vector3(bbox[0].x, bbox[1].y, bbox[0].z)).distanceTo(bbox[1]), height: bbox[0].distanceTo(new THREE.Vector3(bbox[0].x, bbox[1].y, bbox[0].z)) });
 
                             el2.userData.walls = el2.userData.walls.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal"), true));
 
@@ -1133,30 +1102,6 @@ Zoning.prototype = {
                     let el2 = el.userData.walls[j];
                     if (!el2.invisible) {
                         el2.area = _getArea(el2.pos);
-                        
-                        // 높이(height) 계산 (최대 y - 최소 y)
-                        let minY = Infinity, maxY = -Infinity;
-                        for (let i = 0; i < el2.pos.length; i++) {
-                            if (el2.pos[i].y < minY) minY = el2.pos[i].y;
-                            if (el2.pos[i].y > maxY) maxY = el2.pos[i].y;
-                        }
-                        el2.height = maxY - minY;
-
-                        // pos.y가 가장 작은 값인 점들만 필터링
-                        let minYPoints = el2.pos.filter(p => p.y === minY);
-
-                        // 최소 y 그룹에서 최대 거리(너비) 찾기
-                        let maxWidth = 0;
-                        for (let i = 0; i < minYPoints.length; i++) {
-                            for (let j = i + 1; j < minYPoints.length; j++) {
-                                let dist = minYPoints[i].distanceTo(minYPoints[j]); // 두 점 사이 거리 계산
-                                if (dist > maxWidth) maxWidth = dist;
-                            }
-                        }
-
-                        el2.width = maxWidth;
-                        if(el2.width >0)
-                        {el2.height = el2.area / maxWidth;}
                     }
                 }
             }
@@ -1201,25 +1146,28 @@ Zoning.prototype = {
                                 return b.area - a.area;
                             });
 
-                            k = arr.length - 1;
+                            let board = [];
+
+                            k = arr.length;
                             while (--k >= 0) {
-                                if (_isOverlappedArea(arr, k)) {
+                                if (!_isDupPoints(board, arr[k].raw)) {
+                                    _markPoints(board, arr[k].raw);
+                                }
+                                else {
                                     arr.splice(k, 1);
                                 }
                             }
 
-                            if (arr.length > 0) {
-                                el.userData.walls.splice(j, 1);
+                            el.userData.walls.splice(j, 1);
 
-                                k = -1;
-                                while (++k < arr.length) {
-                                    if (arr[k].graph) {
-
-                                        let edge = _asEdges(arr[k].graph);
-                                        let pnts = _asPoints(edge);
-                                        if (!_overlapInWalls(el.userData.walls, pnts, arr[k].area)) {
-                                            el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k].graph, invisible: false, working:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, pnts: pnts, width:arr[k].width, height:arr[k].height});
-                                        }
+                            k = -1;
+                            while (++k < arr.length) {
+                                if (arr[k].graph) {
+            
+                                    let edge = _asEdges(arr[k].raw);
+                                    let pnts = _asPoints(edge);
+                                    if (!_overlapInWalls(el.userData.walls, pnts, arr[k].area)) {
+                                        el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k].graph, invisible: false, working:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, pnts: pnts});
                                     }
                                 }
                             }
@@ -1271,13 +1219,6 @@ Zoning.prototype = {
 
                                 stru.width = (new THREE.Vector3(stru.bbox[0].x, stru.bbox[1].y, stru.bbox[0].z)).distanceTo(stru.bbox[1]);
                                 stru.height = stru.bbox[0].distanceTo(new THREE.Vector3(stru.bbox[0].x, stru.bbox[1].x, stru.bbox[0].z));
-                                
-                                if( stru.width >  stru.height)
-                                {
-                                    stru.height = _getArea(o)/ stru.width;
-                                }else{
-                                    stru.width =  _getArea(o)/ stru.height;
-                                }
 
                                 stru.pos = o;
                                 el2.userData.children.push(stru);
