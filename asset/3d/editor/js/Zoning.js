@@ -530,7 +530,7 @@ Zoning.prototype = {
             }
         };
         let _getSubType = (name) => {
-            let arr = ["+GWL ", "+DR ", "+CW ", "+RF ", "+WL ", "+WN "], _i = -1, n;
+            let arr = [ "+DR ", "+CW ", "+RF ", "+WL ", "+WN "], _i = -1, n;
 
             while (++_i < arr.length) {
                 if ((n = name.indexOf(arr[_i])) >= 0) {
@@ -541,7 +541,6 @@ Zoning.prototype = {
         };
         let _getTypeColor = (type) => {
             return {
-                "GWL": "GW",
                 "DR": "DR",
                 "CW": "CW1",
                 "RF": "RF",
@@ -561,7 +560,7 @@ Zoning.prototype = {
         let _getName = (nm) => {
             let b = nm.split('+')[0].split('_');
 
-            return b[0] + "_Zone" + _pad(parseInt(b[1].replace("Zone", "")), 3);
+            return b[0] + "_Zone" + _pad(parseInt(b[1]), 3);
         };
         let _getCardinal = (pos, walls) => {
             let i = -1, j;
@@ -1075,7 +1074,18 @@ Zoning.prototype = {
                             }
                             let o = _asLines(el.geometry.getAttribute("position"));
                             let bbox = _asRectangle(o);
-                            el2.userData.children.push({ type: type, uuid: el.uuid, area: _getArea(o), pos: o, bbox: bbox, width: (new THREE.Vector3(bbox[0].x, bbox[1].y, bbox[0].z)).distanceTo(bbox[1]), height: bbox[0].distanceTo(new THREE.Vector3(bbox[0].x, bbox[1].y, bbox[0].z)) });
+
+
+                            bbox.width = (new THREE.Vector3(bbox[0].x, bbox[1].y, bbox[0].z)).distanceTo(bbox[1]);
+                            bbox.height= bbox[0].distanceTo(new THREE.Vector3(bbox[0].x, bbox[1].y, bbox[0].z)) 
+                            if ( bbox.width >bbox.height) {
+                                bbox.height= _getArea(o)/ bbox.width;
+                            }else{
+                                bbox.width= _getArea(o)/ bbox.height;
+                            }
+                            
+
+                            el2.userData.children.push({ type: type, uuid: el.uuid, area: _getArea(o), pos: o, bbox: bbox, width: bbox.width, height:bbox.height });
 
                             el2.userData.walls = el2.userData.walls.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal"), true));
 
@@ -1102,6 +1112,30 @@ Zoning.prototype = {
                     let el2 = el.userData.walls[j];
                     if (!el2.invisible) {
                         el2.area = _getArea(el2.pos);
+                        
+                        // ����(height) ��� (�ִ� y - �ּ� y)
+                        let minY = Infinity, maxY = -Infinity;
+                        for (let i = 0; i < el2.pos.length; i++) {
+                            if (el2.pos[i].y < minY) minY = el2.pos[i].y;
+                            if (el2.pos[i].y > maxY) maxY = el2.pos[i].y;
+                        }
+                        el2.height = maxY - minY;
+
+                        // pos.y�� ���� ���� ���� ���鸸 ���͸�
+                        let minYPoints = el2.pos.filter(p => p.y === minY);
+
+                        // �ּ� y �׷쿡�� �ִ� �Ÿ�(�ʺ�) ã��
+                        let maxWidth = 0;
+                        for (let i = 0; i < minYPoints.length; i++) {
+                            for (let j = i + 1; j < minYPoints.length; j++) {
+                                let dist = minYPoints[i].distanceTo(minYPoints[j]); // �� �� ���� �Ÿ� ���
+                                if (dist > maxWidth) maxWidth = dist;
+                            }
+                        }
+
+                        el2.width = maxWidth;
+                        if(el2.width >0)
+                        {el2.height = el2.area / maxWidth;}
                     }
                 }
             }
@@ -1167,7 +1201,7 @@ Zoning.prototype = {
                                     let edge = _asEdges(arr[k].raw);
                                     let pnts = _asPoints(edge);
                                     if (!_overlapInWalls(el.userData.walls, pnts, arr[k].area)) {
-                                        el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k].graph, invisible: false, working:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, pnts: pnts});
+                                        el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k].graph, invisible: false, working:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, pnts: pnts, width:arr[k].width, height:arr[k].height});
                                     }
                                 }
                             }
@@ -1218,7 +1252,14 @@ Zoning.prototype = {
                                 stru.bbox = _asRectangle(o);
 
                                 stru.width = (new THREE.Vector3(stru.bbox[0].x, stru.bbox[1].y, stru.bbox[0].z)).distanceTo(stru.bbox[1]);
-                                stru.height = stru.bbox[0].distanceTo(new THREE.Vector3(stru.bbox[0].x, stru.bbox[1].x, stru.bbox[0].z));
+                                stru.height = stru.bbox[0].distanceTo(new THREE.Vector3(stru.bbox[0].x, stru.bbox[1].y, stru.bbox[0].z));
+                                
+                                if( stru.width >  stru.height)
+                                {
+                                    stru.height = _getArea(o)/ stru.width;
+                                }else{
+                                    stru.width =  _getArea(o)/ stru.height;
+                                }
 
                                 stru.pos = o;
                                 el2.userData.children.push(stru);
