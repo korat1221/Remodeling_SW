@@ -137,6 +137,8 @@ function Editor() {
 
 	this.pid = "";
 
+	this.selectOld = [];
+
 }
 
 Editor.prototype = {
@@ -554,20 +556,130 @@ Editor.prototype = {
 		this.select( this.scene.getObjectById( id ) );
 
 	},
+	resetBridgesSelection: function () {
+		let _hideBridges = (bridges) => {
+			let i;
 
-	selectByUuid: function ( uuid ) {
+			for (const [id2, el] of Object.entries(bridges)) {
+				i = -1;
+				while(++i < el.bridges.length) {
+					let o = this.getByUuid(el.bridges[i]);
 
-		var scope = this;
+					if (o) {
+						o.visible = false;
+					}
+				}
+			}
+		};
+
+		let i = -1;
+		while(++i < this.scene.children.length) {
+			if (this.scene.children[i] instanceof THREE.Group) {
+				let el = this.scene.children[i];
+				if (el.userData.bridges) {
+					_hideBridges(el.userData.bridges);
+				}
+
+				break;
+			}
+		}
+	},
+	selectByBridgeID: function ( id ) {
+		let _showBridges = (bridges, id) => {
+			let i;
+
+			for (const [id2, el] of Object.entries(bridges)) {
+				i = -1;
+				while(++i < el.bridges.length) {
+					let o = this.getByUuid(el.bridges[i]);
+
+					if (o) {
+						o.visible = !!(id == id2);
+					}
+				}
+			}
+		};
+
+		let i = -1;
+		while(++i < this.scene.children.length) {
+			if (this.scene.children[i] instanceof THREE.Group) {
+				let el = this.scene.children[i];
+				if (el.userData.bridges) {
+					_showBridges(el.userData.bridges, id);
+				}
+
+				break;
+			}
+		}
+		this.signals.sceneGraphChanged.dispatch();
+	},
+	selectByZoneid: function ( zid ) {
+		let i = -1, j;
+		let arr = [];
+
+		while(++i < this.scene.children.length) {
+			if (this.scene.children[i] instanceof THREE.Group) {
+				let el = this.scene.children[i];
+				for (const [id2, el2] of Object.entries(el.userData.zones)) {
+					if (id2 == zid) {
+						if (el2.object.userData.children) {
+							j = -1;
+							while(++j < el2.object.userData.children.length) {
+								let el3 = el2.object.userData.children[j];
+								let o = this.getByUuid(el3.uuid);
+	
+								if (o) {
+									arr.push(o);
+								}
+							}
+						}
+						j = -1;
+						while(++j < el2.object.userData.walls.length) {
+							let el3 = el2.object.userData.walls[j];
+							let o = this.getByUuid(el3.uuid);
+
+							if (o) {
+								arr.push(o);
+							}
+						}
+					}
+				}
+				break;
+			}
+		}
+		this.restoreSelect();
+		this.markSelect(arr);
+		this.signals.sceneGraphChanged.dispatch();
+	},
+
+	getByUuid: function ( uuid ) {
+
+		let ret= null;
 
 		this.scene.traverse( function ( child ) {
 
 			if ( child.uuid === uuid ) {
-
-				scope.select( child );
-
+				ret = child;
 			}
-
 		} );
+
+		return ret;
+
+	},
+
+	selectByUuid: function ( uuid ) {
+
+		let arr = [];
+
+		this.scene.traverse( function ( child ) {
+
+			if ( child.uuid === uuid ) {
+				arr.push(child);
+			}
+		} );
+		this.restoreSelect();
+		this.markSelect(arr);
+		this.signals.sceneGraphChanged.dispatch();
 
 	},
 
@@ -826,8 +938,46 @@ Editor.prototype = {
 		saveString: saveString,
 		formatNumber: formatNumber
 
-	}
+	},
 
+	restoreSelect: function () {
+		let i = -1, j;
+
+		this.resetBridgesSelection();
+
+		while(++i < this.selectOld.length) {
+			let el = this.selectOld[i];
+			el.material.color.set(el.userData.color);
+			el.material.opacity = el.userData.opacity;
+			if (el.userData.shadows) {
+				j = -1;
+				while(++j < el.userData.shadows.length) {
+					this.getByUuid(el.userData.shadows[j]).visible = false;
+				}
+			}
+		}
+		this.selectOld = [];
+	},
+
+	markSelect: function (arr) {
+		let i = -1, j;
+
+		while(++i < arr.length) {
+			let el = arr[i];
+
+			el.material.color.set(0xff0000);
+			el.material.opacity = 0.9;
+
+			if (el.userData.shadows) {
+				j = -1;
+				while(++j < el.userData.shadows.length) {
+					this.getByUuid(el.userData.shadows[j]).visible = true;
+				}
+			}
+
+			this.selectOld.push(el);
+		}
+	},
 };
 
 const link = document.createElement( 'a' );

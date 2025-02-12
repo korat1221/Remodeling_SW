@@ -17,8 +17,12 @@
 		</style>
 	</head>
 	<body>
+		<!-- <div style="width:32px;height:32px"></div> -->
 		<div id="view-cont" style="width:100%;height:100%"></div>
-
+		<div id="dlgProgress" title="" style="overflow: hidden;background-color:#fff;padding:0">
+			<span id="progress" style="display: table-cell;text-align: center;vertical-align: middle;overflow: hidden;"></span>
+		</div>
+	
 		<script type="importmap">
 			{
 				"imports": {
@@ -66,6 +70,10 @@
 		<script src="js/libs/signals.min.js"></script>
 		<script src="/js/jquery-3.6.0.min.js"></script>
 		<script src="/js/b64.js"></script>
+ 		<link rel="stylesheet" href="/js/jquery-ui/jquery-ui.min.css?v=1.0.1">
+		<script type="text/javascript" src="/js/jquery-ui/jquery-ui.min.js"></script>
+	  <script src="/js/progress.js"></script> 
+	  <script type="text/javascript" src="js/earcut.min.js"></script>
 
 		<script type="module">
 
@@ -136,6 +144,8 @@
 
 				} );
 */
+				initProgress();
+
 				//
 				var loader = new THREE.FileLoader();
 				let _getParam = (sname) => {
@@ -164,6 +174,9 @@
 						loader.load(
 							objFile,
 							function (text) {
+
+								openProgressDlg("3D모델을 분석합니다...");
+
 								let _getFileBlobUsingURL = function (url, convertBlob) {
 									var xhr = new XMLHttpRequest();
 									xhr.open("GET", url);
@@ -184,10 +197,14 @@
 										convertBlob(_blobToFile(blob, 'model.obj'));
 									});
 								};
-								_getFileObjectFromURL(objFile, function (fileObject) {
-									editor.loader.loadFile(fileObject);
-									editor.cardinalMark.draw();
-								});
+
+								setTimeout(() => {
+									_getFileObjectFromURL(objFile, function (fileObject) {
+										editor.loader.loadFile(fileObject);
+										editor.cardinalMark.draw();
+										closeProgressDlg();
+									});
+								},100);
 							},null, function () {
 
 								loader.load(
@@ -198,6 +215,7 @@
 									},null, function () {
 									});
 							});
+					}, null, function () {
 					});
 
 				// let timeout;
@@ -322,6 +340,24 @@
 			// 	}
 
 			// }
+
+		</script>
+		<script>
+
+			function selectObject(id) {
+				let arr = id.split('::');
+				if (arr.length > 2) {
+					if (arr[0] === 'selectbdg') {
+						editor.selectByBridgeID(parseInt((arr[2]) - 1) + "");
+					}
+					else if (arr[2] === '---') {
+						editor.selectByZoneid(arr[1]);
+					}
+					else {
+						editor.selectByUuid(arr[2]);
+					}
+				}
+			}
 
 		</script>
 	</body>

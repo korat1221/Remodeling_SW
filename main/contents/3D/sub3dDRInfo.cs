@@ -13,38 +13,30 @@ namespace main.contents
 {
     public partial class sub3dDRInfo : Form
     {
-        string sid = "";
         public sub3dDRInfo()
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
         }
         private void onVisibleChanged(object sender, EventArgs e)
         {
-            if (main.MainContents.selID != sid)
+            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체,번호", "아이디 = '" + main.MainContents.selectInfo[2] + "'");
+
+            if (rec.Length > 0)
             {
-                sid = main.MainContents.selID;
+                textBox3.Text = rec[0][2];
+                textBox1.Text = Double.Parse(rec[0][0]).ToString("#.##");
+                textBox2.Text = rec[0][1];
+            }
 
-                String key = sid.IndexOf("F_Zone") > 0 ? "번호" : "아이디";
-                String ID = main.MainContents.selID.Replace("board-", "");
-                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체,번호", key + " = '" + ID + "'");
-
-                if (rec.Length > 0)
-                {
-                    textBox3.Text = rec[0][2];
-                    textBox1.Text = Double.Parse(rec[0][0]).ToString("#.##");
-                    textBox2.Text = rec[0][1];
-                }
-
-                if (ID.IndexOf("_INWALL_") > 0)
-                {
-                    label3.Show();
-                    label1.Hide();
-                }
-                else
-                {
-                    label1.Show();
-                    label3.Hide();
-                }
+            if (main.MainContents.selectInfo[1] == "IW")
+            {
+                label3.Show();
+                label1.Hide();
+            }
+            else
+            {
+                label1.Show();
+                label3.Hide();
             }
         }
     }

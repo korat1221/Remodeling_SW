@@ -329,15 +329,23 @@ Bridges.prototype = {
 		  };
 	
 		let _pushBridges = (kind) => {
-			let i = -1;
+			let i = -1, j;
 
 			this.editor.bridges[kind] = {dist:0,items:[]};
 
-			while(++i < this.editor.edges.length) {
-				let el = this.editor.edges[i];
+			for (const [id, _el] of Object.entries(zones)) {
+                    j = -1;
+                    while (++j < _el.userData.walls.length) {
+                        let edges = _el.userData.walls[j].edges;
+						i = -1;
+						while(++i < edges.length) {
+							let el = edges[i];
 
-				if ((o = _getBridgeKind(kind, el, el.line)) !== null && !_findBridge(kind, el.line) && (kind !== 14 || _is2FOutwall(el)) && (kind !== 12 || _is270Outwall(el))) {
-					this.editor.bridges[kind].items.push({line:el.line, data:o.data, edge:el});
+							if ((o = _getBridgeKind(kind, el, el.line)) !== null && !_findBridge(kind, el.line) && (kind !== 14 || _is2FOutwall(el)) && (kind !== 12 || _is270Outwall(el))) {
+								this.editor.bridges[kind].items.push({line:el.line, data:o.data, edge:el});
+							}
+						}
+					}
 				}
 			}
 		};

@@ -464,7 +464,7 @@ function Loader( editor ) {
 
 					let object = new OBJLoader().parse( editor, contents );
 
-					object.name = filename;
+					object.name = "__OBJ_MODEL__";
 
 					editor.execute( new AddObjectCommand( editor, object ) );
 

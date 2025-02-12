@@ -474,7 +474,7 @@ namespace main.contents
 
                     if (rec.Length > 0)
                     {
-                        Program.UTIL.sendMessage("board-" + rec[0][0] + getWallTypePostfix(rec[0][2]));
+                        Program.UTIL.select3DObject("---::---::" + rec[0][0] + getWallTypePostfix(rec[0][2]));
                     }
                 }
 
@@ -750,7 +750,7 @@ namespace main.contents
             if (dataGridView2.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
                 string ID = dataGridView2.Rows[e.RowIndex].Cells[1].Value.ToString();
-                Program.UTIL.sendMessage("space-" + ids[ID]);
+                Program.UTIL.select3DObject("---::" + ID + "::---");
             }
             if (e.RowIndex >= 0)
             {

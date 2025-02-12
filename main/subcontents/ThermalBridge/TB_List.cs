@@ -38,18 +38,15 @@ namespace main.contents
             if (main.MainContents.selID != sid)
             {
                 this.panel1.Show();
-                int split_num;
 
-                #region ID 번호, 명칭 찾기 
-                if (main.MainContents.selID.Length == 8)
-                { split_num = Convert.ToInt16(main.MainContents.selID.Substring(7, 1)); }
-                else { split_num = Convert.ToInt16(main.MainContents.selID.Substring(7, 2)); }
-                label4.Text = ID[split_num - 1] + ". " + ID_Name[split_num - 1];
-                TBType = ID_Name[split_num - 1];
-                #endregion
+                if (main.MainContents.selectInfo[0] == "selectbdg")
+                {
+                    int split_num = Convert.ToInt16(main.MainContents.selectInfo[2]);
+                    label4.Text = ID[split_num - 1] + ". " + ID_Name[split_num - 1];
+                    TBType = ID_Name[split_num - 1];
 
-
-                Load_TBDB();
+                    Load_TBDB();
+                }
             }
         }
         private void create_datagridview1()

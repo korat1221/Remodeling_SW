@@ -55,7 +55,7 @@ function Viewport( editor ) {
 
 	const grid2 = new THREE.GridHelper( 25, 2.5, 0xDEE2E6 );
 	grid2.material.color.setHex( 0x222222 );
-	grid2.material.depthFunc = THREE.AlwaysDepth;
+//	grid2.material.depthFunc = THREE.AlwaysDepth;
 	grid2.material.vertexColors = false;
 	grid.add( grid2 );
 
@@ -197,6 +197,18 @@ function Viewport( editor ) {
 			const intersects = selector.getPointerIntersects( onUpPosition, camera );
 			signals.intersectionsDetected.dispatch( intersects );
 
+			let i = -1;
+
+			while(++i < intersects.length) {
+				let object = intersects[i].object;
+				if (object instanceof THREE.Mesh && object !== scene && object !== camera && object.material && object.name.indexOf("DUMMY_BUILDING") < 0) {
+					editor.restoreSelect();
+					editor.markSelect([object]);
+					window.chrome.webview.postMessage(object.userData.tkey);
+					break;
+				}
+			}
+	
 			render();
 
 		}
@@ -408,8 +420,18 @@ function Viewport( editor ) {
 		// selectionBox.visible = false;
 		// transformControls.detach();
 
-		 if ( object !== null && object !== scene && object !== camera ) {
+	//	 if ( object !== null && object !== scene && object !== camera && object.material && object instanceof THREE.Mesh) {
+/*
+			if (selOld.obj) {
+				selOld.obj.material.color.set(selOld.obj.userData.color);
+				selOld.obj.material.opacity = selOld.obj.userData.opacity;
+			}
 
+			console.log(object);
+			object.material.color.set(0xff0000);
+			object.material.opacity = 0.9;
+			selOld.obj = object;
+*/
 		// 	box.setFromObject( object, true );
 
 		// 	if ( box.isEmpty() === false ) {
@@ -421,7 +443,7 @@ function Viewport( editor ) {
 		// 	// transformControls.attach( object );
 		//	object.update material; arcookie
 
-		 }
+	//	 }
 
 		render();
 

@@ -17,6 +17,9 @@ import {
 } from 'three';
 
 import { Zoning } from './Zoning.js';
+import { Shadows } from './Shadows.js';
+import { Bridges } from './Bridges.js';
+import { SQLExport } from './SQLExport.js';
 
 // o object_name | g group_name
 const _object_pattern = /^[og]\s*(.+)?/;
@@ -900,18 +903,10 @@ class OBJLoader extends Loader {
 
 		}
 
-		let o = new Zoning(editor).calc(container);
-
-		$.ajax ({
-            type:"POST",
-            url:"/upload",
-            async: true,
-            data:"r="+Math.random() + "&pid=" + editor.pid + "&json=" + Base64.encode(JSON.stringify( container.toJSON())) + "&sql=" + Base64.encode(o.sql) + "&tree=" + Base64.encode(JSON.stringify(o.tree)),
-            dataType:"text",
-            success: function (data) {
-//                alert('111');
-            }
-        });
+		(new Zoning(editor)).calc(container);
+		(new Shadows( editor )).calc(container);
+		(new Bridges( editor )).calc(container);
+		(new SQLExport( editor )).calc(container);
 
 		return container;
 

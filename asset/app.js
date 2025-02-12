@@ -49,9 +49,16 @@ app.post('/upload', (req, res) => {
 
   let pid = _getParam("pid");
   let path = __dirname + "/projects/" + pid + ".json";
+  let path2 = __dirname + "/projects/" + pid + ".obj";
 
-  fs.writeFile(path,Buffer.from(pid,'base64').toString('utf8'),function(err){
+  fs.writeFile(path,Buffer.from(_getParam("json"),'base64').toString('utf8'),function(err){
     if (err === null) {
+      fs.access(path2, fs.constants.F_OK, (err) => { // A
+        if (err) return console.log('access denied.');
+      
+        fs.unlink(path2, (err) => err ?  
+          console.log(err) : console.log(`${path2} deleted.`));
+      });
       fs.writeFile(__dirname + "/projects/execute.sql",Buffer.from(_getParam("sql"),'base64').toString('utf8'),function(err){
         if (err === null) {
           fs.writeFile(__dirname + "/projects/" + pid + ".tree",Buffer.from(_getParam("tree"),'base64').toString('utf8'),function(err){
