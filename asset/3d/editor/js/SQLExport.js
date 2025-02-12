@@ -334,18 +334,14 @@ SQLExport.prototype = {
             while (++i < tree[0].length) {
                 let el2 = tree[0][i];
                 sql +=
-                    "INSERT INTO ZoneGeneral_3D (ID,존번호,프로젝트유형,층,지면접합유형,바닥면적,주향,주광너비,주광깊이,상인방높이,존이름) VALUES (" +
+                    "INSERT INTO ZoneGeneral_3D (ID,존번호,프로젝트유형,층,지면접합유형,바닥면적,존이름) VALUES (" +
                     el2.skey +
                     ",'" +
                     el2.text +
                     "','__PROJ_TYPE__','" +
                     el2.floor +
                     "','" + el2.floorType + 
-                    "','" + el2.floorArea + 
-                    "','" + el2.mainCardi + 
-                    "','" + el2.mainWidth + 
-                    "','" + el2.mainDepth + 
-                    "','" + el2.mainHeight +                     
+                    "','" + el2.floorArea +                   
                     "','" + el2.Name + 
                     "');";
             }
