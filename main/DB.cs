@@ -178,20 +178,20 @@ namespace main
 #if INMEMORY_DB
             gProjFName = projPath;
 #endif
-            AppDomain.CurrentDomain.SetData(string.Format(
-                "462734ae-de3e-43e1-9eab-fb5282b94c59_{0}",
-                System.Diagnostics.Process.GetCurrentProcess().Id),
-                "IPAZEB <info@ipazeb.org>");
+            //AppDomain.CurrentDomain.SetData(string.Format(
+            //    "462734ae-de3e-43e1-9eab-fb5282b94c59_{0}",
+            //    System.Diagnostics.Process.GetCurrentProcess().Id),
+            //    "IPAZEB <info@ipazeb.org>");
 
-            SQLiteCommand.Execute(
-                "PRAGMA activate_extensions='see-7bb07b8d471d642e';",
-                SQLiteExecuteType.NonQuery,
-                "Data Source=:memory:;");
+            //SQLiteCommand.Execute(
+            //    "PRAGMA activate_extensions='see-7bb07b8d471d642e';",
+            //    SQLiteExecuteType.NonQuery,
+            //    "Data Source=:memory:;");
 
-            SQLiteCommand.Execute( /* SELF-TEST */
-                "SELECT COUNT(*) FROM sqlite_schema;",
-                SQLiteExecuteType.Scalar,
-                "Data Source=:memory:;Password=1234;");
+            //SQLiteCommand.Execute( /* SELF-TEST */
+            //    "SELECT COUNT(*) FROM sqlite_schema;",
+            //    SQLiteExecuteType.Scalar,
+            //    "Data Source=:memory:;Password=1234;");
 
             /*
              * NOTE: Use only the file name here, which indicates
