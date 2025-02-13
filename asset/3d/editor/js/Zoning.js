@@ -558,9 +558,9 @@ Zoning.prototype = {
             return num;
         };
         let _getName = (nm) => {
-            let b = nm.split('+')[0].split('_');
+            let b = nm.split('+').slice(0, 1).join('+');
 
-            return b[0] + "_Zone" + _pad(parseInt(b[1]), 3);
+            return b; 
         };
         let _getCardinal = (pos, walls) => {
             let i = -1, j;
@@ -1113,7 +1113,6 @@ Zoning.prototype = {
                     if (!el2.invisible) {
                         el2.area = _getArea(el2.pos);
                         
-                        // ����(height) ��� (�ִ� y - �ּ� y)
                         let minY = Infinity, maxY = -Infinity;
                         for (let i = 0; i < el2.pos.length; i++) {
                             if (el2.pos[i].y < minY) minY = el2.pos[i].y;
@@ -1121,14 +1120,12 @@ Zoning.prototype = {
                         }
                         el2.height = maxY - minY;
 
-                        // pos.y�� ���� ���� ���� ���鸸 ���͸�
                         let minYPoints = el2.pos.filter(p => p.y === minY);
 
-                        // �ּ� y �׷쿡�� �ִ� �Ÿ�(�ʺ�) ã��
                         let maxWidth = 0;
                         for (let i = 0; i < minYPoints.length; i++) {
                             for (let j = i + 1; j < minYPoints.length; j++) {
-                                let dist = minYPoints[i].distanceTo(minYPoints[j]); // �� �� ���� �Ÿ� ���
+                                let dist = minYPoints[i].distanceTo(minYPoints[j]); 
                                 if (dist > maxWidth) maxWidth = dist;
                             }
                         }
@@ -1218,6 +1215,7 @@ Zoning.prototype = {
                     el2.center = _getCenterPosition(el2.pos);
                     if (!el2.invisible) {
                         el2.uuid = _addMeshObject(el2.pos, this.colors[el2.type], id);
+                        el2.zoneid = _getName(id);
                         k = -1;
                         while (++k < el2.edges.length) {
                             el2.links.push(_collectLinks(el2.edges[k]));
@@ -1353,6 +1351,16 @@ Zoning.prototype = {
                         if (el2.type === 'CW') {
                             el2.id = nm + "_" + el2.type + "_" + (struCW.length + 1);
                             struCW.push({});
+                        }
+                        else if(el2.type === 'WN')
+                        {
+                            if (!stru[el2.type]) {
+                                stru[el2.type] = [];
+                            }
+
+                            el2.id = nm + "_WIN_" + (stru[el2.type].length + 1);
+
+                            stru[el2.type].push({});
                         }
                         else {
                             if (!stru[el2.type]) {

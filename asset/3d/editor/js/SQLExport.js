@@ -48,7 +48,7 @@ SQLExport.prototype = {
             return b;
         };
         let _getTitle = (type) => {
-            return { "GWL": "지중벽", "DR": "외부출입문", "CW": "커튼월창", "WN": "창호", "RF": "지붕", "FL": "최하층바닥", "SL": "층간바닥", "IW": "내벽", "WL": "외벽" }[type];
+            return {  "DR": "외부출입문", "CW": "커튼월창", "WN": "창호", "RF": "지붕", "FL": "최하층바닥", "SL": "층간바닥", "IW": "내벽", "WL": "외벽" }[type];
         };
 
         let _asVal = (v, def = "") => {
@@ -105,7 +105,7 @@ SQLExport.prototype = {
 
                 if (el.userData.children) {
                     let i = -1;
-                    let winArea = 0, mainWin = null;
+                    let WNArea = 0, mainWN = null;
 
                     while (++i < el.userData.children.length) {
                         let el2 = el.userData.children[i];
@@ -114,9 +114,19 @@ SQLExport.prototype = {
                         if (el2.type === 'CW') {
                             struCW.push({
                                 "text": el2.id,
-                                "id": "selectwin::" + el2.type + "::" + el2.uuid
+                                "id": "selectWN::" + el2.type + "::" + el2.uuid
                             });
-                            o.userData.tkey = "selectwin::" + el2.type + "::" + el2.uuid;
+                            o.userData.tkey = "selectWN::" + el2.type + "::" + el2.uuid;
+                        }
+                        else if(el2.type === 'WN') {
+                            if (!stru[el2.type]) {
+                                stru[el2.type] = [];
+                            }
+                            stru[el2.type].push({
+                                "text": el2.id,
+                                "id": "selectWN::" + "WIN" + "::" + el2.uuid
+                            });
+                            o.userData.tkey = "selectWN::" + "WIN" + "::" + el2.uuid;
                         }
                         else {
                             if (!stru[el2.type]) {
@@ -125,24 +135,24 @@ SQLExport.prototype = {
     
                             stru[el2.type].push({
                                 "text": el2.id,
-                                "id": "selectwin::" + el2.type + "::" + el2.uuid
+                                "id": "selectWN::" + el2.type + "::" + el2.uuid
                             });
-                            o.userData.tkey = "selectwin::" + el2.type + "::" + el2.uuid;
+                            o.userData.tkey = "selectWN::" + el2.type + "::" + el2.uuid;
                         }
                         if (el2.type === 'WN') {
-                            if (winArea < el2.area) {
-                                winArea = el2.area;
-                                mainWin = el2;
+                            if (WNArea < el2.area) {
+                                WNArea = el2.area;
+                                mainWN = el2;
                             }
                         }
                     }
-                    if (mainWin) {
-                        mainCardi = mainWin.cardi;
-                        mainWidth = (new THREE.Vector3(mainWin.bbox[0][0],mainWin.bbox[1][1],mainWin.bbox[0][2])).distanceTo(new THREE.Vector3(mainWin.bbox[1][0],mainWin.bbox[1][1],mainWin.bbox[1][2]));
-                        mainHeight = (mainWin.bbox[0][1] > mainWin.bbox[1][1] ? mainWin.bbox[0][1] : mainWin.bbox[1][1]);
+                    if (mainWN) {
+                        mainCardi = mainWN.cardi;
+                        mainWidth = (new THREE.Vector3(mainWN.bbox[0][0],mainWN.bbox[1][1],mainWN.bbox[0][2])).distanceTo(new THREE.Vector3(mainWN.bbox[1][0],mainWN.bbox[1][1],mainWN.bbox[1][2]));
+                        mainHeight = (mainWN.bbox[0][1] > mainWN.bbox[1][1] ? mainWN.bbox[0][1] : mainWN.bbox[1][1]);
           
                         if (mainWidth > 0) {
-                            mainDepth = mainWin.area / mainWidth;
+                            mainDepth = mainWN.area / mainWidth;
                         }
                     }
                 }
@@ -157,10 +167,18 @@ SQLExport.prototype = {
 
                         let o = _getObjectByUuid(el2.uuid);
 
+                        
                         if (!stru[el2.type]) {
                             stru[el2.type] = [];
                         }
-
+                        if(el2.type === 'WN') {
+                            
+                            stru[el2.type].push({
+                                "text": el2.id,
+                                "id": "selectWN::" + "WIN" + "::" + el2.uuid
+                            });
+                            o.userData.tkey = "selectWN::" + "WIN" + "::" + el2.uuid;
+                        }
                         stru[el2.type].push({
                             "text": el2.id,
                             "id": "selectwal::" + el2.type + "::" + el2.uuid
@@ -217,10 +235,6 @@ SQLExport.prototype = {
                     "floor": el.userData.floor,
                     "floorType": floorType,
                     "floorArea": area,
-                    "mainWidth": mainWidth,
-                    "mainCardi": mainCardi,
-                    "mainDepth": mainDepth,
-                    "mainHeight": mainHeight,
                     "children": children
                 });
             }
@@ -233,26 +247,20 @@ SQLExport.prototype = {
 
             i = -1;
             
-            let _zoneID ="";
-            let _nearID ="";
-            let _EnvelopeID="";
             for (const [id, el] of Object.entries(zones)) {
 
                 if (el.userData.children) {
                     let i = -1;
+                    let zoneid= _getZoneNum(id);
 
                     while (++i < el.userData.children.length) {
                         let el2 = el.userData.children[i];
-                        _zoneID = id.split('+').slice(0, 1).join('+');
-                        _EnvelopeID =_zoneID + "_" + el2.id.split('_').slice(2).join('_');
-                        _EnvelopeID = _EnvelopeID.replace("WN", "WIN");
-
                         sql += "INSERT INTO ZoneEnvelope_3D (아이디, 번호,프로젝트유형,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이) VALUES ('" +
                         el2.uuid +
-                        "','" + _EnvelopeID + "','__PROJ_TYPE__','" +
+                        "','" + el2.id+ "','__PROJ_TYPE__','" +
                         el.userData.floor +
                         "F','" +
-                        _zoneID+
+                        zoneid+
                         "','" +
                         _getTitle(el2.type) +
                         "','" +
@@ -260,7 +268,6 @@ SQLExport.prototype = {
                         "','" +
                         el2.area +
                         "','','" +
-                        cardinal[el2.cardi] +
                         "','" +
                         el2.slope +
                         "','" +
@@ -291,24 +298,21 @@ SQLExport.prototype = {
 
                     while (++i < el.userData.walls.length) {
                         let el2 = el.userData.walls[i];
-                        _zoneID = id.split('+').slice(0, 1).join('+');
-                        _nearID =  _asVal(el2.near, "").split('+').slice(0, 1).join('+');
-                        _EnvelopeID =_zoneID + "_" + el2.id.split('_').slice(2).join('_');
-                        _EnvelopeID = _EnvelopeID.replace("WN", "WIN");
+                        let nearid = _getZoneNum( _asVal(el2.near, ""));
                         if (el2.invisible) continue;
 
                         sql += "INSERT INTO ZoneEnvelope_3D (아이디, 번호,프로젝트유형,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이) VALUES ('" +
                         el2.uuid +
-                        "','" + _EnvelopeID+ "','__PROJ_TYPE__','" +
+                        "','" + el2.id+ "','__PROJ_TYPE__','" +
                         el.userData.floor +
                         "F','" +
-                        _zoneID +
+                        el2.zoneid+
                         "','" +
                         _getTitle(el2.type) +
                         "','','" +
                         el2.area +
                         "','" +
-                        _nearID  + 
+                        nearid  + 
                         "','" +
                         cardinal[el2.cardi] +
                         "','" +
@@ -333,18 +337,14 @@ SQLExport.prototype = {
             while (++i < tree[0].length) {
                 let el2 = tree[0][i];
                 sql +=
-                    "INSERT INTO ZoneGeneral_3D (ID,존번호,프로젝트유형,층,지면접합유형,바닥면적,주향,주광너비,주광깊이,상인방높이,존이름) VALUES (" +
+                    "INSERT INTO ZoneGeneral_3D (ID,존번호,프로젝트유형,층,지면접합유형,바닥면적,존이름) VALUES (" +
                     el2.skey +
                     ",'" +
                     el2.text +
                     "','__PROJ_TYPE__','" +
                     el2.floor +
                     "','" + el2.floorType + 
-                    "','" + el2.floorArea + 
-                    "','" + el2.mainCardi + 
-                    "','" + el2.mainWidth + 
-                    "','" + el2.mainDepth + 
-                    "','" + el2.mainHeight +                     
+                    "','" + el2.floorArea +                   
                     "','" + el2.Name + 
                     "');";
             }
