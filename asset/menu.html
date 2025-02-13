@@ -52,15 +52,15 @@
     function setObjInfo(pid) {
         if (d3Flag) {
             $.ajax({
-                url: "http://localhost:3000/models/" + pid + "/model.json",
-                type: 'GET',
-                dataType: 'json',
-                async: true,
-                success: function (o) {
-                    gTreeData[2][1].children = o.tree[0].children;
-                    gTreeData[2][2].children = o.tree[1].children;
-                    load(2);
-                },
+	            url: "http://localhost:3000/projects/" + pid + ".tree",
+	            type: 'GET',
+	            dataType : 'json',
+	            async: true,
+	            success: function (o) {
+	                gTreeData[2][1].children = o[0];
+	                gTreeData[2][2].children = o[1];
+	                load(2);
+	            },
                 error: function () {
                 }
             });
