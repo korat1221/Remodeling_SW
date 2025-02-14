@@ -29,11 +29,6 @@ SQLExport.prototype = {
             return box;
         };
 
-        let _pad = (num, size) => {
-            num = num.toString();
-            while (num.length < size) num = "0" + num;
-            return num;
-        };
         let _getZoneNum = (nm) => {
             let b = nm.split('+').slice(0, 1).join('+');
             return b;
@@ -377,40 +372,6 @@ SQLExport.prototype = {
                 10: "WTB5",
                 11: "WTB6",
             };
-            let _is2FOutwall = (edge) => {
-                let infloor = false;
-                let outerwall = false;
-        
-                edge.walls.forEach((el, idx) => {
-                    let el2 = this.wall[el.cardi][el.id];
-                    if (el2.type == 'IW' && (el2.cardinal ===  'DOWN' || el2.cardinal ===  'UP')) {
-                    infloor = true;
-                    }
-                    else if (el2.type == 'WL') {
-                    outerwall = true;
-                    }
-                });
-        
-                return (infloor && outerwall);
-            };
-        
-            let _is270Outwall = (edge) => {
-                let rf_y = null;
-                let ot_y = null;
-            
-                edge.walls.forEach((el, idx) => {
-                    let el2 = this.wall[el.cardi][el.id];
-                    if (el2.type == 'RF') {
-                    rf_y = el2.center[1];
-                    }
-                    else if (el2.type == 'WsL') {
-                    ot_y = el2.center[1];
-                    }
-                });
-            
-                return (rf_y && ot_y && rf_y < ot_y);
-            };
-            
             let m = 0;
             bridges["11"].items.forEach((el2, idx) => {
                 ++m;
@@ -423,16 +384,14 @@ SQLExport.prototype = {
                     "');";
             });
             bridges["12"].items.forEach((el2, idx) => {
-                if (_is270Outwall(el2.edge)) {
-                    ++m;
-                    let n = m <= 9 ? "0" + m : m;
-                    sql +=
-                    "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('RTB2_" +
-                    n +
-                    "','__PROJ_TYPE__','평지붕+외벽[270]','" +
-                    el2.line[0].distanceTo(el2.line[1]) +
-                    "');";
-                }
+                ++m;
+                let n = m <= 9 ? "0" + m : m;
+                sql +=
+                "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('RTB2_" +
+                n +
+                "','__PROJ_TYPE__','평지붕+외벽[270]','" +
+                el2.line[0].distanceTo(el2.line[1]) +
+                "');";
             });
         
             bridges["13"].items.forEach((el2, idx) => {
@@ -445,15 +404,13 @@ SQLExport.prototype = {
                     "');";
                 });
             bridges["14"].items.forEach((el2, idx) => {
-                if (_is2FOutwall(el2.edge)) {
-                    let n = idx <= 8 ? "0" + (idx + 1) : idx + 1;
-                    sql +=
-                    "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('WTB6_" +
-                    n +
-                    "','__PROJ_TYPE__','바닥+외벽[270]','" +
-                    el2.line[0].distanceTo(el2.line[1]) +
-                    "');";
-                }
+                let n = idx <= 8 ? "0" + (idx + 1) : idx + 1;
+                sql +=
+                "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('WTB6_" +
+                n +
+                "','__PROJ_TYPE__','바닥+외벽[270]','" +
+                el2.line[0].distanceTo(el2.line[1]) +
+                "');";
             });
         
             Object.keys(bridges).forEach((el) => {
@@ -518,20 +475,7 @@ SQLExport.prototype = {
 
         for (const [key, value] of Object.entries(_bridges)) {
             let arr = [];
-
-            if (key == "1") {
-                _getBridgeInfo("1", "1", arr, 0);
-            } else if (key == "2") {
-                let m = _getBridgeInfo("11", "2", arr, 0);
-
-                _getBridgeInfo("12", "2", arr, m);
-            } else if (key == "11") {
-                _getBridgeInfo("13", "11", arr, 0);
-            } else if (key == "12") {
-                _getBridgeInfo("14", "12", arr, 0);
-            } else {
-                _getBridgeInfo(parseInt(key) - 1, key, arr, 0);
-            }
+            _getBridgeInfo(key, key, arr, 0);
 
             if (arr.length > 0) {
                 tree[1].push({
