@@ -127,22 +127,7 @@ namespace main.contents
                     Program.DB.executeSQL(DB.type.ProjDB, sql);
                     Program.DB.deleteTable(DB.type.ProjDB, "Shade_3D");
 
-                    string[][] Win = Program.DB.querySQL(DB.type.ProjDB, "Select 번호 From ZoneEnvelope_3D Where 외피유형 = '창호' or 외피유형 = '커튼월창' Order by 번호");
-                    if (Win.Length > 0)
-                    {
-                        for (int k = 0; k < Win.Length; k++)
-                        {
-                            ZoneShade zoneshade = new ZoneShade(Win[k][0]);
-                            zoneshade.Calc_방위각();
-                            zoneshade.Calc_지형물음영();
-
-                            zoneshade.Calc_상부음영();
-                            zoneshade.Calc_좌측음영();
-                            zoneshade.Calc_우측음영();
-                            zoneshade.Calc_음영계수();
-                            zoneshade.Save();
-                        }
-                    }
+                    
                     resetZoneDraw();
                     Program.DB.saveProject();
 

@@ -550,6 +550,7 @@ namespace main
             zonelight1.LoadData_NaturalLight();
             zonelight1.LoadData_Renew();
             zone1.LoadData_ZoneGeneral();
+            zone1.LoadData_Shade(zone1.ZoneNum);
             zone1.LoadData_q50();
             zone1.LoadData_dUtb_2D();
             zone1.LoadData_Ventil();
