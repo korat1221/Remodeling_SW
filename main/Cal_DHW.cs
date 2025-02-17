@@ -29,7 +29,7 @@ namespace main
         public double[] dmth = new double[12] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         public double[] Qw_d = new double[12], Qw_s = new double[12], Qw_gen = new double[12], Qw_outg = new double[12], Qw_f = new double[12];
         public double[] Ww_d = new double[12], Ww_s = new double[12], Ww_g = new double[12];
-        public double Psi_pipe, L, Qs_po_day;
+        public double Psi_pipe, PipeL, Qs_po_day;
         public double[] Qw_gen_day = new double[12], Qw_gen_p0_day = new double[12], eta_pn_w = new double[12];
         public String Carrier;
         public ArrayList SelectSolar_split = new ArrayList(); public ArrayList SolarNum_split = new ArrayList(); public ArrayList SolarDirection_split = new ArrayList(); ArrayList SolarDegree_split = new ArrayList();
@@ -306,13 +306,15 @@ namespace main
 
         public void Load_PipeData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(ProjNum, "DHWSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재", "번호 = '" + DHWNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "DHWSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재,노출배관길이", "번호 = '" + DHWNum + "'");
             if (Value.Length > 0)
             {
                 PipeD = Convert.ToDouble(Value[0][0]);
                 PipeInsD = Convert.ToDouble(Value[0][1]);
                 PipeIns_Ramda = Convert.ToDouble(Value[0][2]);
                 PipeIns = Value[0][3];
+                if (Value[0][4] == "" || Value[0][4] == null) { PipeL = 0; }
+                else { PipeL = Convert.ToDouble(Value[0][4]); }
             }
         }
        
@@ -326,17 +328,17 @@ namespace main
                 Ramda_se = 5 + 0.15 * 5.67 / 100000000 * 4 * 1000;
                 R_se = 1 / (Ramda_se * 2 * Math.PI * (PipeD / 2 + PipeInsD) / 1000);
                 Psi_pipe = 1 / (R_pipe + R_se);            
-                string[][] Value = Program.DB.getValue(ProjNum, "User_Pump", "양정", "번호 = '" + Pump1 + "'");
-                if (Value.Length > 0)
-                {
-                    L1 = Convert.ToDouble(Value[0][0]);
-                }
-                Value = Program.DB.getValue(ProjNum, "User_Pump", "양정", "번호 = '" + Pump2 + "'");
-                if (Value.Length > 0)
-                {
-                    L2 = Convert.ToDouble(Value[0][0]);
-                }
-                L = L1 + L2;
+                //string[][] Value = Program.DB.getValue(ProjNum, "User_Pump", "양정", "번호 = '" + Pump1 + "'");
+                //if (Value.Length > 0)
+                //{
+                //    L1 = Convert.ToDouble(Value[0][0]);
+                //}
+                //Value = Program.DB.getValue(ProjNum, "User_Pump", "양정", "번호 = '" + Pump2 + "'");
+                //if (Value.Length > 0)
+                //{
+                //    L2 = Convert.ToDouble(Value[0][0]);
+                //}
+                //L = L1 + L2;
 
             double[] theta_i = new double[12];
             for (int mth = 0; mth < 12; mth++)
@@ -354,7 +356,7 @@ namespace main
                         theta_i[mth] = theta_ih_avg[mth];
                     }
 
-                Qw_d[mth] = Math.Max(Psi_pipe * L * (57.5 - theta_i[mth]) * dop_mth_avg[mth]*th_op_day_avg / 1000, 0);
+                Qw_d[mth] = Math.Max(Psi_pipe * PipeL * (57.5 - theta_i[mth]) * dop_mth_avg[mth]*th_op_day_avg / 1000, 0);
                     if (double.IsNaN(Qw_d[mth])) { Qw_d[mth] = 0; }
                 }
 
@@ -400,7 +402,7 @@ namespace main
                     dP = H_pump * 1000 * 9.81;
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        Vz[mth] = Psi_pipe * L * (57.5 - theta_i_h_set_avg) / (1.15 * 5 * 1000);
+                        Vz[mth] = Psi_pipe * PipeL * (57.5 - theta_i_h_set_avg) / (1.15 * 5 * 1000);
                         P_hydr[mth] = dP * Vz[mth] / 3600;
                         fe[mth] = (1.25 + 200 / P_hydr[mth]) * 2;
                         e_hydr[mth] = fe[mth] * (Cp1 + Cp2) * 0.25 / 0.25;

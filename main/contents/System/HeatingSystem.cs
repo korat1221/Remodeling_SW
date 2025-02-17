@@ -39,7 +39,7 @@ namespace main.contents
         String StorageUse, StoragePumpUse, StoragePump; double Vs;
         String[] SystemType = { "보일러", "외기 히트펌프", "지열 히트펌프", "지하수 히트펌프", "태양열 융합 히트펌프", "흡수식온수기", "지역난방", "태양열시스템" };
         String[] ceType = { "실내기", "방열기", "팬코일유닛", "복사난방" };
-        double PipeD, PipeInsD, PipeIns_Ramda;
+        double PipeD, PipeInsD, PipeIns_Ramda, PipeL;
         String PipeIns;
         double ZoneArea;
         ArrayList SelectZone_split = new ArrayList(); ArrayList SelectBoiler_split = new ArrayList(); ArrayList SelectAirHP_split = new ArrayList(); ArrayList SelectGroundHP_split = new ArrayList(); ArrayList SelectGWHP_split = new ArrayList(); ArrayList SelectSolar_split = new ArrayList(); ArrayList SelectAS_split = new ArrayList(); ArrayList SelectDH_split = new ArrayList();
@@ -599,7 +599,7 @@ namespace main.contents
                 else
                 {
                     if (Boiler_dataGridView.Rows.Count > 0)
-                    { 
+                    {
                         Boiler_dataGridView.Rows[0].Cells[10].Value = nonSplit;
                         Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, 0, 10, 0);
                     }
@@ -990,7 +990,7 @@ namespace main.contents
                 else
                 {
                     if (AS_dataGridView.Rows.Count > 0)
-                    { 
+                    {
                         AS_dataGridView.Rows[0].Cells[9].Value = nonSplit;
                         Program.UTIL.dataGridView_doubleComa(AS_dataGridView, 0, 9, 0);
                     }
@@ -1006,7 +1006,7 @@ namespace main.contents
         /////////////////////////////////////////////////////지역난방///////////////////////////////////////////////////////////////////
         private void Load_DHForm()
         {
-            DH_DB heating_DH = new DH_DB("장비일람표 적용", SelectDH_nonsplit,"난방");
+            DH_DB heating_DH = new DH_DB("장비일람표 적용", SelectDH_nonsplit, "난방");
             DialogResult result = heating_DH.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -1340,7 +1340,7 @@ namespace main.contents
                             int nRow = HP_dataGridView.Rows.Count - 1;
                             for (int a = 0; a < 3; a++)
                             {
-                                HP_dataGridView.Rows[nRow].Cells[ a + 1].Value = User_Value[n][a];
+                                HP_dataGridView.Rows[nRow].Cells[a + 1].Value = User_Value[n][a];
                             }
                             HP_dataGridView.Rows[nRow].Cells[4].Value = source;
                             HP_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][3];
@@ -1471,7 +1471,7 @@ namespace main.contents
                 {
                     HPSupply_nonsplit[0] += HP_dataGridView.Rows[Convert.ToInt16(index_외기[k])].Cells[13].Value.ToString();
                     HPControl_nonsplit[0] += HP_dataGridView.Rows[Convert.ToInt16(index_외기[k])].Cells[14].Value.ToString();
-                    HPNum_nonsplit[0] += (Program.UTIL.dataGridView_doubleComa(HP_dataGridView,Convert.ToInt16(index_외기[k]),15,0)).ToString();
+                    HPNum_nonsplit[0] += (Program.UTIL.dataGridView_doubleComa(HP_dataGridView, Convert.ToInt16(index_외기[k]), 15, 0)).ToString();
                 }
                 else if (HP_dataGridView.Rows[Convert.ToInt16(index_외기[k])].Cells[13].Value != null && HP_dataGridView.Rows[Convert.ToInt16(index_외기[k])].Cells[14].Value != null && HP_dataGridView.Rows[Convert.ToInt16(index_외기[k])].Cells[15].Value != null)
                 {
@@ -1592,7 +1592,7 @@ namespace main.contents
                 else
                 {
                     if (HP_dataGridView.Rows.Count > 0)
-                    { 
+                    {
                         HP_dataGridView.Rows[0].Cells[15].Value = nonSplit;
                         Program.UTIL.dataGridView_doubleComa(HP_dataGridView, 0, 15, 0);
                     }
@@ -1700,9 +1700,9 @@ namespace main.contents
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "번호 = '" + StoragePump.ToString() + "'");
             if (Value.Length > 0)
             {
-               
-                StoragePump_textBox.Text = Value[0][0];              
-                for (int a=0; a < Value[0].Length; a++)
+
+                StoragePump_textBox.Text = Value[0][0];
+                for (int a = 0; a < Value[0].Length; a++)
                 {
                     StoragePump_dataGridView.Rows[0].Cells[a + 1].Value = Value[0][a];
                 }
@@ -1727,8 +1727,14 @@ namespace main.contents
         {
             PipeInsD = Program.UTIL.textBox_doubleComa(PipeInsD_textBox, false, 1);
         }
+
+        private void PipeL_textBox_TextChanged(object sender, EventArgs e)
+        {
+            PipeL = Program.UTIL.textBox_doubleComa(PipeL_textBox, false, 2);
+        }
         private void Calc_Pipe()
         {
+            double Qh_max_sum = 0;
             if (SelectZone_split.Count > 0)
             {
                 ZoneArea = 0;
@@ -1737,34 +1743,36 @@ namespace main.contents
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호 = '" + SelectZone_split[n].ToString() + "'");
                     if (Value.Length > 0)
                     { ZoneArea += Convert.ToDouble(Value[0][0]); }
+
+                    string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호 = '" + SelectZone_split[n].ToString() + "' and 난방_냉방='난방' and 비이용일_이용일='이용일' and 월='1월' ");
+                    if (Value2.Length > 0)
+                    {
+                        Qh_max_sum += Convert.ToDouble(Value2[0][0]);
+                    }
                 }
-                string[][] Value_PipeIns = Program.DB.getValue(DB.type.BaseDB_Heating, "배관단열", "순바닥면적,배관관경,단열두께,열전도율", "");
-                if (Value_PipeIns.Length > 0)
+
+                double dtheta = 10;
+                string[][] v = Program.DB.getValue(DB.type.BaseDB_Heating, "공급환수온도", "공급온도, 환수온도", "공급환수온도='" + SLRL + "'");
+                if (v.Length > 0)
                 {
-                    if (ZoneArea < Convert.ToDouble(Value_PipeIns[0][0]))
+                    dtheta = Convert.ToDouble(v[0][0]) - Convert.ToDouble(v[0][1]);
+                }
+                double Volume = Qh_max_sum / 1000 * 3.6 / (dtheta * 4.18) * 1000 / 60; // Liter/min 
+
+                PipeD = 25;
+                PipeInsD = 25;
+                if (Volume > 0)
+                {
+                    string[][] P = Program.DB.querySQL(DB.type.BaseDB_Heating, "Select Distinct lpm_max, 외경 From 부피별관경");
+                    if (P.Length > 0)
                     {
-                        PipeD = Convert.ToDouble(Value_PipeIns[0][1]);
-                        PipeInsD = Convert.ToDouble(Value_PipeIns[0][2]);
-                    }
-                    else if (ZoneArea < Convert.ToDouble(Value_PipeIns[1][0]))
-                    {
-                        PipeD = Convert.ToDouble(Value_PipeIns[1][1]);
-                        PipeInsD = Convert.ToDouble(Value_PipeIns[1][2]);
-                    }
-                    else if (ZoneArea < Convert.ToDouble(Value_PipeIns[2][0]))
-                    {
-                        PipeD = Convert.ToDouble(Value_PipeIns[2][1]);
-                        PipeInsD = Convert.ToDouble(Value_PipeIns[2][2]);
-                    }
-                    else if (ZoneArea < Convert.ToDouble(Value_PipeIns[3][0]))
-                    {
-                        PipeD = Convert.ToDouble(Value_PipeIns[3][1]);
-                        PipeInsD = Convert.ToDouble(Value_PipeIns[3][2]);
-                    }
-                    else
-                    {
-                        PipeD = Convert.ToDouble(Value_PipeIns[4][1]);
-                        PipeInsD = Convert.ToDouble(Value_PipeIns[4][2]);
+                        for (int a = 0; a < P.Length; a++)
+                        {
+                            if (Convert.ToDouble(P[a][0]) >= Volume)
+                            {
+                                PipeD = Convert.ToDouble(P[a][1]);
+                            }
+                        }
                     }
                 }
 
@@ -1782,7 +1790,6 @@ namespace main.contents
             }
 
         }
-
         private void PipeIns_button_Click(object sender, EventArgs e)
         {
             CW_PanelDB InsDB_form = new CW_PanelDB();
@@ -1814,18 +1821,6 @@ namespace main.contents
                     PumpMethod_label.Visible = true;
                     PumpMethod_comboBox.Visible = true;
                     Create_Pump_Table();
-                    PipeD_label1.Visible = true;
-                    PipeD_label2.Visible = true;
-                    PipeD_textBox.Visible = true;
-                    PipeInsD_label1.Visible = true;
-                    PipeInsD_label2.Visible = true;
-                    PipeInsD_textBox.Visible = true;
-                    PipeIns_label.Visible = true;
-                    PipeIns_textBox.Visible = true;
-                    PipeIns_button.Visible = true;
-                    PipeIns_Ramda_label1.Visible = true;
-                    PipeIns_Ramda_label2.Visible = true;
-                    PipeIns_Ramda_textBox.Visible = true;
                 }
                 else
                 {
@@ -1834,18 +1829,6 @@ namespace main.contents
                     PumpMethod_comboBox.SelectedItem = null;
                     Pump_dataGridView.Columns.Clear();
                     ChangeVisble_Pump(null);
-                    PipeD_label1.Visible = false;
-                    PipeD_label2.Visible = false;
-                    PipeD_textBox.Visible = false;
-                    PipeInsD_label1.Visible = false;
-                    PipeInsD_label2.Visible = false;
-                    PipeInsD_textBox.Visible = false;
-                    PipeIns_label.Visible = false;
-                    PipeIns_textBox.Visible = false;
-                    PipeIns_button.Visible = false;
-                    PipeIns_Ramda_label1.Visible = false;
-                    PipeIns_Ramda_label2.Visible = false;
-                    PipeIns_Ramda_textBox.Visible = false;
                 }
             }
             else
@@ -2025,7 +2008,7 @@ namespace main.contents
                         Pump_dataGridView.Rows[nRow].Cells[0].Value = "2차펌프";
                     }
                     else { Pump_dataGridView.Rows[nRow].Cells[0].Value = "1차펌프"; }
-                    for(int a=0; a < Value[0].Length; a++) 
+                    for (int a = 0; a < Value[0].Length; a++)
                     {
                         Pump_dataGridView.Rows[nRow].Cells[a + 1].Value = Value[0][a];
                     }
@@ -2436,7 +2419,7 @@ namespace main.contents
         {
             BoilerNum_nonsplit = "";
             SolarNum_nonsplit = ""; SolarDirection_nonsplit = ""; SolarDegree_nonsplit = "";
-            ASNum_nonsplit = ""; 
+            ASNum_nonsplit = "";
             HPNum_nonsplit[0] = ""; HPNum_nonsplit[1] = ""; HPNum_nonsplit[2] = "";
             HPSupply_nonsplit[0] = ""; HPSupply_nonsplit[1] = ""; HPSupply_nonsplit[2] = "";
             HPControl_nonsplit[0] = ""; HPControl_nonsplit[1] = ""; HPControl_nonsplit[2] = ""; //외기/지열/지하수 순 
@@ -2459,7 +2442,7 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PumpUse + "','" + PumpMethod + "','" + Pump1 + "','" + Pump2 + "','" + Pump1Valve + "','" + Pump2Valve + "','" + Pump1Control + "','" + Pump2Control + "','" + Pump1Num.ToString() + "','" + Pump2Num.ToString() + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,공급설비1종류,공급설비2종류", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + ce1Type + "','" + ce2Type + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,축열유무,축열펌프유무,축열펌프,축열용량", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + StorageUse + "','" + StoragePumpUse + "','" + StoragePump + "','" + Vs.ToString() + "'", "번호");
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,배관관경,배관보온두께,보온열전도율,배관보온재", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PipeD.ToString() + "','" + PipeInsD.ToString() + "','" + PipeIns_Ramda.ToString() + "','" + PipeIns + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,배관관경,배관보온두께,보온열전도율,배관보온재,노출배관길이", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PipeD.ToString() + "','" + PipeInsD.ToString() + "','" + PipeIns_Ramda.ToString() + "','" + PipeIns + "','" + PipeL.ToString() + "'", "번호");
 
 
 
@@ -2486,7 +2469,7 @@ namespace main.contents
             ce1Type = null; ce2Type = null; ce_SelectRow = 0;
             StorageUse = null; StoragePumpUse = null; StoragePump = null; Vs = 0;
             SelectZone_split.Clear(); SelectBoiler_split.Clear();
-            PipeD = 0; PipeInsD = 0; PipeIns_Ramda = 0; PipeIns = null;
+            PipeD = 0; PipeInsD = 0; PipeIns_Ramda = 0; PipeIns = null; PipeL = 0;
             ZoneArea = 0;
 
             Num_textBox.Text = null;
@@ -2804,7 +2787,7 @@ namespace main.contents
                     Program.UTIL.textBox_doubleComa(Vs_textBox, true, 3);
                 }
             }
-            Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재", "번호 = '" + ID + "'");
+            Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재,노출배관길이", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
                 PipeD = Convert.ToDouble(Value[0][0]);
@@ -2821,6 +2804,13 @@ namespace main.contents
 
                 PipeIns = Value[0][3];
                 PipeIns_textBox.Text = PipeIns;
+                if (Value[0][4] == null || Value[0][4] == "")
+                { PipeL = 0; }
+                else
+                {
+                    PipeL = Convert.ToDouble(Value[0][4]);
+                }
+                Program.UTIL.textBox_doubleComa(PipeL_textBox, true, 2);
             }
         }
 
@@ -2834,5 +2824,6 @@ namespace main.contents
         }
 
         #endregion
+
     }
 }

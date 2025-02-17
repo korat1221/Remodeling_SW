@@ -296,7 +296,7 @@ namespace main.subcontents.Alt
                 for (int a = 0; a < WList.Length; a++)
                 {
                     string[][] WArea = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "Sum(면적)", "구조체번호='" + WList[a][0] + "'");
-                    if (WArea.Length > 0)
+                    if (WArea.Length > 0 && WArea[0][0]!="")
                     {
                         area[a] = Convert.ToDouble(WArea[0][0]);
                     }
