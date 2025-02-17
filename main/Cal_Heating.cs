@@ -39,7 +39,7 @@ namespace main
         public double[] dtheta_ce = new double[12], dtheta_d = new double[12], dtheta_s = new double[12], dtheta_gen = new double[12];
         public double[] Qh_ce = new double[12], Qh_d = new double[12], Qh_s = new double[12], Qh_gen = new double[12], Qh_outg = new double[12], Qh_f = new double[12];
         public double[] Wh_ce = new double[12], Wh_d = new double[12], Wh_s = new double[12], Wh_g = new double[12];
-        public double dtheta_ce1, dtheta_ce2, Psi_pipe, L, Qs_po_day;
+        public double dtheta_ce1, dtheta_ce2, Psi_pipe, PipeL, Qs_po_day;
         public double[] Qh_gen_day = new double[12], Pgen_Pn = new double[12], Pgen_Pint = new double[12], Pgen_P0 = new double[12], eta_gen_Pn = new double[12], eta_gen_Pint = new double[12];
         public double[] fpint = new double[12];  public double[,] COPpint = new double[3, 12], Qh_outg_sng = new double[3, 12];
         public String Carrier; 
@@ -318,13 +318,15 @@ namespace main
 
         public void Load_PipeData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재", "번호 = '" + HeatingNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재,노출배관길이", "번호 = '" + HeatingNum + "'");
             if (Value.Length > 0)
             {
                 PipeD = Convert.ToDouble(Value[0][0]);
                 PipeInsD = Convert.ToDouble(Value[0][1]);
                 PipeIns_Ramda = Convert.ToDouble(Value[0][2]);
                 PipeIns = Value[0][3];
+                if (Value[0][4] == "" || Value[0][4] == null) { PipeL = 0; }
+                else { PipeL = Convert.ToDouble(Value[0][4]); }
             }
         }
         //외기 히트펌프 정보 불러오기 
@@ -767,17 +769,19 @@ namespace main
                 Ramda_se = 5 + 0.15 * 5.67 / 100000000 * 4 * 1000;
                 R_se = 1 / (Ramda_se * 2 * Math.PI * (PipeD / 2 + PipeInsD) / 1000);
                 Psi_pipe = 1 / (R_pipe + R_se);
-                string[][] Value = Program.DB.getValue(ProjNum, "User_Pump", "양정", "번호 = '" + Pump1 + "'");
-                if (Value.Length > 0)
-                {
-                    L1 = Convert.ToDouble(Value[0][0]);
-                }
-                Value = Program.DB.getValue(ProjNum, "User_Pump", "양정", "번호 = '" + Pump2 + "'");
-                if (Value.Length > 0)
-                {
-                    L2 = Convert.ToDouble(Value[0][0]);
-                }
-                L = L1 + L2;
+                //string[][] Value = Program.DB.getValue(ProjNum, "User_Pump", "양정", "번호 = '" + Pump1 + "'");
+                //if (Value.Length > 0)
+                //{
+                //    L1 = Convert.ToDouble(Value[0][0]);
+                //}
+                //Value = Program.DB.getValue(ProjNum, "User_Pump", "양정", "번호 = '" + Pump2 + "'");
+                //if (Value.Length > 0)
+                //{
+                //    L2 = Convert.ToDouble(Value[0][0]);
+                //}
+                //L = L1 + L2;
+
+                
 
                 double[] theta_i = new double[12];               
 
@@ -796,7 +800,7 @@ namespace main
                         theta_i[mth] = theta_ih_avg[mth];
                     }
 
-                    Qh_d[mth] = Math.Max(Psi_pipe * L * (theta_av_d[mth] - theta_i[mth]) * thrL[mth] / 1000, 0);
+                    Qh_d[mth] = Math.Max(Psi_pipe * PipeL * (theta_av_d[mth] - theta_i[mth]) * thrL[mth] / 1000, 0);
                     if (double.IsNaN(Qh_d[mth])) { Qh_d[mth] = 0; }
                 }
             }
