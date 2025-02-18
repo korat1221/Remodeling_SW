@@ -680,7 +680,7 @@ namespace main
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"6\"}");
                         }
-                        else if (selID.IndexOf("::WN::") >= 0)
+                        else if (selID.IndexOf("::WIN::") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"7\"}");
                         }

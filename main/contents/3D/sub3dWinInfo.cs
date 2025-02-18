@@ -74,6 +74,15 @@ namespace main.contents
                 pictureBox2.Load(Program.gPath + Image1[0][0]);
                 pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
 
+                if (rec[0][5] != "")
+                {
+                    tabControl1.TabPages.Remove(tabPage2);
+                    tabControl1.TabPages.Add(tabPage2);
+                }
+                else
+                {
+                    tabControl1.TabPages.Remove(tabPage2);
+                }
                 //음영정보
                 R1 = Convert.ToDouble(rec[0][5]);
                 R1_textBox.Text = R1.ToString("0.00") + "m";
@@ -91,10 +100,6 @@ namespace main.contents
                 T1_textBox.Text = T1.ToString("0.00") + "m";
                 T2 = Convert.ToDouble(rec[0][3]);
                 T2_textBox.Text = T2.ToString("0.00") + "°";
-
-
-                //save한 음영계수값 불러오기 (최종만)
-                string[][] value = Program.DB.getValue(DB.type.ProjDB, "Shade_3D", "음영계수", "번호 = '" + 번호 + "'");
 
                 //창호정보 불러오기 // *************************창호 너비 높이 면적은 존 인벨롭에서 들어오는 값으로 해야함 (임시방편)
                 String[][] SubLoad = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭,상위창호번호,창호면적,창호너비,창호높이,창호유효열관류율,설치열교가산치", "번호 = '" + rec[0][12] + "'");
@@ -153,8 +158,10 @@ namespace main.contents
                 Width_textBox.Text = rec[0][14] == "" ? "0" : String.Format("{0:F2}", Convert.ToDouble(rec[0][14]));
                 height_textBox.Text = rec[0][15] == "" ? "0" : String.Format("{0:F2}", Convert.ToDouble(rec[0][15]));
 
-                if (SubLoad.Length > 0)
+                if (SubLoad.Length > 0 && SubLoad[0][0]!="")
                 {
+                    tabControl1.TabPages.Remove(tabPage1);
+                    tabControl1.TabPages.Add(tabPage1);
                     String[][] MainLoad = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호,창호명칭,프레임재료,프레임종류,유리종류,간봉종류,설치유형,설치종류,태양열취득률,빛투과율,Type,설치유형,프레임재료,이중단창,설치종류,유리열관류율", "번호 = '" + SubLoad[0][2] + "'");
 
                     // 텍스트정보 
@@ -201,11 +208,17 @@ namespace main.contents
                     LoadGraph2(번호);
 
                 }
+                else
+                {
+                    tabControl1.TabPages.Remove(tabPage1);
+                }
                 //차양정보 불러오기
                 String[][] BlindValue = Program.DB.querySQL(DB.type.ProjDB, "select a.제품명,a.종류,a.설치,a.투과수준,a.색깔,a.외부반사율,a.내부반사율,a.투과율,a.흡수율,a.제어방식1,a.제어방식2,b.방위,b.기울기 FROM ConstructionBlind AS  a INNER JOIN ZoneEnvelope_3D AS b ON a.번호 = b.차양적용 where b.번호 = '" + 번호 + "'");
 
-                if (BlindValue.Length > 0)
+                if (BlindValue.Length > 0 && BlindValue[0][0] != "")
                 {
+                    tabControl1.TabPages.Remove(Blind_tabPage);
+                    tabControl1.TabPages.Add(Blind_tabPage);
 
                     label20.Visible = true;
                     label19.Visible = true;
@@ -231,6 +244,7 @@ namespace main.contents
                 }
                 else
                 {
+                    tabControl1.TabPages.Remove(Blind_tabPage);
                     BlindName_textBox.Text = "차양 없음";
                     label20.Visible = false;
                     label19.Visible = false;
@@ -244,6 +258,7 @@ namespace main.contents
             {
                 tabControl1.Visible = false;
             }
+            tabPageOrder();
         }
 
         private void LoadGraph(String ControlType2, String Direction, string Slope)
@@ -259,7 +274,15 @@ namespace main.contents
                     s += Convert.ToDouble(res1[0][0]) * 100 + ",";
                 }
                 res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='" + Direction + "' And 기간 = '" + 12.ToString() + "월'");
-                s += Convert.ToDouble(res1[0][0]) * 100;
+                if (res1.Length > 0)
+                {
+                    webView21.Visible = true;
+                    s += Convert.ToDouble(res1[0][0]) * 100;
+                }
+                else
+                {
+                    webView21.Visible = false;
+                }
 
                 for (int mth = 0; mth < 11; mth++)
                 {
@@ -287,7 +310,15 @@ namespace main.contents
                     s += Convert.ToDouble(res1[0][0]) * 100 + ",";
                 }
                 res1 = Program.DB.getValue(DB.type.ProjDB, "Shade_3D", "음영계수", "번호= '" + Num + "' And 월 = '" + 12.ToString() + "월'");
-                s += Convert.ToDouble(res1[0][0]) * 100;
+                if (res1.Length > 0)
+                {
+                    webView22.Visible = true;
+                    s += Convert.ToDouble(res1[0][0]) * 100;
+                }
+                else
+                {
+                    webView22.Visible = false;
+                }
                 string s2 = "[" + s + "]";
                 s3 += "{type:\"line\",label:\"음영계수\",data:" + s2 + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:true,tension: 0.4},";
                 webView22.CoreWebView2.ExecuteScriptAsync("drawChart2([" + s3 + "],100, 10, true)");
@@ -295,5 +326,29 @@ namespace main.contents
             catch { }
         }
 
+        private void tabPageOrder()
+        {
+            if (tabControl1.TabPages.Count == 1)
+            {
+                tabControl1.TabPages.Clear();
+                tabControl1.TabPages.Add(tabPage1);
+
+            }
+            else if (tabControl1.TabPages.Count == 2)
+            {
+                tabControl1.TabPages.Clear();
+                tabControl1.TabPages.Add(tabPage1);
+                tabControl1.TabPages.Add(tabPage2);
+
+            }
+            else if (tabControl1.TabPages.Count == 3)
+            {
+                tabControl1.TabPages.Clear();
+                tabControl1.TabPages.Add(tabPage1);
+                tabControl1.TabPages.Add(tabPage2);
+                tabControl1.TabPages.Add(Blind_tabPage);
+
+            }
+        }
     }
 }

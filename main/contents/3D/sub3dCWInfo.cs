@@ -65,6 +65,15 @@ namespace main.contents
                 pictureBox2.Load(Program.gPath + Image1[0][0]);
                 pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
 
+                if(rec[0][5]!="")
+                {
+                    tabControl1.TabPages.Remove(tabPage2);
+                    tabControl1.TabPages.Add(tabPage2);
+                }
+                else
+                {
+                    tabControl1.TabPages.Remove(tabPage2);
+                }
                 //음영정보
                 R1 = Convert.ToDouble(rec[0][5]);
                 R1_textBox.Text = R1.ToString("0.00") + "m";
@@ -84,63 +93,13 @@ namespace main.contents
                 T2_textBox.Text = T2.ToString("0.00") + "°";
 
 
-                //save한 음영계수값 불러오기 (최종만)
-                string[][] value = Program.DB.getValue(DB.type.ProjDB, "Shade_3D", "음영계수", "번호 = '" + rec[0][9] + "'");
-
                 //커튼월정보 불러오기  // *************************창호 너비 높이 면적은 존 인벨롭에서 들어오는 값으로 해야함 (임시방편)
                 String[][] CWLoad = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭,커튼월면적,너비,높이,프레임종류,고정유리종류,개폐유리종류,간봉종류,설치유형,태양열취득률,빛투과율,설치열교가산치,커튼월창유효열관류율,Type,설치종류,Ucw적용방법", "번호 = '" + rec[0][12] + "'");
 
-                if (CWLoad.Length > 0)
+                if (CWLoad.Length > 0 && CWLoad[0][0] != "")
                 {
-                    //구조체 지정 전까지 면적,너비,높이 빼고 전부 다 안보이게
-                    if (rec[0][12] == "")
-                    {
-                        label4.Visible = false;
-                        install_textBox.Visible = false;
-                        label2.Visible = false;
-                        glass_textBox.Visible = false;
-                        label10.Visible = false;
-                        glass2_textBox.Visible = false;
-                        label3.Visible = false;
-                        frame_textBox.Visible = false;
-                        label6.Visible = false;
-                        Spacer_textBox.Visible = false;
-                        label7.Visible = false;
-                        shgc_textBox.Visible = false;
-                        label9.Visible = false;
-                        light_textBox.Visible = false;
-                        label11.Visible = false;
-                        uw_textBox.Visible = false;
-                        label13.Visible = false;
-                        inst_textBox.Visible = false;
-                        CWType_pictureBox.Visible = false;
-                        CWInstall_pictureBox.Visible = false;
-                    }
-                    else
-                    {
-                        label4.Visible = true;
-                        install_textBox.Visible = true;
-                        label2.Visible = true;
-                        glass_textBox.Visible = true;
-                        label10.Visible = true;
-                        glass2_textBox.Visible = true;
-                        label3.Visible = true;
-                        frame_textBox.Visible = true;
-                        label6.Visible = true;
-                        Spacer_textBox.Visible = true;
-                        label7.Visible = true;
-                        shgc_textBox.Visible = true;
-                        label9.Visible = true;
-                        light_textBox.Visible = true;
-                        label11.Visible = true;
-                        uw_textBox.Visible = true;
-                        label13.Visible = true;
-                        inst_textBox.Visible = true;
-                        CWType_pictureBox.Visible = true;
-                        CWInstall_pictureBox.Visible = true;
-                    }
-
-
+                    tabControl1.TabPages.Remove(tabPage1);
+                    tabControl1.TabPages.Add(tabPage1);
                     // 텍스트정보 
                     Name_textBox.Text = rec[0][9];
                     Name_textBox1.Text = CWLoad[0][1];
@@ -170,9 +129,9 @@ namespace main.contents
                     Tao_off_textBox.Text= CWLoad[0][11];
 
                     uw = Convert.ToDouble(CWLoad[0][13]);
-                    uw_textBox.Text = uw.ToString("0.000");
+                    uw_textBox.Text = uw.ToString("0.000") + " W/m" + Program.UTIL.Subscript(2, true)+"K";
                     install = Convert.ToDouble(CWLoad[0][12]);
-                    inst_textBox.Text = install.ToString("0.000");
+                    inst_textBox.Text = install.ToString("0.000")+ " W/m" + Program.UTIL.Subscript(2, true) + "K";
 
                     Type = CWLoad[0][14];
                     InstallType = CWLoad[0][9];
@@ -208,14 +167,31 @@ namespace main.contents
                     CWInstall_pictureBox.Load(Program.gPath + Image3[0][0]);
                     CWInstall_pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                 }
+                else
+                {
+                    tabControl1.TabPages.Remove(tabPage1);
+                }
                 string s = "";
                 string[][] res = Program.DB.querySQL(DB.type.ProjDB, "SELECT 음영계수 FROM Shade_3D WHERE 유형 = '최종음영' AND 번호 = '" + _ID + "' ORDER BY 월*1 ASC");
 
-                for (int k = 0; k < res.Length; k++)
+                if(res.Length > 0)
                 {
-                    s += Convert.ToDouble(res[k][0]) * 100 + ",";
+                    webView22.Visible = true;
                 }
-                runScript("drawChart([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\"}])");
+                else
+                {
+                    webView22.Visible = false;
+                }
+
+                if (res.Length > 0)
+                {
+                    for (int k = 0; k < res.Length; k++)
+                    {
+                        s += Convert.ToDouble(res[k][0]) * 100 + ",";
+                    }
+
+                    runScript("drawChart([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\"}])");
+                }
 
             }
             else
@@ -226,8 +202,10 @@ namespace main.contents
             //차양정보 불러오기
             String[][] BlindValue = Program.DB.querySQL(DB.type.ProjDB, "select a.제품명,a.종류,a.설치,a.투과수준,a.색깔,a.외부반사율,a.내부반사율,a.투과율,a.흡수율,a.제어방식1,a.제어방식2 FROM ConstructionBlind AS  a INNER JOIN ZoneEnvelope_3D AS b ON a.번호 = b.차양적용 where b.아이디 = '" + rec[0][9] + "'");
                 
-            if( BlindValue.Length > 0 )
+            if( BlindValue.Length > 0 && BlindValue[0][0]!="")
             {
+                tabControl1.TabPages.Remove(Blind_tabPage);
+                tabControl1.TabPages.Add(Blind_tabPage);
                 BlindName_textBox.Text = BlindValue[0][0];
                 BlindType_textBox.Text = BlindValue[0][1];
                 BlindInstall_textBox.Text = BlindValue[0][2];
@@ -243,6 +221,11 @@ namespace main.contents
                 Tao_on_textBox.Text = Convert.ToDouble(Blind[0][1]).ToString("0.000");
                 }
             }
+            else
+            {
+                tabControl1.TabPages.Remove(Blind_tabPage);
+            }
+            tabPageOrder();
         }
 
         private void LoadGraph(String ControlType2, String Direction)
@@ -255,7 +238,16 @@ namespace main.contents
                 for (int mth = 1; mth < 12; mth++)
                 {
                     res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='" + Direction + "' And 기간 = '" + mth.ToString() + "월'");
-                    s += Convert.ToDouble(res1[0][0]) * 100 + ",";
+                    if (res1.Length > 0)
+                    {
+                        webView21.Visible = true;
+                        s += Convert.ToDouble(res1[0][0]) * 100 + ",";
+                    }
+                    else
+                    {
+                        webView21.Visible = false;
+                    }
+                   
                 }
                 res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='" + Direction + "' And 기간 = '" + 12.ToString() + "월'");
                 s += Convert.ToDouble(res1[0][0]) * 100;
@@ -273,6 +265,31 @@ namespace main.contents
 
             }
             catch { }
+        }
+
+        private void tabPageOrder()
+        {
+            if(tabControl1.TabPages.Count ==1)
+            {
+                tabControl1.TabPages.Clear();
+                tabControl1.TabPages.Add(tabPage1);
+
+            }
+            else if (tabControl1.TabPages.Count ==2)
+            {
+                tabControl1.TabPages.Clear();
+                tabControl1.TabPages.Add(tabPage1);
+                tabControl1.TabPages.Add(tabPage2);
+
+            }
+            else if(tabControl1.TabPages.Count ==3)
+            {
+                tabControl1.TabPages.Clear();
+                tabControl1.TabPages.Add(tabPage1);
+                tabControl1.TabPages.Add(tabPage2);
+                tabControl1.TabPages.Add(Blind_tabPage);
+
+            }
         }
     }
 }

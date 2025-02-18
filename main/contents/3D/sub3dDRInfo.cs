@@ -19,24 +19,40 @@ namespace main.contents
         }
         private void onVisibleChanged(object sender, EventArgs e)
         {
-            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체,번호", "아이디 = '" + main.MainContents.selectInfo[2] + "'");
+            String[][] RES = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호", "아이디 = '" + main.MainContents.selectInfo[2] + "'");
+            string 번호 = null;
+            if (RES.Length > 0)
+            {
+                번호 = RES[0][0];
+            }
+            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,면적,창호너비,창호높이,구조체번호", "번호 = '" + 번호 + "'");
 
             if (rec.Length > 0)
             {
-                textBox3.Text = rec[0][2];
-                textBox1.Text = Double.Parse(rec[0][0]).ToString("#.##");
-                textBox2.Text = rec[0][1];
-            }
+                Name_textBox.Text = rec[0][0];
+                Area_textBox.Text = String.Format("{0:F2}", Convert.ToDouble(rec[0][1]));
+                Width_textBox.Text = rec[0][2] == "" ? "0" : String.Format("{0:F2}", Convert.ToDouble(rec[0][2]));
+                height_textBox.Text = rec[0][3] == "" ? "0" : String.Format("{0:F2}", Convert.ToDouble(rec[0][3]));
 
-            if (main.MainContents.selectInfo[1] == "IW")
-            {
-                label3.Show();
-                label1.Hide();
-            }
-            else
-            {
-                label1.Show();
-                label3.Hide();
+
+                //문짝제품, 문틀내부, 열교가산치, 문유효열관류율
+                string[][] DRLoad = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "문짝제품, 문틀내부, 열교가산치, 문유효열관류율", "번호 = '" + rec[0][4] + "'");
+                if( DRLoad.Length > 0 )
+                {
+                    Panel1.Visible = true;
+                    Door_textBox.Text = DRLoad[0][0];
+                    DRFrame_textBox.Text = DRLoad[0][1];
+                    dUinst_textBox.Text = String.Format("{0:F3}", Convert.ToDouble(DRLoad[0][2])) + " W/m" + Program.UTIL.Subscript(2, true)+"K";
+                    UD_textBox.Text = String.Format("{0:F3}", Convert.ToDouble(DRLoad[0][3])) + " W/m" + Program.UTIL.Subscript(2, true)+"K";
+                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "출입문유형이미지", "이미지", "유형 = '" + "치수" + "'");
+                    pictureBox1.Visible = true;
+                    pictureBox1.Load(Program.gPath + Image[0][0]);
+                    pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+                else
+                {
+                    Panel1.Visible= false;
+                }
             }
         }
     }

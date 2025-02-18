@@ -28,125 +28,96 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.SuspendLayout();
+            Area_textBox = new TextBox();
+            label6 = new Label();
+            Name_textBox = new TextBox();
+            NearZone_textBox = new TextBox();
+            label1 = new Label();
+            SuspendLayout();
+            // 
+            // Area_textBox
+            // 
+            Area_textBox.BackColor = Color.White;
+            Area_textBox.BorderStyle = BorderStyle.None;
+            Area_textBox.ForeColor = Color.Black;
+            Area_textBox.Location = new Point(91, 50);
+            Area_textBox.Name = "Area_textBox";
+            Area_textBox.ReadOnly = true;
+            Area_textBox.Size = new Size(116, 16);
+            Area_textBox.TabIndex = 136;
+            Area_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.ForeColor = SystemColors.ControlDark;
+            label6.Location = new Point(36, 51);
+            label6.Name = "label6";
+            label6.Size = new Size(31, 15);
+            label6.TabIndex = 135;
+            label6.Text = "면적";
+            label6.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // Name_textBox
+            // 
+            Name_textBox.BackColor = Color.White;
+            Name_textBox.BorderStyle = BorderStyle.None;
+            Name_textBox.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            Name_textBox.Location = new Point(36, 22);
+            Name_textBox.Name = "Name_textBox";
+            Name_textBox.ReadOnly = true;
+            Name_textBox.Size = new Size(171, 15);
+            Name_textBox.TabIndex = 134;
+            Name_textBox.Text = "    ";
+            // 
+            // NearZone_textBox
+            // 
+            NearZone_textBox.BackColor = Color.White;
+            NearZone_textBox.BorderStyle = BorderStyle.None;
+            NearZone_textBox.ForeColor = Color.Black;
+            NearZone_textBox.Location = new Point(91, 79);
+            NearZone_textBox.Name = "NearZone_textBox";
+            NearZone_textBox.ReadOnly = true;
+            NearZone_textBox.Size = new Size(116, 16);
+            NearZone_textBox.TabIndex = 138;
+            NearZone_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(51, 45);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(78, 15);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "외벽 길이 값:";
-            // 
-            // textBox1
-            // 
-            this.textBox1.BackColor = System.Drawing.Color.White;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Location = new System.Drawing.Point(135, 44);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(120, 16);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(261, 45);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(18, 15);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "m";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(51, 45);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(78, 15);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "내벽 길이 값:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(51, 85);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(46, 15);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "구조체:";
-            // 
-            // textBox2
-            // 
-            this.textBox2.BackColor = System.Drawing.Color.White;
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox2.Location = new System.Drawing.Point(135, 82);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(120, 16);
-            this.textBox2.TabIndex = 5;
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox3
-            // 
-            this.textBox3.BackColor = System.Drawing.Color.White;
-            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox3.Font =  new Font(UTIL.Families[0], 9.75F,System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.textBox3.Location = new System.Drawing.Point(51, 12);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(120, 16);
-            this.textBox3.TabIndex = 7;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(361, 218);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(31, 15);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "내벽";
+            label1.AutoSize = true;
+            label1.ForeColor = SystemColors.ControlDark;
+            label1.Location = new Point(36, 80);
+            label1.Name = "label1";
+            label1.Size = new Size(43, 15);
+            label1.TabIndex = 137;
+            label1.Text = "인접존";
+            label1.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // sub3dSLInfo
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "sub3dSLInfo";
-            this.Text = "sub3dSLInfo";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
+            ClientSize = new Size(800, 450);
+            Controls.Add(NearZone_textBox);
+            Controls.Add(label1);
+            Controls.Add(Area_textBox);
+            Controls.Add(label6);
+            Controls.Add(Name_textBox);
+            FormBorderStyle = FormBorderStyle.None;
+            Name = "sub3dSLInfo";
+            Text = "sub3dSLInfo";
+            VisibleChanged += onVisibleChanged;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
+        private TextBox Area_textBox;
+        private Label label6;
+        private TextBox Name_textBox;
+        private TextBox NearZone_textBox;
         private Label label1;
-        private TextBox textBox1;
-        private Label label2;
-        private Label label3;
-        private Label label4;
-        private TextBox textBox2;
-        private TextBox textBox3;
-        private Label label5;
     }
 }

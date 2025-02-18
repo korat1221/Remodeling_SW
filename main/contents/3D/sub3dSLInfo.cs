@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,7 +20,16 @@ namespace main.contents
         }
         private void onVisibleChanged(object sender, EventArgs e)
         {
-            string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체,번호", "아이디 = '" + main.MainContents.selectInfo[2] + "'");
+            string[][] value1 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적,번호,인접존", "아이디 = '" + main.MainContents.selectInfo[2] + "'");
+            if (value1.Length > 0)
+            {
+                Name_textBox.Text = value1[0][1];
+                double Area = Convert.ToDouble(value1[0][0]);
+                Area_textBox.Text = Area.ToString();
+                Program.UTIL.textBox_doubleComa(Area_textBox, true, 2);
+                Area_textBox.Text = Area_textBox.Text.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                NearZone_textBox.Text = value1[0][2];
+            }
         }
     }
 }

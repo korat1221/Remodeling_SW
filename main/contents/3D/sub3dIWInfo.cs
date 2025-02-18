@@ -23,16 +23,15 @@ namespace main.contents
         }
         private void onVisibleChanged(object sender, EventArgs e)
         {
-            string[][] value1 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호,면적,번호,인접존,방위", "아이디 = '" + main.MainContents.selectInfo[2] + "'");
-
+            string[][] value1 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적,번호,인접존", "아이디 = '" + main.MainContents.selectInfo[2] + "'");
             if (value1.Length > 0)
             {
-                Name_textBox.Text = value1[0][2];
-                //Name_textBox1.Text= value1[0][0];  ---> 구조체 번호는 없지..
-                //di_textBox.Text = value1[0][4];
-                Area = Convert.ToDouble(value1[0][1]);
-                Area_textBox.Text = string.Format("{0:F2}", Area);
-                near_textBox.Text = value1[0][3];
+                Name_textBox.Text = value1[0][1];
+                double Area = Convert.ToDouble(value1[0][0]);
+                Area_textBox.Text = Area.ToString();
+                Program.UTIL.textBox_doubleComa(Area_textBox, true, 2);
+                Area_textBox.Text = Area_textBox.Text.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                NearZone_textBox.Text = value1[0][2];
             }
         }
     }
