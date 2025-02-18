@@ -301,25 +301,23 @@ Zoning.prototype = {
                 }
             }
             return false;
-        };
-        let _getIntersectPoint = (line, point) => {
+        };        
+        let _intersectedPoint = (line, point) => {
             if ((new THREE.Triangle(line[1], line[0], point)).getArea() < 0.00001) {
                 let max = line[0].distanceTo(point), tmp = line[1].distanceTo(point);
 
                 if (max < tmp) max = tmp;
-
-                return (max < line[0].distanceTo(line[1]) && (!_equalPoint(line[0], point) || !_equalPoint(line[1], point))) ? point : null;
+                return !!(max < line[0].distanceTo(line[1]) - 0.0001);
             }
-            return null;
         };
         let _getInnerLines = (pos) => {
             let i = 0;
             let ret = [];
 
             while (i < pos.length) {
-                ret.push({line:[pos[i], pos[i + 1]],tmp:[]});
-                ret.push({line:[pos[i + 1], pos[i + 2]],tmp:[]});
-                ret.push({line:[pos[i + 2], pos[i]],tmp:[]});
+                ret.push([pos[i], pos[i + 1]]);
+                ret.push([pos[i + 1], pos[i + 2]]);
+                ret.push([pos[i + 2], pos[i]]);
                 i += 3;
             }
             return ret;
@@ -392,8 +390,8 @@ Zoning.prototype = {
             }
             return links;
         };
-        let _asPoints = (edges) => {
-            let i = -1, pnts = [];
+        let _asPoints = (edges, pnts0 = []) => {
+            let i = -1, pnts = pnts0;
 
             while (++i < edges.length) {
                 let edge = edges[i];
@@ -407,32 +405,19 @@ Zoning.prototype = {
             }
             return pnts;
         };
-        let _pushTempPoint = (lines_tmp, P0, P) => {
-            let o = {dist:P0.distanceTo(P), pnt:P};
-
-            if (!lines_tmp.find(el => _equalPoint(el.pnt, o.pnt))) {
-                lines_tmp.push(o);
+        let _pushPoint = (pnts, P) => {
+            if (!pnts.find((el3 => _equalPoint(el3, P)))) {
+                pnts.push(P);
             }
-        };
-        let _collectTempPoint = (L0, L2) => {
-            if (_intersectedLine(L0.line, L2)) {
-                let L,  P0 = L0.line[0];
-    
-                _pushTempPoint(L0.tmp, P0, L0.line[0]);
-                _pushTempPoint(L0.tmp, P0, L0.line[1]);
-
-                if ((L = _getIntersectPoint(L0.line, L2[0])) !== null) {
-                    _pushTempPoint(L0.tmp, P0, L);
-                }
-
-                if ((L = _getIntersectPoint(L0.line, L2[1])) !== null) {
-                    _pushTempPoint(L0.tmp, P0, L);
-                }
-            } 
         };
         let _pushLines = (id0, idx, cardi, lines) => {
             let i = -1, j, k;
+            let pos = zones[id0].userData.walls[idx].pos;
             let edges = zones[id0].userData.walls[idx].edges;
+
+            zones[id0].userData.walls[idx].pnts = [];
+
+            let pnts = zones[id0].userData.walls[idx].pnts;
 
             while(++i < lines.length) {
                 let L1 = lines[i];
@@ -447,28 +432,63 @@ Zoning.prototype = {
                         if ((id0 !== id || idx != j) && _compareCardi(cardi, el2.cardi)) {
                             k = -1;
             
-                            while(++k < el2.lines.length) {                
-                                _collectTempPoint(L1, el2.lines[k].line);
+                            while(++k < el2.lines.length) {   
+                                if (_intersectedLine(L1, el2.lines[k], true)) {
+                                    if (_pointInArea(pos, el2.lines[k][0]) && _pointInArea(pos, el2.lines[k][1])) {
+                                        if (!edges.find(el => _equalLine(el, el2.lines[k]))) {
+                                            edges.push(el2.lines[k]);
+                                        }
+                                        _pushPoint(pnts, el2.lines[k][0]);
+                                        _pushPoint(pnts, el2.lines[k][1]);
+                                    }
+                                    else if (_intersectedPoint(L1, el2.lines[k][0])) {
+                                        _pushPoint(pnts, el2.lines[k][0]);
+                                    }
+                                    else if (_intersectedPoint(L1, el2.lines[k][1])) {
+                                        _pushPoint(pnts, el2.lines[k][1]);
+                                    }
+                                }
                             }    
                         }
                     }    
                 }
             }
+        };
+        let _collectOuterPoints = (id0, idx0, elem) => {
+            let i, j, k, a, P;
 
-            i = -1;
-            while(++i < lines.length) {
-                let ltmp = lines[i].tmp;
+            for (const [id, el] of Object.entries(zones)) {
+                let walls = el.userData.walls;
                 
-                ltmp.sort((a, b) => {
-                    return a.dist - b.dist;
-                });
+                i = -1;
+                while (++i < walls.length) {
+                    let el2 = walls[i];
 
-                j = -1;
-                while(++j < ltmp.length - 1) {
-                    let L = [ltmp[j].pnt,ltmp[j + 1].pnt];
+                    if (id0 !== id || idx0 != i) {                        
+                        j = -1;
+                        while(++j < el2.edges.length) {
+                            let L1 = el2.edges[j];
 
-                    if (!edges.find(el => _equalLine(el, L))) {
-                        edges.push(L);
+                            if (_pointInArea(elem.pos, L1[0])) {
+                                _pushPoint(elem.pnts, L1[0]);
+                            }
+                            if (_pointInArea(elem.pos, L1[1])) {
+                                _pushPoint(elem.pnts, L1[1]);
+                            }
+                            if (_isInterscect(elem.pos, el2.pos)) {
+                                k = -1;
+                                while(++k < elem.edges.length) {
+                                    let L2 = elem.edges[k];
+
+                                    if ((a = math.intersect([L1[0].x, L1[0].y, L1[0].z], [L1[1].x, L1[1].y, L1[1].z], [L2[0].x, L2[0].y, L2[0].z], [L2[1].x, L2[1].y, L2[1].z])) !== null) {
+                                        P = new Vector3(a[0], a[1], a[2]);
+                                        if (_pointInArea(elem.pos, P) && !elem.pnts.find((el3 => el3.distanceTo(P) < 0.1))) {
+                                            elem.pnts.push(P);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -501,24 +521,34 @@ Zoning.prototype = {
             return false;
         };
         let _collectLines = () => {
-            let i, j, k;
+            let i, j;
 
             for (const [id, el] of Object.entries(zones)) {
-                let walls = zones[id].userData.walls;
+                let walls = el.userData.walls;
 
                 i = -1;
                 while (++i < walls.length) {
-                    walls[i].lines = _getInnerLines(walls[i].pos);    
+                    let el2 = walls[i];
+                    el2.lines = _getInnerLines(el2.pos);    
                 }
-
             }
 
             for (const [id, el] of Object.entries(zones)) {
-                let walls = zones[id].userData.walls;
+                let walls = el.userData.walls;
 
                 i = -1;
                 while (++i < walls.length) {
-                    _pushLines(id, i, walls[i].cardi, walls[i].lines);
+                    let el2 = walls[i];
+                    _pushLines(id, i, el2.cardi, el2.lines);
+                }
+            }
+
+            for (const [id, el] of Object.entries(zones)) {
+                let walls = el.userData.walls;
+                
+                i = -1;
+                while (++i < walls.length) {
+                    _collectOuterPoints(id, i, walls[i]);
                 }
             }
 
@@ -529,29 +559,61 @@ Zoning.prototype = {
                 while (++i < walls.length) {
                     let el2 = walls[i];
 
-                    let pnts = _asPoints(el2.edges);
+                    el2.edges2 = [];
+
                     j = -1;
-                    while(++j < pnts.length) {
+                    while(++j < el2.pnts.length) {
                         k = j;
-                        while(++k < pnts.length) {
-                            let L = [pnts[j],pnts[k]];
-                            if (!el2.edges.find(el3 => _intersectedLine(el3, L, true)) && _findConnection(L)) {
-                                el2.edges.push(L);
+                        while(++k < el2.pnts.length) {
+                            let L = [el2.pnts[j],el2.pnts[k]];
+                            if (_findConnection(L) && !el2.edges2.find(el3 => _equalLine(el3, L))) {
+                                el2.edges2.push(L);
                             }
+                        }
+                    }
+                }
+            }
+            
+            for (const [id, el] of Object.entries(zones)) {
+                let walls = zones[id].userData.walls;
+                
+                i = -1;
+                while (++i < walls.length) {
+                    let el2 = walls[i];
+
+                    el2.edges = [];
+
+                    j = -1;
+                    while(++j < el2.edges2.length) {
+                        let el3 = el2.edges2[j];
+
+                        if (!_removableEdge(el2.edges2, el3)) {
+                            el2.edges.push(el3);
                         }
                     }
                 }
             }
 
             for (const [id, el] of Object.entries(zones)) {
-                let walls = zones[id].userData.walls;
-
+                let walls = el.userData.walls;
                 i = -1;
                 while (++i < walls.length) {
-                    let el2 = walls[i];
-                    delete el2.lines;
+                    delete walls[i].lines;
+                    delete walls[i].pnts;
+                    delete walls[i].edges2;
                 }
             }
+        };
+        let _removableEdge = (edges, L) => {
+            let i = -1;
+
+            while(++i < edges.length) {
+                let el = edges[i];
+                if (_intersectedPoint(L,el[0]) || _intersectedPoint(L,el[1])) {
+                    return true;
+                }
+            }
+            return false;
         };
         let _collectLines_SD = () => {
             let a, b, i, j, k = -1;
@@ -583,9 +645,9 @@ Zoning.prototype = {
                             while (++a < el1[i].length) {
                                 b = -1;
                                 while (++b < el1[j].length) {
-                                    if (_intersectedLine(el1[i][a].line, el1[j][b].line)) {
-                                        if (!edges.find(el5 => _equalLine(el5, el1[i][a].line))) {
-                                            edges.push(el1[i][a].line);
+                                    if (_intersectedLine(el1[i][a], el1[j][b], true)) {
+                                        if (!edges.find(el5 => _equalLine(el5, el1[i][a]))) {
+                                            edges.push(el1[i][a]);
                                         }
                                     }
                                 }
@@ -691,6 +753,23 @@ Zoning.prototype = {
 
             return false;
         };
+        let _pointInArea = (b, c) => {
+            let i = 0, v = new THREE.Vector3(), P = new THREE.Plane();
+
+            while (i < b.length) {
+                let T = new THREE.Triangle(b[i], b[i + 1], b[i + 2]);
+
+                T.getPlane(P);
+                P.projectPoint(c, v);
+
+                if (_equalPoint(c, v) && T.containsPoint(v)) {
+                    return true;
+                }
+                i += 3;
+            }
+
+            return false;
+        };
          let _isLinked = (edges, a, b) => {
             let i = -1;
 
@@ -716,7 +795,7 @@ Zoning.prototype = {
             while (++i < arr.length) {
                 j = i;
                 while (++j < arr.length) {
-                    if (i !== j && _isLinked(wall.edges, arr[i], arr[j])) {
+                    if (_isLinked(wall.edges, arr[i], arr[j])) {
                         if (connections[i].findIndex(el => el === j) < 0) {
                             connections[i].push(j);
                         }
@@ -726,6 +805,7 @@ Zoning.prototype = {
                     }
                 }
             }
+
             const loops = [];
             const globally_visited = Array(arr.length).fill(false)
 
@@ -772,7 +852,6 @@ Zoning.prototype = {
 
             if (loops.length > 0) {
                 let graph = [];
-                let areaW = parseInt(wall.area * 1000);
 
                 i = -1;
                 while (++i < loops.length) {
@@ -803,7 +882,8 @@ Zoning.prototype = {
                                 k += 3;
                             }
                             let area = _getArea(arr);
-                            if(area > 0.1 && parseInt(area * 100) < areaW) {
+
+                            if(area > 0.1) {
                                 graph[i] = {area:area,graph:arr,raw:g};
                             }
                             else {
@@ -841,7 +921,7 @@ Zoning.prototype = {
             return {};
         };
         let _overlappedArea = (conn, board, graph, idx) => {
-            let path = graph[idx].graph;
+            let path = graph[idx].raw;
             let i = -1, j, k, cnt;
 
             while(++i < path.length) {
@@ -944,7 +1024,7 @@ Zoning.prototype = {
         let _drawPolygon = (a, color, loc) => {
             const geometry = new THREE.BufferGeometry();
             geometry.setFromPoints(a);
-            geometry.translate(loc);
+            geometry.translate(loc ? loc : offset);
             const mesh = new THREE.Line(geometry,
                 new THREE.LineBasicMaterial({
                     color: new THREE.Color(color),
@@ -954,10 +1034,10 @@ Zoning.prototype = {
             );
             this.editor.addObject(mesh);
         };
-        let _drawPoint = (a, color) => {
+        let _drawPoint = (a, color, loc) => {
             const geometry = new THREE.BufferGeometry();
             geometry.setFromPoints(a);
-    //        geometry.translate(offset);
+            geometry.translate(loc ? loc : offset);
 
             const material = new THREE.PointsMaterial({ color: color, size: 0.5 });
 
@@ -967,16 +1047,16 @@ Zoning.prototype = {
         };
 
         let _isDupPoints = (board, graph) => {
-            let i = -1;
+            let i = -1, cnt = 0;
 
             while(++i < graph.length) {
                 let pnt = graph[i];
 
                 if (!board.find(el => _equalPoint(el, pnt))) {
-                    return false;
+                    cnt++;
                 }
             }
-            return true;
+            return !(cnt >= 2);
         };
         let _markPoints = (board, graph) => {
             let i = -1;
@@ -1163,15 +1243,17 @@ Zoning.prototype = {
                 while (--j >= 0) {
                     let el2 = el.userData.walls[j];
                     let angle = {baseX:baseX, baseY:baseY, baseZ:baseZ, normal:el2.normal,x:baseX.angleTo(el2.normal),y:baseY.angleTo(el2.normal),z:baseZ.angleTo(el2.normal)};
+
                     let arr = _splitWall(angle, el2);
                     
                     if (arr.length > 1) {
-
+    
                         el2.deletable = true;
 
                         k = -1;
                         while (++k < arr.length) {
                             if (arr[k].graph) {
+        
                                 let edge = _asEdges(arr[k].raw);
                                 el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k].graph, working:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, /* pnts: pnts,  */width:arr[k].width, height:arr[k].height});
                             }
@@ -1433,26 +1515,6 @@ Zoning.prototype = {
             }
 
             console.log(zones);
-
-            // for (const [id, el] of Object.entries(zones)) {
-            //     let i = -1;
-
-            //     while (++i < el.userData.walls.length) {
-            //         let el2 = el.userData.walls[i];
-            //         let j = -1;
-            //         while (++j < el2.links.length) {
-            //             let el3 = el2.links[j];
-            //             let k = -1;
-
-            //             while(++k < el3.length) {
-            //                 let el4 = el3[k];
-            //                 if (el4.type=='RF') {
-            //                     _drawPolygon(el4.pos, "#ff0000");
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
 
             i = obj.children.length;
             while (--i >= 0) {
