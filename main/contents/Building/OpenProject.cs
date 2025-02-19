@@ -20,6 +20,7 @@ using System.Xml.Linq;
 
 using System.Data.SQLite;
 using main.subcontents.HeatingSystem;
+using main.info;
 
 namespace main.contents
 {
@@ -62,7 +63,7 @@ namespace main.contents
             dataGridView1.Rows.Clear();
 
             string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT ID, pnum, title, type,date FROM projects");
-            if(res.Length > 0)
+            if (res.Length > 0)
             {
                 for (int n = 0; n < res.Length; n++)
                 {
@@ -80,7 +81,7 @@ namespace main.contents
                 }
             }
         }
-      
+
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
             if (row % 2 == 1)
@@ -144,7 +145,7 @@ namespace main.contents
             }
 
             Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,프로젝트명,프로젝트유형,프로젝트유형번호"
-                    , "'" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "','" + dataGridView1.Rows[k].Cells[3].Value.ToString() + "','" + ProjectType + "','" + ProjectTypeNum  + "'"
+                    , "'" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "','" + dataGridView1.Rows[k].Cells[3].Value.ToString() + "','" + ProjectType + "','" + ProjectTypeNum + "'"
                     , "프로젝트번호");
         }
 
@@ -199,5 +200,22 @@ namespace main.contents
             }
             return -1;
         }
+
+        private void info_Click(object sender, EventArgs e)
+        {            
+            string basePath = Program.gPath + "ZEROFIX manual_final\\2.project\\2.1.project";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.info;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -118,7 +119,7 @@ namespace main.contents
                 tables.Add("ZoneLighting_form");
             }
             if (System_checkBox.Checked)
-            {        
+            {
                 tables.Add("HeatingSystem_Form");
                 tables.Add("Heating_ce_Form");
                 tables.Add("CoolingSystem_Form");
@@ -160,6 +161,23 @@ namespace main.contents
                 System_checkBox.Checked = false;
             }
         }
+
+        private void info_Click(object sender, EventArgs e)
+        {            
+            string basePath = Program.gPath + "ZEROFIX manual_final\\2.project\\2.2.projectcopy";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+       
     }
 
 }

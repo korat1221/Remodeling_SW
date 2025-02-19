@@ -39,6 +39,7 @@ partial class BlowDoorTest
         n50_textBox = new TextBox();
         n50_label1 = new Label();
         n50_label2 = new Label();
+        info = new Button();
         ((System.ComponentModel.ISupportInitialize)Blow_dataGridView).BeginInit();
         SuspendLayout();
         // 
@@ -67,7 +68,7 @@ partial class BlowDoorTest
         Blow_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
         dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
         dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-        dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+        dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
         dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
         dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
         dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -78,7 +79,7 @@ partial class BlowDoorTest
         Blow_dataGridView.Name = "Blow_dataGridView";
         dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
         dataGridViewCellStyle2.BackColor = SystemColors.Control;
-        dataGridViewCellStyle2.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+        dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
         dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
         dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
         dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -87,12 +88,11 @@ partial class BlowDoorTest
         Blow_dataGridView.RowHeadersVisible = false;
         Blow_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
         dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        dataGridViewCellStyle3.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+        dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
         dataGridViewCellStyle3.ForeColor = Color.Black;
         dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
         dataGridViewCellStyle3.SelectionForeColor = Color.Black;
         Blow_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-        Blow_dataGridView.RowTemplate.Height = 25;
         Blow_dataGridView.Size = new Size(391, 141);
         Blow_dataGridView.TabIndex = 19;
         Blow_dataGridView.CellContentClick += Blow_dataGridView_CellContentClick;
@@ -103,7 +103,7 @@ partial class BlowDoorTest
         Add_button.BackColor = SystemColors.ControlLight;
         Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
         Add_button.FlatStyle = FlatStyle.System;
-        Add_button.Font = new System.Drawing.Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+        Add_button.Font = new Font("나눔바른고딕", 11.9999981F, FontStyle.Bold);
         Add_button.Location = new Point(327, 6);
         Add_button.Margin = new Padding(0);
         Add_button.Name = "Add_button";
@@ -118,7 +118,7 @@ partial class BlowDoorTest
         Delete_button.BackColor = SystemColors.ControlLight;
         Delete_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
         Delete_button.FlatStyle = FlatStyle.System;
-        Delete_button.Font = new System.Drawing.Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+        Delete_button.Font = new Font("나눔바른고딕", 11.9999981F, FontStyle.Bold);
         Delete_button.Location = new Point(354, 6);
         Delete_button.Margin = new Padding(0);
         Delete_button.Name = "Delete_button";
@@ -131,10 +131,10 @@ partial class BlowDoorTest
         // label4
         // 
         label4.AutoSize = true;
-        label4.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+        label4.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
         label4.Location = new Point(12, 10);
         label4.Name = "label4";
-        label4.Size = new Size(99, 15);
+        label4.Size = new Size(97, 15);
         label4.TabIndex = 174;
         label4.Text = "기밀 테스트 결과";
         // 
@@ -142,7 +142,7 @@ partial class BlowDoorTest
         // 
         n50_textBox.BackColor = Color.White;
         n50_textBox.BorderStyle = BorderStyle.None;
-        n50_textBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+        n50_textBox.Font = new Font("나눔바른고딕", 9.75F);
         n50_textBox.ForeColor = SystemColors.ControlText;
         n50_textBox.Location = new Point(232, 186);
         n50_textBox.Name = "n50_textBox";
@@ -153,24 +153,39 @@ partial class BlowDoorTest
         // n50_label1
         // 
         n50_label1.AutoSize = true;
-        n50_label1.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+        n50_label1.Font = new Font("나눔바른고딕", 9.75F);
         n50_label1.ForeColor = SystemColors.ControlText;
         n50_label1.Location = new Point(175, 187);
         n50_label1.Name = "n50_label1";
-        n50_label1.Size = new Size(56, 15);
+        n50_label1.Size = new Size(58, 15);
         n50_label1.TabIndex = 175;
         n50_label1.Text = "평균 n50";
         // 
         // n50_label2
         // 
         n50_label2.AutoSize = true;
-        n50_label2.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+        n50_label2.Font = new Font("나눔바른고딕", 9.75F);
         n50_label2.ForeColor = SystemColors.ControlText;
         n50_label2.Location = new Point(352, 185);
         n50_label2.Name = "n50_label2";
-        n50_label2.Size = new Size(25, 16);
+        n50_label2.Size = new Size(29, 15);
         n50_label2.TabIndex = 177;
         n50_label2.Text = "1/h";
+        // 
+        // info
+        // 
+        info.BackColor = SystemColors.ControlLight;
+        info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+        info.FlatStyle = FlatStyle.System;
+        info.Font = new Font("나눔바른고딕", 9.75F);
+        info.Location = new Point(112, 6);
+        info.Margin = new Padding(0);
+        info.Name = "info";
+        info.Size = new Size(23, 23);
+        info.TabIndex = 178;
+        info.Text = "?";
+        info.UseVisualStyleBackColor = false;
+        info.Click += info_Click;
         // 
         // BlowDoorTest
         // 
@@ -178,6 +193,7 @@ partial class BlowDoorTest
         AutoScaleMode = AutoScaleMode.Font;
         BackColor = Color.White;
         ClientSize = new Size(393, 244);
+        Controls.Add(info);
         Controls.Add(n50_label2);
         Controls.Add(n50_textBox);
         Controls.Add(n50_label1);
@@ -205,4 +221,5 @@ partial class BlowDoorTest
     private TextBox n50_textBox;
     private Label n50_label1;
     private Label n50_label2;
+    private Button info;
 }

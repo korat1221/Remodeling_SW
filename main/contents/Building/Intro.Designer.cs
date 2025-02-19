@@ -38,6 +38,7 @@
             radioButton2 = new RadioButton();
             radioButton1 = new RadioButton();
             GeneralPanel = new Panel();
+            info = new Button();
             ((System.ComponentModel.ISupportInitialize)Logo_pictureBox).BeginInit();
             groupBox1.SuspendLayout();
             GeneralPanel.SuspendLayout();
@@ -46,7 +47,7 @@
             // Save_button
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            Save_button.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
             Save_button.ForeColor = Color.Black;
             Save_button.Location = new Point(590, 480);
             Save_button.Name = "Save_button";
@@ -67,20 +68,20 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font(UTIL.Families[0], 21.75F, FontStyle.Italic);
+            label2.Font = new Font("나눔바른고딕", 21.75F, FontStyle.Italic);
             label2.Location = new Point(533, 275);
             label2.Name = "label2";
-            label2.Size = new Size(452, 32);
+            label2.Size = new Size(442, 34);
             label2.TabIndex = 113;
             label2.Text = "Building energy design program ";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font(UTIL.Families[0], 21.75F, FontStyle.Italic);
+            label3.Font = new Font("나눔바른고딕", 21.75F, FontStyle.Italic);
             label3.Location = new Point(533, 320);
             label3.Name = "label3";
-            label3.Size = new Size(242, 32);
+            label3.Size = new Size(238, 34);
             label3.TabIndex = 114;
             label3.Text = "for fixing to zero ";
             // 
@@ -90,7 +91,7 @@
             groupBox1.Controls.Add(radioButton3);
             groupBox1.Controls.Add(radioButton2);
             groupBox1.Controls.Add(radioButton1);
-            groupBox1.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            groupBox1.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
             groupBox1.Location = new Point(332, 404);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(605, 40);
@@ -102,7 +103,7 @@
             radioButton4.AutoSize = true;
             radioButton4.Location = new Point(489, 15);
             radioButton4.Name = "radioButton4";
-            radioButton4.Size = new Size(49, 18);
+            radioButton4.Size = new Size(49, 19);
             radioButton4.TabIndex = 3;
             radioButton4.Text = "신규";
             radioButton4.UseVisualStyleBackColor = true;
@@ -113,7 +114,7 @@
             radioButton3.AutoSize = true;
             radioButton3.Location = new Point(340, 15);
             radioButton3.Name = "radioButton3";
-            radioButton3.Size = new Size(73, 18);
+            radioButton3.Size = new Size(73, 19);
             radioButton3.TabIndex = 2;
             radioButton3.Text = "리모델링";
             radioButton3.UseVisualStyleBackColor = true;
@@ -124,7 +125,7 @@
             radioButton2.AutoSize = true;
             radioButton2.Location = new Point(191, 15);
             radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(73, 18);
+            radioButton2.Size = new Size(73, 19);
             radioButton2.TabIndex = 1;
             radioButton2.Text = "리트로핏";
             radioButton2.UseVisualStyleBackColor = true;
@@ -136,7 +137,7 @@
             radioButton1.Checked = true;
             radioButton1.Location = new Point(66, 15);
             radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(49, 18);
+            radioButton1.Size = new Size(49, 19);
             radioButton1.TabIndex = 0;
             radioButton1.TabStop = true;
             radioButton1.Text = "기존";
@@ -146,6 +147,7 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(info);
             GeneralPanel.Controls.Add(Logo_pictureBox);
             GeneralPanel.Controls.Add(Save_button);
             GeneralPanel.Controls.Add(groupBox1);
@@ -156,6 +158,21 @@
             GeneralPanel.Size = new Size(1268, 684);
             GeneralPanel.TabIndex = 133;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(1230, 12);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 148;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
             // 
             // Intro
             // 
@@ -187,5 +204,6 @@
         private RadioButton radioButton1;
         private Panel GeneralPanel;
         private RadioButton radioButton4;
+        private Button info;
     }
 }

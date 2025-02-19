@@ -16,6 +16,7 @@ using static main.DB;
 using System.Xml.Linq;
 using System.Data.Common;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
+using main.info;
 
 namespace main.contents.Building
 {
@@ -73,9 +74,9 @@ namespace main.contents.Building
             Panel p = (Panel)sender;
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
-       
-        
-        
+
+
+
 
         #region 전기
         private void Create_ElecUse_Table()
@@ -145,7 +146,7 @@ namespace main.contents.Building
                     string s3 = null;
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        s3 +=  Program.UTIL.dataGridView_doubleComa(Elec_dataGridView, a, mth + 2, 0) + ",";
+                        s3 += Program.UTIL.dataGridView_doubleComa(Elec_dataGridView, a, mth + 2, 0) + ",";
                     }
                     string s2 = "[" + s3 + "]";
                     s += "{label:\"" + label + "\",type:\"line\",data:" + s2 + ",yAxisTitle:\"전기 에너지사용량[kWh]\",pointStyle:\"circle\",pointRadius:\"2.5\",borderWidth:\"0.5\",borderColor:\"" + randomGrayColor + "\",backgroundColor:\"" + randomGrayColor + "\",dash:true,tension: 0.4},";
@@ -170,7 +171,7 @@ namespace main.contents.Building
                     s3 += average[mth].ToString() + ",";
                 }
                 string s2 = "[" + s3 + "]";
-               s += "{label:\"" + label + "\",type:\"line\",data:" + s2 + ",yAxisTitle:\"전기 에너지사용량[kWh]\",pointStyle:\"rect\",pointRadius:\"3.5\",borderWidth:\"2\",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false,tension: 0.4},";
+                s += "{label:\"" + label + "\",type:\"line\",data:" + s2 + ",yAxisTitle:\"전기 에너지사용량[kWh]\",pointStyle:\"rect\",pointRadius:\"3.5\",borderWidth:\"2\",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false,tension: 0.4},";
             }
 
             double Elec_max = 0;
@@ -195,7 +196,7 @@ namespace main.contents.Building
             int n = ((int)Elec_max).ToString().Length;
             Elec_max = Convert.ToDouble(String.Format("{0:F0}", Elec_max / Math.Pow(10, n - 1))) * Math.Pow(10, n - 1) + Math.Pow(10, n - 1);
             webView22.CoreWebView2.ExecuteScriptAsync("drawChart_energyuse([" + s + "]," + Elec_max.ToString() + ")");
-        }       
+        }
         #endregion
         #region 가스
         private void Create_GasUse_Table()
@@ -216,7 +217,7 @@ namespace main.contents.Building
             Gas_m3_dataGridView.Columns.Add(연도Combo);
             for (int mth = 1; mth < 13; mth++)
             {
-                Gas_m3_dataGridView.Columns.Add("B" + mth.ToString(), "가스사용량." + mth + "월.[m"+ Program.UTIL.Subscript(3, true) + "]");
+                Gas_m3_dataGridView.Columns.Add("B" + mth.ToString(), "가스사용량." + mth + "월.[m" + Program.UTIL.Subscript(3, true) + "]");
             }
 
             new StackedHeaderDecorator(Gas_kWh_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
@@ -507,7 +508,7 @@ namespace main.contents.Building
                 {
                     double energy = Program.UTIL.dataGridView_doubleComa(Gas_m3_dataGridView, n, mth + 1, 0);
                     Program.DB.setValue(DB.type.ProjDB, "BuildingEnergyUse", "프로젝트유형,연료,연도,월,단위,에너지사용량,사용시작일,사용종료일",
-                          "'" + 프로젝트유형[0][0] + "','가스','" + Gas_m3_dataGridView.Rows[n].Cells[1].Value + "','" + mth + "월','m3','" + energy+ "','" +
+                          "'" + 프로젝트유형[0][0] + "','가스','" + Gas_m3_dataGridView.Rows[n].Cells[1].Value + "','" + mth + "월','m3','" + energy + "','" +
                           Gas_StartDay_comboBox.Text + "','" + Gas_EndDay_comboBox.Text
                           + "'", "연료,연도,월,단위");
                 }
@@ -645,5 +646,24 @@ namespace main.contents.Building
             }
 
         }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "ZEROFIX manual_final\\4.energyuse";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
     }
+
 }
+

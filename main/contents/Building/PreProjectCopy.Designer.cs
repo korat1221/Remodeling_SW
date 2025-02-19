@@ -51,6 +51,7 @@ namespace main.contents
             pnum = new DataGridViewTextBoxColumn();
             pname = new DataGridViewTextBoxColumn();
             type = new DataGridViewTextBoxColumn();
+            info = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)System_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Zone_pictureBox).BeginInit();
@@ -63,6 +64,7 @@ namespace main.contents
             // panel1
             // 
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(info);
             panel1.Controls.Add(label4);
             panel1.Controls.Add(System_checkBox);
             panel1.Controls.Add(System_pictureBox);
@@ -84,10 +86,10 @@ namespace main.contents
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            label4.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 129);
             label4.Location = new Point(12, 21);
             label4.Name = "label4";
-            label4.Size = new Size(119, 14);
+            label4.Size = new Size(109, 15);
             label4.TabIndex = 130;
             label4.Text = "기존 건물 프로젝트";
             // 
@@ -95,10 +97,10 @@ namespace main.contents
             // 
             System_checkBox.AutoSize = true;
             System_checkBox.Enabled = false;
-            System_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
+            System_checkBox.Font = new Font("나눔바른고딕", 9.75F);
             System_checkBox.Location = new Point(520, 260);
             System_checkBox.Name = "System_checkBox";
-            System_checkBox.Size = new Size(77, 18);
+            System_checkBox.Size = new Size(77, 19);
             System_checkBox.TabIndex = 129;
             System_checkBox.Text = "설비 정보";
             System_checkBox.UseVisualStyleBackColor = true;
@@ -116,10 +118,10 @@ namespace main.contents
             // 
             Zone_checkBox.AutoSize = true;
             Zone_checkBox.Enabled = false;
-            Zone_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Zone_checkBox.Font = new Font("나눔바른고딕", 9.75F);
             Zone_checkBox.Location = new Point(422, 260);
             Zone_checkBox.Name = "Zone_checkBox";
-            Zone_checkBox.Size = new Size(65, 18);
+            Zone_checkBox.Size = new Size(65, 19);
             Zone_checkBox.TabIndex = 127;
             Zone_checkBox.Text = "존 정보";
             Zone_checkBox.UseVisualStyleBackColor = true;
@@ -137,10 +139,10 @@ namespace main.contents
             // 
             Model_checkBox.AutoSize = true;
             Model_checkBox.Enabled = false;
-            Model_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Model_checkBox.Font = new Font("나눔바른고딕", 9.75F);
             Model_checkBox.Location = new Point(316, 260);
             Model_checkBox.Name = "Model_checkBox";
-            Model_checkBox.Size = new Size(70, 18);
+            Model_checkBox.Size = new Size(70, 19);
             Model_checkBox.TabIndex = 125;
             Model_checkBox.Text = "3D 정보";
             Model_checkBox.UseVisualStyleBackColor = true;
@@ -158,10 +160,10 @@ namespace main.contents
             // 
             Construction_checkBox.AutoSize = true;
             Construction_checkBox.Enabled = false;
-            Construction_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Construction_checkBox.Font = new Font("나눔바른고딕", 9.75F);
             Construction_checkBox.Location = new Point(202, 260);
             Construction_checkBox.Name = "Construction_checkBox";
-            Construction_checkBox.Size = new Size(89, 18);
+            Construction_checkBox.Size = new Size(89, 19);
             Construction_checkBox.TabIndex = 123;
             Construction_checkBox.Text = "구조체 정보";
             Construction_checkBox.UseVisualStyleBackColor = true;
@@ -180,10 +182,10 @@ namespace main.contents
             Building_checkBox.AutoSize = true;
             Building_checkBox.Checked = true;
             Building_checkBox.CheckState = CheckState.Checked;
-            Building_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Building_checkBox.Font = new Font("나눔바른고딕", 9.75F);
             Building_checkBox.Location = new Point(104, 260);
             Building_checkBox.Name = "Building_checkBox";
-            Building_checkBox.Size = new Size(77, 18);
+            Building_checkBox.Size = new Size(77, 19);
             Building_checkBox.TabIndex = 121;
             Building_checkBox.Text = "건물 정보";
             Building_checkBox.UseVisualStyleBackColor = true;
@@ -200,7 +202,7 @@ namespace main.contents
             // Save_button
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            Save_button.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
             Save_button.ForeColor = Color.Black;
             Save_button.Location = new Point(524, 315);
             Save_button.Name = "Save_button";
@@ -223,7 +225,7 @@ namespace main.contents
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -235,7 +237,7 @@ namespace main.contents
             dataGridView1.Name = "dataGridView1";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -244,7 +246,7 @@ namespace main.contents
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
@@ -298,6 +300,21 @@ namespace main.contents
             type.Resizable = DataGridViewTriState.False;
             type.Width = 96;
             // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(678, 9);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 150;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
+            // 
             // PreProjectCopy
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -341,5 +358,6 @@ namespace main.contents
         private DataGridViewTextBoxColumn pnum;
         private DataGridViewTextBoxColumn pname;
         private DataGridViewTextBoxColumn type;
+        private Button info;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.info;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,7 +33,7 @@ namespace main.contentslist
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
-             Program.DB.initTable(DB.type.ProjDB, "ConstructionWall");
+            Program.DB.initTable(DB.type.ProjDB, "ConstructionWall");
             Create_Table();
         }
 
@@ -91,9 +92,9 @@ namespace main.contentslist
             dataGridView1.Columns.Add("A1", "번호");
             dataGridView1.Columns.Add("A2", "명칭");
             dataGridView1.Columns.Add("A3", "Type");
-            dataGridView1.Columns.Add("A4", "유효열관류율.[W/m"+Program.UTIL.Subscript(2, true)+"·K]");
+            dataGridView1.Columns.Add("A4", "유효열관류율.[W/m" + Program.UTIL.Subscript(2, true) + "·K]");
             dataGridView1.Columns.Add("A5", "흡수율.[-]");
-            dataGridView1.Columns.Add("A6", "면적.[m"+ Program.UTIL.Subscript(2, true) + "]");
+            dataGridView1.Columns.Add("A6", "면적.[m" + Program.UTIL.Subscript(2, true) + "]");
             dataGridView1.Columns[0].Width = 40;
         }
 
@@ -133,19 +134,19 @@ namespace main.contentslist
                     dataGridView1.Rows[nRow].Cells[3].Value = List[n][2];
                     dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][3]));
                     dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][4]));
-                    string[][] Area = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "구조체번호='"+ List[n][0]+"'");
-                    double A=0;
-                    if(Area.Length > 0)
+                    string[][] Area = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "구조체번호='" + List[n][0] + "'");
+                    double A = 0;
+                    if (Area.Length > 0)
                     {
-                        for(int a  = 0; a < Area.Length; a++)
+                        for (int a = 0; a < Area.Length; a++)
                         {
                             A += Convert.ToDouble(Area[a][0]);
-                        }                       
+                        }
                         dataGridView1.Rows[nRow].Cells[6].Value = String.Format("{0:F2}", A);
                     }
                     mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":3,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
                 }
-               
+
             }
             CountDB = List.Length;
             Program.UTIL.resetMainTree(1, 1, mainMenu.ToArray(), "34"); // 예시 코드: 메인 메뉴 동적 할당
@@ -197,5 +198,22 @@ namespace main.contentslist
         {
             load_List();
         }
+
+        private void info_Click(object sender, EventArgs e)
+        {            
+            string basePath = Program.gPath + "ZEROFIX manual_final\\5.wall\\5.1.wallgeneral";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
     }
 }

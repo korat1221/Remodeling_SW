@@ -21,6 +21,7 @@ using System.Xml.Linq;
 using System.Data.SQLite;
 using System.Drawing.Configuration;
 using static System.Data.Entity.Infrastructure.Design.Executor;
+using main.info;
 
 namespace main.contents
 {
@@ -112,7 +113,7 @@ namespace main.contents
                     PreCopy_button.Visible = false;
                     New_button.Visible = true;
                 }
-                ProjectType_label.Text = types[ProjectType] +" 생성";
+                ProjectType_label.Text = types[ProjectType] + " 생성";
 
             }
             catch { }
@@ -143,7 +144,7 @@ namespace main.contents
                 }
                 drawing = false;
             }
-           
+
 
         }
         static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
@@ -188,7 +189,7 @@ namespace main.contents
             {
                 string title0 = "";
                 string[][] value = Program.DB.querySQL(DB.type.ProjListDB, "SELECT title FROM projects WHERE pnum ='" + pid0 + "'");
-                if(value.Length >0)
+                if (value.Length > 0)
                 {
                     title0 = value[0][0];
                 }
@@ -210,7 +211,7 @@ namespace main.contents
                         }
                     }
 
-                    Program.DB.executeSQL(db, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "', 프로젝트유형='"+ types[ProjectType]+"', 프로젝트유형번호='"+ ProjectType+"'");
+                    Program.DB.executeSQL(db, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "', 프로젝트유형='" + types[ProjectType] + "', 프로젝트유형번호='" + ProjectType + "'");
                     Program.DB.executeSQL(db, "UPDATE BuildingGeneral SET 기존프로젝트 ='" + pid0 + "' WHERE  프로젝트번호 = '" + pid + "'");
                     db.Close();
                 }
@@ -236,7 +237,7 @@ namespace main.contents
                 int k_new = dataGridView1.Rows.Count - 1;
                 dataGridView1.Rows[k_new].Cells[0].Value = true;
                 string[][] pre = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "기존프로젝트", "프로젝트번호 = '" + pid + "'");
-                if(pre.Length > 0)
+                if (pre.Length > 0)
                 {
                     ProjectOpen();
                     Program.getMenuForm().DoLoadFormDirect(0);
@@ -245,7 +246,7 @@ namespace main.contents
                 {
                     MessageBox.Show("기존 프로젝트가 지정되지 않았습니다. 다시 지정 후 Copy 하세요.");
                 }
-               
+
             }
         }
         private void Copy_button_Click(object sender, EventArgs e)
@@ -377,7 +378,7 @@ namespace main.contents
 
             string pid = dt.Year + "-" + dt.Month.ToString().PadLeft(2, '0') + "-" + num.ToString().PadLeft(3, '0');
             string today = DateTime.Now.ToString("yyyy/MM/dd");
-            Program.DB.executeSQL(DB.type.ProjListDB, "INSERT INTO projects (pnum, type, title,date) VALUES ('" + pid + "'," + ProjectType + ",'" + title +"','"+ today + "')");
+            Program.DB.executeSQL(DB.type.ProjListDB, "INSERT INTO projects (pnum, type, title,date) VALUES ('" + pid + "'," + ProjectType + ",'" + title + "','" + today + "')");
 
             if (pid0 != "")
             {
@@ -389,7 +390,7 @@ namespace main.contents
             }
 
             Directory.CreateDirectory(Program.gPath + "threejs\\public\\models\\" + pid);
-            
+
             return pid;
         }
         private int GetSelectedIndex()
@@ -436,7 +437,7 @@ namespace main.contents
 
                         if (File.Exists(Program.gPath + "projects\\" + pid + ".sqlite"))
                         {
-                            if(k >1)
+                            if (k > 1)
                             {
                                 dataGridView1.Rows[k].Cells[0].Value = false;
                                 dataGridView1.Rows[k - 1].Cells[0].Value = true;
@@ -448,7 +449,7 @@ namespace main.contents
                                 MessageBox.Show("최소 한 개 이상의 프로젝트가 필요하므로 삭제할 수 없습니다.");
                             }
                         }
-                           
+
 
                         if (Directory.Exists(Program.gPath + "threejs\\public\\models\\" + pid))
                             Directory.Delete(Program.gPath + "threejs\\public\\models\\" + pid, true);
@@ -533,8 +534,24 @@ namespace main.contents
             dataGridView1.Rows[k_new].Cells[0].Value = true;
             ProjectOpen();
             Program.getMenuForm().DoLoadFormDirect(0);
-            create_stop: int a = 0;
+        create_stop: int a = 0;
 
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {             
+            string basePath = Program.gPath + "ZEROFIX manual_final\\2.project\\2.1.project";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
 
     }

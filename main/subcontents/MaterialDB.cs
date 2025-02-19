@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using main.info;
 
 
 namespace main.subcontents
@@ -26,7 +27,7 @@ namespace main.subcontents
         public MaterialDB()
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
-            
+
 
             //재료유형 리스트 생성 
             MaterialType_comboBox.Items.Add("단열재");
@@ -55,7 +56,7 @@ namespace main.subcontents
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
-           dataGridView.Columns.Add(checkBoxColumn);
+            dataGridView.Columns.Add(checkBoxColumn);
 
             dataGridView.Columns.Add("A1", "번호");
             dataGridView.Columns.Add("A2", "DB유형");
@@ -63,7 +64,7 @@ namespace main.subcontents
             dataGridView.Columns.Add("A4", "종류1");
             dataGridView.Columns.Add("A5", "종류2");
             dataGridView.Columns.Add("A6", "λ열전도율.[W/m·K]");
-            dataGridView.Columns.Add("A7", "ρ밀도.[kg/m"+Program.UTIL.Subscript(3, true) + "]");
+            dataGridView.Columns.Add("A7", "ρ밀도.[kg/m" + Program.UTIL.Subscript(3, true) + "]");
             dataGridView.Columns.Add("A8", "с비열.[kJ/kg·K]");
             dataGridView.Columns.Add("A9", "투습저항계수.dry");
             dataGridView.Columns.Add("A10", "투습저항계수.wet");
@@ -74,14 +75,14 @@ namespace main.subcontents
             dataGridView.Columns[3].Width = 150;
 
 
-            if (MaterialType=="공기층")
+            if (MaterialType == "공기층")
             {
                 int nRow = dataGridView.Rows.Add();
                 dataGridView.Rows[nRow].Cells[1].Value = "M_000";
                 dataGridView.Rows[nRow].Cells[1].Value = "표준";
                 dataGridView.Rows[nRow].Cells[2].Value = "공기층";
             }
-            else 
+            else
             {
                 string[][] User_DB = Program.DB.getValue(DB.type.ProjDB, "User_Material", "번호,DB유형,재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '" + MaterialType + "'");
                 if (User_DB.Length > 0)
@@ -122,7 +123,7 @@ namespace main.subcontents
                     }
                 }
 
-            }           
+            }
         }
         private bool dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
         {
@@ -135,11 +136,11 @@ namespace main.subcontents
                 return true;
             }
 
-            return false; 
+            return false;
         }
         private void AddUserDB_button_Click(object sender, EventArgs e)
         {
-           
+
             int nRow = dataGridView.Rows.Add();
             UserNum = Program.UTIL.CreateNum("User_Material", "번호", "UM_0");
             dataGridView.Rows[nRow].Cells[1].Value = UserNum;
@@ -207,7 +208,7 @@ namespace main.subcontents
             #region 사용자 저장
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
 
-            for(int a=0; a< dataGridView.Rows.Count; a++)
+            for (int a = 0; a < dataGridView.Rows.Count; a++)
             {
                 if (dataGridView.Rows[a].Cells[2].Value.ToString() == "사용자")
                 {
@@ -256,8 +257,24 @@ namespace main.subcontents
 
             this.DialogResult = DialogResult.OK;
             this.Close();
-            사용자DB부족: int c = 0; 
+        사용자DB부족: int c = 0;
 
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {            
+            string basePath = Program.gPath + "ZEROFIX manual_final\\5.wall\\5.3.materialdb";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
 
     }

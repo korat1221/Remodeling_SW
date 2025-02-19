@@ -23,6 +23,7 @@ using Eagle._Components.Public;
 using System.Drawing.Text;
 using main.subcontents.HeatingSystem;
 using System.Text.RegularExpressions;
+using main.info;
 
 namespace main.contents
 {
@@ -227,31 +228,31 @@ namespace main.contents
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-           // ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
+            // ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-           // ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
+            // ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
 
         private void panel3_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-           // ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
+            // ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
 
         private void panel5_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-          //  ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
+            //  ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
 
         private void panel7_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
-          //  ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
+            //  ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
         }
 
         private void BlowDoorTest_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -495,7 +496,7 @@ namespace main.contents
 
         private void BuildingArea_textBox_TextChanged(object sender, EventArgs e)
         {
-            BuildingArea = Program.UTIL.textBox_doubleComa(BuildingArea_textBox , false, 2);
+            BuildingArea = Program.UTIL.textBox_doubleComa(BuildingArea_textBox, false, 2);
         }
         private void AboveGround_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -887,6 +888,22 @@ namespace main.contents
             {
                 n50 = Convert.ToDouble(Value[0][0]);
                 n50_textBox.Text = Convert.ToDouble(Value[0][0]).ToString("0.0");
+            }
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "ZEROFIX manual_final\\3.general\\3.1.general";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
             }
         }
 

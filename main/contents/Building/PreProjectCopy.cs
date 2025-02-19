@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.info;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -60,7 +61,7 @@ namespace main.contents
                     for (int k = 0; k < 4; k++)
                     {
                         if (k == 3) { dataGridView1.Rows[nRow].Cells[k + 1].Value = "기존건물"; }
-                        else { dataGridView1.Rows[nRow].Cells[k + 1].Value =res[n][k]; }
+                        else { dataGridView1.Rows[nRow].Cells[k + 1].Value = res[n][k]; }
                     }
 
                     DataGridViewCheckBoxCell cell = dataGridView1.Rows[nRow].Cells[0] as DataGridViewCheckBoxCell;
@@ -72,7 +73,7 @@ namespace main.contents
         private void CheckBox_CheckedChanged(object sender, EventArgs e)
         {
             int k = GetSelectedIndex();
-            if(k < 0)
+            if (k < 0)
             {
                 MessageBox.Show("먼저 복사할 프로젝트부터 선택하세요.");
             }
@@ -101,7 +102,7 @@ namespace main.contents
                 {
                     System_checkBox.Checked = false;
                 }
-            }            
+            }
         }
         private int GetSelectedIndex()
         {
@@ -231,7 +232,24 @@ namespace main.contents
 
                 this.Close();
             }
+
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
             
+            string basePath = Program.gPath + "ZEROFIX manual_final\\2.project\\2.3.preprojectcopy";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
 
     }

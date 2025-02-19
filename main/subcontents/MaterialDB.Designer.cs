@@ -44,6 +44,7 @@ namespace main.subcontents
             Deletebutton = new Button();
             Save_button = new Button();
             dataGridView = new DataGridView();
+            info = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
@@ -52,6 +53,7 @@ namespace main.subcontents
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.AliceBlue;
+            GeneralPanel.Controls.Add(info);
             GeneralPanel.Controls.Add(MaterialType_comboBox);
             GeneralPanel.Controls.Add(label24);
             GeneralPanel.Controls.Add(label2);
@@ -67,21 +69,21 @@ namespace main.subcontents
             // MaterialType_comboBox
             // 
             MaterialType_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            MaterialType_comboBox.Font =  new Font(UTIL.Families[0], 9.75F);
+            MaterialType_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             MaterialType_comboBox.FormattingEnabled = true;
             MaterialType_comboBox.Location = new Point(136, 120);
             MaterialType_comboBox.Name = "MaterialType_comboBox";
-            MaterialType_comboBox.Size = new Size(120, 24);
+            MaterialType_comboBox.Size = new Size(120, 23);
             MaterialType_comboBox.TabIndex = 56;
             MaterialType_comboBox.SelectedIndexChanged += MaterialType_comboBox_SelectedIndexChanged;
             // 
             // label24
             // 
             label24.AutoSize = true;
-            label24.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            label24.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label24.Location = new Point(20, 122);
             label24.Name = "label24";
-            label24.Size = new Size(60, 17);
+            label24.Size = new Size(55, 15);
             label24.TabIndex = 108;
             label24.Text = "재료유형";
             // 
@@ -118,7 +120,7 @@ namespace main.subcontents
             AddUserDB_button.BackColor = SystemColors.ControlLight;
             AddUserDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AddUserDB_button.FlatStyle = FlatStyle.System;
-            AddUserDB_button.Font = new Font(UTIL.Families[0], 9.75F);
+            AddUserDB_button.Font = new Font("나눔바른고딕", 9.75F);
             AddUserDB_button.Location = new Point(916, 116);
             AddUserDB_button.Margin = new Padding(0);
             AddUserDB_button.Name = "AddUserDB_button";
@@ -133,7 +135,7 @@ namespace main.subcontents
             Deletebutton.BackColor = SystemColors.ControlLight;
             Deletebutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Deletebutton.FlatStyle = FlatStyle.System;
-            Deletebutton.Font = new Font(UTIL.Families[0], 9.75F);
+            Deletebutton.Font = new Font("나눔바른고딕", 9.75F);
             Deletebutton.Location = new Point(943, 116);
             Deletebutton.Margin = new Padding(0);
             Deletebutton.Name = "Deletebutton";
@@ -168,7 +170,7 @@ namespace main.subcontents
             dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font =  new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -179,7 +181,7 @@ namespace main.subcontents
             dataGridView.Name = "dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -188,7 +190,7 @@ namespace main.subcontents
             dataGridView.RowHeadersVisible = false;
             dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
@@ -196,6 +198,21 @@ namespace main.subcontents
             dataGridView.Size = new Size(985, 470);
             dataGridView.TabIndex = 19;
             dataGridView.CellContentClick += dataGridView_CellContentClick;
+            // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(943, 11);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 179;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
             // 
             // MaterialDB
             // 
@@ -228,5 +245,6 @@ namespace main.subcontents
         private Label label7;
         private CustomComboBox MaterialType_comboBox;
         private Label label24;
+        private Button info;
     }
 }

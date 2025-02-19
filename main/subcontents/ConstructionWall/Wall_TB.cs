@@ -10,6 +10,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using main.info;
 
 namespace main.subcontents.ConstructionWall
 {
@@ -195,9 +196,9 @@ namespace main.subcontents.ConstructionWall
         {
             if (e.RowIndex >= 0)
             {
-                for(int  i = 0; i < TB_dataGridView.Rows.Count; i++)
+                for (int i = 0; i < TB_dataGridView.Rows.Count; i++)
                 {
-                    if(i != e.RowIndex)
+                    if (i != e.RowIndex)
                     {
                         TB_dataGridView.Rows[i].Cells[0].Value = false;
                     }
@@ -288,16 +289,16 @@ namespace main.subcontents.ConstructionWall
                     PerArea = 0;
                 }
                 PerArea_label1.Text = "적용개수";
-                PerArea_label2.Text = "EA/m"+Program.UTIL.Subscript(2, true);
+                PerArea_label2.Text = "EA/m" + Program.UTIL.Subscript(2, true);
             }
             else
             {
                 if (dx != 0 || dy != 0)
                 {
 
-                    PerArea = 1 / Math.Max(dx ,dy);
+                    PerArea = 1 / Math.Max(dx, dy);
                     PerArea_label1.Text = "적용길이";
-                    PerArea_label2.Text = "m/m"+Program.UTIL.Subscript(2, true);
+                    PerArea_label2.Text = "m/m" + Program.UTIL.Subscript(2, true);
                 }
             }
             PerArea_textBox.Text = string.Format("{0:F3}", PerArea);
@@ -357,5 +358,22 @@ namespace main.subcontents.ConstructionWall
             dy = Program.UTIL.textBox_doubleComa(dy_textBox, false, 1);
             Calc_PerArea();
         }
+
+        private void info_Click(object sender, EventArgs e)
+        {            
+            string basePath = Program.gPath + "ZEROFIX manual_final\\5.wall\\5.4.wall1D";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
     }
 }

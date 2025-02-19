@@ -42,6 +42,7 @@ namespace main.contents
             Building_pictureBox = new PictureBox();
             Save_button = new Button();
             Construction_pictureBox = new PictureBox();
+            info = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)System_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Zone_pictureBox).BeginInit();
@@ -73,10 +74,10 @@ namespace main.contents
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            label4.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 129);
             label4.Location = new Point(53, 29);
             label4.Name = "label4";
-            label4.Size = new Size(89, 14);
+            label4.Size = new Size(82, 15);
             label4.TabIndex = 131;
             label4.Text = "프로젝트 복사";
             // 
@@ -84,10 +85,10 @@ namespace main.contents
             // 
             System_checkBox.AutoSize = true;
             System_checkBox.Enabled = false;
-            System_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
+            System_checkBox.Font = new Font("나눔바른고딕", 9.75F);
             System_checkBox.Location = new Point(520, 155);
             System_checkBox.Name = "System_checkBox";
-            System_checkBox.Size = new Size(77, 18);
+            System_checkBox.Size = new Size(77, 19);
             System_checkBox.TabIndex = 118;
             System_checkBox.Text = "설비 정보";
             System_checkBox.UseVisualStyleBackColor = true;
@@ -105,10 +106,10 @@ namespace main.contents
             // 
             Zone_checkBox.AutoSize = true;
             Zone_checkBox.Enabled = false;
-            Zone_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Zone_checkBox.Font = new Font("나눔바른고딕", 9.75F);
             Zone_checkBox.Location = new Point(422, 155);
             Zone_checkBox.Name = "Zone_checkBox";
-            Zone_checkBox.Size = new Size(65, 18);
+            Zone_checkBox.Size = new Size(65, 19);
             Zone_checkBox.TabIndex = 116;
             Zone_checkBox.Text = "존 정보";
             Zone_checkBox.UseVisualStyleBackColor = true;
@@ -126,10 +127,10 @@ namespace main.contents
             // 
             Model_checkBox.AutoSize = true;
             Model_checkBox.Enabled = false;
-            Model_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Model_checkBox.Font = new Font("나눔바른고딕", 9.75F);
             Model_checkBox.Location = new Point(316, 155);
             Model_checkBox.Name = "Model_checkBox";
-            Model_checkBox.Size = new Size(70, 18);
+            Model_checkBox.Size = new Size(70, 19);
             Model_checkBox.TabIndex = 114;
             Model_checkBox.Text = "3D 정보";
             Model_checkBox.UseVisualStyleBackColor = true;
@@ -147,10 +148,10 @@ namespace main.contents
             // 
             Construction_checkBox.AutoSize = true;
             Construction_checkBox.Enabled = false;
-            Construction_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Construction_checkBox.Font = new Font("나눔바른고딕", 9.75F);
             Construction_checkBox.Location = new Point(202, 155);
             Construction_checkBox.Name = "Construction_checkBox";
-            Construction_checkBox.Size = new Size(89, 18);
+            Construction_checkBox.Size = new Size(89, 19);
             Construction_checkBox.TabIndex = 112;
             Construction_checkBox.Text = "구조체 정보";
             Construction_checkBox.UseVisualStyleBackColor = true;
@@ -161,10 +162,10 @@ namespace main.contents
             Building_checkBox.AutoSize = true;
             Building_checkBox.Checked = true;
             Building_checkBox.CheckState = CheckState.Checked;
-            Building_checkBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Building_checkBox.Font = new Font("나눔바른고딕", 9.75F);
             Building_checkBox.Location = new Point(104, 155);
             Building_checkBox.Name = "Building_checkBox";
-            Building_checkBox.Size = new Size(77, 18);
+            Building_checkBox.Size = new Size(77, 19);
             Building_checkBox.TabIndex = 110;
             Building_checkBox.Text = "건물 정보";
             Building_checkBox.UseVisualStyleBackColor = true;
@@ -181,7 +182,7 @@ namespace main.contents
             // Save_button
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            Save_button.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
             Save_button.ForeColor = Color.Black;
             Save_button.Location = new Point(524, 203);
             Save_button.Name = "Save_button";
@@ -199,12 +200,28 @@ namespace main.contents
             Construction_pictureBox.TabIndex = 111;
             Construction_pictureBox.TabStop = false;
             // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(678, 9);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 151;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
+            // 
             // ProjectCopy
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.AliceBlue;
             ClientSize = new Size(710, 243);
+            Controls.Add(info);
             Controls.Add(GeneralPanel);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "ProjectCopy";
@@ -236,5 +253,6 @@ namespace main.contents
         private CheckBox Building_checkBox;
         private PictureBox Building_pictureBox;
         private Label label4;
+        private Button info;
     }
 }
