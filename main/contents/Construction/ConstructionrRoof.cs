@@ -12,7 +12,6 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using main.subcontents;
 using main.subcontents.ConstructionRoof;
-using main.subcontents.Info;
 using System.Net;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using static System.ComponentModel.Design.ObjectSelectorEditor;

@@ -238,9 +238,6 @@
     <Compile Update="subcontents\EquipmentList\CTopCal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="subcontents\Info\Info_Roof.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="subcontents\RESystem_FC\FC.cs">
       <SubType>Form</SubType>
     </Compile>
