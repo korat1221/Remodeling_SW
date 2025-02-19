@@ -19,6 +19,7 @@ using static System.ComponentModel.Design.ObjectSelectorEditor;
 using Microsoft.Web.WebView2.Core;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using main.info;
 
 namespace main.contents
 {
@@ -1528,28 +1529,21 @@ namespace main.contents
             RoofNum = ID;
         }
 
-        private void Info_button_Click(object sender, EventArgs e)
+        private void info_Click(object sender, EventArgs e)
         {
-            try
-            {
-                //string filePath = Program.gPath + "threejs\\public\\print\\Info\\" + "001_133144.html";
-                //Process.Start(new ProcessStartInfo
-                //{
-                //    FileName = filePath,
-                //    UseShellExecute = true
-            //});
-            Info_Roof Info = new Info_Roof();
-            DialogResult result = Info.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-              
-            }
+            string basePath = Program.gPath + "ZEROFIX manual_final\\6.roof\\6.2.roofselected";
 
-        }
-            catch (Exception ex)
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
             {
-                MessageBox.Show("파일을 열 수 없습니다: " + ex.Message);
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
             }
         }
+
     }
 }
