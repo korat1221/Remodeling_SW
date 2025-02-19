@@ -875,6 +875,7 @@ namespace main.contents.Alt
         }
         private void Load_Graph_Wall(string SelectNum, string 리모델링안)
         {
+            Wall_webView.Source = new Uri(Program.gPath + "threejs\\public\\transmit.html", true);
             List<Material_Wall> Materials_Wall = new List<Material_Wall>();
 
             if (SelectNum != "" && SelectNum != null)
@@ -1228,6 +1229,7 @@ namespace main.contents.Alt
         }
         private void Load_Graph_Roof(string SelectNum, string 리모델링안)
         {
+            Roof_webView.Source = new Uri(Program.gPath + "threejs\\public\\transmit.html?type=roof", true);
 
             List<Material_Roof> Materials_Roof = new List<Material_Roof>();
 
@@ -1558,6 +1560,7 @@ namespace main.contents.Alt
 
         private void Load_Graph_Floor(string SelectNum, string 리모델링안)
         {
+            Floor_webView.Source = new Uri(Program.gPath + "threejs\\public\\transmit.html?type=floor", true);
 
             List<Material_Floor> Materials_Floor = new List<Material_Floor>();
 

@@ -733,9 +733,7 @@ namespace main.contents.Alt
             Wall_webView.DefaultBackgroundColor = Color.White;
             Wall_webView.Location = new Point(593, 33);
             Wall_webView.Name = "Wall_webView";
-            Wall_webView.Size = new Size(366, 314);
-            Wall_webView.Source = new Uri("http://localhost:3000/transmit.html", UriKind.Absolute);
-            Wall_webView.TabIndex = 155;
+            Wall_webView.Size = new Size(366, 314);         
             Wall_webView.Visible = false;
             Wall_webView.ZoomFactor = 1D;
             Wall_webView.NavigationCompleted += OnNaviCompleted;
@@ -955,7 +953,6 @@ namespace main.contents.Alt
             Roof_webView.Location = new Point(593, 63);
             Roof_webView.Name = "Roof_webView";
             Roof_webView.Size = new Size(366, 284);
-            Roof_webView.Source = new Uri("http://localhost:3000/transmit.html?type=roof", UriKind.Absolute);
             Roof_webView.TabIndex = 168;
             Roof_webView.Visible = false;
             Roof_webView.ZoomFactor = 1D;
@@ -1176,7 +1173,6 @@ namespace main.contents.Alt
             Floor_webView.Location = new Point(597, 63);
             Floor_webView.Name = "Floor_webView";
             Floor_webView.Size = new Size(366, 284);
-            Floor_webView.Source = new Uri("http://localhost:3000/transmit.html?type=floor", UriKind.Absolute);
             Floor_webView.TabIndex = 180;
             Floor_webView.Visible = false;
             Floor_webView.ZoomFactor = 1D;

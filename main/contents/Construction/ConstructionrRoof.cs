@@ -12,7 +12,6 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using main.subcontents;
 using main.subcontents.ConstructionRoof;
-using main.subcontents.Info;
 using System.Net;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
@@ -80,6 +79,7 @@ namespace main.contents
             //구조유형콤보박스
             //Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, StructureType_comboBox, "지붕", "구조유형", "3");
             Load_table();
+            webView21.Source = new Uri(Program.gPath + "threejs\\public\\transmit.html?type=roof", true);
             InitializeAsync();
         }
         async void InitializeAsync()

@@ -136,9 +136,6 @@
     <Compile Update="subcontents\EquipmentList\ZoneResult.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="subcontents\Info\ssss.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="subcontents\ZoneGeneral\PreZone.cs">
       <SubType>Form</SubType>
     </Compile>
