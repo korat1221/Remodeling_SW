@@ -28,7 +28,8 @@ namespace main.subcontents.Alt
         bool scriptable = false;
         public AltFloor(String SelectValue)
         {
-            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);            
+            InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
+            webView21.Source = new Uri(Program.gPath + "threejs\\public\\transmit.html?type=floor", true);
             FloorRemodelingType_comboBox.Items.Clear();
             FloorRemodelingType_comboBox.Items.Add("외부덧댐");
             FloorRemodelingType_comboBox.Items.Add("내부덧댐");

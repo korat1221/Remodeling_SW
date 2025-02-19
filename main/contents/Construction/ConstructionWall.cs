@@ -20,6 +20,7 @@ using Microsoft.Web.WebView2.Core;
 using System.Collections;
 using System.Security.Cryptography;
 using main.info;
+using System.Security.Policy;
 
 namespace main.contents
 {
@@ -80,6 +81,7 @@ namespace main.contents
             //표면열전달저항기준 콤보박스 
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, ISO_KS_comboBox, "외벽", "실내외표면열전달저항", "1");
             Load_table();
+            webView21.Source = new Uri(Program.gPath + "threejs\\public\\transmit.html", true);
             InitializeAsync();
         }
         async void InitializeAsync()

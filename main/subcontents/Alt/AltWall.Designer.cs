@@ -117,7 +117,6 @@ namespace main.subcontents.Alt
             webView21.Location = new Point(701, -3);
             webView21.Name = "webView21";
             webView21.Size = new Size(366, 337);
-            webView21.Source = new Uri("http://localhost:3000/transmit.html", UriKind.Absolute);
             webView21.TabIndex = 100;
             webView21.Visible = false;
             webView21.ZoomFactor = 1D;

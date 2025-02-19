@@ -69,6 +69,7 @@ namespace main.contents.Construction
             //단열수준콤보박스
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, Uvalue_comboBox, "바닥", "단열수준", "3");
             Load_table();
+            webView21.Source = new Uri(Program.gPath + "threejs\\public\\transmit.html?type=floor", true);
 
             InitializeAsync();
 
