@@ -1352,13 +1352,10 @@ namespace main.contents
 
 
                 //층정보 불러오기
-                String[][] General_3D = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "층,상인방높이", "존번호 = '" + ZoneNum + "'");
+                String[][] General_3D = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "층,층고", "존번호 = '" + ZoneNum + "'");
 
                 Layer = General_3D[0][0] + "F";
-                if (General_3D[0][1] != "")
-                {
-                    hLi = Convert.ToDouble(General_3D[0][1]);
-                }
+                hLi = 2.5;
 
                 //Zonelight profile 가져오기 
                 string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "조도,이용영역계수,조명이용시부재율,작업면높이", "용도명 = '" + Usage + "'");
@@ -1560,7 +1557,8 @@ namespace main.contents
                 Wr = 0;
                 for (int j = 0; j < Wall_Length.Length; j++)
                 {
-                    Wr += Convert.ToDouble(Wall_Length[j][0]);
+                    if (Wall_Length[j][0] == "") { Wr += 1; }
+                    else { Wr += Convert.ToDouble(Wall_Length[j][0]); }
                 }
                 Lr = A / Wr;
             }
@@ -1793,7 +1791,11 @@ namespace main.contents
             {
                 for (int j = 0; j < Wall_Length.Length; j++)
                 {
-                    Wr += Convert.ToDouble(Wall_Length[j][0]);
+                    if (Wall_Length[j][0] == "") { Wr += 1; }
+                    else
+                    {
+                        Wr += Convert.ToDouble(Wall_Length[j][0]);
+                    }
                 }
             }
 

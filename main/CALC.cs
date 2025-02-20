@@ -347,6 +347,7 @@ namespace main
             dUtb[0] = 0.15;
             dUtb[1] = 0.15;
             dUtb[2] = 0.15;
+            /*
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             if(프로젝트유형.Length >0)
             {
@@ -428,7 +429,7 @@ namespace main
                 }
 
             }
-           
+           */
             return dUtb;
         }
 

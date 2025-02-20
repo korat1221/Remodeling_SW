@@ -1757,13 +1757,14 @@ namespace main.contents
                 {
                     dtheta = Convert.ToDouble(v[0][0]) - Convert.ToDouble(v[0][1]);
                 }
-                double Volume = Qh_max_sum / 1000 * 3.6 / (dtheta * 4.18) * 1000 / 60; // Liter/min 
+                double Volume = Qh_max_sum * 3.6 / (4.18 * dtheta); // Liter/min 
+
 
                 PipeD = 25;
-                PipeInsD = 25;
+                PipeInsD = 10;
                 if (Volume > 0)
                 {
-                    string[][] P = Program.DB.querySQL(DB.type.BaseDB_Heating, "Select Distinct lpm_max, 외경 From 부피별관경");
+                    string[][] P = Program.DB.querySQL(DB.type.BaseDB_Heating, "Select lpm_max, 외경 From 부피별관경 Order by 외경 DESC");
                     if (P.Length > 0)
                     {
                         for (int a = 0; a < P.Length; a++)
@@ -2716,7 +2717,7 @@ namespace main.contents
                 if (ce1Type != null && ce1Type != "")
                 {
                     Create_ce_Table();
-                    Load_ce(ce1Type);
+                    Load_ce(ce1Type); 
                     Load_ce1Zone(ce1Type);
 
                     for (int n = 0; n < ce_dataGridView.Rows.Count; n++)

@@ -1339,13 +1339,13 @@ namespace main.contents
                 {
                     dtheta = Convert.ToDouble(v[0][0]) - Convert.ToDouble(v[0][1]);
                 }
-                double Volume = Qw_max_sum / 1000 * 3.6 / (dtheta * 4.18) * 1000 / 60; // Liter/min 
+                double Volume = Qw_max_sum *3.6/(4.18 * dtheta); // Liter/min 
 
                 PipeD = 25;
                 PipeInsD = 25;
                 if (Volume > 0)
                 {
-                    string[][] P = Program.DB.querySQL(DB.type.BaseDB_Heating, "Select Distinct lpm_max, 외경 From 부피별관경");
+                    string[][] P = Program.DB.querySQL(DB.type.BaseDB_Heating, "Select lpm_max, 외경 From 부피별관경 Order by 외경 DESC");
                     if (P.Length > 0)
                     {
                         for (int a = 0; a < P.Length; a++)
@@ -1369,6 +1369,7 @@ namespace main.contents
                 Program.UTIL.textBox_doubleComa(PipeIns_Ramda_textBox, true, 3);
 
                 PipeIns_textBox.Text = "일반 보온재";
+                PipeIns = "일반 보온재";
             }
         }
 
@@ -1747,9 +1748,8 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Form", "번호,프로젝트유형,펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PumpUse + "','" + PumpMethod + "','" + Pump1 + "','" + Pump2 + "','" + Pump1Valve + "','" + Pump2Valve + "','" + Pump1Control + "','" + Pump2Control + "','" + Pump1Num.ToString() + "','" + Pump2Num.ToString() + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Form", "번호,프로젝트유형,축열유무,축열펌프유무,축열펌프,축열용량,축열유형", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + StorageUse + "','" + StoragePumpUse + "','" + StoragePump + "','" + Vs.ToString() + "','" + StorageType + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Form", "번호,프로젝트유형,배관관경,배관보온두께,보온열전도율,배관보온재,노출배관길이", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PipeD.ToString() + "','" + PipeInsD.ToString() + "','" + PipeIns_Ramda.ToString() + "','" + PipeIns + "','" + PipeL.ToString() + "'", "번호");
-            Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Form", "번호,프로젝트유형,히트펌프번호,히트펌프제어방식,히트펌프대수,", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectHP_nonsplit + "','" + HPControl_nonsplit + "','" + HPNum_nonsplit + "'", "번호");
-
-
+            Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Form", "번호,프로젝트유형,히트펌프번호,히트펌프제어방식,히트펌프대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectHP_nonsplit + "','" + HPControl_nonsplit + "','" + HPNum_nonsplit + "'", "번호");
+         
             this.DialogResult = DialogResult.OK;
             this.Hide();
             Program.getMenuForm().DoLoadForm(49, OnLoadListProc);

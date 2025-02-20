@@ -204,7 +204,7 @@ namespace main
         }
         public void LoadData_Shade(string ZoneNum)
         {
-            string[][] Win = Program.DB.querySQL(DB.type.ProjDB, "Select 번호 From ZoneEnvelope_3D Where 외피유형 = '창호' or 외피유형 = '커튼월창' and 존='" + ZoneNum + "' Order by 번호");
+            string[][] Win = Program.DB.querySQL(DB.type.ProjDB, "Select 번호 From ZoneEnvelope_3D Where (외피유형 = '창호' or 외피유형 = '커튼월창') and 존='" + ZoneNum + "' Order by 번호");
             if (Win.Length > 0)
             {
                 for (int k = 0; k < Win.Length; k++)

@@ -219,11 +219,31 @@ namespace main.contents
 
                 if (projectcopy.model_copy)
                 {
-                    Directory.CreateDirectory(Program.gPath + "threejs\\public\\models\\" + pid);
+                    string sourceFile = Path.Combine(Program.gPath, "projects", pid0 + ".json");
+                    string destinationFile = Path.Combine(Program.gPath, "projects", pid + ".json");
 
-                    CopyDirectory(Program.gPath + "threejs\\public\\models\\" + pid0, Program.gPath + "threejs\\public\\models\\" + pid, true);
+                    if (File.Exists(sourceFile))
+                    {
+                        File.Copy(sourceFile, destinationFile, true); // 파일 덮어쓰기
+                    }
+                    else
+                    {
+                        throw new FileNotFoundException($"Source file not found: {sourceFile}");
+                    }
 
-                    CopyDirectory(Program.gPath + "threejs\\public\\print\\img\\" + pid0, Program.gPath + "threejs\\public\\print\\img\\" + pid, true);
+                    sourceFile = Path.Combine(Program.gPath, "projects", pid0 + ".tree");
+                    destinationFile = Path.Combine(Program.gPath, "projects", pid + ".tree");
+
+                    if (File.Exists(sourceFile))
+                    {
+                        File.Copy(sourceFile, destinationFile, true); // 파일 덮어쓰기
+                    }
+                    else
+                    {
+                        throw new FileNotFoundException($"Source file not found: {sourceFile}");
+                    }
+
+                    CopyDirectory(Program.gPath + "\\print\\img\\" + pid0, Program.gPath + "\\print\\img\\" + pid, true);
                 }
 
                 drawList(ProjectType.ToString());
@@ -284,10 +304,31 @@ namespace main.contents
 
                     if (projectcopy.model_copy)
                     {
-                        Directory.CreateDirectory(Program.gPath + "threejs\\public\\models\\" + pid);
+                        string sourceFile = Path.Combine(Program.gPath, "projects", pid0 + ".json");
+                        string destinationFile = Path.Combine(Program.gPath, "projects", pid + ".json");
 
-                        CopyDirectory(Program.gPath + "threejs\\public\\models\\" + pid0, Program.gPath + "threejs\\public\\models\\" + pid, true);
-                        CopyDirectory(Program.gPath + "threejs\\public\\print\\img\\" + pid0, Program.gPath + "threejs\\public\\print\\img\\" + pid, true);
+                        if (File.Exists(sourceFile))
+                        {
+                            File.Copy(sourceFile, destinationFile, true); // 파일 덮어쓰기
+                        }
+                        else
+                        {
+                            throw new FileNotFoundException($"Source file not found: {sourceFile}");
+                        }
+
+                        sourceFile = Path.Combine(Program.gPath, "projects", pid0 + ".tree");
+                        destinationFile = Path.Combine(Program.gPath, "projects", pid + ".tree");
+
+                        if (File.Exists(sourceFile))
+                        {
+                            File.Copy(sourceFile, destinationFile, true); // 파일 덮어쓰기
+                        }
+                        else
+                        {
+                            throw new FileNotFoundException($"Source file not found: {sourceFile}");
+                        }
+
+                        CopyDirectory(Program.gPath + "\\print\\img\\" + pid0, Program.gPath + "\\print\\img\\" + pid, true);
                     }
 
                     drawList(ProjectType.ToString());

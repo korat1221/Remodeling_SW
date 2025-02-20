@@ -722,13 +722,17 @@ namespace main
                         Qh_ce[mth] = 0;
                     }
                     string[][] Value2 = Program.DB.getValue(ProjNum, "User_ce", "소비전력_난방", "번호 = '" + ce.ceNum() + "'");
-                    if (Value2.Length > 0)
+                    if (Value2.Length > 0 && Value2[0][0] != "")
                     {
                         for (int n = 0; n < SelectAirHP_split.Count; n++)
                         {
                             string[][] airHP = Program.DB.getValue(ProjNum, "User_AirHP", "난방정격소비전력", "번호 = '" + SelectAirHP_split[n] + "'");
-                            if (Convert.ToDouble(Value2[0][0]).ToString("0") == Convert.ToDouble(airHP[0][0]).ToString("0") || Convert.ToDouble(Value2[0][0]) >0.5)
-                            { goto goto_; }
+                            if(airHP.Length > 0 && airHP[0][0]!="")
+                            {
+                                if (Convert.ToDouble(Value2[0][0]).ToString("0") == Convert.ToDouble(airHP[0][0]).ToString("0") || Convert.ToDouble(Value2[0][0]) > 0.5)
+                                { goto goto_; }
+                            }
+                            
                         }
 
                         if (Value2[0][0] != "")

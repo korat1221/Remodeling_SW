@@ -216,7 +216,7 @@ namespace main.contents
                 }
                 Directory.CreateDirectory(Program.gPath + "threejs\\public\\print\\img\\" + pid);
                 // 저장할 파일 경로 설정
-                string ImageName = "/threejs/public/print/img/"+pid+ "/Building.png";
+                string ImageName = "/print/img/"+pid+ "/Building.png";
                 string imagePath = Program.gPath + ImageName; // 최종 경로
 
                 // 비트맵을 파일로 저장
