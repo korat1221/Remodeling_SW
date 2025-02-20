@@ -1,0 +1,1149 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title></title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="googlebot" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="js/chartjs/chart.min.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <!-- <div style="width:32px;height:32px"></div> -->
+    <div id="cont" style="width:100%;height:100%"></div>
+<script type="text/javascript">//<![CDATA[
+
+window.addEventListener("message", async (event) => {
+  let o = event.data;
+  if (o.chart) {
+    if (o.donut) {
+        drawDonut(o.donut,o.size,o.fontSize);
+    }
+    else {
+        drawChart2(o.data, o.max, o.step, o.legend, o.stacked);
+    }
+  }
+});
+
+function drawDonut(val, size = 87, fontSize = '16px') {
+    document.getElementById("cont").innerHTML = `
+        <div style="position: relative; width: ${size}px; height: ${size}px; display: flex; justify-content: center; align-items: center;">
+            <canvas id="myChart" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;"></canvas>
+            <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-weight: 900; font-size: ${fontSize};">${parseInt(val)}%</div>
+        </div>`;
+
+    document.getElementById("cont").style.backgroundSize = "contain";
+    document.getElementById("cont").style.backgroundRepeat = "no-repeat";
+    document.getElementById("cont").style.marginTop = "0px";
+    document.getElementById("cont").style.display = "flex"; // 추가: flexbox로 중앙 정렬
+    document.getElementById("cont").style.justifyContent = "center"; // 추가: 가로 중앙 정렬
+    document.getElementById("cont").style.alignItems = "center"; // 추가: 세로 중앙 정렬
+
+    new Chart(document.getElementById("myChart").getContext("2d"), {
+        type: 'doughnut',
+        data: {
+            labels: ['Disabled', 'Enabled'],
+            datasets: [{
+                label: '--',
+                data: [val, 100 - val],
+                backgroundColor: ['#4472C4', '#A5A5A5'],
+            }]
+        },
+        options: {
+            cutout: '55%', // Adjust this value to change the size of the inner cutout
+            plugins: {
+                legend: { display: false },
+                title: { display: false },
+                tooltip: { enabled: false }
+            },
+            events: ["touchstart", "touchmove", "touchend"],
+        },
+        plugins: [{
+            beforeDraw(chart) {
+                const ctx = chart.ctx;
+                const chartArea = chart.chartArea;
+
+                // Draw white background in the center
+                ctx.save();
+                ctx.fillStyle = '#FFFFFF'; // White color
+                ctx.beginPath();
+                ctx.arc(chartArea.left + (chartArea.right - chartArea.left) / 2,
+                        chartArea.top + (chartArea.bottom - chartArea.top) / 2,
+                        (chartArea.right - chartArea.left) / 2 * 0.7, // Adjust the radius as needed
+                        0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }]
+    });
+}
+
+
+function drawDonut_old(val) {
+document.getElementById("cont").innerHTML = '<div style="left:30px;top:32px;position:absolute;width:87px;height:87px;"><canvas id="myChart" style="width: 100%;height:100%"></canvas><div style="position: absolute;left: 30px;top: 32px;font-weight: 900;">' + parseInt(val) + '%</div></div>';
+//document.getElementById("cont").style.backgroundImage="url(donut.png)";
+document.getElementById("cont").style.backgroundSize="contain";
+document.getElementById("cont").style.backgroundRepeat = "no-repeat";
+document.getElementById("cont").style.marginTop = "10px";
+
+new Chart(document.getElementById("myChart").getContext("2d"), {
+    type: 'doughnut',
+    data: {
+        labels: ['disable', 'enable'],
+        datasets: [   {
+            label: '--',
+            data: [val,100 - val],
+            backgroundColor: [
+                '#4472C4',
+                '#A5A5A5',
+            ],
+        }]
+    },
+    showTooltips: false,
+    options: {
+        plugins: {
+            legend: {
+                display: false,
+            },
+            title: {
+                display: false,
+            },
+        },
+        events: ["touchstart", "touchmove", "touchend"],
+    },
+});
+}
+
+function drawChart2(arr, max, step = 500, legend = false, stacked = false) {
+    if (arr) {
+        let datasets = [], i = -1;
+
+        while(++i < arr.length) {
+            let el = arr[i];
+
+            datasets.push({
+                label:el.label,
+                type: el.type,//'line',
+                borderWidth: 1,
+                data: el.data, 
+                borderColor: el.borderColor,//'#91D050',
+                backgroundColor: el.backgroundColor,//'#91D050',
+                barPercentage: el.barPercentage,
+                yAxisID: el.yAxisID,
+                pointStyle: 'circle',
+                pointRadius: 3,
+                borderDash: el.dash ? [10, 10] : [0, 0],
+                tension: el.tension ? el.tension : 0,
+            });
+        }
+
+        document.getElementById("cont").innerHTML = '<canvas id="myChart" style="width: 100%;height: 100%;"></canvas>';
+
+        new Chart(document.getElementById("myChart").getContext("2d"), {
+            data: {
+                labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                datasets: datasets
+            },
+            showTooltips: false,
+            options: {
+                animation: {
+                    duration: 0,
+                    onComplete : function(){
+                        var ctx = this.ctx;
+                        ctx.fillStyle = "#aaa";
+                        ctx.textAlign = "center";
+                        ctx.textBaseline = "bottom";
+
+                        let i = -1;
+
+                        while(++i < this._metasets.length) {
+                            let el = this._metasets[i];
+
+                            if (el.yAxisID === 'y1') {
+                                el.data.forEach(function (el2, idx) {
+                                    let val = (el._dataset.data[idx] * 100);
+                                    ctx.fillText(val.toFixed(1) + '%', el2.x, el2.y);
+                                });
+                            }
+                        }
+                    }
+                },
+                responsive: false,
+                scales: {
+                    x: {
+                        grid: {
+                            color:"rgba(0,0,0,0)"
+                        },
+                        display: true,
+                        title: {
+                        display: false,
+                        },
+                        stacked:stacked ? true : false,
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: false,
+                        },
+                        grid:{
+                            borderColor:'rgba(0,0,0,0)',
+                        },
+                        min:0,
+                        max:max,
+                        ticks: {
+                            stepSize: step,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, ticks) {
+                                return value;
+                            }
+                        },
+                        stacked:stacked ? true : false,
+                    },
+                    'y1': {
+                        display: false,
+                        title: {
+                            display: false,
+                        },
+                        grid:{
+                            borderColor:'rgba(0,0,0,0)',
+                        },
+                        min:0,
+                        max:1,
+                        ticks: {
+                            stepSize: 0.1,
+                        },
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: legend,
+                        position:"left",
+                        labels: {
+                            usePointStyle: true,
+                            boxHeight: 6
+                        }  
+                    },
+                    title: {
+                        display: false,
+                    },
+                },
+                events: ["touchstart", "touchmove", "touchend"],
+            },
+        });
+    }
+}
+
+function drawChart(arr) {
+    if (arr) {
+        let datasets = [], i = -1;
+
+        while(++i < arr.length) {
+            let el = arr[i];
+
+            datasets.push({
+                type: el.type,//'line',
+                borderWidth: 1,
+                data: el.data, 
+                borderColor: el.borderColor,//'#91D050',
+                backgroundColor: el.backgroundColor,//'#91D050',
+                pointStyle: 'circle',
+                pointRadius: 3,
+                borderDash: [10, 10],
+                tension: el.tension ? el.tension : 0,
+            });
+        }
+        datasets.push({
+            type: 'bar',
+            borderWidth: 1,
+            data: arr[0].data, 
+            borderColor: 'rgba(0,0,0,0)',
+            backgroundColor: 'rgba(0,0,0,0)',
+            pointStyle: 'circle',
+            pointRadius: 3,
+            borderDash: [10, 10],
+        });
+
+        document.getElementById("cont").innerHTML = '<canvas id="myChart" style="width: 100%;height: 100%;"></canvas>';
+
+        new Chart(document.getElementById("myChart").getContext("2d"), {
+            data: {
+                labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                datasets: datasets
+            },
+            showTooltips: false,
+            options: {
+                    animation:{
+                    onComplete : function(){
+                        var ctx = this.ctx;
+                        ctx.fillStyle = "#aaa";
+                        ctx.textAlign = "center";
+                        ctx.textBaseline = "bottom";
+
+                        this._metasets.forEach(function (el) {
+                            el.data.forEach(function (el2, idx) {
+                                let val = el._dataset.data[idx];
+                                ctx.fillText(val.toFixed(1) + '%', el2.x, el2.y - 20);
+                            });
+                        });
+                    }
+                },
+                responsive: false,
+                scales: {
+                    x: {
+                        grid: {
+                            color:"rgba(0,0,0,0)"
+                        },
+                        display: true,
+                        title: {
+                        display: false,
+                        },
+                        ticks: {
+                            autoSkip: true
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: false,
+                        },
+                        grid:{
+                            borderColor:'rgba(0,0,0,0)',
+                        },
+                        min:0,
+                        max:100,
+                        ticks: {
+                            stepSize: 20,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, ticks) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: false,
+                    },
+                },
+                events: ["touchstart", "touchmove", "touchend"],
+            },
+        });
+    }
+}
+
+
+function drawChart3(arr) {
+    if (arr) {
+        let datasets = [], i = -1;
+
+        while(++i < arr.length) {
+            let el = arr[i];
+
+            datasets.push({
+                type: el.type,
+                borderWidth: 1,
+                data: el.data, 
+                borderColor: el.borderColor,
+                backgroundColor: el.backgroundColor,
+                pointStyle: 'circle',
+                min:el.min,
+                max:el.max,
+                pointRadius: 3,
+                borderDash: [10, 10],
+                yAxisID: (i==0 ? 'y' : 'y1'),
+                tension: el.tension ? el.tension : 0,
+            });
+        }
+
+        document.getElementById("cont").innerHTML = '<canvas id="myChart" style="width: 100%;height: 100%;"></canvas>';
+
+        new Chart(document.getElementById("myChart").getContext("2d"), {
+            data: {
+                labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                datasets: datasets
+            },
+            showTooltips: false,
+            options: {
+                    animation:{
+                    onComplete : function(){
+                        var ctx = this.ctx;
+                        ctx.fillStyle = "#aaa";
+                        ctx.textAlign = "center";
+                        ctx.textBaseline = "bottom";
+
+                        let el = this._metasets[0];
+
+                        el.data.forEach(function (el2, idx) {
+                            let val = el._dataset.data[idx];
+                            ctx.fillText(val.toFixed(1) + '%', el2.x, el2.y - 20);
+                        });
+
+                        el = this._metasets[1];
+                        
+                        el.data.forEach(function (el2, idx) {
+                            let val = el._dataset.data[idx];
+                            ctx.fillText(val.toFixed(1), el2.x, el2.y + 20);
+                        });
+
+                        // this._metasets.forEach(function (el) {
+                        //     el.data.forEach(function (el2, idx) {
+                        //         let val = el._dataset.data[idx];
+                        //         ctx.fillText(val.toFixed(1), el2.x, el2.y + 20);
+                        //     });
+                        // });
+                    }
+                },
+                responsive: false,
+                scales: {
+                    x: {
+                        grid: {
+                            color:"rgba(0,0,0,0)"
+                        },
+                        display: true,
+                        title: {
+                        display: false,
+                        },
+                        ticks: {
+                            autoSkip: true
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: false,
+                        },
+                        grid:{
+                            borderColor:'rgba(0,0,0,0)',
+                        },
+                        min:0,
+                        max:100,
+                        position:'left',
+                        ticks: {
+                            stepSize: 20,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, ticks) {
+                                return value + '%';
+                            }
+                        }
+                    },
+                    y1: {
+                        display: true,
+                        title: {
+                            display: false,
+                        },
+                        grid:{
+                            borderColor:'rgba(0,0,0,0)',
+                        },
+                        min:0,
+                        max:200,
+                        position:'right',
+                        ticks: {
+                            stepSize: 40,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, ticks) {
+                                return value;
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: false,
+                    },
+                },
+                events: ["touchstart", "touchmove", "touchend"],
+            },
+        });
+    }
+}
+
+function drawChart4(arr) {
+    if (arr) {
+        let datasets = [], i = -1;
+        let bar_max = 200, line_max = 100;
+
+        while(++i < arr.length) {
+            let el = arr[i];
+
+            datasets.push({
+                label:el.label,
+                type: el.type,
+                borderWidth: 1,
+                data: el.data, 
+                borderColor: el.borderColor,
+                backgroundColor: el.backgroundColor,
+                barPercentage:el.barPercentage,
+                pointStyle: 'circle',
+                min:el.min,
+                max:el.max,
+                pointRadius: 3,
+                borderDash: [10, 10],
+                yAxisID: (i==0 ? 'y' : 'y1'),
+                tension: el.tension ? el.tension : 0,
+            });
+
+            if (el.type === 'bar' && el.max) {
+                bar_max = el.max;
+            }
+            if (el.type === 'line' && el.max) {
+                line_max = el.max;
+            }
+        }
+
+        document.getElementById("cont").innerHTML = '<canvas id="myChart" style="width: 100%;height: 100%;"></canvas>';
+
+        new Chart(document.getElementById("myChart").getContext("2d"), {
+            data: {
+                labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                datasets: datasets
+            },
+            showTooltips: false,
+            options: {
+                    animation:{
+                    onComplete : function(){
+                        var ctx = this.ctx;
+                        let height = this.canvas.clientHeight;
+                        ctx.fillStyle = "#aaa";
+                        ctx.textAlign = "center";
+                        ctx.textBaseline = "bottom";
+
+                        let el = this._metasets[0];
+
+                        el.data.forEach(function (el2, idx) {
+                            let val = el._dataset.data[idx];
+                            ctx.fillText(parseInt(val) + '%', el2.x, el2.y - 6);
+                        });
+
+                        el = this._metasets[1];
+                        
+                        el.data.forEach(function (el2, idx) {
+                            let val = el._dataset.data[idx];
+                            ctx.fillText(val.toFixed(1), el2.x, height - 32);
+                        });
+                    }
+                },
+                responsive: false,
+                scales: {
+                    x: {
+                        grid: {
+                            color:"rgba(0,0,0,0)"
+                        },
+                        display: true,
+                        title: {
+                        display: false,
+                        },
+                        ticks: {
+                            autoSkip: true
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: false,
+                        },
+                        grid:{
+                            borderColor:'rgba(0,0,0,0)',
+                        },
+                        min:0,
+                        max:line_max,
+                        position:'left',
+                        ticks: {
+                            stepSize: 20,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, ticks) {
+                                return value + '%';
+                            }
+                        }
+                    },
+                    y1: {
+                        display: true,
+                        title: {
+                            display: false,
+                        },
+                        grid:{
+                            borderColor:'rgba(0,0,0,0)',
+                        },
+                        min:0,
+                        max:bar_max,
+                        position:'right',
+                        ticks: {
+                            stepSize: 40,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, ticks) {
+                                return value;
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position:"left",
+                        labels: {
+                            usePointStyle: true,
+                            boxHeight: 6
+                        }  
+                    },
+                    title: {
+                        display: false,
+                    },
+                },
+                events: ["touchstart", "touchmove", "touchend"],
+            },
+        });
+    }
+}
+
+
+function drawChart_energyuse(arr, max, step = 500, legend = true, stacked = false) {
+    if (arr) {
+        let datasets = [], i = -1;
+
+        while (++i < arr.length) {
+            let el = arr[i];
+            datasets.push({
+                label: el.label, 
+                type: el.type,
+                borderWidth: el.borderWidth,
+                data: el.data,
+                borderColor: el.borderColor, 
+                backgroundColor: el.backgroundColor, 
+                barPercentage: el.barPercentage,
+                yAxisID: el.yAxisID,
+                pointStyle: el.pointStyle,
+                pointRadius: el.pointRadius,
+                borderDash: el.dash ? [2, 2] : [0, 0],
+                tension: el.tension ? el.tension : 0,
+            });
+        }
+
+        const yAxisTitle = arr[0]?.yAxisTitle || '에너지사용량';
+
+        document.getElementById("cont").innerHTML = `
+        <div style="display: flex; width: 100%; height: 100%;">
+                <canvas id="myChart" style="width: 80%; height: 100%;"></canvas>
+                <div id="legend" style="width: 20%; display: flex; flex-direction: column; margin-top: 40px;"></div>
+            </div>
+        `;
+
+        const ctx = document.getElementById("myChart").getContext("2d");
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                datasets: datasets
+            },
+            options: {
+                responsive: false,
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: stacked,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: { 
+                        stacked: stacked, 
+                        min: 0, 
+                        max: max,
+                        title: {
+                            display: true,
+                            text: yAxisTitle,
+                            align: 'center',
+                            padding: {
+                                top: 10,
+                            },
+                            font: {
+                                size: 12,
+                            },
+                            rotation: 0,
+                        }
+                    },
+                },
+            },
+        });
+
+        const legendContainer = document.getElementById('legend');
+        datasets.forEach((dataset, index) => {
+            const legendItem = document.createElement('div');
+            legendItem.style.display = 'flex';
+            legendItem.style.alignItems = 'center';
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = `checkbox-${index}`;
+            checkbox.checked = true;
+            checkbox.style.marginTop  = '15px';
+
+            const lineBox = document.createElement('span');
+            lineBox.style.width = '20px';
+            lineBox.style.height = '2px';
+            lineBox.style.backgroundColor = dataset.borderColor;
+            lineBox.style.marginRight = '0px';
+            lineBox.style.marginTop = '15px';
+            lineBox.style.alignSelf = 'center';
+
+            const pointBox = document.createElement('span');
+            pointBox.style.width = '10px';
+            pointBox.style.height = '10px';
+            pointBox.style.borderRadius = '50%';
+            pointBox.style.backgroundColor = dataset.borderColor;
+            pointBox.style.marginRight = '5px';
+            pointBox.style.marginTop = '15px';
+
+            const label = document.createElement('span');
+            label.style.marginLeft = '5px';
+            label.style.marginTop = '15px';
+            label.textContent = dataset.label;
+            label.style.textAlign = 'center';
+            label.style.fontSize = '12px';
+
+            checkbox.addEventListener('change', (e) => {
+                myChart.getDatasetMeta(index).hidden = !e.target.checked;
+                myChart.update();
+            });
+
+            legendItem.appendChild(checkbox);
+            legendItem.appendChild(lineBox);
+            legendItem.appendChild(pointBox);
+            legendItem.appendChild(label);
+            legendContainer.appendChild(legendItem);
+        });
+    }
+}
+
+
+
+function drawChart_wp(arr) {
+    
+    if (arr) {
+        let datasets = [], i = -1;
+        let line_max = 100;
+
+        while(++i < arr.length) {
+            let el = arr[i];
+
+            datasets.push({
+                label:el.label,
+                type: el.type,
+                borderWidth: 1,
+                data: el.data, 
+                borderColor: el.borderColor,
+                backgroundColor: el.backgroundColor,
+                pointStyle: 'circle',
+                min:el.min,
+                max:el.max,
+                pointRadius: 3,
+                borderDash: el.dash ? [2, 2] : [0, 0],
+                yAxisID: (i==0 ? 'y' : 'y1'),
+                tension: el.tension ? el.tension : 0,
+            });
+            if (el.type === 'line' && el.max) {
+                line_max = el.max;
+            }
+        }
+
+        document.getElementById("cont").innerHTML = '<canvas id="myChart" style="width: 100%;height: 100%;"></canvas>';
+
+        new Chart(document.getElementById("myChart").getContext("2d"), {
+            data: {
+                labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                datasets: datasets
+            },
+            showTooltips: false,
+            options: {
+                    animation:{
+                    onComplete : function(){
+                        var ctx = this.ctx;
+                        let height = this.canvas.clientHeight;
+                        ctx.fillStyle = "#aaa";
+                        ctx.textAlign = "center";
+                        ctx.textBaseline = "bottom";
+
+                        let el = this._metasets[0];
+
+                        el.data.forEach(function (el2, idx) {
+                            let val = el._dataset.data[idx];
+                            ctx.fillText(val.toFixed(1) , el2.x, el2.y -5);
+                        });
+                    }
+                },
+                responsive: false,
+                scales: {
+                    x: {
+                        grid: {
+                            color:"rgba(0,0,0,0)"
+                        },
+                        display: true,
+                        title: {
+                        display: false,
+                        },
+                        ticks: {
+                            autoSkip: true
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: false,
+                        },
+                        grid:{
+                            borderColor:'rgba(0,0,0,0)',
+                        },
+                        min:0,
+                        max:line_max,
+                        position:'left',
+                        ticks: {
+                            stepSize: 20,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, ticks) {
+                                return value ;
+                            }
+                        }
+                    },
+                    
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position:"left",
+                        labels: {
+                            usePointStyle: true,
+                            boxHeight: 6
+                        }  
+                    },
+                    title: {
+                        display: false,
+                    },
+                },
+                events: ["touchstart", "touchmove", "touchend"],
+            },
+        });
+    }
+}
+
+
+function drawChart_pv(arr) {
+    
+    if (arr) {
+        let datasets = [], i = -1;
+        let bar_max = 200, line_max = 100;
+
+        while(++i < arr.length) {
+            let el = arr[i];
+
+            datasets.push({
+                label:el.label,
+                type: el.type,
+                borderWidth: 1,
+                data: el.data, 
+                borderColor: el.borderColor,
+                backgroundColor: el.backgroundColor,
+                barPercentage:el.barPercentage,
+                pointStyle: 'circle',
+                min:el.min,
+                max:el.max,
+                pointRadius: 3,
+                borderDash: el.dash ? [2, 2] : [0, 0],
+                yAxisID: (i==0 ? 'y' : 'y1'),
+                tension: el.tension ? el.tension : 0,
+            });
+
+            if (el.type === 'bar' && el.max) {
+                bar_max = el.max;
+            }
+            if (el.type === 'line' && el.max) {
+                line_max = el.max;
+            }
+        }
+
+        document.getElementById("cont").innerHTML = '<canvas id="myChart" style="width: 100%;height: 100%;"></canvas>';
+
+        new Chart(document.getElementById("myChart").getContext("2d"), {
+            data: {
+                labels: ['1월', '2월', '4월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                datasets: datasets
+            },
+            showTooltips: false,
+            options: {
+                    animation:{
+                    onComplete : function(){
+                        var ctx = this.ctx;
+                        let height = this.canvas.clientHeight;
+                        ctx.fillStyle = "#aaa";
+                        ctx.textAlign = "center";
+                        ctx.textBaseline = "top";
+
+                        let el = this._metasets[0]; //라인
+
+                        el.data.forEach(function (el2, idx) {
+                            let val = el._dataset.data[idx];
+                            ctx.fillText(val.toFixed(1) , el2.x, el2.y -20);
+                        });
+
+
+                        el = this._metasets[1]; //막대그래프
+                        
+                        el.data.forEach(function (el2, idx) {
+                            let val = el._dataset.data[idx];
+                            ctx.fillText(val.toFixed(1), el2.x, el2.y -20);
+                        });
+
+                    }
+                },
+                responsive: false,
+                    scales: {
+                    x: {
+                        grid: {
+                            color:"rgba(0,0,0,0)"
+                        },
+                        display: true,
+                        title: {
+                        display: false,
+                        },
+                        ticks: {
+                            autoSkip: true
+                        }
+                    },
+                    y: {
+                        display: false,
+                        title: {
+                            display: false,
+                        },
+                        grid:{
+                            borderColor:'rgba(0,0,0,0)',
+                        },
+                        min:0,
+                        max:line_max,
+                        position:'left',
+                        ticks: {
+                            display: false,
+                            stepSize: 40,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, ticks) {
+                                return value ;
+                            }
+                        }
+                    },
+                    y1: {
+                        display: true,
+                        title: {
+                            display: false,
+                        },
+                        grid:{
+                            borderColor:'rgba(0,0,0,0)',
+                        },
+                        min:0,
+                        max:bar_max,
+                        position:'right',
+                        ticks: {
+                            display:true,
+                            stepSize: 30,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, ticks) {
+                                return value;
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position:"left",
+                        labels: {
+                            usePointStyle: true,
+                            boxHeight: 6
+                        }  
+                    },
+                    title: {
+                        display: false,
+                    },
+                },
+                events: ["touchstart", "touchmove", "touchend"],
+            },
+        });
+    }
+}
+
+function drawChart_blind(arr) {
+    
+    if (arr) {
+        let datasets = [], i = -1;
+        let bar_max = 200, line_max = 100;
+
+        while(++i < arr.length) {
+            let el = arr[i];
+
+            datasets.push({
+                label:el.label,
+                type: el.type,
+                borderWidth: 1,
+                data: el.data, 
+                borderColor: el.borderColor,
+                backgroundColor: el.backgroundColor,
+                barPercentage:el.barPercentage,
+                pointStyle: 'circle',
+                min:el.min,
+                max:el.max,
+                pointRadius: 3,
+                borderDash: el.dash ? [2, 2] : [0, 0],
+                yAxisID: (i==0 ? 'y' : 'y1'),
+                tension: el.tension ? el.tension : 0,
+            });
+
+            if (el.type === 'bar' && el.max) {
+                bar_max = el.max;
+            }
+            if (el.type === 'line' && el.max) {
+                line_max = el.max;
+            }
+        }
+
+        document.getElementById("cont").innerHTML = '<canvas id="myChart" style="width: 100%;height: 100%;"></canvas>';
+
+        new Chart(document.getElementById("myChart").getContext("2d"), {
+            data: {
+                labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                datasets: datasets
+            },
+            showTooltips: false,
+            options: {
+                    animation:{
+                    onComplete : function(){
+                        var ctx = this.ctx;
+                        let height = this.canvas.clientHeight;
+                        ctx.fillStyle = "#aaa";
+                        ctx.textAlign = "center";
+                        ctx.textBaseline = "bottom";
+
+                        let el = this._metasets[0];
+
+                        el.data.forEach(function (el2, idx) {
+                            let val = el._dataset.data[idx];
+                            ctx.fillText(val.toFixed(1) + '%', el2.x, el2.y - 5);
+                        });
+
+
+                        el = this._metasets[1];
+                        
+                        el.data.forEach(function (el2, idx) {
+                            let val = el._dataset.data[idx];
+                            ctx.fillText(val.toFixed(1), el2.x, height - 32);
+                        });
+
+                    }
+                },
+                responsive: false,
+                scales: {
+                    x: {
+                        grid: {
+                            color:"rgba(0,0,0,0)"
+                        },
+                        display: true,
+                        title: {
+                        display: false,
+                        },
+                        ticks: {
+                            autoSkip: true
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: false,
+                        },
+                        grid:{
+                            borderColor:'rgba(0,0,0,0)',
+                        },
+                        min:0,
+                        max:line_max,
+                        position:'left',
+                        ticks: {
+                            stepSize: 20,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, ticks) {
+                                return value +'%';
+                            }
+                        }
+                    },
+                    y1: {
+                        display: true,
+                        title: {
+                            display: false,
+                        },
+                        grid:{
+                            borderColor:'rgba(0,0,0,0)',
+                        },
+                        min:0,
+                        max:bar_max,
+                        position:'right',
+                        ticks: {
+                            stepSize: 40,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, ticks) {
+                                return value;
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position:"left",
+                        labels: {
+                            usePointStyle: true,
+                            boxHeight: 6
+                        }  
+                    },
+                    title: {
+                        display: false,
+                    },
+                },
+                events: ["touchstart", "touchmove", "touchend"],
+            },
+        });
+    }
+}
+function loadImage(arr) {
+    if (arr) {
+        let datasets = [], i = -1;
+        while(++i < arr.length) {
+            let el = arr[i];
+            datasets.push({
+                imgsrc:el.imgsrc
+            });
+        }
+
+        const img = document.createElement('img');
+            img.src = imgsrc; // 이미지 경로를 매개변수로 사용
+            img.alt = 'Image'; // 대체 텍스트
+            img.style.maxWidth = '100%'; // 최대 너비
+            img.style.maxHeight = '270px'; // 최대 높이
+            img.style.height = 'auto'; // 비율에 맞게 높이 조정
+            document.getElementById('image-container').appendChild(img);
+        }
+    }
+
+</script>
+</body>
+</html>
