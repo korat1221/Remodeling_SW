@@ -22,7 +22,6 @@ namespace main.contents.Result
         public Element_Lighting()
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
-            webView21.Source = new Uri(Program.gPath + "threejs\\public\\report.html", true);
             InitializeAsync();
         }
         async void InitializeAsync()
