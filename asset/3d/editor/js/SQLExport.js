@@ -42,6 +42,10 @@ SQLExport.prototype = {
             let b = nm.split('+').slice(2, 3)[0];
             return b;
         };
+        let _getZoneHeight= (nm) => {
+            let b = nm.split('+').slice(3, 4)[0];
+            return b;
+        };
         let _getTitle = (type) => {
             return {  "DR": "외부출입문", "CW": "커튼월창", "WN": "창호", "RF": "지붕", "FL": "최하층바닥", "SL": "층간바닥", "IW": "내벽", "WL": "외벽" }[type];
         };
@@ -95,6 +99,7 @@ SQLExport.prototype = {
                 let num = _getZoneNum(id);
                 let name = _getZoneName(id);
                 let area = _getZoneArea(id);
+                let height = _getZoneHeight(id);
                 let stru = {}, struCW = [];
                 let floorType = "", floorArea = 0, mainCardi = "", mainWidth = 0, mainHeight = 0, mainDepth = 0;
 
@@ -230,6 +235,7 @@ SQLExport.prototype = {
                     "floor": el.userData.floor,
                     "floorType": floorType,
                     "floorArea": area,
+                    "height": height,
                     "children": children
                 });
             }
@@ -332,14 +338,15 @@ SQLExport.prototype = {
             while (++i < tree[0].length) {
                 let el2 = tree[0][i];
                 sql +=
-                    "INSERT INTO ZoneGeneral_3D (ID,존번호,프로젝트유형,층,지면접합유형,바닥면적,존이름) VALUES (" +
+                    "INSERT INTO ZoneGeneral_3D (ID,존번호,프로젝트유형,층,지면접합유형,바닥면적,층고,존이름) VALUES (" +
                     el2.skey +
                     ",'" +
                     el2.text +
                     "','__PROJ_TYPE__','" +
                     el2.floor +
                     "','" + el2.floorType + 
-                    "','" + el2.floorArea +                   
+                    "','" + el2.floorArea +       
+                    "','" + el2.height +                
                     "','" + el2.Name + 
                     "');";
             }
