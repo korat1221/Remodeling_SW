@@ -686,33 +686,13 @@ Zoning.prototype = {
             return b; 
         };
         let _getCardinal = (pos, walls) => {
-            let i = -1, j;
-            var P = new THREE.Plane();
-            let v2 = new THREE.Vector3();
-            let center = new THREE.Vector3();
+            let i = -1;
 
-            while (++i < pos.length) {
-                center.x += pos[i].x;
-                center.y += pos[i].y;
-                center.z += pos[i].z;
-            }
-            center.x /= pos.length;
-            center.y /= pos.length;
-            center.z /= pos.length;
-
-            i = -1;
             while (++i < walls.length) {
                 let po = walls[i];
 
-                j = 0;
-                while (j < po.pos.length) {
-                    let T = (new THREE.Triangle(po.pos[j], po.pos[j + 1], po.pos[j + 2]));
-
-                    T.getPlane(P);
-                    if (Math.abs(P.distanceToPoint(center)) < 0.001 && T.containsPoint(P.projectPoint(center, v2))) {
-                        return { cardi: po.cardi, slope: po.slope, pidx : i };
-                    }
-                    j += 3;
+                if (_isInterscect(pos, po.pos)) {
+                    return { cardi: po.cardi, slope: po.slope, pidx : i };
                 }
             }
             return null;
@@ -1263,6 +1243,72 @@ Zoning.prototype = {
                 }
             }
 
+            i = -1;
+            while (++i < obj.children.length) {
+                let el = obj.children[i];
+                if (el instanceof THREE.LineSegments) {
+                    if (el.name.indexOf("DUMMY_BUILDING") < 0) {
+                        j = -1;
+                        while (++j < zkeys.length) {
+                            let zk = zkeys[j];
+                            let el2 = zones[zk];
+                            let pos = el.geometry.getAttribute("position"), o;
+
+                            if (el.name.indexOf(zk) >= 0 && _getSubType(el.name) === "" && (o = _asWinPoly(pos)) !== null) {
+                                if (!el2.userData.children) {
+                                    el2.userData.children = [];
+                                }
+
+                                let stru = {};
+
+                                stru.uuid = _addMeshObject(o, this.colors["WN"], zk);
+                                stru.type = "WN";
+                                stru.area = _getArea(o);
+                                stru.bbox = _asRectangle(o);
+
+                                stru.width = (new THREE.Vector3(stru.bbox[0].x, stru.bbox[1].y, stru.bbox[0].z)).distanceTo(stru.bbox[1]);
+                                stru.height = stru.bbox[0].distanceTo(new THREE.Vector3(stru.bbox[0].x, stru.bbox[1].y, stru.bbox[0].z));
+                                
+                                if( stru.width >  stru.height)
+                                {
+                                    stru.height = _getArea(o)/ stru.width;
+                                }else{
+                                    stru.width =  _getArea(o)/ stru.height;
+                                }
+
+                                stru.pos = o;
+                                el2.userData.children.push(stru);
+                            }
+                        }
+                    }
+                    el.visible = false;
+                }
+            }
+            for (const [id, el] of Object.entries(zones)) {
+                if (el.userData.children) {
+                    i = -1;
+                    while (++i < el.userData.children.length) {
+                        let el2 = el.userData.children[i];
+
+                        let o = _getCardinal(el2.pos, el.userData.walls);
+                        if (o) {
+                            el2.cardi = o.cardi;
+                            el2.slope = o.slope;
+                            el2.pidx = o.pidx;
+                        }
+                        let o2 = obj.getObjectByProperty('uuid', el2.uuid);
+                        if (o2) {
+                            let opt = this.colors[_getTypeColor(el2.type)];
+
+                            o2.material.color.set(opt.color);
+                            o2.material.opacity = opt.opacity;
+                            o2.userData.color = opt.color;
+                            o2.userData.opacity = opt.opacity;
+                        }
+                    }
+                }
+            }
+
             for (const [id, el] of Object.entries(zones)) {
                 i = el.userData.walls.length;
 
@@ -1349,48 +1395,6 @@ Zoning.prototype = {
             i = -1;
             while (++i < obj.children.length) {
                 let el = obj.children[i];
-                if (el instanceof THREE.LineSegments) {
-                    if (el.name.indexOf("DUMMY_BUILDING") < 0) {
-                        j = -1;
-                        while (++j < zkeys.length) {
-                            let zk = zkeys[j];
-                            let el2 = zones[zk];
-                            let pos = el.geometry.getAttribute("position"), o;
-
-                            if (el.name.indexOf(zk) >= 0 && _getSubType(el.name) === "" && (o = _asWinPoly(pos)) !== null) {
-                                if (!el2.userData.children) {
-                                    el2.userData.children = [];
-                                }
-
-                                let stru = {};
-
-                                stru.uuid = _addMeshObject(o, this.colors["WN"], zk);
-                                stru.type = "WN";
-                                stru.area = _getArea(o);
-                                stru.bbox = _asRectangle(o);
-
-                                stru.width = (new THREE.Vector3(stru.bbox[0].x, stru.bbox[1].y, stru.bbox[0].z)).distanceTo(stru.bbox[1]);
-                                stru.height = stru.bbox[0].distanceTo(new THREE.Vector3(stru.bbox[0].x, stru.bbox[1].y, stru.bbox[0].z));
-                                
-                                if( stru.width >  stru.height)
-                                {
-                                    stru.height = _getArea(o)/ stru.width;
-                                }else{
-                                    stru.width =  _getArea(o)/ stru.height;
-                                }
-
-                                stru.pos = o;
-                                el2.userData.children.push(stru);
-                            }
-                        }
-                    }
-                    el.visible = false;
-                }
-            }
-
-            i = -1;
-            while (++i < obj.children.length) {
-                let el = obj.children[i];
                 if (el instanceof THREE.Mesh && el.name.indexOf("DUMMY_BUILDING") < 0) {
                     j = -1;
                     while (++j < zkeys.length) {
@@ -1419,26 +1423,6 @@ Zoning.prototype = {
 
             for (const [id, el] of Object.entries(zones)) {
                 if (el.userData.children) {
-                    i = -1;
-                    while (++i < el.userData.children.length) {
-                        let el2 = el.userData.children[i];
-
-                        let o = _getCardinal(el2.pos, el.userData.walls);
-                        if (o) {
-                            el2.cardi = o.cardi;
-                            el2.slope = o.slope;
-                            el2.pidx = o.pidx;
-                        }
-                        let o2 = obj.getObjectByProperty('uuid', el2.uuid);
-                        if (o2) {
-                            let opt = this.colors[_getTypeColor(el2.type)];
-
-                            o2.material.color.set(opt.color);
-                            o2.material.opacity = opt.opacity;
-                            o2.userData.color = opt.color;
-                            o2.userData.opacity = opt.opacity;
-                        }
-                    }
                     i = -1;
 
                     while (++i < el.userData.walls.length) {
