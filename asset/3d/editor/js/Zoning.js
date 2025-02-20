@@ -382,7 +382,7 @@ Zoning.prototype = {
                 while (++i < el.userData.walls.length) {
                     j = -1;
                     while (++j < el.userData.walls[i].edges.length) {
-                        if ((i !== idx || j !== idx2) && _intersectedLine(edge, el.userData.walls[i].edges[j])) {
+                        if ((id0 !== id || i !== idx || j !== idx2) && _equalLine(edge, el.userData.walls[i].edges[j])) {
                             links.push(el.userData.walls[i]);
                         }
                     }
@@ -1255,7 +1255,8 @@ Zoning.prototype = {
                             if (arr[k].graph) {
         
                                 let edge = _asEdges(arr[k].raw);
-                                el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k].graph, working:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, /* pnts: pnts,  */width:arr[k].width, height:arr[k].height});
+
+                                el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k].graph, working:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, width:arr[k].width, height:arr[k].height});
                             }
                         }
                     }
