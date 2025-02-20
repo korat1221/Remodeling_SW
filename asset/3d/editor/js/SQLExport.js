@@ -163,8 +163,6 @@ SQLExport.prototype = {
                     while (++i < el.userData.walls.length) {
                         let el2 = el.userData.walls[i];
 
-                        if (el2.invisible) continue;
-
                         let o = _getObjectByUuid(el2.uuid);
 
                         
@@ -268,7 +266,7 @@ SQLExport.prototype = {
                         (el2.type === 'CW' ? '유리부분' : '') +
                         "','" +
                         el2.area +
-                        "','','" +
+                        "','','" + cardinal[el2.cardi] + 
                         "','" +
                         el2.slope +
                         "','" +
@@ -300,7 +298,6 @@ SQLExport.prototype = {
                     while (++i < el.userData.walls.length) {
                         let el2 = el.userData.walls[i];
                         let nearid = _getZoneNum( _asVal(el2.near, ""));
-                        if (el2.invisible) continue;
 
                         sql += "INSERT INTO ZoneEnvelope_3D (아이디, 번호,프로젝트유형,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이) VALUES ('" +
                         el2.uuid +
