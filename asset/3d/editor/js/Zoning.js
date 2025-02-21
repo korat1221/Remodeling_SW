@@ -429,7 +429,7 @@ Zoning.prototype = {
                     while (++j < walls.length) {
                         let el2 = walls[j];
 
-                        if ((id0 !== id || idx != j) && _compareCardi(cardi, el2.cardi)) {
+                        if (_compareCardi(cardi, el2.cardi)) {
                             k = -1;
             
                             while(++k < el2.lines.length) {   
@@ -640,7 +640,7 @@ Zoning.prototype = {
 
                     j = -1;
                     while (++j < el1.length) {
-                        if (i != j && _compareCardi(walls[i].cardi, walls[j].cardi)) {
+                        if (_compareCardi(walls[i].cardi, walls[j].cardi)) {
                             a = -1;
                             while (++a < el1[i].length) {
                                 b = -1;
@@ -1063,8 +1063,11 @@ Zoning.prototype = {
             let i = -1, area = 0;
 
             while(++i < wins.length) {
-                if (wins[i].pidx == idx) {
-                    area += wins[i].area;
+                let el = wins[i];
+                if (el.pidx == idx) {
+                    if (!el.atteched) {
+                        area += el.area;
+                    }
                 }
             }
 
@@ -1186,7 +1189,7 @@ Zoning.prototype = {
                             }
                             
 
-                            el2.userData.children.push({ type: type, uuid: el.uuid, area: _getArea(o), pos: o, bbox: bbox, width: bbox.width, height:bbox.height });
+                            el2.userData.children.push({ type: type, uuid: el.uuid, area: _getArea(o), pos: o, bbox: bbox, width: bbox.width, height:bbox.height, atteched:true });
 
                             el2.userData.walls = el2.userData.walls.concat(_collPositions(el.geometry.getAttribute("position"), el.geometry.getAttribute("normal")));
 
@@ -1236,10 +1239,20 @@ Zoning.prototype = {
         
                                 let edge = _asEdges(arr[k].raw);
 
-                                el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k].graph, working:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, width:arr[k].width, height:arr[k].height});
+                                let rid = _getWallOwner(id, arr[k].graph, edge, el2.cardi, id.indexOf('3F_Zone14') >= 0 && el2.cardi == 'UP');
+
+                                el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k].graph, splitted:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, width:arr[k].width, height:arr[k].height});
                             }
                         }
                     }
+                }
+            }
+
+            for (const [id, el] of Object.entries(zones)) {
+                i = el.userData.walls.length;
+
+                while (--i >= 0) {
+                    if (el.userData.walls[i].deletable) el.userData.walls.splice(i, 1);
                 }
             }
 
@@ -1308,15 +1321,7 @@ Zoning.prototype = {
                     }
                 }
             }
-
-            for (const [id, el] of Object.entries(zones)) {
-                i = el.userData.walls.length;
-
-                while (--i >= 0) {
-                    if (el.userData.walls[i].deletable) el.userData.walls.splice(i, 1);
-                }
-            }
-             
+            
             i = -1;
             while (++i < obj.children.length) {
                 let el = obj.children[i];
