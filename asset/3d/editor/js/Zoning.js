@@ -1239,8 +1239,6 @@ Zoning.prototype = {
         
                                 let edge = _asEdges(arr[k].raw);
 
-                                let rid = _getWallOwner(id, arr[k].graph, edge, el2.cardi, id.indexOf('3F_Zone14') >= 0 && el2.cardi == 'UP');
-
                                 el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k].graph, splitted:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, width:arr[k].width, height:arr[k].height});
                             }
                         }
