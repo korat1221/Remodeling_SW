@@ -283,7 +283,7 @@ Shadows.prototype = {
 					if (key != key2 && val2.length == 2) {
 						if ((dist = _linkedPoint(L, val2)) !== null && ((!isRight && _isLeftProj(cardi, key2.substring(0,key2.indexOf('__')), center, dist)) || (isRight && _isRightProj(cardi, key2.substring(0,key2.indexOf('__')), center, dist))) &&
 						_checkCrossProduct(center, dist, val2, isRight)) {
-							return {base:center.distanceTo(dist), height:val2[0].distanceTo(val2[1]), point:(dist == val2[0] ? val2[1] : val2[0])};
+							return {base:center.distanceTo(dist), height:val2[0].distanceTo(val2[1]), point:(_equalPoint(dist, val2[0]) ? val2[1] : val2[0])};
 						}
 					}
 				}

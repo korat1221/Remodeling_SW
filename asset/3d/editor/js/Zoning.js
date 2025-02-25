@@ -1504,30 +1504,6 @@ Zoning.prototype = {
 
             console.log(zones);
 
-            for (const [id, el] of Object.entries(zones)) {
-                let i = -1;
-
-                while (++i < el.userData.walls.length) {
-                    let el2 = el.userData.walls[i];
-                    let j = -1;
-                    while (++j < el2.edges.length) {
-                //        _drawPoint(el2.edges[j],'#ff0000');
-                    }
-                    if (id.indexOf('3F_Zone17') >= 0 && el2.cardi == 'W') {
-                        j = -1;
-                        while (++j < el2.edges.length) {
-                            _drawPolygon(el2.edges[j],'#ff0000');
-                        }
-                    }
-//                    if (id.indexOf('3F_Zone19') >= 0 && el2.cardi == 'E') {
-  //                      let j = -1;
-    //                    while (++j < el2.edges.length) {
-      //                      _drawPolygon(el2.edges[j],'#0000ff');
-        //                }
-          //          }
-                }
-            }
-
             i = obj.children.length;
             while (--i >= 0) {
                 if (!obj.children[i].visible) {
