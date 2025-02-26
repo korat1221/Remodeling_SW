@@ -209,15 +209,24 @@ namespace main
             {
                 for (int k = 0; k < Win.Length; k++)
                 {
-                    ZoneShade zoneshade = new ZoneShade(Win[k][0]);
-                    zoneshade.Calc_방위각();
-                    zoneshade.Calc_지형물음영();
+                    string[][] shade = Program.DB.getValue(DB.type.ProjDB, "Shade_3D", "음영계수", "번호='" + Win[k][0] + "'");
+                    if(shade.Length >0 && shade[0][0]!="")
+                    {
 
-                    zoneshade.Calc_상부음영();
-                    zoneshade.Calc_좌측음영();
-                    zoneshade.Calc_우측음영();
-                    zoneshade.Calc_음영계수();
-                    zoneshade.Save();
+                    }
+                    else
+                    {
+                        ZoneShade zoneshade = new ZoneShade(Win[k][0]);
+                        zoneshade.Calc_방위각();
+                        zoneshade.Calc_지형물음영();
+
+                        zoneshade.Calc_상부음영();
+                        zoneshade.Calc_좌측음영();
+                        zoneshade.Calc_우측음영();
+                        zoneshade.Calc_음영계수();
+                        zoneshade.Save();
+                    }
+                    
                 }
             }
         }
