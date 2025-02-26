@@ -267,7 +267,7 @@ namespace main.contents.Building
         private void Load_Gas_kWh_Value()
         {
             if (Gas_SelectColumn > 1)
-            { Gas_kWh_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value = string.Format("{0:F0}", Convert.ToDouble(Gas_m3_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value.ToString()) * 43.1 * 0.277778); }
+            { Gas_kWh_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value = string.Format("{0:F0}", Convert.ToDouble(Gas_m3_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value.ToString()) * 38.9 * 0.277778); }
             else
             {
                 Gas_kWh_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value = string.Format("{0:F0}", Convert.ToDouble(Gas_m3_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value.ToString()));

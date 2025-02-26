@@ -207,7 +207,7 @@ namespace main.contents.Result
                     else
                     {
                         primary = Convert.ToDouble(Value[0][5]) * 1.1 + Convert.ToDouble(Value[0][6]) *2.75;
-                        tco2 = Convert.ToDouble(Value[0][5]) * 0.4747 / 1000000 * 1000 + Convert.ToDouble(Value[0][6]) / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                        tco2 = Convert.ToDouble(Value[0][5]) * 0.4747 / 1000000 * 1000 + Convert.ToDouble(Value[0][6]) / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
                     }
                     AnnualData[7].Add(new { idx = i, val = primary.ToString("#,##0") });
                     AnnualData[8].Add(new { idx = i, val = tco2.ToString("0.0") });

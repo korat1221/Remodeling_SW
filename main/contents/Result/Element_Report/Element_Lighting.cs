@@ -312,8 +312,8 @@ namespace main.contents.Result
                     d = (ventil_saving / Total_Energy_pre * 100);
                     charts += "{donut:" + d + "},";
 
-                    double ventil_tCO2 = ventil_saving_elec * 0.4747 / 1000000 * 1000 + ventil_saving_noelec / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                    double ventil_TOE = ventil_saving_elec * 0.00023 + ventil_saving_noelec / 43.1 / 0.277778 * 0.00103;
+                    double ventil_tCO2 = ventil_saving_elec * 0.4747 / 1000000 * 1000 + ventil_saving_noelec / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    double ventil_TOE = ventil_saving_elec * 0.00023 + ventil_saving_noelec / 38.9  / 0.277778 * 0.00103;
 
                     Ventil_data[2].Add(new { idx = i, val = ventil_tCO2.ToString("0.0") });  //tco2
                     Ventil_data[3].Add(new { idx = i, val = ventil_TOE.ToString("0.0") });  //TOE 
@@ -440,8 +440,8 @@ namespace main.contents.Result
                     d = (infil_saving / Total_Energy_pre * 100);
                     charts += "{donut:" + d + "},";
 
-                    double infil_tCO2 = infil_saving_elec * 0.4747 / 1000000 * 1000 + infil_saving_noelec / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                    double infil_TOE = infil_saving_elec * 0.00023 + infil_saving_noelec / 43.1 / 0.277778 * 0.00103;
+                    double infil_tCO2 = infil_saving_elec * 0.4747 / 1000000 * 1000 + infil_saving_noelec / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    double infil_TOE = infil_saving_elec * 0.00023 + infil_saving_noelec / 38.9  / 0.277778 * 0.00103;
 
                     Infil_data[2].Add(new { idx = i, val = infil_tCO2.ToString("0.0") });  //tco2
                     Infil_data[3].Add(new { idx = i, val = infil_TOE.ToString("0.0") });  //TOE 
@@ -817,8 +817,8 @@ namespace main.contents.Result
                     d = (ventil_saving / Total_Energy_pre * 100);
                     charts += "{donut:" + d + "},";
 
-                    double ventil_tCO2 = ventil_saving_elec * 0.4747 / 1000000 * 1000 + ventil_saving_noelec / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                    double ventil_TOE = ventil_saving_elec * 0.00023 + ventil_saving_noelec / 43.1 / 0.277778 * 0.00103;
+                    double ventil_tCO2 = ventil_saving_elec * 0.4747 / 1000000 * 1000 + ventil_saving_noelec / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    double ventil_TOE = ventil_saving_elec * 0.00023 + ventil_saving_noelec / 38.9  / 0.277778 * 0.00103;
 
                     Ventil_data[2].Add(new { idx = i, val = ventil_tCO2.ToString("0.0") });  //tco2
                     Ventil_data[3].Add(new { idx = i, val = ventil_TOE.ToString("0.0") });  //TOE 
@@ -981,8 +981,8 @@ namespace main.contents.Result
                     d = (infil_saving / Total_Energy_pre * 100);
                     charts += "{donut:" + d + "},";
 
-                    double infil_tCO2 = infil_saving_elec * 0.4747 / 1000000 * 1000 + infil_saving_noelec / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                    double infil_TOE = infil_saving_elec * 0.00023 + infil_saving_noelec / 43.1 / 0.277778 * 0.00103;
+                    double infil_tCO2 = infil_saving_elec * 0.4747 / 1000000 * 1000 + infil_saving_noelec / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    double infil_TOE = infil_saving_elec * 0.00023 + infil_saving_noelec / 38.9  / 0.277778 * 0.00103;
 
                     Infil_data[2].Add(new { idx = i, val = infil_tCO2.ToString("0.0") });  //tco2
                     Infil_data[3].Add(new { idx = i, val = infil_TOE.ToString("0.0") });  //TOE 

@@ -223,6 +223,15 @@ namespace main.contents.Result.Building_Report
                 double Qh_a_전기 = 0, Qc_a_전기 = 0, Qw_a_전기 = 0, Ql_a_전기 = 0, Qv_a_전기 = 0, Qbase_a_전기 = 0, Qreg_a_전기 = 0, Qtot_a_전기 = 0;
                 double[] Qtot_mth_전기 = new double[12];
                 double Error_mth_avg_전기 = 0;
+
+                double max_use = 0;
+                for(int mth =1; mth < 12; mth++)
+                {
+                    if (Quse_elec_mth[3, mth] > max_use)
+                    {
+                        max_use = Quse_elec_mth[3, mth];
+                    }
+                }
                 for (int mth = 0; mth < 12; mth++)
                 {
                     string[][] Final = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,연료,신재생에너지,총에너지소요량", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
@@ -248,11 +257,13 @@ namespace main.contents.Result.Building_Report
 
                         총전기소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Qtot_mth_전기[mth].ToString())), 3) + 0);
                         전기소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Qtot_mth_전기[mth].ToString())), 3) + 0);
+
                         if (check_use)
                         {
-                            __data[39].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed(((Qtot_mth_전기[mth] - Quse_elec_mth[3, mth]) / Quse_elec_mth[3, mth] * 100).ToString("0.0")) }); //오차율
-                            Error_mth_avg_전기 += Math.Abs((Qtot_mth_전기[mth] - Quse_elec_mth[3, mth]) / Quse_elec_mth[3, mth] * 100);
-                            전기오차율chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Math.Abs(((Qtot_mth_전기[mth] - Quse_elec_mth[3, mth]) / Quse_elec_mth[3, mth])).ToString())), 3) + 0);  /// >>> 백분율 단위로 표시 필요 
+                            double error = Math.Abs(Qtot_mth_전기[mth] - Quse_elec_mth[3, mth]) / Quse_elec_mth[3, mth] * Quse_elec_mth[3, mth] / max_use * 100;
+                            __data[39].Add(new { idx = i * 12 + mth, val = Program.UTIL.asFixed((error).ToString("0.0")) }); //오차율
+                            Error_mth_avg_전기 += error;
+                            전기오차율chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed((error/100).ToString())), 3) + 0);  /// >>> 백분율 단위로 표시 필요 
                         }
                         else
                         {

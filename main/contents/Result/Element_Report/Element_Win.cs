@@ -129,11 +129,12 @@ namespace main.contents.Result
                     data.Add(new { cname = "win_saving", data = Win_data[0] });
                     data.Add(new { cname = "win_savingpercent", data = Win_data[1] });
 
+
                     charts += "{donut:" + d + "},";
                     double win_tCO2_elec = win_saving_elec * 0.4747 / 1000000 * 1000;
                     double win_TOE_elec = win_saving_elec * 0.00023;
-                    double win_tCO2_noelec = win_saving_noelec / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                    double win_TOE_noelec = win_saving_noelec / 43.1 / 0.277778 * 0.00103;
+                    double win_tCO2_noelec = win_saving_noelec / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    double win_TOE_noelec = win_saving_noelec / 38.9 / 0.277778 * 0.00103;
                     double win_tCO2 = win_tCO2_elec + win_tCO2_noelec;
                     double win_TOE = win_TOE_elec + win_TOE_noelec;
                     Win_data[2].Add(new { idx = i, val = win_tCO2.ToString("0.0") });  //tco2
@@ -403,8 +404,8 @@ namespace main.contents.Result
                     double cw_tCO2_elec = cw_saving_elec * 0.4747 / 1000000 * 1000;
                     double cw_TOE_elec = cw_saving_elec * 0.00023;
 
-                    double cw_tCO2_noelec = cw_saving_noelec / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                    double cw_TOE_noelec = cw_saving_noelec / 43.1 / 0.277778 * 0.00103;
+                    double cw_tCO2_noelec = cw_saving_noelec / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    double cw_TOE_noelec = cw_saving_noelec / 38.9 / 0.277778 * 0.00103;
                     double cw_tCO2 = cw_tCO2_elec + cw_tCO2_noelec;
                     double cw_TOE = cw_TOE_elec + cw_TOE_noelec;
                     CW_data[2].Add(new { idx = i, val = cw_tCO2.ToString("0.0") });  //tco2
@@ -657,8 +658,8 @@ namespace main.contents.Result
                     double door_tCO2_elec = door_saving_elec * 0.4747 / 1000000 * 1000;
                     double door_TOE_elec = door_saving_elec * 0.00023;
 
-                    double door_tCO2_noelec = door_saving_noelec / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                    double door_TOE_noelec = door_saving_noelec / 43.1 / 0.277778 * 0.00103;
+                    double door_tCO2_noelec = door_saving_noelec / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    double door_TOE_noelec = door_saving_noelec / 38.9 / 0.277778 * 0.00103;
                     double door_tCO2 = door_tCO2_elec + door_tCO2_noelec;
                     double door_TOE = door_TOE_elec + door_TOE_noelec;
                     Door_data[2].Add(new { idx = i, val = door_tCO2.ToString("0.0") });  //tco2
@@ -887,8 +888,8 @@ namespace main.contents.Result
                     double win_tCO2_elec = win_saving_elec * 0.4747 / 1000000 * 1000;
                     double win_TOE_elec = win_saving_elec * 0.00023;
 
-                    double win_tCO2_noelec = win_saving_noelec / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                    double win_TOE_noelec = win_saving_noelec / 43.1 / 0.277778 * 0.00103;
+                    double win_tCO2_noelec = win_saving_noelec / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    double win_TOE_noelec = win_saving_noelec / 38.9 / 0.277778 * 0.00103;
                     double win_tCO2 = win_tCO2_elec + win_tCO2_noelec;
                     double win_TOE = win_TOE_elec + win_TOE_noelec;
                     Win_data[2].Add(new { idx = i, val = win_tCO2.ToString("0.0") });  //tco2
@@ -1197,8 +1198,8 @@ namespace main.contents.Result
                     double cw_tCO2_elec = cw_saving_elec * 0.4747 / 1000000 * 1000;
                     double cw_TOE_elec = cw_saving_elec * 0.00023;
 
-                    double cw_tCO2_noelec = cw_saving_noelec / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                    double cw_TOE_noelec = cw_saving_noelec / 43.1 / 0.277778 * 0.00103;
+                    double cw_tCO2_noelec = cw_saving_noelec / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    double cw_TOE_noelec = cw_saving_noelec / 38.9 / 0.277778 * 0.00103;
                     double cw_tCO2 = cw_tCO2_elec + cw_tCO2_noelec;
                     double cw_TOE = cw_TOE_elec + cw_TOE_noelec;
                     CW_data[2].Add(new { idx = i, val = cw_tCO2.ToString("0.0") });  //tco2
@@ -1503,8 +1504,8 @@ namespace main.contents.Result
                     double door_tCO2_elec = door_saving_elec * 0.4747 / 1000000 * 1000;
                     double door_TOE_elec = door_saving_elec * 0.00023;
 
-                    double door_tCO2_noelec = door_saving_noelec / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                    double door_TOE_noelec = door_saving_noelec / 43.1 / 0.277778 * 0.00103;
+                    double door_tCO2_noelec = door_saving_noelec / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    double door_TOE_noelec = door_saving_noelec / 38.9 / 0.277778 * 0.00103;
                     double door_tCO2 = door_tCO2_elec + door_tCO2_noelec;
                     double door_TOE = door_TOE_elec + door_TOE_noelec;
                     Door_data[2].Add(new { idx = i, val = door_tCO2.ToString("0.0") });  //tco2

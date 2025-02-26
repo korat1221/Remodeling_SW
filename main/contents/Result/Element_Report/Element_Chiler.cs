@@ -197,9 +197,9 @@ namespace main.contents.Result
                 data.Add(new { cname = "air_saving_total", data = Air_data[216] });
                 Air_data[217].Add(new { idx = i, val = (air_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                 data.Add(new { cname = "air_saving_percent", data = Air_data[217] });
-                Air_data[218].Add(new { idx = i, val = (air_total_elec * 0.4747 / 1000000 * 1000 + air_total_gas / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+                Air_data[218].Add(new { idx = i, val = (air_total_elec * 0.4747 / 1000000 * 1000 + air_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
                 data.Add(new { cname = "air_tco2", data = Air_data[218] });
-                Air_data[219].Add(new { idx = i, val = (air_total_elec * 0.00023 + air_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+                Air_data[219].Add(new { idx = i, val = (air_total_elec * 0.00023 + air_total_gas / 38.9 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                 data.Add(new { cname = "air_toe", data = Air_data[219] });
 
                 d = (air_total_saving / Total_Energy_pre * 100);
@@ -349,9 +349,9 @@ namespace main.contents.Result
                 data.Add(new { cname = "water_saving_total", data = Water_data[216] });
                 Water_data[217].Add(new { idx = i, val = (water_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                 data.Add(new { cname = "water_saving_percent", data = Water_data[217] });
-                Water_data[218].Add(new { idx = i, val = (water_total_elec * 0.4747 / 1000000 * 1000 + water_total_gas / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+                Water_data[218].Add(new { idx = i, val = (water_total_elec * 0.4747 / 1000000 * 1000 + water_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
                 data.Add(new { cname = "water_tco2", data = Water_data[218] });
-                Water_data[219].Add(new { idx = i, val = (water_total_elec * 0.00023 + water_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+                Water_data[219].Add(new { idx = i, val = (water_total_elec * 0.00023 + water_total_gas / 38.9 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                 data.Add(new { cname = "water_toe", data = Water_data[219] });
 
                 d = (air_total_saving / Total_Energy_pre * 100);
@@ -623,9 +623,9 @@ namespace main.contents.Result
                     data.Add(new { cname = "air_saving_total", data = Air_data[216] });
                     Air_data[217].Add(new { idx = i, val = (air_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                     data.Add(new { cname = "air_saving_percent", data = Air_data[217] });
-                    Air_data[218].Add(new { idx = i, val = (air_total_elec * 0.4747 / 1000000 * 1000 + air_total_gas / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+                    Air_data[218].Add(new { idx = i, val = (air_total_elec * 0.4747 / 1000000 * 1000 + air_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
                     data.Add(new { cname = "air_tco2", data = Air_data[218] });
-                    Air_data[219].Add(new { idx = i, val = (air_total_elec * 0.00023 + air_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+                    Air_data[219].Add(new { idx = i, val = (air_total_elec * 0.00023 + air_total_gas / 38.9 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                     data.Add(new { cname = "air_toe", data = Air_data[219] });
 
                     d = (air_total_saving / Total_Energy_pre * 100);
@@ -803,9 +803,9 @@ namespace main.contents.Result
                     data.Add(new { cname = "water_saving_total", data = Water_data[216] });
                     Water_data[217].Add(new { idx = i, val = (water_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                     data.Add(new { cname = "water_saving_percent", data = Water_data[217] });
-                    Water_data[218].Add(new { idx = i, val = (water_total_elec * 0.4747 / 1000000 * 1000 + water_total_gas / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+                    Water_data[218].Add(new { idx = i, val = (water_total_elec * 0.4747 / 1000000 * 1000 + water_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
                     data.Add(new { cname = "water_tco2", data = Water_data[218] });
-                    Water_data[219].Add(new { idx = i, val = (water_total_elec * 0.00023 + water_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+                    Water_data[219].Add(new { idx = i, val = (water_total_elec * 0.00023 + water_total_gas / 38.9 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                     data.Add(new { cname = "water_toe", data = Water_data[219] });
 
                     d = (air_total_saving / Total_Energy_pre * 100);

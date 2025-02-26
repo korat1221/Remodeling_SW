@@ -251,8 +251,8 @@ namespace main.contents.Result.Building_Report
                     __data[44].Add(new { idx = i, val = ((Saving_a_가스 / Qtot_a2_가스) * 100).ToString("0.0") }); //연간 절감율
                     __data[45].Add(new { idx = i, val = SavingPercent_mth_avg_가스.ToString("0.0") }); //월평균 절감율 
 
-                    double saing_tCO2 = Saving_a_가스 / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                    double saing_TOE = Saving_a_가스 / 43.1 / 0.277778 * 0.00103;
+                    double saing_tCO2 = Saving_a_가스 / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    double saing_TOE = Saving_a_가스 / 38.9 / 0.277778 * 0.00103;
                     __data[106].Add(new { idx = i, val = (saing_tCO2).ToString("0.0")  }); //온실가스
                     __data[107].Add(new { idx = i, val = (saing_TOE).ToString("0.0")  }); //온실가스
                     for (int mth = 0; mth < 12; mth++)

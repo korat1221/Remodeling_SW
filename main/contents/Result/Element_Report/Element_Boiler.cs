@@ -267,9 +267,9 @@ namespace main.contents.Result
                 data.Add(new { cname = "boiler_saving_total", data = Boiler_data[64] });
                 Boiler_data[65].Add(new { idx = i, val = (boiler_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                 data.Add(new { cname = "boiler_saving_percent", data = Boiler_data[65] });
-                Boiler_data[66].Add(new { idx = i, val = (boiler_total_elec * 0.4747 / 1000000 * 1000 + boiler_total_gas / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+                Boiler_data[66].Add(new { idx = i, val = (boiler_total_elec * 0.4747 / 1000000 * 1000 + boiler_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
                 data.Add(new { cname = "boiler_tco2", data = Boiler_data[66] });
-                Boiler_data[67].Add(new { idx = i, val = (boiler_total_elec * 0.00023 + boiler_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+                Boiler_data[67].Add(new { idx = i, val = (boiler_total_elec * 0.00023 + boiler_total_gas / 38.9 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                 data.Add(new { cname = "boiler_toe", data = Boiler_data[67] });
 
                 d = (boiler_total_saving / Total_Energy_pre * 100);
@@ -505,9 +505,9 @@ namespace main.contents.Result
                 data.Add(new { cname = "solar_saving_total", data = Solar_data[64] });
                 Solar_data[65].Add(new { idx = i, val = (solar_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                 data.Add(new { cname = "solar_saving_percent", data = Solar_data[65] });
-                Solar_data[66].Add(new { idx = i, val = (solar_total_elec * 0.4747 / 1000000 * 1000 + solar_total_gas / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+                Solar_data[66].Add(new { idx = i, val = (solar_total_elec * 0.4747 / 1000000 * 1000 + solar_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
                 data.Add(new { cname = "solar_tco2", data = Solar_data[66] });
-                Solar_data[67].Add(new { idx = i, val = (solar_total_elec * 0.00023 + solar_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+                Solar_data[67].Add(new { idx = i, val = (solar_total_elec * 0.00023 + solar_total_gas / 38.9 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                 data.Add(new { cname = "solar_toe", data = Solar_data[67] });
 
                 d = (solar_total_saving / Total_Energy_pre * 100);
@@ -680,9 +680,9 @@ namespace main.contents.Result
                 data.Add(new { cname = "whp_saving_total", data = WHP_data[64] });
                 WHP_data[65].Add(new { idx = i, val = (WHP_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                 data.Add(new { cname = "whp_saving_percent", data = WHP_data[65] });
-                WHP_data[66].Add(new { idx = i, val = (WHP_total_elec * 0.4747 / 1000000 * 1000 + WHP_total_gas / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+                WHP_data[66].Add(new { idx = i, val = (WHP_total_elec * 0.4747 / 1000000 * 1000 + WHP_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
                 data.Add(new { cname = "whp_tco2", data = WHP_data[66] });
-                WHP_data[67].Add(new { idx = i, val = (WHP_total_elec * 0.00023 + WHP_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+                WHP_data[67].Add(new { idx = i, val = (WHP_total_elec * 0.00023 + WHP_total_gas / 38.9 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                 data.Add(new { cname = "whp_toe", data = WHP_data[67] });
 
                 d = (WHP_total_saving / Total_Energy_pre * 100);
@@ -1188,9 +1188,9 @@ namespace main.contents.Result
                     data.Add(new { cname = "boiler_saving_total", data = Boiler_data[64] });
                     Boiler_data[65].Add(new { idx = i, val = (boiler_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                     data.Add(new { cname = "boiler_saving_percent", data = Boiler_data[65] });
-                    Boiler_data[66].Add(new { idx = i, val = (boiler_total_elec * 0.4747 / 1000000 * 1000 + boiler_total_gas / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+                    Boiler_data[66].Add(new { idx = i, val = (boiler_total_elec * 0.4747 / 1000000 * 1000 + boiler_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
                     data.Add(new { cname = "boiler_tco2", data = Boiler_data[66] });
-                    Boiler_data[67].Add(new { idx = i, val = (boiler_total_elec * 0.00023 + boiler_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+                    Boiler_data[67].Add(new { idx = i, val = (boiler_total_elec * 0.00023 + boiler_total_gas / 38.9 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                     data.Add(new { cname = "boiler_toe", data = Boiler_data[67] });
 
                     d = (boiler_total_saving / Total_Energy_pre * 100);
@@ -1572,9 +1572,9 @@ namespace main.contents.Result
                     data.Add(new { cname = "solar_saving_total", data = Solar_data[64] });
                     Solar_data[65].Add(new { idx = i, val = (solar_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                     data.Add(new { cname = "solar_saving_percent", data = Solar_data[65] });
-                    Solar_data[66].Add(new { idx = i, val = (solar_total_elec * 0.4747 / 1000000 * 1000 + solar_total_gas / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+                    Solar_data[66].Add(new { idx = i, val = (solar_total_elec * 0.4747 / 1000000 * 1000 + solar_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
                     data.Add(new { cname = "solar_tco2", data = Solar_data[66] });
-                    Solar_data[67].Add(new { idx = i, val = (solar_total_elec * 0.00023 + solar_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+                    Solar_data[67].Add(new { idx = i, val = (solar_total_elec * 0.00023 + solar_total_gas / 38.9 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                     data.Add(new { cname = "solar_toe", data = Solar_data[67] });
 
                     d = (solar_total_saving / Total_Energy_pre * 100);
@@ -1793,9 +1793,9 @@ namespace main.contents.Result
                     data.Add(new { cname = "whp_saving_total", data = WHP_data[64] });
                     WHP_data[65].Add(new { idx = i, val = (WHP_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                     data.Add(new { cname = "whp_saving_percent", data = WHP_data[65] });
-                    WHP_data[66].Add(new { idx = i, val = (WHP_total_elec * 0.4747 / 1000000 * 1000 + WHP_total_gas / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+                    WHP_data[66].Add(new { idx = i, val = (WHP_total_elec * 0.4747 / 1000000 * 1000 + WHP_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
                     data.Add(new { cname = "whp_tco2", data = WHP_data[66] });
-                    WHP_data[67].Add(new { idx = i, val = (WHP_total_elec * 0.00023 + WHP_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+                    WHP_data[67].Add(new { idx = i, val = (WHP_total_elec * 0.00023 + WHP_total_gas / 38.9 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                     data.Add(new { cname = "whp_toe", data = WHP_data[67] });
 
                     d = (WHP_total_saving / Total_Energy_pre * 100);

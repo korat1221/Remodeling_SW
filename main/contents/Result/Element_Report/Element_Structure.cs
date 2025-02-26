@@ -132,8 +132,8 @@ namespace main.contents.Result
                 double wall_tCO2_elec = wall_saving_elec * 0.4747 / 1000000 * 1000;
                 double wall_TOE_elec = wall_saving_elec * 0.00023;
 
-                double wall_tCO2_noelec = wall_saving_noelec / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                double wall_TOE_noelec = wall_saving_noelec / 43.1 / 0.277778 * 0.00103;
+                double wall_tCO2_noelec = wall_saving_noelec / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                double wall_TOE_noelec = wall_saving_noelec / 38.9 / 0.277778 * 0.00103;
                 double wall_tCO2 = wall_tCO2_elec + wall_tCO2_noelec;
                 double wall_TOE = wall_TOE_elec + wall_TOE_noelec;
                 Wall_data[2].Add(new { idx = i, val = wall_tCO2.ToString("0.0") });  //tco2
@@ -324,8 +324,8 @@ namespace main.contents.Result
                 charts += "{donut:" + d + "},";
                 double roof_tCO2_elec = roof_saving_elec * 0.4747 / 1000000 * 1000;
                 double roof_TOE_elec = roof_saving_elec * 0.00023;
-                double roof_tCO2_noelec = roof_saving_noelec / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                double roof_TOE_noelec = roof_saving_noelec / 43.1 / 0.277778 * 0.00103;
+                double roof_tCO2_noelec = roof_saving_noelec / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                double roof_TOE_noelec = roof_saving_noelec / 38.9 / 0.277778 * 0.00103;
                 double roof_tCO2 = roof_tCO2_elec + roof_tCO2_noelec;
                 double roof_TOE = roof_TOE_elec + roof_TOE_noelec;
                 Roof_data[2].Add(new { idx = i, val = roof_tCO2.ToString("0.0") });  //tco2
@@ -522,8 +522,8 @@ namespace main.contents.Result
                 charts += "{donut:" + d + "},";
                 double floor_tCO2_elec = floor_saving_elec * 0.4747 / 1000000 * 1000;
                 double floor_TOE_elec = floor_saving_elec * 0.00023;
-                double floor_tCO2_noelec = floor_saving_noelec / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                double floor_TOE_noelec = floor_saving_noelec / 43.1 / 0.277778 * 0.00103;
+                double floor_tCO2_noelec = floor_saving_noelec / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                double floor_TOE_noelec = floor_saving_noelec / 38.9 / 0.277778 * 0.00103;
                 double floor_tCO2 = floor_tCO2_elec + floor_tCO2_noelec;
                 double floor_TOE = floor_TOE_elec + floor_TOE_noelec;
                 Floor_data[2].Add(new { idx = i, val = floor_tCO2.ToString("0.0") });  //tco2
@@ -760,8 +760,8 @@ namespace main.contents.Result
                     double wall_tCO2_elec = wall_saving_elec * 0.4747 / 1000000 * 1000;
                     double wall_TOE_elec = wall_saving_elec * 0.00023;
 
-                    double wall_tCO2_noelec = wall_saving_noelec / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                    double wall_TOE_noelec = wall_saving_noelec / 43.1 / 0.277778 * 0.00103;
+                    double wall_tCO2_noelec = wall_saving_noelec / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    double wall_TOE_noelec = wall_saving_noelec / 38.9 / 0.277778 * 0.00103;
                     double wall_tCO2 = wall_tCO2_elec + wall_tCO2_noelec;
                     double wall_TOE = wall_TOE_elec + wall_TOE_noelec;
                     Wall_data[2].Add(new { idx = i, val = wall_tCO2.ToString("0.0") });  //tco2
@@ -986,8 +986,8 @@ namespace main.contents.Result
                     double roof_tCO2_elec = roof_saving_elec * 0.4747 / 1000000 * 1000;
                     double roof_TOE_elec = roof_saving_elec * 0.00023;
 
-                    double roof_tCO2_noelec = roof_saving_noelec / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                    double roof_TOE_noelec = roof_saving_noelec / 43.1 / 0.277778 * 0.00103;
+                    double roof_tCO2_noelec = roof_saving_noelec / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    double roof_TOE_noelec = roof_saving_noelec / 38.9 / 0.277778 * 0.00103;
                     double roof_tCO2 = roof_tCO2_elec + roof_tCO2_noelec;
                     double roof_TOE = roof_TOE_elec + roof_TOE_noelec;
                     Roof_data[2].Add(new { idx = i, val = roof_tCO2.ToString("0.0") });  //tco2
@@ -1218,8 +1218,8 @@ namespace main.contents.Result
                     double floor_tCO2_elec = floor_saving_elec * 0.4747 / 1000000 * 1000;
                     double floor_TOE_elec = floor_saving_elec * 0.00023;
 
-                    double floor_tCO2_noelec = floor_saving_noelec / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                    double floor_TOE_noelec = floor_saving_noelec / 43.1 / 0.277778 * 0.00103;
+                    double floor_tCO2_noelec = floor_saving_noelec / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    double floor_TOE_noelec = floor_saving_noelec / 38.9 / 0.277778 * 0.00103;
                     double floor_tCO2 = floor_tCO2_elec + floor_tCO2_noelec;
                     double floor_TOE = floor_TOE_elec + floor_TOE_noelec;
                     Floor_data[2].Add(new { idx = i, val = floor_tCO2.ToString("0.0") });  //tco2

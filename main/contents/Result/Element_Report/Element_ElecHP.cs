@@ -240,9 +240,9 @@ namespace main.contents.Result
                 data.Add(new { cname = "ehp_saving_total", data = EHP_data[216] });
                 EHP_data[217].Add(new { idx = i, val = (ehp_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                 data.Add(new { cname = "ehp_saving_percent", data = EHP_data[217] });
-                EHP_data[218].Add(new { idx = i, val = (ehp_total_elec * 0.4747 / 1000000 * 1000 + ehp_total_gas / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+                EHP_data[218].Add(new { idx = i, val = (ehp_total_elec * 0.4747 / 1000000 * 1000 + ehp_total_gas / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
                 data.Add(new { cname = "ehp_tco2", data = EHP_data[218] });
-                EHP_data[219].Add(new { idx = i, val = (ehp_total_elec * 0.00023 + ehp_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+                EHP_data[219].Add(new { idx = i, val = (ehp_total_elec * 0.00023 + ehp_total_gas / 38.9  / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                 data.Add(new { cname = "ehp_toe", data = EHP_data[219] });
 
                 d = (ehp_total_saving / Total_Energy_pre * 100);
@@ -424,9 +424,9 @@ namespace main.contents.Result
                 data.Add(new { cname = "airc_saving_total", data = AirC_data[216] });
                 AirC_data[217].Add(new { idx = i, val = (airc_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                 data.Add(new { cname = "airc_saving_percent", data = AirC_data[217] });
-                AirC_data[218].Add(new { idx = i, val = (airc_total_elec * 0.4747 / 1000000 * 1000 + airc_total_gas / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+                AirC_data[218].Add(new { idx = i, val = (airc_total_elec * 0.4747 / 1000000 * 1000 + airc_total_gas / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
                 data.Add(new { cname = "airc_tco2", data = AirC_data[218] });
-                AirC_data[219].Add(new { idx = i, val = (airc_total_elec * 0.00023 + airc_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+                AirC_data[219].Add(new { idx = i, val = (airc_total_elec * 0.00023 + airc_total_gas / 38.9  / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                 data.Add(new { cname = "airc_toe", data = AirC_data[219] });
 
                 d = (airc_total_saving / Total_Energy_pre * 100);
@@ -817,9 +817,9 @@ namespace main.contents.Result
                     data.Add(new { cname = "ehp_saving_total", data = EHP_data[216] });
                     EHP_data[217].Add(new { idx = i, val = (ehp_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                     data.Add(new { cname = "ehp_saving_percent", data = EHP_data[217] });
-                    EHP_data[218].Add(new { idx = i, val = (ehp_total_elec * 0.4747 / 1000000 * 1000 + ehp_total_gas / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+                    EHP_data[218].Add(new { idx = i, val = (ehp_total_elec * 0.4747 / 1000000 * 1000 + ehp_total_gas / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
                     data.Add(new { cname = "ehp_tco2", data = EHP_data[218] });
-                    EHP_data[219].Add(new { idx = i, val = (ehp_total_elec * 0.00023 + ehp_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+                    EHP_data[219].Add(new { idx = i, val = (ehp_total_elec * 0.00023 + ehp_total_gas / 38.9  / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                     data.Add(new { cname = "ehp_toe", data = EHP_data[219] });
 
                     d = (ehp_total_saving / Total_Energy_pre * 100);
@@ -1033,9 +1033,9 @@ namespace main.contents.Result
                     data.Add(new { cname = "airc_saving_total", data = AirC_data[216] });
                     AirC_data[217].Add(new { idx = i, val = (airc_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
                     data.Add(new { cname = "airc_saving_percent", data = AirC_data[217] });
-                    AirC_data[218].Add(new { idx = i, val = (airc_total_elec * 0.4747 / 1000000 * 1000 + airc_total_gas / 43.1 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+                    AirC_data[218].Add(new { idx = i, val = (airc_total_elec * 0.4747 / 1000000 * 1000 + airc_total_gas / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
                     data.Add(new { cname = "airc_tco2", data = AirC_data[218] });
-                    AirC_data[219].Add(new { idx = i, val = (airc_total_elec * 0.00023 + airc_total_gas / 43.1 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+                    AirC_data[219].Add(new { idx = i, val = (airc_total_elec * 0.00023 + airc_total_gas / 38.9  / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                     data.Add(new { cname = "airc_toe", data = AirC_data[219] });
 
                     d = (airc_total_saving / Total_Energy_pre * 100);
