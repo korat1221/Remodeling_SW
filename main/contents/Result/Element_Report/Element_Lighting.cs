@@ -59,7 +59,8 @@ namespace main.contents.Result
             string[][] 프로젝트유형 = Program.DB.querySQL(DB.type.ProjListDB, "Select type from projects where current = '1'");
             if(프로젝트유형.Length >0)
             {
-                if (프로젝트유형[0][0] == "1")
+
+                if (프로젝트유형[0][0] == "1" || 프로젝트유형[0][0] == "4")
                 {
                     script = Report_Before();
                 }
