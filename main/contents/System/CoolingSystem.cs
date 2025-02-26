@@ -991,7 +991,7 @@ namespace main.contents
             {
                 for (int i = 1; i < 7; i++)
                 {
-                    if (AirCon_dataGridView.Rows[k].Cells[i].Value.ToString() == null)
+                    if (AirCon_dataGridView.Rows[k].Cells[i].Value == null)
                     {
                         MessageBox.Show("선택항목을 완료해주세요.", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
