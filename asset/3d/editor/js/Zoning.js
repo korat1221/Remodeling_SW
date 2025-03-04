@@ -279,23 +279,27 @@ Zoning.prototype = {
             return (_equalPoint(a[0], b[0]) && _equalPoint(a[1], b[1])) ||
                 (_equalPoint(a[0], b[1]) && _equalPoint(a[1], b[0]));
         };
-        let _intersectedLine = (a, b, less = false) => {
+        let _intersectedLine = (a, b, less = false, more = false) => {
+            
             if ((new THREE.Triangle(a[1], a[0], b[0])).getArea() < 0.0001 && (new THREE.Triangle(a[1], a[0], b[1])).getArea() < 0.0001) {
-                let A = [a[0].distanceTo(b[0]),a[0].distanceTo(b[1]),a[1].distanceTo(b[0]),a[1].distanceTo(b[1])], i = -1, max = -1;
+                let A = [a[0].distanceTo(b[0]),a[0].distanceTo(b[1]),a[1].distanceTo(b[0]),a[1].distanceTo(b[1])], i = -1, max = -1, min = 99999999;
 
                 while(++i < A.length) { 
                     if (max < A[i]) {
                         max = A[i];
                     }
+                    if (min > A[i]) {
+                        min = A[i];
+                    }
                 }
     
                 if (less) {
-                    if (max < a[0].distanceTo(a[1]) + b[0].distanceTo(b[1]) - 0.0001) {
+                    if ((!more || min > 0.001) && max < a[0].distanceTo(a[1]) + b[0].distanceTo(b[1]) - 0.0001) {
                         return true;
                     }
                 }
                 else {
-                    if (max <= a[0].distanceTo(a[1]) + b[0].distanceTo(b[1])) {
+                    if ((!more || min > 0.001) && max <= a[0].distanceTo(a[1]) + b[0].distanceTo(b[1])) {
                         return true;
                     }
                 }
@@ -376,14 +380,19 @@ Zoning.prototype = {
             let edge = zones[id0].userData.walls[idx].edges[idx2];
             let links = [], i, j;
 
-            for (const [id, el] of Object.entries(zones)) {
-                i = -1;
+            if (edge[0].distanceTo(edge[1]) > 0.01) {
+                for (const [id, el] of Object.entries(zones)) {
+                    i = -1;
+    
+                    while (++i < el.userData.walls.length) {
+                        j = -1;
+                        while (++j < el.userData.walls[i].edges.length) {
+                            let edge2 = el.userData.walls[i].edges[j];
 
-                while (++i < el.userData.walls.length) {
-                    j = -1;
-                    while (++j < el.userData.walls[i].edges.length) {
-                        if ((id0 !== id || i !== idx || j !== idx2) && _equalLine(edge, el.userData.walls[i].edges[j])) {
-                            links.push(el.userData.walls[i]);
+                            if ((id0 !== id || i !== idx || j !== idx2) &&
+                             (_equalLine(edge, edge2) || _intersectedLine(edge, edge2, false, true))) {
+                                links.push(el.userData.walls[i]);
+                            }
                         }
                     }
                 }
@@ -1387,6 +1396,7 @@ Zoning.prototype = {
                     el2.uuid = _addMeshObject(el2.pos, this.colors[el2.type], id);
                     el2.zoneid = _getName(id);
                     k = -1;
+
                     while (++k < el2.edges.length) {
                         el2.links.push(_collectLinks(id, j, k));
                     }

@@ -92,6 +92,34 @@ SQLExport.prototype = {
         let zones = obj.userData.zones;
         let zkeys = Object.keys(zones);
         let tree = [[], []], sql = "DELETE FROM ZoneGeneral_3D;DELETE FROM ZoneEnvelope_3D;DELETE FROM ThermalBridge_3D;DELETE FROM Blind_3D;DELETE FROM ZoneGeneral_Form;DELETE FROM ZoneLighting_Form;DELETE FROM Shade_3D;";
+        let _bridges = {
+            1: "평지붕+외벽[90]",
+            2: "평지붕+외벽[270]",
+            3: "평지붕+내벽",
+            4: "경사지붕",
+            5: "경사지붕+외벽[수평]",
+            6: "경사지붕+외벽[경사]",
+            7: "층간슬라브+외벽",
+            8: "외벽+내벽",
+            9: "외벽+외벽[90]",
+            10: "외벽+외벽[270]",
+            11: "바닥+외벽[90]",
+            12: "바닥+외벽[270]",
+        };
+        let _codes = {
+            1: "RTB1",
+            2: "RTB2",
+            3: "RTB3",
+            4: "RTB4",
+            5: "RTB5",
+            6: "RTB6",
+            7: "WTB1",
+            8: "WTB2",
+            9: "WTB3",
+            10: "WTB4",
+            11: "WTB5",
+            12: "WTB6",
+        };
 
         if (zkeys.length > 0) {
 
@@ -350,120 +378,23 @@ SQLExport.prototype = {
 
             let bridges = obj.userData.bridges;
 
-            let _bridges = {
-                1: "평지붕+외벽[90]",
-                2: "평지붕+내벽",
-                3: "경사지붕",
-                4: "경사지붕+외벽[수평]",
-                5: "경사지붕+외벽[경사]",
-                6: "층간슬라브+외벽",
-                7: "외벽+내벽",
-                8: "외벽+외벽[90]",
-                9: "외벽+외벽[270]",
-                10: "바닥+외벽[90]",
-                11: "바닥+외벽[270]",
-            };
-            let _codes = {
-                1: "RTB1",
-                2: "RTB3",
-                3: "RTB4",
-                4: "RTB5",
-                5: "RTB6",
-                6: "WTB1",
-                7: "WTB2",
-                8: "WTB3",
-                9: "WTB4",
-                10: "WTB5",
-                11: "WTB6",
-            };
-            let m = 0;
-            bridges["11"].items.forEach((el2, idx) => {
-                ++m;
-                let n = m <= 9 ? "0" + m : m;
-                sql +=
-                    "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('RTB2_" +
-                    n +
-                    "','__PROJ_TYPE__','평지붕+외벽[270]','" +
-                    el2.line[0].distanceTo(el2.line[1]) +
-                    "');";
-            });
-            bridges["12"].items.forEach((el2, idx) => {
-                ++m;
-                let n = m <= 9 ? "0" + m : m;
-                sql +=
-                "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('RTB2_" +
-                n +
-                "','__PROJ_TYPE__','평지붕+외벽[270]','" +
-                el2.line[0].distanceTo(el2.line[1]) +
-                "');";
-            });
-        
-            bridges["13"].items.forEach((el2, idx) => {
-                let n = idx <= 8 ? "0" + (idx + 1) : idx + 1;
-                sql +=
-                    "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('WTB5_" +
-                    n +
-                    "','__PROJ_TYPE__','바닥+외벽[90]','" +
-                    el2.line[0].distanceTo(el2.line[1]) +
-                    "');";
-                });
-            bridges["14"].items.forEach((el2, idx) => {
-                let n = idx <= 8 ? "0" + (idx + 1) : idx + 1;
-                sql +=
-                "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('WTB6_" +
-                n +
-                "','__PROJ_TYPE__','바닥+외벽[270]','" +
-                el2.line[0].distanceTo(el2.line[1]) +
-                "');";
-            });
-        
             Object.keys(bridges).forEach((el) => {
-                if (parseInt(el) < 10) {
-                    bridges[el].items.forEach((el2, idx) => {
-                        let n = idx <= 8 ? "0" + (idx + 1) : idx + 1;
-                        sql +=
-                            "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('" +
-                            _codes[el] +
-                            "_" +
-                            n +
-                            "','__PROJ_TYPE__','" +
-                            _bridges[el] +
-                            "','" +
-                            el2.line[0].distanceTo(el2.line[1]) +
-                            "');";
-                    });
-                }
+                bridges[el].items.forEach((el2, idx) => {
+                    let n = idx <= 8 ? "0" + (idx + 1) : idx + 1;
+                    sql +=
+                        "INSERT INTO ThermalBridge_3D (번호,프로젝트유형,열교항목,열교길이) VALUES ('" +
+                        _codes[el] +
+                        "_" +
+                        n +
+                        "','__PROJ_TYPE__','" +
+                        _bridges[el] +
+                        "','" +
+                        el2.line[0].distanceTo(el2.line[1]) +
+                        "');";
+                });
             });
         }
         
-        let _bridges = {
-            1: "평지붕+외벽[90]",
-            2: "평지붕+외벽[270]",
-            3: "평지붕+내벽",
-            4: "경사지붕",
-            5: "경사지붕+외벽[수평]",
-            6: "경사지붕+외벽[경사]",
-            7: "층간슬라브+외벽",
-            8: "외벽+내벽",
-            9: "외벽+외벽[90]",
-            10: "외벽+외벽[270]",
-            11: "바닥+외벽[90]",
-            12: "바닥+외벽[270]",
-        };
-        let _codes = {
-            1: "RTB1",
-            2: "RTB2",
-            3: "RTB3",
-            4: "RTB4",
-            5: "RTB5",
-            6: "RTB6",
-            7: "WTB1",
-            8: "WTB2",
-            9: "WTB3",
-            10: "WTB4",
-            11: "WTB5",
-            12: "WTB6",
-        };
         let _getBridgeInfo = (src, tgt, _arr, _m) => {
             obj.userData.bridges[src].items.forEach(() => {
                 ++_m;

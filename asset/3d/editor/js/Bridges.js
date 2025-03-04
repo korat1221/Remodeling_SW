@@ -23,6 +23,94 @@ Bridges.prototype = {
 			}
 		};
 
+		let _asPoints = (edges, pnts0 = []) => {
+            let i = -1, pnts = pnts0;
+
+            while (++i < edges.length) {
+                let edge = edges[i];
+
+                if (!pnts.find(el => _equalPoint(el, edge[0]))) {
+                    pnts.push(edge[0]);
+                }
+                if (!pnts.find(el => _equalPoint(el, edge[1]))) {
+                    pnts.push(edge[1]);
+                }
+            }
+            return pnts;
+        };
+
+		let _wallTop = (edges) => {
+			let pnt = _asPoints(edges), i = -1, t = 0;
+
+			while (++i < pnt.length) {
+				if (t < pnt[i].y) {
+					t = pnt[i].y;
+				}
+			}
+			return t;
+		};
+
+		let _beforeWall = (links, edges) => {
+			let i = -1;
+
+			while (++i < links.length) {
+				let el = links[i];
+
+				if (_wallTop(el.edges) > _wallTop(edges) + 0.0001) {
+					return true;
+				}
+			}
+			return false;
+		};
+
+		let _walls90 = (a, b) => {
+			let C = {"N":"E","W":"N","S":"W","E":"S","NW":"NE","SW":"NW","SE":"SW","NE":"SE"};
+			let c = a.center.clone();
+			let pos = b.center;
+
+			switch(a.cardi) {
+				case 'NW':
+					return !!(c.sub(pos).z < 0 && C[a.cardi] === b.cardi);
+				case 'N':
+					return !!(c.sub(pos).z < 0 && C[a.cardi] === b.cardi);
+				case 'NE':
+					return !!(c.sub(pos).z < 0 && C[a.cardi] === b.cardi);
+				case 'SE':
+					return !!(c.sub(pos).z > 0 && C[a.cardi] === b.cardi);
+				case 'S':
+					return !!(c.sub(pos).z > 0 && C[a.cardi] === b.cardi);
+				case 'SW':
+					return !!(c.sub(pos).z > 0 && C[a.cardi] === b.cardi);
+				case 'W':
+					return !!(c.sub(pos).x < 0 && C[a.cardi] === b.cardi);
+				case 'E':
+					return !!(c.sub(pos).x > 0 && C[a.cardi] === b.cardi);
+				}
+		};
+		let _walls270 = (a, b) => {
+			let C = {"N":"E","W":"N","S":"W","E":"S","NW":"NE","SW":"NW","SE":"SW","NE":"SE"};
+			let c = a.center.clone();
+			let pos = b.center;
+
+			switch(a.cardi) {
+				case 'NW':
+					return !!(c.sub(pos).z > 0 && C[a.cardi] === b.cardi);
+				case 'N':
+					return !!(c.sub(pos).z > 0 && C[a.cardi] === b.cardi);
+				case 'NE':
+					return !!(c.sub(pos).z > 0 && C[a.cardi] === b.cardi);
+				case 'SE':
+					return !!(c.sub(pos).z < 0 && C[a.cardi] === b.cardi);
+				case 'S':
+					return !!(c.sub(pos).z < 0 && C[a.cardi] === b.cardi);
+				case 'SW':
+					return !!(c.sub(pos).z < 0 && C[a.cardi] === b.cardi);
+				case 'W':
+					return !!(c.sub(pos).x > 0 && C[a.cardi] === b.cardi);
+				case 'E':
+					return !!(c.sub(pos).x < 0 && C[a.cardi] === b.cardi);
+				}
+		};
 		let _pushBridges = (kind) => {
 			let i = -1, j, k;
 
@@ -46,7 +134,7 @@ Bridges.prototype = {
 								k = -1;
 								while(++k < links[j].length) {
 									let el3 = links[j][k];
-									if (Math.abs(MathUtils.radToDeg(el2.normal.angleTo(el3.normal))) == 90 && el3.type == 'WL' && el2.center.y > el3.center.y) {
+									if (Math.abs(MathUtils.radToDeg(el2.normal.angleTo(el3.normal))) == 90 && el3.type == 'WL' && _wallTop(el3.edges) < _wallTop(el2.edges) + 0.0001) {
 										done = true;
 										break;
 									}
@@ -58,7 +146,8 @@ Bridges.prototype = {
 								k = -1;
 								while(++k < links[j].length) {
 									let el3 = links[j][k];
-									if (Math.abs(MathUtils.radToDeg(el2.normal.angleTo(el3.normal))) == 90 && el3.type == 'WL' && el2.center.y < el3.center.y) {
+
+									if (Math.abs(MathUtils.radToDeg(el2.normal.angleTo(el3.normal))) == 90 && el3.type == 'WL' && _wallTop(el3.edges) > _wallTop(el2.edges) + 0.0001) {
 										done = true;
 										break;
 									}
@@ -70,7 +159,7 @@ Bridges.prototype = {
 								k = -1;
 								while(++k < links[j].length) {
 									let el3 = links[j][k];
-									if (Math.abs(MathUtils.radToDeg(el2.normal.angleTo(el3.normal))) == 90 && el3.type == 'IW' && el2.center.y > el3.center.y) {
+									if (Math.abs(MathUtils.radToDeg(el2.normal.angleTo(el3.normal))) == 90 && el3.type == 'IW' && _wallTop(el3.edges) < _wallTop(el2.edges) + 0.0001 && !_beforeWall(links[j], el2.edges)) {
 										done = true;
 										break;
 									}
@@ -154,11 +243,12 @@ Bridges.prototype = {
 							}
 						}
 						else if (kind == 9) {
-							if (el2.type == 'WL' && edges[j][1].y - edges[j][0].y > 0.00001) {
+							if (el2.type == 'WL' && Math.abs(edges[j][1].y - edges[j][0].y) > 0.00001) {
 								k = -1;
 								while(++k < links[j].length) {
 									let el3 = links[j][k];
-									if (el3.type == 'WL' && Math.abs(MathUtils.radToDeg(el2.normal.angleTo(el3.normal))) == 90) {
+
+									if (el3.type == 'WL' && _walls90(el2, el3)) {
 										done = true;
 										break;
 									}
@@ -166,11 +256,13 @@ Bridges.prototype = {
 							}
 						}
 						else if (kind == 10) {
-							if (el2.type == 'WL' && edges[j][1].y - edges[j][0].y > 0.00001) {
+							if (el2.type == 'WL' && Math.abs(edges[j][1].y - edges[j][0].y) > 0.00001) {
 								k = -1;
+
 								while(++k < links[j].length) {
 									let el3 = links[j][k];
-									if (el3.type == 'WL' && Math.abs(MathUtils.radToDeg(el2.normal.angleTo(el3.normal))) == 90) {
+			
+									if (el3.type == 'WL' && _walls270(el2, el3)) {
 										done = true;
 										break;
 									}
@@ -207,56 +299,6 @@ Bridges.prototype = {
 					}
 				}
             }
-		};
-
-		let _cardinal270 = (a, b) => {
-			return !!(
-				a == 'N' && b == 'E' ||
-				a == 'E' && b == 'N' ||
-				a == 'N' && b == 'W' ||
-				a == 'W' && b == 'N' ||
-				a == 'S' && b == 'E' ||
-				a == 'E' && b == 'S' ||
-				a == 'S' && b == 'W' ||
-				a == 'W' && b == 'S' ||
-
-				a == 'NW' && b == 'NE' ||
-				a == 'NE' && b == 'NW' ||
-				
-				a == 'NW' && b == 'SW' ||
-				a == 'SW' && b == 'NW' ||
-
-				a == 'SW' && b == 'SE' ||
-				a == 'SE' && b == 'SW' ||
-
-				a == 'NE' && b == 'SE' ||
-				a == 'SE' && b == 'NE'
-			);
-		};
-
-		let _cardinal90 = (a, b) => {
-			return !!(
-				a == 'N' && b == 'E' ||
-				a == 'E' && b == 'N' ||
-				a == 'N' && b == 'W' ||
-				a == 'W' && b == 'N' ||
-				a == 'S' && b == 'E' ||
-				a == 'E' && b == 'S' ||
-				a == 'S' && b == 'W' ||
-				a == 'W' && b == 'S' ||
-
-				a == 'NW' && b == 'NE' ||
-				a == 'NE' && b == 'NW' ||
-				
-				a == 'NW' && b == 'SW' ||
-				a == 'SW' && b == 'NW' ||
-
-				a == 'SW' && b == 'SE' ||
-				a == 'SE' && b == 'SW' ||
-
-				a == 'NE' && b == 'SE' ||
-				a == 'SE' && b == 'NE'
-			);
 		};
 
 		let _getNormal = (T) => {
