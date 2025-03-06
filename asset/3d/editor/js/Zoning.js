@@ -280,26 +280,28 @@ Zoning.prototype = {
                 (_equalPoint(a[0], b[1]) && _equalPoint(a[1], b[0]));
         };
         let _intersectedLine = (a, b, less = false, more = false) => {
-            
-            if ((new THREE.Triangle(a[1], a[0], b[0])).getArea() < 0.0001 && (new THREE.Triangle(a[1], a[0], b[1])).getArea() < 0.0001) {
+          
+            if ((new THREE.Triangle(a[1], a[0], b[0])).getArea() < 0.001 && (new THREE.Triangle(a[1], a[0], b[1])).getArea() < 0.001) {
                 let A = [a[0].distanceTo(b[0]),a[0].distanceTo(b[1]),a[1].distanceTo(b[0]),a[1].distanceTo(b[1])], i = -1, max = -1, min = 99999999;
 
                 while(++i < A.length) { 
                     if (max < A[i]) {
                         max = A[i];
                     }
-                    if (min > A[i]) {
+                    if (A[i] > 0.01 && min > A[i]) {
                         min = A[i];
                     }
                 }
     
+                let m = !!(!more || (min < 99999999 && min > 0.01));
+
                 if (less) {
-                    if ((!more || min > 0.001) && max < a[0].distanceTo(a[1]) + b[0].distanceTo(b[1]) - 0.0001) {
+                    if (m && max < a[0].distanceTo(a[1]) + b[0].distanceTo(b[1]) - 0.0001) {
                         return true;
                     }
                 }
                 else {
-                    if ((!more || min > 0.001) && max <= a[0].distanceTo(a[1]) + b[0].distanceTo(b[1])) {
+                    if (m && max <= a[0].distanceTo(a[1]) + b[0].distanceTo(b[1])) {
                         return true;
                     }
                 }
@@ -390,7 +392,7 @@ Zoning.prototype = {
                             let edge2 = el.userData.walls[i].edges[j];
 
                             if ((id0 !== id || i !== idx || j !== idx2) &&
-                             (_equalLine(edge, edge2) || _intersectedLine(edge, edge2, false, true))) {
+                             (_equalLine(edge, edge2) || _intersectedLine(edge, edge2, true, true))) {
                                 links.push(el.userData.walls[i]);
                             }
                         }
