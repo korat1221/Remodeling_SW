@@ -1,4 +1,4 @@
-import { Vector3, MathUtils } from 'three';
+import { Box3, Vector3, MathUtils } from 'three';
 
 function Bridges( editor ) {
     this.editor = editor;
@@ -63,53 +63,21 @@ Bridges.prototype = {
 			return false;
 		};
 
-		let _walls90 = (a, b) => {
-			let C = {"N":"E","W":"N","S":"W","E":"S","NW":"NE","SW":"NW","SE":"SW","NE":"SE"};
-			let c = a.center.clone();
-			let pos = b.center;
+		let _angleBetween = (a, b, c) => {
+			let A = new THREE.Vector3(a.x, b.y - 0.000001, a.z);
+			let B = new THREE.Vector3(b.x, b.y, b.z);
+			let C = new THREE.Vector3(c.x, b.y + 0.000001, c.z);
+			
+			A = A.sub(B).normalize();
+			C = C.sub(B).normalize();
 
-			switch(a.cardi) {
-				case 'NW':
-					return !!(c.sub(pos).z < 0 && C[a.cardi] === b.cardi);
-				case 'N':
-					return !!(c.sub(pos).z < 0 && C[a.cardi] === b.cardi);
-				case 'NE':
-					return !!(c.sub(pos).z < 0 && C[a.cardi] === b.cardi);
-				case 'SE':
-					return !!(c.sub(pos).z > 0 && C[a.cardi] === b.cardi);
-				case 'S':
-					return !!(c.sub(pos).z > 0 && C[a.cardi] === b.cardi);
-				case 'SW':
-					return !!(c.sub(pos).z > 0 && C[a.cardi] === b.cardi);
-				case 'W':
-					return !!(c.sub(pos).x < 0 && C[a.cardi] === b.cardi);
-				case 'E':
-					return !!(c.sub(pos).x > 0 && C[a.cardi] === b.cardi);
-				}
+			return ((A.clone().cross(C).z < 0 ? -1 : 1) * Math.acos(A.dot(C))*180/Math.PI);
 		};
-		let _walls270 = (a, b) => {
-			let C = {"N":"E","W":"N","S":"W","E":"S","NW":"NE","SW":"NW","SE":"SW","NE":"SE"};
-			let c = a.center.clone();
-			let pos = b.center;
+		
+		let _includeRect = (a, b) => {
+			let bbox = new Box3().setFromPoints(_asPoints(b.edges));
 
-			switch(a.cardi) {
-				case 'NW':
-					return !!(c.sub(pos).z > 0 && C[a.cardi] === b.cardi);
-				case 'N':
-					return !!(c.sub(pos).z > 0 && C[a.cardi] === b.cardi);
-				case 'NE':
-					return !!(c.sub(pos).z > 0 && C[a.cardi] === b.cardi);
-				case 'SE':
-					return !!(c.sub(pos).z < 0 && C[a.cardi] === b.cardi);
-				case 'S':
-					return !!(c.sub(pos).z < 0 && C[a.cardi] === b.cardi);
-				case 'SW':
-					return !!(c.sub(pos).z < 0 && C[a.cardi] === b.cardi);
-				case 'W':
-					return !!(c.sub(pos).x > 0 && C[a.cardi] === b.cardi);
-				case 'E':
-					return !!(c.sub(pos).x < 0 && C[a.cardi] === b.cardi);
-				}
+			return !(_equalPoint(bbox.min, a[0]) || _equalPoint(bbox.max, a[0]) || _equalPoint(bbox.min, a[1]) || _equalPoint(bbox.max, a[1]));
 		};
 		let _pushBridges = (kind) => {
 			let i = -1, j, k;
@@ -248,7 +216,9 @@ Bridges.prototype = {
 								while(++k < links[j].length) {
 									let el3 = links[j][k];
 
-									if (el3.type == 'WL' && _walls90(el2, el3)) {
+									if (el3.type == 'WL' 
+										&& Math.round(_angleBetween(el2.center, new THREE.Vector3((edges[j][0].x + edges[j][1].x) / 2, (edges[j][0].y + edges[j][1].y) / 2, (edges[j][0].z + edges[j][1].z) / 2), el3.center)) == ((Math.atan2(el2.normal.z, el2.normal.x) * 180 / Math.PI) < 180 ? -90:90) && 
+										!_includeRect(edges[j], el3)) {
 										done = true;
 										break;
 									}
@@ -261,8 +231,8 @@ Bridges.prototype = {
 
 								while(++k < links[j].length) {
 									let el3 = links[j][k];
-			
-									if (el3.type == 'WL' && _walls270(el2, el3)) {
+
+									if (el3.type == 'WL' && Math.abs(MathUtils.radToDeg(el2.normal.angleTo(el3.normal))) == 90 && !bridges[9].items.find(el4 => _equalLine(el4.line, edges[j]))) {
 										done = true;
 										break;
 									}
