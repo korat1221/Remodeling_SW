@@ -15,9 +15,41 @@ Bridges.prototype = {
             return (_equalPoint(a[0], b[0]) && _equalPoint(a[1], b[1])) ||
                 (_equalPoint(a[0], b[1]) && _equalPoint(a[1], b[0]));
         };
+        let _getSamePoints = (a, b) => {
+            var ret = [], i = -1, j;
 
+            while (++i < a.length) {
+                j = -1;
+                while (++j < b.length) {
+                    if (_equalPoint(a[i], b[j]) && !ret.find(el => _equalPoint(el, a[i]))) ret.push(a[i]);
+                }
+            }
+
+            return ret;
+        };
+
+		let _exceptBrigde = (edge) => {
+			let i, j;
+
+			for (const [id, el] of Object.entries(zones)) {
+                i = -1;
+
+				if (el.userData.children) {
+					while (++i < el.userData.children.length) {
+						let el2 = el.userData.children[i];
+						j = -1;
+						while(++j < el2.pos.length) {
+							if ((el2.type == 'WN' || el2.type == 'DR') && _getSamePoints(el2.pos, edge).length == 2) {
+								return true;
+							}
+						}
+					}
+				}
+			}
+			return false;
+		};
 		let _pushBridge = (kind, edge) => {
-			if (!bridges[kind].items.find(el => _equalLine(el.line, edge))) {
+			if (!_exceptBrigde(edge) && !bridges[kind].items.find(el => _equalLine(el.line, edge))) {
 				bridges[kind].items.push({line:edge});
 				bridges[kind].bridges.push(_addLineObject(edge,0xFF0000, 1));
 			}
@@ -98,7 +130,7 @@ Bridges.prototype = {
 						let done = false;
 
 						if (kind == 1) {
-							if (el2.type == 'RF') {
+							if (el2.type == 'RF' && el2.slope == 0) {
 								k = -1;
 								while(++k < links[j].length) {
 									let el3 = links[j][k];
