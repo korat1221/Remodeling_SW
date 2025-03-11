@@ -15,7 +15,7 @@ namespace main
         public double[] 태양좌측방위각 = new double[12];
         public double[] 태양우측방위각 = new double[12];
 
-        public double 창호세로길이, 창호가로길이, 주변지형물높이, 경사, 좌측돌출부길이, 좌측돌출부각도, 우측돌출부각도, 우측돌출부길이, 주변지형물각도, 상부돌출부길이, 상부돌출부각도, 방위각;
+        public double 창호세로길이, 창호가로길이, 주변지형물높이, 경사, 좌측돌출부길이, 좌측돌출부각도, 우측돌출부각도, 우측돌출부길이, 주변지형물각도, 상부돌출부높이, 상부돌출부각도, 방위각;
         public string 방위;
         public double 좌측돌출부이격거리, 우측돌출부이격거리, 상부돌출부이격거리, 지형물까지의거리;
 
@@ -54,8 +54,8 @@ namespace main
                 주변지형물각도 = Convert.ToDouble(rec[0][4]);
                 우측돌출부길이 = Convert.ToDouble(rec[0][5]);
                 좌측돌출부길이 = Convert.ToDouble(rec[0][6]);
-                상부돌출부길이 = Convert.ToDouble(rec[0][7]);
-                주변지형물높이 = Convert.ToDouble(rec[0][8]);
+                상부돌출부높이 = Convert.ToDouble(rec[0][7]);//테이블의 상부돌출길이는 실제로는 높이 값임 
+                주변지형물높이 = Convert.ToDouble(rec[0][8]); //테이블의 주변요소음영길이는 실제로는 높이 값임 
                 방위 = rec[0][10];
                 경사 = Convert.ToDouble(rec[0][11]);
                 창호가로길이 = Convert.ToDouble(rec[0][13]);
@@ -186,6 +186,7 @@ namespace main
         public void Calc_상부음영()
         {
             상부음영길이 hk_ovh = new 상부음영길이();
+            double 상부돌출부길이 = 상부돌출부높이 * Math.Tan(주변지형물각도 * Math.PI / 180.0);
 
             상부돌출부이격거리 = hk_ovh.상부돌출부이격거리(상부돌출부길이, 상부돌출부각도, 창호세로길이);
 
