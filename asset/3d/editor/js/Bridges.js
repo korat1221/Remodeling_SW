@@ -39,7 +39,7 @@ Bridges.prototype = {
 						let el2 = el.userData.children[i];
 						j = -1;
 						while(++j < el2.pos.length) {
-							if ((el2.type == 'WN' || el2.type == 'DR') && _getSamePoints(el2.pos, edge).length == 2) {
+							if ((el2.type == 'WN' || el2.type == 'DR' || el2.type == 'CW') && _getSamePoints(el2.pos, edge).length == 2) {
 								return true;
 							}
 						}
