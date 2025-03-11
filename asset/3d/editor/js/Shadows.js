@@ -470,6 +470,7 @@ Shadows.prototype = {
 
 						let win = _getObjectByUuid(el2.uuid); 
 						win.userData.shadows = [];
+						
 
 						if (pkey !== '') {
 							let y = -99999999;
@@ -483,11 +484,12 @@ Shadows.prototype = {
 							});
 	
 							if (y > -99999999) {
+								
 								el2.shadow_base = pos0.distanceTo(centers[pkey]);
-								el2.shadow_height = centers[pkey].distanceTo(pos2);
+								el2.shadow_height = centers[pkey].distanceTo(pos2) + pos0.y;
 								el2.shadow_angle = Math.atan2(centers[pkey].distanceTo(pos2), pos0.distanceTo(centers[pkey])) * 180 / Math.PI;
 
-								win.userData.shadows.push(_addLineObject([pos0, pos2],0x0000FF, 0.5));
+								win.userData.shadows.push(_addLineObject([ctr, pos2],0x0000FF, 0.5));
 							}
 						}
 	
@@ -497,6 +499,8 @@ Shadows.prototype = {
 		
 							let left = _getProjWall(verts2, el2.cardi, pid, false, ctr);
 							let right = _getProjWall(verts2, el2.cardi, pid, true, ctr);
+							let up = _getProjWall(verts2, el2.cardi, pid, true, ctr);
+							
 
 							// left와 right 반전
 							if (left) {
@@ -513,7 +517,22 @@ Shadows.prototype = {
 								win.userData.shadows.push(_addLineObject([ctr, right.point], 0xFF00, 0.5)); // 기존 right의 값을 left로 사용
 							}
 
+							if (upPoint) {
+								let up = ctr.clone();
+								up.y = upPoint.y;
+							
+								el2.up_shadow_base = Math.hypot(upPoint.x - ctr.x, upPoint.z - ctr.z); // XY 평면 기준 거리
+								el2.up_shadow_height = upPoint.y - ctr.y; // Y축 거리
+								el2.up_shadow_angle = Math.atan2(el2.up_shadow_height, el2.up_shadow_base) * 180 / Math.PI;
+							
+								win.userData.shadows.push(_addLineObject([ctr, upPoint], 0xFF00FF, 0.5));
+							}
+							
+
+						
 						}
+
+
 					}
 				}
 			}
