@@ -347,7 +347,7 @@ namespace main
             dUtb[0] = 0.15;
             dUtb[1] = 0.15;
             dUtb[2] = 0.15;
-            /*
+            
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             if(프로젝트유형.Length >0)
             {
@@ -372,10 +372,19 @@ namespace main
                         }
                         if(check_ >0)
                         {
-                            MessageBox.Show("접합부 열교를 입력하지 않아 내단열 기준 표준값 0.15로 검토됩니다.");
-                            dUtb[0] = 0.15;
-                            dUtb[1] = 0.15;
-                            dUtb[2] = 0.15;
+                            string[][] check2 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "외벽dUtb,지붕dUtb,바닥dUtb");
+                            if(check2.Length >0)
+                            {
+
+                            }
+                            else
+                            {
+                                MessageBox.Show("접합부 열교를 입력하지 않아 내단열 기준 표준값 0.15로 검토됩니다.");
+                                dUtb[0] = 0.15;
+                                dUtb[1] = 0.15;
+                                dUtb[2] = 0.15;
+                            }
+                            
                         }
                         else
                         {
@@ -429,7 +438,7 @@ namespace main
                 }
 
             }
-           */
+           
             return dUtb;
         }
 

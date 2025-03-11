@@ -249,13 +249,16 @@ namespace main
                 String[][] Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
                 //String[][] Blind = Program.DB.querySQL(DB.type.ProjDB, "select a.차양적용 From ZoneEnvelope_3D AS a INNER JOIN ZoneLighting_form AS b ON a.존 = b.번호 where a.존 = '" + ZoneNum + "' AND a.아이디 =  b.주창아이디");
                 String[][] Blind = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "차양적용", "존='" + ZoneNum + "' And 번호 ='" + WinNum + "'");
-                String[][] BlindValue = Program.DB.getValue(DB.type.ProjDB, "ConstructionBlind", "제어방식2", "번호='" + Blind[0][0] + "'");
+
+                String[][] BlindValue = null;
+                if (Blind.Length > 0 && Blind[0][0] != "")
+                { BlindValue = Program.DB.getValue(DB.type.ProjDB, "ConstructionBlind", "제어방식2", "번호='" + Blind[0][0] + "'"); }
                 
                 
                 
                 for (int i = 0; i < 12; i++)
                 {
-                    if (BlindValue.Length > 0)
+                    if (BlindValue != null && BlindValue.Length > 0)
                     {
                         ValueA = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + BlindValue[0][0], "계수", "지역명= '" + Location[0][0] + "' And 방향 ='" + facade_di + "' And 기간 = '" + (i + 1).ToString() + "월'");
                         if (ValueA.Length > 0)
