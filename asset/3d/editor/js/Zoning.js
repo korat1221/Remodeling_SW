@@ -1116,6 +1116,28 @@ Zoning.prototype = {
             }
         };
 
+        let getMinY2FromZone = (el) => {
+            
+            if (!el || !el.userData || !el.userData.walls) {
+                console.warn(`Zone ${el?.id || "Unknown"} has no walls.`);
+                return 0; // walls가 없으면 기본값 0 반환
+            }
+        
+            let minY2 = null;
+        
+            for (let wall of el.userData.walls) {
+                if (wall.pos && wall.pos.length > 0) {
+                    for (let point of wall.pos) {
+                        if (minY2 === null || point.y < minY2) {
+                            minY2 = point.y;
+                        }
+                    }
+                }
+            }
+        
+            return minY2 !== null ? minY2 : 0; // minY가 없으면 기본값 0
+        };
+        
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         const box = new Box3().setFromObject(obj);
@@ -1221,7 +1243,11 @@ Zoning.prototype = {
             }
             
             for (const [id, el] of Object.entries(zones)) {
+               
+            
+
                 while (_findWalls(el.userData.walls));
+
                 j = -1;
                 while (++j < el.userData.walls.length) {
                     let el2 = el.userData.walls[j];
@@ -1456,6 +1482,13 @@ Zoning.prototype = {
             }
 
             for (const [id, el] of Object.entries(zones)) {
+
+                let zoneMinY2 = getMinY2FromZone(el);
+
+                el.userData.zoneMinY2 = zoneMinY2;
+                
+                console.log(`Zone ${id} Min Y2:`, el.userData.zoneMinY2);
+
                 let nm = _getName(id);
                 let stru = {}, struCW = [];
 

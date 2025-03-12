@@ -328,14 +328,17 @@ Shadows.prototype = {
             }
             return null;
         }
+
+	
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		let zones = obj.userData.zones;
 		let h, i, j, k, pnt;
 
 		for (const [id, el] of Object.entries(zones)) {
-
+		
 			if (el.userData.children) {
+	
 				i = -1;
 
 				while (++i < el.userData.children.length) {
@@ -346,6 +349,7 @@ Shadows.prototype = {
 						let edges2 = [];
 						let pos0 = new THREE.Vector3((el2.bbox[0].x + el2.bbox[1].x) / 2, el2.bbox[0].y < el2.bbox[1].y ? el2.bbox[0].y : el2.bbox[1].y, (el2.bbox[0].z + el2.bbox[1].z) / 2);
 						let ctr = new THREE.Vector3((el2.bbox[0].x + el2.bbox[1].x) / 2, (el2.bbox[0].y + el2.bbox[1].y) / 2, (el2.bbox[0].z + el2.bbox[1].z) / 2);
+						let pos1 = new THREE.Vector3((el2.bbox[0].x + el2.bbox[1].x) / 2, el2.bbox[0].y > el2.bbox[1].y ? el2.bbox[0].y : el2.bbox[1].y,(el2.bbox[0].z + el2.bbox[1].z) / 2);
 
 						for (const [id3, el3] of Object.entries(zones)) {
 							j = -1;
@@ -470,7 +474,7 @@ Shadows.prototype = {
 
 						let win = _getObjectByUuid(el2.uuid); 
 						win.userData.shadows = [];
-						
+						el2.window_height = pos1.y;
 
 						if (pkey !== '') {
 							let y = -99999999;
@@ -487,9 +491,14 @@ Shadows.prototype = {
 								
 								el2.shadow_base = pos0.distanceTo(centers[pkey]);
 								el2.shadow_height = centers[pkey].distanceTo(pos2) + pos0.y;
-								el2.shadow_angle = Math.atan2(centers[pkey].distanceTo(pos2), pos0.distanceTo(centers[pkey])) * 180 / Math.PI;
+								el2.shadow_angle = Math.atan2(
+															   centers[pkey].distanceTo(pos2),
+															   ctr.distanceTo(centers[pkey])
+															   ) * 180 / Math.PI;
 
-								win.userData.shadows.push(_addLineObject([ctr, pos2],0x0000FF, 0.5));
+								win.userData.shadows.push(_addLineObject([ctr, pos2],0x0000FF, 0.5)); 
+
+								
 							}
 						}
 	
@@ -529,7 +538,6 @@ Shadows.prototype = {
 							}
 							
 
-						
 						}
 
 

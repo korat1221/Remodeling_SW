@@ -282,7 +282,7 @@ SQLExport.prototype = {
 
                     while (++i < el.userData.children.length) {
                         let el2 = el.userData.children[i];
-                        sql += "INSERT INTO ZoneEnvelope_3D (아이디, 번호,프로젝트유형,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이) VALUES ('" +
+                        sql += "INSERT INTO ZoneEnvelope_3D (아이디, 번호,프로젝트유형,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이,천창유무,차양적용,벽체높이,상인방높이,지면으로부터의상인방높이) VALUES ('" +
                         el2.uuid +
                         "','" + el2.id+ "','__PROJ_TYPE__','" +
                         el.userData.floor +
@@ -316,6 +316,12 @@ SQLExport.prototype = {
                         "','" + _asVal(el2.width,"") + 
                         "','" + _asVal(el2.width,"") + 
                         "','" + _asVal(el2.height,"") + 
+                        "','" +
+                        "','"+
+                        "','"+
+                        "','"+
+                        (_asVal(el2.window_height)- _asVal(el.userData.zoneMinY2, "0")) +
+                        "','"+_asVal(el2.window_height)+
                         "');";
                     }
                 }
@@ -327,7 +333,7 @@ SQLExport.prototype = {
                         let el2 = el.userData.walls[i];
                         let nearid = _getZoneNum( _asVal(el2.near, ""));
 
-                        sql += "INSERT INTO ZoneEnvelope_3D (아이디, 번호,프로젝트유형,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이) VALUES ('" +
+                        sql += "INSERT INTO ZoneEnvelope_3D (아이디, 번호,프로젝트유형,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,구조체,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,벽체길이,창호너비,창호높이,천창유무,차양적용,벽체높이,상인방높이,지면으로부터의상인방높이) VALUES ('" +
                         el2.uuid +
                         "','" + el2.id+ "','__PROJ_TYPE__','" +
                         el.userData.floor +
@@ -353,6 +359,11 @@ SQLExport.prototype = {
                         "','" +
                         "','"+
                         el2.width +
+                        "','"+
+                        "','"+
+                        "','"+
+                        "','"+
+                        "','"+
                         "','','');";
                     }
                     i=i
