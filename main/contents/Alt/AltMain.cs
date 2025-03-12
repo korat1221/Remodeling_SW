@@ -38,6 +38,9 @@ namespace main.contents.Alt
         double TotalPoint; double TotalSavingPercent;
         double Cost_Total; double Cost_Net = 0;//총공사비, 순공사비
         bool scriptable = false;
+        bool scriptable_Wall = false;
+        bool scriptable_Roof = false;
+        bool scriptable_Floor = false;
         string SelectAlt_Wall;
         string SelectAlt_Roof;
         string SelectAlt_Floor;
@@ -68,11 +71,29 @@ namespace main.contents.Alt
         {
             await webView22.EnsureCoreWebView2Async(null);
             webView22.CoreWebView2.NavigationCompleted += OnNaviCompleted;
+            await Wall_webView.EnsureCoreWebView2Async(null);
+            Wall_webView.CoreWebView2.NavigationCompleted += OnNaviCompleted_Wall;
+            await Roof_webView.EnsureCoreWebView2Async(null);
+            Roof_webView.CoreWebView2.NavigationCompleted += OnNaviCompleted_Roof;
+            await Floor_webView.EnsureCoreWebView2Async(null);
+            Floor_webView.CoreWebView2.NavigationCompleted += OnNaviCompleted_Floor;
         }
         void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
         {
             scriptable = true;
             Load_RuleResult();
+        }
+        void OnNaviCompleted_Wall(object sender, CoreWebView2NavigationCompletedEventArgs args)
+        {
+            scriptable_Wall = true;
+        }
+        void OnNaviCompleted_Roof(object sender, CoreWebView2NavigationCompletedEventArgs args)
+        {
+            scriptable_Roof = true;
+        }
+        void OnNaviCompleted_Floor(object sender, CoreWebView2NavigationCompletedEventArgs args)
+        {
+            scriptable_Floor = true;
         }
         public void runScript(string script)
         {
@@ -1015,7 +1036,7 @@ namespace main.contents.Alt
         }
         public void runScrip_Wall(string script)
         {
-            if (scriptable)
+            if (scriptable_Wall)
             {
                 Wall_webView.CoreWebView2.ExecuteScriptAsync(script);
             }
@@ -1362,7 +1383,7 @@ namespace main.contents.Alt
         }
         public void runScrip_Roof(string script)
         {
-            if (scriptable)
+            if (scriptable_Roof)
             {
                 Roof_webView.CoreWebView2.ExecuteScriptAsync(script);
             }
@@ -1694,7 +1715,7 @@ namespace main.contents.Alt
         }
         public void runScrip_Floor(string script)
         {
-            if (scriptable)
+            if (scriptable_Floor)
             {
                 Floor_webView.CoreWebView2.ExecuteScriptAsync(script);
             }

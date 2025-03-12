@@ -736,7 +736,7 @@ namespace main.contents.Alt
             Wall_webView.Size = new Size(366, 314);         
             Wall_webView.Visible = false;
             Wall_webView.ZoomFactor = 1D;
-            Wall_webView.NavigationCompleted += OnNaviCompleted;
+            Wall_webView.NavigationCompleted += OnNaviCompleted_Wall;
             // 
             // Wall_new_label
             // 
@@ -956,7 +956,7 @@ namespace main.contents.Alt
             Roof_webView.TabIndex = 168;
             Roof_webView.Visible = false;
             Roof_webView.ZoomFactor = 1D;
-            Roof_webView.NavigationCompleted += OnNaviCompleted;
+            Roof_webView.NavigationCompleted += OnNaviCompleted_Roof;
             // 
             // Roof_new_label
             // 
@@ -1176,6 +1176,7 @@ namespace main.contents.Alt
             Floor_webView.TabIndex = 180;
             Floor_webView.Visible = false;
             Floor_webView.ZoomFactor = 1D;
+            Floor_webView.NavigationCompleted += OnNaviCompleted_Floor;
             // 
             // Floor_new_label
             // 
