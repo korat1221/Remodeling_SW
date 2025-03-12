@@ -15,7 +15,7 @@ namespace main
         public double[] 태양좌측방위각 = new double[12];
         public double[] 태양우측방위각 = new double[12];
 
-        public double 창호세로길이, 창호가로길이, 주변지형물높이, 경사, 좌측돌출부길이, 좌측돌출부각도, 우측돌출부각도, 우측돌출부길이, 주변지형물각도, 상부돌출부높이, 상부돌출부각도, 방위각;
+        public double 창호세로길이, 창호가로길이, 주변지형물높이, 경사, 좌측돌출부길이, 좌측돌출부각도, 우측돌출부각도, 우측돌출부길이, 주변지형물각도, 상부돌출부높이, 상부돌출부각도, 방위각, 상인방높이,지면으로부터의상인방높이;
         public string 방위;
         public double 좌측돌출부이격거리, 우측돌출부이격거리, 상부돌출부이격거리, 지형물까지의거리;
 
@@ -46,7 +46,7 @@ namespace main
             {
 
                 //string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,번호,방위,기울기,외피유형", "아이디 = '" + "S6_N_WIN_1" + "'");   //창호 혹은 커튼월 가로 세로 나와야함 (임시로 가로길이, 세로길이라고함)
-                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,번호,방위,기울기,외피유형,창호너비,창호높이", "번호 = '" + ID + "'");  
+                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,번호,방위,기울기,외피유형,창호너비,창호높이,상인방높이,지면으로부터의상인방높이", "번호 = '" + ID + "'");  
                 
                 우측돌출부각도 = Convert.ToDouble(rec[0][1]);
                 좌측돌출부각도 = Convert.ToDouble(rec[0][2]);
@@ -60,6 +60,8 @@ namespace main
                 경사 = Convert.ToDouble(rec[0][11]);
                 창호가로길이 = Convert.ToDouble(rec[0][13]);
                 창호세로길이 = Convert.ToDouble(rec[0][14]);
+                상인방높이 = Convert.ToDouble(rec[0][15]);
+                지면으로부터의상인방높이 = Convert.ToDouble(rec[0][16]);
                 //rec[0][12] = 창호가로길이.ToString();
                 //rec[0][13] = 창호세로길이.ToString();
 
@@ -172,11 +174,13 @@ namespace main
         {
             지형물에의한음영길이 hsh_obst = new 지형물에의한음영길이();
 
-            지형물까지의거리 = hsh_obst.지형물거리(주변지형물높이, 주변지형물각도);
+            double 창호중심으로부터의지형물높이 = Math.Max(0,주변지형물높이 - (지면으로부터의상인방높이 -창호세로길이/2));
+            double 지면으로부터의창호하인방높이 = Math.Max(0, 지면으로부터의상인방높이 - 창호세로길이);
+            지형물까지의거리 = hsh_obst.지형물거리(창호중심으로부터의지형물높이, 주변지형물각도);
 
             for (int i = 0; i < 12; i++)
             {
-                지형물수직음영길이[i] = hsh_obst.수직음영길이(창호세로길이, 주변지형물높이, 지형물까지의거리, 태양고도각[i]);
+                지형물수직음영길이[i] = hsh_obst.수직음영길이(창호세로길이, 주변지형물높이, 지형물까지의거리, 태양고도각[i], 지면으로부터의창호하인방높이);
                 지형물수평음영길이[i] = hsh_obst.수평음영길이(지형물수직음영길이[i], 태양고도각[i]);
                 지형물로인한음영길이[i] = hsh_obst.지형물음영거리(창호세로길이, 경사, 지형물수직음영길이[i], 지형물수평음영길이[i]);
             }
@@ -245,9 +249,9 @@ namespace main
             double 음영길이, 지형물로인한음영길이;
 
             //수직음영길이 
-            public double 수직음영길이(double 창호세로길이, double 주변지형물높이, double 지형물까지거리, double 태양고도각)
+            public double 수직음영길이(double 창호세로길이, double 주변지형물높이, double 지형물까지거리, double 태양고도각, double 지면으로부터의창호하인방높이)
             {
-                지형물수직음영길이 = Math.Min(창호세로길이, Math.Max(0, 주변지형물높이 - 지형물까지거리 * Math.Tan(태양고도각 * Math.PI / 180.0)));
+                지형물수직음영길이 = Math.Min(창호세로길이, Math.Max(0, 주변지형물높이- 지면으로부터의창호하인방높이 - 지형물까지거리 * Math.Tan(태양고도각 * Math.PI / 180.0)));
                 return 지형물수직음영길이;
             }
 
@@ -267,7 +271,7 @@ namespace main
             }
 
             //지형물까지 거리 
-            public double 지형물거리(double 주변지형물높이, double 주변지형물각도)
+            public double 지형물거리(double 창호중심으로부터의지형물높이, double 주변지형물각도)
             {
                 if(주변지형물각도 == 0)
                 {
@@ -275,7 +279,7 @@ namespace main
                 }
                 else
                 {
-                    지형물까지거리 = 주변지형물높이 / Math.Tan(주변지형물각도 * Math.PI / 180.0);
+                    지형물까지거리 = 창호중심으로부터의지형물높이 / Math.Tan(주변지형물각도 * Math.PI / 180.0);
                 }
                 return 지형물까지거리;
             }
