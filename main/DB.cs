@@ -1,6 +1,7 @@
 ﻿//#define INMEMORY_DB
 using System.Data;
 using System.Data.SQLite;
+using System.Runtime.InteropServices;
 
 /* 
  * DB 사용법
@@ -28,6 +29,20 @@ using System.Data.SQLite;
 
 namespace main
 {
+    public class SecureSQLite
+    {
+        [DllImport("wrap_sqlite.dll")]
+        static public extern string OpenDB(string sql, int idx);
+        [DllImport("wrap_sqlite.dll")]
+        static public extern int CloseDB(int idx);
+        [DllImport("wrap_sqlite.dll")]
+        static public extern int SaveDB(string path, int idx);
+        [DllImport("wrap_sqlite.dll")]
+        static public extern string QuerySQL(int idx, string sql);
+        [DllImport("wrap_sqlite.dll")]
+        static public extern int ExecuteSQL(int idx, string sql);
+    }
+
     internal class DB
     {
         public enum type
