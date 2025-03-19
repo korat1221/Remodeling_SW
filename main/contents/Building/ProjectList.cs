@@ -64,7 +64,7 @@ namespace main.contents
 
         public static bool OnLoadProc2(Form form)
         {
-            Intro f = (Intro)form;
+            General f = (General)form;
 
             f.LoadData("");
 
