@@ -54,6 +54,13 @@ namespace main.subcontents
             label6 = new Label();
             Qhmax_Copy_button = new Button();
             Qcmax_Copy_button = new Button();
+            Qwmax_Copy_button = new Button();
+            Qwmax_textBox = new TextBox();
+            label7 = new Label();
+            label8 = new Label();
+            Qwb_textBox = new TextBox();
+            label9 = new Label();
+            label10 = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ZoneResult_dataGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)QmaxList_panel).BeginInit();
@@ -64,9 +71,9 @@ namespace main.subcontents
             // 
             panel1.Controls.Add(ZoneResult_dataGridView);
             panel1.Controls.Add(QmaxList_panel);
-            panel1.Location = new Point(24, 80);
+            panel1.Location = new Point(24, 109);
             panel1.Name = "panel1";
-            panel1.Size = new Size(811, 452);
+            panel1.Size = new Size(979, 423);
             panel1.TabIndex = 2;
             // 
             // ZoneResult_dataGridView
@@ -82,7 +89,7 @@ namespace main.subcontents
             ZoneResult_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle7.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle7.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle7.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle7.SelectionForeColor = Color.Black;
@@ -94,7 +101,7 @@ namespace main.subcontents
             ZoneResult_dataGridView.Name = "ZoneResult_dataGridView";
             dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle8.BackColor = SystemColors.Control;
-            dataGridViewCellStyle8.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle8.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
@@ -103,13 +110,12 @@ namespace main.subcontents
             ZoneResult_dataGridView.RowHeadersVisible = false;
             ZoneResult_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle9.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle9.ForeColor = Color.Black;
             dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle9.SelectionForeColor = Color.Black;
             ZoneResult_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
-            ZoneResult_dataGridView.RowTemplate.Height = 25;
-            ZoneResult_dataGridView.Size = new Size(811, 452);
+            ZoneResult_dataGridView.Size = new Size(979, 423);
             ZoneResult_dataGridView.TabIndex = 20;
             ZoneResult_dataGridView.CellContentClick += ZoneResult_dataGridView_CellContentClick;
             // 
@@ -126,7 +132,7 @@ namespace main.subcontents
             QmaxList_panel.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle10.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle10.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle10.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle10.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle10.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle10.SelectionForeColor = Color.Black;
@@ -138,7 +144,7 @@ namespace main.subcontents
             QmaxList_panel.Name = "QmaxList_panel";
             dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle11.BackColor = SystemColors.Control;
-            dataGridViewCellStyle11.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle11.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle11.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
@@ -147,13 +153,12 @@ namespace main.subcontents
             QmaxList_panel.RowHeadersVisible = false;
             QmaxList_panel.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle12.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle12.ForeColor = Color.Black;
             dataGridViewCellStyle12.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle12.SelectionForeColor = Color.Black;
             QmaxList_panel.RowsDefaultCellStyle = dataGridViewCellStyle12;
-            QmaxList_panel.RowTemplate.Height = 25;
-            QmaxList_panel.Size = new Size(811, 452);
+            QmaxList_panel.Size = new Size(979, 423);
             QmaxList_panel.TabIndex = 100;
             // 
             // Icon_pictureBox
@@ -167,10 +172,10 @@ namespace main.subcontents
             // label35
             // 
             label35.AutoSize = true;
-            label35.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label35.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label35.Location = new Point(114, 11);
             label35.Name = "label35";
-            label35.Size = new Size(83, 17);
+            label35.Size = new Size(73, 15);
             label35.TabIndex = 169;
             label35.Text = "선택 존 합계";
             label35.TextAlign = ContentAlignment.MiddleCenter;
@@ -180,10 +185,10 @@ namespace main.subcontents
             Qhb_textBox.BackColor = Color.White;
             Qhb_textBox.BorderStyle = BorderStyle.None;
             Qhb_textBox.Enabled = false;
-            Qhb_textBox.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Qhb_textBox.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             Qhb_textBox.Location = new Point(255, 33);
             Qhb_textBox.Name = "Qhb_textBox";
-            Qhb_textBox.Size = new Size(70, 16);
+            Qhb_textBox.Size = new Size(70, 15);
             Qhb_textBox.TabIndex = 168;
             Qhb_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -210,10 +215,10 @@ namespace main.subcontents
             Qcb_textBox.BackColor = Color.White;
             Qcb_textBox.BorderStyle = BorderStyle.None;
             Qcb_textBox.Enabled = false;
-            Qcb_textBox.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Qcb_textBox.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             Qcb_textBox.Location = new Point(255, 58);
             Qcb_textBox.Name = "Qcb_textBox";
-            Qcb_textBox.Size = new Size(70, 16);
+            Qcb_textBox.Size = new Size(70, 15);
             Qcb_textBox.TabIndex = 172;
             Qcb_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -240,10 +245,10 @@ namespace main.subcontents
             Qcmax_textBox.BackColor = Color.White;
             Qcmax_textBox.BorderStyle = BorderStyle.None;
             Qcmax_textBox.Enabled = false;
-            Qcmax_textBox.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Qcmax_textBox.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             Qcmax_textBox.Location = new Point(472, 58);
             Qcmax_textBox.Name = "Qcmax_textBox";
-            Qcmax_textBox.Size = new Size(70, 16);
+            Qcmax_textBox.Size = new Size(70, 15);
             Qcmax_textBox.TabIndex = 178;
             Qcmax_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -270,10 +275,10 @@ namespace main.subcontents
             Qhmax_textBox.BackColor = Color.White;
             Qhmax_textBox.BorderStyle = BorderStyle.None;
             Qhmax_textBox.Enabled = false;
-            Qhmax_textBox.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Qhmax_textBox.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             Qhmax_textBox.Location = new Point(472, 33);
             Qhmax_textBox.Name = "Qhmax_textBox";
-            Qhmax_textBox.Size = new Size(70, 16);
+            Qhmax_textBox.Size = new Size(70, 15);
             Qhmax_textBox.TabIndex = 175;
             Qhmax_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -300,7 +305,7 @@ namespace main.subcontents
             Qhmax_Copy_button.BackColor = SystemColors.ControlLight;
             Qhmax_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Qhmax_Copy_button.FlatStyle = FlatStyle.System;
-            Qhmax_Copy_button.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Qhmax_Copy_button.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             Qhmax_Copy_button.Location = new Point(575, 30);
             Qhmax_Copy_button.Margin = new Padding(0);
             Qhmax_Copy_button.Name = "Qhmax_Copy_button";
@@ -315,7 +320,7 @@ namespace main.subcontents
             Qcmax_Copy_button.BackColor = SystemColors.ControlLight;
             Qcmax_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Qcmax_Copy_button.FlatStyle = FlatStyle.System;
-            Qcmax_Copy_button.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Qcmax_Copy_button.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             Qcmax_Copy_button.Location = new Point(575, 55);
             Qcmax_Copy_button.Margin = new Padding(0);
             Qcmax_Copy_button.Name = "Qcmax_Copy_button";
@@ -325,13 +330,95 @@ namespace main.subcontents
             Qcmax_Copy_button.UseVisualStyleBackColor = false;
             Qcmax_Copy_button.Click += Qcmax_Copy_button_Click;
             // 
+            // button2
+            // 
+            Qwmax_Copy_button.BackColor = SystemColors.ControlLight;
+            Qwmax_Copy_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            Qwmax_Copy_button.FlatStyle = FlatStyle.System;
+            Qwmax_Copy_button.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            Qwmax_Copy_button.Location = new Point(575, 78);
+            Qwmax_Copy_button.Margin = new Padding(0);
+            Qwmax_Copy_button.Name = "Qwmax_Copy_button";
+            Qwmax_Copy_button.Size = new Size(47, 23);
+            Qwmax_Copy_button.TabIndex = 187;
+            Qwmax_Copy_button.Text = "Copy";
+            Qwmax_Copy_button.UseVisualStyleBackColor = false;
+            Qwmax_Copy_button.Click += Qwmax_Copy_button_Click;
+            // 
+            // Qwmax_textBox
+            // 
+            Qwmax_textBox.BackColor = Color.White;
+            Qwmax_textBox.BorderStyle = BorderStyle.None;
+            Qwmax_textBox.Enabled = false;
+            Qwmax_textBox.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            Qwmax_textBox.Location = new Point(472, 81);
+            Qwmax_textBox.Name = "Qwmax_textBox";
+            Qwmax_textBox.Size = new Size(70, 15);
+            Qwmax_textBox.TabIndex = 186;
+            Qwmax_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(548, 82);
+            label7.Name = "label7";
+            label7.Size = new Size(24, 15);
+            label7.TabIndex = 185;
+            label7.Text = "kW";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(379, 82);
+            label8.Name = "label8";
+            label8.Size = new Size(87, 15);
+            label8.TabIndex = 184;
+            label8.Text = "최대 급탕 부하";
+            // 
+            // Qwb_textBox
+            // 
+            Qwb_textBox.BackColor = Color.White;
+            Qwb_textBox.BorderStyle = BorderStyle.None;
+            Qwb_textBox.Enabled = false;
+            Qwb_textBox.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            Qwb_textBox.Location = new Point(255, 81);
+            Qwb_textBox.Name = "Qwb_textBox";
+            Qwb_textBox.Size = new Size(70, 15);
+            Qwb_textBox.TabIndex = 183;
+            Qwb_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(331, 82);
+            label9.Name = "label9";
+            label9.Size = new Size(42, 15);
+            label9.TabIndex = 182;
+            label9.Text = "kWh/a";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(114, 82);
+            label10.Name = "label10";
+            label10.Size = new Size(135, 15);
+            label10.TabIndex = 181;
+            label10.Text = "연간 급탕 에너지요구량";
+            // 
             // ZoneResult
             // 
             AllowDrop = true;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(856, 559);
+            ClientSize = new Size(1015, 559);
+            Controls.Add(Qwmax_Copy_button);
+            Controls.Add(Qwmax_textBox);
+            Controls.Add(label7);
+            Controls.Add(label8);
+            Controls.Add(Qwb_textBox);
+            Controls.Add(label9);
+            Controls.Add(label10);
             Controls.Add(Qcmax_Copy_button);
             Controls.Add(Qhmax_Copy_button);
             Controls.Add(Qcmax_textBox);
@@ -390,5 +477,12 @@ namespace main.subcontents
         private TextBox Qhmax_textBox;
         private Button Qhmax_Copy_button;
         private Button Qcmax_Copy_button;
+        private Button Qwmax_Copy_button;
+        private TextBox Qwmax_textBox;
+        private Label label7;
+        private Label label8;
+        private TextBox Qwb_textBox;
+        private Label label9;
+        private Label label10;
     }
 }

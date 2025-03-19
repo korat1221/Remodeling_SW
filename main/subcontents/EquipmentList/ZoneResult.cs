@@ -46,16 +46,18 @@ namespace main.subcontents
             ZoneResult_dataGridView.Columns.Add("A2", "층");
             ZoneResult_dataGridView.Columns.Add("A3", "존명칭");
             ZoneResult_dataGridView.Columns.Add("A4", "용도프로필");
-            ZoneResult_dataGridView.Columns.Add("A5", "면적.[m"+Program.UTIL.Subscript(2, true)+"]");
+            ZoneResult_dataGridView.Columns.Add("A5", "면적.[m" + Program.UTIL.Subscript(2, true) + "]");
             ZoneResult_dataGridView.Columns.Add("A6", "연간 요구량.난방.[kWh/a]");
             ZoneResult_dataGridView.Columns.Add("A7", "연간 요구량.냉방.[kWh/a]");
-            ZoneResult_dataGridView.Columns.Add("A8", "최대부하.난방.[kW]");
-            ZoneResult_dataGridView.Columns.Add("A9", "최대부하.냉방.[kW]");
+            ZoneResult_dataGridView.Columns.Add("A8", "연간 요구량.급탕.[kWh/a]");
+            ZoneResult_dataGridView.Columns.Add("A9", "최대부하.난방.[kW]");
+            ZoneResult_dataGridView.Columns.Add("A10", "최대부하.냉방.[kW]");
+            ZoneResult_dataGridView.Columns.Add("A11", "최대부하.급탕.[kW]");
 
             ZoneResult_dataGridView.Columns[0].Width = 40;
             ZoneResult_dataGridView.Columns[2].Width = 60;
 
-            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 존번호,존이름,용도프로필,순바닥면적 from ZoneGeneral_Form where Not 냉난방유무 ='비냉난방'  Order by  존번호");
+            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 존번호,존이름,용도프로필,순바닥면적,일일급탕요구량 from ZoneGeneral_Form where Not 냉난방유무 ='비냉난방'  Order by  존번호");
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
@@ -73,18 +75,42 @@ namespace main.subcontents
                     ZoneResult_dataGridView.Rows[nRow].Cells[4].Value = Value[n][2];
                     ZoneResult_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(Value[n][3]));
 
+
                     string[][] 난방부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a,Q_max", "번호 ='" + Value[n][0] + "' AND 난방_냉방 = '난방'");
                     if (난방부하.Length > 0)
                     {
                         ZoneResult_dataGridView.Rows[nRow].Cells[6].Value = Convert.ToDouble(난방부하[0][0]).ToString("0");
-                        ZoneResult_dataGridView.Rows[nRow].Cells[8].Value = (Convert.ToDouble(난방부하[0][1]) / 1000).ToString("0.00");
+                        ZoneResult_dataGridView.Rows[nRow].Cells[9].Value = (Convert.ToDouble(난방부하[0][1]) / 1000).ToString("0.00");
                     }
                     string[][] 냉방부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a,Q_max", "번호 ='" + Value[n][0] + "' AND 난방_냉방 = '냉방'");
                     if (냉방부하.Length > 0)
                     {
                         ZoneResult_dataGridView.Rows[nRow].Cells[7].Value = Convert.ToDouble(냉방부하[0][0]).ToString("0");
-                        ZoneResult_dataGridView.Rows[nRow].Cells[9].Value = (Convert.ToDouble(냉방부하[0][1]) / 1000).ToString("0.00");
+                        ZoneResult_dataGridView.Rows[nRow].Cells[10].Value = (Convert.ToDouble(냉방부하[0][1]) / 1000).ToString("0.00");
                     }
+                    double Qwb_day = 0, dop_a = 0; double[] theta_e = new double[12]; double[] dmth = new double[12] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+                    if (Value[n][4] != "")
+                    {
+                        Qwb_day = Convert.ToDouble(Value[n][4]);
+                    }
+                    for (int mth = 0; mth < 12; mth++)
+                    {
+                        string[][] 급탕부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "theta_e, dwd_mth", "번호 ='" + Value[n][0] + "' AND 난방_냉방 = '난방' and 비이용일_이용일='이용일' and 월='" + (mth + 1) + "월'");
+                        theta_e[mth] = Convert.ToDouble(급탕부하[0][0]);
+                        dop_a += Convert.ToDouble(급탕부하[0][1]);
+                    }
+                    double[] Qwb_mth = new double[12];
+                    double Qwb_a = 0;
+                    for (int mth = 0; mth < 12; mth++)
+                    {
+                        Qwb_mth[mth] = Qwb_day * dop_a * dmth[mth] / 365 * (-0.02 * theta_e[mth] + 1.25);
+                        Qwb_a += Qwb_mth[mth];
+                    }
+                    ZoneResult_dataGridView.Rows[nRow].Cells[8].Value = Qwb_a.ToString("0");
+                    string[][] Usage = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "급탕시간당비율", "용도명 = '" + Value[n][2] + "'");
+                    if (Usage.Length > 0)
+                    { ZoneResult_dataGridView.Rows[nRow].Cells[11].Value = (Qwb_day * Convert.ToDouble(Usage[0][0])).ToString("0.00"); ; }
+
                 }
             }
         }
@@ -111,7 +137,7 @@ namespace main.subcontents
 
         private void SelectCalc()
         {
-            double Qhb = 0; double Qcb = 0; double Qhmax = 0; double Qcmax = 0;
+            double Qhb = 0; double Qcb = 0; double Qwb = 0; double Qhmax = 0; double Qcmax = 0; double Qwmax = 0;
             foreach (DataGridViewRow row in ZoneResult_dataGridView.Rows)
             {
                 if (Convert.ToBoolean(row.Cells["check"].Value))
@@ -122,13 +148,17 @@ namespace main.subcontents
                     if (row.Cells[7].Value != null)
                     { Qcb += Convert.ToDouble(row.Cells[7].Value.ToString()); }
                     if (row.Cells[8].Value != null)
-                    { Qhmax += Convert.ToDouble(row.Cells[8].Value.ToString()); }
+                    { Qwb += Convert.ToDouble(row.Cells[8].Value.ToString()); }
                     if (row.Cells[9].Value != null)
-                    { Qcmax += Convert.ToDouble(row.Cells[9].Value.ToString()); }
+                    { Qhmax += Convert.ToDouble(row.Cells[9].Value.ToString()); }
+                    if (row.Cells[10].Value != null)
+                    { Qcmax += Convert.ToDouble(row.Cells[10].Value.ToString()); }
+                    if (row.Cells[11].Value != null)
+                    { Qwmax += Convert.ToDouble(row.Cells[11].Value.ToString()); }
                 }
             }
-            if(Qhb > 0) 
-            {  
+            if (Qhb > 0)
+            {
                 Qhb_textBox.Text = Qhb.ToString();
                 Program.UTIL.textBox_doubleComa(Qhb_textBox, true, 0);
             }
@@ -136,6 +166,11 @@ namespace main.subcontents
             {
                 Qcb_textBox.Text = Qcb.ToString();
                 Program.UTIL.textBox_doubleComa(Qcb_textBox, true, 0);
+            }
+            if (Qwb > 0)
+            {
+                Qwb_textBox.Text = Qwb.ToString();
+                Program.UTIL.textBox_doubleComa(Qwb_textBox, true, 0);
             }
             if (Qhmax > 0)
             {
@@ -146,6 +181,11 @@ namespace main.subcontents
             {
                 Qcmax_textBox.Text = Qcmax.ToString();
                 Program.UTIL.textBox_doubleComa(Qcmax_textBox, true, 2);
+            }
+            if (Qwmax > 0)
+            {
+                Qwmax_textBox.Text = Qwmax.ToString();
+                Program.UTIL.textBox_doubleComa(Qwmax_textBox, true, 2);
             }
         }
 
@@ -161,12 +201,18 @@ namespace main.subcontents
             MessageBox.Show("최대 냉방 부하 값이 복사되었습니다.");
         }
 
+        private void Qwmax_Copy_button_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(Qwmax_textBox.Text.ToString());
+            MessageBox.Show("최대 급탕 부하 값이 복사되었습니다.");
+        }
         private void ZoneResult_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if(e.RowIndex >-1)
+            if (e.RowIndex > -1)
             {
                 SelectCalc();
             }
         }
+
     }
 }

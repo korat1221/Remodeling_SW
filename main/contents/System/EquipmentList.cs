@@ -145,14 +145,33 @@ namespace main.contents
             if (value.Length > 0 && value[0][0] != "")
             {
                 Qhmax_textBox.Text = (Convert.ToDouble(value[0][0]) / 1000).ToString();
-                Program.UTIL.textBox_doubleComa(Qhmax_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Qhmax_textBox, true, 1);
 
             }
             value = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(Q_max) From Zone_HCneed_Result Where 난방_냉방='냉방' and 비이용일_이용일='이용일' and  월='1월'");
             if (value.Length > 0 && value[0][0] != "")
             {
                 Qcmax_textBox.Text = (Convert.ToDouble(value[0][0]) / 1000).ToString();
-                Program.UTIL.textBox_doubleComa(Qcmax_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Qcmax_textBox, true, 1);
+            }
+            string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "일일급탕요구량,용도프로필");
+            if (ZoneValue.Length > 0 )
+            {
+                double Qmax_w = 0;
+                for(int a=0; a< ZoneValue.Length; a++)
+                {
+                    string[][] Usage = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "급탕시간당비율", "용도명 = '" + ZoneValue[0][1] + "'");
+                    if (Usage.Length > 0)
+                    {
+                        if(ZoneValue[a][0]!="" && Usage[0][0]!="")
+                        {
+                            Qmax_w += Convert.ToDouble(ZoneValue[a][0]) * Convert.ToDouble(Usage[0][0]);
+                        }
+                    }
+                }
+                Qwmax_textBox.Text = (Qmax_w).ToString();
+                Program.UTIL.textBox_doubleComa(Qwmax_textBox, true, 1);
+
             }
         }
 
@@ -552,7 +571,7 @@ namespace main.contents
             ABS_dataGridView.Columns[5].Width = 60;
             ABS_dataGridView.Columns[17].Width = 60;
             ABS_dataGridView.Columns[18].Width = 60;
-
+            ABS_dataGridView.Columns[16].Visible = false; 
         }
         private void UserABS_Add_button_Click(object sender, EventArgs e)
         {
@@ -1266,7 +1285,7 @@ namespace main.contents
             Load_FC_Num();
             FC_dataGridView.Rows[nRow].Cells[2].Value = "기본";
 
-            subcontents.FC fc_DB = new subcontents.FC("기본DB 적용");
+            subcontents.FC fc_DB = new subcontents.FC("기본DB 적용", null);
             DialogResult result = fc_DB.ShowDialog();
             if (result == DialogResult.OK)
             {
