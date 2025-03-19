@@ -495,6 +495,23 @@ class OBJLoader extends Loader {
 
 		const state = new ParserState();
 
+		// 
+
+		let mainCardi = 0;
+		let len = ('MainCardinal:').length;
+		let idx = text.indexOf('MainCardinal:');
+
+		if (idx >= 0) {
+			let s = text.substr(idx);
+
+			let n = s.indexOf('\r\n');
+
+			if (n >= 0) {
+				let s2 = s.substr(len, n - len);
+				mainCardi = parseFloat(s2);
+			}
+		}
+
 		if ( text.indexOf( '\r\n' ) !== - 1 ) {
 
 			// This is faster than String.split with regex that splits on both
@@ -906,7 +923,7 @@ class OBJLoader extends Loader {
 		(new Zoning(editor)).calc(container);
 		(new Shadows( editor )).calc(container);
 		(new Bridges( editor )).calc(container);
-		(new SQLExport( editor )).calc(container);
+		(new SQLExport( editor )).calc(container, mainCardi);
 
 		return container;
 

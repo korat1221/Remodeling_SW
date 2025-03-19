@@ -5,7 +5,7 @@ function SQLExport(editor) {
 }
 
 SQLExport.prototype = {
-    calc: function (obj) {
+    calc: function (obj, mainCardi) {
         let _getBoundingBox2 = (vtx) => {
             let box = [
                 [99999999, 99999999, 99999999],
@@ -64,18 +64,77 @@ SQLExport.prototype = {
             SW: "남서",
             UP: "수평",
             DOWN: "수평",
-            UP_N: "북쪽위",
-            UP_S: "남쪽위",
-            UP_E: "동쪽위",
-            UP_W: "서쪽위",
-            UP_NE: "북동쪽위",
-            UP_NW: "북서쪽위",
-            UP_SE: "남동쪽위",
-            UP_SW: "남서쪽위",
+            UP_N: "북",
+            UP_S: "남",
+            UP_E: "동",
+            UP_W: "서",
+            UP_NE: "북동",
+            UP_NW: "북서",
+            UP_SE: "남동",
+            UP_SW: "남서",
           };
 
+          let MainDirection ="남";
+          let _CalcMainDirection = (mainCardi) => {
+            if(mainCardi<0){mainCardi= 360 + mainCardi;}
+            if (mainCardi< 68 && mainCardi>= 23) {
+                return "남동";
+            } else if (mainCardi < 113 && mainCardi >= 68) {
+                return "동";
+            } else if (mainCardi < 158 && mainCardi >= 113) {
+                return "북동";
+            } else if (mainCardi < 203 && mainCardi >= 158) {
+                return "북";
+            } else if (mainCardi< 248 && mainCardi >= 203) {
+                return "북서";
+            } else if (mainCardi < 293 && mainCardi >= 248) {
+                return "서";
+            } else if (mainCardi < 338 && mainCardi >= 293) {
+                return "남서";
+            } else {
+                return "남";
+            }
+        };
+        let _realCardinal= (_cardi) => {
+            const arrDi = ["북", "북동", "동", "남동", "남", "남서", "서", "북서"];
+            let index = 4;
+            let index_s = 4;
+
+            // MainDirection의 인덱스 찾기
+            for (let a = 0; a < arrDi.length; a++) {
+                if (arrDi[a] === MainDirection) {
+                    index = a;
+                    break;
+                }
+            }
+
+            if(_cardi=="수평")
+            {
+                return _cardi
+            }else{
+                // _cardi의 인덱스 찾기 및 계산
+                for (let k = 0; k < arrDi.length; k++) {
+                if (arrDi[k] === _cardi) {
+                    let newIndex = k - (index_s - index);
+                    
+                    if (newIndex < 0) {
+                        return arrDi[arrDi.length + newIndex];
+                    } else {
+                        return arrDi[newIndex];
+                    }
+                }
+                }
+            }
+            
+
+            return null; // _cardi가 배열에 없을 경우
+        };
+
+        
+        
           let _getObjectByUuid = ( uuid ) => {
             let i = -1;
+            MainDirection = _CalcMainDirection(mainCardi);
 
             while(++i < obj.children.length) {
                 let el = obj.children[i];
@@ -294,7 +353,7 @@ SQLExport.prototype = {
                         (el2.type === 'CW' ? '유리부분' : '') +
                         "','" +
                         el2.area +
-                        "','','" + cardinal[el2.cardi] + 
+                        "','','" + _realCardinal(cardinal[el2.cardi]) + 
                         "','" +
                         el2.slope +
                         "','" +
@@ -346,7 +405,7 @@ SQLExport.prototype = {
                         "','" +
                         nearid  + 
                         "','" +
-                        cardinal[el2.cardi] +
+                        _realCardinal(cardinal[el2.cardi]) +
                         "','" +
                         el2.slope +
                         "','" +
