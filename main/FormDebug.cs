@@ -73,7 +73,23 @@ namespace main
 
         private void button4_Click(object sender, EventArgs e)
         {
-     
+            if(TableName_textBox.Text!= null && ColumnName_textBox.Text!= null)
+            {
+                string directoryPath = Program.gPath + "projects"; // 대상 폴더
+                string[] sqliteFiles = Directory.GetFiles(directoryPath, "*.sqlite"); // 모든 .sqlite 파일 검색
+
+                foreach (string dbPath in sqliteFiles)
+                {
+                    Program.DB.UpdateDatabase(dbPath, TableName_textBox.Text.ToString(), ColumnName_textBox.Text.ToString());
+                }
+
+                MessageBox.Show("모든 SQLite 데이터베이스 업데이트 완료!", "업데이트 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("컬럼을 추가할 테이블 명칭과 컬럼명칭을 작성하세요.");
+            }
+           
         }
 
         private void button6_Click(object sender, EventArgs e)

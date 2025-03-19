@@ -43,6 +43,10 @@
             label2 = new Label();
             button7 = new Button();
             button8 = new Button();
+            ColumnName_textBox = new TextBox();
+            TableName_textBox = new TextBox();
+            label3 = new Label();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             SuspendLayout();
             // 
@@ -95,11 +99,11 @@
             // 
             // button4
             // 
-            button4.Location = new Point(23, 497);
+            button4.Location = new Point(272, 502);
             button4.Name = "button4";
             button4.Size = new Size(187, 23);
             button4.TabIndex = 4;
-            button4.Text = "메모리DB에 데이터 로딩";
+            button4.Text = "테이블 컬럼추가";
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
             // 
@@ -185,11 +189,57 @@
             button8.UseVisualStyleBackColor = true;
             button8.Click += button8_Click;
             // 
+            // ColumnName_textBox
+            // 
+            ColumnName_textBox.BackColor = Color.White;
+            ColumnName_textBox.BorderStyle = BorderStyle.FixedSingle;
+            ColumnName_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            ColumnName_textBox.ForeColor = SystemColors.ControlText;
+            ColumnName_textBox.Location = new Point(149, 502);
+            ColumnName_textBox.Name = "ColumnName_textBox";
+            ColumnName_textBox.Size = new Size(120, 22);
+            ColumnName_textBox.TabIndex = 133;
+            ColumnName_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // TableName_textBox
+            // 
+            TableName_textBox.BackColor = Color.White;
+            TableName_textBox.BorderStyle = BorderStyle.FixedSingle;
+            TableName_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            TableName_textBox.ForeColor = SystemColors.ControlText;
+            TableName_textBox.Location = new Point(23, 502);
+            TableName_textBox.Name = "TableName_textBox";
+            TableName_textBox.Size = new Size(120, 22);
+            TableName_textBox.TabIndex = 132;
+            TableName_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(50, 484);
+            label3.Name = "label3";
+            label3.Size = new Size(67, 15);
+            label3.TabIndex = 134;
+            label3.Text = "테이블명칭";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(182, 484);
+            label4.Name = "label4";
+            label4.Size = new Size(55, 15);
+            label4.TabIndex = 135;
+            label4.Text = "컬럼명칭";
+            // 
             // FormDebug
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 633);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(ColumnName_textBox);
+            Controls.Add(TableName_textBox);
             Controls.Add(button8);
             Controls.Add(button7);
             Controls.Add(label2);
@@ -231,5 +281,9 @@
         private Label label2;
         private Button button7;
         private Button button8;
+        private TextBox ColumnName_textBox;
+        private TextBox TableName_textBox;
+        private Label label3;
+        private Label label4;
     }
 }
