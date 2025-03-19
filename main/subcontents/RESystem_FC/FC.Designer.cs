@@ -40,7 +40,6 @@ namespace main.subcontents
             Icon_pictureBox = new PictureBox();
             panel1 = new Panel();
             UserNum_textBox = new TextBox();
-            label4 = new Label();
             Save_button = new Button();
             ((System.ComponentModel.ISupportInitialize)FC_dataGridView).BeginInit();
             GeneralPanel.SuspendLayout();
@@ -61,7 +60,7 @@ namespace main.subcontents
             FC_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font =  new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -72,7 +71,7 @@ namespace main.subcontents
             FC_dataGridView.Name = "FC_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -81,7 +80,7 @@ namespace main.subcontents
             FC_dataGridView.RowHeadersVisible = false;
             FC_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
@@ -103,10 +102,10 @@ namespace main.subcontents
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            label2.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label2.Location = new Point(64, 21);
             label2.Name = "label2";
-            label2.Size = new Size(119, 15);
+            label2.Size = new Size(118, 15);
             label2.TabIndex = 105;
             label2.Text = "연료전지 장비일람표";
             // 
@@ -123,7 +122,6 @@ namespace main.subcontents
             panel1.BackColor = SystemColors.GradientInactiveCaption;
             panel1.Controls.Add(FC_dataGridView);
             panel1.Controls.Add(UserNum_textBox);
-            panel1.Controls.Add(label4);
             panel1.Location = new Point(0, 58);
             panel1.Name = "panel1";
             panel1.Size = new Size(932, 343);
@@ -138,16 +136,6 @@ namespace main.subcontents
             UserNum_textBox.Size = new Size(68, 16);
             UserNum_textBox.TabIndex = 107;
             UserNum_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
-            label4.Location = new Point(8, 15);
-            label4.Name = "label4";
-            label4.Size = new Size(117, 15);
-            label4.TabIndex = 96;
-            label4.Text = "기준 DB 및 인증 DB";
             // 
             // Save_button
             // 

@@ -1,4 +1,5 @@
 ﻿using main.contentslist;
+using main.subcontents;
 using main.subcontents.ConstructionCW;
 using main.subcontents.HeatingSystem;
 using System;
@@ -31,18 +32,18 @@ namespace main.contents
         String Num, Name; String SelectZone_nonsplit;
         String SystemLoacation, SLRL, Complex, MainSystem, Sub1System, Sub2System;
         String SelectBoiler_nonsplit, BoilerNum_nonsplit;
-        String SelectSolar_nonsplit, SolarNum_nonsplit, SolarDirection_nonsplit, SolarDegree_nonsplit;
+        String SelectSolar_nonsplit, SolarNum_nonsplit, SolarDirection_nonsplit, SolarDegree_nonsplit, SelectFC_nonsplit, FCNum_nonsplit, FCElecInstall_nonsplit;
         String SelectAS_nonsplit, ASNum_nonsplit; String SelectDH_nonsplit;
         String[] SelectHP_nonsplit = new String[3], HPNum_nonsplit = new String[3], HPSupply_nonsplit = new String[3], HPControl_nonsplit = new String[3]; //외기/지열/지하수 순 
         String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; double Pump1Num, Pump2Num;
         String ce1Type, ce2Type; int ce_SelectRow;
         String StorageUse, StoragePumpUse, StoragePump; double Vs;
-        String[] SystemType = { "보일러", "외기 히트펌프", "지열 히트펌프", "지하수 히트펌프", "태양열 융합 히트펌프", "흡수식온수기", "지역난방", "태양열시스템" };
+        String[] SystemType = { "보일러", "외기 히트펌프", "지열 히트펌프", "지하수 히트펌프", "태양열 융합 히트펌프", "흡수식온수기", "지역난방", "태양열시스템","연료전지" };
         String[] ceType = { "실내기", "방열기", "팬코일유닛", "복사난방" };
         double PipeD, PipeInsD, PipeIns_Ramda, PipeL;
         String PipeIns;
         double ZoneArea;
-        ArrayList SelectZone_split = new ArrayList(); ArrayList SelectBoiler_split = new ArrayList(); ArrayList SelectAirHP_split = new ArrayList(); ArrayList SelectGroundHP_split = new ArrayList(); ArrayList SelectGWHP_split = new ArrayList(); ArrayList SelectSolar_split = new ArrayList(); ArrayList SelectAS_split = new ArrayList(); ArrayList SelectDH_split = new ArrayList();
+        ArrayList SelectZone_split = new ArrayList(); ArrayList SelectBoiler_split = new ArrayList(); ArrayList SelectAirHP_split = new ArrayList(); ArrayList SelectGroundHP_split = new ArrayList(); ArrayList SelectGWHP_split = new ArrayList(); ArrayList SelectSolar_split = new ArrayList(); ArrayList SelectAS_split = new ArrayList(); ArrayList SelectDH_split = new ArrayList(); ArrayList SelectFC_split = new ArrayList();
         string[][] 프로젝트유형;
         public HeatingSystem()
         {
@@ -306,6 +307,10 @@ namespace main.contents
                 { HeatSourceImage("지열", "신규"); }
                 else if (Sub1System == "지역난방")
                 { HeatSourceImage("지역난방", "신규"); }
+                else if (Sub1System == "태양열시스템")
+                { HeatSourceImage("태양열시스템", "신규"); }
+                else if (Sub1System == "연료전지")
+                { HeatSourceImage("연료전지", "신규"); }
                 else
                 { HeatSourceImage(null, "신규"); }
             }
@@ -333,6 +338,10 @@ namespace main.contents
                 { HeatSourceImage("지열", "신규"); }
                 else if (Sub2System == "지역난방")
                 { HeatSourceImage("지역난방", "신규"); }
+                else if (Sub2System == "태양열시스템")
+                { HeatSourceImage("태양열시스템", "신규"); }
+                else if (Sub2System == "연료전지")
+                { HeatSourceImage("연료전지", "신규"); }
                 else
                 { HeatSourceImage(null, "신규"); }
             }
@@ -355,6 +364,10 @@ namespace main.contents
             else if (MainSystem == "태양열시스템")
             {
                 Load_SolarForm();
+            }
+            else if (MainSystem == "연료전지")
+            {
+                Load_FCForm();
             }
             else if (MainSystem == "흡수식온수기")
             {
@@ -381,6 +394,10 @@ namespace main.contents
             {
                 Load_SolarForm();
             }
+            else if (Sub1System == "연료전지")
+            {
+                Load_FCForm();
+            }
             else if (Sub1System == "흡수식온수기")
             {
                 Load_ASForm();
@@ -404,6 +421,10 @@ namespace main.contents
             else if (Sub2System == "태양열시스템")
             {
                 Load_SolarForm();
+            }
+            else if (Sub2System == "연료전지")
+            {
+                Load_FCForm();
             }
             else if (Sub2System == "흡수식온수기")
             {
@@ -436,6 +457,10 @@ namespace main.contents
             else if (System == "태양열시스템")
             {
                 tabControl2.SelectedTab = tabControl2.TabPages["Solar_tabPage"];
+            }
+            else if (System == "연료전지")
+            {
+                tabControl2.SelectedTab = tabControl2.TabPages["FC_tabPage"];
             }
         }
 
@@ -743,11 +768,11 @@ namespace main.contents
 
             for (int k = 0; k < Solar_dataGridView.Rows.Count; k++)
             {
-                if (k == Solar_dataGridView.Rows.Count - 1 && Solar_dataGridView.Rows[k].Cells[9].Value != null && Solar_dataGridView.Rows[k].Cells[10].Value != null && Solar_dataGridView.Rows[k].Cells[11].Value != null)
+                if (Solar_dataGridView.Rows.Count == 1 && Solar_dataGridView.Rows[k].Cells[9].Value != null && Solar_dataGridView.Rows[k].Cells[10].Value != null && Solar_dataGridView.Rows[k].Cells[11].Value != null)
                 {
-                    SolarNum_nonsplit += Solar_dataGridView.Rows[k].Cells[9].Value.ToString();
-                    SolarDirection_nonsplit += Solar_dataGridView.Rows[k].Cells[10].Value.ToString();
-                    SolarDegree_nonsplit += Solar_dataGridView.Rows[k].Cells[11].Value.ToString();
+                    SolarNum_nonsplit = Solar_dataGridView.Rows[k].Cells[9].Value.ToString();
+                    SolarDirection_nonsplit = Solar_dataGridView.Rows[k].Cells[10].Value.ToString();
+                    SolarDegree_nonsplit = Solar_dataGridView.Rows[k].Cells[11].Value.ToString();
                 }
                 else if (Solar_dataGridView.Rows[k].Cells[9].Value != null && Solar_dataGridView.Rows[k].Cells[10].Value != null && Solar_dataGridView.Rows[k].Cells[11].Value != null)
                 {
@@ -836,6 +861,205 @@ namespace main.contents
                 {
                     if (Solar_dataGridView.Rows.Count > 0)
                     { Solar_dataGridView.Rows[0].Cells[11].Value = nonSplit; }
+                }
+            }
+            else { return; }
+
+        }
+
+        #endregion
+
+        #region 연료전지
+        /////////////////////////////////////////////////////연료전지////////////////////////////////////////////////////////////////////
+        private void Load_FCForm()
+        {
+            FC fcdb = new FC("장비일람표 적용", SelectSolar_nonsplit);
+            DialogResult result = fcdb.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                if (fcdb.SelectFCnonsplit != null)
+                {
+                    SelectFC_nonsplit = fcdb.SelectFCnonsplit;
+                    Split_FC(fcdb.SelectFCnonsplit);
+                }
+            }
+        }
+
+        private void Split_FC(String nonSplit)
+        {
+            String 내용 = null;
+            if (nonSplit != null)
+            {
+                if (nonSplit.Contains('+'))
+                {
+                    string[] token = nonSplit.Split('+');
+                    SelectFC_split.Clear();
+                    foreach (var item in token)
+                    {
+                        SelectFC_split.Add(item.ToString());
+                    }
+
+                    string[][] FCName = Program.DB.getValue(DB.type.ProjDB, "User_FC", "명칭", "번호 = '" + SelectFC_split[0].ToString() + "'");
+                    if (FCName.Length > 0)
+                    { 내용 = FCName[0][0] + " 외 " + (SelectFC_split.Count - 1).ToString() + "개"; }
+                }
+                else
+                {
+                    SelectFC_split.Clear();
+                    SelectFC_split.Add(nonSplit);
+                    string[][] FCName = Program.DB.getValue(DB.type.ProjDB, "User_FC", "명칭", "번호 = '" + SelectFC_split[0].ToString() + "'");
+                    if (FCName.Length > 0)
+                    { 내용 = FCName[0][0]; }
+                }
+
+                if (MainSystem == "연료전지")
+                {
+                    MainUserList_textBox.Text = 내용;
+                }
+                else if (Sub1System == "연료전지")
+                {
+                    Sub1UserList_textBox.Text = 내용;
+                }
+                else if (Sub2System == "연료전지")
+                {
+                    Sub2UserList_textBox.Text = 내용;
+                }
+                Load_FC_Table();
+            }
+            else
+            {
+                내용 = "";
+            }
+        }
+
+        private void Load_FC_Table()
+        {
+            DataGridViewCheckBoxColumn FC_checkBoxColumn = new DataGridViewCheckBoxColumn();
+            new StackedHeaderDecorator(FC_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            FC_dataGridView.Columns.Clear();
+            FC_checkBoxColumn.HeaderText = "선택";
+            FC_checkBoxColumn.Name = "check";
+            FC_dataGridView.Columns.Add(FC_checkBoxColumn);
+            FC_dataGridView.Columns.Add("A1", "번호");
+            FC_dataGridView.Columns.Add("A2", "명칭");
+            FC_dataGridView.Columns.Add("A3", "연료");
+            FC_dataGridView.Columns.Add("A4", "전기.출력.[kW]");
+            FC_dataGridView.Columns.Add("A5", "전기.효율.[%]");
+            FC_dataGridView.Columns.Add("A6", "열.출력.[kW]");
+            FC_dataGridView.Columns.Add("A7", "열.효율.[%]");
+            FC_dataGridView.Columns.Add("A8", "대수.[EA]");
+            FC_dataGridView.Columns.Add("A9", "설치유형");
+            FC_dataGridView.Columns[0].Width = 30;
+
+            for (int n = 0; n < SelectFC_split.Count; n++)
+            {
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_FC", "번호,명칭,연료,전기출력,전기효율,열출력,열효율", "번호 = '" + SelectFC_split[n].ToString() + "'");
+                if (User_Value.Length > 0)
+                {
+                    FC_dataGridView.Rows.Add();
+                    int nRow = FC_dataGridView.Rows.Count - 1;
+                    for (int k = 0; k < 7; k++)
+                    {
+                        FC_dataGridView.Rows[nRow].Cells[k + 1].Value = User_Value[0][k];
+                    }
+
+                    DataGridViewComboBoxCell 설치유형comboBox = new DataGridViewComboBoxCell();
+                    설치유형comboBox.Items.Add("단독형");
+                    설치유형comboBox.Items.Add("공동주택연계형");
+                    FC_dataGridView.Rows[nRow].Cells[9] = 설치유형comboBox;
+                }
+            }
+        }
+
+        private void NonSplit_FC()
+        {
+
+            for (int k = 0; k < FC_dataGridView.Rows.Count; k++)
+            {
+
+                if (FC_dataGridView.Rows[k].Cells[8].Value == null )
+                {
+                    MessageBox.Show("연료전지의 모든 정보를 입력하세요.");
+                    break;
+                }
+            }
+
+
+            for (int k = 0; k < FC_dataGridView.Rows.Count; k++)
+            {
+                if ( FC_dataGridView.Rows.Count == 1 && FC_dataGridView.Rows[k].Cells[8].Value != null )
+                {
+                    FCNum_nonsplit = FC_dataGridView.Rows[k].Cells[8].Value.ToString();
+                }
+                else if (FC_dataGridView.Rows[k].Cells[8].Value != null )
+                {
+                    FCNum_nonsplit = FC_dataGridView.Rows[k].Cells[8].Value.ToString() + "+";
+                }
+            }
+            for (int k = 0; k < FC_dataGridView.Rows.Count; k++)
+            {
+                if (FC_dataGridView.Rows.Count == 1 && FC_dataGridView.Rows[k].Cells[9].Value != null)
+                {
+                    FCElecInstall_nonsplit = FC_dataGridView.Rows[k].Cells[9].Value.ToString();
+                }
+                else if (FC_dataGridView.Rows[k].Cells[9].Value != null)
+                {
+                    FCElecInstall_nonsplit += FC_dataGridView.Rows[k].Cells[9].Value.ToString() + "+";
+                }
+            }
+        }
+        private void Split_FCNum(String nonSplit)
+        {
+            if (nonSplit != null)
+            {
+                if (nonSplit.Contains('+'))
+                {
+                    ArrayList FC_split = new ArrayList();
+
+                    string[] token = nonSplit.Split('+');
+                    FC_split.Clear();
+                    foreach (var item in token)
+                    {
+                        FC_split.Add(item.ToString());
+                    }
+                    for (int k = 0; k < FC_dataGridView.Rows.Count; k++)
+                    {
+                        FC_dataGridView.Rows[k].Cells[8].Value = FC_split[k];
+                    }
+                }
+                else
+                {
+                    if (FC_dataGridView.Rows.Count > 0)
+                    { FC_dataGridView.Rows[0].Cells[8].Value = nonSplit; }
+                }
+            }
+            else { return; }
+
+        }
+
+        private void Split_FCElecInstall(String nonSplit)
+        {
+            if (nonSplit != null)
+            {
+                if (nonSplit.Contains('+'))
+                {
+                    ArrayList FC_split = new ArrayList();
+
+                    string[] token = nonSplit.Split('+');
+                    FC_split.Clear();
+                    foreach (var item in token)
+                    {
+                        FC_split.Add(item.ToString());
+                    }
+                    for (int k = 0; k < FC_dataGridView.Rows.Count; k++)
+                    {
+                        FC_dataGridView.Rows[k].Cells[9].Value = FC_split[k];
+                    }
+                }
+                else
+                {
+                    if (FC_dataGridView.Rows.Count > 0)
+                    { FC_dataGridView.Rows[0].Cells[9].Value = nonSplit; }
                 }
             }
             else { return; }
@@ -2317,6 +2541,7 @@ namespace main.contents
         }
 
 
+
         private void MainSystemImage(string type, string install)//2.냉방설비 그림
         {
             string[][] image1 = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지",
@@ -2382,7 +2607,7 @@ namespace main.contents
         }
         private void HeatSourceImage(string HeatSource, string Install_f)  // 지열 그림
         {
-            if (HeatSource == "지열" || HeatSource == "지역난방")
+            if (HeatSource == "지열" || HeatSource == "지역난방" || HeatSource == "태양열시스템" || HeatSource == "연료전지")
             {
                 SourcepictureBox.Visible = true;
             }
@@ -2390,6 +2615,7 @@ namespace main.contents
             {
                 SourcepictureBox.Visible = false;
             }
+
             string[][] image = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형 = '열원' AND 설비유형='" + HeatSource + "' And 설치유형='" + Install_f + "'");
             if (image.Length > 0)
             {
@@ -2426,6 +2652,7 @@ namespace main.contents
             HPControl_nonsplit[0] = ""; HPControl_nonsplit[1] = ""; HPControl_nonsplit[2] = ""; //외기/지열/지하수 순 
             NonSplit_BoilerNum();
             NonSplit_Solar();
+            NonSplit_FC();
             NonSplit_HP();
             NonSplit_AS();
             Save_Pump();
@@ -2444,7 +2671,7 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,공급설비1종류,공급설비2종류", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + ce1Type + "','" + ce2Type + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,축열유무,축열펌프유무,축열펌프,축열용량", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + StorageUse + "','" + StoragePumpUse + "','" + StoragePump + "','" + Vs.ToString() + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,배관관경,배관보온두께,보온열전도율,배관보온재,노출배관길이", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PipeD.ToString() + "','" + PipeInsD.ToString() + "','" + PipeIns_Ramda.ToString() + "','" + PipeIns + "','" + PipeL.ToString() + "'", "번호");
-
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,연료전지번호,연료전지대수,연료전지설치유형", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectFC_nonsplit + "','" + FCNum_nonsplit + "','" + FCElecInstall_nonsplit + "'", "번호");
 
 
             this.DialogResult = DialogResult.OK;
@@ -2464,7 +2691,7 @@ namespace main.contents
             Num = null; Name = null; SelectZone_nonsplit = null;
             SystemLoacation = null; SLRL = null; Complex = null; MainSystem = null; Sub1System = null; Sub2System = null;
             SelectBoiler_nonsplit = null; BoilerNum_nonsplit = null;
-            SelectSolar_nonsplit = null; SolarNum_nonsplit = null; SolarDirection_nonsplit = null; SolarDegree_nonsplit = null;
+            SelectSolar_nonsplit = null; SolarNum_nonsplit = null; SolarDirection_nonsplit = null; SolarDegree_nonsplit = null; SelectFC_nonsplit = null; FCNum_nonsplit = null;
             PumpUse = null; PumpMethod = null; Pump1 = null; Pump2 = null; Pump1Valve = null; Pump2Valve = null; Pump1Control = null; Pump2Control = null;
             Pump1Num = 0; Pump2Num = 0;
             ce1Type = null; ce2Type = null; ce_SelectRow = 0;
@@ -2498,6 +2725,9 @@ namespace main.contents
 
             Solar_dataGridView.Columns.Clear();
             Solar_dataGridView.Rows.Clear();
+
+            FC_dataGridView.Columns.Clear();
+            FC_dataGridView.Rows.Clear();
 
             DH_dataGridView.Columns.Clear();
             DH_dataGridView.Rows.Clear();
@@ -2579,6 +2809,19 @@ namespace main.contents
 
                 BoilerNum_nonsplit = Value[0][1];
                 Split_BoilerNum(BoilerNum_nonsplit);
+            }
+
+            Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "연료전지번호,연료전지대수,연료전지설치유형", "번호 = '" + ID + "'");
+            if (Value.Length > 0)
+            {
+                SelectFC_nonsplit = Value[0][0];
+                Split_FC(SelectFC_nonsplit);
+
+                FCNum_nonsplit = Value[0][1];
+                Split_FCNum(FCNum_nonsplit);
+
+                FCElecInstall_nonsplit = Value[0][2];
+                Split_FCElecInstall(FCElecInstall_nonsplit);
             }
 
 

@@ -17,13 +17,13 @@ namespace main
         public String SelectBoiler_nonsplit, BoilerNum_nonsplit;
         public String SelectABS_nonsplit, ABSNum_nonsplit;
         public String SelectDH_nonsplit;
-        public String SelectSolar_nonsplit, SolarNum_nonsplit, SolarDirection_nonsplit, SolarDegree_nonsplit;
+        public String SelectSolar_nonsplit, SolarNum_nonsplit, SolarDirection_nonsplit, SolarDegree_nonsplit; public String SelectFC_nonsplit, FCNum_nonsplit, FCElecInstall_nonsplit;
         public String[] SelectHP_nonsplit = new String[3], HPNum_nonsplit = new String[3], HPSupply_nonsplit = new String[3], HPControl_nonsplit = new String[3]; //외기/지열/지하수 순 
         String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; int Pump1Count, Pump2Count;
         public String ce1Type, ce2Type; int ce_SelectRow;
         public ArrayList ce_Type1 = new ArrayList(); public ArrayList ce_Type2 = new ArrayList(); public ArrayList Pump = new ArrayList();
         String StorageUse, StoragePumpUse, StoragePump; public double Vs;
-        String[] SystemType = { "보일러", "히트펌프", "흡수식온수기", "지역난방", "태양열시스템" };
+        String[] SystemType = { "보일러", "히트펌프", "흡수식온수기", "지역난방", "태양열시스템,연료전지" };
         String[] ceType = { "실내기", "방열기", "팬코일유닛", "파워팬유닛", "복사난방" };
         double PipeD, PipeInsD, PipeIns_Ramda;
         String PipeIns;
@@ -48,6 +48,11 @@ namespace main
         public ArrayList AirHPControl_split = new ArrayList(); ArrayList GroundHPControl_split = new ArrayList(); ArrayList GWHPControl_split = new ArrayList();
         public ArrayList AirHPNum_split = new ArrayList(); ArrayList GroundHPNum_split = new ArrayList(); ArrayList GWHPNum_split = new ArrayList();
         public ArrayList SelectSolar_split = new ArrayList(); ArrayList SolarNum_split = new ArrayList(); ArrayList SolarDirection_split = new ArrayList(); ArrayList SolarDegree_split = new ArrayList();
+        public ArrayList SelectFC_split = new ArrayList(); ArrayList FCNum_split = new ArrayList(); ArrayList FCElecInstall_split = new ArrayList();
+
+
+        double[] Qfc_heat = new double[12], Qfc_elec = new double[12];
+        double[] Qfc_f= new double[12];
 
         public double[] Qh_sol = new double[12];
         string[][] 프로젝트번호 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
@@ -271,7 +276,22 @@ namespace main
                 SolarDegree_split = Split_(SolarDegree_nonsplit);
             }
         }
-       
+        public void Load_FC_general(string ProjNum)
+        {
+            string[][] Value = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "연료전지번호,연료전지대수,연료전지설치유형", "번호 = '" + HeatingNum + "'");
+            if (Value.Length > 0)
+            {
+                SelectFC_nonsplit = Value[0][0];
+                SelectFC_split = Split_(SelectFC_nonsplit);
+
+                FCNum_nonsplit = Value[0][1];
+                FCNum_split = Split_(FCNum_nonsplit);
+
+                FCElecInstall_nonsplit = Value[0][2];
+                FCElecInstall_split = Split_(FCElecInstall_nonsplit);
+            }
+        }
+
         public void Load_PumpData(string ProjNum)
         {
             string[][] Value = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수", "번호 = '" + HeatingNum + "'");
@@ -992,6 +1012,35 @@ namespace main
                 if (double.IsNaN(Qh_outg[mth])) { Qh_outg[mth] = 0; }
             }
         }
+        public void LoadCalc_FC(string ProjNum)
+        {
+            for (int n = 0; n < SelectFC_split.Count; n++)
+            {
+                string[][] Value = Program.DB.getValue(ProjNum, "User_FC", "번호, 명칭, 연료, 전기출력, 전기효율, 열출력, 열효율", "번호 = '" + SelectFC_split[n].ToString() + "'");
+                if(Value.Length > 0 )
+                {
+                    double percent = 0.4;//20%미만이면 0.4 이상이면 0.6
+                    double power = Convert.ToDouble(Value[0][5]);
+                    double eta_elec = Convert.ToDouble(Value[0][4])/100;
+                    double eta_heat = Convert.ToDouble(Value[0][6])/100;
+                    if ( Qh_max_sum / power >= 0.2)
+                    {
+                        percent = 0.6;
+                    }
+                    for(int mth  =0; mth <12; mth++)
+                    {
+                        Qfc_heat[mth] = Math.Min(power * 24 * dmth[mth], Qh_outg[mth]);
+                        Qfc_elec[mth] = Qfc_heat[mth] * eta_elec;
+                        Qfc_f[mth] = Qfc_heat[mth] * 1 / eta_heat;
+
+                        Qh_outg[mth] = Math.Max(0, Qh_outg[mth] - Qfc_heat[mth]);
+                    }                    
+
+                }
+            }
+        }
+
+
         public void LoadCalc_Boiler(string ProjNum)
         {
             for (int n = 0; n < SelectBoiler_split.Count; n++)

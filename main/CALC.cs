@@ -1002,6 +1002,7 @@ namespace main
             Heating1.Load_HeatingGeneral(ProjNum);
             Heating1.Load_Boiler_general(ProjNum);
             Heating1.Load_Solar_general(ProjNum);
+            Heating1.Load_FC_general(ProjNum);
             Heating1.Load_PumpData(ProjNum);
             Heating1.Load_ceData(ProjNum);
             Heating1.Load_StorageData(ProjNum);
@@ -1024,6 +1025,7 @@ namespace main
             Heating1.Calc_Qh_s(ProjNum);
             Heating1.Calc_beta_gen();
             Heating1.LoadCalc_Solar(ProjNum);
+            Heating1.LoadCalc_FC(ProjNum);
             Heating1.LoadCalc_Boiler(ProjNum);
             Heating1.LoadCalc_AirHP(ProjNum);
             Heating1.LoadCalc_ABS(ProjNum);

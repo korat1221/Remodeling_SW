@@ -705,6 +705,7 @@ namespace main
                     Heating1.Calc_Qh_s(ProjNum);
                     Heating1.Calc_beta_gen();
                     Heating1.LoadCalc_Solar(ProjNum);
+                    Heating1.LoadCalc_FC(ProjNum);
                     if (검토유형 != "보일러")
                     { Heating1.LoadCalc_Boiler(ProjNum); }
                     else

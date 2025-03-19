@@ -68,7 +68,7 @@ namespace main.contents
             {
                 string install = null;
                 Name = Name_textBox.Text;
-                subcontents.FC FC_DB_form = new subcontents.FC("장비일람표 DB");
+                subcontents.FC FC_DB_form = new subcontents.FC("장비일람표 DB",null);
                 DialogResult result = FC_DB_form.ShowDialog();
                 if (result == DialogResult.OK)
                 {
