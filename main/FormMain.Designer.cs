@@ -32,7 +32,7 @@
             splitContainer1 = new SplitContainer();
             toolStripContainer1 = new ToolStripContainer();
             toolStrip1 = new ToolStrip();
-            Home = new ToolStripButton();
+            New = new ToolStripButton();
             toolStripSeparator2 = new ToolStripSeparator();
             ProjectOpen = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
@@ -94,22 +94,22 @@
             toolStrip1.BackColor = Color.Transparent;
             toolStrip1.Dock = DockStyle.None;
             toolStrip1.ImageScalingSize = new Size(35, 35);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { Home, toolStripSeparator2, ProjectOpen, toolStripSeparator1, EnergyNeed_Sim, toolStripSeparator3, FinalEnergy_Sim, toolStripSeparator4, Element_Sim });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { New, toolStripSeparator2, ProjectOpen, toolStripSeparator1, EnergyNeed_Sim, toolStripSeparator3, FinalEnergy_Sim, toolStripSeparator4, Element_Sim });
             toolStrip1.Location = new Point(3, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(331, 62);
             toolStrip1.TabIndex = 0;
             // 
-            // Home
+            // New
             // 
-            Home.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            Home.Image = (Image)resources.GetObject("Home.Image");
-            Home.ImageTransparentColor = Color.Magenta;
-            Home.Name = "Home";
-            Home.Padding = new Padding(0, 0, 20, 20);
-            Home.Size = new Size(59, 59);
-            Home.Text = "Home";
-            Home.Click += toolStripButton1_Click;
+            New.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            New.Image = (Image)resources.GetObject("New.Image");
+            New.ImageTransparentColor = Color.Magenta;
+            New.Name = "New";
+            New.Padding = new Padding(0, 0, 20, 20);
+            New.Size = new Size(59, 59);
+            New.Text = "Home";
+            New.Click += toolStripButton1_Click;
             // 
             // toolStripSeparator2
             // 
@@ -182,8 +182,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1664, 771);
             Controls.Add(toolStripContainer1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FormMain";
-            Text = "FormMain";
+            Text = "ZEROFIX";
             FormClosed += OnClosed;
             Load += FormMain_Load;
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
@@ -203,7 +204,7 @@
         public SplitContainer splitContainer1;
         private ToolStripContainer toolStripContainer1;
         private ToolStrip toolStrip1;
-        private ToolStripButton Home;
+        private ToolStripButton New;
         private ToolStripButton ProjectOpen;
         private ToolStripButton EnergyNeed_Sim;
         private ToolStripButton FinalEnergy_Sim;

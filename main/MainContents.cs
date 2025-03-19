@@ -892,6 +892,16 @@ namespace main
         }
         public void DoLoadFormDirect(int idx)
         {
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral","프로젝트번호,프로젝트유형,프로젝트명");
+            if(value.Length>0)
+            {
+                FormMain mainForm = Application.OpenForms["FormMain"] as FormMain;
+
+                if (mainForm != null)
+                {
+                    mainForm.Text = "ZEROFIX        "+value[0][0] + "_" + value[0][2] + "_" + value[0][1];
+                }
+            }
             formParam.formID = idx;
             DoLoadForm(idx, OnLoadProc);
         }

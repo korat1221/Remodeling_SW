@@ -42,7 +42,11 @@ namespace main
             f1.DoResizeMain(new Size(splitContainer1.Panel2.Width, splitContainer1.Panel2.Height));
 
             f1.Show();
-
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,프로젝트유형,프로젝트명");
+            if (value.Length > 0)
+            {
+                this.Text = "ZEROFIX        " + value[0][0] + "_" + value[0][2] + "_" + value[0][1];
+            }
         }
 
         private void OnClosed(object sender, FormClosedEventArgs e)
@@ -65,7 +69,7 @@ namespace main
             }
             catch (Exception ex)
             {
-//                MessageBox.Show(ex.ToString());
+                //                MessageBox.Show(ex.ToString());
             }
         }
 
@@ -77,7 +81,7 @@ namespace main
 
         public static bool OnLoadProc1(Form form)
         {
-            Intro f = (Intro)form;
+            General f = (General)form;
 
             f.LoadData("");
 
