@@ -1,12 +1,9 @@
 ﻿// dllmain.cpp : DLL 애플리케이션의 진입점을 정의합니다.
 #include "pch.h"
 #include "_wrap_sqlite.h"
-
-#include <mutex>
-
+#include "wrap_sqlite3.h"
 #include "json/json.h"
-
-std::mutex mtxsql;
+#include "utf8.h"
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
@@ -24,9 +21,19 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     return TRUE;
 }
 
-__declspec(dllexport) int __stdcall OpenDB(const char* path, int idx)
+__declspec(dllexport) int __stdcall OpenDB(LPCWSTR path, int idx)
 {
-    return db_open(path, idx);
+    std::wstring path0 = path;
+    std::string s;
+
+    utf8::utf16to8(path0.begin(), path0.end(), std::back_inserter(s));
+
+    return db_open(s.c_str(), idx);
+}
+
+__declspec(dllexport) int __stdcall OpenMemoryDB(int idx)
+{
+    return db_open_mem(idx);
 }
 
 __declspec(dllexport) int __stdcall CloseDB(int idx)
@@ -34,37 +41,68 @@ __declspec(dllexport) int __stdcall CloseDB(int idx)
     return db_close(idx);
 }
 
-__declspec(dllexport) int __stdcall SaveDB(const char* path, int idx)
+__declspec(dllexport) int __stdcall SaveDB(LPCWSTR path, int idx)
 {
-    return db_save(path, idx);
+    std::wstring path0 = path;
+    std::string s;
+
+    utf8::utf16to8(path0.begin(), path0.end(), std::back_inserter(s));
+
+    return db_save(s.c_str(), idx);
 }
 
-__declspec(dllexport) const char* __stdcall QuerySQL(int idx, const char* sql)
+__declspec(dllexport) WCHAR * __stdcall QuerySQL(int idx, LPCWSTR sql)
 {
-    std::lock_guard<std::mutex> guard(mtxsql);
-    Json::FastWriter write;
-    static std::string s;
-    Json::Value jData;
+    std::string s;
+    std::wstring ret;
+    std::wstring sql0 = sql;
 
-    if (!db_query_sql(idx, sql)) {
-        Json::Value jVal;
-        int r = 0, c, rows = DB_ROW_COUNT(0), columns = DB_COL_COUNT(0);
+    utf8::utf16to8(sql0.begin(), sql0.end(), std::back_inserter(s));
 
-        while (++r <= rows) {
-            c = -1;
-            while (++c < columns) {
-                jVal[DB_COL_NAME(0, c)] = DB_GET_VALUE(0, r, c);
+    if (!db_query_sql(idx, s.c_str())) {
+        int r = 0, c, rows = DB_ROW_COUNT(idx), columns = DB_COL_COUNT(idx);
+
+		if (r < rows) {
+            char* ch;
+            Json::Value jData;
+            Json::FastWriter write;
+
+            while (++r <= rows) {
+                Json::Value jVal;
+                c = -1;
+                while (++c < columns) {
+                    ch = DB_GET_VALUE(idx, r, c);
+                    jVal.append(ch == 0 ? "" : ch);
+                }
+                jData.append(jVal);
             }
-            jData.append(jVal);
+            s = write.write(jData);
+
+            utf8::utf8to16(s.begin(), s.end(), std::back_inserter(ret));
         }
     }
 
-    s = write.write(jData);
+    if (ret.empty()) {
+        ret = L"[]";
+    }
 
-    return s.data();
+    int len = (ret.size() + 1) * sizeof(WCHAR);
+    WCHAR* res = (WCHAR*)LocalAlloc(LPTR, len);
+
+    if (res != NULL) {
+        wcscpy_s(res, len / sizeof(WCHAR), ret.data());
+        return res;
+    }
+
+    return NULL;
 }
 
-__declspec(dllexport) int __stdcall ExecuteSQL(int idx, const char* sql)
+__declspec(dllexport) int __stdcall ExecuteSQL(int idx, LPCWSTR sql)
 {
-    return db_execute_sql(idx, sql);
+    std::string s;
+    std::wstring sql0 = sql;
+
+    utf8::utf16to8(sql0.begin(), sql0.end(), std::back_inserter(s));
+
+    return db_execute_sql(idx, s.c_str());
 }

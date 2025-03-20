@@ -4,8 +4,8 @@
 extern "C" {
 #endif
 
-#define DB_INDEX_MAX		128
-#define DB_FIELD_MAX		31
+#define DB_INDEX_MAX		64
+#define DB_FIELD_MAX		64
 
 #define DB_NOERR_SQL		0
 #define DB_NOERR_OPENED		1
@@ -29,6 +29,7 @@ extern int		gDBResCols[DB_INDEX_MAX];
 
 extern int db_is_opened(int idx);
 extern int db_open(const void* path, int idx);
+extern int db_open_mem(int idx);
 extern int db_close(int idx);
 
 extern int db_last_changes(int idx);

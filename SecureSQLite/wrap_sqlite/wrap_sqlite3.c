@@ -38,7 +38,7 @@ static int loadOrSaveDb(sqlite3 *pInMemory, const char *zFilename, int isSave){
 
   /* Open the database file identified by zFilename. Exit early if this fails
   ** for any reason. */
-  rc = sqlite3_open16(zFilename, &pFile);
+  rc = sqlite3_open(zFilename, &pFile);
   if( rc==SQLITE_OK ){
 
     /* If this is a 'load' operation (isSave==0), then data is copied
@@ -80,32 +80,6 @@ int db_is_opened(int idx)
 	return (gDBs[idx] ? 1 : 0);
 }
 
-int db_open2(void * path, int idx)
-{
-	if (first) { // if it is the first call, then reset db channels.
-		first = 0;
-		memset(gDBs, 0, sizeof(gDBs));
-		memset(gDBRes, 0, sizeof(gDBRes));
-	}
-
-	INDEX_CHECK;
-
-	if (gDBs[idx]) sqlite3_close(gDBs[idx]);
-	
-	if (sqlite3_open(":memory:", &gDBs[idx]) == SQLITE_OK) {
-		char* sql = "create table requests (num INTEGER PRIMARY KEY AUTOINCREMENT, data VARCHAR(1024));"
-			"create table sending (wid INTEGER PRIMARY KEY, uid_list VARCHAR(255), uids_list VARCHAR(255), login_list VARCHAR(255), data VARCHAR(1024)); "
-			"create table version (version char(32));"
-			"create table working (num INTEGER PRIMARY KEY AUTOINCREMENT DEFAULT 1, wid INTEGER DEFAULT (-1), uid INTEGER DEFAULT 1, uids CHAR(32) DEFAULT __ruler__, vnet_id CHAR(255), url CHAR(255) DEFAULT _, pwd CHAR(32), path CHAR(255), aid INTEGER DEFAULT 0, name VARCHAR2(128), regdate DATETIME DEFAULT(strftime('%Y-%m-%d %H:%M:%f', 'now', 'localtime')), region VARCHAR2(255), state SMALLINT DEFAULT 1, active BOOL DEFAULT 0, setting TEXT, explain VARCHAR2(255), ext CHAR(8)); "
-			"create UNIQUE INDEX [key_working] ON [working] ([num], [wid], [uid], [uids], [vnet_id], [url]);"
-			"CREATE TABLE [netffice] ([num] INTEGER PRIMARY KEY AUTOINCREMENT DEFAULT 1, [use] INTEGER DEFAULT 0, [wnum] INTEGER CONSTRAINT[foreign_key_wnum] REFERENCES[working]([num]) ON DELETE CASCADE DEFAULT 1); "
-			"CREATE UNIQUE INDEX [index_unique_num] ON [netffice] ([wnum]);PRAGMA synchronous=OFF;PRAGMA journal_mode=OFF;";
-
-		return (sqlite3_exec(gDBs[idx], sql, 0, 0, 0) != SQLITE_OK ? DB_ERR_CORRUPTED : DB_NOERR_OPENED);
-	}
-	return DB_ERR_CORRUPTED;
-}
-
 int db_open(void * path, int idx)
 {
 	if (first) { // if it is the first call, then reset db channels.
@@ -121,6 +95,26 @@ int db_open(void * path, int idx)
 	if (sqlite3_open(":memory:", &gDBs[idx]) == SQLITE_OK && loadOrSaveDb(gDBs[idx], path, 0) == SQLITE_OK) {
 		sqlite3_exec(gDBs[idx], "PRAGMA synchronous=OFF", 0, 0, 0 );
 		sqlite3_exec(gDBs[idx], "PRAGMA journal_mode=OFF;", 0, 0, 0 );
+		return DB_NOERR_OPENED;
+	}
+	return DB_ERR_CORRUPTED;
+}
+
+int db_open_mem(int idx)
+{
+	if (first) { // if it is the first call, then reset db channels.
+		first = 0;
+		memset(gDBs, 0, sizeof(gDBs));
+		memset(gDBRes, 0, sizeof(gDBRes));
+	}
+
+	INDEX_CHECK;
+
+	if (gDBs[idx]) sqlite3_close(gDBs[idx]);
+
+	if (sqlite3_open(":memory:", &gDBs[idx]) == SQLITE_OK) {
+		sqlite3_exec(gDBs[idx], "PRAGMA synchronous=OFF", 0, 0, 0);
+		sqlite3_exec(gDBs[idx], "PRAGMA journal_mode=OFF;", 0, 0, 0);
 		return DB_NOERR_OPENED;
 	}
 	return DB_ERR_CORRUPTED;
