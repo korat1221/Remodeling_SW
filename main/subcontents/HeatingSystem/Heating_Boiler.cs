@@ -57,24 +57,19 @@ namespace main.subcontents.HeatingSystem
             Boiler_dataGridView.Columns.Add("A1", "번호");
             Boiler_dataGridView.Columns.Add("A2", "명칭");
             Boiler_dataGridView.Columns.Add("A3", "연료");
-            //Boiler_table.Columns.Add("번호", typeof(string));
-            //Boiler_table.Columns.Add("명칭", typeof(string));
-            //Boiler_table.Columns.Add("연료", typeof(string));
             if (DefaultUse != "기본DB 적용")
             {
                 Boiler_dataGridView.Columns.Add("A4", "Type");
                 Boiler_dataGridView.Columns.Add("A5", "용량.[kW]");
-                //Boiler_table.Columns.Add("Type", typeof(string));
-                //Boiler_table.Columns.Add("용량" + Environment.NewLine + "[kW]", typeof(string));
             }
             Boiler_dataGridView.Columns.Add("A6", "전부하효율.[%]");
             Boiler_dataGridView.Columns.Add("A7", "부분부하효율.[%]");
             Boiler_dataGridView.Columns.Add("A8", "소비전력.[W]");
             Boiler_dataGridView.Columns.Add("A9", "대기전력.[W]");
-            //Boiler_table.Columns.Add("전부하효율" + Environment.NewLine + "[%]", typeof(string));
-            //Boiler_table.Columns.Add("부분부하효율" + Environment.NewLine + "[%]", typeof(string));
-            //Boiler_table.Columns.Add("소비전력" + Environment.NewLine + "[W]", typeof(string));
-            //Boiler_table.Columns.Add("대기전력" + Environment.NewLine + "[W]", typeof(string));
+            Boiler_dataGridView.Columns[0].Width = 40;
+            Boiler_dataGridView.Columns[1].Width = 60;
+            Boiler_dataGridView.Columns[2].Width = 150;
+            Boiler_dataGridView.Columns[3].Width = 50;
 
             if (DefaultUse == "기본DB 적용")
             {

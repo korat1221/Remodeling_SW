@@ -141,8 +141,6 @@ namespace main.subcontents.HeatingSystem
                 HP_dataGridView.Columns.Add("A10", "한랭지.소비전력" + Environment.NewLine + "[kW]");
             }
             HP_dataGridView.Columns[0].Width = 40;
-            HP_dataGridView.Columns[1].Width = 40;
-            HP_dataGridView.Columns[2].Width = 100;
 
 
         }
