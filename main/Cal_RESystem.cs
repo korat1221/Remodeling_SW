@@ -55,10 +55,10 @@ namespace main
             프로젝트번호 = buildinginfo[0][0].ToString();
             프로젝트유형 = buildinginfo[0][1].ToString();
             string ort = buildinginfo[0][2].ToString();
-            string[][] PVdata = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "방위,기울기,fperf,인버터효율,지형물거리,지형물높이,어레이높이,계통유형,면적,용량,배터리번호", "번호='" + Num +"'");
+            string[][] PVformdata = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "방위,기울기,fperf,인버터효율,지형물거리,지형물높이,어레이높이,계통유형,면적,용량,배터리번호", "번호='" + Num +"'");
             string orientation, slope;
-            orientation = PVdata[0][0].ToString();
-            slope = PVdata[0][1].ToString() + "˚";
+            orientation = PVformdata[0][0].ToString();
+            slope = PVformdata[0][1].ToString() + "˚";
             double[] dmth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
             if (slope == "0˚" || orientation == "수평")
@@ -77,14 +77,15 @@ namespace main
            
             for(int k = 0; k < 10; k++)
             {
-                this.PVdata.Add(PVdata[0][k + 1]);
+               //this.PVdata.Add(PVdata[0][k + 1]);
+                this.PVdata.Add(PVformdata[0][k + 1]);
             }
         }
 
         public void PVcal()
         {
             double Slope, fPerf, InverterEff, shLength, shHeight, Arrayheight, tan, totalArea, Kpk;
-            
+           
             Slope = Convert.ToDouble(PVdata[0]);
             fPerf = Convert.ToDouble(PVdata[1]);
             InverterEff = Convert.ToDouble(PVdata[2])/100;
