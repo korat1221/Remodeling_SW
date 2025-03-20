@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Reflection.Emit;
 
 namespace main.subcontents.ConstructionWindow
 {
@@ -41,6 +42,23 @@ namespace main.subcontents.ConstructionWindow
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, Frame_comboBox, "창호", "프레임시스템", "1");
             //설치위치 콤보박스
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, Install_comboBox, "창호", "구조", "1");
+
+
+            string unit = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
+            Uw_unit_label.Text = unit;
+            label35.Text = unit;
+            Ug_unit_label.Text = unit;
+            label8.Text = unit;
+            Uw3_unit_label.Text = unit;
+            label4.Text = unit;
+
+            unit = "m" + Program.UTIL.Subscript(2, true);
+            label52.Text = unit;
+            label46.Text = unit;
+            label54.Text = unit;
+            label58.Text = unit;
+            label63.Text = unit;
+            label62.Text = unit;
         }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
@@ -566,6 +584,9 @@ namespace main.subcontents.ConstructionWindow
             WindowFrame_pictureBox.Visible = false;
             WindowInstall_pictureBox.Visible = false;
 
+            FrameCert_button.Visible = false;
+            FrameCert_pictureBox.Visible = false;
+
             WinNum = null;
             WindowName = null;
             Type = null;
@@ -846,6 +867,19 @@ namespace main.subcontents.ConstructionWindow
                         WindowFrame_pictureBox.Load(Program.gPath + Image2[0][0]);
                         WindowFrame_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     }
+                    Image2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호프레임", "이미지", "제품명 = '" + FrameName + "'");
+                    if (Image2.Length > 0 && Image2[0][0] != "")
+                    {
+                        FrameCert_button.Visible = true;
+                        FrameCert_pictureBox.Visible = true;
+                        FrameCert_pictureBox.Load(Program.gPath + Image2[0][0]);
+                        FrameCert_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    }
+                    else
+                    {
+                        FrameCert_button.Visible = false;
+                        FrameCert_pictureBox.Visible = false;
+                    }
                     string[][] Image3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호설치열교이미지", "이미지열교유형", "구분1 = '" + InstallType + "' AND 구분2 = '" + FrameMaterial + "' AND 구분3 = '" + SingleDoubleType + "' AND 구분4 = '" + InstallName + "'");
                     if (Image3.Length > 0)
                     {
@@ -862,5 +896,38 @@ namespace main.subcontents.ConstructionWindow
             WinNum = ID;
         }
 
+        private void FrameCert_button_Click(object sender, EventArgs e)
+        {
+
+            // 새로운 Form을 생성하여 팝업창 역할 수행
+            Form popup = new Form();
+            popup.FormBorderStyle = FormBorderStyle.FixedDialog;  // 창 테두리 제거
+            popup.StartPosition = FormStartPosition.CenterScreen; // 화면 중앙 정렬
+            popup.BackColor = Color.Black; // 배경 검정 (이미지 경계 명확하게)
+            popup.TopMost = true; // 항상 위에 표시
+            popup.MaximizeBox = false;
+            popup.MinimizeBox = false;
+
+            // PictureBox 추가
+            PictureBox pb = new PictureBox();
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호프레임", "인증서", "제품명 = '" + FrameName + "'");
+            if (Image.Length > 0)
+            {
+                pb.Load(Program.gPath + Image[0][0]);
+                pb.SizeMode = PictureBoxSizeMode.StretchImage; // 원본 크기대로 표시
+                pb.Dock = DockStyle.Fill; // 전체 화면 채우기
+
+                pb.Size = new Size(480, 700);
+                // 팝업 폼 크기를 이미지 크기에 맞춤
+                popup.ClientSize = new Size(480, 725);
+
+                // 클릭하면 닫히도록 설정
+                pb.Click += (s, ev) => popup.Close();
+
+                // 폼에 PictureBox 추가 후 표시
+                popup.Controls.Add(pb);
+                popup.ShowDialog();
+            }
+        }
     }
 }
