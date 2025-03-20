@@ -44,6 +44,9 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle20 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle21 = new DataGridViewCellStyle();
@@ -53,9 +56,6 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle25 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle26 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle27 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
             label15 = new Label();
             OldSystem_textBox = new TextBox();
@@ -85,6 +85,8 @@ namespace main.contents
             DH_dataGridView = new DataGridView();
             Solar_tabPage = new TabPage();
             Solar_dataGridView = new DataGridView();
+            FC_tabPage = new TabPage();
+            FC_dataGridView = new DataGridView();
             label9 = new Label();
             Complex_comboBox = new CustomComboBox();
             Sub2UserList_textBox = new TextBox();
@@ -119,6 +121,7 @@ namespace main.contents
             label11 = new Label();
             StorageUse_comboBox = new CustomComboBox();
             Qhd_tabPage = new TabPage();
+            PipeD_comboBox = new CustomComboBox();
             label17 = new Label();
             PipeL_textBox = new TextBox();
             label14 = new Label();
@@ -126,9 +129,7 @@ namespace main.contents
             PipeIns_Ramda_label1 = new Label();
             PipeIns_Ramda_label2 = new Label();
             PipeIns_Ramda_textBox = new TextBox();
-            PipeD_textBox = new TextBox();
             PipeD_label1 = new Label();
-            PipeD_label2 = new Label();
             PipeInsD_textBox = new TextBox();
             PipeInsD_label1 = new Label();
             PipeInsD_label2 = new Label();
@@ -178,8 +179,6 @@ namespace main.contents
             panel2 = new Panel();
             panel5 = new Panel();
             panel6 = new Panel();
-            FC_tabPage = new TabPage();
-            FC_dataGridView = new DataGridView();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -196,6 +195,8 @@ namespace main.contents
             ((System.ComponentModel.ISupportInitialize)DH_dataGridView).BeginInit();
             Solar_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Solar_dataGridView).BeginInit();
+            FC_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)FC_dataGridView).BeginInit();
             Qhs_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)StoragePump_dataGridView).BeginInit();
             Qhd_tabPage.SuspendLayout();
@@ -218,8 +219,6 @@ namespace main.contents
             panel2.SuspendLayout();
             panel5.SuspendLayout();
             panel6.SuspendLayout();
-            FC_tabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)FC_dataGridView).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -761,6 +760,59 @@ namespace main.contents
             Solar_dataGridView.Size = new Size(972, 121);
             Solar_dataGridView.TabIndex = 23;
             // 
+            // FC_tabPage
+            // 
+            FC_tabPage.Controls.Add(FC_dataGridView);
+            FC_tabPage.Location = new Point(4, 25);
+            FC_tabPage.Name = "FC_tabPage";
+            FC_tabPage.Padding = new Padding(3);
+            FC_tabPage.Size = new Size(978, 127);
+            FC_tabPage.TabIndex = 7;
+            FC_tabPage.Text = "연료전지";
+            FC_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // FC_dataGridView
+            // 
+            FC_dataGridView.AllowUserToAddRows = false;
+            FC_dataGridView.AllowUserToDeleteRows = false;
+            FC_dataGridView.AllowUserToResizeColumns = false;
+            FC_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            FC_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            FC_dataGridView.BackgroundColor = Color.White;
+            FC_dataGridView.BorderStyle = BorderStyle.None;
+            FC_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
+            FC_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle16.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle16.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle16.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle16.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle16.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle16.WrapMode = DataGridViewTriState.True;
+            FC_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
+            FC_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            FC_dataGridView.Dock = DockStyle.Fill;
+            FC_dataGridView.Location = new Point(3, 3);
+            FC_dataGridView.Name = "FC_dataGridView";
+            dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle17.BackColor = SystemColors.Control;
+            dataGridViewCellStyle17.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle17.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle17.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle17.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle17.WrapMode = DataGridViewTriState.True;
+            FC_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle17;
+            FC_dataGridView.RowHeadersVisible = false;
+            FC_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle18.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle18.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle18.ForeColor = Color.Black;
+            dataGridViewCellStyle18.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle18.SelectionForeColor = Color.Black;
+            FC_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle18;
+            FC_dataGridView.Size = new Size(972, 121);
+            FC_dataGridView.TabIndex = 24;
+            // 
             // label9
             // 
             label9.AutoSize = true;
@@ -1187,6 +1239,7 @@ namespace main.contents
             // Qhd_tabPage
             // 
             Qhd_tabPage.BackColor = Color.White;
+            Qhd_tabPage.Controls.Add(PipeD_comboBox);
             Qhd_tabPage.Controls.Add(label17);
             Qhd_tabPage.Controls.Add(PipeL_textBox);
             Qhd_tabPage.Controls.Add(label14);
@@ -1194,9 +1247,7 @@ namespace main.contents
             Qhd_tabPage.Controls.Add(PipeIns_Ramda_label1);
             Qhd_tabPage.Controls.Add(PipeIns_Ramda_label2);
             Qhd_tabPage.Controls.Add(PipeIns_Ramda_textBox);
-            Qhd_tabPage.Controls.Add(PipeD_textBox);
             Qhd_tabPage.Controls.Add(PipeD_label1);
-            Qhd_tabPage.Controls.Add(PipeD_label2);
             Qhd_tabPage.Controls.Add(PipeInsD_textBox);
             Qhd_tabPage.Controls.Add(PipeInsD_label1);
             Qhd_tabPage.Controls.Add(PipeInsD_label2);
@@ -1220,6 +1271,17 @@ namespace main.contents
             Qhd_tabPage.Size = new Size(992, 275);
             Qhd_tabPage.TabIndex = 3;
             Qhd_tabPage.Text = "분배";
+            // 
+            // PipeD_comboBox
+            // 
+            PipeD_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            PipeD_comboBox.Font = new Font("나눔바른고딕", 9.75F);
+            PipeD_comboBox.FormattingEnabled = true;
+            PipeD_comboBox.Location = new Point(94, 35);
+            PipeD_comboBox.Name = "PipeD_comboBox";
+            PipeD_comboBox.Size = new Size(120, 23);
+            PipeD_comboBox.TabIndex = 202;
+            PipeD_comboBox.SelectedIndexChanged += PipeD_comboBox_SelectedIndexChanged;
             // 
             // label17
             // 
@@ -1300,19 +1362,6 @@ namespace main.contents
             PipeIns_Ramda_textBox.TabIndex = 195;
             PipeIns_Ramda_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // PipeD_textBox
-            // 
-            PipeD_textBox.BackColor = Color.White;
-            PipeD_textBox.BorderStyle = BorderStyle.FixedSingle;
-            PipeD_textBox.Font = new Font("나눔바른고딕", 9.75F);
-            PipeD_textBox.ForeColor = SystemColors.ControlText;
-            PipeD_textBox.Location = new Point(94, 35);
-            PipeD_textBox.Name = "PipeD_textBox";
-            PipeD_textBox.Size = new Size(120, 22);
-            PipeD_textBox.TabIndex = 192;
-            PipeD_textBox.TextAlign = HorizontalAlignment.Center;
-            PipeD_textBox.TextChanged += PipeD_textBox_TextChanged;
-            // 
             // PipeD_label1
             // 
             PipeD_label1.AutoSize = true;
@@ -1323,17 +1372,6 @@ namespace main.contents
             PipeD_label1.Size = new Size(58, 15);
             PipeD_label1.TabIndex = 193;
             PipeD_label1.Text = "배관 관경";
-            // 
-            // PipeD_label2
-            // 
-            PipeD_label2.AutoSize = true;
-            PipeD_label2.Font = new Font("나눔바른고딕", 9.75F);
-            PipeD_label2.ForeColor = SystemColors.ControlText;
-            PipeD_label2.Location = new Point(217, 38);
-            PipeD_label2.Name = "PipeD_label2";
-            PipeD_label2.Size = new Size(31, 15);
-            PipeD_label2.TabIndex = 194;
-            PipeD_label2.Text = "mm";
             // 
             // PipeInsD_textBox
             // 
@@ -1954,59 +1992,6 @@ namespace main.contents
             panel6.Size = new Size(1000, 291);
             panel6.TabIndex = 127;
             // 
-            // FC_tabPage
-            // 
-            FC_tabPage.Controls.Add(FC_dataGridView);
-            FC_tabPage.Location = new Point(4, 25);
-            FC_tabPage.Name = "FC_tabPage";
-            FC_tabPage.Padding = new Padding(3);
-            FC_tabPage.Size = new Size(978, 127);
-            FC_tabPage.TabIndex = 7;
-            FC_tabPage.Text = "연료전지";
-            FC_tabPage.UseVisualStyleBackColor = true;
-            // 
-            // FC_dataGridView
-            // 
-            FC_dataGridView.AllowUserToAddRows = false;
-            FC_dataGridView.AllowUserToDeleteRows = false;
-            FC_dataGridView.AllowUserToResizeColumns = false;
-            FC_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            FC_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            FC_dataGridView.BackgroundColor = Color.White;
-            FC_dataGridView.BorderStyle = BorderStyle.None;
-            FC_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            FC_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle16.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle16.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle16.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle16.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle16.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle16.WrapMode = DataGridViewTriState.True;
-            FC_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
-            FC_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            FC_dataGridView.Dock = DockStyle.Fill;
-            FC_dataGridView.Location = new Point(3, 3);
-            FC_dataGridView.Name = "FC_dataGridView";
-            dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle17.BackColor = SystemColors.Control;
-            dataGridViewCellStyle17.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle17.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle17.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle17.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle17.WrapMode = DataGridViewTriState.True;
-            FC_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle17;
-            FC_dataGridView.RowHeadersVisible = false;
-            FC_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle18.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle18.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle18.ForeColor = Color.Black;
-            dataGridViewCellStyle18.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle18.SelectionForeColor = Color.Black;
-            FC_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle18;
-            FC_dataGridView.Size = new Size(972, 121);
-            FC_dataGridView.TabIndex = 24;
-            // 
             // HeatingSystem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -2041,6 +2026,8 @@ namespace main.contents
             ((System.ComponentModel.ISupportInitialize)DH_dataGridView).EndInit();
             Solar_tabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Solar_dataGridView).EndInit();
+            FC_tabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)FC_dataGridView).EndInit();
             Qhs_tabPage.ResumeLayout(false);
             Qhs_tabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)StoragePump_dataGridView).EndInit();
@@ -2067,8 +2054,6 @@ namespace main.contents
             panel2.ResumeLayout(false);
             panel5.ResumeLayout(false);
             panel6.ResumeLayout(false);
-            FC_tabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)FC_dataGridView).EndInit();
             ResumeLayout(false);
         }
 
@@ -2163,9 +2148,7 @@ namespace main.contents
         private TextBox PipeIns_textBox;
         private Button PipeIns_button;
         private Label PipeIns_label;
-        private TextBox PipeD_textBox;
         private Label PipeD_label1;
-        private Label PipeD_label2;
         private TextBox PipeInsD_textBox;
         private Label PipeInsD_label1;
         private Label PipeInsD_label2;
@@ -2199,5 +2182,6 @@ namespace main.contents
         private Label label17;
         private TabPage FC_tabPage;
         private DataGridView FC_dataGridView;
+        private CustomComboBox PipeD_comboBox;
     }
 }

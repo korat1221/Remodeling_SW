@@ -38,7 +38,7 @@ namespace main.contents
         String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; double Pump1Num, Pump2Num;
         String ce1Type, ce2Type; int ce_SelectRow;
         String StorageUse, StoragePumpUse, StoragePump; double Vs;
-        String[] SystemType = { "보일러", "외기 히트펌프", "지열 히트펌프", "지하수 히트펌프", "태양열 융합 히트펌프", "흡수식온수기", "지역난방", "태양열시스템","연료전지" };
+        String[] SystemType = { "보일러", "외기 히트펌프", "지열 히트펌프", "지하수 히트펌프", "태양열 융합 히트펌프", "흡수식온수기", "지역난방", "태양열시스템", "연료전지" };
         String[] ceType = { "실내기", "방열기", "팬코일유닛", "복사난방" };
         double PipeD, PipeInsD, PipeIns_Ramda, PipeL;
         String PipeIns;
@@ -128,6 +128,15 @@ namespace main.contents
             {
                 ce1Type_comboBox.Items.Add(ceType[i]);
                 ce2Type_comboBox.Items.Add(ceType[i]);
+            }
+            PipeD_comboBox.Items.Clear();
+            string[][] value = Program.DB.getValue_SameCheck(DB.type.BaseDB_Heating, "부피별관경", "호칭경A", "");
+            if (value.Length > 0)
+            {
+                for (int a = 0; a < value.Length; a++)
+                {
+                    PipeD_comboBox.Items.Add(value[a][0] + "A");
+                }
             }
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
@@ -977,7 +986,7 @@ namespace main.contents
             for (int k = 0; k < FC_dataGridView.Rows.Count; k++)
             {
 
-                if (FC_dataGridView.Rows[k].Cells[8].Value == null )
+                if (FC_dataGridView.Rows[k].Cells[8].Value == null)
                 {
                     MessageBox.Show("연료전지의 모든 정보를 입력하세요.");
                     break;
@@ -987,11 +996,11 @@ namespace main.contents
 
             for (int k = 0; k < FC_dataGridView.Rows.Count; k++)
             {
-                if ( FC_dataGridView.Rows.Count == 1 && FC_dataGridView.Rows[k].Cells[8].Value != null )
+                if (FC_dataGridView.Rows.Count == 1 && FC_dataGridView.Rows[k].Cells[8].Value != null)
                 {
                     FCNum_nonsplit = FC_dataGridView.Rows[k].Cells[8].Value.ToString();
                 }
-                else if (FC_dataGridView.Rows[k].Cells[8].Value != null )
+                else if (FC_dataGridView.Rows[k].Cells[8].Value != null)
                 {
                     FCNum_nonsplit = FC_dataGridView.Rows[k].Cells[8].Value.ToString() + "+";
                 }
@@ -1942,10 +1951,18 @@ namespace main.contents
 
         #region 분배
         /////////////////////////////////////////////////////분배////////////////////////////////////////////////////////////////////
-        ///
-        private void PipeD_textBox_TextChanged(object sender, EventArgs e)
+
+
+        private void PipeD_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            PipeD = Program.UTIL.textBox_doubleComa(PipeD_textBox, false, 1);
+            if (PipeD_comboBox.SelectedItem != null && PipeD_comboBox.SelectedItem.ToString() != "")
+            {
+                string[][] value = Program.DB.getValue(DB.type.BaseDB_Heating, "부피별관경", "외경", "호칭경A='" + PipeD_comboBox.SelectedItem.ToString().Substring(0, PipeD_comboBox.SelectedItem.ToString().Length - 1) + "'");
+                if (value.Length > 0)
+                {
+                    PipeD = Convert.ToDouble(value[0][0]);
+                }
+            }
         }
         private void PipeInsD_textBox_TextChanged(object sender, EventArgs e)
         {
@@ -1984,11 +2001,11 @@ namespace main.contents
                 double Volume = Qh_max_sum * 3.6 / (4.18 * dtheta); // Liter/min 
 
 
-                PipeD = 25;
+                PipeD = 21.7;
                 PipeInsD = 10;
                 if (Volume > 0)
                 {
-                    string[][] P = Program.DB.querySQL(DB.type.BaseDB_Heating, "Select lpm_max, 외경 From 부피별관경 Order by 외경 DESC");
+                    string[][] P = Program.DB.querySQL(DB.type.BaseDB_Heating, "Select lpm_max, 외경,호칭경A From 부피별관경 Order by 외경 DESC");
                     if (P.Length > 0)
                     {
                         for (int a = 0; a < P.Length; a++)
@@ -1999,11 +2016,13 @@ namespace main.contents
                             }
                         }
                     }
+
+                    P = Program.DB.querySQL(DB.type.BaseDB_Heating, "Select 호칭경A From 부피별관경 Where 외경='" + PipeD + "'");
+                    if (P.Length > 0)
+                    {
+                        PipeD_comboBox.SelectedItem = P[0][0] + "A";
+                    }
                 }
-
-                PipeD_textBox.Text = PipeD.ToString();
-                Program.UTIL.textBox_doubleComa(PipeD_textBox, true, 1);
-
                 PipeInsD_textBox.Text = PipeInsD.ToString();
                 Program.UTIL.textBox_doubleComa(PipeInsD_textBox, true, 1);
 
@@ -2753,7 +2772,8 @@ namespace main.contents
             StoragePump_dataGridView.Columns.Clear();
             StoragePump_dataGridView.Rows.Clear();
 
-            PipeD_textBox.Text = null;
+            PipeD_comboBox.SelectedItem = null;
+            Vs_textBox.Text = null;
             PipeInsD_textBox.Text = null;
             PipeIns_Ramda_textBox.Text = null;
             PipeIns_textBox.Text = null;
@@ -2960,7 +2980,7 @@ namespace main.contents
                 if (ce1Type != null && ce1Type != "")
                 {
                     Create_ce_Table();
-                    Load_ce(ce1Type); 
+                    Load_ce(ce1Type);
                     Load_ce1Zone(ce1Type);
 
                     for (int n = 0; n < ce_dataGridView.Rows.Count; n++)
@@ -3035,8 +3055,11 @@ namespace main.contents
             if (Value.Length > 0)
             {
                 PipeD = Convert.ToDouble(Value[0][0]);
-                PipeD_textBox.Text = PipeD.ToString();
-                Program.UTIL.textBox_doubleComa(PipeD_textBox, true, 1);
+                string[][] p = Program.DB.getValue(DB.type.BaseDB_Heating, "부피별관경", "호칭경A", "외경 = '" + PipeD + "'");
+                if (p.Length > 0)
+                {
+                    PipeD_comboBox.SelectedItem = p[0][0] + "A";
+                }
 
                 PipeInsD = Convert.ToDouble(Value[0][1]);
                 PipeInsD_textBox.Text = PipeInsD.ToString();
@@ -3054,6 +3077,7 @@ namespace main.contents
                 {
                     PipeL = Convert.ToDouble(Value[0][4]);
                 }
+                PipeL_textBox.Text = PipeL.ToString();
                 Program.UTIL.textBox_doubleComa(PipeL_textBox, true, 2);
             }
         }
@@ -3068,6 +3092,5 @@ namespace main.contents
         }
 
         #endregion
-
     }
 }

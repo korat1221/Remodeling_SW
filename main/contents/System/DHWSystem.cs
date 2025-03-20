@@ -116,6 +116,16 @@ namespace main.contents
             PumpMethod_comboBox.Items.Add("1차펌프");
             PumpMethod_comboBox.Items.Add("1차폐회로+2차펌프");
 
+            PipeD_comboBox.Items.Clear();
+            string[][] value = Program.DB.getValue_SameCheck(DB.type.BaseDB_Heating, "부피별관경", "호칭경A", "");
+            if (value.Length > 0)
+            {
+                for (int a = 0; a < value.Length; a++)
+                {
+                    PipeD_comboBox.Items.Add(value[a][0] + "A");
+                }
+            }
+
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -1297,10 +1307,18 @@ namespace main.contents
 
         #region 분배
         /////////////////////////////////////////////////////분배////////////////////////////////////////////////////////////////////
-        ///
-        private void PipeD_textBox_TextChanged(object sender, EventArgs e)
+
+
+        private void PipeD_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            PipeD = Program.UTIL.textBox_doubleComa(PipeD_textBox, false, 1);
+            if (PipeD_comboBox.SelectedItem != null && PipeD_comboBox.SelectedItem.ToString() != "")
+            {
+                string[][] value = Program.DB.getValue(DB.type.BaseDB_Heating, "부피별관경", "외경", "호칭경A='" + PipeD_comboBox.SelectedItem.ToString().Substring(0, PipeD_comboBox.SelectedItem.ToString().Length - 1) + "'");
+                if (value.Length > 0)
+                {
+                    PipeD = Convert.ToDouble(value[0][0]);
+                }
+            }
         }
         private void PipeInsD_textBox_TextChanged(object sender, EventArgs e)
         {
@@ -1339,9 +1357,9 @@ namespace main.contents
                 {
                     dtheta = Convert.ToDouble(v[0][0]) - Convert.ToDouble(v[0][1]);
                 }
-                double Volume = Qw_max_sum *3.6/(4.18 * dtheta); // Liter/min 
+                double Volume = Qw_max_sum * 3.6 / (4.18 * dtheta); // Liter/min 
 
-                PipeD = 25;
+                PipeD = 21.7;
                 PipeInsD = 25;
                 if (Volume > 0)
                 {
@@ -1353,13 +1371,16 @@ namespace main.contents
                             if (Convert.ToDouble(P[a][0]) >= Volume)
                             {
                                 PipeD = Convert.ToDouble(P[a][1]);
+                                
                             }
                         }
                     }
+                    P = Program.DB.querySQL(DB.type.BaseDB_Heating, "Select 호칭경A From 부피별관경 Where 외경='"+ PipeD + "'");
+                    if(P.Length > 0)
+                    {
+                        PipeD_comboBox.SelectedItem = P[0][0] + "A";
+                    }
                 }
-
-                PipeD_textBox.Text = PipeD.ToString();
-                Program.UTIL.textBox_doubleComa(PipeD_textBox, true, 1);
 
                 PipeInsD_textBox.Text = PipeInsD.ToString();
                 Program.UTIL.textBox_doubleComa(PipeInsD_textBox, true, 1);
@@ -1749,7 +1770,7 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Form", "번호,프로젝트유형,축열유무,축열펌프유무,축열펌프,축열용량,축열유형", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + StorageUse + "','" + StoragePumpUse + "','" + StoragePump + "','" + Vs.ToString() + "','" + StorageType + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Form", "번호,프로젝트유형,배관관경,배관보온두께,보온열전도율,배관보온재,노출배관길이", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PipeD.ToString() + "','" + PipeInsD.ToString() + "','" + PipeIns_Ramda.ToString() + "','" + PipeIns + "','" + PipeL.ToString() + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Form", "번호,프로젝트유형,히트펌프번호,히트펌프제어방식,히트펌프대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectHP_nonsplit + "','" + HPControl_nonsplit + "','" + HPNum_nonsplit + "'", "번호");
-         
+
             this.DialogResult = DialogResult.OK;
             this.Hide();
             Program.getMenuForm().DoLoadForm(49, OnLoadListProc);
@@ -1816,7 +1837,7 @@ namespace main.contents
             StoragePump_dataGridView.Columns.Clear();
             StoragePump_dataGridView.Rows.Clear();
 
-            PipeD_textBox.Text = null;
+            PipeD_comboBox.SelectedItem = null;
             PipeInsD_textBox.Text = null;
             PipeIns_Ramda_textBox.Text = null;
             PipeIns_textBox.Text = null;
@@ -2012,8 +2033,11 @@ namespace main.contents
             if (Value.Length > 0)
             {
                 PipeD = Convert.ToDouble(Value[0][0]);
-                PipeD_textBox.Text = PipeD.ToString();
-                Program.UTIL.textBox_doubleComa(PipeD_textBox, true, 1);
+                string[][] p = Program.DB.getValue(DB.type.BaseDB_Heating, "부피별관경", "호칭경A", "외경 = '" + PipeD + "'");
+                if (p.Length > 0)
+                {
+                    PipeD_comboBox.SelectedItem = p[0][0] + "A";
+                }
 
                 PipeInsD = Convert.ToDouble(Value[0][1]);
                 PipeInsD_textBox.Text = PipeInsD.ToString();
@@ -2047,7 +2071,5 @@ namespace main.contents
         }
 
         #endregion
-
-        
     }
 }
