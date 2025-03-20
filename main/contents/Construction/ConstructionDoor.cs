@@ -72,6 +72,18 @@ namespace main.contents
                 }
             }
 
+            string unit = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
+            Ug_unit_label.Text = unit;
+            label84.Text = unit;
+            label86.Text = unit;
+            label83.Text = unit;
+            label9.Text = unit;
+            label23.Text = unit;
+            label15.Text = unit;
+
+            unit = "m" + Program.UTIL.Subscript(2, true);
+            label2.Text = unit;
+            label34.Text = unit;
 
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)

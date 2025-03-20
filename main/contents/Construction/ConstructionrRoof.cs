@@ -521,7 +521,7 @@ namespace main.contents
                             PsiKai_label1.Text = "점형열교 열관류율";
                             PsiKai_label2.Text = "W/K";
                             dU_label3.Text = "1D 열교가산치";
-                            dU_label4.Text = "W/m2·K";
+                            dU_label4.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
 
 
                         }
@@ -532,7 +532,7 @@ namespace main.contents
                             PsiKai_label1.Text = "선형열교 열관류율";
                             PsiKai_label2.Text = "W/mK";
                             dU_label3.Text = "1D 열교가산치";
-                            dU_label4.Text = "W/m2·K";
+                            dU_label4.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
                         }
 
                         Load_TB_Image();
@@ -1333,7 +1333,7 @@ namespace main.contents
                     PsiKai_label1.Text = "점형열교 열관류율";
                     PsiKai_label2.Text = "W/K";
                     dU_label3.Text = "1D 열교가산치";
-                    dU_label4.Text = "W/m2·K";
+                    dU_label4.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 }
                 else if (LinearPoint == "선형")
                 {
@@ -1342,7 +1342,7 @@ namespace main.contents
                     PsiKai_label1.Text = "선형열교 열관류율";
                     PsiKai_label2.Text = "W/mK";
                     dU_label3.Text = "1D 열교가산치";
-                    dU_label4.Text = "W/m2·K";
+                    dU_label4.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 }
                 else { }
 

@@ -17,6 +17,7 @@ using static CustomComboBox;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolBar;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace main.contents
 {
@@ -71,6 +72,11 @@ namespace main.contents
                 }
             }
 
+            string unit = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
+            Uw2_unit_label.Text = unit;
+            label8.Text = unit;
+            Uw3_unit_label.Text = unit;
+            Ug_unit_label.Text = unit;
         }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
@@ -491,7 +497,7 @@ namespace main.contents
 
         private void ImportSize_button_Click(object sender, EventArgs e)
         {
-            if(UwMethod=="법규")
+            if (UwMethod == "법규")
             {
                 Window_ImportSize window_importsize_form = new Window_ImportSize(WinNum, WindowName, 0.14, 0.10, 0.14);
 
@@ -518,7 +524,7 @@ namespace main.contents
                     MessageBox.Show("프레임 종류를 선택 후 입력하세요.");
                 }
             }
-            
+
         }
         private void ImportSize()
         {
@@ -707,6 +713,21 @@ namespace main.contents
                         WindowFrame_pictureBox.Load(Program.gPath + Image[0][0]);
                         WindowFrame_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     }
+
+                    Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호프레임", "이미지", "제품명 = '" + FrameName + "'");
+                    if (Image.Length > 0 && Image[0][0] != "")
+                    {
+                        FrameCert_button.Visible = true;
+                        FrameCert_pictureBox.Visible = true;
+                        FrameCert_pictureBox.Load(Program.gPath + Image[0][0]);
+                        FrameCert_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    }
+                    else
+                    {
+                        FrameCert_button.Visible = false;
+                        FrameCert_pictureBox.Visible = false;
+                    }
+
                 }
             }
 
@@ -730,6 +751,39 @@ namespace main.contents
 
         }
 
+        private void FrameCert_button_Click(object sender, EventArgs e)
+        {
+            // 새로운 Form을 생성하여 팝업창 역할 수행
+            Form popup = new Form();
+            popup.FormBorderStyle = FormBorderStyle.FixedDialog;  // 창 테두리 제거
+            popup.StartPosition = FormStartPosition.CenterScreen; // 화면 중앙 정렬
+            popup.BackColor = Color.Black; // 배경 검정 (이미지 경계 명확하게)
+            popup.TopMost = true; // 항상 위에 표시
+            popup.MaximizeBox = false;
+            popup.MinimizeBox = false;
+
+            // PictureBox 추가
+            PictureBox pb = new PictureBox();
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호프레임", "인증서", "제품명 = '" + FrameName + "'");
+            if (Image.Length > 0)
+            {
+                pb.Load(Program.gPath + Image[0][0]);
+                pb.SizeMode = PictureBoxSizeMode.StretchImage; // 원본 크기대로 표시
+                pb.Dock = DockStyle.Fill; // 전체 화면 채우기
+
+                pb.Size = new Size(480, 700);
+                // 팝업 폼 크기를 이미지 크기에 맞춤
+                popup.ClientSize = new Size(480, 725);
+
+                // 클릭하면 닫히도록 설정
+                pb.Click += (s, ev) => popup.Close();
+
+                // 폼에 PictureBox 추가 후 표시
+                popup.Controls.Add(pb);
+                popup.ShowDialog();
+            }
+
+        }
         private void Glass_button_Click(object sender, EventArgs e)
         {
             if (SingleDoubleType == "이중창")
@@ -793,7 +847,7 @@ namespace main.contents
                     GlassName_textBox.Text = GlassName;
                     GlassName_textBox2.Text = GlassName;
                     LE_CL_V = window_glassDB_form.Select_Glass[5];
-                    Ug = Convert.ToDouble(window_glassDB_form.Select_Glass[6]);                   
+                    Ug = Convert.ToDouble(window_glassDB_form.Select_Glass[6]);
                     g = Convert.ToDouble(window_glassDB_form.Select_Glass[7]);
                     τD65_SNA = Convert.ToDouble(window_glassDB_form.Select_Glass[8]);
 
@@ -865,7 +919,7 @@ namespace main.contents
                         Psi_g_fix = Convert.ToDouble(form.Select_WindowSpacer[6]);
                         Psi_g_open = Convert.ToDouble(form.Select_WindowSpacer[7]);
                     }
-                    Psi_g_fix_textBox.Text =  Psi_g_fix.ToString();
+                    Psi_g_fix_textBox.Text = Psi_g_fix.ToString();
                     Program.UTIL.textBox_doubleComa(Psi_g_fix_textBox, true, 3);
 
                     Psi_g_open_textBox.Text = Psi_g_open.ToString();
@@ -1013,7 +1067,7 @@ namespace main.contents
         }
         private void Calc_Uw2by2()
         {
-            double width = 2; double height = 2; double percent_open = 0.5; double n_hori = 2;double n_ver = 1;
+            double width = 2; double height = 2; double percent_open = 0.5; double n_hori = 2; double n_ver = 1;
             double Af_open = ((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2) * percent_open / 100 * df_open;
             double Af_fix = ((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2) * (1 - percent_open / 100) * df_btw;
             double Af_btw = ((n_hori - 1) * height + (n_ver - 1) * width) * df_btw;
@@ -1023,13 +1077,13 @@ namespace main.contents
             double Lg_fix = ((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2 + ((n_hori - 1) * height + (n_ver - 1) * width)) * (1 - percent_open / 100);
             double Lg_open = ((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2 + ((n_hori - 1) * height + (n_ver - 1) * width)) * (percent_open / 100);
             double Uwcalc;
-            if (UwMethod == "계산" && Ug != 0 && Uf_fix != 0 && Psi_g_fix != 0 )
+            if (UwMethod == "계산" && Ug != 0 && Uf_fix != 0 && Psi_g_fix != 0)
             {
                 Uwcalc = (Ug * (Ag_fix + Ag_open) + (Uf_open * Af_open) + (Uf_fix * Af_fix) + (Uf_btw * Af_btw) + (Psi_g_fix * Lg_fix) + (Psi_g_open * Lg_open)) / Area;
             }
             else { Uwcalc = 0; }
 
-            if(Uwcalc >0)
+            if (Uwcalc > 0)
             {
                 Uw = Uwcalc;
                 Uw2_textBox.Text = Uw.ToString();
@@ -1201,6 +1255,9 @@ namespace main.contents
             WindowType_pictureBox.Visible = false;
             WindowFrame_pictureBox.Visible = false;
             WindowInstall_pictureBox.Visible = false;
+
+            FrameCert_button.Visible = false;
+            FrameCert_pictureBox.Visible = false;
 
             WinNum = null;
             WindowName = null;
@@ -1375,31 +1432,31 @@ namespace main.contents
                     Uw2_textBox.Text = Uw.ToString();
                     Program.UTIL.textBox_doubleComa(Uw2_textBox, true, 3);
 
-                    Uw3_textBox.Text =  Uw.ToString();
+                    Uw3_textBox.Text = Uw.ToString();
                     Program.UTIL.textBox_doubleComa(Uw3_textBox, true, 3);
                 }
                 Uf_open = Convert.ToDouble(Load[0][24]);
-                Uf_open_textBox.Text =  Uf_open.ToString();
+                Uf_open_textBox.Text = Uf_open.ToString();
                 Program.UTIL.textBox_doubleComa(Uf_open_textBox, true, 2);
 
                 Uf_fix = Convert.ToDouble(Load[0][25]);
-                Uf_fix_textBox.Text =  Uf_fix.ToString();
+                Uf_fix_textBox.Text = Uf_fix.ToString();
                 Program.UTIL.textBox_doubleComa(Uf_fix_textBox, true, 2);
 
                 Uf_btw = Convert.ToDouble(Load[0][26]);
-                Uf_btw_textBox.Text =  Uf_btw.ToString();
+                Uf_btw_textBox.Text = Uf_btw.ToString();
                 Program.UTIL.textBox_doubleComa(Uf_btw_textBox, true, 2);
 
                 df_open = Convert.ToDouble(Load[0][27]);
-                df_open_textBox.Text =  df_open.ToString();
+                df_open_textBox.Text = df_open.ToString();
                 Program.UTIL.textBox_doubleComa(df_open_textBox, true, 2);
 
                 df_fix = Convert.ToDouble(Load[0][28]);
-                df_fix_textBox.Text =  df_fix.ToString();
+                df_fix_textBox.Text = df_fix.ToString();
                 Program.UTIL.textBox_doubleComa(df_fix_textBox, true, 2);
 
                 df_btw = Convert.ToDouble(Load[0][29]);
-                df_btw_textBox.Text =  df_btw.ToString();
+                df_btw_textBox.Text = df_btw.ToString();
                 Program.UTIL.textBox_doubleComa(df_btw_textBox, true, 2);
 
                 ImportSize();
@@ -1420,6 +1477,19 @@ namespace main.contents
                     WindowFrame_pictureBox.Load(Program.gPath + Image2[0][0]);
                     WindowFrame_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
+                Image2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호프레임", "이미지", "제품명 = '" + FrameName + "'");
+                if (Image2.Length > 0 && Image2[0][0] != "")
+                {
+                    FrameCert_button.Visible = true;
+                    FrameCert_pictureBox.Visible = true;
+                    FrameCert_pictureBox.Load(Program.gPath + Image2[0][0]);
+                    FrameCert_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+                else
+                {
+                    FrameCert_button.Visible = false;
+                    FrameCert_pictureBox.Visible = false;
+                }
                 string[][] Image3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호설치열교이미지", "이미지열교유형", "구분1 = '" + InstallType + "' AND 구분2 = '" + FrameMaterial + "' AND 구분3 = '" + SingleDoubleType + "' AND 구분4 = '" + InstallName + "'");
                 if (Image3.Length > 0)
                 {
@@ -1434,6 +1504,10 @@ namespace main.contents
             WinNum_textBox.Text = ID;
             WinNum = ID;
         }
-       
+
+        private void FrameCert_pictureBox_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

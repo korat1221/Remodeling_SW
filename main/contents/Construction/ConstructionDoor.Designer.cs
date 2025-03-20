@@ -1315,7 +1315,7 @@ namespace main.contents
             label28.Name = "label28";
             label28.Size = new Size(27, 15);
             label28.TabIndex = 176;
-            label28.Text = "m2";
+            label28.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // DoorArea_textBox
             // 
@@ -1597,7 +1597,7 @@ namespace main.contents
             glassArea_label2.Name = "glassArea_label2";
             glassArea_label2.Size = new Size(27, 15);
             glassArea_label2.TabIndex = 113;
-            glassArea_label2.Text = "m2";
+            glassArea_label2.Text = "m" + Program.UTIL.Subscript(2, true);
             glassArea_label2.Visible = false;
             // 
             // GlassArea_textBox

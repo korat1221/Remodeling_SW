@@ -66,6 +66,7 @@ namespace main.contents
                 CWGlass_pictureBox.Load(Program.gPath + Image[0][0]);
                 CWGlass_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
+           
             string[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호", "");
             if (value.Length > 0)
             {
@@ -87,6 +88,28 @@ namespace main.contents
 
             Door_checkBox.Checked = true;
             Door_checkBox.Checked = false;
+
+            string unit = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
+            Ug_unit_label.Text = unit;
+            UCW_p_label2.Text = unit;
+            UCW_d_label2.Text= unit;
+            label34.Text = unit;
+            label32.Text = unit;
+            label35.Text = unit;
+            label30.Text = unit;
+            label28.Text = unit;
+            label21.Text = unit;
+            label84.Text = unit;
+
+            unit = "m" + Program.UTIL.Subscript(2, true);
+            label65.Text = unit;
+            label59.Text = unit;
+            label58.Text = unit;
+            label57.Text = unit;
+            label14.Text = unit;
+            label10.Text = unit;
+            label72.Text = unit;
+            label68.Text = unit;
 
         }
 
@@ -485,21 +508,39 @@ namespace main.contents
                     Psi_p = Convert.ToDouble(cw_frameDB_form.Select_CWFrame[7]);
                     df_mt = Convert.ToDouble(cw_frameDB_form.Select_CWFrame[8]);
                     df_open = Convert.ToDouble(cw_frameDB_form.Select_CWFrame[9]);
-                    Uf_mt_textBox.Text =  Uf_mt.ToString();
-                    Uf_open_textBox.Text =  Uf_open.ToString();
-                    df_mt_textBox.Text =  df_mt.ToString();
-                    df_open_textBox.Text =  df_open.ToString();
+                    Uf_mt_textBox.Text = Uf_mt.ToString();
+                    Uf_open_textBox.Text = Uf_open.ToString();
+                    df_mt_textBox.Text = df_mt.ToString();
+                    df_open_textBox.Text = df_open.ToString();
                     Program.UTIL.textBox_doubleComa(Uf_mt_textBox, true, 2);
                     Program.UTIL.textBox_doubleComa(Uf_open_textBox, true, 2);
                     Program.UTIL.textBox_doubleComa(df_mt_textBox, true, 2);
                     Program.UTIL.textBox_doubleComa(df_open_textBox, true, 2);
+                    LoadCert_Pic();
                 }
             }
             Calc_Ucw();
             Calc_dUinst();
 
-        }
 
+        }
+        
+        private void LoadCert_Pic()
+        {
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월프레임", "이미지", "제품명 = '" + FrameName + "'");
+            if (Image.Length > 0 && Image[0][0] != "")
+            {
+                FrameCert_button.Visible = true;
+                FrameCert_pictureBox.Visible = true;
+                FrameCert_pictureBox.Load(Program.gPath + Image[0][0]);
+                FrameCert_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+            else
+            {
+                FrameCert_button.Visible = false;
+                FrameCert_pictureBox.Visible = false;
+            }
+        }
         private void FixGlassDB_button_Click(object sender, EventArgs e)
         {
             GlassDB cw_glassDB_form = new GlassDB();
@@ -831,8 +872,8 @@ namespace main.contents
                 check_DoorFrame = cw_doorframeDB_form.Select_DoorFrame[3];
                 Uf_door = Convert.ToDouble(cw_doorframeDB_form.Select_DoorFrame[4]);
                 df_door = Convert.ToDouble(cw_doorframeDB_form.Select_DoorFrame[5]);
-                Uf_door_textBox.Text =  Uf_door.ToString();
-                df_door_textBox.Text =  df_door.ToString();
+                Uf_door_textBox.Text = Uf_door.ToString();
+                df_door_textBox.Text = df_door.ToString();
                 Program.UTIL.textBox_doubleComa(Uf_door_textBox, true, 2);
                 Program.UTIL.textBox_doubleComa(df_door_textBox, true, 2);
             }
@@ -1009,7 +1050,7 @@ namespace main.contents
                         Psi_InstallSide = Convert.ToDouble(window_installDB_form.Select_CWInstall[6]);
                         Psi_InstallButtom = Convert.ToDouble(window_installDB_form.Select_CWInstall[7]);
 
-                        Psi_InstallTop_textBox.Text =  Psi_InstallTop.ToString();
+                        Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString();
                         Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString();
                         Psi_InstallButtom_textBox.Text = Psi_InstallButtom.ToString();
                         Program.UTIL.textBox_doubleComa(Psi_InstallTop_textBox, true, 3);
@@ -1033,13 +1074,13 @@ namespace main.contents
 
         private void ImportSize_button_Click(object sender, EventArgs e)
         {
-            if(df_mt>0&& df_open >0)
+            if (df_mt > 0 && df_open > 0)
             {
                 CW_ImportSize Importsize_form;
 
-                if(Door_checkBox.Checked == true)
+                if (Door_checkBox.Checked == true)
                 {
-                    if(df_door >0)
+                    if (df_door > 0)
                     {
                         Importsize_form = new CW_ImportSize(CWNum, CWName, df_mt, df_open, df_door);
                     }
@@ -1052,7 +1093,7 @@ namespace main.contents
                 }
                 else
                 {
-                    if(UcwMethod=="법규")
+                    if (UcwMethod == "법규")
                     {
                         Importsize_form = new CW_ImportSize(CWNum, CWName, 0.6, 0.8, 0);
                     }
@@ -1069,7 +1110,7 @@ namespace main.contents
                             goto a_;
                         }
                     }
-                 
+
                 }
 
                 DialogResult result = Importsize_form.ShowDialog();
@@ -1092,20 +1133,20 @@ namespace main.contents
                     Lg_d = Convert.ToDouble(Importsize_form.Select[16]);
 
                     Size_textBox.Text = SizeName + " 치수 적용";
-                    Area_textBox.Text = Area.ToString();                   
-                    Width_textBox.Text =  Width.ToString();
-                    Height_textBox.Text =  Height.ToString();
-                    Ag_fix_textBox.Text =  Ag_fix.ToString();
-                    Ag_open_textBox.Text =  Ag_open.ToString();
-                    Lg_fix_textBox.Text =  Lg_fix.ToString();
-                    Lg_open_textBox.Text =  Lg_open.ToString();
-                    Ap_textBox.Text =  Ap.ToString();
-                    Lp_textBox.Text =  Lp.ToString();
-                    Af_mt_textBox.Text =  Af_mt.ToString();
-                    Af_open_textBox.Text =  Af_open.ToString();
-                    Af_d_textBox.Text =  Af_d.ToString();
-                    Ag_d_textBox.Text =  Ag_d.ToString();
-                    Lg_d_textBox.Text =  Lg_d.ToString();
+                    Area_textBox.Text = Area.ToString();
+                    Width_textBox.Text = Width.ToString();
+                    Height_textBox.Text = Height.ToString();
+                    Ag_fix_textBox.Text = Ag_fix.ToString();
+                    Ag_open_textBox.Text = Ag_open.ToString();
+                    Lg_fix_textBox.Text = Lg_fix.ToString();
+                    Lg_open_textBox.Text = Lg_open.ToString();
+                    Ap_textBox.Text = Ap.ToString();
+                    Lp_textBox.Text = Lp.ToString();
+                    Af_mt_textBox.Text = Af_mt.ToString();
+                    Af_open_textBox.Text = Af_open.ToString();
+                    Af_d_textBox.Text = Af_d.ToString();
+                    Ag_d_textBox.Text = Ag_d.ToString();
+                    Lg_d_textBox.Text = Lg_d.ToString();
                     Program.UTIL.textBox_doubleComa(Area_textBox, true, 2);
                     Program.UTIL.textBox_doubleComa(Area_textBox2, true, 2);
                     Program.UTIL.textBox_doubleComa(Width_textBox, true, 2);
@@ -1288,7 +1329,7 @@ namespace main.contents
                 if (dUinst.Equals(double.NaN) == false)
                 {
                     dUinst_textBox.Text = dUinst.ToString("0.000");
-                   // Program.UTIL.textBox_doubleComa(dUinst_textBox, true, 3);
+                    // Program.UTIL.textBox_doubleComa(dUinst_textBox, true, 3);
                 }
             }
 
@@ -1593,6 +1634,8 @@ namespace main.contents
             Area = 0; Width = 0; Height = 0; Ag_fix = 0; Ag_open = 0; Lg_fix = 0; Lg_open = 0; Ap = 0; Lp = 0; Af_mt = 0; Af_open = 0; Af_d = 0; Ag_d = 0; Lg_d = 0;
             Old = null; f_shgc = null; f_τ = null;
             Panel_check = false; Door_check = false;
+            FrameCert_button.Visible = false;
+            FrameCert_pictureBox.Visible = false;
         }
 
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
@@ -1641,6 +1684,8 @@ namespace main.contents
                 FrameName_textBox.Text = FrameName;
                 FrameName2_textBox.Text = FrameName;
 
+                LoadCert_Pic();
+
                 FixGlassName = Load[0][8];
                 FixGlassName_textBox.Text = FixGlassName;
                 FixGlassName2_textBox.Text = FixGlassName;
@@ -1662,25 +1707,25 @@ namespace main.contents
                 check_LE_CL_V = Load[0][13];
 
                 Ug_Fix = Convert.ToDouble(Load[0][14]);
-                Ug_Fix_textBox.Text =  Ug_Fix.ToString();
+                Ug_Fix_textBox.Text = Ug_Fix.ToString();
                 Ug_Open = Convert.ToDouble(Load[0][15]);
-                Ug_Open_textBox.Text =  Ug_Open.ToString();
+                Ug_Open_textBox.Text = Ug_Open.ToString();
                 g = Convert.ToDouble(Load[0][16]);
-                g_textBox.Text =  g.ToString();
+                g_textBox.Text = g.ToString();
                 τ = Convert.ToDouble(Load[0][17]);
                 τg_textBox.Text = τ.ToString();
                 Psi_g_fix = Convert.ToDouble(Load[0][18]);
-                Psi_g_fix_textBox.Text =  Psi_g_fix.ToString();
+                Psi_g_fix_textBox.Text = Psi_g_fix.ToString();
                 Psi_g_open = Convert.ToDouble(Load[0][19]);
                 Psi_g_open_textBox.Text = Psi_g_open.ToString();
                 Uf_mt = Convert.ToDouble(Load[0][20]);
-                Uf_mt_textBox.Text =  Uf_mt.ToString();
+                Uf_mt_textBox.Text = Uf_mt.ToString();
                 Uf_open = Convert.ToDouble(Load[0][21]);
                 Uf_open_textBox.Text = Uf_open.ToString();
                 df_mt = Convert.ToDouble(Load[0][22]);
                 df_mt_textBox.Text = df_mt.ToString();
                 df_open = Convert.ToDouble(Load[0][23]);
-                df_open_textBox.Text =df_open.ToString();
+                df_open_textBox.Text = df_open.ToString();
                 Program.UTIL.textBox_doubleComa(Ug_Fix_textBox, true, 3);
                 Program.UTIL.textBox_doubleComa(Ug_Open_textBox, true, 3);
                 Program.UTIL.textBox_doubleComa(g_textBox, true, 3);
@@ -1693,7 +1738,7 @@ namespace main.contents
                 Program.UTIL.textBox_doubleComa(df_open_textBox, true, 3);
 
                 Psi_InstallTop = Convert.ToDouble(Load[0][24]);
-                Psi_InstallTop_textBox.Text =  Psi_InstallTop.ToString();
+                Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString();
                 Psi_InstallSide = Convert.ToDouble(Load[0][25]);
                 Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString();
                 Psi_InstallButtom = Convert.ToDouble(Load[0][26]);
@@ -1714,23 +1759,23 @@ namespace main.contents
                 Af_open = Convert.ToDouble(Load[0][36]);
 
                 Size_textBox.Text = SizeName + " 치수 적용";
-                Area_textBox.Text =  Area.ToString();
-                Area_textBox2.Text =  Area.ToString();
-                Width_textBox.Text =  Width.ToString();
-                Height_textBox.Text =  Height.ToString();
-                Ag_fix_textBox.Text =  Ag_fix.ToString();
-                Ag_open_textBox.Text =  Ag_open.ToString();
-                Lg_fix_textBox.Text =  Lg_fix.ToString();
-                Lg_open_textBox.Text =  Lg_open.ToString();
-                Af_mt_textBox.Text =  Af_mt.ToString();
-                Af_open_textBox.Text =  Af_open.ToString();
+                Area_textBox.Text = Area.ToString();
+                Area_textBox2.Text = Area.ToString();
+                Width_textBox.Text = Width.ToString();
+                Height_textBox.Text = Height.ToString();
+                Ag_fix_textBox.Text = Ag_fix.ToString();
+                Ag_open_textBox.Text = Ag_open.ToString();
+                Lg_fix_textBox.Text = Lg_fix.ToString();
+                Lg_open_textBox.Text = Lg_open.ToString();
+                Af_mt_textBox.Text = Af_mt.ToString();
+                Af_open_textBox.Text = Af_open.ToString();
 
                 d_InstallTop_textBox.Text = Width.ToString();
                 d_InstallButtom_textBox.Text = Width.ToString();
                 d_InstallSide_textBox.Text = (Height * 2).ToString();
 
                 Program.UTIL.textBox_doubleComa(Area_textBox, true, 2);
-                Program.UTIL.textBox_doubleComa(Area_textBox2, true, 2);              
+                Program.UTIL.textBox_doubleComa(Area_textBox2, true, 2);
                 Program.UTIL.textBox_doubleComa(Width_textBox, true, 2);
                 Program.UTIL.textBox_doubleComa(Height_textBox, true, 2);
                 Program.UTIL.textBox_doubleComa(Ag_fix_textBox, true, 2);
@@ -1746,7 +1791,7 @@ namespace main.contents
 
                 Ucw = Convert.ToDouble(Load[0][37]);
                 Ucw_g = Convert.ToDouble(Load[0][38]);
-                UCW_g_textBox.Text =  Ucw_g.ToString();
+                UCW_g_textBox.Text = Ucw_g.ToString();
                 Program.UTIL.textBox_doubleComa(UCW_g_textBox, true, 3);
 
                 dUinst = Convert.ToDouble(Load[0][39]);
@@ -1795,14 +1840,14 @@ namespace main.contents
 
                     Ap = Convert.ToDouble(Load[0][9]);
                     Lp = Convert.ToDouble(Load[0][10]);
-                    Ap_textBox.Text =  Ap.ToString();
-                    Lp_textBox.Text =  Lp.ToString();
+                    Ap_textBox.Text = Ap.ToString();
+                    Lp_textBox.Text = Lp.ToString();
                     Program.UTIL.textBox_doubleComa(Ap_textBox, true, 2);
                     Program.UTIL.textBox_doubleComa(Lp_textBox, true, 2);
 
 
                     Ucw_p = Convert.ToDouble(Load[0][11]);
-                    UCW_p_textBox.Text =  Ucw_p.ToString();
+                    UCW_p_textBox.Text = Ucw_p.ToString();
                     Program.UTIL.textBox_doubleComa(UCW_p_textBox, true, 3);
                     Ucw_p_inst = Convert.ToDouble(Load[0][12]);
                 }
@@ -1836,7 +1881,7 @@ namespace main.contents
                     Program.UTIL.textBox_doubleComa(Ug_Door_textBox, true, 3);
 
                     gd = Convert.ToDouble(Load[0][6]);
-                    gd_textBox.Text =  gd.ToString();
+                    gd_textBox.Text = gd.ToString();
                     Program.UTIL.textBox_doubleComa(gd_textBox, true, 3);
 
                     τd = Convert.ToDouble(Load[0][7]);
@@ -1858,9 +1903,9 @@ namespace main.contents
                     Af_d = Convert.ToDouble(Load[0][11]);
                     Ag_d = Convert.ToDouble(Load[0][12]);
                     Lg_d = Convert.ToDouble(Load[0][13]);
-                    Af_d_textBox.Text =  Af_d.ToString();
-                    Ag_d_textBox.Text =  Ag_d.ToString();
-                    Lg_d_textBox.Text =  Lg_d.ToString();
+                    Af_d_textBox.Text = Af_d.ToString();
+                    Ag_d_textBox.Text = Ag_d.ToString();
+                    Lg_d_textBox.Text = Lg_d.ToString();
                     Program.UTIL.textBox_doubleComa(Af_d_textBox, true, 2);
                     Program.UTIL.textBox_doubleComa(Ag_d_textBox, true, 2);
                     Program.UTIL.textBox_doubleComa(Lg_d_textBox, true, 2);
@@ -1898,5 +1943,38 @@ namespace main.contents
             CWNum = ID;
         }
 
+        private void FrameCert_button_Click(object sender, EventArgs e)
+        {
+            // 새로운 Form을 생성하여 팝업창 역할 수행
+            Form popup = new Form();
+            popup.FormBorderStyle = FormBorderStyle.FixedDialog;  // 창 테두리 제거
+            popup.StartPosition = FormStartPosition.CenterScreen; // 화면 중앙 정렬
+            popup.BackColor = Color.Black; // 배경 검정 (이미지 경계 명확하게)
+            popup.TopMost = true; // 항상 위에 표시
+            popup.MaximizeBox = false;
+            popup.MinimizeBox = false;
+
+            // PictureBox 추가
+            PictureBox pb = new PictureBox();
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월프레임", "인증서", "제품명 = '" + FrameName + "'");
+            if (Image.Length > 0)
+            {
+                pb.Load(Program.gPath + Image[0][0]);
+                pb.SizeMode = PictureBoxSizeMode.StretchImage; // 원본 크기대로 표시
+                pb.Dock = DockStyle.Fill; // 전체 화면 채우기
+
+                pb.Size = new Size(480, 700);
+                // 팝업 폼 크기를 이미지 크기에 맞춤
+                popup.ClientSize = new Size(480, 725);
+
+                // 클릭하면 닫히도록 설정
+                pb.Click += (s, ev) => popup.Close();
+
+                // 폼에 PictureBox 추가 후 표시
+                popup.Controls.Add(pb);
+                popup.ShowDialog();
+            }
+
+        }
     }
 }
