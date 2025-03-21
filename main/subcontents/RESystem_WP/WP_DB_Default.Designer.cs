@@ -83,23 +83,23 @@ namespace main.subcontents.RESystem_WP
             GeneralPanel.Controls.Add(panel1);
             GeneralPanel.Location = new Point(0, -2);
             GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(909, 636);
+            GeneralPanel.Size = new Size(1314, 267);
             GeneralPanel.TabIndex = 18;
             // 
             // pictureBox8
             // 
-            pictureBox8.Location = new Point(451, 402);
+            pictureBox8.Location = new Point(986, 71);
             pictureBox8.Name = "pictureBox8";
-            pictureBox8.Size = new Size(299, 175);
+            pictureBox8.Size = new Size(299, 167);
             pictureBox8.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox8.TabIndex = 35;
             pictureBox8.TabStop = false;
             // 
             // pictureBox7
             // 
-            pictureBox7.Location = new Point(112, 373);
+            pictureBox7.Location = new Point(713, 71);
             pictureBox7.Name = "pictureBox7";
-            pictureBox7.Size = new Size(250, 204);
+            pictureBox7.Size = new Size(250, 167);
             pictureBox7.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox7.TabIndex = 34;
             pictureBox7.TabStop = false;
@@ -107,7 +107,7 @@ namespace main.subcontents.RESystem_WP
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(441, 298);
+            label3.Location = new Point(986, 8);
             label3.Name = "label3";
             label3.Size = new Size(324, 60);
             label3.TabIndex = 33;
@@ -116,7 +116,7 @@ namespace main.subcontents.RESystem_WP
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(97, 298);
+            label2.Location = new Point(700, 8);
             label2.Name = "label2";
             label2.Size = new Size(280, 60);
             label2.TabIndex = 32;
@@ -124,7 +124,7 @@ namespace main.subcontents.RESystem_WP
             // 
             // pictureBox6
             // 
-            pictureBox6.Location = new Point(682, 92);
+            pictureBox6.Location = new Point(582, 71);
             pictureBox6.Name = "pictureBox6";
             pictureBox6.Size = new Size(100, 167);
             pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -133,7 +133,7 @@ namespace main.subcontents.RESystem_WP
             // 
             // pictureBox5
             // 
-            pictureBox5.Location = new Point(107, 92);
+            pictureBox5.Location = new Point(7, 71);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(192, 167);
             pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -142,7 +142,7 @@ namespace main.subcontents.RESystem_WP
             // 
             // pictureBox4
             // 
-            pictureBox4.Location = new Point(558, 92);
+            pictureBox4.Location = new Point(458, 71);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(100, 167);
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -151,7 +151,7 @@ namespace main.subcontents.RESystem_WP
             // 
             // pictureBox3
             // 
-            pictureBox3.Location = new Point(430, 92);
+            pictureBox3.Location = new Point(330, 71);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(100, 167);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -160,7 +160,7 @@ namespace main.subcontents.RESystem_WP
             // 
             // pictureBox2
             // 
-            pictureBox2.Location = new Point(312, 92);
+            pictureBox2.Location = new Point(212, 71);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(100, 167);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -171,7 +171,7 @@ namespace main.subcontents.RESystem_WP
             // 
             textBox6.BackColor = Color.GhostWhite;
             textBox6.BorderStyle = BorderStyle.FixedSingle;
-            textBox6.Location = new Point(668, 54);
+            textBox6.Location = new Point(568, 33);
             textBox6.Name = "textBox6";
             textBox6.Size = new Size(125, 23);
             textBox6.TabIndex = 25;
@@ -182,7 +182,7 @@ namespace main.subcontents.RESystem_WP
             // 
             textBox5.BackColor = Color.GhostWhite;
             textBox5.BorderStyle = BorderStyle.FixedSingle;
-            textBox5.Location = new Point(544, 54);
+            textBox5.Location = new Point(444, 33);
             textBox5.Name = "textBox5";
             textBox5.Size = new Size(125, 23);
             textBox5.TabIndex = 24;
@@ -193,7 +193,7 @@ namespace main.subcontents.RESystem_WP
             // 
             textBox4.BackColor = Color.GhostWhite;
             textBox4.BorderStyle = BorderStyle.FixedSingle;
-            textBox4.Location = new Point(420, 54);
+            textBox4.Location = new Point(320, 33);
             textBox4.Name = "textBox4";
             textBox4.Size = new Size(125, 23);
             textBox4.TabIndex = 23;
@@ -204,7 +204,7 @@ namespace main.subcontents.RESystem_WP
             // 
             textBox3.BackColor = Color.GhostWhite;
             textBox3.BorderStyle = BorderStyle.FixedSingle;
-            textBox3.Location = new Point(296, 54);
+            textBox3.Location = new Point(196, 33);
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(125, 23);
             textBox3.TabIndex = 22;
@@ -215,7 +215,7 @@ namespace main.subcontents.RESystem_WP
             // 
             textBox2.BackColor = Color.GhostWhite;
             textBox2.BorderStyle = BorderStyle.FixedSingle;
-            textBox2.Location = new Point(296, 33);
+            textBox2.Location = new Point(196, 12);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(497, 23);
             textBox2.TabIndex = 21;
@@ -226,7 +226,7 @@ namespace main.subcontents.RESystem_WP
             // 
             textBox1.BackColor = Color.GhostWhite;
             textBox1.BorderStyle = BorderStyle.FixedSingle;
-            textBox1.Location = new Point(106, 33);
+            textBox1.Location = new Point(6, 12);
             textBox1.Multiline = true;
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(191, 43);
@@ -237,7 +237,7 @@ namespace main.subcontents.RESystem_WP
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
-            panel1.Location = new Point(106, 33);
+            panel1.Location = new Point(6, 12);
             panel1.Name = "panel1";
             panel1.Size = new Size(687, 237);
             panel1.TabIndex = 36;
@@ -246,7 +246,7 @@ namespace main.subcontents.RESystem_WP
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(763, 794);
+            Save_button.Location = new Point(1150, 419);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 20;
@@ -267,18 +267,18 @@ namespace main.subcontents.RESystem_WP
             WP_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             WP_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             WP_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            WP_dataGridView.Location = new Point(0, 599);
+            WP_dataGridView.Location = new Point(0, 262);
             WP_dataGridView.Name = "WP_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -287,12 +287,12 @@ namespace main.subcontents.RESystem_WP
             WP_dataGridView.RowHeadersVisible = false;
             WP_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             WP_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            WP_dataGridView.Size = new Size(909, 151);
+            WP_dataGridView.Size = new Size(1314, 151);
             WP_dataGridView.TabIndex = 21;
             WP_dataGridView.CellContentClick += WP_dataGridView_CellContentClick;
             // 
@@ -301,7 +301,7 @@ namespace main.subcontents.RESystem_WP
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(910, 831);
+            ClientSize = new Size(1313, 467);
             Controls.Add(WP_dataGridView);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);

@@ -49,16 +49,16 @@ namespace main.subcontents.HeatingSystem
             GeneralPanel.Controls.Add(Icon_pictureBox);
             GeneralPanel.Location = new Point(0, -2);
             GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(800, 74);
+            GeneralPanel.Size = new Size(940, 74);
             GeneralPanel.TabIndex = 18;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label4.Location = new Point(68, 32);
             label4.Name = "label4";
-            label4.Size = new Size(71, 15);
+            label4.Size = new Size(70, 15);
             label4.TabIndex = 103;
             label4.Text = "난방 보일러";
             // 
@@ -95,7 +95,7 @@ namespace main.subcontents.HeatingSystem
             Boiler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -106,7 +106,7 @@ namespace main.subcontents.HeatingSystem
             Boiler_dataGridView.Name = "Boiler_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -115,13 +115,12 @@ namespace main.subcontents.HeatingSystem
             Boiler_dataGridView.RowHeadersVisible = false;
             Boiler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             Boiler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            Boiler_dataGridView.RowTemplate.Height = 25;
-            Boiler_dataGridView.Size = new Size(800, 358);
+            Boiler_dataGridView.Size = new Size(940, 358);
             Boiler_dataGridView.TabIndex = 19;
             // 
             // Heating_Boiler
@@ -129,7 +128,7 @@ namespace main.subcontents.HeatingSystem
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(797, 479);
+            ClientSize = new Size(937, 479);
             Controls.Add(Boiler_dataGridView);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);

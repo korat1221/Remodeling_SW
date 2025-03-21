@@ -65,7 +65,8 @@ namespace main.subcontents.RESystem_WP
             WP_dataGridView.Columns.Add("A13", "전력계수.시동풍속.[-]");
             WP_dataGridView.Columns.Add("A14", "전력계수.최적풍속.[-]");
             WP_dataGridView.Columns.Add("A15", "전력계수.종단풍속.[-]");
-
+            WP_dataGridView.Columns[0].Width = 40;
+            WP_dataGridView.Columns[4].Visible = false;
 
 
             string[][] WP = Program.DB.getValue(DB.type.BaseDB_RESystem, "풍력DB", "번호,DB유형,제품명,제조사,타입,세부타입,정격출력,회전면적,허브높이,시동풍속,최적풍속,종단풍속,시동풍속전력계수,최적풍속전력계수,종단풍속전력계수", "");

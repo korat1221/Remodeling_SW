@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            info = new Button();
             label7 = new Label();
             TB_Type_comboBox = new ComboBox();
             StructureType_textBox = new TextBox();
@@ -57,7 +58,8 @@
             panel2 = new Panel();
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
-            info = new Button();
+            Delete_button = new Button();
+            Add_button = new Button();
             GeneralPanel.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TB_dataGridView).BeginInit();
@@ -80,6 +82,21 @@
             GeneralPanel.Name = "GeneralPanel";
             GeneralPanel.Size = new Size(800, 47);
             GeneralPanel.TabIndex = 18;
+            // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(769, 10);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 152;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
             // 
             // label7
             // 
@@ -165,6 +182,8 @@
             // 
             panel1.BackColor = SystemColors.GradientInactiveCaption;
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(Delete_button);
+            panel1.Controls.Add(Add_button);
             panel1.Controls.Add(TBName_textBox);
             panel1.Controls.Add(dU_textBox);
             panel1.Controls.Add(Ueff_label2);
@@ -341,33 +360,33 @@
             TB_dataGridView.BorderStyle = BorderStyle.None;
             TB_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             TB_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            TB_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            TB_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             TB_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             TB_dataGridView.Location = new Point(0, 295);
             TB_dataGridView.Name = "TB_dataGridView";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            TB_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            TB_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             TB_dataGridView.RowHeadersVisible = false;
             TB_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle3.ForeColor = Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            TB_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle6.ForeColor = Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
+            TB_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
             TB_dataGridView.Size = new Size(800, 134);
             TB_dataGridView.TabIndex = 19;
             TB_dataGridView.CellContentClick += TB_dataGridView_CellContentClick;
@@ -407,20 +426,35 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
-            // info
+            // Delete_button
             // 
-            info.BackColor = SystemColors.ControlLight;
-            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            info.FlatStyle = FlatStyle.System;
-            info.Font = new Font("나눔바른고딕", 9.75F);
-            info.Location = new Point(769, 10);
-            info.Margin = new Padding(0);
-            info.Name = "info";
-            info.Size = new Size(23, 23);
-            info.TabIndex = 152;
-            info.Text = "?";
-            info.UseVisualStyleBackColor = false;
-            info.Click += info_Click;
+            Delete_button.BackColor = SystemColors.ControlLight;
+            Delete_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            Delete_button.FlatStyle = FlatStyle.System;
+            Delete_button.Font = new Font("나눔바른고딕", 9.75F);
+            Delete_button.Location = new Point(764, 4);
+            Delete_button.Margin = new Padding(0);
+            Delete_button.Name = "Delete_button";
+            Delete_button.Size = new Size(23, 23);
+            Delete_button.TabIndex = 157;
+            Delete_button.Text = "-";
+            Delete_button.UseVisualStyleBackColor = false;
+            Delete_button.Click += Delete_button_Click;
+            // 
+            // Add_button
+            // 
+            Add_button.BackColor = SystemColors.ControlLight;
+            Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            Add_button.FlatStyle = FlatStyle.System;
+            Add_button.Font = new Font("나눔바른고딕", 9.75F);
+            Add_button.Location = new Point(738, 4);
+            Add_button.Margin = new Padding(0);
+            Add_button.Name = "Add_button";
+            Add_button.Size = new Size(23, 23);
+            Add_button.TabIndex = 156;
+            Add_button.Text = "+";
+            Add_button.UseVisualStyleBackColor = false;
+            Add_button.Click += Add_button_Click;
             // 
             // Roof_TB
             // 
@@ -479,5 +513,7 @@
         private TextBox PerArea_label1;
         private TextBox TBName_textBox;
         private Button info;
+        private Button Delete_button;
+        private Button Add_button;
     }
 }

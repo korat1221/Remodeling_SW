@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            label1 = new Label();
+            HC_comboBox = new CustomComboBox();
             label4 = new Label();
             Icon_pictureBox = new PictureBox();
             Carrier_label = new Label();
             Carrier_comboBox = new CustomComboBox();
             Save_button = new Button();
             HP_dataGridView = new DataGridView();
-            label1 = new Label();
-            HC_comboBox = new CustomComboBox();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)HP_dataGridView).BeginInit();
@@ -56,16 +56,37 @@
             GeneralPanel.Controls.Add(Carrier_comboBox);
             GeneralPanel.Location = new Point(0, -2);
             GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(800, 74);
+            GeneralPanel.Size = new Size(916, 74);
             GeneralPanel.TabIndex = 18;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("나눔바른고딕", 9.75F);
+            label1.Location = new Point(553, 45);
+            label1.Name = "label1";
+            label1.Size = new Size(61, 15);
+            label1.TabIndex = 158;
+            label1.Text = "난방/냉방";
+            // 
+            // HC_comboBox
+            // 
+            HC_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            HC_comboBox.Font = new Font("나눔바른고딕", 9.75F);
+            HC_comboBox.FormattingEnabled = true;
+            HC_comboBox.Location = new Point(621, 41);
+            HC_comboBox.Name = "HC_comboBox";
+            HC_comboBox.Size = new Size(120, 23);
+            HC_comboBox.TabIndex = 157;
+            HC_comboBox.SelectedIndexChanged += HC_comboBox_SelectedIndexChanged;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label4.Location = new Point(68, 32);
             label4.Name = "label4";
-            label4.Size = new Size(83, 15);
+            label4.Size = new Size(82, 15);
             label4.TabIndex = 103;
             label4.Text = "외기 히트펌프";
             // 
@@ -80,8 +101,8 @@
             // Carrier_label
             // 
             Carrier_label.AutoSize = true;
-            Carrier_label.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            Carrier_label.Location = new Point(423, 45);
+            Carrier_label.Font = new Font("나눔바른고딕", 9.75F);
+            Carrier_label.Location = new Point(747, 45);
             Carrier_label.Name = "Carrier_label";
             Carrier_label.Size = new Size(31, 15);
             Carrier_label.TabIndex = 156;
@@ -90,9 +111,9 @@
             // Carrier_comboBox
             // 
             Carrier_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Carrier_comboBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            Carrier_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             Carrier_comboBox.FormattingEnabled = true;
-            Carrier_comboBox.Location = new Point(460, 41);
+            Carrier_comboBox.Location = new Point(784, 41);
             Carrier_comboBox.Name = "Carrier_comboBox";
             Carrier_comboBox.Size = new Size(120, 23);
             Carrier_comboBox.TabIndex = 155;
@@ -102,7 +123,7 @@
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(365, 442);
+            Save_button.Location = new Point(769, 438);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 20;
@@ -121,64 +142,42 @@
             HP_dataGridView.BorderStyle = BorderStyle.None;
             HP_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             HP_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            HP_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            HP_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             HP_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             HP_dataGridView.Location = new Point(0, 68);
             HP_dataGridView.Name = "HP_dataGridView";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            HP_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            HP_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             HP_dataGridView.RowHeadersVisible = false;
             HP_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle6.ForeColor = Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
-            HP_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
-            HP_dataGridView.RowTemplate.Height = 25;
-            HP_dataGridView.Size = new Size(593, 364);
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            HP_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            HP_dataGridView.Size = new Size(916, 364);
             HP_dataGridView.TabIndex = 19;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(229, 45);
-            label1.Name = "label1";
-            label1.Size = new Size(60, 15);
-            label1.TabIndex = 158;
-            label1.Text = "난방/냉방";
-            // 
-            // customComboBox1
-            // 
-            HC_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            HC_comboBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            HC_comboBox.FormattingEnabled = true;
-            HC_comboBox.Location = new Point(297, 41);
-            HC_comboBox.Name = "customComboBox1";
-            HC_comboBox.Size = new Size(120, 23);
-            HC_comboBox.TabIndex = 157;
-            HC_comboBox.SelectedIndexChanged += HC_comboBox_SelectedIndexChanged;
             // 
             // AirHP_DB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.Control;
-            ClientSize = new Size(592, 479);
+            ClientSize = new Size(916, 479);
             Controls.Add(HP_dataGridView);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);

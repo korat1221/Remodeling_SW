@@ -50,13 +50,13 @@
             GeneralPanel.Controls.Add(label1);
             GeneralPanel.Location = new Point(0, -2);
             GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(1104, 98);
+            GeneralPanel.Size = new Size(1269, 98);
             GeneralPanel.TabIndex = 18;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(690, 11);
+            label2.Location = new Point(810, 11);
             label2.Name = "label2";
             label2.Size = new Size(219, 75);
             label2.TabIndex = 2;
@@ -64,7 +64,7 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(470, 19);
+            pictureBox1.Location = new Point(590, 19);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(201, 59);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -74,7 +74,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 26);
+            label1.Location = new Point(94, 33);
             label1.Name = "label1";
             label1.Size = new Size(419, 45);
             label1.TabIndex = 0;
@@ -84,7 +84,7 @@
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(958, 256);
+            Save_button.Location = new Point(1112, 218);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 20;
@@ -105,18 +105,18 @@
             Door_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             Door_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Door_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Door_dataGridView.Location = new Point(12, 144);
+            Door_dataGridView.Location = new Point(12, 87);
             Door_dataGridView.Name = "Door_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -125,13 +125,12 @@
             Door_dataGridView.RowHeadersVisible = false;
             Door_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             Door_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            Door_dataGridView.RowTemplate.Height = 25;
-            Door_dataGridView.Size = new Size(1081, 106);
+            Door_dataGridView.Size = new Size(1257, 110);
             Door_dataGridView.TabIndex = 112;
             Door_dataGridView.CellContentClick += Door_dataGridView_CellContentClick;
             Door_dataGridView.CellValueChanged += Door_dataGridView_CellValueChanged;
@@ -141,7 +140,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1105, 291);
+            ClientSize = new Size(1268, 255);
             Controls.Add(Door_dataGridView);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);

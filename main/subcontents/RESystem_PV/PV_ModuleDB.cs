@@ -100,7 +100,9 @@ namespace main.subcontents.RESystem_PV
 
                 PVModule_dataGridView.Columns[3].Width = 140;
                 PVModule_dataGridView.Columns[5].Width = 110;
-
+                PVModule_dataGridView.Columns[6].Visible = false;
+                PVModule_dataGridView.Columns[7].Visible = false;
+                PVModule_dataGridView.Columns[8].Visible = false;
             }
             else if(DefaultUse == "장비일람표 DB")
             {
