@@ -610,17 +610,22 @@ namespace main
             }
             else if (selID != selID_old)
             {
+                if (selID == "{\"formID\": 43\"ID\":\"0\"}" )
+                {
+                    
+                    if (formParam.formID == 53 || formParam.formID == 54 || formParam.formID == 55 || formParam.formID == 69 || formParam.formID == 24 || formParam.formID == 25)
+                    {
+                        Program.UTIL.setObjInfo(ProjectList.CurProjID);
+
+                        DoLoadForm(formParam.formID, OnLoadProc);
+                        return;
+                    }
+                }
                 if (Deserialize(selID))
                 {
                     if (formParam.formID == 8)
                     {
                         Program.UTIL.setObjInfo(ProjectList.CurProjID);
-                        DoLoadForm(8, OnLoadProc);
-                    }
-                    else if (formParam.formID == 8)
-                    {
-                        Program.UTIL.setObjInfo(ProjectList.CurProjID);
-
                         DoLoadForm(8, OnLoadProc);
                     }
                     else if (formParam.formID >= 0 && formParam.formID < 100)

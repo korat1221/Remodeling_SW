@@ -81,7 +81,7 @@ namespace main
 
         public static bool OnLoadProc1(Form form)
         {
-            General f = (General)form;
+           Intro f = (Intro)form;
 
             f.LoadData("");
 
