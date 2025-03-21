@@ -90,6 +90,8 @@ namespace main
             Element_Chielr,
             Element_RESystem,
             Report_Gas,
+            List_SolarTherm,
+            SolarTherm,
             None
 
         }
@@ -113,7 +115,7 @@ namespace main
             new List_AHUSystem(),
             new List_Alt(), new AltMain(),
             new Element_Structure(),new Element_Win(),new Element_Lighting(),new Element_ElecHP(),new Element_GasHP(),new Element_Boiler(),new Element_Chiler(),new Element_RESystem(),
-            new Report_Gas()
+            new Report_Gas(), new List_SolarTherm(),new SolarTherm()
         }; 
         bool scriptable = false;
         public class FormParam
@@ -229,7 +231,7 @@ namespace main
             }
             else if (formParam.formID == 10)
             {
-               ConstructionBlind f = (ConstructionBlind)form;
+                ConstructionBlind f = (ConstructionBlind)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -373,7 +375,7 @@ namespace main
             }
             else if (formParam.formID == 40)
             {
-               Intro f = (Intro)form;
+                Intro f = (Intro)form;
 
                 f.LoadData(formParam.ID);
             }
@@ -478,7 +480,7 @@ namespace main
                 List_AHUSystem f = (List_AHUSystem)form;
 
                 f.LoadData(formParam.ID);
-            }           
+            }
             else if (formParam.formID == 58)
             {
                 List_Alt f = (List_Alt)form;
@@ -544,6 +546,10 @@ namespace main
                 Report_Gas f = (Report_Gas)form;
 
                 f.LoadData(formParam.ID);
+            }
+            else if(formParam.formID == 69)
+            {
+
             }
             return true;
         }
@@ -1037,6 +1043,8 @@ namespace main
                     forms[66] = new Element_Chiler();
                     forms[67] = new Element_RESystem();
                     forms[68] = new Report_Gas();
+                    forms[69] = new List_SolarTherm ();
+                    forms[70] = new SolarTherm();
 
                     i = -1;
                     while (++i < forms.Length)
@@ -1274,6 +1282,21 @@ namespace main
                     {
                         openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
                         forms[idx] = new AltMain();
+                        forms[idx].TopLevel = false;
+                        openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
+                        return;
+                    }
+                }
+            }
+
+            else if (idx == 70)
+            {
+                foreach (FormMain openForm in Application.OpenForms)
+                {
+                    if (openForm.Name == "FormMain")
+                    {
+                        openForm.splitContainer1.Panel2.Controls.Remove(forms[idx]);
+                        forms[idx] = new SolarTherm();
                         forms[idx].TopLevel = false;
                         openForm.splitContainer1.Panel2.Controls.Add(forms[idx]);
                         return;
