@@ -92,7 +92,7 @@ namespace main.subcontents
             Door_dataGridView.Columns.Add("A14", "문짝치수.가로.[mm]");
             Door_dataGridView.Columns.Add("A15", "문짝치수.세로.[mm]");
             Door_dataGridView.Columns.Add("A16", "문열관류율.[W/m"+Program.UTIL.Subscript(2, true)+"∙K]");
-            Door_dataGridView.Columns[0].Width = 20;
+            Door_dataGridView.Columns[0].Width = 40;
             Door_dataGridView.Columns[1].Width = 50;
             Door_dataGridView.Columns[2].Width = 60;
             Door_dataGridView.Columns[3].Width = 25;
@@ -108,7 +108,7 @@ namespace main.subcontents
             Door_dataGridView.Columns[13].Width = 60;
             Door_dataGridView.Columns[14].Width = 60;
             Door_dataGridView.Columns[15].Width = 60;
-            Door_dataGridView.Columns[16].Width = 60;
+            Door_dataGridView.Columns[16].Width = 80;
 
             DataGridViewComboBoxCell 유형Combo = new DataGridViewComboBoxCell();
             유형Combo.Items.Add("도면");

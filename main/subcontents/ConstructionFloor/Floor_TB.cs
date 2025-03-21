@@ -90,6 +90,20 @@ namespace main.subcontents.ConstructionFloor
             TB_dataGridView.Columns[3].Width = 130;
             TB_dataGridView.Columns[9].Width = 130;
 
+            string[][] User_TB = Program.DB.getValue(DB.type.ProjDB, "User_1DTB", "번호,DB유형,제품명,제조사,구조유형,열교유형,수직간격,수평간격,열교열관류율", "구조체='최하층바닥' and  구조유형 = '" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
+            if (User_TB.Length > 0)
+            {
+                for (int n = 0; n < User_TB.Length; n++)
+                {
+                    TB_dataGridView.Rows.Add();
+                    int nRow = TB_dataGridView.Rows.Count - 1;
+                    for (int k = 0; k < 9; k++)
+                    {
+                        TB_dataGridView.Rows[nRow].Cells[k + 1].Value = User_TB[n][k];
+                    }
+                }
+            }
+
             string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "바닥선형열교", "번호,DB유형,제품명,제조사,구조유형,열교유형,수직간격,수평간격,A,B,C", "구조유형 ='" + StructureType + "' And 열교유형 = '" + TB_Type + "'");
             if (TB.Length > 0)
             {
@@ -157,17 +171,30 @@ namespace main.subcontents.ConstructionFloor
                 TBName_textBox.Text = row.Cells[3].Value.ToString(); //제품명
                 Load_Image2();
 
-
-                string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "바닥선형열교", "번호, A, B, C", "번호 = '" + row.Cells[1].Value.ToString() + "'");
-                if (TB.Length > 0)
+                if (TB_dataGridView.Rows[SelectRow].Cells[2].Value.ToString() == "도면")
                 {
-                    for (int n = 0; n < TB.Length; n++)
+                    if (LinearPoint == "점형")
                     {
-                        A = Convert.ToDouble(TB[n][1]);
-                        B = Convert.ToDouble(TB[n][2]);
-                        C = Convert.ToDouble(TB[n][3]);
-                        Psi = (A * Math.Pow(d_Ins, 2) + B * d_Ins + C) / 1000;
-                        Count_DB = TB.Length;
+                        Kai = Program.UTIL.dataGridView_doubleComa(TB_dataGridView, SelectRow, 9, 3);
+                    }
+                    else
+                    {
+                        Psi = Program.UTIL.dataGridView_doubleComa(TB_dataGridView, SelectRow, 9, 3);
+                    }
+                }
+                else
+                {
+                    string[][] TB = Program.DB.getValue(DB.type.BaseDB_HCneed, "바닥선형열교", "번호, A, B, C", "번호 = '" + row.Cells[1].Value.ToString() + "'");
+                    if (TB.Length > 0)
+                    {
+                        for (int n = 0; n < TB.Length; n++)
+                        {
+                            A = Convert.ToDouble(TB[n][1]);
+                            B = Convert.ToDouble(TB[n][2]);
+                            C = Convert.ToDouble(TB[n][3]);
+                            Psi = (A * Math.Pow(d_Ins, 2) + B * d_Ins + C) / 1000;
+                            Count_DB = TB.Length;
+                        }
                     }
                 }
                 dx = Convert.ToDouble(row.Cells[7].Value) / 1000;
@@ -207,7 +234,7 @@ namespace main.subcontents.ConstructionFloor
                     PerArea = 0;
                 }
                 PerArea_label1.Text = "적용개수";
-                PerArea_label2.Text = "EA/m"+Program.UTIL.Subscript(2, true);
+                PerArea_label2.Text = "EA/m" + Program.UTIL.Subscript(2, true);
             }
             else
             {
@@ -215,7 +242,7 @@ namespace main.subcontents.ConstructionFloor
                 {
                     PerArea = 1 / Math.Max(dx, dy);
                     PerArea_label1.Text = "적용길이";
-                    PerArea_label2.Text = "m/m"+Program.UTIL.Subscript(2, true);
+                    PerArea_label2.Text = "m/m" + Program.UTIL.Subscript(2, true);
                 }
             }
             PerArea_textBox.Text = string.Format("{0:F3}", PerArea);
@@ -236,8 +263,35 @@ namespace main.subcontents.ConstructionFloor
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-            DataGridViewRow row = TB_dataGridView.Rows[SelectRow];
+            for (int a = 0; a < TB_dataGridView.Rows.Count; a++)
+            {
+                if (TB_dataGridView.Rows[a].Cells[2].Value != null && TB_dataGridView.Rows[a].Cells[2].Value.ToString() == "도면")
+                {
+                    for (int aa = 7; aa < 10; aa++)
+                    {
+                        if (TB_dataGridView.Rows[a].Cells[aa].Value != null && TB_dataGridView.Rows[a].Cells[aa].Value.ToString() != "")
+                        {
+                            double parsedValue;
+                            if (double.TryParse(TB_dataGridView.Rows[a].Cells[aa].Value.ToString(), out parsedValue))
+                            {
+                            }
+                            else
+                            {
+                                TB_dataGridView.Rows[a].Cells[aa].Value = 0;
+                                MessageBox.Show("숫자만 입력하세요.");
+                                goto 그만;
+                            }
+                        }
 
+                    }
+                    Program.DB.setValue(DB.type.ProjDB, "User_1DTB", "번호,DB유형,제품명,제조사,구조체,구조유형,열교유형,수직간격,수평간격,열교열관류율",
+                        "'" + TB_dataGridView.Rows[a].Cells[1].Value.ToString() + "','" + "도면" + "','" + TB_dataGridView.Rows[a].Cells[3].Value.ToString() + "','" + TB_dataGridView.Rows[a].Cells[4].Value.ToString() + "','최하층바닥','" +
+                        TB_dataGridView.Rows[a].Cells[5].Value.ToString() + "','" + TB_dataGridView.Rows[a].Cells[6].Value.ToString() + "','" +
+                        Program.UTIL.dataGridView_doubleComa(TB_dataGridView, a, 7, 0) + "','" + Program.UTIL.dataGridView_doubleComa(TB_dataGridView, a, 8, 0) + "','" +
+                        Program.UTIL.dataGridView_doubleComa(TB_dataGridView, a, 9, 3) + "'", "번호");
+                }
+            }
+            DataGridViewRow row = TB_dataGridView.Rows[SelectRow];
             Select_TB[0] = row.Cells[1].Value.ToString(); //번호
             Select_TB[1] = row.Cells[3].Value.ToString(); //제품명
             Select_TB[2] = row.Cells[5].Value.ToString(); //구조유형
@@ -262,6 +316,7 @@ namespace main.subcontents.ConstructionFloor
 
             this.DialogResult = DialogResult.OK;
             this.Close();
+        그만: int x = 1;
 
         }
         private void dx_textBox_TextChanged(object sender, EventArgs e)
@@ -274,6 +329,43 @@ namespace main.subcontents.ConstructionFloor
         {
             dy = Program.UTIL.textBox_doubleComa(dy_textBox, false, 1);
             Calc_PerArea();
+        }
+
+        private void Add_button_Click(object sender, EventArgs e)
+        {
+            int nRow = TB_dataGridView.Rows.Add();
+            string UserNum = Program.UTIL.CreateNum("User_1DTB", "번호", "UTB_0");
+            TB_dataGridView.Rows[nRow].Cells[1].Value = UserNum;
+            TB_dataGridView.Rows[nRow].Cells[2].Value = "도면";
+            TB_dataGridView.Rows[nRow].Cells[5].Value = this.StructureType;
+            TB_dataGridView.Rows[nRow].Cells[6].Value = this.TB_Type;
+
+            DataGridViewRow MoveRow = TB_dataGridView.Rows[nRow];
+            TB_dataGridView.Rows.RemoveAt(nRow);
+            TB_dataGridView.Rows.Insert(0, MoveRow);
+            TB_dataGridView.CurrentCell = TB_dataGridView[TB_dataGridView.CurrentCell.ColumnIndex, 0];
+        }
+
+        private void Delete_button_Click(object sender, EventArgs e)
+        {
+            int k = TB_dataGridView.CurrentCell.RowIndex;
+            if (k > -1)
+            {
+                if (TB_dataGridView.Rows[k].Cells[2].Value.ToString() == "도면")
+                {
+                    if ((MessageBox.Show(TB_dataGridView.Rows[k].Cells[3].Value.ToString() + "을 삭제하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
+                    {
+                        String Delete_Num = TB_dataGridView.Rows[k].Cells[1].Value.ToString();
+                        Program.DB.deleteValue(DB.type.ProjDB, "User_1DTB", "번호 ='" + Delete_Num + "'");
+                        load_table_DB();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("기본 DB는 삭제할 수 없습니다.");
+                }
+            }
+
         }
     }
 }
