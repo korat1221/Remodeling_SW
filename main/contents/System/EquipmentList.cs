@@ -1018,8 +1018,6 @@ namespace main.contents
             PV_dataGridView.Columns.Add("A6", "모듈(변경가능).높이.[m]");
             PV_dataGridView.Columns.Add("A7", "모듈(변경가능).정격출력.[W]");
             PV_dataGridView.Columns.Add("A8","Kpk");
-            //Program.UTIL.ApplyHTMLSuperscriptAndSubscript(label2, "K<sub>pk</sub>");
-            //Program.UTIL.ApplyHTMLSuperscriptAndSubscript(PV_dataGridView, "K<sub>pk</sub>",8);
 
            
             DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
@@ -1085,15 +1083,12 @@ namespace main.contents
             {
                 if (pv_DB.SelectPV != null)
                 {
-                    string[][] Value = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광모듈DB", "CELLTYPE,길이,높이,정격출력,Kpk", "번호 = '" + pv_DB.SelectPV + "'");
+                    string[][] Value = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광모듈DB", "CELLTYPE,Kpk", "번호 = '" + pv_DB.SelectPV + "'");
                     if (Value.Length > 0)
                     {
                        
                         PV_dataGridView.Rows[nRow].Cells[4].Value = Value[0][0].ToString();
-                        PV_dataGridView.Rows[nRow].Cells[5].Value = Value[0][1].ToString();
-                        PV_dataGridView.Rows[nRow].Cells[6].Value = Value[0][2].ToString();
-                        PV_dataGridView.Rows[nRow].Cells[7].Value = Value[0][3].ToString();
-                        PV_dataGridView.Rows[nRow].Cells[8].Value = Value[0][4].ToString();
+                        PV_dataGridView.Rows[nRow].Cells[8].Value = Value[0][1].ToString();
                     }                  
 
                 }
@@ -1151,16 +1146,23 @@ namespace main.contents
 
         private void PV_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            double Length, Height, Power;
-            if(e.ColumnIndex == 5|| e.ColumnIndex == 6|| e.ColumnIndex == 7)
+            double Length, Height, Power; double Power_m2;
+            if (e.ColumnIndex == 5|| e.ColumnIndex == 6 || e.ColumnIndex == 7 )
             {
                 if(Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 5,1)&& Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 6,1)&& Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 7, 1))
                 {
                     Length = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString());
                     Height = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString());
                     Power = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString());
-                    double Power_m2 = Power / Length * Height / 1000;
+                    Power_m2 = Power / 1000 / ( Length * Height) ;
                     PV_dataGridView.Rows[e.RowIndex].Cells[8].Value = string.Format("{0:F3}", Power_m2);
+                }else if(Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 5, 1) && Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 6, 1) && Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 8, 1))
+                {
+                    Length = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString());
+                    Height = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString());
+                    Power_m2 = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString());
+                    Power = Power_m2 * 1000 * (Length * Height) ;
+                    PV_dataGridView.Rows[e.RowIndex].Cells[7].Value = Power.ToString("0");
                 }
             }
         }
