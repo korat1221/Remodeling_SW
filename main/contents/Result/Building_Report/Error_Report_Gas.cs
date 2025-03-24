@@ -134,7 +134,7 @@ namespace main.contents.Result.Building_Report
                             {
                                 for (int k = 0; k < Gas1.Length; k++) //연도별
                                 {
-                                    Quse_gas_mth[k, mth] = (Convert.ToDouble(Gas1[k][0]) * Convert.ToDouble(Value_사용시작일_가스[0][0]) / dmth[mth] + Convert.ToDouble(Gas2[k][0]) * (dmth[11] - Convert.ToDouble(Value_사용시작일_가스[0][0])) / dmth[mth]);
+                                    Quse_gas_mth[k, mth] = (Convert.ToDouble(Gas1[k][0]) * Convert.ToDouble(Value_사용시작일_가스[0][0]) / dmth[mth] + Convert.ToDouble(Gas2[k][0]) * (dmth[mth] - Convert.ToDouble(Value_사용시작일_가스[0][0])) / dmth[mth]);
                                 }
                                 yearnum = Gas1.Length;
                             }

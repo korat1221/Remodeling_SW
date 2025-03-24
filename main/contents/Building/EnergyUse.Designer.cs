@@ -50,6 +50,7 @@ namespace main.contents.Building
             DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle20 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            info = new Button();
             pictureBox1 = new PictureBox();
             label3 = new Label();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
@@ -87,7 +88,9 @@ namespace main.contents.Building
             DH_Mcal_dataGridView = new DataGridView();
             webView23 = new Microsoft.Web.WebView2.WinForms.WebView2();
             panel1 = new Panel();
-            info = new Button();
+            label10 = new Label();
+            label11 = new Label();
+            label12 = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
@@ -116,6 +119,21 @@ namespace main.contents.Building
             GeneralPanel.Size = new Size(1000, 80);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(970, 8);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 148;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
             // 
             // pictureBox1
             // 
@@ -151,6 +169,7 @@ namespace main.contents.Building
             // Gas_tabPage
             // 
             Gas_tabPage.BackColor = Color.White;
+            Gas_tabPage.Controls.Add(label11);
             Gas_tabPage.Controls.Add(label4);
             Gas_tabPage.Controls.Add(Gas_EndDay_comboBox);
             Gas_tabPage.Controls.Add(label5);
@@ -363,6 +382,7 @@ namespace main.contents.Building
             // Elec_tabPage
             // 
             Elec_tabPage.BackColor = Color.White;
+            Elec_tabPage.Controls.Add(label10);
             Elec_tabPage.Controls.Add(webView22);
             Elec_tabPage.Controls.Add(label2);
             Elec_tabPage.Controls.Add(Elec_EndDay_comboBox);
@@ -553,6 +573,7 @@ namespace main.contents.Building
             // 
             // DH_tabPage
             // 
+            DH_tabPage.Controls.Add(label12);
             DH_tabPage.Controls.Add(label7);
             DH_tabPage.Controls.Add(DH_EndDay_comboBox);
             DH_tabPage.Controls.Add(label8);
@@ -773,20 +794,35 @@ namespace main.contents.Building
             panel1.Size = new Size(1000, 592);
             panel1.TabIndex = 147;
             // 
-            // info
+            // label10
             // 
-            info.BackColor = SystemColors.ControlLight;
-            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            info.FlatStyle = FlatStyle.System;
-            info.Font = new Font("나눔바른고딕", 9.75F);
-            info.Location = new Point(970, 8);
-            info.Margin = new Padding(0);
-            info.Name = "info";
-            info.Size = new Size(23, 23);
-            info.TabIndex = 148;
-            info.Text = "?";
-            info.UseVisualStyleBackColor = false;
-            info.Click += info_Click;
+            label10.AutoSize = true;
+            label10.Font = new Font("나눔바른고딕", 9.75F);
+            label10.Location = new Point(483, 39);
+            label10.Name = "label10";
+            label10.Size = new Size(383, 15);
+            label10.TabIndex = 128;
+            label10.Text = "* 사용기간이 1일에서 말일까지 인 경우, 전 달 사용량으로 입력하세요. ";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("나눔바른고딕", 9.75F);
+            label11.Location = new Point(476, 36);
+            label11.Name = "label11";
+            label11.Size = new Size(383, 15);
+            label11.TabIndex = 132;
+            label11.Text = "* 사용기간이 1일에서 말일까지 인 경우, 전 달 사용량으로 입력하세요. ";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("나눔바른고딕", 9.75F);
+            label12.Location = new Point(471, 36);
+            label12.Name = "label12";
+            label12.Size = new Size(383, 15);
+            label12.TabIndex = 150;
+            label12.Text = "* 사용기간이 1일에서 말일까지 인 경우, 전 달 사용량으로 입력하세요. ";
             // 
             // EnergyUse
             // 
@@ -864,5 +900,8 @@ namespace main.contents.Building
         private Panel panel1;
         private PictureBox pictureBox1;
         private Button info;
+        private Label label11;
+        private Label label10;
+        private Label label12;
     }
 }

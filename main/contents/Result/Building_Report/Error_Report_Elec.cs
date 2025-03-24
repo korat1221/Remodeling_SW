@@ -134,7 +134,7 @@ namespace main.contents.Result.Building_Report
                             {
                                 for (int k = 0; k < Elec1.Length; k++) //연도별
                                 {
-                                    Quse_elec_mth[k, mth] = (Convert.ToDouble(Elec1[k][0]) * Convert.ToDouble(Value_사용시작일_전기[0][0]) / dmth[mth] + Convert.ToDouble(Elec2[k][0]) * (dmth[11] - Convert.ToDouble(Value_사용시작일_전기[0][0])) / dmth[mth]);
+                                    Quse_elec_mth[k, mth] = (Convert.ToDouble(Elec1[k][0]) * Convert.ToDouble(Value_사용시작일_전기[0][0]) / dmth[mth] + Convert.ToDouble(Elec2[k][0]) * (dmth[mth] - Convert.ToDouble(Value_사용시작일_전기[0][0])) / dmth[mth]);
                                 }
                                 yearnum = Elec1.Length;
                             }
