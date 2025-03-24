@@ -448,15 +448,15 @@ namespace main
                 }
                 else if (a == 1)
                 {
-                    code = "#,#.#";
+                    code = "#,0.#";
                 }
                 else if (a == 2)
                 {
-                    code = "#,#.##";
+                    code = "#,0.##";
                 }
                 else
                 {
-                    code = "#,#.###";
+                    code = "#,0.###";
                 }
 
             }

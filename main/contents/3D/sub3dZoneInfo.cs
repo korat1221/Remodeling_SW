@@ -218,7 +218,7 @@ namespace main.contents
         {
             try
             {
-                return (v == "0" ? "0" : Double.Parse(v).ToString("#.##"));
+                return (v == "0" ? "0" : Double.Parse(v).ToString("#,0.##"));
             }
             catch (Exception e) { }
 
