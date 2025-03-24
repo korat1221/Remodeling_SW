@@ -65,7 +65,7 @@ namespace main.contents.Result.Building_Report
                 MainMenu.Add(new { text = Final[0][0]+"소요량", id = "{\\\"formID\\\":68,\\\"ID\\\":\\\"Result_7\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             }
 
-            Program.UTIL.resetMainTree(5, 0, MainMenu.ToArray(), "56"); // 예시 코드: 메인 메뉴 동적 할당
+            Program.UTIL.resetMainTree(6, 0, MainMenu.ToArray(), "56"); // 예시 코드: 메인 메뉴 동적 할당
            
         }
 

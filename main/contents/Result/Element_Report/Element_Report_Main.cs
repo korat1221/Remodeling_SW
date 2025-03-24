@@ -68,7 +68,7 @@ namespace main.contents
             MainMenu.Add(new { text = "냉동기", id = "{\\\"formID\\\":66,\\\"ID\\\":\\\"Element_Chiler\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             MainMenu.Add(new { text = "신재생시스템", id = "{\\\"formID\\\":67,\\\"ID\\\":\\\"Element_RESystem\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
 
-            Program.UTIL.resetMainTree(5, 1, MainMenu.ToArray(), "60"); // 예시 코드: 메인 메뉴 동적 할당
+            Program.UTIL.resetMainTree(6, 1, MainMenu.ToArray(), "60"); // 예시 코드: 메인 메뉴 동적 할당
         }
         public void LoadData(string ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {

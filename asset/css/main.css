@@ -59,9 +59,11 @@ html,body {
     border: solid 1px #aaa;
     border-radius: 4px;
 }
-
 .cont-item {
-    padding :10px
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .cont-icon {

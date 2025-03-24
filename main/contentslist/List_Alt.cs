@@ -146,7 +146,7 @@ namespace main.contentslist
 
             }
             CountDB = List.Length;
-            Program.UTIL.resetMainTree(6, 0, mainMenu.ToArray(), "58"); // 예시 코드: 메인 메뉴 동적 할당
+            Program.UTIL.resetMainTree(7, 0, mainMenu.ToArray(), "58"); // 예시 코드: 메인 메뉴 동적 할당
         }
 
         private void Load_alt(string AltNum, int row )

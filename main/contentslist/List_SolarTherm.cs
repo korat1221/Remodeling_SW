@@ -171,7 +171,7 @@ namespace main.contentslist
                 subMenu.Add(new { text = "태양열시스템", id = "{\\\"formID\\\":69,\\\"ID\\\":\\\"SOLAR_4\\\"}", children = stsubMenu.ToArray() });  // 예시 코드: 메인 메뉴 동적 할당
                 subMenu.Add(new { text = "공급의무비율", id = "{\\\"formID\\\":24,\\\"ID\\\":\\\"SOLAR_5\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
                 subMenu.Add(new { text = "에너지자립률", id = "{\\\"formID\\\":25,\\\"ID\\\":\\\"SOLAR_6\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-                Program.UTIL.resetMainTree(4, 4, subMenu.ToArray(), "69"); // 예시 코드: 메인 메뉴 동적 할당
+                Program.UTIL.resetMainTree(5, 3, subMenu.ToArray(), "69"); // 예시 코드: 메인 메뉴 동적 할당
             }
         }
 
