@@ -1357,7 +1357,7 @@ namespace main.contents
                 {
                     dtheta = Convert.ToDouble(v[0][0]) - Convert.ToDouble(v[0][1]);
                 }
-                double Volume = Qw_max_sum * 3.6 / (4.18 * dtheta); // Liter/min 
+                double Volume = Qw_max_sum * 3.6 / (4.18 * dtheta) *1000/60; // Liter/min 
 
                 PipeD = 21.7;
                 PipeInsD = 25;

@@ -2533,37 +2533,28 @@ namespace main.contents
             Pump_dataGridView.Columns.Add("P4", "A효율" + Environment.NewLine + "[%]");
             Pump_dataGridView.Columns.Add("P5", "B효율" + Environment.NewLine + "[%]");
             Pump_dataGridView.Columns.Add("P6", "유량" + Environment.NewLine + "[CMH]");
-            Pump_dataGridView.Columns.Add("P7", "양정" + Environment.NewLine + "[m]");
-            Pump_dataGridView.Columns.Add("P8", "");
-            Pump_dataGridView.Columns.Add("P9", "동력" + Environment.NewLine + "[W]");
-            Pump_dataGridView.Columns.Add("P10", "");
-            Pump_dataGridView.Columns.Add("P11", "대수" + Environment.NewLine + "[EA]");
+            Pump_dataGridView.Columns.Add("P7", "");
+            Pump_dataGridView.Columns.Add("P8", "양정" + Environment.NewLine + "[m]");
+            Pump_dataGridView.Columns.Add("P9", "");
+            Pump_dataGridView.Columns.Add("P10", "동력" + Environment.NewLine + "[W]");
+            Pump_dataGridView.Columns.Add("P11", "");
+            Pump_dataGridView.Columns.Add("P12", "대수" + Environment.NewLine + "[EA]");
             Pump_dataGridView.Columns[0].Width = 40;
             Pump_dataGridView.Columns[1].Width = 60;
-            Pump_dataGridView.Columns[2].Width = 130;
             Pump_dataGridView.Columns[3].Width = 130;
-            Pump_dataGridView.Columns[7].Width = 100;
-            Pump_dataGridView.Columns[8].Width = 30;
-            Pump_dataGridView.Columns[9].Width = 100;
-            Pump_dataGridView.Columns[10].Width = 30;
+            Pump_dataGridView.Columns[7].Width = 30;
+            Pump_dataGridView.Columns[8].Width = 100;
+            Pump_dataGridView.Columns[9].Width = 30;
+            Pump_dataGridView.Columns[10].Width = 100;
+            Pump_dataGridView.Columns[11].Width = 30;
             DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
             설치유형Combo.HeaderText = "설치";
             설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
             Pump_dataGridView.Columns.Add(설치유형Combo);
             Pump_dataGridView.Columns[12].Width = 100;
+            Pump_dataGridView.Columns[13].Width = 100;
+            Pump_dataGridView.Columns[4].Visible = false;
 
-            //Pump_dataGridView.ColumnCount = 12;
-            //Pump_dataGridView.Columns[1].HeaderText = "번호";
-            //Pump_dataGridView.Columns[2].HeaderText = "명칭";
-            //Pump_dataGridView.Columns[3].HeaderText = "종류";
-            //Pump_dataGridView.Columns[4].HeaderText = "A효율" + Environment.NewLine + "[%]";
-            //Pump_dataGridView.Columns[5].HeaderText = "B효율" + Environment.NewLine + "[%]";
-            //Pump_dataGridView.Columns[6].HeaderText = "유량" + Environment.NewLine + "[CMH]";
-            //Pump_dataGridView.Columns[7].HeaderText = "양정" + Environment.NewLine + "[m]";
-            //Pump_dataGridView.Columns[8].HeaderText = "계산";
-            //Pump_dataGridView.Columns[9].HeaderText = "동력" + Environment.NewLine + "[kW]";
-            //Pump_dataGridView.Columns[10].HeaderText = "계산";
-            //Pump_dataGridView.Columns[11].HeaderText = "대수" + Environment.NewLine + "[EA]";
         }
 
         private void Pump_Add_button_Click(object sender, EventArgs e)
@@ -2582,17 +2573,17 @@ namespace main.contents
             Pump_dataGridView.Rows[nRow].Cells[3] = 펌프종류comboBox;
 
             DataGridViewButtonCell PumpHead_ButtonCell = new DataGridViewButtonCell();
-            Pump_dataGridView.Rows[nRow].Cells[8] = PumpHead_ButtonCell;
+            Pump_dataGridView.Rows[nRow].Cells[9] = PumpHead_ButtonCell;
             PumpHead_ButtonCell.Value = "+";
             DataGridViewButtonCell PumpPower_ButtonCell = new DataGridViewButtonCell();
-            Pump_dataGridView.Rows[nRow].Cells[10] = PumpPower_ButtonCell;
+            Pump_dataGridView.Rows[nRow].Cells[11] = PumpPower_ButtonCell;
             PumpPower_ButtonCell.Value = "+";
-            for (int k = 4; k < 12; k++)
+            for (int k = 4; k < 13; k++)
             {
                 Pump_dataGridView.Rows[nRow].Cells[k].Style.BackColor = SystemColors.Info;
             }
-            Pump_dataGridView.Rows[nRow].Cells[8].Style.BackColor = Color.White;
-            Pump_dataGridView.Rows[nRow].Cells[10].Style.BackColor = Color.White;
+            Pump_dataGridView.Rows[nRow].Cells[9].Style.BackColor = Color.White;
+            Pump_dataGridView.Rows[nRow].Cells[11].Style.BackColor = Color.White;
         }
 
         private void Pump_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -2643,14 +2634,18 @@ namespace main.contents
             펌프종류comboBox.Items.Add("지열순환펌프");
             Pump_dataGridView.Rows[nRow].Cells[3] = 펌프종류comboBox;
 
+            DataGridViewButtonCell PumpVolume_ButtonCell = new DataGridViewButtonCell();
+            Pump_dataGridView.Rows[nRow].Cells[7] = PumpVolume_ButtonCell;
+            PumpVolume_ButtonCell.Value = "+";
+
             DataGridViewButtonCell PumpHead_ButtonCell = new DataGridViewButtonCell();
-            Pump_dataGridView.Rows[nRow].Cells[8] = PumpHead_ButtonCell;
+            Pump_dataGridView.Rows[nRow].Cells[9] = PumpHead_ButtonCell;
             PumpHead_ButtonCell.Value = "+";
             DataGridViewButtonCell PumpPower_ButtonCell = new DataGridViewButtonCell();
-            Pump_dataGridView.Rows[nRow].Cells[10] = PumpPower_ButtonCell;
+            Pump_dataGridView.Rows[nRow].Cells[11] = PumpPower_ButtonCell;
             PumpPower_ButtonCell.Value = "+";
 
-            for (int k = 2; k < 13; k++)
+            for (int k = 2; k < 14; k++)
             {
                 if (Pump_dataGridView.Rows[Pump_SelectRow].Cells[k].Value != null)
                 {
@@ -2666,8 +2661,8 @@ namespace main.contents
             {
                 Pump_dataGridView.Rows[nRow].Cells[2].Value = Pump_dataGridView.Rows[Pump_SelectRow].Cells[2].Value.ToString() + "_복사";
             }
-            Pump_dataGridView.Rows[nRow].Cells[8].Style.BackColor = Color.White;
-            Pump_dataGridView.Rows[nRow].Cells[10].Style.BackColor = Color.White;
+            Pump_dataGridView.Rows[nRow].Cells[9].Style.BackColor = Color.White;
+            Pump_dataGridView.Rows[nRow].Cells[11].Style.BackColor = Color.White;
         }
         private void Pump_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -2675,7 +2670,17 @@ namespace main.contents
             {
                 Pump_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 Pump_SelectRow = e.RowIndex;
-                if (e.ColumnIndex == 8)
+                if (e.ColumnIndex == 7)
+                {
+                    PumpVolume form = new PumpVolume(Pump_dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString());
+                    DialogResult result = form.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        double Volume = form.Volume;
+                        Pump_dataGridView.Rows[e.RowIndex].Cells[6].Value = String.Format("{0:F1}",Volume);
+                    }
+                }
+                if (e.ColumnIndex == 9)
                 {
                     double Lmax; double PumpHead;
                     PumpCal pumpcal_form = new PumpCal(Pump_dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString());
@@ -2684,10 +2689,10 @@ namespace main.contents
                     {
                         Lmax = pumpcal_form.Lmax;
                         PumpHead = pumpcal_form.PumpHead;
-                        Pump_dataGridView.Rows[e.RowIndex].Cells[7].Value = String.Format("{0:F1}", PumpHead);
+                        Pump_dataGridView.Rows[e.RowIndex].Cells[8].Value = String.Format("{0:F1}", PumpHead);
                     }
                 }
-                if (e.ColumnIndex == 10)
+                if (e.ColumnIndex == 11)
                 {
                     if (Pump_dataGridView.Rows[e.RowIndex].Cells[5].Value == null)
                     {
@@ -2697,7 +2702,7 @@ namespace main.contents
                     {
                         MessageBox.Show("유량을 입력하세요.");
                     }
-                    else if (Pump_dataGridView.Rows[e.RowIndex].Cells[7].Value == null)
+                    else if (Pump_dataGridView.Rows[e.RowIndex].Cells[8].Value == null)
                     {
                         MessageBox.Show("양정을 입력하세요.");
                     }
@@ -2705,10 +2710,10 @@ namespace main.contents
                     {
                         double 효율 = Convert.ToDouble(Pump_dataGridView.Rows[e.RowIndex].Cells[5].Value);
                         double 유량 = Convert.ToDouble(Pump_dataGridView.Rows[e.RowIndex].Cells[6].Value);
-                        double 양정 = Convert.ToDouble(Pump_dataGridView.Rows[e.RowIndex].Cells[7].Value);
+                        double 양정 = Convert.ToDouble(Pump_dataGridView.Rows[e.RowIndex].Cells[8].Value);
                         double Power;
                         Power = (양정 * 1000 * 9.81) * 유량 / 3600 / (효율 / 100);
-                        Pump_dataGridView.Rows[e.RowIndex].Cells[9].Value = String.Format("{0:F1}", Power);
+                        Pump_dataGridView.Rows[e.RowIndex].Cells[10].Value = String.Format("{0:F1}", Power);
                     }
                 }
             }
@@ -2748,20 +2753,20 @@ namespace main.contents
                     else { Value[i - 1] = ""; }
                 }
                 //동력
-                if (Pump_dataGridView.Rows[k].Cells[9].Value != null)
-                { Value[6] = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView,k,9,0).ToString(); }
+                if (Pump_dataGridView.Rows[k].Cells[10].Value != null)
+                { Value[6] = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView,k,10,0).ToString(); }
                 else { Value[6] = ""; }
                 //양정
-                if (Pump_dataGridView.Rows[k].Cells[7].Value != null)
-                { Value[7] = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, k, 7, 0).ToString(); }
+                if (Pump_dataGridView.Rows[k].Cells[8].Value != null)
+                { Value[7] = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, k, 8, 0).ToString(); }
                 else { Value[7] = ""; }
                 //대수
-                if (Pump_dataGridView.Rows[k].Cells[11].Value != null)
-                { Value[8] = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, k, 11, 0).ToString(); }
+                if (Pump_dataGridView.Rows[k].Cells[12].Value != null)
+                { Value[8] = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, k, 12, 0).ToString(); }
                 else { Value[8] = ""; }
                 //신규기존
-                if (Pump_dataGridView.Rows[k].Cells[12].Value != null)
-                { Value[9] = Pump_dataGridView.Rows[k].Cells[12].Value.ToString(); }
+                if (Pump_dataGridView.Rows[k].Cells[13].Value != null)
+                { Value[9] = Pump_dataGridView.Rows[k].Cells[13].Value.ToString(); }
                 else { Value[9] = ""; }
 
                 Program.DB.setValue(DB.type.ProjDB, "User_Pump", "번호,프로젝트유형,명칭,종류,A효율,B효율,유량,동력,양정,대수,신규기존",
@@ -2812,15 +2817,18 @@ namespace main.contents
                     Pump_dataGridView.Rows[nRow].Cells[4].Value = A효율;
                     Pump_dataGridView.Rows[nRow].Cells[5].Value = B효율;
                     Pump_dataGridView.Rows[nRow].Cells[6].Value = 유량;
-                    Pump_dataGridView.Rows[nRow].Cells[7].Value = 양정;
-                    Pump_dataGridView.Rows[nRow].Cells[9].Value = 동력;
-                    Pump_dataGridView.Rows[nRow].Cells[11].Value = Value[n][8];
-                    Pump_dataGridView.Rows[nRow].Cells[12].Value = Value[n][9];
+                    Pump_dataGridView.Rows[nRow].Cells[8].Value = 양정;
+                    Pump_dataGridView.Rows[nRow].Cells[10].Value = 동력;
+                    Pump_dataGridView.Rows[nRow].Cells[12].Value = Value[n][8];
+                    Pump_dataGridView.Rows[nRow].Cells[13].Value = Value[n][9];
+                    DataGridViewButtonCell PumpVolume_ButtonCell = new DataGridViewButtonCell();
+                    Pump_dataGridView.Rows[nRow].Cells[7] = PumpVolume_ButtonCell;
+                    PumpVolume_ButtonCell.Value = "+";
                     DataGridViewButtonCell PumpHead_ButtonCell = new DataGridViewButtonCell();
-                    Pump_dataGridView.Rows[nRow].Cells[8] = PumpHead_ButtonCell;
+                    Pump_dataGridView.Rows[nRow].Cells[9] = PumpHead_ButtonCell;
                     PumpHead_ButtonCell.Value = "+";
                     DataGridViewButtonCell PumpPower_ButtonCell = new DataGridViewButtonCell();
-                    Pump_dataGridView.Rows[nRow].Cells[10] = PumpPower_ButtonCell;
+                    Pump_dataGridView.Rows[nRow].Cells[11] = PumpPower_ButtonCell;
                     PumpPower_ButtonCell.Value = "+";
                 }
             }

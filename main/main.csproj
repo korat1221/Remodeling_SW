@@ -139,6 +139,9 @@
     <Compile Update="subcontents\BuildingGeneral\BlowDoorTest.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\EquipmentList\PumpVolume.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\EquipmentList\ZoneResult.cs">
       <SubType>Form</SubType>
     </Compile>
