@@ -29,7 +29,7 @@ namespace main.contents
 {
     public partial class HeatingSystem : Form
     {
-        String Num, Name; String SelectZone_nonsplit;
+        String Num, Name; String SelectZone_nonsplit; String SelectAHU_nonsplit;
         String SystemLoacation, SLRL, Complex, MainSystem, Sub1System, Sub2System;
         String SelectBoiler_nonsplit, BoilerNum_nonsplit;
         String SelectSolar_nonsplit, SolarNum_nonsplit, SolarDirection_nonsplit, SolarDegree_nonsplit, SelectFC_nonsplit, FCNum_nonsplit, FCElecInstall_nonsplit;
@@ -42,7 +42,7 @@ namespace main.contents
         String[] ceType = { "실내기", "방열기", "팬코일유닛", "복사난방" };
         double PipeD, PipeInsD, PipeIns_Ramda, PipeL;
         String PipeIns;
-        double ZoneArea;
+        double ZoneArea; ArrayList SelectAHU_split = new ArrayList();
         ArrayList SelectZone_split = new ArrayList(); ArrayList SelectBoiler_split = new ArrayList(); ArrayList SelectAirHP_split = new ArrayList(); ArrayList SelectGroundHP_split = new ArrayList(); ArrayList SelectGWHP_split = new ArrayList(); ArrayList SelectSolar_split = new ArrayList(); ArrayList SelectAS_split = new ArrayList(); ArrayList SelectDH_split = new ArrayList(); ArrayList SelectFC_split = new ArrayList();
         string[][] 프로젝트유형;
         public HeatingSystem()
@@ -138,6 +138,7 @@ namespace main.contents
                     PipeD_comboBox.Items.Add(value[a][0] + "A");
                 }
             }
+            label20.Text = "면적 [m" + Program.UTIL.Subscript(2, true) + "]";
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -172,6 +173,22 @@ namespace main.contents
                 }
             }
         }
+
+        private void AHU_button_Click(object sender, EventArgs e)
+        {
+            Heating_AHU heatingahu = new Heating_AHU(Num, SelectAHU_nonsplit);
+            DialogResult result = heatingahu.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                if (heatingahu.SelectAHU != null)
+                {
+                    SelectAHU_nonsplit = heatingahu.SelectAHU;
+                    Split_AHU(heatingahu.SelectAHU);
+                    Calc_Pipe();
+                }
+            }
+
+        }
         private void Split_Zone(String nonSplit)
         {
             String 내용;
@@ -194,6 +211,100 @@ namespace main.contents
                     내용 = SelectZone_split[0].ToString();
                 }
                 Zone_textBox.Text = 내용;
+
+                if(SelectZone_split.Count>0 && SelectZone_split[0] != "")
+                {
+                    double Qba = 0, Qmax = 0, Area = 0;
+                    for (int a = 0; a < SelectZone_split.Count; a++)
+                    {
+                        string[][] 요구량 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a, Q_max", "번호 ='" + SelectZone_split[a].ToString() + "' AND 난방_냉방 = '난방'");
+                        if (요구량.Length > 0)
+                        {
+                            Qba += Convert.ToDouble(요구량[0][0]);
+                            Qmax += Convert.ToDouble(요구량[0][1]) / 1000;
+                        }
+                        string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호 ='" + SelectZone_split[a].ToString() + "'");
+                        if (Value.Length > 0)
+                        {
+                            Area += Convert.ToDouble(Value[0][0]);
+                        }
+                    }
+                    Zone_Qba_textBox.Text = string.Empty;
+                    Zone_Qba_textBox.Text = Qba.ToString();
+                    Program.UTIL.textBox_doubleComa(Zone_Qba_textBox, true, 0);
+                    Zone_Qmax_textBox.Text = string.Empty;
+                    Zone_Qmax_textBox.Text = Qmax.ToString();
+                    Program.UTIL.textBox_doubleComa(Zone_Qmax_textBox, true, 2);
+                    Zone_Area_textBox.Text = string.Empty;
+                    Zone_Area_textBox.Text = Area.ToString();
+                    Program.UTIL.textBox_doubleComa(Zone_Area_textBox, true, 2);
+                }
+
+            }
+            else { 내용 = ""; }
+
+        }
+
+        private void Split_AHU(String nonSplit)
+        {
+            String 내용;
+            if (nonSplit != null)
+            {
+                if (nonSplit.Contains("+"))
+                {
+                    string[] token = nonSplit.Split('+');
+                    SelectAHU_split.Clear();
+                    foreach (var item in token)
+                    {
+                        SelectAHU_split.Add(item.ToString());
+                    }
+                    내용 = SelectAHU_split[0].ToString() + " 외 " + (SelectAHU_split.Count - 1).ToString() + "개";
+                }
+                else
+                {
+                    SelectAHU_split.Clear();
+                    SelectAHU_split.Add(nonSplit);
+                    내용 = SelectAHU_split[0].ToString();
+                }
+                AHU_textBox.Text = 내용;
+
+                if(SelectAHU_split.Count >0 && SelectAHU_split[0]!="")
+                {
+                    double Qba = 0, Qmax = 0, Area = 0;
+                    for (int a = 0; a < SelectAHU_split.Count; a++)
+                    {
+                        for (int mth = 0; mth < 12; mth++)
+                        {
+                            string[][] 요구량 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "공조요구량", "번호 ='" + SelectAHU_split[a].ToString() + "' And 난방_냉방 = '난방' And 월 = '" + (mth + 1).ToString() + "월'");
+                            if (요구량.Length > 0)
+                            {
+                                Qba += Convert.ToDouble(요구량[0][0]);
+                            }
+                        }
+                        string[][] 부하 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "Qmax_tot", "번호 ='" + SelectAHU_split[a].ToString() + "' And 난방_냉방 = '난방' And 월 = '1월'");
+                        if (부하.Length > 0)
+                        {
+                            Qmax += Convert.ToDouble(부하[0][0]) / 1000;
+                        }
+                        string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "선택열회수기 ='" + SelectAHU_split[a].ToString() + "'");
+                        if (Value.Length > 0)
+                        {
+                            Area += Convert.ToDouble(Value[0][0]);
+                        }
+                    }
+                    AHU_Qba_textBox.Text = string.Empty;
+                    AHU_Qba_textBox.Text = Qba.ToString();
+                    Program.UTIL.textBox_doubleComa(AHU_Qba_textBox, true, 0);
+                    AHU_Qmax_textBox.Text = string.Empty;
+                    AHU_Qmax_textBox.Text = Qmax.ToString();
+                    Program.UTIL.textBox_doubleComa(AHU_Qmax_textBox, true, 2);
+                    AHU_Area_textBox.Text = string.Empty;
+                    AHU_Area_textBox.Text = Area.ToString();
+                    Program.UTIL.textBox_doubleComa(AHU_Area_textBox, true, 2);
+                }
+                
+
+
             }
             else { 내용 = ""; }
 
@@ -1975,64 +2086,64 @@ namespace main.contents
         }
         private void Calc_Pipe()
         {
-            double Qh_max_sum = 0;
-            if (SelectZone_split.Count > 0)
+            ZoneArea = 0;
+            double Qmax_sum = 0;
+            if(Zone_Area_textBox.Text != null && Zone_Area_textBox.Text!="")
             {
-                ZoneArea = 0;
-                for (int n = 0; n < SelectZone_split.Count; n++)
-                {
-                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호 = '" + SelectZone_split[n].ToString() + "'");
-                    if (Value.Length > 0)
-                    { ZoneArea += Convert.ToDouble(Value[0][0]); }
-
-                    string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호 = '" + SelectZone_split[n].ToString() + "' and 난방_냉방='난방' and 비이용일_이용일='이용일' and 월='1월' ");
-                    if (Value2.Length > 0)
-                    {
-                        Qh_max_sum += Convert.ToDouble(Value2[0][0]);
-                    }
-                }
-
-                double dtheta = 10;
-                string[][] v = Program.DB.getValue(DB.type.BaseDB_Heating, "공급환수온도", "공급온도, 환수온도", "공급환수온도='" + SLRL + "'");
-                if (v.Length > 0)
-                {
-                    dtheta = Convert.ToDouble(v[0][0]) - Convert.ToDouble(v[0][1]);
-                }
-                double Volume = Qh_max_sum/1000 * 3.6 / (4.18 * dtheta) * 1000 / 60; // Liter/min 
-
-
-                PipeD = 21.7;
-                PipeInsD = 10;
-                if (Volume > 0)
-                {
-                    string[][] P = Program.DB.querySQL(DB.type.BaseDB_Heating, "Select lpm_max, 외경,호칭경A From 부피별관경 Order by 외경 DESC");
-                    if (P.Length > 0)
-                    {
-                        for (int a = 0; a < P.Length; a++)
-                        {
-                            if (Convert.ToDouble(P[a][0]) >= Volume)
-                            {
-                                PipeD = Convert.ToDouble(P[a][1]);
-                            }
-                        }
-                    }
-
-                    P = Program.DB.querySQL(DB.type.BaseDB_Heating, "Select 호칭경A From 부피별관경 Where 외경='" + PipeD + "'");
-                    if (P.Length > 0)
-                    {
-                        PipeD_comboBox.SelectedItem = P[0][0] + "A";
-                    }
-                }
-                PipeInsD_textBox.Text = PipeInsD.ToString();
-                Program.UTIL.textBox_doubleComa(PipeInsD_textBox, true, 1);
-
-                PipeIns_Ramda = 0.035;
-                PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
-                Program.UTIL.textBox_doubleComa(PipeIns_Ramda_textBox, true, 3);
-
-                PipeIns_textBox.Text = "일반 보온재";
+                ZoneArea = Convert.ToDouble(Zone_Area_textBox.Text.ToString());
+            }
+            if (AHU_Area_textBox.Text != null && AHU_Area_textBox.Text != "")
+            {
+                ZoneArea += Convert.ToDouble(AHU_Area_textBox.Text.ToString());
+            }
+            if (Zone_Qmax_textBox.Text != null && Zone_Qmax_textBox.Text != "")
+            {
+               Qmax_sum  = Convert.ToDouble(Zone_Qmax_textBox.Text.ToString());
+            }
+            if (AHU_Qmax_textBox.Text != null && AHU_Qmax_textBox.Text != "")
+            {
+                Qmax_sum += Convert.ToDouble(AHU_Qmax_textBox.Text.ToString());
             }
 
+            double dtheta = 10;
+            string[][] v = Program.DB.getValue(DB.type.BaseDB_Heating, "공급환수온도", "공급온도, 환수온도", "공급환수온도='" + SLRL + "'");
+            if (v.Length > 0)
+            {
+                dtheta = Convert.ToDouble(v[0][0]) - Convert.ToDouble(v[0][1]);
+            }
+            double Volume = Qmax_sum / 1000 * 3.6 / (4.18 * dtheta) * 1000 / 60; // Liter/min 
+
+
+            PipeD = 21.7;
+            PipeInsD = 10;
+            if (Volume > 0)
+            {
+                string[][] P = Program.DB.querySQL(DB.type.BaseDB_Heating, "Select lpm_max, 외경,호칭경A From 부피별관경 Order by 외경 DESC");
+                if (P.Length > 0)
+                {
+                    for (int a = 0; a < P.Length; a++)
+                    {
+                        if (Convert.ToDouble(P[a][0]) >= Volume)
+                        {
+                            PipeD = Convert.ToDouble(P[a][1]);
+                        }
+                    }
+                }
+
+                P = Program.DB.querySQL(DB.type.BaseDB_Heating, "Select 호칭경A From 부피별관경 Where 외경='" + PipeD + "'");
+                if (P.Length > 0)
+                {
+                    PipeD_comboBox.SelectedItem = P[0][0] + "A";
+                }
+            }
+            PipeInsD_textBox.Text = PipeInsD.ToString();
+            Program.UTIL.textBox_doubleComa(PipeInsD_textBox, true, 1);
+
+            PipeIns_Ramda = 0.035;
+            PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
+            Program.UTIL.textBox_doubleComa(PipeIns_Ramda_textBox, true, 3);
+
+            PipeIns_textBox.Text = "일반 보온재";
         }
         private void PipeIns_button_Click(object sender, EventArgs e)
         {
@@ -2791,7 +2902,7 @@ namespace main.contents
             Num_textBox.Text = ID;
             Num = ID;
 
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "명칭,존", "번호 = '" + ID + "'");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "명칭,존,공조기", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
                 Name_textBox.Text = Value[0][0];
@@ -2799,6 +2910,8 @@ namespace main.contents
 
                 SelectZone_nonsplit = Value[0][1];
                 Split_Zone(SelectZone_nonsplit);
+                SelectAHU_nonsplit = Value[0][2];
+                Split_AHU(SelectAHU_nonsplit);
             }
 
             Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "설치위치,공급환수온도,복합설비유무,주요설비,보조설비1,보조설비2", "번호 = '" + ID + "'");
