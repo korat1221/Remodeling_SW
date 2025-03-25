@@ -314,6 +314,7 @@ namespace main.subcontents.ConstructionFloor
             }
 
 
+            Program.DB.saveProject();
             this.DialogResult = DialogResult.OK;
             this.Close();
         그만: int x = 1;

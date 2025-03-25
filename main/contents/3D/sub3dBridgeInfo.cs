@@ -288,8 +288,9 @@ namespace main.contents
                  "'" + dataGridView1.Rows[i].Cells[1].Value + "','" + dataGridView1.Rows[i].Cells[3].Value + "'",
                  "번호");
             }
-           
+            Program.DB.saveProject();
             MessageBox.Show("저장되었습니다.");
+
         }
     }
 }

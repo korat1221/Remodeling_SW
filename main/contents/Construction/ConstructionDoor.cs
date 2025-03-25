@@ -978,6 +978,7 @@ namespace main.contents
                         + "'", "번호");
             }
             else { }
+            Program.DB.saveProject();
             this.DialogResult = DialogResult.OK;
             this.Hide();
             Program.getMenuForm().DoLoadForm(51, OnLoadListProc);

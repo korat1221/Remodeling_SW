@@ -590,6 +590,7 @@ namespace main.contents
                     Program.DB.executeSQL(DB.type.ProjDB, "UPDATE SubWindow SET 창호열관류율  ='" + Sub_Uw[i] + "', 설치열교가산치 = '" + Sub_dUinst[i] + "', 창호유효열관류율 = '" + Sub_Uw_inst[i] + "',법규열관류율='" + 법규U.ToString() + "' WHERE  번호 = '" + Size[i][0] + "'");
                 }
                 Size_textBox.Text = Size.Length.ToString() + "개 치수 적용";
+                Program.DB.saveProject();
             }
         }
 
@@ -1202,6 +1203,7 @@ namespace main.contents
             {
                 ImportSize();
             }
+            Program.DB.saveProject();
             this.DialogResult = DialogResult.OK;
             this.Hide();
             Program.getMenuForm().DoLoadForm(29, OnLoadListProc);

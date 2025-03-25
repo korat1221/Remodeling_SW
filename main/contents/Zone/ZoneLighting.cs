@@ -1084,6 +1084,7 @@ namespace main.contents
             }
             else { }
 
+            Program.DB.saveProject();
             MessageBox.Show(ZoneNum + "[" + ZoneName + "] 정보를 저장하였습니다.");
             this.DialogResult = DialogResult.OK;
             this.Hide();

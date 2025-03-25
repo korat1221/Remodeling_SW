@@ -203,6 +203,7 @@ namespace main.subcontents
                 load_table_DoubleGlassDB();
                 UserNum = Program.UTIL.CreateNum("User_DoubleGlass", "번호", "DWG_0");
                 UserNum_textBox.Text = UserNum;
+                Program.DB.saveProject();
             }
             else
             {

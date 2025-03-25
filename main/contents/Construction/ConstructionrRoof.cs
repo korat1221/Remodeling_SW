@@ -1145,6 +1145,7 @@ namespace main.contents
                 α.ToString() + "','" + Uvalue.ToString() + "','" + dU.ToString() + "','" + Ueff.ToString() + "','" +
                 법규U.ToString()
                  + "'", "번호");
+            Program.DB.saveProject();
             this.DialogResult = DialogResult.OK;
             this.Hide();
             Program.getMenuForm().DoLoadForm(35, OnLoadListProc);

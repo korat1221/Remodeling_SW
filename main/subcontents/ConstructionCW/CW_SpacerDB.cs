@@ -142,6 +142,7 @@ namespace main.subcontents.ConstructionCW
                 load_table_SpacerDB(UserDBType2);
                 UserNum = Program.UTIL.CreateNum("User_CWSpacer", "번호", "UCS_0");
                 UserNum_textBox.Text = UserNum;
+                Program.DB.saveProject();
             }
             else
             {

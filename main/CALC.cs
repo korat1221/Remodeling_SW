@@ -27,6 +27,7 @@ namespace main
             Program.DB.initTable(DB.type.ProjDB, "Zone_Envelope_Result");
             Cal_Qb();
 
+            Program.DB.saveProject();
             return true;
         }
         public static bool Run_All()
@@ -70,6 +71,7 @@ namespace main
             RESystemCalc(NowProjNum[0][0]);
             // MessageBox.Show("계산되었습니다.");
 
+            Program.DB.saveProject();
             return true;
         }
         public static void Cal_Qb()

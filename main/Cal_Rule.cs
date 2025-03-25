@@ -620,7 +620,7 @@ namespace main
             }
             
             Save_Alt(final1, 검토유형);
-
+            Program.DB.saveProject();
             #endregion
 
         }

@@ -210,6 +210,7 @@ namespace main.contents
 
                     Program.DB.executeSQL(pid, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "', 프로젝트유형='" + types[ProjectType] + "', 프로젝트유형번호='" + ProjectType + "'");
                     Program.DB.executeSQL(pid, "UPDATE BuildingGeneral SET 기존프로젝트 ='" + pid0 + "' WHERE  프로젝트번호 = '" + pid + "'");
+                    Program.DB.saveProject();
                 }
 
 
@@ -291,6 +292,7 @@ namespace main.contents
                         }
 
                         Program.DB.executeSQL(pid, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "', 프로젝트유형='" + types[ProjectType] + "', 프로젝트유형번호='" + ProjectType + "'");
+                        Program.DB.saveProject();
                     }
 
 
@@ -519,6 +521,7 @@ namespace main.contents
                 Program.DB.openDB("projects\\" + ProjectList.CurProjID + ".sqlite");
                 Program.DB.initTables(DB.type.ProjDB);
                 Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,프로젝트유형,프로젝트유형번호", "'" + ProjectList.CurProjID + "','" + types[ProjectType] + "','" + ProjectType + "'", "프로젝트번호");
+                Program.DB.saveProject();
                 Program.getMenuForm().resetAll();
                 Program.UTIL.ReloadModel();
             }
@@ -545,6 +548,8 @@ namespace main.contents
                             Program.DB.querySQL(DB.type.ProjListDB, "UPDATE projects SET title='" + title + "' WHERE pnum='" + pid + "'");
                         }
                     }
+
+                    Program.DB.saveProject();
                 }
             }
         }
@@ -562,6 +567,7 @@ namespace main.contents
                     Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET title= '" + dataGridView1.Rows[k].Cells[3].Value.ToString() + "' WHERE pnum='" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "'");
                 }
             }
+            Program.DB.saveProject();
             MessageBox.Show("생성되었습니다.");
             int k_new = dataGridView1.Rows.Count - 1;
             dataGridView1.Rows[k_new].Cells[0].Value = true;

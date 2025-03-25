@@ -179,6 +179,7 @@ namespace main.subcontents.ZoneLighting
                 Program.DB.setValue(DB.type.ProjDB, "User_Lighting", "번호,프로젝트유형,DB유형,등기구명칭,램프유형,제조사,안정기_컨버터,광속,소비전력,광효율,조명계수",
                     "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + UserDB_Name + "','" + UserDB_LampType + "','" + UserDB_Manufacture + "','" + UserDB_Converter + "','" + UserDB_lm.ToString() + "','" + UserDB_W.ToString() + "','" + UserDB_eff.ToString() + "','" + UserDB_FL.ToString() + "'", "번호");
                 load_table_LightDB();
+                Program.DB.saveProject();
             }
             else
             {

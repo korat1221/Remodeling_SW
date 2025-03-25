@@ -64,6 +64,7 @@ namespace main.subcontents
                             }
                             n++;
                         }
+                        Program.DB.saveProject();
                     }
                 }
                 catch
@@ -172,6 +173,7 @@ namespace main.subcontents
                 + row.Cells[5].Value.ToString() + "','" + row.Cells[6].Value.ToString() + "','" + row.Cells[7].Value.ToString() + "','" + row.Cells[8].Value.ToString() + "','" + row.Cells[9].Value.ToString() + "','"
                 + row.Cells[10].Value.ToString() + "','" + row.Cells[11].Value.ToString() + "','" + 유리면적비 + "'", "번호");
 
+                Program.DB.saveProject();
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
@@ -201,6 +203,7 @@ namespace main.subcontents
                                     "'" + Name + "','" + Area + "','" + width + "','" + height + "','"
                                     + Ag_fix + "','" + Ag_open + "','" + Af_open + "','" + Af_fix + "','" + Af_btw + "','"
                                     + Lg_fix + "','" + Lg_open + "'", "창호명칭");
+                    Program.DB.saveProject();
                 }
             }
             else

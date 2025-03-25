@@ -57,6 +57,7 @@
                             }
                             n++;
                         }
+                        Program.DB.saveProject();
                     }
                 }
                 catch
@@ -219,6 +220,7 @@
                                      + Ag_panel + "','" + Lg_panel + "','"
                                      + Af_mt + "','" + Af_open + "','"
                                      + Af_door + "','" + Ag_door + "','" + Lg_door + "'", "명칭");
+                        Program.DB.saveProject();
                     }
                 }
             }

@@ -1153,20 +1153,6 @@ namespace main
                             }
                             MTH = (mth + 1).ToString() + "월";
 
-                                //Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
-                                //   "난방_냉방,비이용일_이용일,월," +
-                                //   "HT,HT_TB," +
-                                //   "QTsink,QTsource," +
-                                //   "QT_TB_sink,QT_TB_source," +
-                                //   "QTsink_tot,QTsource_tot",
-                                //   "'1','" + zonewall.Num() + "','" + ZoneNum + "','" + zonewall.CNum() + "','" + "외벽" + "','" + zonewall.DiIndi() + "','" +
-                                //    HC[hc] + "','" + WEWD[wewd] + "','" + MTH + "','" +
-                                //   (zonewall.Ueff() * zonewall.Area()).ToString() + "','" + (Utb * zonewall.Area()).ToString() + "','" +
-                                //  zoneWalls_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneWalls_QTsource[i, hc, wewd, mth].ToString() + "','" +
-                                //  zoneWalls_QTsink_TB[i, hc, wewd, mth].ToString() + "','" + zoneWalls_QTsource_TB[i, hc, wewd, mth].ToString() + "','" +
-                                //  (zoneWalls_QTsink[i, hc, wewd, mth] + zoneWalls_QTsink_TB[i, hc, wewd, mth]).ToString() + "','" + (zoneWalls_QTsource[i, hc, wewd, mth] + zoneWalls_QTsource_TB[i, hc, wewd, mth]).ToString() + "'", "외피번호,난방_냉방,비이용일_이용일,월");
-
-                           
 
                             QTsink_Wall[hc, wewd, mth] += zoneWalls_QTsink[i, hc, wewd, mth];
                             QTsource_Wall[hc, wewd, mth] += zoneWalls_QTsource[i, hc, wewd, mth];
@@ -1242,19 +1228,7 @@ namespace main
                             }
                             MTH = (mth + 1).ToString() + "월";
 
-                                // Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
-                                //"난방_냉방,비이용일_이용일,월," +
-                                //"HT,HT_TB," +
-                                //"QTsink,QTsource," +
-                                //"QT_TB_sink,QT_TB_source," +
-                                //"QTsink_tot,QTsource_tot",
-                                //"'1','" + zoneroof.Num() + "','" + ZoneNum + "','" + zoneroof.CNum() + "','" + "지붕" + "','" + zoneroof.DiIndi() + "','" +
-                                // HC[hc] + "','" + WEWD[wewd] + "','" + MTH + "','" +
-                                //(zoneroof.Ueff() * zoneroof.Area()).ToString() + "','" + (Utb * zoneroof.Area()).ToString() + "','" +
-                                //zoneRoofs_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneRoofs_QTsource[i, hc, wewd, mth].ToString() + "','" +
-                                //zoneRoofs_QTsink_TB[i, hc, wewd, mth].ToString() + "','" + zoneRoofs_QTsource_TB[i, hc, wewd, mth].ToString() + "','" +
-                                //(zoneRoofs_QTsink[i, hc, wewd, mth] + zoneRoofs_QTsink_TB[i, hc, wewd, mth]).ToString() + "','" + (zoneRoofs_QTsource[i, hc, wewd, mth] + zoneRoofs_QTsource_TB[i, hc, wewd, mth]).ToString() + "'", "외피번호,난방_냉방,비이용일_이용일,월");
-                            
+                               
                             QTsink_Roof[hc, wewd, mth] += zoneRoofs_QTsink[i, hc, wewd, mth];
                             QTsource_Roof[hc, wewd, mth] += zoneRoofs_QTsource[i, hc, wewd, mth];
                             QTsink_TB[hc, wewd, mth] += zoneRoofs_QTsink_TB[i, hc, wewd, mth];
@@ -1316,19 +1290,6 @@ namespace main
                             }
 
 
-                            //    Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
-                            //    "난방_냉방,비이용일_이용일,월," +
-                            //    "HT,HT_TB," +
-                            //    "QTsink,QTsource," +
-                            //    "QT_TB_sink,QT_TB_source," +
-                            //    "QTsink_tot,QTsource_tot",
-                            //    "'1','" + zonefloor.Num() + "','" + ZoneNum + "','" + zonefloor.CNum() + "','" + "최하층바닥" + "','" + zonefloor.GroundType() + "','" +
-                            //     HC[hc] + "','" + WEWD[wewd] + "','" + (mth + 1).ToString() + "월" + "','" +
-                            //    (zonefloor.Ueff() * zonefloor.Area()).ToString() + "','" + (Utb * zonefloor.Area()).ToString() + "','" +
-                            //    zoneFloors_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneFloors_QTsource[i, hc, wewd, mth].ToString() + "','" +
-                            //    zoneFloors_QTsink_TB[i, hc, wewd, mth].ToString() + "','" + zoneFloors_QTsource_TB[i, hc, wewd, mth].ToString() + "','" +
-                            //   (zoneFloors_QTsink_TB[i, hc, wewd, mth] + zoneFloors_QTsink[i, hc, wewd, mth]).ToString() + "','" + (zoneFloors_QTsource[i, hc, wewd, mth] + zoneFloors_QTsource_TB[i, hc, wewd, mth]).ToString() + "'", "외피번호,난방_냉방,비이용일_이용일,월");
-
                             QTsink_Floor[hc, wewd, mth] += zoneFloors_QTsink[i, hc, wewd, mth];
                             QTsource_Floor[hc, wewd, mth] += zoneFloors_QTsource[i, hc, wewd, mth];
                             QTsink_TB[hc, wewd, mth] += zoneFloors_QTsink_TB[i, hc, wewd, mth];
@@ -1381,19 +1342,7 @@ namespace main
                             }
  
                                 MTH = (mth + 1).ToString() + "월";
-                                //Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
-                                //"난방_냉방,비이용일_이용일,월," +
-                                //"HT,HT_TB," +
-                                //"QTsink,QTsource," +
-                                //"QT_TB_sink,QT_TB_source," +
-                                //"QTsink_tot,QTsource_tot",
-                                //"'1','" + zonegwall.Num() + "','" + ZoneNum + "','" + zonegwall.CNum() + "','" + "외벽" + "','" + "지면" + "','" +
-                                // HC[hc] + "','" + WEWD[wewd] + "','" + MTH + "','" +
-                                //(zonegwall.Ueff() * zonegwall.Area()).ToString() + "','" + (Utb * zonegwall.Area()).ToString() + "','" +
-                                //zoneGWalls_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneGWalls_QTsource[i, hc, wewd, mth].ToString() + "','" +
-                                //zoneGWalls_QTsink_TB[i, hc, wewd, mth].ToString() + "','" + zoneGWalls_QTsource_TB[i, hc, wewd, mth].ToString() + "','" +
-                                //(zoneGWalls_QTsink[i, hc, wewd, mth] + zoneGWalls_QTsink_TB[i, hc, wewd, mth]).ToString() + "','" + (zoneGWalls_QTsource[i, hc, wewd, mth] + zoneGWalls_QTsource_TB[i, hc, wewd, mth]).ToString() + "'", "외피번호,난방_냉방,비이용일_이용일,월");
-                            
+                               
 
                             QTsink_GWall[hc, wewd, mth] += zoneGWalls_QTsink[i, hc, wewd, mth];
                             QTsource_GWall[hc, wewd, mth] += zoneGWalls_QTsource[i, hc, wewd, mth];
@@ -1459,19 +1408,6 @@ namespace main
                             }
                             MTH = (mth + 1).ToString() + "월";
 
-                                //    Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
-                                //"난방_냉방,비이용일_이용일,월," +
-                                //"HT,HT_TB," +
-                                //"QTsink,QTsource," +
-                                //"QT_TB_sink,QT_TB_source," +
-                                //"QTsink_tot,QTsource_tot",
-                                //"'1','" + zonedoor.Num() + "','" + ZoneNum + "','" + zonedoor.CNum() + "','" + "외부출입문" + "','" + zonedoor.DiIndi() + "','" +
-                                // HC[hc] + "','" + WEWD[wewd] + "','" + MTH + "','" +
-                                //(zonedoor.Ueff() * zonedoor.Area()).ToString() + "','" + (Utb * zonedoor.Area()).ToString() + "','" +
-                                //zoneDoors_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneDoors_QTsource[i, hc, wewd, mth].ToString() + "','" +
-                                //zoneDoors_QTsink_TB[i, hc, wewd, mth].ToString() + "','" + zoneDoors_QTsource_TB[i, hc, wewd, mth].ToString() + "','" +
-                                //(zoneDoors_QTsink[i, hc, wewd, mth] + zoneDoors_QTsink_TB[i, hc, wewd, mth]).ToString() + "','" + (zoneDoors_QTsource[i, hc, wewd, mth] + zoneDoors_QTsource_TB[i, hc, wewd, mth]).ToString() + "'", "외피번호,난방_냉방,비이용일_이용일,월");
-                            
 
                             QTsink_Door[hc, wewd, mth] += zoneDoors_QTsink[i, hc, wewd, mth];
                             QTsource_Door[hc, wewd, mth] += zoneDoors_QTsource[i, hc, wewd, mth];
@@ -1550,19 +1486,6 @@ namespace main
 
                             MTH = (mth + 1).ToString() + "월";
       
-                               // Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접,커튼월유형," +
-                               //"난방_냉방,비이용일_이용일,월," +
-                               // "HT,HT_TB," +
-                               // "QTsink,QTsource," +
-                               // "QT_TB_sink,QT_TB_source," +
-                               // "QTsink_tot,QTsource_tot",
-                               // "'1','" + zonecw.Num() + "','" + ZoneNum + "','" + zonecw.CNum() + "','" + "커튼월창" + "','" + "직접외기" + "','" + zonecw.CWType() + "','" +
-                               // HC[hc] + "','" + WEWD[wewd] + "','" + (mth + 1).ToString() + "월" + "','" +
-                               //(zonecw.Uvalue_g() * zonecw.Area_g()).ToString() + "','" + (zonecw.Uinst() * zonecw.Area_g()).ToString() + "','" +
-                               //zoneCWs_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneCWs_QTsource[i, hc, wewd, mth].ToString() + "','" +
-                               //zoneCWs_QTsink_TB[i, hc, wewd, mth].ToString() + "','" + zoneCWs_QTsource_TB[i, hc, wewd, mth].ToString() + "','" +
-                               //(zoneCWs_QTsink[i, hc, wewd, mth] + zoneCWs_QTsink_TB[i, hc, wewd, mth]).ToString() + "','" + (zoneCWs_QTsource[i, hc, wewd, mth] + zoneCWs_QTsource_TB[i, hc, wewd, mth]).ToString() + "'", "외피번호,난방_냉방,비이용일_이용일,월");
-                            
 
                             QTsink_CW[hc, wewd, mth] += zoneCWs_QTsink[i, hc, wewd, mth];
                             QTsource_CW[hc, wewd, mth] += zoneCWs_QTsource[i, hc, wewd, mth];
@@ -1628,19 +1551,6 @@ namespace main
                             MTH = (mth + 1).ToString() + "월";
 
           
-                                //    Program.DB.setValue(DB.type.ProjDB, "Zone_Envelope_Result", "프로젝트유형,외피번호,존번호,구조체번호,외피유형,직접간접," +
-                                //"난방_냉방,비이용일_이용일,월," +
-                                //"HT,HT_TB," +
-                                //"QTsink,QTsource," +
-                                //"QT_TB_sink,QT_TB_source," +
-                                //"QTsink_tot,QTsource_tot",
-                                //"'1','" + zonewin.Num() + "','" + ZoneNum + "','" + zonewin.CNum() + "','" + "창호" + "','" + zonewin.DiIndi() + "','" +
-                                // HC[hc] + "','" + WEWD[wewd] + "','" + MTH + "','" +
-                                //(zonewin.Uvalue() * zonewin.Area()).ToString() + "','" + (Utb * zonewin.Area()).ToString() + "','" +
-                                //zoneWins_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneWins_QTsource[i, hc, wewd, mth].ToString() + "','" +
-                                //zoneWins_QTsink_TB[i, hc, wewd, mth].ToString() + "','" + zoneWins_QTsource_TB[i, hc, wewd, mth].ToString() + "','" +
-                                //zoneWins_QTsink[i, hc, wewd, mth].ToString() + "','" + zoneWins_QTsource[i, hc, wewd, mth].ToString() + "'", "외피번호,난방_냉방,비이용일_이용일,월");
-                            
 
                             QTsink_Win[hc, wewd, mth] += zoneWins_QTsink[i, hc, wewd, mth];
                             QTsource_Win[hc, wewd, mth] += zoneWins_QTsource[i, hc, wewd, mth];

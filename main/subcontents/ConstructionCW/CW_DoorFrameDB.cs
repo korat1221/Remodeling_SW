@@ -129,6 +129,8 @@ namespace main.subcontents.ConstructionCW
                 load_table_DoorFrameDB();
                 UserNum = Program.UTIL.CreateNum("User_CWDoorFrmae", "번호", "UCWD_0");
                 UserNum_textBox.Text = UserNum;
+
+                Program.DB.saveProject();
             }
             else
             {

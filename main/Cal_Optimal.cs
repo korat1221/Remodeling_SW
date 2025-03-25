@@ -605,7 +605,7 @@
             }
             
             Save_Alt(final1, 검토유형,리모델링안);
-
+            Program.DB.saveProject();
             #endregion
 
         }

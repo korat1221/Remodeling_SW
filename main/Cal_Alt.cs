@@ -89,6 +89,8 @@ namespace main
                    Qvf_elec_a + "','" + (Qbase_elec_a + Qbase_gas_a) + "','" + Qreg_elec_a + "','" + (Qf_elec_tot_a + Qf_gas_tot_a)
                    + "'", "검토유형,번호,월,연료");
             #endregion
+
+            Program.DB.saveProject();
         }
 
 
@@ -868,6 +870,8 @@ namespace main
                 final1.Qf_gas_tot_mth[mth] = final1.Qhf_gas[mth] + final1.Qcf_gas[mth] + final1.Qwf_gas[mth] + final1.Qbase_gas[mth];
             }
             Save_Alt(final1, 검토유형);
+
+            Program.DB.saveProject();
 
             #endregion
 

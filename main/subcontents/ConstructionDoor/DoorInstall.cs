@@ -184,6 +184,7 @@ namespace main.subcontents.ConstructionDoor
                 load_table_DB();
                 UserNum = Program.UTIL.CreateNum("User_DoorInstall", "번호", "UDIS_0");
                 UserNum_textBox.Text = UserNum;
+                Program.DB.saveProject();
             }
             else
             {

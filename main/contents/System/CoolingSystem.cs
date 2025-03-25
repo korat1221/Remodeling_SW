@@ -3212,6 +3212,7 @@ namespace main.contents
             Save_ce();
             if (Save_CG() == true)
             {
+                Program.DB.saveProject();
                 this.DialogResult = DialogResult.OK;
                 this.Hide();
                 Program.getMenuForm().DoLoadForm(38, OnLoadListProc);

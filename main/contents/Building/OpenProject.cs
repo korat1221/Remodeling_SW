@@ -147,6 +147,7 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,프로젝트명,프로젝트유형,프로젝트유형번호"
                     , "'" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "','" + dataGridView1.Rows[k].Cells[3].Value.ToString() + "','" + ProjectType + "','" + ProjectTypeNum + "'"
                     , "프로젝트번호");
+            Program.DB.saveProject();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -183,6 +184,7 @@ namespace main.contents
                 Program.DB.openDB("projects\\" + ProjectList.CurProjID + ".sqlite");
                 Program.DB.initTables(DB.type.ProjDB);
                 Create_Project_GeneralData(k);
+                Program.DB.saveProject();
                 Program.getMenuForm().resetAll();
                 Program.getMenuForm().DoLoadFormDirect(0);
                 Program.UTIL.ReloadModel();

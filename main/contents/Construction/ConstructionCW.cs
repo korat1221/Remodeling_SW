@@ -1531,6 +1531,7 @@ namespace main.contents
                      법규Ucw_d.ToString()
                      + "'", "번호");
             }
+            Program.DB.saveProject();
             this.DialogResult = DialogResult.OK;
             this.Hide();
             Program.getMenuForm().DoLoadForm(30, OnLoadListProc);

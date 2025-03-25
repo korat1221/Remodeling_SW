@@ -189,6 +189,7 @@ namespace main.subcontents.ConstructionCW
                 load_table_InstallDB();
                 UserNum = Program.UTIL.CreateNum("User_CWInstall", "번호", "UCWS_0");
                 UserNum_textBox.Text = UserNum;
+                Program.DB.saveProject();
             }
             else
             {

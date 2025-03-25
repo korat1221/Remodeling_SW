@@ -246,7 +246,10 @@ namespace main.subcontents.ConstructionBlind
                     if (row.Cells[i].Value == null) { Select_Blind[i - 1] = null; }
                     else { Select_Blind[i - 1] = row.Cells[i].Value.ToString(); }
                 }
-                this.DialogResult = DialogResult.OK;
+
+            Program.DB.saveProject();
+
+            this.DialogResult = DialogResult.OK;
                 this.Close();
 
         

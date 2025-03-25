@@ -225,6 +225,7 @@ namespace main.contents
 
                 Program.DB.setValue(DB.type.ProjDB, "FuelCell_Form", "번호,프로젝트유형,명칭,연료전지,생산유형,시작시간,종료시간,사용시간,주이용일,설치대수,급탕설비,난방설비",
                 "'" + Num + "','" + 프로젝트유형 + "','" + Name + "','" + GenNumnonsplit + "','" + SupplyType + "', '" + StartTime + "','" + EndTime + "','" + Usehour + "', '" + Useday + "', '" + InstallNumbernonsplit + "', '" + WListNonsplit + "','" + HListNonsplit + "'", "번호");
+                Program.DB.saveProject();
                 return true;
             }
 

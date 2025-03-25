@@ -356,6 +356,8 @@ namespace main.subcontents.ConstructionCW
                 load_table_FrameDB();
                 UserNum = Program.UTIL.CreateNum("User_CWFrame", "번호", "UCW_0");
                 UserNum_textBox.Text = UserNum;
+
+                Program.DB.saveProject();
             }
             else
             {

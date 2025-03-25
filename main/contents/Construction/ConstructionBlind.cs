@@ -345,6 +345,7 @@ namespace main.contents
                               BlindEx.ToString() + "','" + BlindIn.ToString() + "','" + BlindSHGC.ToString() + "','" + BlindAlpha.ToString() + "','" +
                               ControlType + "','" + ControlType2 + "'", "번호");
             }
+            Program.DB.saveProject();
             this.DialogResult = DialogResult.OK;
             this.Hide();
             Program.getMenuForm().DoLoadForm(50, OnLoadListProc);

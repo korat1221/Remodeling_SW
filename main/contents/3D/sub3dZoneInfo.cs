@@ -542,7 +542,6 @@ namespace main.contents
                         ret += "{\"id0\":\"" + id + "\",\"id\":\"" + num + "\",\"type\":\"" + Type + "\",\"wtype\":\"" + CWType + "\"},";
 
                         Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,외피유형,커튼월부위", "'" + id + "','" + num + "','" + Type + "','" + CWType + "'", "아이디");
-
                     }
 
                     if (dataGridView1.Rows[i].Cells[10].Value == null)
@@ -581,6 +580,7 @@ namespace main.contents
                             ConsNum = Value[0][0];
                             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
                             Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,프로젝트유형,구조체,구조체번호", "'" + id + "','" + num + "','" + 프로젝트유형[0][0] + "','" + ConsType + "','" + ConsNum + "'", "아이디");
+
                         }
                         else { }
                     }
@@ -671,6 +671,7 @@ namespace main.contents
                 }
             }
 
+
             Program.DB.deleteTable(DB.type.ProjDB, "Shade_3D");
             string[][] Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호", "외피유형 = '창호' or 외피유형 = '커튼월창'");
             if (Win.Length > 0)
@@ -689,6 +690,8 @@ namespace main.contents
                 }
             }
             //           redrawList();
+
+            Program.DB.saveProject();
             MessageBox.Show("저장되었습니다.");
 
             return "[" + ret + "]";

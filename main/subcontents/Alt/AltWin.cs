@@ -357,6 +357,7 @@ namespace main.subcontents.Alt
                     }
                 }
 
+                Program.DB.saveProject();
             }
         }
         private double[] Cal_Ueff(string 리모델링안, string WinRemodelingType)

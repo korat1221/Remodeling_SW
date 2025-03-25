@@ -305,6 +305,7 @@ public partial class TB_DB : Form
                     + TB_dataGridView.Rows[i].Cells[6].Value + "','"
                     + TB_dataGridView.Rows[i].Cells[7].Value + "'",
                     "번호");
+                    Program.DB.saveProject();
                     MessageBox.Show("저장되었습니다.");
                 }
 
@@ -321,6 +322,7 @@ public partial class TB_DB : Form
              "'" + Value[i][0] + "','" + TBNum + "'",
              "번호");
         }
+        Program.DB.saveProject();
         this.DialogResult = DialogResult.OK;
         this.Close();
     }

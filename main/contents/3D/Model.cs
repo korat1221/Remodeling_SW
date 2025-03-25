@@ -474,6 +474,7 @@ namespace main.contents
 
                             Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름",
                          "'" + Value_Zone[0] + "','" + Value_Zone[3] + "'", "존번호");
+                            Program.DB.saveProject();
                         }
 
                     }
@@ -514,6 +515,7 @@ namespace main.contents
                           + Value_Envelope[9] + "','" + Value_Envelope[10] + "','" + Value_Envelope[11] + "','" + Value_Envelope[12] + "','" + Value_Envelope[13] + "','"
                           + Value_Envelope[14] + "','" + Value_Envelope[15] + "','" + Value_Envelope[16] + "','" + Value_Envelope[17] + "','"
                           + Value_Envelope[18] + "','" + Value_Envelope[19] + "','" + Value_Envelope[20] + "','" + Value_Envelope[21] + "'", "번호");
+
                         }
                     }
 

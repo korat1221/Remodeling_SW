@@ -546,6 +546,7 @@ namespace main.contents.Building
                           + "'", "연료,연도,월,단위");
                 }
             }
+            Program.DB.saveProject();
             MessageBox.Show("저장 되었습니다.");
         }
 

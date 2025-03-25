@@ -138,6 +138,7 @@ namespace main.subcontents.RESystem_WP
                 Program.DB.setValue(DB.type.ProjDB, "User_WPInverter", "번호,프로젝트유형,DB유형,제품명,제조사,EURO효율",
                     "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + UserDB_Name + "','" + UserDB_Manufacture + "','" + UserDB_EURO.ToString() + "'", "번호");
                 load_table_WPInverter();
+                Program.DB.saveProject();
             }
             else
             {

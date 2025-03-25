@@ -171,6 +171,7 @@ namespace main.subcontents.ZoneLighting
                 Program.DB.setValue(DB.type.ProjDB, "User_Renew", "번호,프로젝트유형,DB유형,집광채광명칭,집광채광종류,제조사,집광채광효율,산광부가로길이,산광부세로길이,산광부면적",
                     "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + UserDB_Name + "','" + UserDB_RenewType + "','" + UserDB_Manufacture + "','" + UserDB_eff.ToString() + "','" + UserDB_Length1.ToString() + "','" + UserDB_Length2.ToString() + "','" + UserDB_A.ToString() + "'", "번호");
                 load_table_RenewDB();
+                Program.DB.saveProject();
             }
             else
             {

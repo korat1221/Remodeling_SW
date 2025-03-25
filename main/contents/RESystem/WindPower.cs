@@ -293,12 +293,15 @@ namespace main.contents
                    Condition + "','" + h2 + "','" +
                    Inverter + "','" + Inverter_num + "','" + Install + "'", "번호");
 
+                Program.DB.saveProject();
+
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
                 if (Value.Length > 0)
                 {
                     CALC.WPCalc(Value[0][0]);
                     LoadGraph();
                 }
+
                 MessageBox.Show("풍력시스템" + "[" + Num + "] 정보를 저장하였습니다.");
 
                 //this.DialogResult = DialogResult.OK;
