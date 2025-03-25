@@ -6,7 +6,7 @@
 extern "C"
 {
 
-	__declspec(dllexport) void __stdcall SetProPath(LPCWSTR path);
+	__declspec(dllexport) void __stdcall SetInfo(LPCWSTR path, bool isEncrypt);
 	__declspec(dllexport) int __stdcall OpenDB(LPCWSTR path, int idx);
 	__declspec(dllexport) int __stdcall OpenMemoryDB(int idx);
 	__declspec(dllexport) int __stdcall CloseDB(int idx);

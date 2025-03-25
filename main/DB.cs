@@ -32,7 +32,7 @@ namespace main
     public class SecureSQLite
     {
         [DllImport("wrap_sqlite.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
-        static public extern void SetProPath(string path);
+        static public extern void SetInfo(string path, bool isEncrypt);
         [DllImport("wrap_sqlite.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
         static public extern int OpenDB(string path, int idx);
         [DllImport("wrap_sqlite.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
@@ -214,7 +214,7 @@ namespace main
         }
         public bool openPListDB(string? gPath)
         {
-            SecureSQLite.SetProPath(gPath);  
+            SecureSQLite.SetInfo(gPath, false);  
 
             return !!(SecureSQLite.OpenDB("projects.sqlite", (int)type.ProjListDB) == 1);
         }

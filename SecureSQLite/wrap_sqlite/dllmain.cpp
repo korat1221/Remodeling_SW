@@ -12,6 +12,7 @@
 #define PASSWORD    L"1234"
 
 std::wstring gProPath;
+bool gIsEncrypt = true;
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
@@ -126,29 +127,35 @@ void encrypt_db(std::wstring from, std::wstring to) {
     DeleteFile(from.data());
 }
 
-__declspec(dllexport) void __stdcall SetProPath(LPCWSTR path)
+__declspec(dllexport) void __stdcall SetInfo(LPCWSTR path, bool isEncrypt)
 {
+	gIsEncrypt = isEncrypt;
     gProPath = path;
 }
 
 __declspec(dllexport) int __stdcall OpenDB(LPCWSTR path, int idx)
 {
-    std::wstring p0 = gProPath + path;
-    std::wstring p = get_temp_path();
+    if (gIsEncrypt) {
+        std::wstring p0 = gProPath + path;
+        std::wstring p = get_temp_path();
 
-    if (is_sqlite_file(asUTF8(p0))) {
-        encrypt_db(p0, p);
-        DeleteFile(p0.data());
-        MoveFile(p.data(), p0.data());
+        if (is_sqlite_file(asUTF8(p0))) {
+            encrypt_db(p0, p);
+            DeleteFile(p0.data());
+            MoveFile(p.data(), p0.data());
+        }
+
+        run_app(TRUE, L"\"%sopenssl\\openssl.exe\" enc -d -aes-256-cbc -in \"%s\" -out \"%s\" -k %s", gProPath.data(), p0.data(), p.data(), PASSWORD);
+
+        int ret = db_open(asUTF8(p).c_str(), idx);
+
+        DeleteFile(p.data());
+
+        return ret;
     }
-
-    run_app(TRUE, L"\"%sopenssl\\openssl.exe\" enc -d -aes-256-cbc -in \"%s\" -out \"%s\" -k %s", gProPath.data(), p0.data(), p.data(), PASSWORD);
-
-    int ret = db_open(asUTF8(p).c_str(), idx);
-
-    DeleteFile(p.data());
-
-    return ret;
+    else {
+		return db_open(asUTF8(gProPath + path).c_str(), idx);
+    }
 }
 
 __declspec(dllexport) int __stdcall OpenMemoryDB(int idx)
@@ -163,14 +170,19 @@ __declspec(dllexport) int __stdcall CloseDB(int idx)
 
 __declspec(dllexport) int __stdcall SaveDB(LPCWSTR path, int idx)
 {
-    std::wstring p = get_temp_path();
-    int ret = db_save(asUTF8(p).c_str(), idx);
+    if (gIsEncrypt) {
+        std::wstring p = get_temp_path();
+        int ret = db_save(asUTF8(p).c_str(), idx);
 
-    encrypt_db(p, gProPath + path);
+        encrypt_db(p, gProPath + path);
 
-	DeleteFile(p.data());
+        DeleteFile(p.data());
 
-    return ret;
+        return ret;
+    }
+    else {
+        return db_save(asUTF8(gProPath + path).c_str(), idx);
+    }
 }
 
 __declspec(dllexport) WCHAR * __stdcall QuerySQL(int idx, LPCWSTR sql)
