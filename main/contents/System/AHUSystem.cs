@@ -1,31 +1,7 @@
-﻿using Eagle._Interfaces.Public;
-using main.contentslist;
+﻿using main.contentslist;
 using main.subcontents.AHUSystem;
 using main.subcontents.ConstructionCW;
-using main.subcontents.DHWSystem;
-using main.subcontents.HeatingSystem;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Drawing;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Numerics;
-using System.Reflection;
-using System.Reflection.PortableExecutable;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Linq;
-using static main.DB;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 
 namespace main.contents

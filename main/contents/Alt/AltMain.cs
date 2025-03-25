@@ -1,35 +1,8 @@
 ﻿using main.contentslist;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Net;
 using main.subcontents.Alt;
-using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
-using static main.DB;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Security.Cryptography;
-using System.Xml.Linq;
-
-using Eagle._Components.Public;
-using System.Drawing.Text;
-using System.Reflection.Metadata.Ecma335;
 using Microsoft.Web.WebView2.Core;
-using System.Collections;
-
-using Eagle._Interfaces.Public;
-using System.Runtime.Intrinsics.X86;
-using main.subcontents.EquipmentList;
-using Eagle._Hosts;
-using Eagle._Constants;
+using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 namespace main.contents.Alt
 {
     public partial class AltMain : Form

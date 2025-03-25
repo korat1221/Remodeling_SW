@@ -1,24 +1,4 @@
-﻿using Eagle._Components.Public;
-using Eagle._Constants;
-using Eagle._Interfaces.Public;
-using main.subcontents.Alt;
-using Microsoft.Office.Interop.Excel;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
-using System.Linq;
-using System.Net;
-using System.Security.Cryptography;
-using System.Security.Policy;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-
-namespace main
+﻿namespace main
 {
     internal class Cal_Optimal
     {

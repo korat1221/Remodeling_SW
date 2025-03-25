@@ -1,6 +1,4 @@
-﻿using Eagle._Components.Public;
-
-namespace main.contents
+﻿namespace main.contents
 {
     partial class sub3dWINInfo
     {

@@ -1,18 +1,4 @@
-﻿using Eagle._Components.Public;
-using Eagle._Constants;
-using main.subcontents;
-using main.subcontents.ConstructionBlind;
-using main.subcontents.ConstructionFloor;
-using Microsoft.Office.Interop.Excel;
-using System;
-using System.Collections;
-using System.Security.AccessControl;
-using System.Security.Policy;
-using System.Windows.Forms;
-using static System.Windows.Forms.MonthCalendar;
-
-
-namespace main
+﻿namespace main
 {
     internal class Cal_RESystem
     {

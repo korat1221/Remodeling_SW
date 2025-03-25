@@ -57,8 +57,9 @@ namespace main
                         CreateNoWindow = true, // this is probably optional
                         ErrorDialog = false, // this is probably optional
                         RedirectStandardOutput = true,
-                        RedirectStandardInput = true
-                    }
+                        RedirectStandardInput = true,
+                        WindowStyle = ProcessWindowStyle.Hidden
+            }
                 };
 
                 // register for the output (for reading the output)

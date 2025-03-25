@@ -1,15 +1,8 @@
-﻿using Eagle._Components.Public;
-using Eagle._Interfaces.Public;
-using main.contents;
-using System;
+﻿using main.contents;
 using System.Data;
 using System.Drawing.Text;
-using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
-using System.Xml.Linq;
-using System.Xml.Schema;
 
 namespace main
 {

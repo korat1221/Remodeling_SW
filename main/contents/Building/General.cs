@@ -1,29 +1,5 @@
-﻿using main.contentslist;
-using System;
+﻿using main.info;
 using main.subcontents.BuildingGeneral;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Net;
-using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
-using static main.DB;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Security.Cryptography;
-using System.Xml.Linq;
-
-using Eagle._Components.Public;
-using System.Drawing.Text;
-using main.subcontents.HeatingSystem;
-using System.Text.RegularExpressions;
-using main.info;
 
 namespace main.contents
 {

@@ -1,27 +1,6 @@
-﻿using Eagle._Components.Public;
-using Eagle._Interfaces.Public;
-using main.contentslist;
-using main.subcontents;
-using main.subcontents.ConstructionRoof;
-using main.subcontents.HeatingSystem;
+﻿using main.contentslist;
 using main.subcontents.RESystem_WP;
-using main.subcontents.ThermalBridge;
 using Microsoft.Web.WebView2.Core;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Drawing;
-using System.Linq;
-using System.Net;
-using System.Numerics;
-using System.Reflection.PortableExecutable;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace main.contents
 {

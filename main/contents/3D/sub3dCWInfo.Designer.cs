@@ -1,7 +1,4 @@
-﻿using Eagle._Components.Public;
-using Eagle._Interfaces.Public;
-
-namespace main.contents
+﻿namespace main.contents
 {
     partial class sub3dCWInfo
     {

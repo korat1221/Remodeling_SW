@@ -1,25 +1,4 @@
-﻿using main.subcontents.HeatingSystem;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static CustomComboBox;
-using static main.MainContents;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using main.subcontents.ThermalBridge;
-using static System.ComponentModel.Design.ObjectSelectorEditor;
-using static main.DB;
-using Eagle._Components.Public;
-using System.Diagnostics.Eventing.Reader;
-
-
-namespace main.contents
+﻿namespace main.contents
 {
     public partial class TB_property : Form
     {

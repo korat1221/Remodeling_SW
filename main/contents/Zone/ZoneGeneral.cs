@@ -1,27 +1,8 @@
 ﻿using main.contentslist;
-using System;
 using main.subcontents.AHUSystem;
 using main.subcontents.ZoneGeneral;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SQLite;
-using System.Diagnostics.Eventing.Reader;
-using System.Drawing;
-using System.Linq;
-using System.Net.Sockets;
-using System.Security.AccessControl;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Xml.Linq;
-using static System.Windows.Forms.MonthCalendar;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using main.subcontents.HeatingSystem;
 using System.Collections;
-using Eagle._Components.Public;
+using System.Data;
 
 namespace main.contents
 {
