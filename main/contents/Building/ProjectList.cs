@@ -195,10 +195,7 @@ namespace main.contents
                 }
                 string pid = AddProject(pid0, title0);
 
-                SQLiteConnection db = new SQLiteConnection(@"Data Source=" + Program.gPath + "projects\\" + pid + ".sqlite");
-                db.Open();
-
-                string[][] res = Program.DB.querySQL(db, "SELECT name FROM sqlite_master WHERE type IN('table', 'view') AND name NOT LIKE 'sqlite_%' UNION ALL SELECT name FROM sqlite_temp_master WHERE type IN('table', 'view') ORDER BY 1");
+                string[][] res = Program.DB.querySQL(pid, "SELECT name FROM sqlite_master WHERE type IN('table', 'view') AND name NOT LIKE 'sqlite_%' UNION ALL SELECT name FROM sqlite_temp_master WHERE type IN('table', 'view') ORDER BY 1");
                 if (res.Length > 0)
                 {
                     for (int n = 0; n < res.Length; n++)
@@ -207,13 +204,12 @@ namespace main.contents
 
                         if (projectcopy.tables.Find(p => p == table) == null)
                         {
-                            Program.DB.executeSQL(db, "DROP TABLE " + table);
+                            Program.DB.executeSQL(pid, "DROP TABLE " + table);
                         }
                     }
 
-                    Program.DB.executeSQL(db, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "', 프로젝트유형='" + types[ProjectType] + "', 프로젝트유형번호='" + ProjectType + "'");
-                    Program.DB.executeSQL(db, "UPDATE BuildingGeneral SET 기존프로젝트 ='" + pid0 + "' WHERE  프로젝트번호 = '" + pid + "'");
-                    db.Close();
+                    Program.DB.executeSQL(pid, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "', 프로젝트유형='" + types[ProjectType] + "', 프로젝트유형번호='" + ProjectType + "'");
+                    Program.DB.executeSQL(pid, "UPDATE BuildingGeneral SET 기존프로젝트 ='" + pid0 + "' WHERE  프로젝트번호 = '" + pid + "'");
                 }
 
 
@@ -281,10 +277,7 @@ namespace main.contents
                 {
                     string pid = AddProject(pid0, dataGridView1.Rows[k].Cells[3].Value.ToString());
 
-                    SQLiteConnection db = new SQLiteConnection(@"Data Source=" + Program.gPath + "projects\\" + pid + ".sqlite");
-                    db.Open();
-
-                    string[][] res = Program.DB.querySQL(db, "SELECT name FROM sqlite_master WHERE type IN('table', 'view') AND name NOT LIKE 'sqlite_%' UNION ALL SELECT name FROM sqlite_temp_master WHERE type IN('table', 'view') ORDER BY 1");
+                    string[][] res = Program.DB.querySQL(pid, "SELECT name FROM sqlite_master WHERE type IN('table', 'view') AND name NOT LIKE 'sqlite_%' UNION ALL SELECT name FROM sqlite_temp_master WHERE type IN('table', 'view') ORDER BY 1");
                     if (res.Length > 0)
                     {
                         for (int n = 0; n < res.Length; n++)
@@ -293,12 +286,11 @@ namespace main.contents
 
                             if (projectcopy.tables.Find(p => p == table) == null)
                             {
-                                Program.DB.executeSQL(db, "DROP TABLE " + table);
+                                Program.DB.executeSQL(pid, "DROP TABLE " + table);
                             }
                         }
 
-                        Program.DB.executeSQL(db, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "', 프로젝트유형='" + types[ProjectType] + "', 프로젝트유형번호='" + ProjectType + "'");
-                        db.Close();
+                        Program.DB.executeSQL(pid, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "', 프로젝트유형='" + types[ProjectType] + "', 프로젝트유형번호='" + ProjectType + "'");
                     }
 
 

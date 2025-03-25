@@ -21,7 +21,7 @@ namespace main
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            if (Program.DB.openPListDB())
+            if (Program.DB.openPListDB(Program.gPath))
             {
                 string[][] res = Program.DB.querySQL(DB.type.ProjListDB, "SELECT pnum FROM projects WHERE current= 1");
 

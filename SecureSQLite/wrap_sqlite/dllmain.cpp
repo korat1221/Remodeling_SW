@@ -4,6 +4,14 @@
 #include "wrap_sqlite3.h"
 #include "json/json.h"
 #include "utf8.h"
+#include <io.h>
+#include <fstream>
+#include <iostream>
+#include <string>
+
+#define PASSWORD    L"1234"
+
+std::wstring gProPath;
 
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
@@ -12,7 +20,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 {
     switch (ul_reason_for_call)
     {
-    case DLL_PROCESS_ATTACH: 
+    case DLL_PROCESS_ATTACH:
     case DLL_THREAD_ATTACH:
     case DLL_THREAD_DETACH:
     case DLL_PROCESS_DETACH:
@@ -21,14 +29,126 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     return TRUE;
 }
 
+const std::wstring get_temp_path(std::wstring out = std::wstring(L""))
+{
+    WCHAR path[MAX_PATH] = { 0, };
+    WCHAR file[MAX_PATH] = { 0, };
+
+    GetTempPath(MAX_PATH, path);
+    GetTempFileName(path, TEXT("__"), 0, file);
+
+	out = file;
+    return out;
+}
+
+void run_app(BOOL bWait, const std::wstring fmt, ...) {
+    int size = ((int)fmt.size()) * 2;    
+    std::wstring buffer;    
+    va_list ap;    
+    
+    while (1) { 
+        buffer.resize(size);        
+        va_start(ap, fmt);        
+        int n = _vsnwprintf_s((WCHAR*)buffer.data(), buffer.size(), _TRUNCATE, fmt.c_str(), ap);        
+        va_end(ap);        
+        if (n > -1 && n < size) { 
+            buffer.resize(n);            
+            break;
+        }        
+        if (n > -1)   
+            size = n + 1;  
+        else   
+            size *= 2;
+    } 
+
+    STARTUPINFO StartupInfo = { 0 };
+    PROCESS_INFORMATION ProcessInfo;
+
+    StartupInfo.cb = sizeof(STARTUPINFO);
+    StartupInfo.dwFlags = STARTF_USESHOWWINDOW;
+
+    if (CreateProcess(NULL, (LPWSTR)buffer.c_str(), NULL, NULL, FALSE, 0, NULL, NULL, &StartupInfo, &ProcessInfo)) {
+        if (bWait) WaitForSingleObject(ProcessInfo.hProcess, INFINITE);
+        CloseHandle(ProcessInfo.hThread);
+        CloseHandle(ProcessInfo.hProcess);
+    }
+}
+
+bool read_header(FILE* db)
+{
+    uint8_t sql_buf[100] = { 0 };
+
+    /* load the header */
+    if (fread(sql_buf, 100, 1, db) != 1) {
+        return false;
+    }
+
+    /* verify that we have a proper header */
+    if (strcmp((char*)sql_buf, "SQLite format 3") != 0) {
+        return false;
+    }
+
+    return true;
+}
+
+bool is_sqlite_file(std::string path) 
+{
+    FILE* f_input;
+
+    errno_t err = fopen_s(&f_input, path.data(), "rb");
+    if (err != 0) {
+        /* Unable to open file for reading */
+        return false;
+    }
+
+    bool ret = read_header(f_input);
+
+    fclose(f_input);
+
+    return ret;
+}
+
+std::string asUTF8(std::wstring text) {
+    std::string s;
+    utf8::utf16to8(text.begin(), text.end(), std::back_inserter(s));
+    return s;
+}
+
+std::wstring asUTF16(std::string text) {
+	std::wstring s;
+	utf8::utf8to16(text.begin(), text.end(), std::back_inserter(s));
+	return s;
+}
+
+void encrypt_db(std::wstring from, std::wstring to) {
+    DeleteFile(to.data());
+    run_app(TRUE, L"\"%sopenssl\\openssl.exe\" enc -aes-256-cbc -salt -in \"%s\" -out \"%s\" -k %s", gProPath.data(), from.data(), to.data(), PASSWORD);
+    DeleteFile(from.data());
+}
+
+__declspec(dllexport) void __stdcall SetProPath(LPCWSTR path)
+{
+    gProPath = path;
+}
+
 __declspec(dllexport) int __stdcall OpenDB(LPCWSTR path, int idx)
 {
-    std::wstring path0 = path;
-    std::string s;
+    std::wstring p0 = gProPath + path;
+    std::wstring p = get_temp_path();
 
-    utf8::utf16to8(path0.begin(), path0.end(), std::back_inserter(s));
+    if (is_sqlite_file(asUTF8(p0))) {
+        encrypt_db(p0, p);
+        DeleteFile(p0.data());
+        MoveFile(p.data(), p0.data());
+    }
 
-    return db_open(s.c_str(), idx);
+    run_app(TRUE, L"\"%sopenssl\\openssl.exe\" enc -d -aes-256-cbc -in \"%s\" -out \"%s\" -k %s", gProPath.data(), p0.data(), p.data(), PASSWORD);
+
+    int ret = db_open(asUTF8(p).c_str(), idx);
+
+    DeleteFile(p.data());
+
+    return ret;
 }
 
 __declspec(dllexport) int __stdcall OpenMemoryDB(int idx)
@@ -43,23 +163,21 @@ __declspec(dllexport) int __stdcall CloseDB(int idx)
 
 __declspec(dllexport) int __stdcall SaveDB(LPCWSTR path, int idx)
 {
-    std::wstring path0 = path;
-    std::string s;
+    std::wstring p = get_temp_path();
+    int ret = db_save(asUTF8(p).c_str(), idx);
 
-    utf8::utf16to8(path0.begin(), path0.end(), std::back_inserter(s));
+    encrypt_db(p, gProPath + path);
 
-    return db_save(s.c_str(), idx);
+	DeleteFile(p.data());
+
+    return ret;
 }
 
 __declspec(dllexport) WCHAR * __stdcall QuerySQL(int idx, LPCWSTR sql)
 {
-    std::string s;
-    std::wstring ret;
-    std::wstring sql0 = sql;
+    std::wstring ret = L"[]";
 
-    utf8::utf16to8(sql0.begin(), sql0.end(), std::back_inserter(s));
-
-    if (!db_query_sql(idx, s.c_str())) {
+    if (!db_query_sql(idx, asUTF8(sql).c_str())) {
         int r = 0, c, rows = DB_ROW_COUNT(idx), columns = DB_COL_COUNT(idx);
 
 		if (r < rows) {
@@ -76,14 +194,8 @@ __declspec(dllexport) WCHAR * __stdcall QuerySQL(int idx, LPCWSTR sql)
                 }
                 jData.append(jVal);
             }
-            s = write.write(jData);
-
-            utf8::utf8to16(s.begin(), s.end(), std::back_inserter(ret));
+            ret = asUTF16(write.write(jData));
         }
-    }
-
-    if (ret.empty()) {
-        ret = L"[]";
     }
 
     int len = (ret.size() + 1) * sizeof(WCHAR);
@@ -99,10 +211,5 @@ __declspec(dllexport) WCHAR * __stdcall QuerySQL(int idx, LPCWSTR sql)
 
 __declspec(dllexport) int __stdcall ExecuteSQL(int idx, LPCWSTR sql)
 {
-    std::string s;
-    std::wstring sql0 = sql;
-
-    utf8::utf16to8(sql0.begin(), sql0.end(), std::back_inserter(s));
-
-    return db_execute_sql(idx, s.c_str());
+    return db_execute_sql(idx, asUTF8(sql).c_str());
 }

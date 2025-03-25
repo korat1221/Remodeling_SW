@@ -1,6 +1,6 @@
-﻿//#define INMEMORY_DB
+﻿using Newtonsoft.Json;
 using System.Data;
-using System.Data.SQLite;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 /* 
@@ -31,15 +31,19 @@ namespace main
 {
     public class SecureSQLite
     {
-        [DllImport("wrap_sqlite.dll")]
-        static public extern string OpenDB(string sql, int idx);
+        [DllImport("wrap_sqlite.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+        static public extern void SetProPath(string path);
+        [DllImport("wrap_sqlite.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+        static public extern int OpenDB(string path, int idx);
+        [DllImport("wrap_sqlite.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+        static public extern int OpenMemoryDB(int idx);
         [DllImport("wrap_sqlite.dll")]
         static public extern int CloseDB(int idx);
-        [DllImport("wrap_sqlite.dll")]
+        [DllImport("wrap_sqlite.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
         static public extern int SaveDB(string path, int idx);
-        [DllImport("wrap_sqlite.dll")]
-        static public extern string QuerySQL(int idx, string sql);
-        [DllImport("wrap_sqlite.dll")]
+        [DllImport("wrap_sqlite.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+        static public extern IntPtr QuerySQL(int idx, string sql);
+        [DllImport("wrap_sqlite.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
         static public extern int ExecuteSQL(int idx, string sql);
     }
 
@@ -47,7 +51,7 @@ namespace main
     {
         public enum type
         {
-            BaseDB_HCneed,
+            BaseDB_HCneed = 0,
             BaseDB_Lighting,
             BaseDB_Heating,
             BaseDB_Cooling,
@@ -60,8 +64,10 @@ namespace main
 
         }
 
-        private string PASSWORD = "abcd";
+        //    private string PASSWORD = "abcd";
+        private const int customDB = 12;
         private bool useCaches = false;
+        private string projDBPath = "";
         private Dictionary<type, Dictionary<string, string[][]>> caches = new Dictionary<type, Dictionary<string, string[][]>>();
         private Dictionary<string, Dictionary<string, string[][]>> caches2 = new Dictionary<string, Dictionary<string, string[][]>>();
         private Dictionary<string, string> tables = new Dictionary<string, string>()
@@ -167,442 +173,73 @@ namespace main
             {"Optimal_PreResult", "CREATE TABLE IF NOT EXISTS Optimal_PreResult (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32),검토유형 VARCHAR (32),리모델링안 VARCHAR (32),리모델링값유형 VARCHAR (32),리모델링값 VARCHAR (32),순공사비 VARCHAR (32),재료비 VARCHAR (32),노무비 VARCHAR (32),경비 VARCHAR (32),에너지절감량 VARCHAR (32),에너지절감률 VARCHAR (32),에너지점수 VARCHAR (32),쾌적성점수 VARCHAR (32),적법성점수 VARCHAR (32),경제성점수 VARCHAR (32),종합점수 REAL)"}
         };
 
-        private SQLiteConnection? baseDB_hcneed, baseDB_lighting, baseDB_heating, baseDB_cooling, baseDB_ahu, baseDB_resystem, baseDB_optimal, projDB, calcDB, proj_listDB;
-
-#if INMEMORY_DB
-        private string gProjFName = "";
-
-        private SQLiteConnection openDBInMemry(string fname)
-        {
-            var memory = new SQLiteConnection(@"Data Source=:memory:");
-            var file = new SQLiteConnection(@"Data Source=" + fname);
-
-            memory.Open();
-            file.Open();
-
-            file.BackupDatabase(memory, "main", "main", -1, null, 0);
-
-            file.Close();
-
-            return memory;
-        }
-
-#endif
+        Dictionary<type, string> dbnames = new Dictionary<type, string>() {
+            {type.BaseDB_HCneed, "basedb_hcneed.sqlite"},
+            {type.BaseDB_Lighting, "basedb_lighting.sqlite"},
+            {type.BaseDB_Heating, "basedb_heating.sqlite"},
+            {type.BaseDB_Cooling, "basedb_cooling.sqlite"},
+            {type.BaseDB_AHU, "basedb_ahu.sqlite"},
+            {type.BaseDB_RESystem, "basedb_resystem.sqlite"},
+            {type.BaseDB_Optimal, "basedb_optimal.sqlite"}
+        };
 
         public bool openDB(string projPath)
         {
-#if INMEMORY_DB
-            gProjFName = projPath;
-#endif
-            //AppDomain.CurrentDomain.SetData(string.Format(
-            //    "462734ae-de3e-43e1-9eab-fb5282b94c59_{0}",
-            //    System.Diagnostics.Process.GetCurrentProcess().Id),
-            //    "IPAZEB <info@ipazeb.org>");
-
-            //SQLiteCommand.Execute(
-            //    "PRAGMA activate_extensions='see-7bb07b8d471d642e';",
-            //    SQLiteExecuteType.NonQuery,
-            //    "Data Source=:memory:;");
-
-            //SQLiteCommand.Execute( /* SELF-TEST */
-            //    "SELECT COUNT(*) FROM sqlite_schema;",
-            //    SQLiteExecuteType.Scalar,
-            //    "Data Source=:memory:;Password=1234;");
-
-            /*
-             * NOTE: Use only the file name here, which indicates
-             *       that an embedded assembly resource is being
-             *       used.
-             */
-            Environment.SetEnvironmentVariable(
-                "Override_SEE_Certificate", "SDS-SEE.exml");
-
-
-            closeDB();
-
-            SQLiteCommand cmd = new SQLiteCommand();
-            
-            //요구량 baseDB
-            if (GetFileSize("basedb_hcneed.sqlite") > 0)
+            foreach (var dbname in dbnames)
             {
-#if INMEMORY_DB
-
-                baseDB_hcneed = openDBInMemry("basedb_hcneed.sqlite");
-#else
-#if !DEBUG
-                baseDB_hcneed = new SQLiteConnection(@"Data Source=baseDB_hcneed.sqlite;Password=" + PASSWORD);
-#else
-                baseDB_hcneed = new SQLiteConnection(@"Data Source=baseDB_hcneed.sqlite");
-#endif
-
-                baseDB_hcneed.Open();
-#endif
-
-                if (baseDB_hcneed.State != ConnectionState.Open)
-                {
-                    return false;
-                }
-
-                cmd.Connection = baseDB_hcneed;
-                cmd.CommandText = "PRAGMA synchronous=OFF";
-                cmd.ExecuteNonQuery();
-                cmd.CommandText = "PRAGMA journal_mode=OFF";
-                cmd.ExecuteNonQuery();
-            }
-            else
-            {
-                return false;
+                SecureSQLite.OpenDB(dbname.Value, (int)dbname.Key);
             }
 
-            //조명 baseDB
-            if (GetFileSize("basedb_lighting.sqlite") > 0)
-            {
-#if INMEMORY_DB
-                baseDB_lighting = openDBInMemry("basedb_lighting.sqlite");
-#else
-#if !DEBUG
-                baseDB_lighting = new SQLiteConnection(@"Data Source=basedb_lighting.sqlite;Password=" + PASSWORD);
-#else
-                baseDB_lighting = new SQLiteConnection(@"Data Source=basedb_lighting.sqlite");
-#endif
-
-                baseDB_lighting.Open();
-#endif
-
-                if (baseDB_lighting.State != ConnectionState.Open)
-                {
-                    return false;
-                }
-
-                cmd.Connection = baseDB_lighting;
-                cmd.CommandText = "PRAGMA synchronous=OFF";
-                cmd.ExecuteNonQuery();
-                cmd.CommandText = "PRAGMA journal_mode=OFF";
-                cmd.ExecuteNonQuery();
-            }
-            else
-            {
-                return false;
-            }
-            //난방 baseDB
-            if (GetFileSize("basedb_heating.sqlite") > 0)
-            {
-#if INMEMORY_DB
-                baseDB_heating = openDBInMemry("basedb_heating.sqlite");
-#else
-
-#if !DEBUG
-                baseDB_heating = new SQLiteConnection(@"Data Source=basedb_heating.sqlite;Password=" + PASSWORD);
-#else
-                baseDB_heating = new SQLiteConnection(@"Data Source=basedb_heating.sqlite");
-#endif
-                baseDB_heating.Open();
-#endif
-
-                if (baseDB_heating.State != ConnectionState.Open)
-                {
-                    return false;
-                }
-
-                cmd.Connection = baseDB_heating;
-                cmd.CommandText = "PRAGMA synchronous=OFF";
-                cmd.ExecuteNonQuery();
-                cmd.CommandText = "PRAGMA journal_mode=OFF";
-                cmd.ExecuteNonQuery();
-            }
-            else
-            {
-                return false;
-            }
-            //냉방 baseDB
-            if (GetFileSize("basedb_cooling.sqlite") > 0)
-            {
-#if INMEMORY_DB
-                baseDB_cooling = openDBInMemry("basedb_cooling.sqlite");
-#else
-#if !DEBUG
-
-                baseDB_cooling = new SQLiteConnection(@"Data Source=basedb_cooling.sqlite;Password=" + PASSWORD);
-#else
-                baseDB_cooling = new SQLiteConnection(@"Data Source=basedb_cooling.sqlite");
-#endif
-                baseDB_cooling.Open();
-#endif
-
-                if (baseDB_cooling.State != ConnectionState.Open)
-                {
-                    return false;
-                }
-
-                cmd.Connection = baseDB_cooling;
-                cmd.CommandText = "PRAGMA synchronous=OFF";
-                cmd.ExecuteNonQuery();
-                cmd.CommandText = "PRAGMA journal_mode=OFF";
-                cmd.ExecuteNonQuery();
-            }
-            else
-            {
-                return false;
-            }
-
-            //공조기 baseDB
-            if (GetFileSize("basedb_ahu.sqlite") > 0)
-            {
-#if INMEMORY_DB
-                baseDB_ahu = openDBInMemry("basedb_ahu.sqlite");
-#else
-#if !DEBUG
-
-                baseDB_ahu = new SQLiteConnection(@"Data Source=basedb_ahu.sqlite;Password=" + PASSWORD);
-#else
-                baseDB_ahu = new SQLiteConnection(@"Data Source=basedb_ahu.sqlite");
-#endif
-                baseDB_ahu.Open();
-#endif
-
-                if (baseDB_ahu.State != ConnectionState.Open)
-                {
-                    return false;
-                }
-
-                cmd.Connection = baseDB_ahu;
-                cmd.CommandText = "PRAGMA synchronous=OFF";
-                cmd.ExecuteNonQuery();
-                cmd.CommandText = "PRAGMA journal_mode=OFF";
-                cmd.ExecuteNonQuery();
-            }
-            else
-            {
-                return false;
-            }
-            //신재생 baseDB
-            if (GetFileSize("basedb_resystem.sqlite") > 0)
-            {
-#if INMEMORY_DB
-                baseDB_resystem = openDBInMemry("basedb_resystem.sqlite");
-#else
-#if !DEBUG
-                baseDB_resystem = new SQLiteConnection(@"Data Source=basedb_resystem.sqlite;Password=" + PASSWORD);
-#else
-                baseDB_resystem = new SQLiteConnection(@"Data Source=basedb_resystem.sqlite");
-#endif
-                baseDB_resystem.Open();
-#endif
-
-                if (baseDB_resystem.State != ConnectionState.Open)
-                {
-                    return false;
-                }
-
-                cmd.Connection = baseDB_resystem;
-                cmd.CommandText = "PRAGMA synchronous=OFF";
-                cmd.ExecuteNonQuery();
-                cmd.CommandText = "PRAGMA journal_mode=OFF";
-                cmd.ExecuteNonQuery();
-            }
-            else
-            {
-                return false;
-            }
-            //최적안 baseDB
-            if (GetFileSize("basedb_optimal.sqlite") > 0)
-            {
-#if INMEMORY_DB
-                baseDB_optimal = openDBInMemry("baseDB_optimal.sqlite");
-#else
-#if !DEBUG
-
-                baseDB_optimal = new SQLiteConnection(@"Data Source=baseDB_optimal.sqlite;Password=" + PASSWORD);
-#else
-                baseDB_optimal = new SQLiteConnection(@"Data Source=basedb_optimal.sqlite");
-#endif
-                baseDB_optimal.Open();
-#endif
-
-                if (baseDB_optimal.State != ConnectionState.Open)
-                {
-                    return false;
-                }
-
-                cmd.Connection = baseDB_optimal;
-                cmd.CommandText = "PRAGMA synchronous=OFF";
-                cmd.ExecuteNonQuery();
-                cmd.CommandText = "PRAGMA journal_mode=OFF";
-                cmd.ExecuteNonQuery();
-            }
-            else
-            {
-                return false;
-            }
             if (GetFileSize(projPath) <= 0)
             {
-//#if !DEBUG
-//                projDB = new SQLiteConnection(@"Data Source=" + projPath);
-//                projDB.SetPassword(PASSWORD);
-//                projDB.Open();
-//                projDB.Close();
-//                projDB.Dispose();
-//#else
                 File.Copy("templ.sqlite", projPath, true);
-//#endif
-
             }
 
-#if INMEMORY_DB
-            projDB = openDBInMemry(projPath);
-#else
-//#if !DEBUG
-
-//            projDB = new SQLiteConnection(@"Data Source=" + projPath + ";Password=" + PASSWORD);
-//#else
-            projDB = new SQLiteConnection(@"Data Source=" + projPath);
-//#endif
-            projDB.Open();
-#endif
-
-            if (projDB.State != ConnectionState.Open)
+            if (SecureSQLite.OpenDB(projPath, (int)type.ProjDB) != 1)
             {
-                baseDB_hcneed.Close();
-                baseDB_hcneed.Dispose();
-
-                baseDB_lighting.Close();
-                baseDB_lighting.Dispose();
-
-                baseDB_heating.Close();
-                baseDB_heating.Dispose();
-
-                baseDB_cooling.Close();
-                baseDB_cooling.Dispose();
-
-                baseDB_ahu.Close();
-                baseDB_ahu.Dispose();
-
-                baseDB_resystem.Close();
-                baseDB_resystem.Dispose();
-
-                baseDB_optimal.Close();
-                baseDB_optimal.Dispose();
-
+                closeBaseDB();
                 return false;
             }
 
-            cmd.Connection = projDB;
-            cmd.CommandText = "PRAGMA synchronous=OFF";
-            cmd.ExecuteNonQuery();
-            cmd.CommandText = "PRAGMA journal_mode=OFF";
-            cmd.ExecuteNonQuery();
-
-            calcDB = new SQLiteConnection(@"Data Source=:memory:");
-            calcDB.Open();
-            if (calcDB.State != ConnectionState.Open)
+            if (SecureSQLite.OpenMemoryDB((int)type.CalcDB) != 1)
             {
-                baseDB_hcneed.Close();
-                baseDB_hcneed.Dispose();
-
-                baseDB_lighting.Close();
-                baseDB_lighting.Dispose();
-
-                baseDB_heating.Close();
-                baseDB_heating.Dispose();
-
-                baseDB_cooling.Close();
-                baseDB_cooling.Dispose();
-
-                baseDB_ahu.Close();
-                baseDB_ahu.Dispose();
-
-                baseDB_resystem.Close();
-                baseDB_resystem.Dispose();
-
-                baseDB_optimal.Close();
-                baseDB_optimal.Dispose();
-
-                projDB.Close();
-                projDB.Dispose();
+                closeBaseDB();
+                SecureSQLite.CloseDB((int)type.ProjDB);
                 return false;
             }
+
+            projDBPath = projPath;
 
             return true;
         }
-        public bool openPListDB()
+        public bool openPListDB(string? gPath)
         {
-            proj_listDB = new SQLiteConnection(@"Data Source=projects.sqlite");
-            proj_listDB.Open();
+            SecureSQLite.SetProPath(gPath);  
 
-            return !!(proj_listDB.State == ConnectionState.Open);
+            return !!(SecureSQLite.OpenDB("projects.sqlite", (int)type.ProjListDB) == 1);
         }
         public void closePListDB()
         {
-            if (proj_listDB != null)
+            SecureSQLite.SaveDB("projects.sqlite", (int)type.ProjListDB);
+            SecureSQLite.CloseDB((int)type.ProjListDB);
+        }
+        public void closeBaseDB()
+        {
+            foreach (var dbname in dbnames)
             {
-                proj_listDB.Close();
-                proj_listDB.Dispose();
+                SecureSQLite.CloseDB((int)dbname.Key);
             }
         }
         public void closeDB()
         {
-            if (baseDB_hcneed != null)
-            {
-                baseDB_hcneed.Close();
-                baseDB_hcneed.Dispose();
-            }
-            if (baseDB_lighting != null)
-            {
-                baseDB_lighting.Close();
-                baseDB_lighting.Dispose();
-            }
-            if (baseDB_heating != null)
-            {
-                baseDB_heating.Close();
-                baseDB_heating.Dispose();
-            }
-            if (baseDB_cooling != null)
-            {
-                baseDB_cooling.Close();
-                baseDB_cooling.Dispose();
-            }
-            if (baseDB_ahu != null)
-            {
-                baseDB_ahu.Close();
-                baseDB_ahu.Dispose();
-            }
-            if (baseDB_resystem != null)
-            {
-                baseDB_resystem.Close();
-                baseDB_resystem.Dispose();
-            }
-            if (baseDB_optimal != null)
-            {
-                baseDB_optimal.Close();
-                baseDB_optimal.Dispose();
-            }
-            if (projDB != null)
-            {
-#if INMEMORY_DB
-                saveProject();
-#endif
-                projDB.Close();
-                projDB.Dispose();
-            }
+            closeBaseDB();
 
-            if (calcDB != null)
-            {
-                calcDB.Close();
-                calcDB.Dispose();
-            }
+            SecureSQLite.CloseDB((int)type.ProjDB);
+            SecureSQLite.CloseDB((int)type.CalcDB);
         }
         public void saveProject()
         {
-#if INMEMORY_DB
-            if (gProjFName != "")
-            {
-                var file = new SQLiteConnection(@"Data Source=" + gProjFName);
-
-                file.Open();
-                projDB.BackupDatabase(file, "main", "main", -1, null, 0);
-                file.Close();
-            }
-#endif
+            SecureSQLite.SaveDB(projDBPath, (int)type.ProjDB);
         }
 
         public void initTable (type dbType, string table)
@@ -631,109 +268,34 @@ namespace main
                 MessageBox.Show(e.Message);
             }
         }
-        public void executeSQL(SQLiteConnection db, string exec)
-        {
-            if (exec != "")
-            {
-                SQLiteCommand cmd = new SQLiteCommand(exec, db);
-                cmd.ExecuteNonQuery();
-            }
-        }
         public void executeSQL(type dbType, string exec)
         {
             if (exec != "")
             {
-                switch (dbType)
-                {
-                    case type.BaseDB_HCneed:
-                        {
-                            SQLiteCommand cmd = new SQLiteCommand(exec, baseDB_hcneed);
-                            cmd.ExecuteNonQuery();
-                        }
-                        break;
-                    case type.BaseDB_Lighting:
-                        {
-                            SQLiteCommand cmd = new SQLiteCommand(exec, baseDB_lighting);
-                            cmd.ExecuteNonQuery();
-                        }
-                        break;
-                    case type.BaseDB_Heating:
-                        {
-                            SQLiteCommand cmd = new SQLiteCommand(exec, baseDB_heating);
-                            cmd.ExecuteNonQuery();
-                        }
-                        break;
-                    case type.BaseDB_Cooling:
-                        {
-                            SQLiteCommand cmd = new SQLiteCommand(exec, baseDB_cooling);
-                            cmd.ExecuteNonQuery();
-                        }
-                        break;
-                    case type.BaseDB_AHU:
-                        {
-                            SQLiteCommand cmd = new SQLiteCommand(exec, baseDB_ahu);
-                            cmd.ExecuteNonQuery();
-                        }
-                        break;
-                    case type.BaseDB_RESystem:
-                        {
-                            SQLiteCommand cmd = new SQLiteCommand(exec, baseDB_resystem);
-                            cmd.ExecuteNonQuery();
-                        }
-                        break;
-                    case type.BaseDB_Optimal:
-                        {
-                            SQLiteCommand cmd = new SQLiteCommand(exec, baseDB_optimal);
-                            cmd.ExecuteNonQuery();
-                        }
-                        break;
-                    case type.ProjDB:
-                        {
-                            SQLiteCommand cmd = new SQLiteCommand(exec, projDB);
-                            cmd.ExecuteNonQuery();
-                        }
-                        break;
-                    case type.ProjListDB:
-                        {
-                            SQLiteCommand cmd = new SQLiteCommand(exec, proj_listDB);
-                            cmd.ExecuteNonQuery();
-                        }
-                        break;
-                    case type.CalcDB:
-                        {
-                            SQLiteCommand cmd = new SQLiteCommand(exec, calcDB);
-                            cmd.ExecuteNonQuery();
-                        }
-                        break;
-                }
+                SecureSQLite.ExecuteSQL((int)dbType, exec);
             }
         }
-        public string[][] querySQL(SQLiteConnection db, string query)
+        public void executeSQL(string projName, string query)
         {
-            SQLiteCommand cmd = new SQLiteCommand();
-            List<string[]> objects = new List<string[]>();
-
-            cmd.Connection = db;
-
-            cmd.CommandText = query;
-
-            using (SQLiteDataReader reader = cmd.ExecuteReader())
+            if (SecureSQLite.OpenDB("projects\\" + projName + ".sqlite", customDB) == 1)
             {
-                string json = string.Empty;
-
-                while (reader.Read())
-                {
-                    string[] rec = new string[reader.FieldCount];
-
-                    for (int i = 0; i < reader.FieldCount; i++)
-                    {
-                        rec[i] = reader[i].ToString();
-                    }
-                    objects.Add(rec);
-                }
+                SecureSQLite.ExecuteSQL(customDB, query);
             }
+        }
+        public string QuerySQL(int dbType, string query)
+        {
+            IntPtr ptr = SecureSQLite.QuerySQL(dbType, query);
+            string? ret = Marshal.PtrToStringUni(ptr);
+            Marshal.FreeHGlobal(ptr);
 
-            return objects.ToArray();
+            if (ret != null)
+            {
+                return ret.Trim();
+            }
+            else
+            {
+                return "[]";
+            }
         }
         public string[][] querySQL(type dbType, string query)
         {
@@ -742,87 +304,29 @@ namespace main
                 return caches[dbType][query];
             }
 
-            SQLiteCommand cmd = new SQLiteCommand();
-            List<string[]> objects = new List<string[]>();
+            string s = QuerySQL((int)dbType, query);
 
-            if (query != "")
+            string[][] ret = JsonConvert.DeserializeObject<string[][]>(QuerySQL((int)dbType, query));
+
+            if (ret.Length > 0)
             {
-                switch (dbType)
+                if (useCaches)
                 {
-                    case type.BaseDB_HCneed:
-                        cmd.Connection = baseDB_hcneed;
-                        break;
-                    case type.BaseDB_Lighting:
-                        cmd.Connection = baseDB_lighting;
-                        break;
-                    case type.BaseDB_Heating:
-                        cmd.Connection = baseDB_heating;
-                        break;
-                    case type.BaseDB_Cooling:
-                        cmd.Connection = baseDB_cooling;
-                        break;
-                    case type.BaseDB_AHU:
-                        cmd.Connection = baseDB_ahu;
-                        break;
-                    case type.BaseDB_RESystem:
-                        cmd.Connection = baseDB_resystem;
-                        break;
-                    case type.BaseDB_Optimal:
-                        cmd.Connection = baseDB_optimal;
-                        break;
-                    case type.ProjDB:
-                        cmd.Connection = projDB;
-                        break;
-                    case type.ProjListDB:
-                        cmd.Connection = proj_listDB;
-                        break;
-                    case type.CalcDB:
-                        cmd.Connection = calcDB;
-                        break;
-                }
-
-                cmd.CommandText = query;
-
-                using (SQLiteDataReader reader = cmd.ExecuteReader())
-                {
-                    string json = string.Empty;
-
-                    while (reader.Read())
+                    if (caches.ContainsKey(dbType))
                     {
-                        string[] rec = new string[reader.FieldCount];
+                        caches[dbType].Add(query, ret);
+                    }
+                    else
+                    {
+                        Dictionary<string, string[][]> v = new Dictionary<string, string[][]>();
 
-                        for (int i = 0; i < reader.FieldCount; i++)
-                        {
-                            rec[i] = reader[i].ToString();
-                        }
-                        objects.Add(rec);
+                        v.Add(query, ret);
+
+                        caches.Add(dbType, v);
                     }
                 }
             }
-
-            if (useCaches)
-            {
-                string[][] ret = objects.ToArray();
-
-                if (caches.ContainsKey(dbType))
-                {
-                    caches[dbType].Add(query, ret);
-                }
-                else
-                {
-                    Dictionary<string, string[][]> v = new Dictionary<string, string[][]>();
-
-                    v.Add(query, ret);
-
-                    caches.Add(dbType, v);
-                }
-
-                return ret;
-            }
-            else
-            {
-                return objects.ToArray();
-            }
+            return ret;
         }
         public string[][] querySQL(string projName, string query)
         {
@@ -831,63 +335,28 @@ namespace main
                 return caches2[projName][query];
             }
 
-            List<string[]> objects = new List<string[]>();
-            SQLiteConnection db = new SQLiteConnection(@"Data Source=projects\\" + projName + ".sqlite");
-
-            db.Open();
-
-            if (db.State == ConnectionState.Open)
+            if (SecureSQLite.OpenDB("projects\\" + projName + ".sqlite", customDB) == 1)
             {
-                SQLiteCommand cmd = new SQLiteCommand();
+                string[][] ret = JsonConvert.DeserializeObject<string[][]>(QuerySQL(customDB, query));
 
-                if (query != "")
+                if (useCaches)
                 {
-                    cmd.Connection = db;
-                    cmd.CommandText = query;
-
-                    using (SQLiteDataReader reader = cmd.ExecuteReader())
+                    if (caches2.ContainsKey(projName))
                     {
-                        string json = string.Empty;
+                        caches2[projName].Add(query, ret);
+                    }
+                    else
+                    {
+                        Dictionary<string, string[][]> v = new Dictionary<string, string[][]>();
 
-                        while (reader.Read())
-                        {
-                            string[] rec = new string[reader.FieldCount];
+                        v.Add(query, ret);
 
-                            for (int i = 0; i < reader.FieldCount; i++)
-                            {
-                                rec[i] = reader[i].ToString();
-                            }
-                            objects.Add(rec);
-                        }
+                        caches2.Add(projName, v);
                     }
                 }
-
-                db.Close();
-            }
-
-            if (useCaches)
-            {
-                string[][] ret = objects.ToArray();
-
-                if (caches2.ContainsKey(projName))
-                {
-                    caches2[projName].Add(query, ret);
-                }
-                else
-                {
-                    Dictionary<string, string[][]> v = new Dictionary<string, string[][]>();
-
-                    v.Add(query, ret);
-
-                    caches2.Add(projName, v);
-                }
-
                 return ret;
             }
-            else
-            {
-                return objects.ToArray();
-            }
+            return new string[0][];
         }
         private long GetFileSize(string filePath)
         {
@@ -902,163 +371,85 @@ namespace main
         }
         public void createTable(type dbType, string name, string exec)
         {
-            try
+            if (exec != "")
             {
-                if (exec != "")
+                string s = QuerySQL((int)dbType, "SELECT name FROM sqlite_master WHERE type='table' AND name='" + name + "';");
+                string[][] ret = JsonConvert.DeserializeObject<string[][]>(QuerySQL((int)dbType, "SELECT name FROM sqlite_master WHERE type='table' AND name='" + name + "';"));
+
+                if (ret.Length > 0)
                 {
-                    SQLiteCommand? cmd = null;
-
-                    switch (dbType)
-                    {
-                        case type.ProjDB:
-                            cmd = new SQLiteCommand(projDB);
-                            break;
-                        case type.CalcDB:
-                            cmd = new SQLiteCommand(calcDB);
-                            break;
-                    }
-
-                    if (cmd != null)
-                    {
-                        bool found = false;
-                        cmd.CommandText = "SELECT name FROM sqlite_master WHERE type='table' AND name='" + name + "';";
-                        using (SQLiteDataReader reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                found = true;
-                            }
-                        }
-
-                        if (!found)
-                        {
-                            cmd.CommandText = exec;
-                            cmd.ExecuteNonQuery();
-                        }
-                    }
+                    SecureSQLite.ExecuteSQL((int)dbType, exec);
                 }
-            }
-            catch (Exception ex)
-            {
             }
         }
 
         public void setValue(type dbType, string table, string columns, string values, string key_columns)
         {
-            try
+            createTable(dbType, table, tables[table]);
+
+            string[] cols = columns.Split(',');
+            string[] vals = values.Split(',');
+            string[] keys = key_columns.Split(',');
+
+            Program.UTIL.trim(cols);
+            Program.UTIL.trim(vals);
+            Program.UTIL.trim(keys);
+
+            string condition = "";
+
             {
-                createTable(dbType, table, tables[table]);
+                int i = -1;
+                string cond = "";
 
-                string[] cols = columns.Split(',');
-                string[] vals = values.Split(',');
-                string[] keys = key_columns.Split(',');
-
-                SQLiteCommand cmd = new SQLiteCommand();
-
-                Program.UTIL.trim(cols);
-                Program.UTIL.trim(vals);
-                Program.UTIL.trim(keys);
-
-                switch (dbType)
+                while (++i < keys.Length)
                 {
-                    case type.ProjDB:
-                        cmd.Connection = projDB;
-                        break;
-                    case type.CalcDB:
-                        cmd.Connection = calcDB;
-                        break;
-                }
+                    int n = Array.FindIndex(cols, el => el == keys[i]);
 
-                string condition = "";
-
-                {
-                    int i = -1;
-                    string cond = "";
-
-                    while (++i < keys.Length)
+                    if (n >= 0)
                     {
-                        int n = Array.FindIndex(cols, el => el == keys[i]);
-
-                        if (n >= 0)
+                        if (cond != "")
                         {
-                            if (cond != "")
-                            {
-                                cond += " AND ";
-                            }
-                            cond += cols[n] + " = " + vals[n];
+                            cond += " AND ";
                         }
-                    }
-
-                    if (cond != "")
-                    {
-                        cmd.CommandText = "SELECT * FROM " + table + " WHERE " + cond;
-                        using (SQLiteDataReader reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read() && reader.HasRows)
-                            {
-                                condition = cond;
-                            }
-                        }
+                        cond += cols[n] + " = " + vals[n];
                     }
                 }
 
-                if (condition == "")
+                if (cond != "")
                 {
-                    cmd.CommandText = "INSERT INTO " + table + " (" + columns + ") VALUES (" + values + ")";
-                }
-                else
-                {
-                    int i = -1;
-                    string upd = "";
+                    string[][] ret = JsonConvert.DeserializeObject<string[][]>(QuerySQL((int)dbType, "SELECT * FROM " + table + " WHERE " + cond));
 
-                    cmd.CommandText = "UPDATE " + table + " SET ";
-
-                    while (++i < cols.Length)
+                    if (ret.Length > 0)
                     {
-                        if (upd != "") upd += ",";
-                        upd += cols[i] + "=" + vals[i];
+                        condition = cond;
                     }
-
-                    cmd.CommandText += upd + " WHERE " + condition;
                 }
-                cmd.ExecuteNonQuery();
             }
-            catch (Exception ex)
+
+            if (condition == "")
             {
-                MessageBox.Show(ex.Message);
+                SecureSQLite.ExecuteSQL((int)dbType, "INSERT INTO " + table + " (" + columns + ") VALUES (" + values + ")");
+            }
+            else
+            {
+                int i = -1;
+                string upd = "", sql = "UPDATE " + table + " SET ";
+
+                while (++i < cols.Length)
+                {
+                    if (upd != "") upd += ",";
+                    upd += cols[i] + "=" + vals[i];
+                }
+
+                sql += upd + " WHERE " + condition;
+                SecureSQLite.ExecuteSQL((int)dbType, sql);
             }
         }
 
         public void deleteTable(type dbType, string table)
         {
-            try
-            {
-
-                SQLiteCommand cmd = new SQLiteCommand();
-
-
-                switch (dbType)
-                {
-                    case type.ProjDB:
-                        cmd.Connection = projDB;
-                        break;
-                    case type.CalcDB:
-                        cmd.Connection = calcDB;
-                        break;
-                }
-
-                string condition = "";
-
-                    cmd.CommandText = "delete from " + table;
-
-
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-            }
+            SecureSQLite.ExecuteSQL((int)dbType, "delete from " + table);
         }
-
 
         public bool CopyValue(type dbType, string table, string conditions = "",string Num="")
         {
@@ -1082,29 +473,12 @@ namespace main
 
                     if (columns != "")
                     {
-                        try
-                        {
-                            SQLiteCommand cmd = new SQLiteCommand();
+                        SecureSQLite.ExecuteSQL((int)dbType, "INSERT INTO " + table + " (" + columns + ") SELECT " + columns + " FROM " + table + " WHERE " + conditions + " LIMIT 1");
 
-                            switch (dbType)
-                            {
-                                case type.ProjDB:
-                                    cmd.Connection = projDB;
-                                    break;
-                                case type.CalcDB:
-                                    cmd.Connection = calcDB;
-                                    break;
-                            }
+                        string[][] res1 = JsonConvert.DeserializeObject<string[][]>(QuerySQL((int)type.ProjDB, "SELECT MAX(ID) AS id FROM " + table));
 
-                            cmd.CommandText = "INSERT INTO " + table + " (" + columns + ") SELECT " + columns + " FROM " + table + " WHERE " + conditions + " LIMIT 1";
+                        SecureSQLite.ExecuteSQL((int)type.ProjDB, "UPDATE " + table + " SET 번호='" + Num + "' WHERE  ID = " + res1[0][0]);
 
-                            cmd.ExecuteNonQuery();
-                            string[][] res1 = Program.DB.querySQL(DB.type.ProjDB, "SELECT MAX(ID) AS id FROM "+ table);
-                            Program.DB.executeSQL(DB.type.ProjDB, "UPDATE "+ table + " SET 번호='" + Num + "' WHERE  ID = " + res1[0][0]);
-                        }
-                        catch (Exception ex)
-                        {
-                        }
                         return true;
                     }
                 }
@@ -1113,38 +487,15 @@ namespace main
         }
         public void deleteValue(type dbType, string table, string conditions = "")
         {
-            try
+            string condition = "";
+
+            if (conditions != "")
             {
-
-                SQLiteCommand cmd = new SQLiteCommand();
-
-
-                switch (dbType)
-                {
-                    case type.ProjDB:
-                        cmd.Connection = projDB;
-                        break;
-                    case type.CalcDB:
-                        cmd.Connection = calcDB;
-                        break;
-                }
-
-                string condition = "";
-
-                if (conditions != "")
-                {
-                    cmd.CommandText = "delete from " + table + " WHERE " + conditions;
-                }
-                else
-                {
-                    cmd.CommandText = "delete from " + table;
-                }
-
-
-                cmd.ExecuteNonQuery();
+                SecureSQLite.ExecuteSQL((int)dbType, "delete from " + table + " WHERE " + conditions);
             }
-            catch (Exception ex)
+            else
             {
+                SecureSQLite.ExecuteSQL((int)dbType, "delete from " + table);
             }
         }
 
@@ -1166,62 +517,10 @@ namespace main
                 return caches[dbType][sql];
             }
 
-            SQLiteCommand cmd = new SQLiteCommand();
-            List<string[]> objects = new List<string[]>();
-
-            switch (dbType)
-            {
-                case type.BaseDB_HCneed:
-                    cmd.Connection = baseDB_hcneed;
-                    break;
-                case type.BaseDB_Lighting:
-                    cmd.Connection = baseDB_lighting;
-                    break;
-                case type.BaseDB_Heating:
-                    cmd.Connection = baseDB_heating;
-                    break;
-                case type.BaseDB_Cooling:
-                    cmd.Connection = baseDB_cooling;
-                    break;
-                case type.BaseDB_AHU:
-                    cmd.Connection = baseDB_ahu;
-                    break;
-                case type.BaseDB_RESystem:
-                    cmd.Connection = baseDB_resystem;
-                    break;
-                case type.BaseDB_Optimal:
-                    cmd.Connection = baseDB_optimal;
-                    break;
-                case type.ProjDB:
-                    cmd.Connection = projDB;
-                    break;
-                case type.CalcDB:
-                    cmd.Connection = calcDB;
-                    break;
-            }
-
-            cmd.CommandText = sql;
-
-            using (SQLiteDataReader reader = cmd.ExecuteReader())
-            {
-                string json = string.Empty;
-
-                while (reader.Read())
-                {
-                    string[] rec = new string[reader.FieldCount];
-
-                    for (int i = 0; i < reader.FieldCount; i++)
-                    {
-                        rec[i] = reader[i].ToString();
-                    }
-                    objects.Add(rec);
-                }
-            }
+            string[][] ret = JsonConvert.DeserializeObject<string[][]>(QuerySQL((int)dbType, sql));
 
             if (useCaches)
             {
-                string[][] ret = objects.ToArray();
-
                 if (caches.ContainsKey(dbType))
                 {
                     caches[dbType].Add(sql, ret);
@@ -1234,13 +533,8 @@ namespace main
 
                     caches.Add(dbType, v);
                 }
-
-                return ret;
             }
-            else
-            {
-                return objects.ToArray();
-            }
+            return ret;
         }
 
         public string[][] getValue(string projName, string table, string columns, string conditions = "")
@@ -1261,163 +555,57 @@ namespace main
                 return caches2[projName][sql];
             }
 
-            List<string[]> objects = new List<string[]>();
-            SQLiteConnection db = new SQLiteConnection(@"Data Source=projects\\" + projName + ".sqlite");
-
-            db.Open();
-
-            if (db.State == ConnectionState.Open)
+            if (SecureSQLite.OpenDB("projects\\" + projName + ".sqlite", customDB) == 1)
             {
-                SQLiteCommand cmd = db.CreateCommand();
-
-                cmd.CommandText = sql;
-
-                using (SQLiteDataReader reader = cmd.ExecuteReader())
+                string[][] ret = JsonConvert.DeserializeObject<string[][]>(QuerySQL(customDB, sql));
+                if (useCaches)
                 {
-                    string json = string.Empty;
-
-                    while (reader.Read())
+                    if (caches2.ContainsKey(projName))
                     {
-                        string[] rec = new string[reader.FieldCount];
-
-                        for (int i = 0; i < reader.FieldCount; i++)
-                        {
-                            rec[i] = reader[i].ToString();
-                        }
-                        objects.Add(rec);
+                        caches2[projName].Add(sql, ret);
+                    }
+                    else
+                    {
+                        Dictionary<string, string[][]> v = new Dictionary<string, string[][]>();
+                        v.Add(sql, ret);
+                        caches2.Add(projName, v);
                     }
                 }
-
-                db.Close();
-            }
-
-            if (useCaches)
-            {
-                string[][] ret = objects.ToArray();
-
-                if (caches2.ContainsKey(projName))
-                {
-                    caches2[projName].Add(sql, ret);
-                }
-                else
-                {
-                    Dictionary<string, string[][]> v = new Dictionary<string, string[][]>();
-
-                    v.Add(sql, ret);
-
-                    caches2.Add(projName, v);
-                }
-
                 return ret;
             }
-            else
-            {
-                return objects.ToArray();
-            }
+            return new string[0][];
         }
         //중복 제거하고 값 가져오기
         public string[][] getValue_SameCheck(type dbType, string table, string columns, string conditions = "")
         {
-            SQLiteCommand cmd = new SQLiteCommand();
+            string sql;
             List<string[]> objects = new List<string[]>();
-
-            switch (dbType)
-            {
-                case type.BaseDB_HCneed:
-                    cmd.Connection = baseDB_hcneed;
-                    break;
-                case type.BaseDB_Lighting:
-                    cmd.Connection = baseDB_lighting;
-                    break;
-                case type.BaseDB_Heating:
-                    cmd.Connection = baseDB_heating;
-                    break;
-                case type.BaseDB_Cooling:
-                    cmd.Connection = baseDB_cooling;
-                    break;
-                case type.BaseDB_AHU:
-                    cmd.Connection = baseDB_ahu;
-                    break;
-                case type.BaseDB_RESystem:
-                    cmd.Connection = baseDB_resystem;
-                    break;
-                case type.BaseDB_Optimal:
-                    cmd.Connection = baseDB_optimal;
-                    break;
-                case type.ProjDB:
-                    cmd.Connection = projDB;
-                    break;
-                case type.CalcDB:
-                    cmd.Connection = calcDB;
-                    break;
-            }
 
             if (conditions != "")
             {
-                cmd.CommandText = "SELECT DISTINCT " + columns + " FROM " + table + " WHERE " + conditions;
+                sql = "SELECT DISTINCT " + columns + " FROM " + table + " WHERE " + conditions;
             }
             else
             {
-                cmd.CommandText = "SELECT DISTINCT " + columns + " FROM " + table  ;
+                sql = "SELECT DISTINCT " + columns + " FROM " + table;
             }
 
-            using (SQLiteDataReader reader = cmd.ExecuteReader())
-            {
-                string json = string.Empty;
-
-                while (reader.Read())
-                {
-                    string[] rec = new string[reader.FieldCount];
-
-                    for (int i = 0; i < reader.FieldCount; i++)
-                    {
-                        rec[i] = reader[i].ToString();
-                    }
-                    objects.Add(rec);
-                }
-            }
-
-            return objects.ToArray();
+            return JsonConvert.DeserializeObject<string[][]>(QuerySQL((int)dbType, sql));
         }
         public string[][] getValue_SameCheck(string projName, string table, string columns, string conditions = "")
         {
-            List<string[]> objects = new List<string[]>();
-            SQLiteConnection db = new SQLiteConnection(@"Data Source=projects\\" + projName + ".sqlite");
-            db.Open();
-
-
-            if (db.State == ConnectionState.Open)
+            if (SecureSQLite.OpenDB("projects\\" + projName + ".sqlite", customDB) == 1)
             {
-                SQLiteCommand cmd = db.CreateCommand();
-
                 if (conditions != "")
                 {
-                    cmd.CommandText = "SELECT DISTINCT " + columns + " FROM " + table + " WHERE " + conditions;
+                    return JsonConvert.DeserializeObject<string[][]>(QuerySQL(customDB, "SELECT DISTINCT " + columns + " FROM " + table + " WHERE " + conditions));
                 }
                 else
                 {
-                    cmd.CommandText = "SELECT DISTINCT " + columns + " FROM " + table;
+                    return JsonConvert.DeserializeObject<string[][]>(QuerySQL(customDB, "SELECT DISTINCT " + columns + " FROM " + table));
                 }
-
-                using (SQLiteDataReader reader = cmd.ExecuteReader())
-                {
-                    string json = string.Empty;
-
-                    while (reader.Read())
-                    {
-                        string[] rec = new string[reader.FieldCount];
-
-                        for (int i = 0; i < reader.FieldCount; i++)
-                        {
-                            rec[i] = reader[i].ToString();
-                        }
-                        objects.Add(rec);
-                    }
-                }
-
-                db.Close();
             }
-            return objects.ToArray();
+            return new string[0][];
         }
         public void UseCaches(bool use)
         {
@@ -1428,49 +616,12 @@ namespace main
 
         public void UpdateDatabase(string dbPath, string table, string column)
         {
-            try
+            if (SecureSQLite.OpenDB(dbPath, customDB) == 1)
             {
-                using (SQLiteConnection conn = new SQLiteConnection($"Data Source={dbPath};Version=3;"))
-                {
-                    conn.Open();
-                    using (SQLiteCommand cmd = conn.CreateCommand())
-                    {
-                        // 컬럼이 없으면 추가
-                        if (!ColumnExists(conn, table, column))
-                        {
-                            cmd.CommandText = "ALTER TABLE "+table+" ADD COLUMN " + column + " VARCHAR(32);";
-                            cmd.ExecuteNonQuery();
-                            Console.WriteLine(column +" 컬럼 추가됨: {dbPath}");
-                        }
-
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"에러 발생 ({dbPath}): {ex.Message}", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                SecureSQLite.ExecuteSQL((int)customDB, "ALTER TABLE " + table + " ADD COLUMN " + column + " VARCHAR(32);");
+                Console.WriteLine(column + " 컬럼 추가됨: {dbPath}");
             }
         }
-
-        private bool ColumnExists(SQLiteConnection conn, string tableName, string columnName)
-        {
-            using (SQLiteCommand cmd = conn.CreateCommand())
-            {
-                cmd.CommandText = $"PRAGMA table_info({tableName});";
-                using (SQLiteDataReader reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        if (reader["name"].ToString().Equals(columnName, StringComparison.OrdinalIgnoreCase))
-                        {
-                            return true; // 컬럼 존재
-                        }
-                    }
-                }
-            }
-            return false; // 컬럼 없음
-        }
-
     }
 }
 

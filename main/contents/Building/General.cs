@@ -648,6 +648,8 @@ namespace main.contents
                 ElecWiring_Infil + "','" +
                 Pipe_Infil + "'", "프로젝트번호");
 
+            Program.DB.saveProject();
+
             MessageBox.Show("저장되었습니다.");
         }
 
