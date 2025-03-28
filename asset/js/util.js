@@ -5,9 +5,13 @@ class MainTree {
         this.onSelect = selProc;
         this.loading = true;
     }
-    load(data, subsel = 0) {
+    load(data, isMain = false, subsel = 0) {
         let that = this;
         let sel = data[subsel].id;
+
+        if (isMain && sel.indexOf('{\"formID\":49}') >= 0) {
+            sel = '{\"formID\":16}'; // 
+        }
 
         this.loading = true;
 
