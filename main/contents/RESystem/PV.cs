@@ -42,7 +42,11 @@ namespace main.contents
             InitializeAsync();
             webView21.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
             string[][] val = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
-            지역 = val[0][0].ToString();
+            if(val.Length >0)
+            {
+                지역 = val[0][0].ToString();
+            }
+            
             
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '태양광시스템'");
@@ -52,7 +56,11 @@ namespace main.contents
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             }
             string[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
-            프로젝트유형 = value[0][0].ToString();
+            if (value.Length > 0)
+            {
+                프로젝트유형 = value[0][0].ToString();
+            }
+            
             Num = Num_textBox.Text;
 
             PVType_ComboBox.Items.Clear();
