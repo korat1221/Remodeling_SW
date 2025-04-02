@@ -2769,6 +2769,11 @@ namespace main.contents
             else
             {
                 Save();
+
+                if( SelectSolar_split.Count > 0)
+                {
+                    SaveSolar(); //새로 추가함
+                }
             }
 
         }
@@ -2809,6 +2814,43 @@ namespace main.contents
             this.Hide();
             Program.getMenuForm().DoLoadForm(39, OnLoadListProc);
         }
+
+        public void SaveSolar()
+        {
+            string 적용유형;
+            string 적용설비 = "난방";
+            if (MainSystem_comboBox.Text == "태양열시스템") 적용유형 = "주요설비";
+            else if (Sub1System_comboBox.Text == "태양열시스템") 적용유형 = "보조설비1";
+            else if (Sub2System_comboBox.Text == "태양열시스템") 적용유형 = "보조설비2";
+            else 적용유형 = null;
+
+            string stnum = solar_num();
+           
+            Program.DB.setValue(DB.type.ProjDB, "SolarTherm_Form", "번호,프로젝트유형,태양열번호,설비번호,적용설비,적용유형,모듈개수,방위,기울기",
+                 "'" + stnum + "','" + 프로젝트유형[0][0] + "','" + SelectSolar_nonsplit + "','" + Num_textBox.Text + "','"+적용설비+"','" + 적용유형 + "','" + SolarNum_nonsplit +
+                 "','" + SolarDirection_nonsplit + "', '" +SolarDegree_nonsplit+ "'", "태양열번호,설비번호");
+        } //새로추가함
+
+        public string solar_num()
+        {
+            string[][] check = Program.DB.getValue(DB.type.ProjDB, "SolarTherm_Form", "번호,태양열번호,설비번호", "");
+            string solarnum = null;
+            if (check.Length > 0)
+            {
+                for(int i = 0; i<check.Length ; i++)
+                {
+                    if (SelectSolar_nonsplit == check[i][1] && Num_textBox.Text == check[i][2])
+                    {
+                        solarnum = check[i][0];
+                    }
+                    else
+                    {
+                        solarnum = Program.UTIL.CreateNum("SolarTherm_Form", "번호", "ST");
+                    }
+                }
+            }
+            return solarnum;
+        } //새로추가함
 
         public static bool OnLoadListProc(Form form)
         {
