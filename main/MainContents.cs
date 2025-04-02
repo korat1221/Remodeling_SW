@@ -549,7 +549,9 @@ namespace main
             }
             else if(formParam.formID == 69)
             {
+                List_SolarTherm f = (List_SolarTherm)form;
 
+                f.LoadData(formParam.ID);
             }
             return true;
         }
@@ -896,6 +898,12 @@ namespace main
                 else if (i == 67)
                 {
                     Element_RESystem f = (Element_RESystem)forms[i];
+
+                    f.LoadData("");
+                }
+                else if (i == 69)
+                {
+                    List_SolarTherm f = (List_SolarTherm)forms[i];
 
                     f.LoadData("");
                 }
