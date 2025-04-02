@@ -17,21 +17,28 @@ namespace main.contentslist
         static String currentID = "";
         static String inEditing = "Add";
 
-        String Num;
+        String 프로젝트유형;
         double CountDB;
-        int SelectRow;
-        // DataTable ListTable = new DataTable();
+        
         DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
 
+      
         public List_SolarTherm()
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
 
-            Icon_pictureBox.Load(Program.gPath + "images/2ndicon/6_1PVSystem.png");
+            Icon_pictureBox.Load(Program.gPath + "images/2ndicon/10_1SolarTherm.png");
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            if (value.Length > 0)
+            {
+                프로젝트유형 = value[0][0].ToString();
+            }
             Create_Table();
         }
 
+             
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
@@ -41,21 +48,7 @@ namespace main.contentslist
         public static bool OnLoadProc(Form form)
         {
             SolarTherm f = (SolarTherm)form;
-
-            if (inEditing == "Edit")
-            {
-                f.LoadData(currentID);
-
-            }
-            else if (inEditing == "Copy")
-            {
-                f.LoadData(currentID);
-            }
-            else
-            {
-                f.ResetForm(currentID);
-            }
-
+            f.LoadData(currentID);
             return true;
         }
 
@@ -63,9 +56,8 @@ namespace main.contentslist
         {
             currentID = ID;
             inEditing = editing;
-            Program.getMenuForm().DoLoadForm(21, OnLoadProc);
+            Program.getMenuForm().DoLoadForm(70, OnLoadProc);
         }
-
 
         public void Create_Table()
         {
@@ -75,11 +67,14 @@ namespace main.contentslist
             checkBoxColumn.Name = "check";
             dataGridView1.Columns.Add(checkBoxColumn);
             dataGridView1.Columns.Add("A1", "번호");
-            dataGridView1.Columns.Add("A2", "명칭");
-            dataGridView1.Columns.Add("A3", "면적.[m"+ Program.UTIL.Subscript(2, true) + "]");
-            dataGridView1.Columns.Add("A4", "용량.[kW]");
-            dataGridView1.Columns.Add("A5", "열효율.[%]");
-            dataGridView1.Columns.Add("A6", "연간생산량.[kWh/년]");
+            dataGridView1.Columns.Add("A2", "태양열번호");
+            dataGridView1.Columns.Add("A3", "설비번호"); //적용 설비번호
+            dataGridView1.Columns.Add("A4", "적용설비"); //난방,급탕
+            dataGridView1.Columns.Add("A5", "면적.[m"+ Program.UTIL.Subscript(2, true) + "]");
+            dataGridView1.Columns.Add("A6", "용량.[kW]");
+            dataGridView1.Columns.Add("A7", "열효율.[%]");
+            dataGridView1.Columns.Add("A8", "연간생산량.[kWh/년]");
+            
             dataGridView1.Columns[0].Width = 40;
         }
 
@@ -105,19 +100,47 @@ namespace main.contentslist
         public void load_table()
         {
             dataGridView1.Rows.Clear();
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "SolarTherm_Form", "번호,명칭,면적,용량,인버터효율", "");
-            if(Value.Length > 0) 
+            string[][] stdb = Program.DB.getValue(DB.type.ProjDB, "SolarTherm_Form", "번호,태양열번호,설비번호,적용설비,모듈개수", "프로젝트유형 = '" + 프로젝트유형 + "'");
+
+            if (stdb.Length > 0)
             {
-                for(int n=0; n<Value.Length; n++)
+                for (int i = 0; i < stdb.Length; i++)
                 {
                     dataGridView1.Rows.Add();
-                    dataGridView1.Rows[n].Cells[1].Value = Value[n][0];
-                    dataGridView1.Rows[n].Cells[2].Value = Value[n][1];
-                    dataGridView1.Rows[n].Cells[3].Value = Value[n][2];
-                    dataGridView1.Rows[n].Cells[4].Value = Value[n][3];
-                    dataGridView1.Rows[n].Cells[5].Value = Value[n][4];
+                    dataGridView1.Rows[i].Cells[1].Value = stdb[i][0];
+                    dataGridView1.Rows[i].Cells[2].Value = stdb[i][1];
+                    dataGridView1.Rows[i].Cells[3].Value = stdb[i][2];
+                    dataGridView1.Rows[i].Cells[4].Value = stdb[i][3];
+                    //적용설비를 바탕으로 작성함
+                    string[][] solartherm = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "모듈면적,효율,유효열용량", "번호 = '" + stdb[i][1] + "'");
+
+                    dataGridView1.Rows[i].Cells[5].Value = string.Format("{0:N2}", Convert.ToDouble(stdb[i][4]) * Convert.ToDouble(solartherm[0][0]));
+                    dataGridView1.Rows[i].Cells[6].Value = string.Format("{0:N2}", Convert.ToDouble(stdb[i][4]) * Convert.ToDouble(solartherm[0][2]));
+                    dataGridView1.Rows[i].Cells[7].Value = string.Format("{0:N0}", Convert.ToDouble(solartherm[0][1]) * 100);
+                    //연간 생산량 작성
+
+                    if (stdb[i][3] == "난방")
+                    {
+                        string[][] stherm = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Result", "월, Qh_sol", "번호 = '" + stdb[i][2] + "'");
+                        double qh = 0;
+                        for (int j = 0; j < 12; j++)
+                        {
+                            qh += Convert.ToDouble(stherm[j][1]);
+                        }
+                        dataGridView1.Rows[i].Cells[8].Value = string.Format("{0:N0}", qh);
+                    }
+                    else if (stdb[i][3] == "급탕")
+                    {
+                        string[][] stherm = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Result", "월, Qw_sol", "번호 = '" + stdb[i][2] + "'");
+                        double qw = 0;
+                        for (int j = 0; j < 12; j++)
+                        {
+                            qw += Convert.ToDouble(stherm[j][1]);
+                        }
+                        dataGridView1.Rows[i].Cells[8].Value = string.Format("{0:N0}", qw);
+                    }
                 }
-            }             
+            }
         }
 
         public void load_List()
@@ -171,6 +194,7 @@ namespace main.contentslist
                 subMenu.Add(new { text = "태양열시스템", id = "{\\\"formID\\\":69,\\\"ID\\\":\\\"SOLAR_4\\\"}", children = stsubMenu.ToArray() });  // 예시 코드: 메인 메뉴 동적 할당
                 subMenu.Add(new { text = "공급의무비율", id = "{\\\"formID\\\":24,\\\"ID\\\":\\\"SOLAR_5\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
                 subMenu.Add(new { text = "에너지자립률", id = "{\\\"formID\\\":25,\\\"ID\\\":\\\"SOLAR_6\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+               
                 Program.UTIL.resetMainTree(5, 3, subMenu.ToArray(), "69"); // 예시 코드: 메인 메뉴 동적 할당
             }
         }
@@ -219,4 +243,5 @@ namespace main.contentslist
 
        
     }
+   
 }
