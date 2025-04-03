@@ -152,7 +152,7 @@ namespace main.contentslist
             List<object> wpsubMenu = new List<object>();
             List<object> stsubMenu = new List<object>();
 
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "SolarTherm_Form", "번호,명칭", "");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "SolarTherm_Form", "번호,태양열번호", "");
             if (Value.Length > 0)
             {
                 Value = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "번호,명칭", "");
@@ -179,7 +179,7 @@ namespace main.contentslist
                         wpsubMenu.Add(new { text = Value[n][0] + "." + Value[n][1], id = "{\\\"formID\\\":23,\\\"ID\\\":\\\"" + Value[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당  
                     }
                 }
-                Value = Program.DB.getValue(DB.type.ProjDB, "SolarTherm_Form", "번호,명칭", "");
+                Value = Program.DB.getValue(DB.type.ProjDB, "SolarTherm_Form", "번호,태양열번호", "");
 
                 if (Value.Length > 0)
                 {

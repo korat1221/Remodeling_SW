@@ -612,7 +612,7 @@ namespace main
             }
             else if (selID != selID_old)
             {
-                if (selID == "{\"formID\": 43\"ID\":\"0\"}" )
+                if (selID.Contains("43"))
                 {
                     
                     if (formParam.formID == 53 || formParam.formID == 54 || formParam.formID == 55 || formParam.formID == 69 || formParam.formID == 24 || formParam.formID == 25)
