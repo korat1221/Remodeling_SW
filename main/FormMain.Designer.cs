@@ -38,9 +38,11 @@
             toolStripSeparator1 = new ToolStripSeparator();
             EnergyNeed_Sim = new ToolStripButton();
             toolStripSeparator3 = new ToolStripSeparator();
+            AHUNeed_Sim = new ToolStripButton();
             FinalEnergy_Sim = new ToolStripButton();
             toolStripSeparator4 = new ToolStripSeparator();
             Element_Sim = new ToolStripButton();
+            toolStripSeparator5 = new ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.SuspendLayout();
             toolStripContainer1.ContentPanel.SuspendLayout();
@@ -94,10 +96,10 @@
             toolStrip1.BackColor = Color.Transparent;
             toolStrip1.Dock = DockStyle.None;
             toolStrip1.ImageScalingSize = new Size(35, 35);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { New, toolStripSeparator2, ProjectOpen, toolStripSeparator1, EnergyNeed_Sim, toolStripSeparator3, FinalEnergy_Sim, toolStripSeparator4, Element_Sim });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { New, toolStripSeparator2, ProjectOpen, toolStripSeparator1, EnergyNeed_Sim, toolStripSeparator3, AHUNeed_Sim, toolStripSeparator5, FinalEnergy_Sim, toolStripSeparator4, Element_Sim });
             toolStrip1.Location = new Point(3, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(331, 62);
+            toolStrip1.Size = new Size(427, 62);
             toolStrip1.TabIndex = 0;
             // 
             // New
@@ -149,6 +151,17 @@
             toolStripSeparator3.Name = "toolStripSeparator3";
             toolStripSeparator3.Size = new Size(6, 62);
             // 
+            // AHUNeed_Sim
+            // 
+            AHUNeed_Sim.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            AHUNeed_Sim.Image = (Image)resources.GetObject("AHUNeed_Sim.Image");
+            AHUNeed_Sim.ImageTransparentColor = Color.Magenta;
+            AHUNeed_Sim.Name = "AHUNeed_Sim";
+            AHUNeed_Sim.Padding = new Padding(0, 0, 20, 20);
+            AHUNeed_Sim.Size = new Size(59, 59);
+            AHUNeed_Sim.Text = "toolStripButton1";
+            AHUNeed_Sim.Click += AHUNeed_Sim_Click;
+            // 
             // FinalEnergy_Sim
             // 
             FinalEnergy_Sim.DisplayStyle = ToolStripItemDisplayStyle.Image;
@@ -175,6 +188,11 @@
             Element_Sim.Size = new Size(59, 59);
             Element_Sim.Text = "Components result";
             Element_Sim.Click += Element_Sim_Click;
+            // 
+            // toolStripSeparator5
+            // 
+            toolStripSeparator5.Name = "toolStripSeparator5";
+            toolStripSeparator5.Size = new Size(6, 62);
             // 
             // FormMain
             // 
@@ -213,5 +231,8 @@
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripSeparator toolStripSeparator3;
         private ToolStripSeparator toolStripSeparator4;
+        private ToolStripButton toolStripButton1;
+        private ToolStripButton AHUNeed_Sim;
+        private ToolStripSeparator toolStripSeparator5;
     }
 }

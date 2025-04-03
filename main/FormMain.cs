@@ -103,6 +103,13 @@ namespace main
             MessageBox.Show("계산되었습니다.");
         }
 
+        private void AHUNeed_Sim_Click(object sender, EventArgs e)
+        {
+            CALC.run(new string[] { "공조계산" });
+            MessageBox.Show("계산되었습니다.");
+
+        }
+
         private void FinalEnergy_Sim_Click(object sender, EventArgs e)
         {
             Program.DB.UseCaches(true);
