@@ -104,7 +104,7 @@ namespace main.contents._3D
             }
             if (parent.comboBox3.IsChecked("외부출입문"))
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭", ""); //출입문으로 나중에 바꿔야함 
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "번호,명칭", ""); //출입문으로 나중에 바꿔야함 
 
                 if (Value != null)
                 {
