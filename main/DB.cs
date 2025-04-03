@@ -149,8 +149,7 @@ namespace main
             {"FuelCell_Form", "CREATE TABLE IF NOT EXISTS FuelCell_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),연료전지 VARCHAR (32),생산유형 VARCHAR (32),시작시간 VARCHAR (32),종료시간 VARCHAR (32),사용시간 VARCHAR (32),주이용일 VARCHAR (32),설치대수 VARCHAR (32), 급탕설비 VARCHAR (32), 난방설비 VARCHAR (32))"},
             {"WindPower_Form", "CREATE TABLE IF NOT EXISTS WindPower_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),풍력 VARCHAR (32),주변환경 VARCHAR (32),설치높이 VARCHAR (32),인버터제품 VARCHAR (32),인버터 VARCHAR (32), 설치대수 VARCHAR (32))"},
 
-             {"SolarTherm_Form", "CREATE TABLE IF NOT EXISTS SolarTherm_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),태양열번호 VARCHAR (32),설비번호 VARCHAR (32), 적용설비 VARCHAR (32), 적용유형 VARCHAR (32),설치용량 VARCHAR (32),설치면적 VARCHAR (32),정격효율 VARCHAR (32),방위 VARCHAR (32),기울기 VARCHAR (32),설치 VARCHAR (32),지형물거리 VARCHAR (32),지형물높이 VARCHAR (32),모듈높이 VARCHAR (32), 기존태양열 VARCHAR (32))"},
-             {"SolarTherm_Result", "CREATE TABLE IF NOT EXISTS SolarTherm_Result (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),월 VARCHAR (32),일사량 VARCHAR (32), Ww_g VARCHAR (32), Wh_g VARCHAR (32), Qw_sol VARCHAR (32), Qh_sol VARCHAR (32))"},
+            {"SolarTherm_Form", "CREATE TABLE IF NOT EXISTS SolarTherm_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),태양열번호 VARCHAR (32),설비번호 VARCHAR (32), 적용설비 VARCHAR (32), 적용유형 VARCHAR (32), 모듈개수 VARCHAR (32),방위 VARCHAR (32),기울기 VARCHAR (32),설치 VARCHAR (32),지형물거리 VARCHAR (32),지형물높이 VARCHAR (32),모듈높이 VARCHAR (32), 기존태양열 VARCHAR (32))"},
             
                        
             //Calc
