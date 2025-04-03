@@ -11,6 +11,7 @@ namespace main
         {
             _calculations["모두계산"] = new Func<bool>(Run_All);
             _calculations["존계산"] = new Func<bool>(Run_Zone);
+            _calculations["공조계산"] = new Func<bool>(Run_AHU);
             _calculations["요소기술계산"] = new Func<bool>(AltCalc);
 
         }
@@ -28,6 +29,32 @@ namespace main
             Cal_Qb();
 
             Program.DB.saveProject();
+
+            return true;
+        }
+        public static bool Run_AHU()
+        {
+            Program.DB.deleteTable(DB.type.ProjDB, "Zone_LightResult");
+            Program.DB.initTable(DB.type.ProjDB, "Zone_LightResult");
+
+            Program.DB.deleteTable(DB.type.ProjDB, "Zone_HCneed_Result");
+            Program.DB.initTable(DB.type.ProjDB, "Zone_HCneed_Result");
+
+            Program.DB.deleteTable(DB.type.ProjDB, "Zone_Envelope_Result");
+            Program.DB.initTable(DB.type.ProjDB, "Zone_Envelope_Result");
+
+            Program.DB.deleteTable(DB.type.ProjDB, "AHUSystem_Result");
+            Program.DB.initTable(DB.type.ProjDB, "AHUSystem_Result");
+
+
+            string[][] NowProjNum = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
+
+
+            Cal_Qb();
+            Cal_Qahu(NowProjNum[0][0]);
+            Program.DB.saveProject();
+
+
             return true;
         }
         public static bool Run_All()
@@ -832,7 +859,7 @@ namespace main
         #region 난방
         public static void Heating_ce_zone_calc(string ProjNum)
         {
-            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");           
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
             string[][] HeatingNum = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "번호");
             int i = -1;
             String MTH;
@@ -881,7 +908,6 @@ namespace main
                 }
             }
         }
-
 
         public static void Heating_ce_zone_calc_Element(string ProjNum)
         {
