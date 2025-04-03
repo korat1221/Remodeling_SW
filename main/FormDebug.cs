@@ -75,7 +75,7 @@ namespace main
         {
             if(TableName_textBox.Text!= null && ColumnName_textBox.Text!= null)
             {
-                string directoryPath = Program.gPath + "projects"; // 대상 폴더
+                string directoryPath =  "projects"; // 대상 폴더
                 string[] sqliteFiles = Directory.GetFiles(directoryPath, "*.sqlite"); // 모든 .sqlite 파일 검색
 
                 foreach (string dbPath in sqliteFiles)

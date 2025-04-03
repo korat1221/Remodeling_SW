@@ -414,7 +414,7 @@ namespace main.contents
             string pid = dt.Year + "-" + dt.Month.ToString().PadLeft(2, '0') + "-" + num.ToString().PadLeft(3, '0');
             string today = DateTime.Now.ToString("yyyy/MM/dd");
             Program.DB.executeSQL(DB.type.ProjListDB, "INSERT INTO projects (pnum, type, title,date) VALUES ('" + pid + "'," + ProjectType + ",'" + title + "','" + today + "')");
-
+            Program.DB.savePListDB();
             if (pid0 != "")
             {
                 File.Copy(Program.gPath + "projects\\" + pid0 + ".sqlite", Program.gPath + "projects\\" + pid + ".sqlite", true);
@@ -424,7 +424,7 @@ namespace main.contents
                 File.Copy("templ.sqlite", Program.gPath + "projects\\" + pid + ".sqlite", true);
             }
 
-            Directory.CreateDirectory(Program.gPath + "threejs\\public\\models\\" + pid);
+            Directory.CreateDirectory(Program.gPath + "threejs\\print\\img\\" + pid);
 
             return pid;
         }
@@ -521,6 +521,7 @@ namespace main.contents
                 Program.DB.openDB("projects\\" + ProjectList.CurProjID + ".sqlite");
                 Program.DB.initTables(DB.type.ProjDB);
                 Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,프로젝트유형,프로젝트유형번호", "'" + ProjectList.CurProjID + "','" + types[ProjectType] + "','" + ProjectType + "'", "프로젝트번호");
+                Program.DB.savePListDB();
                 Program.DB.saveProject();
                 Program.getMenuForm().resetAll();
                 Program.UTIL.ReloadModel();

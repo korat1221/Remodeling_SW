@@ -227,6 +227,10 @@ namespace main
             SecureSQLite.SaveDB("projects.sqlite", (int)type.ProjListDB);
             SecureSQLite.CloseDB((int)type.ProjListDB);
         }
+        public void savePListDB()
+        {
+            SecureSQLite.SaveDB("projects.sqlite", (int)type.ProjListDB);
+        }
         public void closeBaseDB()
         {
             foreach (var dbname in dbnames)
@@ -281,6 +285,11 @@ namespace main
         }
         public void executeSQL(string projName, string query)
         {
+            if (projDBPath.IndexOf(projName + ".sqlite") != -1)
+            {
+                executeSQL(type.ProjDB, query);
+                return;
+            }
             if (SecureSQLite.OpenDB("projects\\" + projName + ".sqlite", customDB) == 1)
             {
                 SecureSQLite.ExecuteSQL(customDB, query);
@@ -337,6 +346,11 @@ namespace main
             if (useCaches && caches2.ContainsKey(projName) && caches2[projName].ContainsKey(query))
             {
                 return caches2[projName][query];
+            }
+
+            if (projDBPath.IndexOf(projName + ".sqlite") != -1)
+            {
+                return querySQL(type.ProjDB, query);
             }
 
             if (SecureSQLite.OpenDB("projects\\" + projName + ".sqlite", customDB) == 1)
@@ -545,6 +559,11 @@ namespace main
         {
             string sql;
 
+            if (projDBPath.IndexOf(projName + ".sqlite") != -1)
+            {
+                return getValue(type.ProjDB, table, columns, conditions);
+            }
+
             if (conditions != "")
             {
                 sql = "SELECT " + columns + " FROM " + table + " WHERE " + conditions;
@@ -598,6 +617,11 @@ namespace main
         }
         public string[][] getValue_SameCheck(string projName, string table, string columns, string conditions = "")
         {
+            if (projDBPath.IndexOf(projName + ".sqlite") != -1)
+            {
+                return getValue_SameCheck(type.ProjDB, table, columns, conditions);
+            }
+
             if (SecureSQLite.OpenDB("projects\\" + projName + ".sqlite", customDB) == 1)
             {
                 if (conditions != "")
@@ -620,10 +644,17 @@ namespace main
 
         public void UpdateDatabase(string dbPath, string table, string column)
         {
-            if (SecureSQLite.OpenDB(dbPath, customDB) == 1)
+            if (dbPath.IndexOf(projDBPath) != -1)
+            {
+                MessageBox.Show("현재 실행 중인 프로젝트는 컬럼이 생성되지 않습니다.");
+                return;
+            }
+            else if (SecureSQLite.OpenDB(dbPath, customDB) == 1)
             {
                 SecureSQLite.ExecuteSQL((int)customDB, "ALTER TABLE " + table + " ADD COLUMN " + column + " VARCHAR(32);");
+                SecureSQLite.SaveDB(dbPath, (int)customDB);
                 Console.WriteLine(column + " 컬럼 추가됨: {dbPath}");
+                SecureSQLite.CloseDB(customDB);
             }
         }
     }
