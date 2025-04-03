@@ -160,6 +160,7 @@ namespace main.contentslist
             subMenu.Add(new { text = "에너지자립률", id = "{\\\"formID\\\":25,\\\"ID\\\":\\\"SOLAR_6\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
 
             Program.UTIL.resetMainTree(5, 3, subMenu.ToArray(), "53"); // 예시 코드: 메인 메뉴 동적 할당
+
         }
 
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
