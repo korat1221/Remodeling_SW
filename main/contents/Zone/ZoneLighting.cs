@@ -1738,21 +1738,21 @@ namespace main.contents
                         }
 
                         MaxSum_CW = AreaSum_ConstructionCW.Max(); //커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값
-                        index = 0;
+                        int index2 = 0;
                         for (int k = 0; k < CW_Type.Length; k++)
                         {
                             if (AreaSum_ConstructionCW[k] == AreaSum_ConstructionCW.Max())
-                            { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
+                            { index2 = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
                         }
                         if (CW_Type.Length > 0)
                         {
-                            MainType_CW_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "빛투과율, 고정유리종류, 번호, 유리부분유리면적비", "번호 = '" + CW_Type[index][1] + "'");
+                            MainType_CW_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "빛투과율, 고정유리종류, 번호, 유리부분유리면적비", "번호 = '" + CW_Type[index2][1] + "'");
                             if (MainType_CW_Value.Length > 0)
                             {
                                 MainType_CW = MainType_CW_Value[0][2].ToString(); // 커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형  
-                                MainType_ID = CW_Type[index][2];
+                                MainType_ID = CW_Type[index2][2];
 
-                                Main_WinCW = CW_Type[index][0];
+                                Main_WinCW = CW_Type[index2][0];
                                 f_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
                                 Main_glass = MainType_CW_Value[0][1];
 
@@ -1760,8 +1760,8 @@ namespace main.contents
                                 //창호랑 커튼월 다 구해놓고 둘 중 큰거 판별 
                                 if (MaxSum_CW > MaxSum_Win)
                                 {
-                                    Main_WinCW = CW_Type[index][0];
-                                    MainType_ID = CW_Type[index][2];
+                                    Main_WinCW = CW_Type[index2][0];
+                                    MainType_ID = CW_Type[index2][2];
                                     f_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
                                     Main_glass = MainType_CW_Value[0][1];
                                     K1 = Convert.ToDouble(MainType_CW_Value[0][3]);
