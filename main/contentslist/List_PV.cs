@@ -76,7 +76,7 @@ namespace main.contentslist
             dataGridView1.Columns.Add(checkBoxColumn);
             dataGridView1.Columns.Add("A1", "번호");
             dataGridView1.Columns.Add("A2", "명칭");
-            dataGridView1.Columns.Add("A3", "면적.[m"+ Program.UTIL.Subscript(2, true) + "]");
+            dataGridView1.Columns.Add("A3", "면적.[m" + Program.UTIL.Subscript(2, true) + "]");
             dataGridView1.Columns.Add("A4", "용량.[kW]");
             dataGridView1.Columns.Add("A5", "인버터효율.[%]");
             dataGridView1.Columns[0].Width = 40;
@@ -105,9 +105,9 @@ namespace main.contentslist
         {
             dataGridView1.Rows.Clear();
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "번호,명칭,면적,용량,인버터효율", "");
-            if(Value.Length > 0) 
+            if (Value.Length > 0)
             {
-                for(int n=0; n<Value.Length; n++)
+                for (int n = 0; n < Value.Length; n++)
                 {
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[n].Cells[1].Value = Value[n][0];
@@ -116,7 +116,7 @@ namespace main.contentslist
                     dataGridView1.Rows[n].Cells[4].Value = Value[n][3];
                     dataGridView1.Rows[n].Cells[5].Value = Value[n][4];
                 }
-            }             
+            }
         }
 
         public void load_List()
@@ -199,15 +199,6 @@ namespace main.contentslist
             }
         }
 
-        private void dataGridView1_DoubleClick(object sender, EventArgs e)
-        {
-            int k = dataGridView1.CurrentCell.RowIndex;
-            if (k > -1)
-            {
-                Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit");
-            }
-
-        }
 
         private void Copy_button_Click(object sender, EventArgs e)
         {
@@ -229,6 +220,13 @@ namespace main.contentslist
             load_List();
         }
 
-       
+        private void dataGridView1_DoubleClick(object sender, EventArgs e)
+        {
+            int k = dataGridView1.CurrentCell.RowIndex;
+            if (k > -1)
+            {
+                Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit");
+            }
+        }
     }
 }
