@@ -143,6 +143,12 @@ namespace main.contents
                     {
                         ene[mth] = 0;
                     } else ene[mth] = Convert.ToDouble(token[0][0].ToString()) / installedarea;
+                    
+                    if (token[0][1].ToString() == null || token[0][1].ToString() == "")
+                    {
+                        wgen[mth] = 0;
+                    }
+                    else wgen[mth] = Convert.ToDouble(token[0][1].ToString()) / installedarea;
                 }
             }
         }
@@ -215,7 +221,7 @@ namespace main.contents
 
             allcapacity.Text = string.Format("{0:N0}", a * installedarea);
             auxcapacity.Text = string.Format("{0:N0}", c * installedarea);
-            averagecpacity.Text = string.Format("{0:N0}", a/b);
+            averagecpacity.Text = string.Format("{0:N0}", 100*a/b);
         }
 
         private void Reset()
