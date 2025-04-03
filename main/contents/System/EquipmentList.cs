@@ -1789,7 +1789,7 @@ namespace main.contents
                     {
                         if (AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "")
                         {
-                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "-")
+                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "-")
                             {
                                 AirHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 7, 1) / Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 8, 1)).ToString("0.00");
                             }
@@ -1799,7 +1799,7 @@ namespace main.contents
                     {
                         if (AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "")
                         {
-                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "-")
+                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "-")
                             {
                                 AirHP_dataGridView.Rows[e.RowIndex].Cells[9].Value = (Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 7, 1) / Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 8, 1)).ToString("0.00");
                             }
@@ -1809,7 +1809,7 @@ namespace main.contents
                     {
                         if (AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "")
                         {
-                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-")
+                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != ""&& AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-")
                             {
                                 AirHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 10, 1) / Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 11, 1)).ToString("0.00");
                             }
@@ -1819,7 +1819,7 @@ namespace main.contents
                     {
                         if (AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() != "")
                         {
-                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-")
+                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-")
                             {
                                 AirHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 10, 1) / Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 11, 1)).ToString("0.00");
                             }
@@ -1829,7 +1829,7 @@ namespace main.contents
                     {
                         if (AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "")
                         {
-                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
+                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value != null &&AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
                             {
                                 AirHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 13, 1) / Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 14, 1)).ToString("0.00");
                             }
@@ -1839,7 +1839,7 @@ namespace main.contents
                     {
                         if (AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "")
                         {
-                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
+                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
                             {
                                 AirHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 13, 1) / Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 14, 1)).ToString("0.00");
                             }
