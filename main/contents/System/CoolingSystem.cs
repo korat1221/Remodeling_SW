@@ -16,6 +16,7 @@ using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -162,6 +163,7 @@ namespace main.contents
             ce2Type_comboBox.Items.AddRange(ceType.ToArray());
             ce1Ahu_comboBox.Items.AddRange(ceAhuType.ToArray());
             ce2Ahu_comboBox.Items.AddRange(ceAhuType.ToArray());
+            label7.Text = "면적 [m" + Program.UTIL.Subscript(2, true) + "]";
         }
 
         private string[] storagelist()
