@@ -466,20 +466,30 @@ namespace main.contents
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            int SelectRow = 0; 
+            if (e.RowIndex >= 0)
+            {
+               SelectRow = e.RowIndex;
+                for(int a=0; a< dataGridView1.Rows.Count; a++)
+                {
+                    if (SelectRow != a)
+                    { dataGridView1.Rows[a].Cells[0].Value = false; }
+                }
+            }
             if (e.RowIndex >= 0)
             {
                 if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                 {
+
                     string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,커튼월부위", "번호='" + dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString() + "'");
 
                     if (rec.Length > 0)
                     {
-                        Program.UTIL.select3DObject("---::---::" + rec[0][0] + getWallTypePostfix(rec[0][2]));
+                        Program.UTIL.select3DObject("---::---::" + rec[0][0]);
                     }
                 }
 
                 dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                int SelectRow = e.RowIndex;
             }
         }
         public string Save()
