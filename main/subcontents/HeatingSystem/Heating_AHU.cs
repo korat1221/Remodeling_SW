@@ -88,7 +88,6 @@ namespace main.subcontents.HeatingSystem
                     Count_DB = Value.Length;
                 }
             }
-            //Zone_dataGridView.DataSource = table_Zone;
         }
 
 

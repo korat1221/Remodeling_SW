@@ -2876,7 +2876,19 @@ namespace main.contents
 
         private Boolean ce_datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
-            if (ce_dataGridView.Rows[row].Cells[4].Value != null && ce_dataGridView.Rows[row].Cells[4].Value.ToString() == "복사난방")
+            if (ce_dataGridView.Rows[row].Cells[4].Value != null && (ce_dataGridView.Rows[row].Cells[4].Value.ToString() == "복사난방" || ce_dataGridView.Rows[row].Cells[4].Value.ToString() == "CAV유닛"))
+            {
+                if (column == 5 || column == 6 || column == 7 || column == 8)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.ForeColor = Color.Black;
+                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.SelectionForeColor = Color.Black;
+                    return true;
+                }
+                else { return false; }
+            }
+           else if (ce_dataGridView.Rows[row].Cells[4].Value != null && ce_dataGridView.Rows[row].Cells[4].Value.ToString() == "CAV유닛")
             {
                 if (column == 5 || column == 6 || column == 7 || column == 8)
                 {
@@ -2891,6 +2903,18 @@ namespace main.contents
             else if (ce_dataGridView.Rows[row].Cells[4].Value != null && ce_dataGridView.Rows[row].Cells[4].Value.ToString() == "방열기")
             {
                 if (column == 5 || column == 6 ||  column == 8)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.ForeColor = Color.Black;
+                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.SelectionForeColor = Color.Black;
+                    return true;
+                }
+                else { return false; }
+            }
+            else if (ce_dataGridView.Rows[row].Cells[4].Value != null &&  ce_dataGridView.Rows[row].Cells[4].Value.ToString() == "VAV유닛")
+            {
+                if (column == 5 || column == 6 || column == 7)
                 {
                     cell.Style.BackColor = Color.FromArgb(255, 255, 255);
                     cell.Style.ForeColor = Color.Black;
@@ -2977,7 +3001,7 @@ namespace main.contents
                 else if (ce_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() == "난방")
                 {
                     DataGridViewComboBoxCell 공급설비종류comboBox = new DataGridViewComboBoxCell();
-                    공급설비종류comboBox.Items.AddRange(new string[] { "실내기", "방열기", "팬코일유닛", "파워팬유닛", "복사난방", "바닥매립형컨백터", "파워팬유닛", "VAV유닛", "CAV유닛" });
+                    공급설비종류comboBox.Items.AddRange(new string[] { "실내기", "방열기", "팬코일유닛", "복사난방", "바닥매립형컨백터", "파워팬유닛", "VAV유닛", "CAV유닛" });
                     ce_dataGridView.Rows[e.RowIndex].Cells[4] = 공급설비종류comboBox;
                     ce_dataGridView.Rows[e.RowIndex].Cells[9].ReadOnly = false;
                 }

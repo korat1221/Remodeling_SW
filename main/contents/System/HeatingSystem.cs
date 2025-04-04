@@ -39,7 +39,7 @@ namespace main.contents
         String ce1Type, ce2Type; int ce_SelectRow;
         String StorageUse, StoragePumpUse, StoragePump; double Vs;
         String[] SystemType = { "보일러", "외기 히트펌프", "지열 히트펌프", "지하수 히트펌프", "태양열 융합 히트펌프", "흡수식온수기", "지역난방", "태양열시스템", "연료전지" };
-        String[] ceType = { "실내기", "방열기", "팬코일유닛", "복사난방" };
+        String[] ceType = { "실내기", "방열기", "팬코일유닛", "복사난방", "바닥매립형컨백터", "파워팬유닛", "VAV유닛", "CAV유닛" };
         double PipeD, PipeInsD, PipeIns_Ramda, PipeL;
         String PipeIns;
         double ZoneArea; ArrayList SelectAHU_split = new ArrayList();
@@ -185,6 +185,7 @@ namespace main.contents
                     SelectAHU_nonsplit = heatingahu.SelectAHU;
                     Split_AHU(heatingahu.SelectAHU);
                     Calc_Pipe();
+                    Load_ceCAV();
                 }
             }
 
@@ -308,6 +309,41 @@ namespace main.contents
             }
             else { 내용 = ""; }
 
+        }
+
+        private void Load_ceCAV()
+        {
+            if (ce_dataGridView.Columns.Count == 0)
+            {
+                Create_ce_Table();
+            }
+            for (int a = 0; a < SelectAHU_split.Count; a++)
+            {
+                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "공조방식", "번호= '" + SelectAHU_split[a].ToString() + "' and 공조방식='정풍량'");
+                if (Value.Length > 0)
+                {
+                    string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+                    string[][] 공급설비일람표 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "번호", "종류 = 'CAV유닛'");
+                    if (공급설비일람표.Length > 0)
+                    {
+                        string[][] zone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호", "선택열회수기='" + SelectAHU_split[a].ToString() + "'");
+                        if (zone.Length > 0)
+                        {
+                            for (int aa = 0; aa < zone.Length; aa++)
+                            {
+                                Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,프로젝트유형,난방시스템,공급설비종류,공급설비",
+                                 "'" + zone[aa][0] + "','" + 프로젝트유형[0][0] + "','"
+                                 + Num + "','CAV유닛','"
+                                + 공급설비일람표[0][0] + "_1'", "존번호,프로젝트유형,난방시스템,공급설비종류");
+                            }
+                        }
+
+                    }
+
+                }
+            }
+
+            Load_ce("CAV유닛");
         }
         #endregion
 
@@ -2523,6 +2559,7 @@ namespace main.contents
                 }
             }
         }
+       
         private void ce_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -2541,6 +2578,7 @@ namespace main.contents
                 ce_dataGridView.Rows.Remove(ce_dataGridView.Rows[ce_SelectRow]);
             }
         }
+
         private void Load_ce(string CE)
         {
             String[][] Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,공급설비종류,공급설비,가동시간", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + CE + "'");
@@ -2609,6 +2647,18 @@ namespace main.contents
         private Boolean ce_datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
             if (ce_dataGridView.Rows[row].Cells[2].Value != null && ce_dataGridView.Rows[row].Cells[2].Value.ToString() == "복사난방")
+            {
+                if (column == 4 || column == 5)
+                {
+                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.ForeColor = Color.Black;
+                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                    cell.Style.SelectionForeColor = Color.Black;
+                    return true;
+                }
+                else { return false; }
+            }
+            else if (ce_dataGridView.Rows[row].Cells[2].Value != null && ce_dataGridView.Rows[row].Cells[2].Value.ToString() == "CAV유닛")
             {
                 if (column == 4 || column == 5)
                 {
@@ -2793,7 +2843,7 @@ namespace main.contents
             Save_Pump();
             Save_ce();
 
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,명칭,존", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + Name + "','" + SelectZone_nonsplit + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,명칭,존,공조기", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + Name + "','" + SelectZone_nonsplit + "','" + SelectAHU_nonsplit + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,설치위치,공급환수온도,복합설비유무,주요설비,보조설비1,보조설비2", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SystemLoacation + "','" + SLRL + "','" + Complex + "','" + MainSystem + "','" + Sub1System + "','" + Sub2System + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,보일러종류,보일러대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectBoiler_nonsplit + "','" + BoilerNum_nonsplit + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,태양열번호,모듈개수,모듈방위,모듈기울기", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectSolar_nonsplit + "','" + SolarNum_nonsplit + "','" + SolarDirection_nonsplit + "','" + SolarDegree_nonsplit + "'", "번호");
@@ -2861,7 +2911,7 @@ namespace main.contents
 
         private void reset()
         {
-            Num = null; Name = null; SelectZone_nonsplit = null;
+            Num = null; Name = null; SelectZone_nonsplit = null; SelectAHU_nonsplit = null;
             SystemLoacation = null; SLRL = null; Complex = null; MainSystem = null; Sub1System = null; Sub2System = null;
             SelectBoiler_nonsplit = null; BoilerNum_nonsplit = null;
             SelectSolar_nonsplit = null; SolarNum_nonsplit = null; SolarDirection_nonsplit = null; SolarDegree_nonsplit = null; SelectFC_nonsplit = null; FCNum_nonsplit = null;
@@ -2869,13 +2919,14 @@ namespace main.contents
             Pump1Num = 0; Pump2Num = 0;
             ce1Type = null; ce2Type = null; ce_SelectRow = 0;
             StorageUse = null; StoragePumpUse = null; StoragePump = null; Vs = 0;
-            SelectZone_split.Clear(); SelectBoiler_split.Clear();
+            SelectZone_split.Clear(); SelectAHU_split.Clear(); SelectBoiler_split.Clear();
             PipeD = 0; PipeInsD = 0; PipeIns_Ramda = 0; PipeIns = null; PipeL = 0;
             ZoneArea = 0;
 
             Num_textBox.Text = null;
             Name_textBox.Text = null;
             Zone_textBox.Text = null;
+            AHU_textBox.Text = null;
 
             SystemLoacation_comboBox.SelectedItem = null;
             SLRL_comboBox.SelectedItem = null;
@@ -2933,6 +2984,13 @@ namespace main.contents
             PipeIns_textBox.Text = null;
             ce1_pictureBox.Visible = false;
             ce2_pictureBox.Visible = false;
+
+            Zone_Qba_textBox.Text = null;
+            Zone_Qmax_textBox.Text = null;
+            Zone_Area_textBox.Text = null;
+            AHU_Qba_textBox .Text = null;
+            AHU_Qmax_textBox .Text = null;
+            AHU_Area_textBox.Text = null;
         }
 
         #endregion
@@ -2955,6 +3013,7 @@ namespace main.contents
                 Split_Zone(SelectZone_nonsplit);
                 SelectAHU_nonsplit = Value[0][2];
                 Split_AHU(SelectAHU_nonsplit);
+              
             }
 
             Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "설치위치,공급환수온도,복합설비유무,주요설비,보조설비1,보조설비2", "번호 = '" + ID + "'");
@@ -3175,6 +3234,25 @@ namespace main.contents
                     }
                 }
             }
+            if (SelectAHU_nonsplit != null)
+            {
+                Load_ce("CAV유닛");
+                for (int n = 0; n < ce_dataGridView.Rows.Count; n++)
+                {
+                    String 존번호, 공급설비;
+                    int index = ce_dataGridView.Rows[n].Cells[1].Value.ToString().IndexOf("CE");
+                    존번호 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(0, index - 1);
+                    공급설비 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(index, ce_dataGridView.Rows[n].Cells[1].Value.ToString().Length - index);
+
+                    string[][] CE_Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "설치위치,가동시간", "난방시스템 = '" + ID + "' And 존번호 = '" + 존번호 + "' And 공급설비 = '" + 공급설비 + "'");
+                    if (CE_Value.Length > 0)
+                    {
+                        ce_dataGridView.Rows[n].Cells[7].Value = CE_Value[0][0].ToString();
+                        ce_dataGridView.Rows[n].Cells[8].Value = CE_Value[0][1].ToString();
+                    }
+                }
+            }
+
             Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "축열유무,축열펌프유무,축열펌프,축열용량", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {

@@ -879,7 +879,7 @@ namespace main
                         for (int a = 0; a < ce.Length; a++)
                         {
                             string[][] ce2 = Program.DB.getValue(ProjNum, "User_ce", "용량_난방", "번호='" + ce[a][0].Substring(0, 4) + "'");
-                            if (ce[a][1] != "복사난방")
+                            if (ce2[0][0] != "")
                             {
                                 가동비율[a] = Convert.ToDouble(ce[a][2]) * Convert.ToDouble(ce2[0][0]);
                                 가동비율_tot += 가동비율[a];
@@ -1012,6 +1012,7 @@ namespace main
         public static void Heating_LoadData(Heating Heating1, string ProjNum)
         {
             Heating1.Load_Zonedata(ProjNum);
+            Heating1.Load_AHUdata(ProjNum); 
             Heating1.Load_HeatingGeneral(ProjNum);
             Heating1.Load_Boiler_general(ProjNum);
             Heating1.Load_Solar_general(ProjNum);
