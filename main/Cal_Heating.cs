@@ -23,7 +23,7 @@ namespace main
         String PipeIns;
         int ZoneCount;
         public ArrayList SelectZone_split = new ArrayList(); public ArrayList SelectAHU_split = new ArrayList(); public ArrayList SelectBoiler_split = new ArrayList(); public ArrayList BoilerNum_split = new ArrayList(); public ArrayList SelectABS_split = new ArrayList(); public ArrayList ABSNum_split = new ArrayList(); public ArrayList SelectDH_split = new ArrayList();
-        public double[] Qhb_mth_sum = new double[12]; public double[] theta_ih_avg = new double[12]; public double[] theta_e = new double[12]; public double[] theta_u = new double[12];
+        public double[] Qhb_mth_sum = new double[12];  public double[] theta_ih_avg = new double[12]; public double[] theta_e = new double[12]; public double[] theta_u = new double[12];
         public double Qh_max_sum, Qh_a_sum, th_op_day_avg, theta_i_h_set_avg; public double[] th_avg = new double[12]; public double[] dop_mth_avg = new double[12];
         double SL, RL;
         double[] dmth = new double[12] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -43,7 +43,10 @@ namespace main
         public ArrayList AirHPNum_split = new ArrayList(); ArrayList GroundHPNum_split = new ArrayList(); ArrayList GWHPNum_split = new ArrayList();
         public ArrayList SelectSolar_split = new ArrayList(); ArrayList SolarNum_split = new ArrayList(); ArrayList SolarDirection_split = new ArrayList(); ArrayList SolarDegree_split = new ArrayList();
         public ArrayList SelectFC_split = new ArrayList(); ArrayList FCNum_split = new ArrayList(); ArrayList FCElecInstall_split = new ArrayList();
-
+        public double[] Qhb_z = new double[12], Qh_ce_z = new double[12], Qh_d_z = new double[12], Qh_s_z = new double[12], Qh_outg_z = new double[12];
+        public double[] Wh_ce_z = new double[12], Wh_d_z = new double[12], Wh_s_z = new double[12];
+        public double[] Qhb_ahu = new double[12], Qh_ce_ahu = new double[12], Qh_d_ahu = new double[12], Qh_s_ahu = new double[12], Qh_outg_ahu = new double[12];
+        public double[] Wh_ce_ahu = new double[12], Wh_d_ahu = new double[12], Wh_s_ahu = new double[12];
 
         double[] Qfc_heat = new double[12], Qfc_elec = new double[12];
         double[] Qfc_f= new double[12];
@@ -178,6 +181,7 @@ namespace main
                 {
                     for (int n = 0; n < Value_ce.Length; n++)
                     {
+                        Qhb_z[mth] += Qhb_mth[n, mth];
                         Qhb_mth_sum[mth] += Qhb_mth[n, mth];
                         //요구량 가중
                         theta_ih_avg[mth] += (theta_ih[n, mth] * Qh_a[n]);
@@ -236,9 +240,10 @@ namespace main
                     {
                         zone = Program.CALC.getZone(Value_ce[n][1]);
                         ahu = Program.CALC.getAHU(Value_ce[n][3]);
+                        double percent = Cal_AHUneed_percent(ahu, zone);
                         for (int mth = 0; mth < 12; mth++)
                         {
-                            Cal_Zone_data_(zone,ahu, Value_ce, n, Qhb_mth, theta_ih, th, dop_mth, Qh_a, th_op_day, theta_i_h_set, ahu.Qv_b[0,mth], mth);
+                            Cal_Zone_data_(zone,ahu, Value_ce, n, Qhb_mth, theta_ih, th, dop_mth, Qh_a, th_op_day, theta_i_h_set, percent * ahu.Qv_b[0,mth], mth);
                         }
                     }
                     else
@@ -255,9 +260,10 @@ namespace main
                                     {
                                         zone = Program.CALC.getZone(PostZone[j][0]);
                                         ahu = Program.CALC.getAHU(PostZone[j][2]);
+                                        double percent = Cal_AHUneed_percent(ahu, zone);
                                         for (int mth = 0; mth < 12; mth++)
                                         {
-                                            Cal_Zone_data_(zone, ahu, Value_ce, n, Qhb_mth, theta_ih, th, dop_mth, Qh_a, th_op_day, theta_i_h_set, ahu.Qv_b[0, mth], mth);
+                                            Cal_Zone_data_(zone, ahu, Value_ce, n, Qhb_mth, theta_ih, th, dop_mth, Qh_a, th_op_day, theta_i_h_set, percent * ahu.Qv_b[0, mth], mth);
                                         }
                                     }
                                 }
@@ -317,6 +323,7 @@ namespace main
                 {
                     for (int n = 0; n < Value_ce.Length; n++)
                     {
+                        Qhb_ahu[mth] += Qhb_mth[n, mth];
                         Qhb_mth_sum[mth] += Qhb_mth[n, mth];
                         //요구량 가중
                         theta_ih_avg[mth] += (theta_ih[n, mth] * Qh_a[n]);
@@ -328,6 +335,19 @@ namespace main
                     dop_mth_avg[mth] = dop_mth_avg[mth] / Qh_a_sum;
                 }
             }
+        }
+
+        private double Cal_AHUneed_percent(AHU ahu, Zone zone)
+        {
+            double percent = 0;
+            double sum = 0;
+           for(int a =0; a< ahu.SelectZone_split.Count; a++)
+            {
+                Zone zone2 = Program.CALC.getZone(ahu.SelectZone_split[a].ToString());
+                sum += zone2.Qb_a[0];
+            }
+            percent = zone.Qb_a[0] / sum; 
+           return percent;
         }
 
         private void Cal_Zone_data_(Zone zone, string[][] Value_ce, int n, double[,] Qhb_mth, double[,] theta_ih, double[,] th, double[,] dop_mth, double[] Qh_a, double[] th_op_day, double[] theta_i_h_set, double Qhb_mth_, int mth)
@@ -1870,7 +1890,30 @@ namespace main
                     Wh_s[mth] = 0;
                     Wh_g[mth] = 0;
                 }
+                double sum = Qhb_z[mth] + Qhb_ahu[mth];
+                if (sum >0)
+                {
+                    Qh_ce_z[mth] = Qh_ce[mth] * Qhb_z[mth]/sum;
+                    Qh_ce_ahu[mth] = Qh_ce[mth] * Qhb_ahu[mth] / sum;
 
+                    Qh_d_z[mth] = Qh_d[mth] * Qhb_z[mth] / sum;
+                    Qh_d_ahu[mth] = Qh_d[mth] * Qhb_ahu[mth] / sum;
+
+                    Qh_s_z[mth] = Qh_s[mth] * Qhb_z[mth] / sum;
+                    Qh_s_ahu[mth] = Qh_s[mth] * Qhb_ahu[mth] / sum;
+
+                    Qh_outg_z[mth] = Qh_outg[mth] * Qhb_z[mth] / sum;
+                    Qh_outg_ahu[mth] = Qh_outg[mth] * Qhb_ahu[mth] / sum;
+
+                    Wh_ce_z[mth] = Wh_ce[mth] * Qhb_z[mth] / sum;
+                    Wh_ce_ahu[mth] = Wh_ce[mth] * Qhb_ahu[mth] / sum;
+
+                    Wh_d_z[mth] = Wh_d[mth] * Qhb_z[mth] / sum;
+                    Wh_d_ahu[mth] = Wh_d[mth] * Qhb_ahu[mth] / sum;
+
+                    Wh_s_z[mth] = Wh_s[mth] * Qhb_z[mth] / sum;
+                    Wh_s_ahu[mth] = Wh_s[mth] * Qhb_ahu[mth] / sum;
+                }
             }
 
         }

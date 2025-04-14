@@ -592,6 +592,9 @@ namespace main
                 {
                     Zone_HT_Di_Wall += zoneWall_HT[i];
 
+                }else if(zonewall.DiIndi() == "통기층")
+                {
+                    Zone_HT_Di_Wall += zoneWall_HT[i];
                 }
                 else if (zonewall.DiIndi() == "간접외기")
                 {
@@ -618,6 +621,11 @@ namespace main
 
 
                 if (zoneroof.DiIndi() == "직접외기")
+                {
+                    Zone_HT_Di_Roof += zoneRoof_HT[i];
+
+                }
+                else if (zoneroof.DiIndi() == "통기층")
                 {
                     Zone_HT_Di_Roof += zoneRoof_HT[i];
 

@@ -1,6 +1,7 @@
 ﻿using main    ;
 using main.subcontents;
 using Microsoft.Web.WebView2.Core;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -785,11 +786,11 @@ namespace main
                     string[][] v2;
                     if (Now_Check == true)
                     {
-                        v2 = Program.DB.getValue(DB.type.ProjDB, "Cooling_ce_Form", "부하율", " 존번호 = '" + value.ZoneNum + "' AND 냉방시스템 = '" + CoolingNum + "' ");
+                        v2 = Program.DB.getValue(DB.type.ProjDB, "Cooling_ce_Form", "부하율", " 존번호 = '" + value.ZoneNum + "' AND 냉방시스템 = '" + CoolingNum + "' and (Not 공급설비종류='CAV유닛' and Not 공급설비종류='VAV유닛') ");
                     }
                     else
                     {
-                        v2 = Program.DB.getValue(DB.type.ProjDB, "Cooling_ce_Form_Element", "부하율", " 존번호 = '" + PreZoneNameList[pre] + "' AND 냉방시스템 = '" + CoolingNum + "' ");
+                        v2 = Program.DB.getValue(DB.type.ProjDB, "Cooling_ce_Form_Element", "부하율", " 존번호 = '" + PreZoneNameList[pre] + "' AND 냉방시스템 = '" + CoolingNum + "' and (Not 공급설비종류='CAV유닛' and Not 공급설비종류='VAV유닛') ");
                     }
 
                     for (int k = 0; k < v2.Length; k++)
@@ -972,11 +973,11 @@ namespace main
         #endregion
 
         #region //공조존 계산
-        public void Cal_Ahu() // 여러공조기 정보작성
+        public void Cal_Ahu(string ProjNum) // 여러공조기 정보작성
         {
             if (AhuNameList.Count > 0)
             {
-                Cal_AhuSum();
+                Cal_AhuSum(ProjNum);
                 Cal_CED_Ahu();
                 Cal_S_Ahu();
                 Cal_Oper_Ahu(); //작동시간
@@ -1000,48 +1001,58 @@ namespace main
             }
             
         }
-        public void Cal_AhuSum() //연간냉방에너지요구량,월이용일수,월실내온도,월냉방에너지요구량,설치위치
+        public void Cal_AhuSum(string ProjNum) //연간냉방에너지요구량,월이용일수,월실내온도,월냉방에너지요구량,설치위치
         {
             double[] dwd_sum = new double[12];
             double[] theta_sum = new double[12];
-            QC_a_ahu = 0;
+            QC_a_z = 0;
+            Boolean Now_Check = true;
+            if (ProjNum == 프로젝트번호[0][0])
+            { Now_Check = true; }
+            else
+            { Now_Check = false; }
+            string[][] 공급설비종류;
 
             for (int i = 0; i < 12; i++)
             {
-                foreach (AHU value in AhuNameList)
+                int pre = 0;
+                foreach (AHU ahu in AhuNameList)
                 {
-                    QC_nd_ahu[i] += value.Qb_mth_tot[1,i]; //공급설비 부하율을 반영한 요구량 산정
-                }
-                if (QC_nd_ahu[i] == 0)
-                {
-                    foreach (AHU value in AhuNameList)
+                    double load_sum = 0;
+                    string[][] v2;
+                    if (Now_Check == true)
                     {
-                        dwd_sum[i] += value.dvmechmth_avg[i] * value.ANF_tot;
-                        theta_sum[i] += value.theta_iset_avg[1] * value.ANF_tot;
+                        v2 = Program.DB.querySQL(DB.type.ProjDB, "Select a.부하율, b.존번호 From Cooling_ce_Form as a Inner Join ZoneGeneral_Form as b on a.존번호=b.존번호 Where b.선택열회수기 = '" + ahu.AHUNum + "' AND a.냉방시스템 = '" + CoolingNum + "' and (a.공급설비종류='CAV유닛' or a.공급설비종류='VAV유닛') ");
                     }
-                    dwd_ahu[i] = dwd_sum[i] / A_ahu; //요구량이 없으므로 면적가중으로 산정함
-                    theta_ahu[i] = theta_sum[i] / A_ahu; //요구량이 없으므로 면적가중으로 산정함
-                }
-                else
-                {
-                    foreach (AHU value in AhuNameList)
+                    else
                     {
-                        dwd_sum[i] += value.dvmechmth_avg[i] * value.Qb_mth_tot[1, i]; // 요구량 가중하여 산정함
-                        theta_sum[i] += value.theta_iset_avg[1] * value.Qb_mth_tot[1, i]; //요구량 가중하여 산정함
+                        v2 = Program.DB.querySQL(DB.type.ProjDB, "Select a.부하율, b.존번호 From Cooling_ce_Form_Element as a Inner Join ZoneGeneral_Form as b on a.존번호=b.존번호 Where b.선택열회수기 = '" + ahu.AHUNum + "' AND 냉방시스템 = '" + CoolingNum + "' and (a.공급설비종류='CAV유닛' or a.공급설비종류='VAV유닛') ");
                     }
-                    dwd_ahu[i] = dwd_sum[i] / QC_nd_ahu[i];
-                    theta_ahu[i] = theta_sum[i] / QC_nd_ahu[i];
+
+                    for (int k = 0; k < v2.Length; k++)
+                    {
+                        Zone zone = Program.CALC.getZone(v2[k][1]);
+                        double percent = Cal_AHUneed_percent(ahu, zone);
+                        QC_nd_ahu[i] += percent * ahu.Qb_mth_tot[1, i] * Convert.ToDouble(v2[k][0]); //공급설비 부하율을 반영한 요구량 산정
+                        dwd_ahu[i] += ahu.dvmechmth_avg[i] * percent * ahu.Qb_mth_tot[1, i] * Convert.ToDouble(v2[k][0]); // 요구량 가중하여 산정함
+                        theta_ahu[i] += ahu.theta_iset_avg[1] * percent * ahu.Qb_mth_tot[1, i] * Convert.ToDouble(v2[k][0]); ; //요구량 가중하여 산정함
+                    }
                 }
+                dwd_ahu[i] = dwd_ahu[i] / QC_nd_ahu[i];
+                theta_ahu[i] = theta_ahu[i] / QC_nd_ahu[i];
                 QC_a_ahu += QC_nd_ahu[i];
+
+
             }
+
             List<double> pow = new List<double>();
             foreach (AHU value in AhuNameList)
             {
                 pow.Add(value.Qmax_tot[1]); //공급설비 부하율을 반영한 요구량 산정
             }
-            foreach(AHU value in AhuNameList)
+            foreach (AHU value in AhuNameList)
             {
-                if(pow.Max() == value.Qmax_tot[1])
+                if (pow.Max() == value.Qmax_tot[1])
                 {
                     if (value.AHULocation == "단열외피 내부")
                     {
@@ -1051,6 +1062,18 @@ namespace main
 
                 }
             }
+        }
+        private double Cal_AHUneed_percent(AHU ahu, Zone zone)
+        {
+            double percent = 0;
+            double sum = 0;
+            for (int a = 0; a < ahu.SelectZone_split.Count; a++)
+            {
+                Zone zone2 = Program.CALC.getZone(ahu.SelectZone_split[a].ToString());
+                sum += zone2.Qb_a[0];
+            }
+            percent = zone.Qb_a[0] / sum;
+            return percent;
         }
 
         public void Cal_CED_Ahu() 
