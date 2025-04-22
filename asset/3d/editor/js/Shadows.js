@@ -531,9 +531,11 @@ Shadows.prototype = {
 								up.y = upPoint.y;
 							
 								el2.up_shadow_base = Math.hypot(upPoint.x - ctr.x, upPoint.z - ctr.z); // XY 평면 기준 거리
-								el2.up_shadow_height = upPoint.y - ctr.y; // Y축 거리
+								
+								el2.up_shadow_height = upPoint.x - ctr.x; // Y축 거리
+
 								el2.up_shadow_angle = 90-(Math.atan2(el2.up_shadow_height, el2.up_shadow_base) * 180 / Math.PI);
-							
+
 								win.userData.shadows.push(_addLineObject([ctr, upPoint], 0xFF00FF, 0.5));
 							}
 							
@@ -549,3 +551,4 @@ Shadows.prototype = {
 };
 
 export { Shadows };
+
