@@ -397,6 +397,7 @@ namespace main
                 {
                     SecureSQLite.ExecuteSQL((int)dbType, exec);
                 }
+
             }
         }
 
