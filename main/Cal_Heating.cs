@@ -973,19 +973,6 @@ namespace main
                 R_pipe = Math.Log(((PipeD / 2 + PipeInsD) / 1000) / (PipeD / 2 / 1000)) / 2 / Math.PI / PipeIns_Ramda;
                 Ramda_se = 5 + 0.15 * 5.67 / 100000000 * 4 * 1000;
                 R_se = 1 / (Ramda_se * 2 * Math.PI * (PipeD / 2 + PipeInsD) / 1000);
-                Psi_pipe = 1 / (R_pipe + R_se);
-                //string[][] Value = Program.DB.getValue(ProjNum, "User_Pump", "양정", "번호 = '" + Pump1 + "'");
-                //if (Value.Length > 0)
-                //{
-                //    L1 = Convert.ToDouble(Value[0][0]);
-                //}
-                //Value = Program.DB.getValue(ProjNum, "User_Pump", "양정", "번호 = '" + Pump2 + "'");
-                //if (Value.Length > 0)
-                //{
-                //    L2 = Convert.ToDouble(Value[0][0]);
-                //}
-                //L = L1 + L2;
-
                 
 
                 double[] theta_i = new double[12];               
@@ -1023,7 +1010,7 @@ namespace main
                         double[] Vz = new double[12], P_hydr = new double[12], fe = new double[12], e_hydr = new double[12], Wh_hydr = new double[12];
                         double theta;
                         Num_pump = Pump1;
-                        A_pump = Convert.ToDouble(Value[0][0]);
+                        A_pump = Value[0][0]!=""? Convert.ToDouble(Value[0][0]) :0  ;
                         B_pump = Convert.ToDouble(Value[0][1]);
                         V_pump = Convert.ToDouble(Value[0][2]);
                         Power_pump = Convert.ToDouble(Value[0][3]);
@@ -1058,7 +1045,7 @@ namespace main
                             else
                             { Vz[mth] = Qh_max_sum / 1000 * 3.6 / (dtheta_d[mth] * 4.18); } //2개일 경우 펌프 파워별로 나눠서 분담한 것으로 계산 
                             P_hydr[mth] = dPz * Vz[mth] / 3600;
-                            fe[mth] = (1.25 + 200 / P_hydr[mth]) * 2;
+                            fe[mth] = (Power_pump / P_hydr[mth]) ;
                             e_hydr[mth] = fe[mth] * (Cp1 + Cp2 / beta_h_d[mth]) * 0.25 / 0.25;
                             Wh_hydr[mth] = P_hydr[mth] / 1000 * beta_h_d[mth] * th_avg[mth] * f_dpm * 1;
                             Wh_d[mth] = Wh_hydr[mth] * e_hydr[mth];
@@ -1073,7 +1060,7 @@ namespace main
                             double[] Vz = new double[12], P_hydr = new double[12], fe = new double[12], e_hydr = new double[12], Wh_hydr = new double[12];
                             double theta;
                             Num_pump = Pump1;
-                            A_pump = Convert.ToDouble(Value2[0][0]);
+                            A_pump = Value2[0][0] != "" ? Convert.ToDouble(Value2[0][0]) : 0;
                             B_pump = Convert.ToDouble(Value2[0][1]);
                             V_pump = Convert.ToDouble(Value2[0][2]);
                             Power_pump = Convert.ToDouble(Value2[0][3]);
@@ -1108,7 +1095,7 @@ namespace main
                                 else
                                 { Vz[mth] = Qh_max_sum / 1000 * 3.6 / (dtheta_d[mth] * 4.18); } //2개일 경우 펌프 파워별로 나눠서 분담한 것으로 계산 
                                 P_hydr[mth] = dPz * Vz[mth] / 3600;
-                                fe[mth] = (1.25 + 200 / P_hydr[mth]) * 2;
+                                fe[mth] = (Power_pump/ P_hydr[mth]) ;
                                 e_hydr[mth] = fe[mth] * (Cp1 + Cp2 / beta_h_d[mth]) * 0.25 / 0.25;
                                 Wh_hydr[mth] = P_hydr[mth] / 1000 * beta_h_d[mth] * th_avg[mth] * f_dpm * 1;
                                 Wh_d[mth] += Wh_hydr[mth] * e_hydr[mth] + Wh_d[mth];

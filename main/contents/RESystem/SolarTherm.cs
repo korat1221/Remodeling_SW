@@ -38,13 +38,9 @@ namespace main.contents
                 지역 = val[0][0].ToString();
             }
 
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '태양열시스템'");
-            if (Image.Length > 0)
-            {
-                pictureBox1.Load(Program.gPath + Image[0][0]);
-                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            }
-          
+            pictureBox1.Load(Program.gPath + "images/2ndicon/10_1SolarTherm.png");
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+
             Create_Table();
         }
 

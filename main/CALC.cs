@@ -1154,7 +1154,7 @@ namespace main
                             if (ce2[0][0] != "" && Convert.ToDouble(ce2[0][0]) > 0)
                             {
                                 용량[a] = Convert.ToDouble(ce2[0][0]);
-                                if (ce2[a][1] != "")
+                                if (ce2[0][1] != "")
                                 {
                                     소비전력[a] = Convert.ToDouble(ce2[0][1]);
                                 }

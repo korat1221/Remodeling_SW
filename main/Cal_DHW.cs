@@ -372,7 +372,7 @@ namespace main
                     double[] Vz = new double[12], P_hydr = new double[12], fe = new double[12], e_hydr = new double[12], Wh_hydr = new double[12];
                     double theta;
                     Num_pump = Pump1;
-                    A_pump = Convert.ToDouble(Value2[0][0]);
+                    A_pump = Value2[0][0] != "" ? Convert.ToDouble(Value2[0][0]) : 0;
                     B_pump = Convert.ToDouble(Value2[0][1]);
                     V_pump = Convert.ToDouble(Value2[0][2]);
                     Power_pump = Convert.ToDouble(Value2[0][3]);
@@ -404,7 +404,7 @@ namespace main
                     {
                         Vz[mth] = Psi_pipe * PipeL * (57.5 - theta_i_h_set_avg) / (1.15 * 5 * 1000);
                         P_hydr[mth] = dP * Vz[mth] / 3600;
-                        fe[mth] = (1.25 + 200 / P_hydr[mth]) * 2;
+                        fe[mth] = (Power_pump / P_hydr[mth]) ;
                         e_hydr[mth] = fe[mth] * (Cp1 + Cp2) * 0.25 / 0.25;
                         Wh_hydr[mth] = P_hydr[mth] / 1000 * dop_mth_avg[mth] * th_op_day_avg;
                         Ww_d[mth] = Wh_hydr[mth] * e_hydr[mth];

@@ -2824,7 +2824,7 @@ namespace main.contents
                     Pump_dataGridView.Rows[nRow].Cells[1].Value = Value[n][0];
                     Pump_dataGridView.Rows[nRow].Cells[2].Value = Value[n][1];
                     Pump_dataGridView.Rows[nRow].Cells[3].Value = Value[n][2];
-                    Pump_dataGridView.Rows[nRow].Cells[4].Value = A효율;
+                    Pump_dataGridView.Rows[nRow].Cells[4].Value = 100;
                     Pump_dataGridView.Rows[nRow].Cells[5].Value = B효율;
                     Pump_dataGridView.Rows[nRow].Cells[6].Value = 유량;
                     Pump_dataGridView.Rows[nRow].Cells[8].Value = 양정;
