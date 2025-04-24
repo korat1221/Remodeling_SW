@@ -124,6 +124,7 @@ Bridges.prototype = {
 					let edges = el2.edges;
 					let links = el2.links;
 
+			
 					j = -1;
 
 					while(++j < edges.length) {
@@ -223,7 +224,7 @@ Bridges.prototype = {
 							}
 						}
 						else if (kind == 8) {
-							if (el2.type == 'IW') {
+							if (parseInt(el.userData.floor) >= 1 && el2.type == 'IW') {
 								k = -1;
 								let l;
 								while(++k < links[j].length) {
@@ -242,6 +243,7 @@ Bridges.prototype = {
 								}
 							}
 						}
+
 						else if (kind == 9) {
 							if (el2.type == 'WL' && Math.abs(edges[j][1].y - edges[j][0].y) > 0.00001) {
 								k = -1;
@@ -249,6 +251,7 @@ Bridges.prototype = {
 									let el3 = links[j][k];
 
 									if (el3.type == 'WL' 
+										&& el2.zoneid == el3.zoneid
 										&& Math.round(_angleBetween(el2.center, new THREE.Vector3((edges[j][0].x + edges[j][1].x) / 2, (edges[j][0].y + edges[j][1].y) / 2, (edges[j][0].z + edges[j][1].z) / 2), el3.center)) == ((Math.atan2(el2.normal.z, el2.normal.x) * 180 / Math.PI) < 180 ? -90:90) && 
 										!_includeRect(edges[j], el3)) {
 										done = true;
@@ -257,6 +260,7 @@ Bridges.prototype = {
 								}
 							}
 						}
+						
 						else if (kind == 10) {
 							if (el2.type == 'WL' && Math.abs(edges[j][1].y - edges[j][0].y) > 0.00001) {
 								k = -1;
@@ -295,6 +299,53 @@ Bridges.prototype = {
 								}
 							}
 						}
+						//(지하 지중접합 열교)
+
+						// else if (kind == 13) {
+						// 	// B로 시작하는 층을 확인하기 위한 정규 표현식
+						// 	const floorPattern = /^B\d+$/i;  
+						
+						// 	// el.userData.floor가 문자열일 경우 공백 제거하고 대소문자 통일 후 확인
+						// 	let floorValue = el.userData.floor.trim ? el.userData.floor.trim().toUpperCase() : el.userData.floor.toString().toUpperCase();
+							
+						// 	if ((el.userData.floor == 1 || floorPattern.test(floorValue)) && el2.type == 'FL') {
+						// 		k = -1;
+						// 		while (++k < links[j].length) {
+						// 			let el3 = links[j][k];
+						// 			if (Math.abs(MathUtils.radToDeg(el2.normal.angleTo(el3.normal))) == 90 && el3.type == 'WL' && el2.center.y < el3.center.y) {
+						// 				done = true;
+						// 				break;
+						// 			}
+						// 		}
+						// 	}
+						// }
+
+						else if (kind == 13 ){
+							if (parseInt(el.userData.floor) === 1 && el2.type == 'FL'){
+								k= -1;
+							while (++k < links[j].length) {
+								let el3=  links[j][k];
+								if(Math.abs(MathUtils.radToDeg(el2.normal.angleTo(el3.normal))) == 90 && el3.type == 'WL' && el2.center.y < el3.center.y) {
+									done = true;
+									break;
+								} 
+							}
+						}
+					}
+					
+						else if (kind == 14 ){
+							if (parseInt(el.userData.floor) === 1 && el2.type == 'FL'){
+								k= -1;
+							while (++k < links[j].length) {
+								let el3=  links[j][k];
+								if(Math.abs(MathUtils.radToDeg(el2.normal.angleTo(el3.normal))) == 90 && el3.type == 'WL' && el2.center.y > el3.center.y) {
+									done = true;
+									break;
+								} 
+							}
+						}
+					}
+						
 						if (done) {
 							_pushBridge(kind, edges[j]);
 						}

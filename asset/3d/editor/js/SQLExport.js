@@ -164,6 +164,8 @@ SQLExport.prototype = {
             10: "외벽+외벽[270]",
             11: "바닥+외벽[90]",
             12: "바닥+외벽[270]",
+            13: "지면바닥+외벽[90]",
+            14: "지면바닥+외벽[270]",
         };
         let _codes = {
             1: "RTB1",
@@ -178,6 +180,8 @@ SQLExport.prototype = {
             10: "WTB4",
             11: "WTB5",
             12: "WTB6",
+            13: "WTB7",
+            14: "WTB8",
         };
 
         if (zkeys.length > 0) {
@@ -369,7 +373,7 @@ SQLExport.prototype = {
                         "','" +
                         _asVal(el2.left_shadow_height, "0") +
                         "','" +
-                        _asVal(el2.up_shadow_height, "0") +
+                        _asVal(el2.up_shadow_base, "0") +
                         "','" +
                         _asVal(el2.shadow_height, "0") +
                         "','" + _asVal(el2.width,"") + 
