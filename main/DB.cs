@@ -391,10 +391,9 @@ namespace main
         {
             if (exec != "")
             {
-                string s = QuerySQL((int)dbType, "SELECT name FROM sqlite_master WHERE type='table' AND name='" + name + "';");
                 string[][] ret = JsonConvert.DeserializeObject<string[][]>(QuerySQL((int)dbType, "SELECT name FROM sqlite_master WHERE type='table' AND name='" + name + "';"));
 
-                if (ret.Length > 0)
+                if (ret.Length == 0)
                 {
                     SecureSQLite.ExecuteSQL((int)dbType, exec);
                 }
