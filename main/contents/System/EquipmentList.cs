@@ -388,7 +388,7 @@ namespace main.contents
             난방급탕Combo.Items.Add("난방+급탕");
             Boiler_dataGridView.Rows[nRow].Cells[4] = 난방급탕Combo;
 
-            for (int k = 2; k < 13; k++)
+            for (int k = 2; k < 14; k++)
             {
                 if (Boiler_dataGridView.Rows[Boiler_SelectRow].Cells[k].Value != null)
                 {
@@ -640,9 +640,7 @@ namespace main.contents
             int nRow = ABS_dataGridView.Rows.Add();
             Load_ABS_Num();
 
-
-
-            for (int k = 2; k < 18; k++)
+            for (int k = 2; k < 19; k++)
             {
                 if (ABS_dataGridView.Rows[ABS_SelectRow].Cells[k].Value != null)
                 {
@@ -654,7 +652,7 @@ namespace main.contents
                 ABS_dataGridView.Rows[nRow].Cells[3].Value = ABS_dataGridView.Rows[ABS_SelectRow].Cells[3].Value.ToString() + "_복사";
             }
 
-            if (ABS_dataGridView.Rows[nRow].Cells[2].Value == "도면")
+            if (ABS_dataGridView.Rows[nRow].Cells[2].Value != null && ABS_dataGridView.Rows[nRow].Cells[2].Value == "도면")
             {
                 DataGridViewComboBoxCell 난방냉방Combo = new DataGridViewComboBoxCell();
                 난방냉방Combo.Items.AddRange(new string[] { "냉방", "냉난방" });
@@ -666,7 +664,7 @@ namespace main.contents
 
                 DataGridViewComboBoxCell 설치Combo = new DataGridViewComboBoxCell();
                 설치Combo.Items.AddRange(new string[] { "기존", "신규", "철거후신규" });
-                ABS_dataGridView.Rows[nRow].Cells[18] = 설치Combo;
+                ABS_dataGridView.Rows[nRow].Cells[18] = 설치Combo; 
             }
         }
         private void ABS_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -677,19 +675,34 @@ namespace main.contents
                 ABS_SelectRow = e.RowIndex;
             }
         }
+       
+
         private void ABS_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
                 if (e.ColumnIndex == 4)
                 {
-                    if (ABS_dataGridView.Rows[e.RowIndex].Cells[4].Value != null && ABS_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString() == "냉방")
+                    if (ABS_dataGridView.Rows[e.RowIndex].Cells[4].Value != null)
                     {
-                        ABS_dataGridView.Rows[e.RowIndex].Cells[9].Value = "-";
-                        ABS_dataGridView.Rows[e.RowIndex].Cells[10].Value = "-";
-                        ABS_dataGridView.Rows[e.RowIndex].Cells[13].Value = "-";
-                        ABS_dataGridView.Rows[e.RowIndex].Cells[14].Value = "-";
+                        string currentValue = ABS_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString();
+
+                        if (currentValue == "냉방")
+                        {
+                            ABS_dataGridView.Rows[e.RowIndex].Cells[9].Value = "-";
+                            ABS_dataGridView.Rows[e.RowIndex].Cells[10].Value = "-";
+                            ABS_dataGridView.Rows[e.RowIndex].Cells[13].Value = "-";
+                            ABS_dataGridView.Rows[e.RowIndex].Cells[14].Value = "-";
+                        }
+                        else
+                        {
+                            ABS_dataGridView.Rows[e.RowIndex].Cells[9].Value = "";
+                            ABS_dataGridView.Rows[e.RowIndex].Cells[10].Value = "";
+                            ABS_dataGridView.Rows[e.RowIndex].Cells[13].Value = "";
+                            ABS_dataGridView.Rows[e.RowIndex].Cells[14].Value = "";
+                        }
                     }
+
                 }
                 else if (e.ColumnIndex == 5)
                 {
@@ -1849,16 +1862,34 @@ namespace main.contents
                 catch { }
 
 
-                if (AirHP_dataGridView.Rows[e.RowIndex].Cells[4].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString() == "냉방")
+               
+                if (e.ColumnIndex == 4)
                 {
-                    AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value = "-";
-                    AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value = "-";
-                    AirHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = "-";
-                    AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value = "-";
-                    AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value = "-";
-                    AirHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = "-";
-                }
+                    if (AirHP_dataGridView.Rows[e.RowIndex].Cells[4].Value != null)
+                    {
+                        string currentValue = AirHP_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString();
 
+                        if (currentValue == "냉방")
+                        {
+                            AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value = "-";
+                            AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value = "-";
+                            AirHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = "-";
+                            AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value = "-";
+                            AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value = "-";
+                            AirHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = "-";
+                        }
+                        else
+                        {
+                            AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value = "";
+                            AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value = "";
+                            AirHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = "";
+                            AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value = "";
+                            AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value = "";
+                            AirHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = "";
+                        }
+                    }
+
+                }
             }
         }
 
@@ -1887,7 +1918,7 @@ namespace main.contents
             }
 
 
-            for (int k = 2; k < 13; k++)
+            for (int k = 2; k < 19; k++)
             {
                 if (AirHP_dataGridView.Rows[HP_SelectRow].Cells[k].Value != null)
                 {
@@ -1907,6 +1938,8 @@ namespace main.contents
                 HP_SelectRow = e.RowIndex;
 
             }
+
+
         }
 
         private void Load_AirHP_Num()
