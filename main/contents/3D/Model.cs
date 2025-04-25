@@ -238,6 +238,7 @@ namespace main.contents
                     Save_Image();
                     string s = f.Save();
                     runScript("updateObjInfo(" + s + ")");
+                    MessageBox.Show("저장되었습니다.");
                     return;
                 }
             }

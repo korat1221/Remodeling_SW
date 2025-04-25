@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using static CustomComboBox;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
@@ -275,25 +276,12 @@ namespace main.contents
                     {
                         idx = dataGridView1.Rows.Add(null, rec[i][0], rec[i][1], rec[i][2], null, null, rec[i][6], _fixed(rec[i][5]), rec[i][7], _fixed(rec[i][8]), null);
 
-                        if (isWinType(rec[i][3]))
-                        {
-                            DataGridViewComboBoxCell TypeCombo = new DataGridViewComboBoxCell();
-                            TypeCombo.Items.Add("커튼월창");
-                            TypeCombo.Items.Add("창호");
-                            TypeCombo.Items.Add("외부출입문");
+                        DataGridViewTextBoxCell TypeLabe2 = new DataGridViewTextBoxCell();
+                        TypeLabe2.Value = rec[i][3];
+                        dataGridView1.Rows[idx].Cells[4] = TypeLabe2;
+                        TypeLabe2.ReadOnly = true;
+                        Load_ConstructionList(idx, rec[i][3]);
 
-                            TypeCombo.Value = rec[i][3];
-                            dataGridView1.Rows[idx].Cells[4] = TypeCombo;
-                            Load_ConstructionList(idx, rec[i][3]);
-                        }
-                        else
-                        {
-                            DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
-                            TypeLabel.Value = rec[i][3];
-                            dataGridView1.Rows[idx].Cells[4] = TypeLabel;
-                            TypeLabel.ReadOnly = true;
-                            Load_ConstructionList(idx, rec[i][3]);
-                        }
                         if (isCWallType(rec[i][4]))
                         {
                             DataGridViewComboBoxCell CWTypeCombo = new DataGridViewComboBoxCell();
@@ -702,7 +690,6 @@ namespace main.contents
             //           redrawList();
 
             Program.DB.saveProject();
-            MessageBox.Show("저장되었습니다.");
 
             return "[" + ret + "]";
         }
@@ -894,16 +881,7 @@ namespace main.contents
             {
                 int cellX = dataGridView1.Location.X + e.CellBounds.X;
                 int cellY = dataGridView1.Location.Y + e.CellBounds.Y;
-                if (e.ColumnIndex == 1)
-                {
-                    if (!button2.Visible)
-                    {
-                        button2.Location = new Point(cellX, cellY - 1);
-                        button2.Size = new Size(e.CellBounds.Width , e.CellBounds.Height);
-                        button2.Show();
-                    }
-                }
-                else if (e.ColumnIndex == 2)
+                if (e.ColumnIndex == 2)
                 {
                     if (!comboBox1.Visible)
                     {
@@ -959,15 +937,192 @@ namespace main.contents
             comboBox3.Hide();
             comboBox4.Hide();
             button1.Hide();
-            button2.Hide();
         }
 
         private void comboBox_DropDownClosed(object sender, EventArgs e)
         {
             if (comboBox1.ValueChanged || comboBox2.ValueChanged || comboBox3.ValueChanged || comboBox4.ValueChanged)
             {
+                Save_Envelope();
                 redrawList();
             }
+        }
+
+        private void Save_Envelope()
+        {
+
+            string num, num0, id, Type, CWType, tcode, RoofWin = "", Blind = "";
+            int i = -1;
+            while (++i < dataGridView1.RowCount)
+            {
+                if (dataGridView1.Rows[i].Cells[4].Value != null)
+                {
+                    if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "내벽" && dataGridView1.Rows[i].Cells[4].Value.ToString() != "층간바닥")
+                    {
+                        if (dataGridView1.Rows[i].Cells[10].Value == null || dataGridView1.Rows[i].Cells[10].Value.ToString() == "")
+                        {
+                            MessageBox.Show(dataGridView1.Rows[i].Cells[1].Value.ToString() + "의 구조체를 선택하세요.");
+                        }
+                        else { }
+                    }
+                    else { }
+                }
+                else { }
+            }
+
+            i = -1;
+            while (++i < dataGridView1.RowCount)
+            {
+                if (dataGridView1.Rows[i].Cells[1].Value != null)
+                {
+                    num0 = dataGridView1.Rows[i].Cells[1].Value.ToString();
+                    num = num0;
+                    Type = dataGridView1.Rows[i].Cells[4].Value.ToString();
+
+                    string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디", "번호='" + num0 + "'");
+
+                    id = rec[0][0];
+
+                    if (isWinType(Type) && (tcode = getTCode(Type)) != "")
+                    {
+                        CWType = dataGridView1.Rows[i].Cells[5].Value.ToString();
+
+                        if (Type != "커튼월창") CWType = Type;
+                        else if (CWType == "") CWType = "유리부분";
+
+                        num = num.Replace("_WIN_", "__");
+                        num = num.Replace("_DR_", "__");
+                        num = num.Replace("_CW_", "__");
+                        num = num.Replace("__", tcode);
+
+                        Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,외피유형,커튼월부위", "'" + id + "','" + num + "','" + Type + "','" + CWType + "'", "아이디");
+                    }
+
+                    if (dataGridView1.Rows[i].Cells[10].Value == null)
+                    {
+                        ConsType = "";
+                    }
+                    else
+                    {
+                        ConsType = dataGridView1.Rows[i].Cells[10].Value.ToString();
+                        string[][] Value = null;
+                        switch (Type)
+                        {
+                            case "커튼월창":
+                                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호", "명칭 = '" + ConsType + "'");
+                                break;
+                            case "외벽":
+                                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호", "명칭 = '" + ConsType + "'");
+                                break;
+                            case "지붕":
+                                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "번호", "명칭 = '" + ConsType + "'");
+                                break;
+                            case "최하층바닥":
+                                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "번호", "명칭 = '" + ConsType + "'");
+                                break;
+                            case "창호":
+                                Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호", "명칭 = '" + ConsType + "'");
+                                break;
+                            case "외부출입문":
+                                Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "번호", "명칭 = '" + ConsType + "'"); ; //출입문으로 나중에 바꿔야함 
+                                break;
+
+
+                        }
+                        if (Value.Length > 0)
+                        {
+                            ConsNum = Value[0][0];
+                            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+                            Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,번호,프로젝트유형,구조체,구조체번호", "'" + id + "','" + num + "','" + 프로젝트유형[0][0] + "','" + ConsType + "','" + ConsNum + "'", "아이디");
+
+                        }
+                        else { }
+                    }
+                    if (dataGridView1.Rows[i].Cells[11].Value == null)
+                    {
+                        RoofWin = "";
+                    }
+                    else
+                    {
+                        RoofWin = dataGridView1.Rows[i].Cells[11].Value.ToString();
+                        Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,천창유무", "'" + id + "','" + RoofWin + "'", "아이디");
+                    }
+                    if (dataGridView1.Rows[i].Cells[12].Value == null)
+                    {
+                        Blind = "";
+                    }
+                    else
+                    {
+                        Blind = dataGridView1.Rows[i].Cells[12].Value.ToString();
+                        Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디,차양적용", "'" + id + "','" + Blind + "'", "아이디");
+                        String[][] SubLoad = Program.DB.querySQL(DB.type.ProjDB, "select a.상위창호번호 FROM SubWindow AS a INNER JOIN ZoneEnvelope_3D AS b ON b.구조체번호 = a.번호 where b.아이디 = '" + id + "' AND b.외피유형 = '창호'");
+                        String[][] BlindValue = Program.DB.getValue(DB.type.ProjDB, "ConstructionBlind", "설치,외부반사율,투과율,흡수율", "번호 = '" + Blind + "'");
+                        if (SubLoad.Length > 0)
+                        {
+                            String[][] MainLoad = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "유리종류,태양열취득률,빛투과율,유리열관류율,이중단창", "번호 = '" + SubLoad[0][0] + "'");
+                            double SHGC_on;
+                            if (BlindValue.Length > 0)
+                            { SHGC_on = Calc_Blind_SHGC(Convert.ToDouble(MainLoad[0][1]), Convert.ToDouble(BlindValue[0][1]), Convert.ToDouble(BlindValue[0][2]), Convert.ToDouble(BlindValue[0][3]), Convert.ToDouble(MainLoad[0][3]), BlindValue[0][0]); }
+                            else { SHGC_on = Convert.ToDouble(MainLoad[0][1]); }
+
+                            double Glass_Ex, Glass_In;
+                            if (MainLoad[0][4] == "단창")
+                            {
+                                string[][] glass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "외부반사율,내부반사율", "제품명 ='" + MainLoad[0][0] + "'");
+                                if (glass.Length == 0)
+                                {
+                                    glass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "외부반사율,내부반사율", "제품명 ='" + MainLoad[0][0] + "'");
+                                }
+
+                                Glass_Ex = Convert.ToDouble(glass[0][0]);
+                                Glass_In = Convert.ToDouble(glass[0][1]);
+
+                            }
+                            else
+                            {
+                                string[][] glass = Program.DB.getValue(DB.type.ProjDB, "User_DoubleGlass", "외부반사율,내부반사율", "제품명 ='" + MainLoad[0][0] + "'");
+                                Glass_Ex = Convert.ToDouble(glass[0][0]);
+                                Glass_In = Convert.ToDouble(glass[0][1]);
+
+                            }
+                            double Tao_on;
+                            if (BlindValue.Length > 0)
+                            { Tao_on = Calc_Blind_Tao(Convert.ToDouble(MainLoad[0][2]), Convert.ToDouble(BlindValue[0][1]), Convert.ToDouble(BlindValue[0][2]), Glass_Ex, Glass_In, BlindValue[0][0]); }
+                            else { Tao_on = Convert.ToDouble(MainLoad[0][2]); }
+                            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+                            Program.DB.setValue(DB.type.ProjDB, "Blind_3D", "아이디,번호,프로젝트유형,차양번호,차양포함태양열취득률,차양포함빛투과율", "'" + id + "','" + num + "','" + 프로젝트유형[0][0] + "','" + Blind + "','" + SHGC_on.ToString() + "','" + Tao_on.ToString() + "'", "아이디");
+                        }
+                        String[][] CWValue = Program.DB.querySQL(DB.type.ProjDB, "select a.고정유리종류,a.태양열취득률,a.빛투과율,a.고정유리열관류율 FROM ConstructionCW AS a INNER JOIN ZoneEnvelope_3D AS b ON b.구조체번호 = a.번호 where b.아이디 = '" + id + "' AND b.외피유형 = '커튼월창'");
+                        if (CWValue.Length > 0)
+                        {
+                            double SHGC_on;
+                            if (BlindValue.Length > 0)
+                            { SHGC_on = Calc_Blind_SHGC(Convert.ToDouble(CWValue[0][1]), Convert.ToDouble(BlindValue[0][1]), Convert.ToDouble(BlindValue[0][2]), Convert.ToDouble(BlindValue[0][3]), Convert.ToDouble(CWValue[0][3]), BlindValue[0][0]); }
+                            else { SHGC_on = Convert.ToDouble(CWValue[0][1]); }
+
+                            double Glass_Ex, Glass_In;
+
+                            string[][] glass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "외부반사율,내부반사율", "제품명 ='" + CWValue[0][0] + "'");
+                            if (glass.Length == 0)
+                            {
+                                glass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "외부반사율,내부반사율", "제품명 ='" + CWValue[0][0] + "'");
+                            }
+
+                            Glass_Ex = Convert.ToDouble(glass[0][0]);
+                            Glass_In = Convert.ToDouble(glass[0][1]);
+
+                            double Tao_on;
+                            if (BlindValue.Length > 0)
+                            { Tao_on = Calc_Blind_Tao(Convert.ToDouble(CWValue[0][2]), Convert.ToDouble(BlindValue[0][1]), Convert.ToDouble(BlindValue[0][2]), Glass_Ex, Glass_In, BlindValue[0][0]); }
+                            else { Tao_on = Convert.ToDouble(CWValue[0][2]); }
+                            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+                            Program.DB.setValue(DB.type.ProjDB, "Blind_3D", "아이디,번호,프로젝트유형,차양번호,차양포함태양열취득률,차양포함빛투과율", "'" + id + "','" + num + "','" + 프로젝트유형[0][0] + "','" + Blind + "','" + SHGC_on.ToString() + "','" + Tao_on.ToString() + "'", "아이디");
+                        }
+                    }
+                }
+            }
+            Program.DB.saveProject();
+
         }
 
         private void button1_Click(object sender, EventArgs e)
