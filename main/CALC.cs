@@ -1086,14 +1086,10 @@ namespace main
                 Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Result", "프로젝트번호,프로젝트유형,번호," +
                       "월," +
                       "Qhb_z,Qh_ce_z,Qh_d_z,Qh_s_z,Qh_outg_z," +
-                      "Wh_ce_z, Wh_d_z, Wh_s_z," +
-                      "Qhb_ahu,Qh_ce_ahu,Qh_d_ahu,Qh_s_ahu,Qh_outg_ahu," +
-                      "Wh_ce_ahu, Wh_d_ahu, Wh_s_ahu",
+                      "Qhb_ahu,Qh_ce_ahu,Qh_d_ahu,Qh_s_ahu,Qh_outg_ahu",
                       "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + Heating1.HeatingNum + "','" + MTH + "','" +
                       Heating1.Qhb_z[mth]+ "','" + Heating1.Qh_ce_z[mth] + "','" + Heating1.Qh_d_z[mth] + "','" + Heating1.Qh_s_z[mth] + "','" + Heating1.Qh_outg_z[mth]  + "','" +
-                      Heating1.Wh_ce_z[mth] + "','" + Heating1.Wh_d_z[mth] + "','" + Heating1.Wh_s_z[mth] + "','" +
-                      Heating1.Qhb_ahu[mth] + "','" + Heating1.Qh_ce_ahu[mth] + "','" + Heating1.Qh_d_ahu[mth] + "','" + Heating1.Qh_s_ahu[mth] + "','" + Heating1.Qh_outg_ahu[mth] + "','" +
-                      Heating1.Wh_ce_ahu[mth] + "','" + Heating1.Wh_d_ahu[mth] + "','" + Heating1.Wh_s_ahu[mth]
+                      Heating1.Qhb_ahu[mth] + "','" + Heating1.Qh_ce_ahu[mth] + "','" + Heating1.Qh_d_ahu[mth] + "','" + Heating1.Qh_s_ahu[mth] + "','" + Heating1.Qh_outg_ahu[mth]
                        + "'", "번호,월"); ;
 
             }
