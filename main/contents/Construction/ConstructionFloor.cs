@@ -196,7 +196,8 @@ namespace main.contents.Construction
             {
                 Base_comboBox.Items.Clear();
                 Base_comboBox.Items.Add("비단열지하실");
-                Base_comboBox.Items.Add("바닥(외기)");
+                Base_comboBox.Items.Add("바닥(직접외기)");
+                Base_comboBox.Items.Add("바닥(간접외기)");
             }
             else
             {
@@ -407,7 +408,7 @@ namespace main.contents.Construction
             }
         }
 
-        // 지면위 -> 지면 / 단열지하실 -> 간접외기 / 비단열지하실 -> 간접외기 / 바닥(외기) -> 직접외기 
+        // 지면위 -> 지면 / 단열지하실 -> 지면 / 비단열지하실 -> 간접외기 / 바닥(직접외기) -> 직접외기 / 바닥(간접외기) -> 간접외기
         public void Dilndi()
         {
             if (UMethod == "법규" || UMethod == "진단")
@@ -417,7 +418,7 @@ namespace main.contents.Construction
                     DiIndi_textBox.Text = "지면";
                     DiIndi2_textBox.Text = "";
                 }
-                else if (Base == "바닥(외기)")
+                else if (Base == "바닥(직접외기)")
                 {
                     DiIndi_textBox.Text = "직접외기";
                     DiIndi2_textBox.Text = "";
@@ -436,7 +437,7 @@ namespace main.contents.Construction
                     DiIndi_textBox.Text = "";
                     DiIndi2_textBox.Text = "지면";
                 }
-                else if (Base == "바닥(외기)")
+                else if (Base == "바닥(직접외기)")
                 {
                     DiIndi_textBox.Text = "";
                     DiIndi2_textBox.Text = "직접외기";
