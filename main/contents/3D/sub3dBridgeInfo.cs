@@ -139,8 +139,18 @@ namespace main.contents
             if (TB_comboBox.SelectedItem != null)
             {
                 SelectTBType = TB_comboBox.SelectedItem.ToString();
-                Load_TBDB();
-                Check_checkBox.Checked = true;
+                if(SelectTBType !=null && SelectTBType !="")
+                {
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        Program.DB.setValue(DB.type.ProjDB, "ThermalBridge_3D", "번호,선택열교",
+                         "'" + dataGridView1.Rows[i].Cells[1].Value + "','" + dataGridView1.Rows[i].Cells[3].Value + "'",
+                         "번호");
+                    }
+                    Program.DB.saveProject();
+                    Load_TBDB();
+                    Check_checkBox.Checked = true;
+                }
             }
         }
         private void Checked_Value()
