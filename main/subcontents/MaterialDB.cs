@@ -75,15 +75,7 @@ namespace main.subcontents
             dataGridView.Columns[3].Width = 150;
 
 
-            if (MaterialType == "공기층")
-            {
-                int nRow = dataGridView.Rows.Add();
-                dataGridView.Rows[nRow].Cells[1].Value = "M_000";
-                dataGridView.Rows[nRow].Cells[1].Value = "표준";
-                dataGridView.Rows[nRow].Cells[2].Value = "공기층";
-            }
-            else
-            {
+            
                 string[][] User_DB = Program.DB.getValue(DB.type.ProjDB, "User_Material", "번호,DB유형,재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '" + MaterialType + "'");
                 if (User_DB.Length > 0)
                 {
@@ -122,8 +114,6 @@ namespace main.subcontents
                         }
                     }
                 }
-
-            }
         }
         private bool dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
         {

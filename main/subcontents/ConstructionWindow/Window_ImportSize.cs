@@ -234,7 +234,7 @@ namespace main.subcontents
         private void percent_open_textBox_TextChanged(object sender, EventArgs e)
         {
             percent_open = Program.UTIL.textBox_doubleComa(percent_open_textBox, false, 1);
-            if (percent_open < 1)
+            if (percent_open != 0 && percent_open < 1)
             {
                 MessageBox.Show("퍼센트 단위로 입력하세요.(Ex : 90.1% ⇒ 90.1)");
             }

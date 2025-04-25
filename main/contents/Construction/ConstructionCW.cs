@@ -1074,106 +1074,100 @@ namespace main.contents
 
         private void ImportSize_button_Click(object sender, EventArgs e)
         {
-            if (df_mt > 0 && df_open > 0)
-            {
-                CW_ImportSize Importsize_form;
+            CW_ImportSize Importsize_form = null;
 
-                if (Door_checkBox.Checked == true)
+            if (UcwMethod == "법규")
+            {
+                Importsize_form = new CW_ImportSize(CWNum, CWName, 0.6, 0.8, 0);
+            }
+            else
+            {
+                if (df_mt > 0 && df_open > 0)
                 {
-                    if (df_door > 0)
+                    if (Door_checkBox.Checked == true)
                     {
-                        Importsize_form = new CW_ImportSize(CWNum, CWName, df_mt, df_open, df_door);
+                        if (df_door > 0)
+                        {
+                            Importsize_form = new CW_ImportSize(CWNum, CWName, df_mt, df_open, df_door);
+                        }
+                        else
+                        {
+                            MessageBox.Show("출입문 프레임부터 선택하세요.");
+                            return;
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("출입문 프레임부터 선택하세요.");
-                        Importsize_form = null;
-                        goto a_;
+                        Importsize_form = new CW_ImportSize(CWNum, CWName, df_mt, df_open, 0);
                     }
                 }
                 else
                 {
-                    if (UcwMethod == "법규")
-                    {
-                        Importsize_form = new CW_ImportSize(CWNum, CWName, 0.6, 0.8, 0);
-                    }
-                    else
-                    {
-                        if (df_mt > 0)
-                        {
-                            Importsize_form = new CW_ImportSize(CWNum, CWName, df_mt, df_open, 0);
-                        }
-                        else
-                        {
-                            MessageBox.Show("프레임부터 선택하세요.");
-                            Importsize_form = null;
-                            goto a_;
-                        }
-                    }
-
+                    MessageBox.Show("프레임부터 선택하세요.");
+                    return;
                 }
+            }
+            DialogResult result = Importsize_form.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                SizeName = Importsize_form.Select[1];
+                Area = Convert.ToDouble(Importsize_form.Select[3]);
+                Width = Convert.ToDouble(Importsize_form.Select[4]);
+                Height = Convert.ToDouble(Importsize_form.Select[5]);
+                Ag_fix = Convert.ToDouble(Importsize_form.Select[6]);
+                Ag_open = Convert.ToDouble(Importsize_form.Select[7]);
+                Lg_fix = Convert.ToDouble(Importsize_form.Select[8]);
+                Lg_open = Convert.ToDouble(Importsize_form.Select[9]);
+                Ap = Convert.ToDouble(Importsize_form.Select[10]);
+                Lp = Convert.ToDouble(Importsize_form.Select[11]);
+                Af_mt = Convert.ToDouble(Importsize_form.Select[12]);
+                Af_open = Convert.ToDouble(Importsize_form.Select[13]);
+                Af_d = Convert.ToDouble(Importsize_form.Select[14]);
+                Ag_d = Convert.ToDouble(Importsize_form.Select[15]);
+                Lg_d = Convert.ToDouble(Importsize_form.Select[16]);
 
-                DialogResult result = Importsize_form.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    SizeName = Importsize_form.Select[1];
-                    Area = Convert.ToDouble(Importsize_form.Select[3]);
-                    Width = Convert.ToDouble(Importsize_form.Select[4]);
-                    Height = Convert.ToDouble(Importsize_form.Select[5]);
-                    Ag_fix = Convert.ToDouble(Importsize_form.Select[6]);
-                    Ag_open = Convert.ToDouble(Importsize_form.Select[7]);
-                    Lg_fix = Convert.ToDouble(Importsize_form.Select[8]);
-                    Lg_open = Convert.ToDouble(Importsize_form.Select[9]);
-                    Ap = Convert.ToDouble(Importsize_form.Select[10]);
-                    Lp = Convert.ToDouble(Importsize_form.Select[11]);
-                    Af_mt = Convert.ToDouble(Importsize_form.Select[12]);
-                    Af_open = Convert.ToDouble(Importsize_form.Select[13]);
-                    Af_d = Convert.ToDouble(Importsize_form.Select[14]);
-                    Ag_d = Convert.ToDouble(Importsize_form.Select[15]);
-                    Lg_d = Convert.ToDouble(Importsize_form.Select[16]);
+                Size_textBox.Text = SizeName + " 치수 적용";
+                Area_textBox.Text = Area.ToString();
+                Width_textBox.Text = Width.ToString();
+                Height_textBox.Text = Height.ToString();
+                Ag_fix_textBox.Text = Ag_fix.ToString();
+                Ag_open_textBox.Text = Ag_open.ToString();
+                Lg_fix_textBox.Text = Lg_fix.ToString();
+                Lg_open_textBox.Text = Lg_open.ToString();
+                Ap_textBox.Text = Ap.ToString();
+                Lp_textBox.Text = Lp.ToString();
+                Af_mt_textBox.Text = Af_mt.ToString();
+                Af_open_textBox.Text = Af_open.ToString();
+                Af_d_textBox.Text = Af_d.ToString();
+                Ag_d_textBox.Text = Ag_d.ToString();
+                Lg_d_textBox.Text = Lg_d.ToString();
 
-                    Size_textBox.Text = SizeName + " 치수 적용";
-                    Area_textBox.Text = Area.ToString();
-                    Width_textBox.Text = Width.ToString();
-                    Height_textBox.Text = Height.ToString();
-                    Ag_fix_textBox.Text = Ag_fix.ToString();
-                    Ag_open_textBox.Text = Ag_open.ToString();
-                    Lg_fix_textBox.Text = Lg_fix.ToString();
-                    Lg_open_textBox.Text = Lg_open.ToString();
-                    Ap_textBox.Text = Ap.ToString();
-                    Lp_textBox.Text = Lp.ToString();
-                    Af_mt_textBox.Text = Af_mt.ToString();
-                    Af_open_textBox.Text = Af_open.ToString();
-                    Af_d_textBox.Text = Af_d.ToString();
-                    Ag_d_textBox.Text = Ag_d.ToString();
-                    Lg_d_textBox.Text = Lg_d.ToString();
-                    Program.UTIL.textBox_doubleComa(Area_textBox, true, 2);
-                    Program.UTIL.textBox_doubleComa(Area_textBox2, true, 2);
-                    Program.UTIL.textBox_doubleComa(Width_textBox, true, 2);
-                    Program.UTIL.textBox_doubleComa(Height_textBox, true, 2);
-                    Program.UTIL.textBox_doubleComa(Ag_fix_textBox, true, 2);
-                    Program.UTIL.textBox_doubleComa(Ag_open_textBox, true, 2);
-                    Program.UTIL.textBox_doubleComa(Lg_fix_textBox, true, 2);
-                    Program.UTIL.textBox_doubleComa(Lg_open_textBox, true, 2);
-                    Program.UTIL.textBox_doubleComa(Ap_textBox, true, 2);
-                    Program.UTIL.textBox_doubleComa(Lp_textBox, true, 2);
-                    Program.UTIL.textBox_doubleComa(Af_mt_textBox, true, 2);
-                    Program.UTIL.textBox_doubleComa(Af_open_textBox, true, 2);
-                    Program.UTIL.textBox_doubleComa(Af_d_textBox, true, 2);
-                    Program.UTIL.textBox_doubleComa(Ag_d_textBox, true, 2);
-                    Program.UTIL.textBox_doubleComa(Lg_d_textBox, true, 2);
-                    Calc_Ucw();
-                    Calc_dUinst();
-                    tabControl1.SelectedTab = tabControl1.TabPages["Size_tabPage"];
-                }
+                Program.UTIL.textBox_doubleComa(Area_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Area_textBox2, true, 2);
+                Program.UTIL.textBox_doubleComa(Width_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Height_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Ag_fix_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Ag_open_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Lg_fix_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Lg_open_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Ap_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Lp_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Af_mt_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Af_open_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Af_d_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Ag_d_textBox, true, 2);
+                Program.UTIL.textBox_doubleComa(Lg_d_textBox, true, 2);
+
+                Calc_Ucw();
+                Calc_dUinst();
+                tabControl1.SelectedTab = tabControl1.TabPages["Size_tabPage"];
             }
             else
             {
-                MessageBox.Show("프레임부터 선택하세요.");
+                MessageBox.Show("치수 선택이 취소되었습니다.");
             }
-        a_: int a = 1;
         }
-
+            
 
         public void Rule_Ucw_g()
         {
