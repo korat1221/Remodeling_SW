@@ -18,7 +18,7 @@ namespace main
         public double[] 태양우측방위각 = new double[12];
         public double 위도;
 
-        public double 창호세로길이, 창호가로길이, 주변지형물높이, 경사, 좌측돌출부길이, 좌측돌출부각도, 우측돌출부각도, 우측돌출부길이, 주변지형물각도, 상부돌출부높이, 상부돌출부각도, 방위각, 상인방높이,지면으로부터의상인방높이;
+        public double 창호세로길이, 창호가로길이, 주변지형물높이, 경사, 좌측돌출부길이, 좌측돌출부각도, 우측돌출부각도, 우측돌출부길이, 주변지형물각도, 상부돌출부길이, 상부돌출부각도, 방위각, 상인방높이,지면으로부터의상인방높이;
         public string 방위;
         public double 좌측돌출부이격거리, 우측돌출부이격거리, 상부돌출부이격거리, 지형물까지의거리;
 
@@ -57,7 +57,7 @@ namespace main
                 주변지형물각도 = Convert.ToDouble(rec[0][4]);
                 우측돌출부길이 = Convert.ToDouble(rec[0][5]);
                 좌측돌출부길이 = Convert.ToDouble(rec[0][6]);
-                상부돌출부높이 = Convert.ToDouble(rec[0][7]);//테이블의 상부돌출길이는 실제로는 높이 값임 
+                상부돌출부길이 = Convert.ToDouble(rec[0][7]);//테이블의 상부돌출길이는 실제로는 높이 값임 
                 주변지형물높이 = Convert.ToDouble(rec[0][8]); //테이블의 주변요소음영길이는 실제로는 높이 값임 
                 방위 = rec[0][10];
                 경사 = Convert.ToDouble(rec[0][11]);
@@ -181,7 +181,7 @@ namespace main
             지형물에의한음영길이 hsh_obst = new 지형물에의한음영길이();
 
             double Hobj = Math.Max(0, 주변지형물높이 - (지면으로부터의상인방높이 - 창호세로길이)); //창호로부터의지형물높이
-            double Lobj = hsh_obst.지형물거리(Hobj, 주변지형물각도); //창호로부터 지형물까지의거리
+            double Lobj = hsh_obst.지형물거리( Hobj - 창호세로길이/2 , 주변지형물각도); //창호로부터 지형물까지의거리
 
             for (int i = 0; i < 12; i++)
             {
@@ -206,8 +206,7 @@ namespace main
         public void Calc_상부음영()
         {
             상부음영길이 hk_ovh = new 상부음영길이();
-            double 상부돌출부길이 = 상부돌출부높이 * Math.Tan(상부돌출부각도 * Math.PI / 180.0);
-            
+                        
             상부돌출부이격거리 = hk_ovh.상부돌출부이격거리(상부돌출부길이, 상부돌출부각도, 창호세로길이);
 
             double A1 = 0, B1 = 0, A2 = 0, B2 = 0;
@@ -255,7 +254,13 @@ namespace main
             }
             for (int i = 0; i < 12; i++)
             {
-                좌측돌출부음영길이[i] = wk_finl.좌측돌출부음영길이(좌측돌출부길이, 좌측돌출부이격거리, A1, B1, A2, B2, 적위[i], 위도, 창호가로길이);
+                double 음영길이 = wk_finl.좌측돌출부음영길이(좌측돌출부길이, 좌측돌출부이격거리, A1, B1, A2, B2, 적위[i], 위도, 창호가로길이);
+                //ISO 52016-1 TableF.1 적용
+                if(방위 == "남" || 방위 == "북") 좌측돌출부음영길이[i] = 0.5 * 음영길이;
+                else if(방위 == "동" || 방위 == "북동") 좌측돌출부음영길이[i] = 음영길이;
+                else if (방위 == "서" || 방위 == "북서") 좌측돌출부음영길이[i] = 0;
+                else if (방위 == "남동") 좌측돌출부음영길이[i] = 0.75 * 음영길이;
+                else if (방위 == "남서") 좌측돌출부음영길이[i] = 0.25 * 음영길이;
             }
         }
 
@@ -277,7 +282,13 @@ namespace main
             }
             for (int i = 0; i < 12; i++)
             {
-                우측돌출부음영길이[i] = wk_finl.우측돌출부음영길이(우측돌출부길이, 우측돌출부이격거리, A1, B1, A2, B2, 적위[i], 위도, 창호가로길이);
+                double 음영길이 = wk_finl.우측돌출부음영길이(우측돌출부길이, 우측돌출부이격거리, A1, B1, A2, B2, 적위[i], 위도, 창호가로길이);
+                //ISO 52016-1 TableF.1 적용
+                if (방위 == "남" || 방위 == "북") 좌측돌출부음영길이[i] = 0.5 * 음영길이;
+                else if (방위 == "동" || 방위 == "북동") 좌측돌출부음영길이[i] = 0;
+                else if (방위 == "서" || 방위 == "북서") 좌측돌출부음영길이[i] = 음영길이;
+                else if (방위 == "남동") 좌측돌출부음영길이[i] = 0.25 * 음영길이;
+                else if (방위 == "남서") 좌측돌출부음영길이[i] = 0.75 * 음영길이;
             }
         }
 
@@ -325,22 +336,28 @@ namespace main
                 {
                     string[][] 비율 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_음영계수", "A1,B1,A2,B2", "구분= 'Wobj겨울' AND 방위 = '" + 방위 + "'");
                     string[][] 각도 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_음영계수", "A1,B1,A2,B2", "구분= 'asol겨울' AND 방위 = '" + 방위 + "'");
-
-                    for(int i = 0; i < 4; i++)
+                    if (비율.Length > 0 && 각도.Length > 0)
                     {
-                        hobj_k = Math.Max(0, h - lobj * Math.Tan(Convert.ToDouble(각도[0][i]) * Math.PI / 180.0));
-                        hobj_m += Convert.ToDouble(비율[0][i]) * hobj_k; 
+                        for (int i = 0; i < 4; i++)
+                        {
+                            hobj_k = Math.Max(0, hobj - lobj * Math.Tan(Convert.ToDouble(각도[0][i]) * Math.PI / 180.0));
+                            hobj_k = Math.Min(h, hobj_k);
+                            hobj_m += Convert.ToDouble(비율[0][i]) * hobj_k;
+                        }
                     }
                 }
                 else
                 {
                     string[][] 비율 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_음영계수", "A1,B1,A2,B2", "구분= 'Wobj여름' AND 방위 = '" + 방위 + "'");
                     string[][] 각도 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_음영계수", "A1,B1,A2,B2", "구분= 'asol여름' AND 방위 = '" + 방위 + "'");
-
-                    for (int i = 0; i < 4; i++)
+                    if (비율.Length > 0 && 각도.Length > 0)
                     {
-                        hobj_k = Math.Max(0, h - lobj * Math.Tan(Convert.ToDouble(각도[0][i]) * Math.PI / 180.0));
-                        hobj_m += Convert.ToDouble(비율[0][i]) * hobj_k;
+                        for (int i = 0; i < 4; i++)
+                        {
+                            hobj_k = Math.Max(0, hobj - lobj * Math.Tan(Convert.ToDouble(각도[0][i]) * Math.PI / 180.0));
+                            hobj_k = Math.Min(h, hobj_k);
+                            hobj_m += Convert.ToDouble(비율[0][i]) * hobj_k;
+                        }
                     }
                 }
                 return hobj_m;
@@ -406,7 +423,7 @@ namespace main
                 double P1fin, P2fin, 좌측돌출음영길이;
 
                 Dfin = 좌측돌출부길이;
-                Lfin = 이격거리;
+                Lfin = 이격거리;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
                 
                 P1fin = Dfin / 창호가로길이;
                 P2fin = Lfin / 창호가로길이;
@@ -512,7 +529,6 @@ namespace main
                 }
             }
         }
-
     }
 }
 
