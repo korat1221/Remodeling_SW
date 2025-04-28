@@ -139,6 +139,7 @@ Zoning.prototype = {
         let _getNormal = (T) => {
             return (new THREE.Triangle(T[0], T[1], T[2])).getNormal(new Vector3());
         };
+
         let _asWinPoly = (pos) => {
             let k = 0, ret = [], v = null, v2;
 
@@ -156,6 +157,9 @@ Zoning.prototype = {
                 v2 = _getNormal([ret[k], ret[k + 1], ret[k + 2]]);
                 if (!v) {
                     v = v2;
+                    if (Math.abs(v.x) < 0.0001 && Math.abs(Math.abs(v.y) - 1) < 0.0001 && Math.abs(v.z) < 0.0001) {
+                        return null;
+                    }
                 }
                 else if (!_equalPoint(v, v2)) {
                     let tmp = ret[k + 2];
@@ -709,24 +713,77 @@ Zoning.prototype = {
             return null;
         };
 
+       // 1. _getCenterPosition 수정
         let _getCenterPosition = (pos) => {
-            var center = new THREE.Vector3(), i = -1;
+            var center = new THREE.Vector3(), count = 0, i = -1;
 
             while (++i < pos.length) {
                 let el = pos[i];
-                center.x += el.x;
-                center.y += el.y;
-                center.z += el.z;
+
+                // isDummy가 true가 아닌 것만 center에 더하기
+                if (!el.isDummy) {
+                    center.x += el.x;
+                    center.y += el.y;
+                    center.z += el.z;
+                    count++;
+                }
             }
 
-            if (i > 0) {
-                center.x /= i;
-                center.y /= i;
-                center.z /= i;
+            if (count > 0) {
+                center.x /= count;
+                center.y /= count;
+                center.z /= count;
             }
 
             return center;
         };
+        let validCenters = [];
+
+        obj.traverse((child) => {
+            if (child instanceof THREE.Mesh && child.name.indexOf("DUMMY_BUILDING") < 0) {
+                if (child.geometry) {
+                    child.geometry.computeBoundingBox();
+                    const box = child.geometry.boundingBox;
+                    const center = new THREE.Vector3();
+                    box.getCenter(center);
+        
+                    // 로컬 center를 world 좌표로 변환
+                    child.localToWorld(center);
+        
+                    validCenters.push(center);
+        
+                    console.log(`OK: ${child.name}, geometry center: (${center.x.toFixed(2)}, ${center.y.toFixed(2)}, ${center.z.toFixed(2)})`);
+                }
+            } else {
+                console.log(`DUMMY SKIP: ${child.name}`);
+            }
+        });
+        
+        if (validCenters.length > 0) {
+            // 3. 모든 center를 평균낸다
+            let centerSum = new THREE.Vector3();
+            validCenters.forEach(c => {
+                centerSum.add(c);
+            });
+        
+            const centerAvg = centerSum.multiplyScalar(1 / validCenters.length);
+        
+            console.log('최종 계산된 평균 center:', centerAvg);
+        
+            // 4. obj를 -centerAvg 만큼 이동
+            const moveOffset = new THREE.Vector3(
+                -centerAvg.x,
+                0,
+                -centerAvg.z
+            );
+        
+            obj.position.add(moveOffset);
+            obj.updateMatrixWorld(true);
+        
+            console.log('적용된 offset:', moveOffset);
+        }
+        
+
         let _isInterscect = (a, b) => {
             let i = 0, v = new THREE.Vector3(), P = new THREE.Plane(), c = _getCenterPosition(a);
 
@@ -1140,14 +1197,14 @@ Zoning.prototype = {
         
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        const box = new Box3().setFromObject(obj);
-        const center = box.getCenter(new Vector3());
-        const offset = new Vector3(obj.position.x - center.x, 0, obj.position.z - center.z);
+        //const box = new Box3().setFromObject(obj);
+        //const center = box.getCenter(new Vector3());
+        //const offset = new Vector3(obj.position.x - center.x, 0, obj.position.z - center.z);
         let baseX = new THREE.Vector3(1,0,0), baseY = new THREE.Vector3(0,1,0), baseZ = new THREE.Vector3(0,0,1);
         let i = -1, j, k;
 
-        obj.position.copy(offset);
-        obj.updateMatrixWorld(true);
+       // obj.position.copy(offset);
+       // obj.updateMatrixWorld(true);
 
         obj.userData.zones = {};
         obj.userData.dummy = [];
