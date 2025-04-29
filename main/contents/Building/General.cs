@@ -456,29 +456,13 @@ namespace main.contents
         }
         private void BuildingName_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (BuildingName_textBox.Text.Contains(","))
-            {
-                BuildingName_textBox.Text = "";
-                BuildingName_textBox.Focus();
-                MessageBox.Show("쉼표(,)는 입력할 수 없습니다.", "입력 오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                
-                if (BuildingName_textBox.Text != null)
-                { BuildingName = BuildingName_textBox.Text.ToString(); }
-            }
+            if (BuildingName_textBox.Text != null) { BuildingName = BuildingName_textBox.Text.ToString(); }
             else { }
         }
 
         private void BuildingLocation_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (BuildingLocation_textBox.Text.Contains(","))
-            {
-                BuildingLocation_textBox.Text = "";
-                BuildingLocation_textBox.Focus();
-                MessageBox.Show("쉼표(,)는 입력할 수 없습니다.", "입력 오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                if (BuildingLocation_textBox.Text != null)
-                { BuildingLocation = BuildingLocation_textBox.Text.ToString(); }
-            }
+            if (BuildingLocation_textBox.Text != null) { BuildingLocation = BuildingLocation_textBox.Text.ToString(); }
             else { }
         }
         public void GrossArea_textBox_TextChanged(object sender, EventArgs e)
@@ -507,43 +491,19 @@ namespace main.contents
         }
         private void ReviewerName_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (ReviewerName_textBox.Text.Contains(","))
-            {
-                ReviewerName_textBox.Text = "";
-                ReviewerName_textBox.Focus();
-                MessageBox.Show("쉼표(,)는 입력할 수 없습니다.", "입력 오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                if (ReviewerName_textBox.Text != null)
-                { ReviewerName = ReviewerName_textBox.Text.ToString(); }
-            }
+            if (ReviewerName_textBox.Text != null) { ReviewerName = ReviewerName_textBox.Text.ToString(); }
             else { }
         }
 
         private void ReviewerLocation_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (ReviewerLocation_textBox.Text.Contains(","))
-            {
-                ReviewerLocation_textBox.Text = "";
-                ReviewerLocation_textBox.Focus();
-                MessageBox.Show("쉼표(,)는 입력할 수 없습니다.", "입력 오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                if (ReviewerLocation_textBox.Text != null)
-                { ReviewerLocation = ReviewerLocation_textBox.Text.ToString(); }
-            }
+            if (ReviewerLocation_textBox.Text != null) { ReviewerLocation = ReviewerLocation_textBox.Text.ToString(); }
             else { }
         }
 
         private void ReviewerCompany_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (ReviewerCompany_textBox.Text.Contains(","))
-            {
-                ReviewerCompany_textBox.Text = "";
-                ReviewerCompany_textBox.Focus();
-                MessageBox.Show("쉼표(,)는 입력할 수 없습니다.", "입력 오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                if (ReviewerCompany_textBox.Text != null)
-                { ReviewerCompany = ReviewerCompany_textBox.Text.ToString(); }
-            }
+            if (ReviewerCompany_textBox.Text != null) { ReviewerCompany = ReviewerCompany_textBox.Text.ToString(); }
             else { }
         }
 
@@ -924,5 +884,6 @@ namespace main.contents
                 MessageBox.Show("The folder path does not exist.");
             }
         }
+
     }
 }
