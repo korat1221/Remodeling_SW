@@ -85,7 +85,29 @@ namespace main.subcontents.CoolingSystem
             }
             else if(_SelectPT == "냉각수1차"|| _SelectPT == "냉각수2차")
             {
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "종류 ='냉각수순환펌프' OR 종류 = '지열순환펌프' OR 종류 = '지하수순환펌프'"); //냉각수순환펌프,지열순환펌프
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "종류 ='냉각수순환펌프''"); //냉각수순환펌프         if (User_Value.Length > 0)
+                if (User_Value.Length > 0)
+                {
+                 
+                    for (int n = 0; n < User_Value.Length; n++)
+                    {
+                        int nRow = Pump_dataGridView.Rows.Add();
+                        for (int a = 0; a < User_Value[0].Length; a++)
+                        {
+                            Pump_dataGridView.Rows[nRow].Cells[a + 2].Value = User_Value[n][a];
+                        }
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 5, 1);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 6, 1);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 7, 0);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 8, 0);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 9, 0);
+                    }
+                }
+                else MessageBox.Show("장비일람표에서 펌프를 작성해 주세요.", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else if (_SelectPT == "지열1차" || _SelectPT == "지열2차")
+            {
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "종류 = '지열순환펌프'"); //지열순환펌프
                 if (User_Value.Length > 0)
                 {
                     for (int n = 0; n < User_Value.Length; n++)
@@ -104,7 +126,28 @@ namespace main.subcontents.CoolingSystem
                 }
                 else MessageBox.Show("장비일람표에서 펌프를 작성해 주세요.", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            
+            else if (_SelectPT == "지하수1차" || _SelectPT == "지하수2차")
+            {
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "종류 ='지하수순환펌프'"); //지하순환펌프
+                if (User_Value.Length > 0)
+                {
+                    for (int n = 0; n < User_Value.Length; n++)
+                    {
+                        int nRow = Pump_dataGridView.Rows.Add();
+                        for (int a = 0; a < User_Value[0].Length; a++)
+                        {
+                            Pump_dataGridView.Rows[nRow].Cells[a + 2].Value = User_Value[n][a];
+                        }
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 5, 1);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 6, 1);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 7, 0);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 8, 0);
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 9, 0);
+                    }
+                }
+                else MessageBox.Show("장비일람표에서 펌프를 작성해 주세요.", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
         }
 
         private void TableMake()
@@ -121,10 +164,13 @@ namespace main.subcontents.CoolingSystem
             Pump_dataGridView.Columns.Add("A3", "명칭");
             Pump_dataGridView.Columns.Add("A4", "종류");
             Pump_dataGridView.Columns.Add("A5", "효율.A[%]");
+
             Pump_dataGridView.Columns.Add("A6", "효율.B.[%]");
             Pump_dataGridView.Columns.Add("A7", "유량.[CMH]");
             Pump_dataGridView.Columns.Add("A8", "동력.[W]");
             Pump_dataGridView.Columns.Add("A9", "양정.[m]");
+
+            Pump_dataGridView.Columns[5].Visible = false;
         }
 
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)

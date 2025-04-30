@@ -1,6 +1,7 @@
 ﻿using main.contentslist;
 using main.subcontents;
 using main.subcontents.CoolingSystem;
+using main.subcontents.EquipmentList;
 using main.subcontents.HeatingSystem;
 using Microsoft.Win32;
 using System;
@@ -78,7 +79,7 @@ namespace main.contents
 
         //펌프정의
 
-        string[] Pump1 = new string[5], Pump2 = new string[5], CPump1 = new string[5], CPump2 = new string[5]; //명칭[0], 타입[1], 설치대수[2], 밸브[3], 제어[4] 
+        string[] Pump1 = new string[7], Pump2 = new string[7], CPump1 = new string[7], CPump2 = new string[7]; //명칭[0], 타입[1], 설치대수[2], 밸브[3], 제어[4],유량[5],양정[6] 
         string PumpUse, PumpMethod, CPumpMethod, Pump1_nonsplit, Pump2_nonsplit, CPump1_nonsplit, CPump2_nonsplit;
 
 
@@ -93,7 +94,7 @@ namespace main.contents
         ArrayList Selectce1Ahu = new ArrayList(); ArrayList Selectce2Ahu = new ArrayList();
         int ce_SelectRow;
 
-        enum PumpType { 냉수1차, 냉수2차, 냉각수1차, 냉각수2차 };
+        enum PumpType { 냉수1차, 냉수2차, 열원1차, 열원2차 };
 
 
         public CoolingSystem()
@@ -141,7 +142,7 @@ namespace main.contents
             PumpMethod_comboBox.Items.Add("1차펌프");
             PumpMethod_comboBox.Items.Add("1차폐회로+2차펌프");
 
-            //냉각수 순환펌프 콤보박스
+            //냉각수/지열 순환펌프 콤보박스
             CPumpMethod_comboBox.Items.Clear();
             CPumpMethod_comboBox.Items.Add("1차펌프");
             CPumpMethod_comboBox.Items.Add("1차폐회로+2차펌프");
@@ -277,7 +278,7 @@ namespace main.contents
                 QC_a_z = 0;
                 QC_max_z = 0;
             }
-           
+
             if (ZoneNameList.Count > 1)
             {
                 ZoneS_label.Visible = true;
@@ -308,7 +309,7 @@ namespace main.contents
             QC_a_Ahu = 0;
             QC_max_Ahu = 0;
 
-            if(AHUNameList.Count > 0)
+            if (AHUNameList.Count > 0)
             {
 
                 foreach (string ahu in AHUNameList) //3개가 잡혔다. 각설비별 값을 입력해서 더해야함
@@ -1005,7 +1006,7 @@ namespace main.contents
                     SelectCG_nonsplit += AirCon_dataGridView.Rows[k].Cells[1].Value.ToString();
                     SelectCGC_nonsplit += AirCon_dataGridView.Rows[k].Cells[4].Value.ToString();
                     SelectCGE_nonsplit += AirCon_dataGridView.Rows[k].Cells[5].Value.ToString();
-                    SelectCGN_nonsplit += (Program.UTIL.dataGridView_doubleComa(AirCon_dataGridView, k, 6, 0)).ToString(); 
+                    SelectCGN_nonsplit += (Program.UTIL.dataGridView_doubleComa(AirCon_dataGridView, k, 6, 0)).ToString();
                 }
                 else
                 {
@@ -1165,7 +1166,7 @@ namespace main.contents
                     AirCooler_dataGridView.Rows[i].Cells[2].Value = Val[0][1];
                     AirCooler_dataGridView.Rows[i].Cells[3].Value = Val[0][2];
                     AirCooler_dataGridView.Rows[i].Cells[6].Value = SelectCGN_split[i];
-                    AirCooler_dataGridView.Rows[i].Cells[7].Value =Val[0][3]; // 냉방출력
+                    AirCooler_dataGridView.Rows[i].Cells[7].Value = Val[0][3]; // 냉방출력
                     AirCooler_dataGridView.Rows[i].Cells[8].Value = Val[0][4]; //소비전력
                     AirCooler_dataGridView.Rows[i].Cells[9].Value = Val[0][5]; //COP
                     AirCooler_dataGridView.Rows[i].Cells[10].Value = Val[0][6]; //대기전력
@@ -2334,7 +2335,7 @@ namespace main.contents
                 {
                     SelectCG_nonsplit += AbsorbCooler_dataGridView.Rows[k].Cells[1].Value.ToString() + " + ";
                     SelectCGE_nonsplit += AbsorbCooler_dataGridView.Rows[k].Cells[4].Value.ToString() + " + ";
-                    SelectCGN_nonsplit +=(Program.UTIL.dataGridView_doubleComa(AbsorbCooler_dataGridView, 0, 5, 0)).ToString() + " + ";
+                    SelectCGN_nonsplit += (Program.UTIL.dataGridView_doubleComa(AbsorbCooler_dataGridView, 0, 5, 0)).ToString() + " + ";
                 }
             }
         }
@@ -2382,19 +2383,19 @@ namespace main.contents
                     if (CG == "수냉식냉동기" || CG == "흡수식냉동기")
                     {
                         CPumpMethod_label.Visible = true;
-                        CPumpMethod_label.Text = "냉각탑 순환펌프 방식";
+                        CPumpMethod_label.Text = "냉각탑 순환펌프";
                         CPumpMethod_comboBox.Visible = true;
                     }
                     else if (CG == "지열히트펌프")
                     {
                         CPumpMethod_label.Visible = true;
-                        CPumpMethod_label.Text = "지열 순환펌프 방식";
+                        CPumpMethod_label.Text = "지열 순환펌프";
                         CPumpMethod_comboBox.Visible = true;
                     }
                     else if (CG == "지하수히트펌프")
                     {
                         CPumpMethod_label.Visible = true;
-                        CPumpMethod_label.Text = "지하수 순환펌프 방식";
+                        CPumpMethod_label.Text = "지하수 순환펌프";
                         CPumpMethod_comboBox.Visible = true;
                     }
                     else
@@ -2438,11 +2439,11 @@ namespace main.contents
             Pump_dataGridView.Columns.Add("A2", "펌프번호"); //save
             Pump_dataGridView.Columns.Add("A3", "명칭");
             Pump_dataGridView.Columns.Add("A4", "종류");
-            Pump_dataGridView.Columns.Add("A5", "A효율.[%]");
-            Pump_dataGridView.Columns.Add("A6", "B효율.[%]");
+            Pump_dataGridView.Columns.Add("A5", "B효율.[%]");
+            Pump_dataGridView.Columns.Add("A6", "동력.[W]");
             Pump_dataGridView.Columns.Add("A7", "유량.[CMH]");
-            Pump_dataGridView.Columns.Add("A8", "동력.[W]");
-            Pump_dataGridView.Columns.Add("A9", "양정.[m]");
+            Pump_dataGridView.Columns.Add("A8", "양정.[m]");
+            Pump_dataGridView.Columns.Add("A9", "");
             Pump_dataGridView.Columns.Add("A10", "정유량 밸브");
             Pump_dataGridView.Columns.Add("A11", "펌프 제어");
             Pump_dataGridView.Columns.Add("A12", "설치대수.[EA]"); //save
@@ -2452,6 +2453,7 @@ namespace main.contents
             Pump_dataGridView.Columns[2].Width = 60;
             Pump_dataGridView.Columns[3].Width = 60;
             Pump_dataGridView.Columns[4].Width = 130;
+            Pump_dataGridView.Columns[9].Width = 30;
         }
 
         //1차 또는 1차+2차펌프
@@ -2590,8 +2592,23 @@ namespace main.contents
 
         private void CPump1_button_Click(object sender, EventArgs e)
         {
-            CPump1[1] = nameof(PumpType.냉각수1차);
-            Cooling_Pump Pump = new Cooling_Pump(CPump1[0], CPump1[1], CPump1[2]);
+            string type;
+            switch (CPumpMethod_label.Text)
+            {
+                case "냉각탑 순환펌프":
+                    type = "냉각수1차";
+                    break;
+                case "지열 순환펌프":
+                    type = "지열1차";
+                    break;
+                case "지하수 순환펌프":
+                    type = "지하수1차";
+                    break;
+                default:
+                    type = "냉각수1차";
+                    break;
+            }
+            Cooling_Pump Pump = new Cooling_Pump(CPump1[0], type, CPump1[2]);
 
             DialogResult result = Pump.ShowDialog();
 
@@ -2600,6 +2617,7 @@ namespace main.contents
                 if (Pump.SelectP != null)
                 {
                     CPump1[0] = Pump.SelectP;
+                    CPump1[1] = "열원1차";
                     CPump1[2] = Pump.SelectPN;
 
                     CPump1_textBox.Text = CPump1[0];
@@ -2610,8 +2628,23 @@ namespace main.contents
 
         private void CPump2_button_Click(object sender, EventArgs e)
         {
-            CPump2[1] = nameof(PumpType.냉각수2차);
-            Cooling_Pump Pump = new Cooling_Pump(CPump2[0], CPump2[1], CPump2[2]);
+            string type;
+            switch (CPumpMethod_label.Text)
+            {
+                case "냉각탑 순환펌프":
+                    type = "냉각수2차";
+                    break;
+                case "지열 순환펌프":
+                    type = "지열2차";
+                    break;
+                case "지하수 순환펌프":
+                    type = "지하수2차";
+                    break;
+                default:
+                    type = "냉각수2차";
+                    break;
+            }
+            Cooling_Pump Pump = new Cooling_Pump(CPump2[0], type, CPump2[2]);
 
             DialogResult result = Pump.ShowDialog();
 
@@ -2620,6 +2653,7 @@ namespace main.contents
                 if (Pump.SelectP != null)
                 {
                     CPump2[0] = Pump.SelectP;
+                    CPump2[1] = "열원2차";
                     CPump2[2] = Pump.SelectPN;
 
                     CPump2_textBox.Text = CPump2[0];
@@ -2638,6 +2672,19 @@ namespace main.contents
                 }
             }
             int nRow = Pump_dataGridView.Rows.Add();
+
+            //7번 작성 필요, 유량
+            //8번 작성 필요, 양정
+            //9번 작성 필요, +버튼
+
+            double 유량 = PowerTotal*1000 / 1000 / 1.15 / 5 ; //kg -> m3로 변환, kW->W로변환
+            Pump_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", 유량);
+
+
+            DataGridViewButtonCell PumpVolume_ButtonCell = new DataGridViewButtonCell();
+            Pump_dataGridView.Rows[nRow].Cells[9] = PumpVolume_ButtonCell;
+            PumpVolume_ButtonCell.Value = "+";
+
             DataGridViewComboBoxCell 정유량밸브comboBox = new DataGridViewComboBoxCell();
             정유량밸브comboBox.Items.Add("있음");
             정유량밸브comboBox.Items.Add("없음");
@@ -2649,7 +2696,7 @@ namespace main.contents
             제어comboBox.Items.Add("제어없음");
             Pump_dataGridView.Rows[nRow].Cells[11] = 제어comboBox;
 
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "번호 = '" + P + "'");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,B효율,동력", "번호 = '" + P + "'");
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
@@ -2661,12 +2708,11 @@ namespace main.contents
                     }
                     Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 5, 1);
                     Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 6, 1);
-                    Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 7, 0);
-                    Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 8, 0);
-                    Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 9, 0);
+
                     Pump_dataGridView.Rows[nRow].Cells[12].Value = PN;
                 }
             }
+
         }
 
 
@@ -2692,15 +2738,17 @@ namespace main.contents
                                 return;
                             }
                         }
-                        Pump1[0] = Pump_dataGridView.Rows[k].Cells[2].Value.ToString();
-                        Pump1[1] = Pump_dataGridView.Rows[k].Cells[1].Value.ToString();
-                        Pump1[2] = Pump_dataGridView.Rows[k].Cells[12].Value.ToString();
-                        Pump1[3] = Pump_dataGridView.Rows[k].Cells[10].Value.ToString();
-                        Pump1[4] = Pump_dataGridView.Rows[k].Cells[11].Value.ToString();
+                        Pump1[0] = Pump_dataGridView.Rows[k].Cells[2].Value.ToString();//펌프번호
+                        Pump1[1] = Pump_dataGridView.Rows[k].Cells[1].Value.ToString();//펌프구분
+                        Pump1[2] = Pump_dataGridView.Rows[k].Cells[12].Value.ToString();//설치대수
+                        Pump1[3] = Pump_dataGridView.Rows[k].Cells[10].Value.ToString();//정유량밸브
+                        Pump1[4] = Pump_dataGridView.Rows[k].Cells[11].Value.ToString();//펌프제어
+                        Pump1[5] = Pump_dataGridView.Rows[k].Cells[7].Value.ToString();//유량
+                        Pump1[6] = Pump_dataGridView.Rows[k].Cells[8].Value.ToString();//양정
 
-                        for (int j = 0; j < 5; j++)
+                        for (int j = 0; j < 7; j++)
                         {
-                            if (j == 4)
+                            if (j == 6)
                             {
                                 Pump1_nonsplit += Pump1[j];
                             }
@@ -2727,10 +2775,12 @@ namespace main.contents
                         Pump2[2] = Pump_dataGridView.Rows[k].Cells[12].Value.ToString();
                         Pump2[3] = Pump_dataGridView.Rows[k].Cells[10].Value.ToString();
                         Pump2[4] = Pump_dataGridView.Rows[k].Cells[11].Value.ToString();
+                        Pump2[5] = Pump_dataGridView.Rows[k].Cells[7].Value.ToString();//유량
+                        Pump2[6] = Pump_dataGridView.Rows[k].Cells[8].Value.ToString();//양정
 
-                        for (int j = 0; j < 5; j++)
+                        for (int j = 0; j < 7; j++)
                         {
-                            if (j == 4)
+                            if (j == 6)
                             {
                                 Pump2_nonsplit += Pump2[j];
                             }
@@ -2741,7 +2791,7 @@ namespace main.contents
 
                         }
                         break;
-                    case nameof(PumpType.냉각수1차):
+                    case nameof(PumpType.열원1차):
                         for (int i = 10; i < 13; i++)
                         {
                             if (Pump_dataGridView.Rows[k].Cells[i].Value == null)
@@ -2755,10 +2805,12 @@ namespace main.contents
                         CPump1[2] = Pump_dataGridView.Rows[k].Cells[12].Value.ToString();
                         CPump1[3] = Pump_dataGridView.Rows[k].Cells[10].Value.ToString();
                         CPump1[4] = Pump_dataGridView.Rows[k].Cells[11].Value.ToString();
+                        CPump1[5] = Pump_dataGridView.Rows[k].Cells[7].Value.ToString();//유량
+                        CPump1[6] = Pump_dataGridView.Rows[k].Cells[8].Value.ToString();//양정
 
-                        for (int j = 0; j < 5; j++)
+                        for (int j = 0; j < 7; j++)
                         {
-                            if (j == 4)
+                            if (j == 6)
                             {
                                 CPump1_nonsplit += CPump1[j];
                             }
@@ -2770,7 +2822,7 @@ namespace main.contents
                         }
                         break;
 
-                    case nameof(PumpType.냉각수2차):
+                    case nameof(PumpType.열원2차):
                         for (int i = 10; i < 13; i++)
                         {
                             if (Pump_dataGridView.Rows[k].Cells[i].Value == null)
@@ -2784,10 +2836,12 @@ namespace main.contents
                         CPump2[2] = Pump_dataGridView.Rows[k].Cells[12].Value.ToString();
                         CPump2[3] = Pump_dataGridView.Rows[k].Cells[10].Value.ToString();
                         CPump2[4] = Pump_dataGridView.Rows[k].Cells[11].Value.ToString();
+                        CPump2[5] = Pump_dataGridView.Rows[k].Cells[7].Value.ToString();//유량
+                        CPump2[6] = Pump_dataGridView.Rows[k].Cells[8].Value.ToString();//양정
 
-                        for (int j = 0; j < 5; j++)
+                        for (int j = 0; j < 7; j++)
                         {
-                            if (j == 4)
+                            if (j == 6)
                             {
                                 CPump2_nonsplit += CPump2[j];
                             }
@@ -2802,6 +2856,24 @@ namespace main.contents
                     default:
                         break;
 
+                }
+            }
+        }
+
+        private void Pump_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Pump_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            int Pump_SelectRow = e.RowIndex;
+            if (e.ColumnIndex == 9)
+            {
+                double Lmax; double PumpHead;
+                PumpCal pumpcal_form = new PumpCal(Pump_dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString());
+                DialogResult result = pumpcal_form.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    Lmax = pumpcal_form.Lmax;
+                    PumpHead = pumpcal_form.PumpHead;
+                    Pump_dataGridView.Rows[e.RowIndex].Cells[8].Value = String.Format("{0:F1}", PumpHead);
                 }
             }
         }
@@ -3491,7 +3563,7 @@ namespace main.contents
                         Pump1_textBox.Text = null;
                         Pump1_nonsplit = Value[0][2].ToString();
                         Split(Pump1_nonsplit, pump);
-                        for (int i = 0; i < 5; i++)
+                        for (int i = 0; i < 7; i++)
                         {
                             Pump1[i] = pump[i];
                         }
@@ -3503,6 +3575,8 @@ namespace main.contents
                             {
                                 Pump_dataGridView.Rows[k].Cells[10].Value = Pump1[3];
                                 Pump_dataGridView.Rows[k].Cells[11].Value = Pump1[4];
+                                Pump_dataGridView.Rows[k].Cells[7].Value = Pump1[5];
+                                Pump_dataGridView.Rows[k].Cells[8].Value = Pump1[6];
                             }
                         }
                         Pump1_textBox.Text = Pump1[0];
@@ -3514,7 +3588,7 @@ namespace main.contents
                         Pump2_textBox.Text = null;
                         Pump2_nonsplit = Value[0][3].ToString();
                         Split(Pump2_nonsplit, pump);
-                        for (int i = 0; i < 5; i++)
+                        for (int i = 0; i < 7; i++)
                         {
                             Pump2[i] = pump[i];
                         }
@@ -3526,6 +3600,8 @@ namespace main.contents
                             {
                                 Pump_dataGridView.Rows[k].Cells[10].Value = Pump2[3];
                                 Pump_dataGridView.Rows[k].Cells[11].Value = Pump2[4];
+                                Pump_dataGridView.Rows[k].Cells[7].Value = Pump2[5];
+                                Pump_dataGridView.Rows[k].Cells[8].Value = Pump2[6];
                             }
                         }
                         Pump2_textBox.Text = Pump2[0];
@@ -3534,19 +3610,19 @@ namespace main.contents
                     if (CG == "수냉식냉동기" || CG == "흡수식냉동기")
                     {
                         CPumpMethod_label.Visible = true;
-                        CPumpMethod_label.Text = "냉각탑 순환펌프 방식";
+                        CPumpMethod_label.Text = "냉각탑 순환펌프";
                         CPumpMethod_comboBox.Visible = true;
                     }
                     else if (CG == "지열히트펌프")
                     {
                         CPumpMethod_label.Visible = true;
-                        CPumpMethod_label.Text = "지열 순환펌프 방식";
+                        CPumpMethod_label.Text = "지열 순환펌프";
                         CPumpMethod_comboBox.Visible = true;
                     }
                     else if (CG == "지하수히트펌프")
                     {
                         CPumpMethod_label.Visible = true;
-                        CPumpMethod_label.Text = "지하수 순환펌프 방식";
+                        CPumpMethod_label.Text = "지하수 순환펌프";
                         CPumpMethod_comboBox.Visible = true;
                     }
                     else
@@ -3560,14 +3636,13 @@ namespace main.contents
                         CPumpMethod_comboBox.SelectedItem = Value[0][4].ToString();
                     }
 
-
                     if (Value[0][5] != null && Value[0][5] != "") //냉각수펌프1
                     {
                         pump.Clear();
                         CPump1_textBox.Text = null;
                         CPump1_nonsplit = Value[0][5];
                         Split(CPump1_nonsplit, pump);
-                        for (int i = 0; i < 5; i++)
+                        for (int i = 0; i < 7; i++)
                         {
                             CPump1[i] = pump[i];
                         }
@@ -3578,6 +3653,8 @@ namespace main.contents
                             {
                                 Pump_dataGridView.Rows[k].Cells[10].Value = CPump1[3];
                                 Pump_dataGridView.Rows[k].Cells[11].Value = CPump1[4];
+                                Pump_dataGridView.Rows[k].Cells[7].Value = CPump1[5];
+                                Pump_dataGridView.Rows[k].Cells[8].Value = CPump1[6];
                             }
                         }
                         CPump1_textBox.Text = CPump1[0];
@@ -3589,7 +3666,7 @@ namespace main.contents
                         CPump2_textBox.Text = null;
                         CPump2_nonsplit = Value[0][6];
                         Split(CPump2_nonsplit, pump);
-                        for (int i = 0; i < 5; i++)
+                        for (int i = 0; i < 7; i++)
                         {
                             CPump2[i] = pump[i];
                         }
@@ -3600,6 +3677,8 @@ namespace main.contents
                             {
                                 Pump_dataGridView.Rows[k].Cells[10].Value = CPump2[3];
                                 Pump_dataGridView.Rows[k].Cells[11].Value = CPump2[4];
+                                Pump_dataGridView.Rows[k].Cells[7].Value = CPump2[5];
+                                Pump_dataGridView.Rows[k].Cells[8].Value = CPump2[6];
                             }
                         }
                         CPump2_textBox.Text = CPump2[0];
@@ -4051,6 +4130,7 @@ namespace main.contents
             }
         }
 
+       
     }
 
 }

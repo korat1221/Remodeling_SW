@@ -950,11 +950,11 @@ namespace main.contents
             CPumpMethod_label.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             CPumpMethod_label.AutoSize = true;
             CPumpMethod_label.Font = new Font("나눔바른고딕", 9.75F);
-            CPumpMethod_label.Location = new Point(211, 38);
+            CPumpMethod_label.Location = new Point(229, 38);
             CPumpMethod_label.Name = "CPumpMethod_label";
-            CPumpMethod_label.Size = new Size(97, 15);
+            CPumpMethod_label.Size = new Size(70, 15);
             CPumpMethod_label.TabIndex = 197;
-            CPumpMethod_label.Text = "냉각탑 펌프 방식";
+            CPumpMethod_label.Text = "냉각탑 펌프";
             CPumpMethod_label.TextAlign = ContentAlignment.TopRight;
             CPumpMethod_label.Visible = false;
             // 
@@ -999,6 +999,7 @@ namespace main.contents
             Pump_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle24;
             Pump_dataGridView.Size = new Size(986, 197);
             Pump_dataGridView.TabIndex = 196;
+            Pump_dataGridView.CellContentClick += Pump_dataGridView_CellContentClick;
             // 
             // Pump2_textBox
             // 
@@ -1070,11 +1071,11 @@ namespace main.contents
             // 
             PumpMethod_label.AutoSize = true;
             PumpMethod_label.Font = new Font("나눔바른고딕", 9.75F);
-            PumpMethod_label.Location = new Point(220, 10);
+            PumpMethod_label.Location = new Point(229, 10);
             PumpMethod_label.Name = "PumpMethod_label";
-            PumpMethod_label.Size = new Size(85, 15);
+            PumpMethod_label.Size = new Size(58, 15);
             PumpMethod_label.TabIndex = 192;
-            PumpMethod_label.Text = "냉수 펌프 방식";
+            PumpMethod_label.Text = "냉수 펌프";
             // 
             // PumpUse_comboBox
             // 

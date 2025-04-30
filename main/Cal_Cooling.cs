@@ -311,6 +311,8 @@ namespace main
                 _pump._number = Convert.ToInt32(pumpinfo[2]);
                 _pump._valve = pumpinfo[3];
                 _pump._control = pumpinfo[4];
+                _pump.유량 = Convert.ToDouble( pumpinfo[5]); //유량
+                _pump.양정 = Convert.ToDouble(pumpinfo[6]); //양정
             }
             else return null;
             return _pump;
@@ -802,8 +804,16 @@ namespace main
                     theta_z[i] += value.theta_i[1, 1, i] * value.Qb_mth[1, 1, i] * load_sum; //요구량 가중하여 산정함
                     pre = pre + 1; 
                 }
-                dwd_z[i] = dwd_z[i] / QC_nd_z[i];
-                theta_z[i] = theta_z[i]/ QC_nd_z[i];
+                if (QC_nd_z[i] == 0)
+                {
+                    dwd_z[i] = 0;
+                    theta_z[i] = 0;
+                }
+                else
+                {
+                    dwd_z[i] = dwd_z[i] / QC_nd_z[i];
+                    theta_z[i] = theta_z[i] / QC_nd_z[i];
+                }
                 QC_a_z += QC_nd_z[i];
             }
             QC_a_z = QC_a_z;
@@ -1857,8 +1867,14 @@ namespace main
         // ///////////////////////////////////////////////////분배 보조설비 에너지 소요량 계산//////////////////////////////////////////////
         public void CalW_d(string ProjNum)//output W_d[12]
         {
-            double[] 냉수펌프1 = new double[12], 냉수펌프2 = new double[12], 냉각수펌프1 = new double[12], 냉각수펌프2 = new double[12];
+            double[] 냉수펌프1 = new double[12], 냉수펌프2 = new double[12];
+            
+            double[] 냉각수펌프1 = new double[12], 냉각수펌프2 = new double[12];
+            double[] 지열순환펌프1 = new double[12], 지열순환펌프2 = new double[12];
+            double[] 지하수순환펌프1 = new double[12], 지하수순환펌프2 = new double[12];
             double num1, num2, num3, num4;
+            string pumptype;
+            
             if (SelectPump1_nonsplit != null)
             {
                 냉수펌프1 = PumpCalc(Pump1, "냉수", ProjNum);
@@ -1889,10 +1905,11 @@ namespace main
                 }
                 num2 = 0;
             }
-            
+            //냉각수펌프,지열펌프,지하수펌프
             if (SelectSPump1_nonsplit != null)
             {
-                냉각수펌프1 = PumpCalc(SPump1, "냉수", ProjNum);
+                pumptype = SPump1.종류;
+                냉각수펌프1 = PumpCalc(SPump1, pumptype, ProjNum);
                 num3 = SPump1._number;
                 SP1power = SPump1.동력 * num3;
                 SPumpControl = SPump1._control;
@@ -1908,7 +1925,8 @@ namespace main
 
             if (SelectSPump2_nonsplit != null)
             {
-                냉각수펌프2 = PumpCalc(SPump2, "냉수", ProjNum);
+                pumptype = SPump2.종류;
+                냉각수펌프2 = PumpCalc(SPump2, pumptype, ProjNum);
                 num4 = SPump2._number;
                 SP2power = SPump2.동력 * num4;
             }
@@ -1928,28 +1946,31 @@ namespace main
 
         }
         
-        public double[] PumpCalc(CoolPump _pump, string type,string ProjNum) //냉수, 냉각수
+        public double[] PumpCalc(CoolPump _pump, string type, string ProjNum) //냉수, 열원
         {
             double Vz = 0, DeltaPz, Phydr, fe1, CP11, CP21, fHydr;
             double[] ed = new double[12], Beta = new double[12], Wd_hydr = new double[12], W_d = new double[12];
             
-            string[][] pumpvalue = Program.DB.getValue(ProjNum, "User_Pump", "B효율,유량,동력,양정", "번호= '" + _pump._pumpNum + "'");
+            string[][] pumpvalue = Program.DB.getValue(ProjNum, "User_Pump", "B효율,동력,종류", "번호= '" + _pump._pumpNum + "'");
             _pump.B효율 = Convert.ToDouble(pumpvalue[0][0]);
-            _pump.유량 = Convert.ToDouble(pumpvalue[0][1]);
-            _pump.동력 = Convert.ToDouble(pumpvalue[0][2]);
-            _pump.양정 = Convert.ToDouble(pumpvalue[0][3]);
+            _pump.동력 = Convert.ToDouble(pumpvalue[0][1]);
+            _pump.종류 = pumpvalue[0][2];
+                        
+            //if (type == "냉수")
+            //{
+            //    Vz = 3.6 * Power_f / (Math.Abs(CWout - CWin) * 4.18);
+            //}
+            //else if (type == "냉각수순환펌프")
+            //{
+            //    Vz = 3.6 * CTPower_f / (Math.Abs(CSWin - CSWout) * 4.18);
+            //}
+            //else if (type == "지열순환펌프" || type == "지하수순환펌프")
+            //{
+            //    Vz = 3.6 * Power_f / (5 * 4.18); //5도차로 운전함
+            //}
             
-            if (type == "냉수")
-            {
-                Vz = 3.6 * Power_f / ((CWout - CWin) * 4.18);
-            }
-            else if (type == "냉각수")
-            {
-                Vz = 3.6 * CTPower_f / ((CSWin - CSWout) * 4.18);
-            }
-                
             DeltaPz = _pump.양정 * 1000 * 9.81; //kPa단위임
-            Phydr = DeltaPz * Vz / 3600;
+            Phydr = DeltaPz * _pump.유량 / 3600;
             fe1 = _pump.동력 / Phydr;
 
             string[][] pumpfactor = Program.DB.getValue(DB.type.BaseDB_Cooling, "펌프제어", "CP1,CP2,fHydr", "펌프제어 = '" + _pump._control + "' And 정유량밸브 = '" + _pump._valve + "'");
@@ -1958,7 +1979,7 @@ namespace main
             fHydr = Convert.ToDouble(pumpfactor[0][2]);
             for (int i = 0;i < 12 ;i++)
             {
-                if (tC_op_z[i] == 0)
+                if (QC_out[i] == 0)
                 {
                     W_d[i] = 0;
                 }
@@ -2056,9 +2077,9 @@ namespace main
     }
     class CoolPump
     {
-        public string _pumpNum, _pumpname, _valve, _control;
+        public string _pumpNum, _pumpname, _valve, _control, 종류;
         public int _number;
-        public double B효율, 유량, 동력, 양정;
+        public double B효율, 동력, 유량, 양정;
     }
     class CoolingCE
     {
