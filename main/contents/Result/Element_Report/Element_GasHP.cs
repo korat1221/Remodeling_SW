@@ -232,14 +232,21 @@ namespace main.contents.Result
                     ghp_total_elec += ghp_elec_H[a] + ghp_elec_C[a];
                     ghp_total_gas += ghp_gas_H[a] + ghp_gas_C[a];
                 }
-
-                ghp_data[216].Add(new { idx = i, val = ghp_total_saving.ToString("#,##0") });//절감량 전체 
+                
+                double v = double.IsNaN(ghp_total_saving) ? 0: ghp_total_saving;
+                ghp_data[216].Add(new { idx = i, val = v.ToString("#,##0") });//절감량 전체 
                 data.Add(new { cname = "ghp_saving_total", data = ghp_data[216] });
-                ghp_data[217].Add(new { idx = i, val = (ghp_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
+
+                v = double.IsNaN(ghp_total_saving / Total_Energy_pre * 100) ? 0 : ghp_total_saving / Total_Energy_pre * 100;
+                ghp_data[217].Add(new { idx = i, val = (v).ToString("0.0") + " %" });//절감률 전체 
                 data.Add(new { cname = "ghp_saving_percent", data = ghp_data[217] });
-                ghp_data[218].Add(new { idx = i, val = (ghp_total_elec * 0.4747 / 1000000 * 1000 + ghp_total_gas / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+
+                v = double.IsNaN(ghp_total_elec * 0.4747 / 1000000 * 1000 + ghp_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000) ? 0 : ghp_total_elec * 0.4747 / 1000000 * 1000 + ghp_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                ghp_data[218].Add(new { idx = i, val = v.ToString("0.0") });//tco2
                 data.Add(new { cname = "ghp_tco2", data = ghp_data[218] });
-                ghp_data[219].Add(new { idx = i, val = (ghp_total_elec * 0.00023 + ghp_total_gas / 38.9  / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+
+                v = double.IsNaN(ghp_total_elec * 0.00023 + ghp_total_gas / 38.9 / 0.277778 * 0.00103) ? 0 : ghp_total_elec * 0.00023 + ghp_total_gas / 38.9 / 0.277778 * 0.00103;
+                ghp_data[219].Add(new { idx = i, val = (v).ToString("0.0") });//절감량 전체 
                 data.Add(new { cname = "ghp_toe", data = ghp_data[219] });
 
                 d = (ghp_total_saving / Total_Energy_pre * 100);
@@ -435,13 +442,20 @@ namespace main.contents.Result
                     abs_Point_C_total = Math.Min(100, abs_Point_C_total / abs_Power_C.Sum());
                 }
 
-                abs_data[216].Add(new { idx = i, val = abs_total_saving.ToString("#,##0") });//절감량 전체 
+                double v2 = double.IsNaN(abs_total_saving) ? 0: abs_total_saving;
+                abs_data[216].Add(new { idx = i, val = v2.ToString("#,##0") });//절감량 전체 
                 data.Add(new { cname = "abs_saving_total", data = abs_data[216] });
-                abs_data[217].Add(new { idx = i, val = (abs_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
+
+                v2 = double.IsNaN(abs_total_saving / Total_Energy_pre * 100 )? 0 : abs_total_saving / Total_Energy_pre * 100;
+                abs_data[217].Add(new { idx = i, val = (v2).ToString("0.0") + " %" });//절감률 전체 
                 data.Add(new { cname = "abs_saving_percent", data = abs_data[217] });
-                abs_data[218].Add(new { idx = i, val = (abs_total_elec * 0.4747 / 1000000 * 1000 + abs_total_gas / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+
+                v2 = double.IsNaN(abs_total_elec * 0.4747 / 1000000 * 1000 + abs_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000 )? 0 : abs_total_elec * 0.4747 / 1000000 * 1000 + abs_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                abs_data[218].Add(new { idx = i, val = (v2).ToString("0.0") });//tco2
                 data.Add(new { cname = "abs_tco2", data = abs_data[218] });
-                abs_data[219].Add(new { idx = i, val = (abs_total_elec * 0.00023 + abs_total_gas / 38.9  / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+
+                v2 = double.IsNaN(abs_total_elec * 0.00023 + abs_total_gas / 38.9 / 0.277778 * 0.00103 ) ? 0 : abs_total_elec * 0.00023 + abs_total_gas / 38.9 / 0.277778 * 0.00103;
+                abs_data[219].Add(new { idx = i, val = (v2).ToString("0.0") });//절감량 전체 
                 data.Add(new { cname = "abs_toe", data = abs_data[219] });
 
                 d = (abs_total_saving / Total_Energy_pre * 100);
@@ -837,13 +851,20 @@ namespace main.contents.Result
                         ghp_total_gas += ghp_gas_H[a] + ghp_gas_C[a];
                     }
 
-                    ghp_data[216].Add(new { idx = i, val = ghp_total_saving.ToString("#,##0") });//절감량 전체 
+                    double v3 = double.IsNaN(ghp_total_saving) ? 0 : ghp_total_saving;
+                    ghp_data[216].Add(new { idx = i, val = v3.ToString("#,##0") });//절감량 전체 
                     data.Add(new { cname = "ghp_saving_total", data = ghp_data[216] });
-                    ghp_data[217].Add(new { idx = i, val = (ghp_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
+
+                    v3 = double.IsNaN(ghp_total_saving / Total_Energy_pre * 100) ? 0 : ghp_total_saving / Total_Energy_pre * 100;
+                    ghp_data[217].Add(new { idx = i, val = (v3).ToString("0.0") + " %" });//절감률 전체 
                     data.Add(new { cname = "ghp_saving_percent", data = ghp_data[217] });
-                    ghp_data[218].Add(new { idx = i, val = (ghp_total_elec * 0.4747 / 1000000 * 1000 + ghp_total_gas / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+
+                    v3 = double.IsNaN(ghp_total_elec * 0.4747 / 1000000 * 1000 + ghp_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000) ? 0 : ghp_total_elec * 0.4747 / 1000000 * 1000 + ghp_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    ghp_data[218].Add(new { idx = i, val = (v3).ToString("0.0") });//tco2
                     data.Add(new { cname = "ghp_tco2", data = ghp_data[218] });
-                    ghp_data[219].Add(new { idx = i, val = (ghp_total_elec * 0.00023 + ghp_total_gas / 38.9  / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+
+                    v3 = double.IsNaN(ghp_total_elec * 0.00023 + ghp_total_gas / 38.9 / 0.277778 * 0.00103) ? 0 : ghp_total_elec * 0.00023 + ghp_total_gas / 38.9 / 0.277778 * 0.00103;
+                    ghp_data[219].Add(new { idx = i, val = (v3).ToString("0.0") });//절감량 전체 
                     data.Add(new { cname = "ghp_toe", data = ghp_data[219] });
 
                     d = (ghp_total_saving / Total_Energy_pre * 100);
@@ -1126,13 +1147,20 @@ namespace main.contents.Result
                         abs_total_gas += abs_gas_H[a] + abs_gas_C[a];
                     }
 
-                    abs_data[216].Add(new { idx = i, val = abs_total_saving.ToString("#,##0") });//절감량 전체 
+                    double v4 = double.IsNaN(abs_total_saving ) ? 0 : abs_total_saving;
+                    abs_data[216].Add(new { idx = i, val = v4.ToString("#,##0") });//절감량 전체 
                     data.Add(new { cname = "abs_saving_total", data = abs_data[216] });
-                    abs_data[217].Add(new { idx = i, val = (abs_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
+
+                    v4 = double.IsNaN(abs_total_saving / Total_Energy_pre * 100) ? 0 : abs_total_saving / Total_Energy_pre * 100;
+                    abs_data[217].Add(new { idx = i, val = (v4).ToString("0.0") + " %" });//절감률 전체 
                     data.Add(new { cname = "abs_saving_percent", data = abs_data[217] });
-                    abs_data[218].Add(new { idx = i, val = (abs_total_elec * 0.4747 / 1000000 * 1000 + abs_total_gas / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+
+                    v4 = double.IsNaN(abs_total_elec * 0.4747 / 1000000 * 1000 + abs_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000) ? 0 : abs_total_elec * 0.4747 / 1000000 * 1000 + abs_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    abs_data[218].Add(new { idx = i, val = (v4).ToString("0.0") });//tco2
                     data.Add(new { cname = "abs_tco2", data = abs_data[218] });
-                    abs_data[219].Add(new { idx = i, val = (abs_total_elec * 0.00023 + abs_total_gas / 38.9  / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+
+                    v4 = double.IsNaN(abs_total_elec * 0.00023 + abs_total_gas / 38.9 / 0.277778 * 0.00103) ? 0 : abs_total_elec * 0.00023 + abs_total_gas / 38.9 / 0.277778 * 0.00103;
+                    abs_data[219].Add(new { idx = i, val = (v4).ToString("0.0") });//절감량 전체 
                     data.Add(new { cname = "abs_toe", data = abs_data[219] });
 
                     d = (abs_total_saving / Total_Energy_pre * 100);

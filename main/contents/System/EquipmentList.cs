@@ -2614,6 +2614,9 @@ namespace main.contents
             펌프종류comboBox.Items.Add("지열순환펌프");
             Pump_dataGridView.Rows[nRow].Cells[3] = 펌프종류comboBox;
 
+            DataGridViewButtonCell PumpVolume_ButtonCell = new DataGridViewButtonCell();
+            Pump_dataGridView.Rows[nRow].Cells[7] = PumpVolume_ButtonCell;
+            PumpVolume_ButtonCell.Value = "+";
             DataGridViewButtonCell PumpHead_ButtonCell = new DataGridViewButtonCell();
             Pump_dataGridView.Rows[nRow].Cells[9] = PumpHead_ButtonCell;
             PumpHead_ButtonCell.Value = "+";

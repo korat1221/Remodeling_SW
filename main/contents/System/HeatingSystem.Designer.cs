@@ -85,18 +85,24 @@ namespace main.contents
             Name_textBox = new TextBox();
             tabControl1 = new CustomTabControl();
             Qhg_tabPage = new TabPage();
-            tabControl2 = new CustomTabControl();
+            tabControl = new CustomTabControl();
             Boiler_tabPage = new TabPage();
+            Boiler_Remove_button = new Button();
             Boiler_dataGridView = new DataGridView();
             HP_tabPage = new TabPage();
+            HP_Remove_button = new Button();
             HP_dataGridView = new DataGridView();
             AS_tabPage = new TabPage();
+            AS_Remove_button = new Button();
             AS_dataGridView = new DataGridView();
             DH_tabPage = new TabPage();
+            DH_Remove_button = new Button();
             DH_dataGridView = new DataGridView();
             Solar_tabPage = new TabPage();
+            Solar_Remove_button = new Button();
             Solar_dataGridView = new DataGridView();
             FC_tabPage = new TabPage();
+            FC_Remove_button = new Button();
             FC_dataGridView = new DataGridView();
             label9 = new Label();
             Complex_comboBox = new CustomComboBox();
@@ -194,7 +200,7 @@ namespace main.contents
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             tabControl1.SuspendLayout();
             Qhg_tabPage.SuspendLayout();
-            tabControl2.SuspendLayout();
+            tabControl.SuspendLayout();
             Boiler_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Boiler_dataGridView).BeginInit();
             HP_tabPage.SuspendLayout();
@@ -427,7 +433,6 @@ namespace main.contents
             radioButton4.Name = "radioButton4";
             radioButton4.Size = new Size(14, 13);
             radioButton4.TabIndex = 2;
-            radioButton4.TabStop = true;
             radioButton4.UseVisualStyleBackColor = true;
             // 
             // label15
@@ -446,7 +451,6 @@ namespace main.contents
             radioButton3.Name = "radioButton3";
             radioButton3.Size = new Size(14, 13);
             radioButton3.TabIndex = 1;
-            radioButton3.TabStop = true;
             radioButton3.UseVisualStyleBackColor = true;
             // 
             // OldSystem_textBox
@@ -465,6 +469,7 @@ namespace main.contents
             // radioButton1
             // 
             radioButton1.AutoSize = true;
+            radioButton1.Checked = true;
             radioButton1.Location = new Point(876, 8);
             radioButton1.Name = "radioButton1";
             radioButton1.Size = new Size(14, 13);
@@ -589,7 +594,7 @@ namespace main.contents
             // Qhg_tabPage
             // 
             Qhg_tabPage.BackColor = Color.White;
-            Qhg_tabPage.Controls.Add(tabControl2);
+            Qhg_tabPage.Controls.Add(tabControl);
             Qhg_tabPage.Controls.Add(label9);
             Qhg_tabPage.Controls.Add(Complex_comboBox);
             Qhg_tabPage.Controls.Add(Sub2UserList_textBox);
@@ -618,39 +623,40 @@ namespace main.contents
             Qhg_tabPage.TabIndex = 0;
             Qhg_tabPage.Text = "생산";
             // 
-            // tabControl2
+            // tabControl
             // 
-            tabControl2.Controls.Add(Boiler_tabPage);
-            tabControl2.Controls.Add(HP_tabPage);
-            tabControl2.Controls.Add(AS_tabPage);
-            tabControl2.Controls.Add(DH_tabPage);
-            tabControl2.Controls.Add(Solar_tabPage);
-            tabControl2.Controls.Add(FC_tabPage);
-            tabControl2.DisplayStyleProvider.BorderColor = SystemColors.Control;
-            tabControl2.DisplayStyleProvider.BorderColorHot = SystemColors.Control;
-            tabControl2.DisplayStyleProvider.CloserColor = Color.Empty;
-            tabControl2.DisplayStyleProvider.FocusTrack = true;
-            tabControl2.DisplayStyleProvider.HotTrack = true;
-            tabControl2.DisplayStyleProvider.ImageAlign = ContentAlignment.MiddleLeft;
-            tabControl2.DisplayStyleProvider.Opacity = 1F;
-            tabControl2.DisplayStyleProvider.Overlap = 0;
-            tabControl2.DisplayStyleProvider.Padding = new Point(6, 3);
-            tabControl2.DisplayStyleProvider.ShowTabCloser = false;
-            tabControl2.DisplayStyleProvider.TextColor = SystemColors.ControlText;
-            tabControl2.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
-            tabControl2.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
-            tabControl2.Dock = DockStyle.Bottom;
-            tabControl2.HotTrack = true;
-            tabControl2.ItemSize = new Size(128, 20);
-            tabControl2.Location = new Point(3, 116);
-            tabControl2.Name = "tabControl2";
-            tabControl2.SelectedIndex = 0;
-            tabControl2.Size = new Size(986, 156);
-            tabControl2.SizeMode = TabSizeMode.Fixed;
-            tabControl2.TabIndex = 144;
+            tabControl.Controls.Add(Boiler_tabPage);
+            tabControl.Controls.Add(HP_tabPage);
+            tabControl.Controls.Add(AS_tabPage);
+            tabControl.Controls.Add(DH_tabPage);
+            tabControl.Controls.Add(Solar_tabPage);
+            tabControl.Controls.Add(FC_tabPage);
+            tabControl.DisplayStyleProvider.BorderColor = SystemColors.Control;
+            tabControl.DisplayStyleProvider.BorderColorHot = SystemColors.Control;
+            tabControl.DisplayStyleProvider.CloserColor = Color.Empty;
+            tabControl.DisplayStyleProvider.FocusTrack = true;
+            tabControl.DisplayStyleProvider.HotTrack = true;
+            tabControl.DisplayStyleProvider.ImageAlign = ContentAlignment.MiddleLeft;
+            tabControl.DisplayStyleProvider.Opacity = 1F;
+            tabControl.DisplayStyleProvider.Overlap = 0;
+            tabControl.DisplayStyleProvider.Padding = new Point(6, 3);
+            tabControl.DisplayStyleProvider.ShowTabCloser = false;
+            tabControl.DisplayStyleProvider.TextColor = SystemColors.ControlText;
+            tabControl.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
+            tabControl.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
+            tabControl.Dock = DockStyle.Bottom;
+            tabControl.HotTrack = true;
+            tabControl.ItemSize = new Size(128, 20);
+            tabControl.Location = new Point(3, 116);
+            tabControl.Name = "tabControl";
+            tabControl.SelectedIndex = 0;
+            tabControl.Size = new Size(986, 156);
+            tabControl.SizeMode = TabSizeMode.Fixed;
+            tabControl.TabIndex = 144;
             // 
             // Boiler_tabPage
             // 
+            Boiler_tabPage.Controls.Add(Boiler_Remove_button);
             Boiler_tabPage.Controls.Add(Boiler_dataGridView);
             Boiler_tabPage.Location = new Point(4, 25);
             Boiler_tabPage.Name = "Boiler_tabPage";
@@ -659,6 +665,21 @@ namespace main.contents
             Boiler_tabPage.TabIndex = 6;
             Boiler_tabPage.Text = "보일러";
             Boiler_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // Boiler_Remove_button
+            // 
+            Boiler_Remove_button.BackColor = SystemColors.ControlLight;
+            Boiler_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            Boiler_Remove_button.FlatStyle = FlatStyle.System;
+            Boiler_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            Boiler_Remove_button.Location = new Point(951, 2);
+            Boiler_Remove_button.Margin = new Padding(0);
+            Boiler_Remove_button.Name = "Boiler_Remove_button";
+            Boiler_Remove_button.Size = new Size(23, 23);
+            Boiler_Remove_button.TabIndex = 195;
+            Boiler_Remove_button.Text = "-";
+            Boiler_Remove_button.UseVisualStyleBackColor = false;
+            Boiler_Remove_button.Click += Boiler_Remove_button_Click;
             // 
             // Boiler_dataGridView
             // 
@@ -680,8 +701,8 @@ namespace main.contents
             dataGridViewCellStyle28.WrapMode = DataGridViewTriState.True;
             Boiler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle28;
             Boiler_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Boiler_dataGridView.Dock = DockStyle.Fill;
-            Boiler_dataGridView.Location = new Point(3, 3);
+            Boiler_dataGridView.Dock = DockStyle.Bottom;
+            Boiler_dataGridView.Location = new Point(3, 31);
             Boiler_dataGridView.Name = "Boiler_dataGridView";
             dataGridViewCellStyle29.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle29.BackColor = SystemColors.Control;
@@ -699,12 +720,14 @@ namespace main.contents
             dataGridViewCellStyle30.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle30.SelectionForeColor = Color.Black;
             Boiler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle30;
-            Boiler_dataGridView.Size = new Size(972, 121);
+            Boiler_dataGridView.Size = new Size(972, 93);
             Boiler_dataGridView.TabIndex = 22;
+            Boiler_dataGridView.CellContentClick += Boiler_dataGridView_CellContentClick;
             // 
             // HP_tabPage
             // 
             HP_tabPage.BackColor = Color.White;
+            HP_tabPage.Controls.Add(HP_Remove_button);
             HP_tabPage.Controls.Add(HP_dataGridView);
             HP_tabPage.Location = new Point(4, 25);
             HP_tabPage.Name = "HP_tabPage";
@@ -713,12 +736,26 @@ namespace main.contents
             HP_tabPage.TabIndex = 2;
             HP_tabPage.Text = "히트펌프";
             // 
+            // HP_Remove_button
+            // 
+            HP_Remove_button.BackColor = SystemColors.ControlLight;
+            HP_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            HP_Remove_button.FlatStyle = FlatStyle.System;
+            HP_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            HP_Remove_button.Location = new Point(952, 3);
+            HP_Remove_button.Margin = new Padding(0);
+            HP_Remove_button.Name = "HP_Remove_button";
+            HP_Remove_button.Size = new Size(23, 23);
+            HP_Remove_button.TabIndex = 195;
+            HP_Remove_button.Text = "-";
+            HP_Remove_button.UseVisualStyleBackColor = false;
+            HP_Remove_button.Click += HP_Remove_button_Click;
+            // 
             // HP_dataGridView
             // 
             HP_dataGridView.AllowUserToAddRows = false;
             HP_dataGridView.AllowUserToDeleteRows = false;
             HP_dataGridView.AllowUserToResizeColumns = false;
-            HP_dataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             HP_dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             HP_dataGridView.BackgroundColor = Color.White;
             HP_dataGridView.BorderStyle = BorderStyle.None;
@@ -733,8 +770,8 @@ namespace main.contents
             dataGridViewCellStyle31.WrapMode = DataGridViewTriState.True;
             HP_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle31;
             HP_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            HP_dataGridView.Dock = DockStyle.Fill;
-            HP_dataGridView.Location = new Point(3, 3);
+            HP_dataGridView.Dock = DockStyle.Bottom;
+            HP_dataGridView.Location = new Point(3, 31);
             HP_dataGridView.Name = "HP_dataGridView";
             dataGridViewCellStyle32.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle32.BackColor = SystemColors.Control;
@@ -752,11 +789,13 @@ namespace main.contents
             dataGridViewCellStyle33.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle33.SelectionForeColor = Color.Black;
             HP_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle33;
-            HP_dataGridView.Size = new Size(972, 121);
+            HP_dataGridView.Size = new Size(972, 93);
             HP_dataGridView.TabIndex = 23;
+            HP_dataGridView.CellContentClick += HP_dataGridView_CellContentClick;
             // 
             // AS_tabPage
             // 
+            AS_tabPage.Controls.Add(AS_Remove_button);
             AS_tabPage.Controls.Add(AS_dataGridView);
             AS_tabPage.Location = new Point(4, 25);
             AS_tabPage.Name = "AS_tabPage";
@@ -765,6 +804,21 @@ namespace main.contents
             AS_tabPage.TabIndex = 3;
             AS_tabPage.Text = "흡수식온수기";
             AS_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // ABS_Remove_button
+            // 
+            AS_Remove_button.BackColor = SystemColors.ControlLight;
+            AS_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            AS_Remove_button.FlatStyle = FlatStyle.System;
+            AS_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            AS_Remove_button.Location = new Point(952, 3);
+            AS_Remove_button.Margin = new Padding(0);
+            AS_Remove_button.Name = "ABS_Remove_button";
+            AS_Remove_button.Size = new Size(23, 23);
+            AS_Remove_button.TabIndex = 195;
+            AS_Remove_button.Text = "-";
+            AS_Remove_button.UseVisualStyleBackColor = false;
+            AS_Remove_button.Click += AS_Remove_button_Click;
             // 
             // AS_dataGridView
             // 
@@ -786,8 +840,8 @@ namespace main.contents
             dataGridViewCellStyle34.WrapMode = DataGridViewTriState.True;
             AS_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle34;
             AS_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            AS_dataGridView.Dock = DockStyle.Fill;
-            AS_dataGridView.Location = new Point(3, 3);
+            AS_dataGridView.Dock = DockStyle.Bottom;
+            AS_dataGridView.Location = new Point(3, 31);
             AS_dataGridView.Name = "AS_dataGridView";
             dataGridViewCellStyle35.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle35.BackColor = SystemColors.Control;
@@ -805,11 +859,13 @@ namespace main.contents
             dataGridViewCellStyle36.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle36.SelectionForeColor = Color.Black;
             AS_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle36;
-            AS_dataGridView.Size = new Size(972, 121);
+            AS_dataGridView.Size = new Size(972, 93);
             AS_dataGridView.TabIndex = 23;
+            AS_dataGridView.CellContentClick += AS_dataGridView_CellContentClick;
             // 
             // DH_tabPage
             // 
+            DH_tabPage.Controls.Add(DH_Remove_button);
             DH_tabPage.Controls.Add(DH_dataGridView);
             DH_tabPage.Location = new Point(4, 25);
             DH_tabPage.Name = "DH_tabPage";
@@ -818,6 +874,21 @@ namespace main.contents
             DH_tabPage.TabIndex = 4;
             DH_tabPage.Text = "지역난방";
             DH_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // DH_Remove_button
+            // 
+            DH_Remove_button.BackColor = SystemColors.ControlLight;
+            DH_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            DH_Remove_button.FlatStyle = FlatStyle.System;
+            DH_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            DH_Remove_button.Location = new Point(952, 3);
+            DH_Remove_button.Margin = new Padding(0);
+            DH_Remove_button.Name = "DH_Remove_button";
+            DH_Remove_button.Size = new Size(23, 23);
+            DH_Remove_button.TabIndex = 195;
+            DH_Remove_button.Text = "-";
+            DH_Remove_button.UseVisualStyleBackColor = false;
+            DH_Remove_button.Click += DH_Remove_button_Click;
             // 
             // DH_dataGridView
             // 
@@ -839,8 +910,8 @@ namespace main.contents
             dataGridViewCellStyle37.WrapMode = DataGridViewTriState.True;
             DH_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle37;
             DH_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DH_dataGridView.Dock = DockStyle.Fill;
-            DH_dataGridView.Location = new Point(3, 3);
+            DH_dataGridView.Dock = DockStyle.Bottom;
+            DH_dataGridView.Location = new Point(3, 31);
             DH_dataGridView.Name = "DH_dataGridView";
             dataGridViewCellStyle38.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle38.BackColor = SystemColors.Control;
@@ -858,11 +929,13 @@ namespace main.contents
             dataGridViewCellStyle39.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle39.SelectionForeColor = Color.Black;
             DH_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle39;
-            DH_dataGridView.Size = new Size(972, 121);
+            DH_dataGridView.Size = new Size(972, 93);
             DH_dataGridView.TabIndex = 24;
+            DH_dataGridView.CellContentClick += DH_dataGridView_CellContentClick;
             // 
             // Solar_tabPage
             // 
+            Solar_tabPage.Controls.Add(Solar_Remove_button);
             Solar_tabPage.Controls.Add(Solar_dataGridView);
             Solar_tabPage.Location = new Point(4, 25);
             Solar_tabPage.Name = "Solar_tabPage";
@@ -871,6 +944,21 @@ namespace main.contents
             Solar_tabPage.TabIndex = 5;
             Solar_tabPage.Text = "태양열시스템";
             Solar_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // Solar_Remove_button
+            // 
+            Solar_Remove_button.BackColor = SystemColors.ControlLight;
+            Solar_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            Solar_Remove_button.FlatStyle = FlatStyle.System;
+            Solar_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            Solar_Remove_button.Location = new Point(952, 3);
+            Solar_Remove_button.Margin = new Padding(0);
+            Solar_Remove_button.Name = "Solar_Remove_button";
+            Solar_Remove_button.Size = new Size(23, 23);
+            Solar_Remove_button.TabIndex = 195;
+            Solar_Remove_button.Text = "-";
+            Solar_Remove_button.UseVisualStyleBackColor = false;
+            Solar_Remove_button.Click += Solar_Remove_button_Click;
             // 
             // Solar_dataGridView
             // 
@@ -892,8 +980,8 @@ namespace main.contents
             dataGridViewCellStyle40.WrapMode = DataGridViewTriState.True;
             Solar_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle40;
             Solar_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Solar_dataGridView.Dock = DockStyle.Fill;
-            Solar_dataGridView.Location = new Point(3, 3);
+            Solar_dataGridView.Dock = DockStyle.Bottom;
+            Solar_dataGridView.Location = new Point(3, 31);
             Solar_dataGridView.Name = "Solar_dataGridView";
             dataGridViewCellStyle41.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle41.BackColor = SystemColors.Control;
@@ -911,11 +999,13 @@ namespace main.contents
             dataGridViewCellStyle42.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle42.SelectionForeColor = Color.Black;
             Solar_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle42;
-            Solar_dataGridView.Size = new Size(972, 121);
+            Solar_dataGridView.Size = new Size(972, 93);
             Solar_dataGridView.TabIndex = 23;
+            Solar_dataGridView.CellContentClick += Solar_dataGridView_CellContentClick;
             // 
             // FC_tabPage
             // 
+            FC_tabPage.Controls.Add(FC_Remove_button);
             FC_tabPage.Controls.Add(FC_dataGridView);
             FC_tabPage.Location = new Point(4, 25);
             FC_tabPage.Name = "FC_tabPage";
@@ -924,6 +1014,21 @@ namespace main.contents
             FC_tabPage.TabIndex = 7;
             FC_tabPage.Text = "연료전지";
             FC_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // FC_Remove_button
+            // 
+            FC_Remove_button.BackColor = SystemColors.ControlLight;
+            FC_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            FC_Remove_button.FlatStyle = FlatStyle.System;
+            FC_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
+            FC_Remove_button.Location = new Point(952, 3);
+            FC_Remove_button.Margin = new Padding(0);
+            FC_Remove_button.Name = "FC_Remove_button";
+            FC_Remove_button.Size = new Size(23, 23);
+            FC_Remove_button.TabIndex = 195;
+            FC_Remove_button.Text = "-";
+            FC_Remove_button.UseVisualStyleBackColor = false;
+            FC_Remove_button.Click += FC_Remove_button_Click;
             // 
             // FC_dataGridView
             // 
@@ -945,8 +1050,8 @@ namespace main.contents
             dataGridViewCellStyle43.WrapMode = DataGridViewTriState.True;
             FC_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle43;
             FC_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            FC_dataGridView.Dock = DockStyle.Fill;
-            FC_dataGridView.Location = new Point(3, 3);
+            FC_dataGridView.Dock = DockStyle.Bottom;
+            FC_dataGridView.Location = new Point(3, 31);
             FC_dataGridView.Name = "FC_dataGridView";
             dataGridViewCellStyle44.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle44.BackColor = SystemColors.Control;
@@ -964,8 +1069,9 @@ namespace main.contents
             dataGridViewCellStyle45.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle45.SelectionForeColor = Color.Black;
             FC_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle45;
-            FC_dataGridView.Size = new Size(972, 121);
+            FC_dataGridView.Size = new Size(972, 93);
             FC_dataGridView.TabIndex = 24;
+            FC_dataGridView.CellContentClick += FC_dataGridView_CellContentClick;
             // 
             // label9
             // 
@@ -2167,7 +2273,7 @@ namespace main.contents
             tabControl1.ResumeLayout(false);
             Qhg_tabPage.ResumeLayout(false);
             Qhg_tabPage.PerformLayout();
-            tabControl2.ResumeLayout(false);
+            tabControl.ResumeLayout(false);
             Boiler_tabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Boiler_dataGridView).EndInit();
             HP_tabPage.ResumeLayout(false);
@@ -2234,7 +2340,7 @@ namespace main.contents
         private CustomComboBox Sub1System_comboBox;
         private Label MainSystem_label;
         private CustomComboBox MainSystem_comboBox;
-        private CustomTabControl tabControl2;
+        private CustomTabControl tabControl;
         private TabPage HP_tabPage;
         private TabPage AS_tabPage;
         private TabPage DH_tabPage;
@@ -2346,5 +2452,11 @@ namespace main.contents
         private TextBox Zone_Area_textBox;
         private Label label21;
         private Label label22;
+        private Button Boiler_Remove_button;
+        private Button HP_Remove_button;
+        private Button AS_Remove_button;
+        private Button DH_Remove_button;
+        private Button Solar_Remove_button;
+        private Button FC_Remove_button;
     }
 }

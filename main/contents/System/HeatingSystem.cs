@@ -32,11 +32,11 @@ namespace main.contents
         String Num, Name; String SelectZone_nonsplit; String SelectAHU_nonsplit;
         String SystemLoacation, SLRL, Complex, MainSystem, Sub1System, Sub2System;
         String SelectBoiler_nonsplit, BoilerNum_nonsplit;
-        String SelectSolar_nonsplit, SolarNum_nonsplit, SolarDirection_nonsplit, SolarDegree_nonsplit, SelectFC_nonsplit, FCNum_nonsplit, FCElecInstall_nonsplit;
+        String SelectSolar_nonsplit, SolarNum_nonsplit, SolarDirection_nonsplit, SolarDegree_nonsplit, SelectFC_nonsplit, FCNum_nonsplit, FCElecInstall_nonsplit, FCElecHeat_nonsplit;
         String SelectAS_nonsplit, ASNum_nonsplit; String SelectDH_nonsplit;
         String[] SelectHP_nonsplit = new String[3], HPNum_nonsplit = new String[3], HPSupply_nonsplit = new String[3], HPControl_nonsplit = new String[3]; //외기/지열/지하수 순 
         String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; double Pump1Num, Pump2Num;
-        String ce1Type, ce2Type; int ce_SelectRow;
+        String ce1Type, ce2Type; int ce_SelectRow; int Boiler_SelectRow; int HP_SelectRow; int AS_SelectRow; int DH_SelectRow; int Solar_SelectRow; int FC_SelectRow;
         String StorageUse, StoragePumpUse, StoragePump; double Vs;
         String[] SystemType = { "보일러", "외기 히트펌프", "지열 히트펌프", "지하수 히트펌프", "태양열 융합 히트펌프", "흡수식온수기", "지역난방", "태양열시스템", "연료전지" };
         String[] ceType = { "실내기", "방열기", "팬코일유닛", "복사난방", "바닥매립형컨백터", "파워팬유닛", "VAV유닛", "CAV유닛" };
@@ -213,7 +213,7 @@ namespace main.contents
                 }
                 Zone_textBox.Text = 내용;
 
-                if(SelectZone_split.Count>0 && SelectZone_split[0] != "")
+                if (SelectZone_split.Count > 0 && SelectZone_split[0] != "")
                 {
                     double Qba = 0, Qmax = 0, Area = 0;
                     for (int a = 0; a < SelectZone_split.Count; a++)
@@ -269,7 +269,7 @@ namespace main.contents
                 }
                 AHU_textBox.Text = 내용;
 
-                if(SelectAHU_split.Count >0 && SelectAHU_split[0]!="")
+                if (SelectAHU_split.Count > 0 && SelectAHU_split[0] != "")
                 {
                     double Qba = 0, Qmax = 0, Area = 0;
                     for (int a = 0; a < SelectAHU_split.Count; a++)
@@ -303,7 +303,7 @@ namespace main.contents
                     AHU_Area_textBox.Text = Area.ToString();
                     Program.UTIL.textBox_doubleComa(AHU_Area_textBox, true, 2);
                 }
-                
+
 
 
             }
@@ -419,6 +419,10 @@ namespace main.contents
         {
             if (MainSystem_comboBox.SelectedItem != null)
             {
+                if(MainSystem!= null & MainSystem != MainSystem_comboBox.SelectedItem.ToString())
+                {
+                    MessageBox.Show("기존 선택한 설비는 삭제하세요.");
+                }
                 MainSystem = MainSystem_comboBox.SelectedItem.ToString();
                 LoadImage();
                 MainSystemImage(MainSystem, "신규");
@@ -447,8 +451,12 @@ namespace main.contents
 
         private void SubSystem1_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Sub1System_comboBox.SelectedItem != null)
+            if (Sub1System != null & Sub1System_comboBox.SelectedItem != null)
             {
+                if (Sub1System != Sub1System_comboBox.SelectedItem.ToString())
+                {
+                    MessageBox.Show("기존 선택한 설비는 삭제하세요.");
+                }
                 Sub1System = Sub1System_comboBox.SelectedItem.ToString();
                 LoadtabPage(Sub1System);
                 if (Sub1System == MainSystem)
@@ -478,8 +486,12 @@ namespace main.contents
 
         private void Sub2System_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Sub2System_comboBox.SelectedItem != null)
+            if (Sub2System != null & Sub2System_comboBox.SelectedItem != null)
             {
+                if (Sub2System != Sub2System_comboBox.SelectedItem.ToString())
+                {
+                    MessageBox.Show("기존 선택한 설비는 삭제하세요.");
+                }
                 Sub2System = Sub2System_comboBox.SelectedItem.ToString();
                 LoadtabPage(Sub2System);
                 if (Sub2System == MainSystem)
@@ -596,27 +608,27 @@ namespace main.contents
         {
             if (System == "보일러")
             {
-                tabControl2.SelectedTab = tabControl2.TabPages["Boiler_tabPage"];
+                tabControl.SelectedTab = tabControl.TabPages["Boiler_tabPage"];
             }
             else if (System == "외기 히트펌프" || System == "지열 히트펌프" || System == "지하수 히트펌프" || System == "태양열 융합 히트펌프")
             {
-                tabControl2.SelectedTab = tabControl2.TabPages["HP_tabPage"];
+                tabControl.SelectedTab = tabControl.TabPages["HP_tabPage"];
             }
             else if (System == "흡수식온수기")
             {
-                tabControl2.SelectedTab = tabControl2.TabPages["AS_tabPage"];
+                tabControl.SelectedTab = tabControl.TabPages["AS_tabPage"];
             }
             else if (System == "지역난방")
             {
-                tabControl2.SelectedTab = tabControl2.TabPages["DH_tabPage"];
+                tabControl.SelectedTab = tabControl.TabPages["DH_tabPage"];
             }
             else if (System == "태양열시스템")
             {
-                tabControl2.SelectedTab = tabControl2.TabPages["Solar_tabPage"];
+                tabControl.SelectedTab = tabControl.TabPages["Solar_tabPage"];
             }
             else if (System == "연료전지")
             {
-                tabControl2.SelectedTab = tabControl2.TabPages["FC_tabPage"];
+                tabControl.SelectedTab = tabControl.TabPages["FC_tabPage"];
             }
         }
 
@@ -1105,6 +1117,7 @@ namespace main.contents
             FC_dataGridView.Columns.Add("A7", "열.효율.[%]");
             FC_dataGridView.Columns.Add("A8", "대수.[EA]");
             FC_dataGridView.Columns.Add("A9", "설치유형");
+            FC_dataGridView.Columns.Add("A10", "생산유형");
             FC_dataGridView.Columns[0].Width = 30;
 
             for (int n = 0; n < SelectFC_split.Count; n++)
@@ -1123,6 +1136,10 @@ namespace main.contents
                     설치유형comboBox.Items.Add("단독형");
                     설치유형comboBox.Items.Add("공동주택연계형");
                     FC_dataGridView.Rows[nRow].Cells[9] = 설치유형comboBox;
+                    DataGridViewComboBoxCell 생산유형comboBox = new DataGridViewComboBoxCell();
+                    생산유형comboBox.Items.Add("전기");
+                    생산유형comboBox.Items.Add("전기와 열");
+                    FC_dataGridView.Rows[nRow].Cells[10] = 생산유형comboBox;
                 }
             }
         }
@@ -1161,6 +1178,17 @@ namespace main.contents
                 else if (FC_dataGridView.Rows[k].Cells[9].Value != null)
                 {
                     FCElecInstall_nonsplit += FC_dataGridView.Rows[k].Cells[9].Value.ToString() + "+";
+                }
+            }
+            for (int k = 0; k < FC_dataGridView.Rows.Count; k++)
+            {
+                if (FC_dataGridView.Rows.Count == 1 && FC_dataGridView.Rows[k].Cells[10].Value != null)
+                {
+                    FCElecHeat_nonsplit = FC_dataGridView.Rows[k].Cells[10].Value.ToString();
+                }
+                else if (FC_dataGridView.Rows[k].Cells[10].Value != null)
+                {
+                    FCElecHeat_nonsplit += FC_dataGridView.Rows[k].Cells[10].Value.ToString() + "+";
                 }
             }
         }
@@ -1216,6 +1244,35 @@ namespace main.contents
                 {
                     if (FC_dataGridView.Rows.Count > 0)
                     { FC_dataGridView.Rows[0].Cells[9].Value = nonSplit; }
+                }
+            }
+            else { return; }
+
+        }
+
+        private void Split_FCElecHeat(String nonSplit)
+        {
+            if (nonSplit != null)
+            {
+                if (nonSplit.Contains('+'))
+                {
+                    ArrayList FC_split = new ArrayList();
+
+                    string[] token = nonSplit.Split('+');
+                    FC_split.Clear();
+                    foreach (var item in token)
+                    {
+                        FC_split.Add(item.ToString());
+                    }
+                    for (int k = 0; k < FC_dataGridView.Rows.Count; k++)
+                    {
+                        FC_dataGridView.Rows[k].Cells[10].Value = FC_split[k];
+                    }
+                }
+                else
+                {
+                    if (FC_dataGridView.Rows.Count > 0)
+                    { FC_dataGridView.Rows[0].Cells[10].Value = nonSplit; }
                 }
             }
             else { return; }
@@ -1305,6 +1362,7 @@ namespace main.contents
             AS_dataGridView.Columns.Add("A8", "통합성능.[-]");
             AS_dataGridView.Columns.Add("A9", "대수.[EA]");
             AS_dataGridView.Columns[0].Width = 30;
+            AS_dataGridView.Columns[8].Visible = false;
 
             for (int n = 0; n < SelectAS_split.Count; n++)
             {
@@ -2124,7 +2182,7 @@ namespace main.contents
         {
             ZoneArea = 0;
             double Qmax_sum = 0;
-            if(Zone_Area_textBox.Text != null && Zone_Area_textBox.Text!="")
+            if (Zone_Area_textBox.Text != null && Zone_Area_textBox.Text != "")
             {
                 ZoneArea = Convert.ToDouble(Zone_Area_textBox.Text.ToString());
             }
@@ -2134,7 +2192,7 @@ namespace main.contents
             }
             if (Zone_Qmax_textBox.Text != null && Zone_Qmax_textBox.Text != "")
             {
-               Qmax_sum  = Convert.ToDouble(Zone_Qmax_textBox.Text.ToString());
+                Qmax_sum = Convert.ToDouble(Zone_Qmax_textBox.Text.ToString());
             }
             if (AHU_Qmax_textBox.Text != null && AHU_Qmax_textBox.Text != "")
             {
@@ -2179,7 +2237,8 @@ namespace main.contents
             PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
             Program.UTIL.textBox_doubleComa(PipeIns_Ramda_textBox, true, 3);
 
-            PipeIns_textBox.Text = "일반 보온재";
+            PipeIns_textBox.Text = "보온단열재";
+            PipeIns = "보온단열재";
         }
         private void PipeIns_button_Click(object sender, EventArgs e)
         {
@@ -2559,7 +2618,7 @@ namespace main.contents
                 }
             }
         }
-       
+
         private void ce_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -2810,6 +2869,43 @@ namespace main.contents
         #endregion
 
         #region 세이브
+
+        private void Save_Image()
+        {
+            try
+            {
+                // 캡쳐할 영역의 위치와 크기 설정
+                Rectangle captureRectangle = ImagePanel.RectangleToScreen(ImagePanel.ClientRectangle); //RectangleToScree는 화면 상 좌표를 읽음, ClientRectangle는 그림의 크기를 읽음 
+
+                // 비트맵 생성
+                Bitmap bmp = new Bitmap(captureRectangle.Width, captureRectangle.Height);
+
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    // 특정 영역을 캡쳐
+                    g.CopyFromScreen(captureRectangle.Location, Point.Empty, captureRectangle.Size);
+                }
+
+                string pid = "0000-00-00";
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
+                if (Value.Length > 0)
+                {
+                    pid = Value[0][0];
+                }
+                Directory.CreateDirectory(Program.gPath + "threejs\\public\\print\\img\\" + pid);
+                // 저장할 파일 경로 설정
+                string ImageName = "/print/img/" + pid + "/" + Num + ".png";
+                string imagePath = Program.gPath + ImageName; // 최종 경로
+
+
+                // 비트맵을 파일로 저장
+                bmp.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("오류 발생: " + ex.Message);
+            }
+        }
         private void Save_button_Click(object sender, EventArgs e)
         {
             if (Name == null)
@@ -2819,8 +2915,9 @@ namespace main.contents
             else
             {
                 Save();
+                Save_Image();
 
-                if( SelectSolar_split.Count > 0)
+                if (SelectSolar_split.Count > 0)
                 {
                     SaveSolar(); //새로 추가함
                 }
@@ -2856,7 +2953,7 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,공급설비1종류,공급설비2종류", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + ce1Type + "','" + ce2Type + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,축열유무,축열펌프유무,축열펌프,축열용량", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + StorageUse + "','" + StoragePumpUse + "','" + StoragePump + "','" + Vs.ToString() + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,배관관경,배관보온두께,보온열전도율,배관보온재,노출배관길이", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PipeD.ToString() + "','" + PipeInsD.ToString() + "','" + PipeIns_Ramda.ToString() + "','" + PipeIns + "','" + PipeL.ToString() + "'", "번호");
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,연료전지번호,연료전지대수,연료전지설치유형", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectFC_nonsplit + "','" + FCNum_nonsplit + "','" + FCElecInstall_nonsplit + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,연료전지번호,연료전지대수,연료전지설치유형,연료전지생산유형", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectFC_nonsplit + "','" + FCNum_nonsplit + "','" + FCElecInstall_nonsplit + "','" + FCElecHeat_nonsplit + "'", "번호");
 
 
             Program.DB.saveProject();
@@ -2875,10 +2972,10 @@ namespace main.contents
             else 적용유형 = null;
 
             string stnum = solar_num();
-           
+
             Program.DB.setValue(DB.type.ProjDB, "SolarTherm_Form", "번호,프로젝트유형,태양열번호,설비번호,적용설비,적용유형,모듈개수,방위,기울기",
-                 "'" + stnum + "','" + 프로젝트유형[0][0] + "','" + SelectSolar_nonsplit + "','" + Num_textBox.Text + "','"+적용설비+"','" + 적용유형 + "','" + SolarNum_nonsplit +
-                 "','" + SolarDirection_nonsplit + "', '" +SolarDegree_nonsplit+ "'", "태양열번호,설비번호");
+                 "'" + stnum + "','" + 프로젝트유형[0][0] + "','" + SelectSolar_nonsplit + "','" + Num_textBox.Text + "','" + 적용설비 + "','" + 적용유형 + "','" + SolarNum_nonsplit +
+                 "','" + SolarDirection_nonsplit + "', '" + SolarDegree_nonsplit + "'", "태양열번호,설비번호");
         } //새로추가함
 
         public string solar_num()
@@ -2887,7 +2984,7 @@ namespace main.contents
             string solarnum = null;
             if (check.Length > 0)
             {
-                for(int i = 0; i<check.Length ; i++)
+                for (int i = 0; i < check.Length; i++)
                 {
                     if (SelectSolar_nonsplit == check[i][1] && Num_textBox.Text == check[i][2])
                     {
@@ -2914,14 +3011,17 @@ namespace main.contents
             Num = null; Name = null; SelectZone_nonsplit = null; SelectAHU_nonsplit = null;
             SystemLoacation = null; SLRL = null; Complex = null; MainSystem = null; Sub1System = null; Sub2System = null;
             SelectBoiler_nonsplit = null; BoilerNum_nonsplit = null;
-            SelectSolar_nonsplit = null; SolarNum_nonsplit = null; SolarDirection_nonsplit = null; SolarDegree_nonsplit = null; SelectFC_nonsplit = null; FCNum_nonsplit = null;
-            PumpUse = null; PumpMethod = null; Pump1 = null; Pump2 = null; Pump1Valve = null; Pump2Valve = null; Pump1Control = null; Pump2Control = null;
-            Pump1Num = 0; Pump2Num = 0;
-            ce1Type = null; ce2Type = null; ce_SelectRow = 0;
+            SelectSolar_nonsplit = null; SolarNum_nonsplit = null; SolarDirection_nonsplit = null; SolarDegree_nonsplit = null; SelectFC_nonsplit = null; FCNum_nonsplit = null; FCElecInstall_nonsplit = null; FCElecHeat_nonsplit = null;
+            SelectAS_nonsplit = null; ASNum_nonsplit = null; SelectDH_nonsplit = null;
+            SelectHP_nonsplit[0] = null; SelectHP_nonsplit[1] = null; SelectHP_nonsplit[2] = null;
+            HPNum_nonsplit[0] = null; HPNum_nonsplit[1] = null; HPNum_nonsplit[2] = null;
+            HPSupply_nonsplit[0] = null; HPSupply_nonsplit[1] = null; HPSupply_nonsplit[2] = null;
+            HPControl_nonsplit[0] = null; HPControl_nonsplit[1] = null; HPControl_nonsplit[2] = null;
+            PumpUse = null; PumpMethod = null; Pump1 = null; Pump2 = null; Pump1Valve = null; Pump2Valve = null; Pump1Control = null; Pump2Control = null; Pump1Num = 0; Pump2Num = 0;
+            ce1Type = null; ce2Type = null;
             StorageUse = null; StoragePumpUse = null; StoragePump = null; Vs = 0;
-            SelectZone_split.Clear(); SelectAHU_split.Clear(); SelectBoiler_split.Clear();
-            PipeD = 0; PipeInsD = 0; PipeIns_Ramda = 0; PipeIns = null; PipeL = 0;
             ZoneArea = 0;
+            SelectAHU_split.Clear(); SelectZone_split.Clear(); SelectBoiler_split.Clear(); SelectAirHP_split.Clear(); SelectGroundHP_split.Clear(); SelectGWHP_split.Clear(); SelectSolar_split.Clear(); SelectAS_split.Clear(); SelectDH_split.Clear(); SelectFC_split.Clear();
 
             Num_textBox.Text = null;
             Name_textBox.Text = null;
@@ -2988,8 +3088,8 @@ namespace main.contents
             Zone_Qba_textBox.Text = null;
             Zone_Qmax_textBox.Text = null;
             Zone_Area_textBox.Text = null;
-            AHU_Qba_textBox .Text = null;
-            AHU_Qmax_textBox .Text = null;
+            AHU_Qba_textBox.Text = null;
+            AHU_Qmax_textBox.Text = null;
             AHU_Area_textBox.Text = null;
         }
 
@@ -3013,7 +3113,7 @@ namespace main.contents
                 Split_Zone(SelectZone_nonsplit);
                 SelectAHU_nonsplit = Value[0][2];
                 Split_AHU(SelectAHU_nonsplit);
-              
+
             }
 
             Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "설치위치,공급환수온도,복합설비유무,주요설비,보조설비1,보조설비2", "번호 = '" + ID + "'");
@@ -3028,12 +3128,12 @@ namespace main.contents
                 Complex_comboBox.SelectedItem = Value[0][2];
                 Complex = Value[0][2];
 
-                MainSystem_comboBox.SelectedItem = Value[0][3];
                 MainSystem = Value[0][3];
-                Sub1System_comboBox.SelectedItem = Value[0][4];
+                MainSystem_comboBox.SelectedItem = Value[0][3];
                 Sub1System = Value[0][4];
-                Sub2System_comboBox.SelectedItem = Value[0][5];
+                Sub1System_comboBox.SelectedItem = Value[0][4];
                 Sub2System = Value[0][5];
+                Sub2System_comboBox.SelectedItem = Value[0][5];
             }
 
             Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "보일러종류,보일러대수", "번호 = '" + ID + "'");
@@ -3046,7 +3146,7 @@ namespace main.contents
                 Split_BoilerNum(BoilerNum_nonsplit);
             }
 
-            Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "연료전지번호,연료전지대수,연료전지설치유형", "번호 = '" + ID + "'");
+            Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "연료전지번호,연료전지대수,연료전지설치유형,연료전지생산유형", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
                 SelectFC_nonsplit = Value[0][0];
@@ -3057,6 +3157,9 @@ namespace main.contents
 
                 FCElecInstall_nonsplit = Value[0][2];
                 Split_FCElecInstall(FCElecInstall_nonsplit);
+
+                FCElecHeat_nonsplit = Value[0][3];
+                Split_FCElecHeat(FCElecHeat_nonsplit);
             }
 
 
@@ -3326,5 +3429,89 @@ namespace main.contents
         }
 
         #endregion
+
+        private void Boiler_Remove_button_Click(object sender, EventArgs e)
+        {
+            if ((MessageBox.Show(Boiler_dataGridView.Rows[Boiler_SelectRow].Cells[1].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
+            {
+              Boiler_dataGridView.Rows.Remove(Boiler_dataGridView.Rows[Boiler_SelectRow]);
+            }
+        }
+
+        private void HP_Remove_button_Click(object sender, EventArgs e)
+        {
+            if ((MessageBox.Show(HP_dataGridView.Rows[HP_SelectRow].Cells[1].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
+            {
+                HP_dataGridView.Rows.Remove(HP_dataGridView.Rows[HP_SelectRow]);
+            }
+        }
+
+        private void AS_Remove_button_Click(object sender, EventArgs e)
+        {
+            if ((MessageBox.Show(AS_dataGridView.Rows[AS_SelectRow].Cells[1].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
+            {
+                AS_dataGridView.Rows.Remove(AS_dataGridView.Rows[AS_SelectRow]);
+            }
+        }
+
+        private void DH_Remove_button_Click(object sender, EventArgs e)
+        {
+            if ((MessageBox.Show(DH_dataGridView.Rows[DH_SelectRow].Cells[1].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
+            {
+                DH_dataGridView.Rows.Remove(DH_dataGridView.Rows[DH_SelectRow]);
+            }
+        }
+
+        private void Solar_Remove_button_Click(object sender, EventArgs e)
+        {
+            if ((MessageBox.Show(Solar_dataGridView.Rows[Solar_SelectRow].Cells[1].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
+            {
+                Solar_dataGridView.Rows.Remove(Solar_dataGridView.Rows[Solar_SelectRow]);
+            }
+        }
+
+        private void FC_Remove_button_Click(object sender, EventArgs e)
+        {
+            if ((MessageBox.Show(FC_dataGridView.Rows[FC_SelectRow].Cells[1].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
+            {
+                FC_dataGridView.Rows.Remove(FC_dataGridView.Rows[FC_SelectRow]);
+            }
+        }
+
+        private void Boiler_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Boiler_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            Boiler_SelectRow = e.RowIndex;
+        }
+
+        private void HP_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            HP_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            HP_SelectRow = e.RowIndex;
+        }
+
+        private void AS_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            AS_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            AS_SelectRow = e.RowIndex;
+        }
+
+        private void DH_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DH_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            DH_SelectRow = e.RowIndex;
+        }
+
+        private void Solar_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Solar_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            Solar_SelectRow = e.RowIndex;
+        }
+
+        private void FC_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            FC_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+            FC_SelectRow = e.RowIndex;
+        }
     }
 }

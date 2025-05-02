@@ -114,16 +114,20 @@ namespace main.contents.Result
                     {
                         light_saving_noelec = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
                     }
-                    Light_data[0].Add(new { idx = i, val = light_saving.ToString("#,##0") }); ; //절감량 
-                    Light_data[1].Add(new { idx = i, val = (light_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
+                    double v = double.IsNaN(light_saving) ? 0 : light_saving;
+                    Light_data[0].Add(new { idx = i, val = v.ToString("#,##0") }); ; //절감량 
+
+                    v = double.IsNaN(light_saving / Total_Energy_pre * 100) ? 0 : light_saving / Total_Energy_pre * 100;
+                    Light_data[1].Add(new { idx = i, val = (v).ToString("0.0") + " %" }); ; //절감률
+
                     data.Add(new { cname = "light_saving", data = Light_data[0] });
                     data.Add(new { cname = "light_savingpercent", data = Light_data[1] });
 
                     d = (light_saving / Total_Energy_pre * 100);
                     charts += "{donut:" + d + "},";
 
-                    double light_tCO2 = Math.Max(0, light_saving_elec * 0.4747 / 1000000 * 1000);
-                    double light_TOE = Math.Max(0, light_saving_elec * 0.00023);
+                    double light_tCO2 = double.IsNaN(Math.Max(0, light_saving_elec * 0.4747 / 1000000 * 1000)) ? 0 : Math.Max(0, light_saving_elec * 0.4747 / 1000000 * 1000);
+                    double light_TOE = double.IsNaN(Math.Max(0, light_saving_elec * 0.00023)) ? 0: Math.Max(0, light_saving_elec * 0.00023);
 
                     Light_data[2].Add(new { idx = i, val = light_tCO2.ToString("0.0") });  //tco2
                     Light_data[3].Add(new { idx = i, val = light_TOE.ToString("0.0") });  //TOE 
@@ -293,16 +297,19 @@ namespace main.contents.Result
                         ventil_saving_noelec = Math.Max(0, ventil_saving_noelec - infil_saving_noelec);
                     }
 
-                    Ventil_data[0].Add(new { idx = i, val = ventil_saving.ToString("#,##0") }); ; //절감량 
-                    Ventil_data[1].Add(new { idx = i, val = (ventil_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
+                    double v2 = double.IsNaN(ventil_saving) ? 0 : ventil_saving;
+                    Ventil_data[0].Add(new { idx = i, val = v2.ToString("#,##0") }); ; //절감량 
+
+                    v2 = double.IsNaN(ventil_saving / Total_Energy_pre * 100) ? 0 : ventil_saving / Total_Energy_pre * 100;
+                    Ventil_data[1].Add(new { idx = i, val = (v2).ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "ventil_saving", data = Ventil_data[0] });
                     data.Add(new { cname = "ventil_savingpercent", data = Ventil_data[1] });
 
                     d = (ventil_saving / Total_Energy_pre * 100);
                     charts += "{donut:" + d + "},";
 
-                    double ventil_tCO2 = ventil_saving_elec * 0.4747 / 1000000 * 1000 + ventil_saving_noelec / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                    double ventil_TOE = ventil_saving_elec * 0.00023 + ventil_saving_noelec / 38.9  / 0.277778 * 0.00103;
+                    double ventil_tCO2 = double.IsNaN(ventil_saving_elec * 0.4747 / 1000000 * 1000 + ventil_saving_noelec / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000) ? 0 : ventil_saving_elec * 0.4747 / 1000000 * 1000 + ventil_saving_noelec / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    double ventil_TOE = double.IsNaN(ventil_saving_elec * 0.00023 + ventil_saving_noelec / 38.9  / 0.277778 * 0.00103) ? 0: ventil_saving_elec * 0.00023 + ventil_saving_noelec / 38.9 / 0.277778 * 0.00103;
 
                     Ventil_data[2].Add(new { idx = i, val = ventil_tCO2.ToString("0.0") });  //tco2
                     Ventil_data[3].Add(new { idx = i, val = ventil_TOE.ToString("0.0") });  //TOE 
@@ -420,17 +427,19 @@ namespace main.contents.Result
                     #region 기밀   
 
 
+                    double v3 = double.IsNaN(infil_saving) ? 0 : infil_saving;
+                    Infil_data[0].Add(new { idx = i, val = v3.ToString("#,##0") }); ; //절감량 
 
-                    Infil_data[0].Add(new { idx = i, val = infil_saving.ToString("#,##0") }); ; //절감량 
-                    Infil_data[1].Add(new { idx = i, val = (infil_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
+                    v3 = double.IsNaN(infil_saving / Total_Energy_pre * 100) ? 0 : infil_saving / Total_Energy_pre * 100;
+                    Infil_data[1].Add(new { idx = i, val = (v3).ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "infil_saving", data = Infil_data[0] });
                     data.Add(new { cname = "infil_savingpercent", data = Infil_data[1] });
 
                     d = (infil_saving / Total_Energy_pre * 100);
                     charts += "{donut:" + d + "},";
 
-                    double infil_tCO2 = infil_saving_elec * 0.4747 / 1000000 * 1000 + infil_saving_noelec / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                    double infil_TOE = infil_saving_elec * 0.00023 + infil_saving_noelec / 38.9  / 0.277778 * 0.00103;
+                    double infil_tCO2 = double.IsNaN(infil_saving_elec * 0.4747 / 1000000 * 1000 + infil_saving_noelec / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000) ? 0 : infil_saving_elec * 0.4747 / 1000000 * 1000 + infil_saving_noelec / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                    double infil_TOE = double.IsNaN(infil_saving_elec * 0.00023 + infil_saving_noelec / 38.9 / 0.277778 * 0.00103) ? 0 : infil_saving_elec * 0.00023 + infil_saving_noelec / 38.9 / 0.277778 * 0.00103;
 
                     Infil_data[2].Add(new { idx = i, val = infil_tCO2.ToString("0.0") });  //tco2
                     Infil_data[3].Add(new { idx = i, val = infil_TOE.ToString("0.0") });  //TOE 
@@ -546,9 +555,11 @@ namespace main.contents.Result
                     }
                     double light_saving = Math.Max(Element_EnergySaving[j_조명], 0);
 
+                    double v4 = double.IsNaN(light_saving) ? 0 : light_saving;
+                    Light_data[0].Add(new { idx = i, val = v4.ToString("#,##0") }); ; //절감량
 
-                    Light_data[0].Add(new { idx = i, val = light_saving.ToString("#,##0") }); ; //절감량 
-                    Light_data[1].Add(new { idx = i, val = (light_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
+                    v4 = double.IsNaN(light_saving / Total_Energy_pre * 100) ? 0 : light_saving / Total_Energy_pre * 100;
+                    Light_data[1].Add(new { idx = i, val = (v4).ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "light_saving", data = Light_data[0] });
                     data.Add(new { cname = "light_savingpercent", data = Light_data[1] });
 
@@ -558,8 +569,8 @@ namespace main.contents.Result
                     double light_saving_elec = Element_ElecSaving[j_조명];
                     double light_saving_noelec = Element_GasSaving[j_조명];
 
-                    double light_tCO2 = Math.Max(0, light_saving_elec * 0.4747 / 1000000 * 1000);
-                    double light_TOE = Math.Max(0, light_saving_elec * 0.00023);
+                    double light_tCO2 = double.IsNaN(Math.Max(0, light_saving_elec * 0.4747 / 1000000 * 1000)) ? 0 : Math.Max(0, light_saving_elec * 0.4747 / 1000000 * 1000);
+                    double light_TOE = double.IsNaN(Math.Max(0, light_saving_elec * 0.00023)) ? 0 : Math.Max(0, light_saving_elec * 0.00023);
 
                     Light_data[2].Add(new { idx = i, val = light_tCO2.ToString("0.0") });  //tco2
                     Light_data[3].Add(new { idx = i, val = light_TOE.ToString("0.0") });  //TOE 
@@ -798,16 +809,19 @@ namespace main.contents.Result
                     double ventil_saving_elec = Math.Max(Element_ElecSaving[j_환기] - infil_saving_elec, 0);
                     double ventil_saving_noelec = Math.Max(Element_GasSaving[j_환기] - infil_saving_noelec, 0);
 
-                    Ventil_data[0].Add(new { idx = i, val = ventil_saving.ToString("#,##0") }); ; //절감량 
-                    Ventil_data[1].Add(new { idx = i, val = (ventil_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
+                    double v = double.IsNaN(ventil_saving) ? 0 : ventil_saving;
+                    Ventil_data[0].Add(new { idx = i, val = v.ToString("#,##0") }); ; //절감량 
+
+                    v = double.IsNaN(ventil_saving / Total_Energy_pre * 100) ? 0 : ventil_saving / Total_Energy_pre * 100;
+                    Ventil_data[1].Add(new { idx = i, val = v.ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "ventil_saving", data = Ventil_data[0] });
                     data.Add(new { cname = "ventil_savingpercent", data = Ventil_data[1] });
 
                     d = (ventil_saving / Total_Energy_pre * 100);
                     charts += "{donut:" + d + "},";
 
-                    double ventil_tCO2 = ventil_saving_elec * 0.4747 / 1000000 * 1000 + ventil_saving_noelec / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                    double ventil_TOE = ventil_saving_elec * 0.00023 + ventil_saving_noelec / 38.9  / 0.277778 * 0.00103;
+                    double ventil_tCO2 = double.IsNaN(ventil_saving_elec * 0.4747 / 1000000 * 1000 + ventil_saving_noelec / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000) ? 0 : ventil_saving_elec * 0.4747 / 1000000 * 1000 + ventil_saving_noelec / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000; ;
+                    double ventil_TOE = double.IsNaN(ventil_saving_elec * 0.00023 + ventil_saving_noelec / 38.9  / 0.277778 * 0.00103) ? 0 : ventil_saving_elec * 0.00023 + ventil_saving_noelec / 38.9 / 0.277778 * 0.00103;
 
                     Ventil_data[2].Add(new { idx = i, val = ventil_tCO2.ToString("0.0") });  //tco2
                     Ventil_data[3].Add(new { idx = i, val = ventil_TOE.ToString("0.0") });  //TOE 
@@ -961,17 +975,19 @@ namespace main.contents.Result
                     #region 기밀   
 
 
+                    double v2= double.IsNaN(infil_saving) ? 0 : infil_saving;
+                    Infil_data[0].Add(new { idx = i, val = v2.ToString("#,##0") }); ; //절감량 
 
-                    Infil_data[0].Add(new { idx = i, val = infil_saving.ToString("#,##0") }); ; //절감량 
-                    Infil_data[1].Add(new { idx = i, val = (infil_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
+                    v2 = double.IsNaN(infil_saving / Total_Energy_pre * 100) ? 0 : infil_saving / Total_Energy_pre * 100;
+                    Infil_data[1].Add(new { idx = i, val = v2.ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "infil_saving", data = Infil_data[0] });
                     data.Add(new { cname = "infil_savingpercent", data = Infil_data[1] });
 
                     d = (infil_saving / Total_Energy_pre * 100);
                     charts += "{donut:" + d + "},";
 
-                    double infil_tCO2 = infil_saving_elec * 0.4747 / 1000000 * 1000 + infil_saving_noelec / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
-                    double infil_TOE = infil_saving_elec * 0.00023 + infil_saving_noelec / 38.9  / 0.277778 * 0.00103;
+                    double infil_tCO2 = double.IsNaN(infil_saving_elec * 0.4747 / 1000000 * 1000 + infil_saving_noelec / 38.9  / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000) ? 0 : infil_saving_elec * 0.4747 / 1000000 * 1000 + infil_saving_noelec / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000; 
+                    double infil_TOE = double.IsNaN(infil_saving_elec * 0.00023 + infil_saving_noelec / 38.9  / 0.277778 * 0.00103) ? 0 : infil_saving_elec * 0.00023 + infil_saving_noelec / 38.9 / 0.277778 * 0.00103;
 
                     Infil_data[2].Add(new { idx = i, val = infil_tCO2.ToString("0.0") });  //tco2
                     Infil_data[3].Add(new { idx = i, val = infil_TOE.ToString("0.0") });  //TOE 

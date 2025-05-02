@@ -91,9 +91,9 @@ namespace main
 
             Cal_Qb();
             Cal_Qahu(NowProjNum[0][0]);
+            Cal_Qfw(NowProjNum[0][0]);
             Cal_Qfh(NowProjNum[0][0]);
             Cal_Qfc(NowProjNum[0][0]);
-            Cal_Qfw(NowProjNum[0][0]);
             Cal_Qf(NowProjNum[0][0]);
             RESystemCalc(NowProjNum[0][0]);
             // MessageBox.Show("계산되었습니다.");
@@ -1042,6 +1042,8 @@ namespace main
             Heating1.LoadCalc_FC(ProjNum);
             Heating1.LoadCalc_Boiler(ProjNum);
             Heating1.LoadCalc_AirHP(ProjNum);
+            Heating1.LoadCalc_GroundHP(ProjNum);
+            Heating1.LoadCalc_GWHP(ProjNum);
             Heating1.LoadCalc_ABS(ProjNum);
             Heating1.LoadCalc_DH(ProjNum);
             Heating1.nan();
@@ -1495,7 +1497,7 @@ namespace main
                     "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + MTH + "','" + "전기" + "','" +
                     final1.Qhf_elec[mth] + "','" + final1.Qcf_elec[mth] + "','" + final1.Qwf_elec[mth] + "','" + final1.Qlf_elec[mth] + "','" +
-                    final1.Qvf_elec[mth] + "','" + final1.Qbase_elec[mth] + "','" + final1.Qreg_elec[mth] + "','" + final1.Qf_elec_tot_mth[mth]
+                    final1.Qvf_elec[mth] + "','" + final1.Qbase_elec[mth] + "','" + final1.Qreg_elec[mth] + "','" + Math.Max( final1.Qf_elec_tot_mth[mth],0)
                     + "'", "번호,월,연료"); 
 
             }
@@ -1563,7 +1565,7 @@ namespace main
                     "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + MTH + "','" + "전체" + "','" +
                     (final1.Qhf_elec[mth]+ final1.Qhf_gas[mth]) + "','" + (final1.Qcf_elec[mth]+final1.Qcf_gas[mth]) + "','" + (final1.Qwf_elec[mth]+final1.Qwf_gas[mth]) + "','" + final1.Qlf_elec[mth] + "','" +
-                    final1.Qvf_elec[mth] + "','" + (final1.Qbase_elec[mth]+final1.Qbase_gas[mth]) + "','" + final1.Qreg_elec[mth]  + "','" + (final1.Qf_elec_tot_mth[mth]+final1.Qf_gas_tot_mth[mth])
+                    final1.Qvf_elec[mth] + "','" + (final1.Qbase_elec[mth]+final1.Qbase_gas[mth]) + "','" + final1.Qreg_elec[mth]  + "','" + Math.Max((final1.Qf_elec_tot_mth[mth]+final1.Qf_gas_tot_mth[mth]),0)
                     + "'", "번호,월,연료"); 
             }
 
@@ -1571,7 +1573,7 @@ namespace main
                    "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                    "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + "연간" + "','" + "전체" + "','" +
                    (Qhf_elec_a+Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_gas_a) + "','" + Qlf_elec_a + "','" +
-                   Qvf_elec_a + "','" + (Qbase_elec_a + Qbase_gas_a) + "','" + Qreg_elec_a + "','" + (Qf_elec_tot_a + Qf_gas_tot_a)
+                   Qvf_elec_a + "','" + (Qbase_elec_a + Qbase_gas_a) + "','" + Qreg_elec_a + "','" + Math.Max((Qf_elec_tot_a + Qf_gas_tot_a),0)
                    + "'", "번호,월,연료");
             #endregion
         }
@@ -1662,7 +1664,7 @@ namespace main
             string[][] Type = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호", "");
             if (Type.Length > 0)
             {
-                if (Type[0][0] != "1")
+                if (Type[0][0] != "1" && Type[0][0] != "4")
                 {
                     for (int i = 0; i < ElementAlt.Length; i++)
                     {

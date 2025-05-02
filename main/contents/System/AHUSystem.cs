@@ -105,8 +105,8 @@ namespace main.contents
             //덕트단열재 설정
             PipeIns_Ramda = 0.035;
             PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
-            PipeIns_textBox.Text = "일반 보온재";
-            PipeIns = "일반 보온재";
+            PipeIns_textBox.Text = "보온단열재";
+            PipeIns = "보온단열재";
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -175,7 +175,7 @@ namespace main.contents
                 TABOptions_label.Visible = true;
                 TABOptions_comboBox.Visible = true;
             }
-            Load_Zone();
+          //  Load_Zone();
         }
 
         private void AHUoptions_button_Click(object sender, EventArgs e)
@@ -197,7 +197,7 @@ namespace main.contents
         {
             String 내용 = "";
             SelectZone_split.Clear();
-            string[][] value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호", "선택열회수기 = '" + Num + "'");
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호", "선택열회수기 = '" + Num + "' and 환기유무='True'");
             if (value.Length > 0)
             {
                 for (int k = 0; k < value.Length; k++)
@@ -622,8 +622,8 @@ namespace main.contents
             {
                 PipeIns_Ramda = 0.035;
                 PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
-                PipeIns_textBox.Text = "일반 보온재";
-                PipeIns = "일반 보온재";
+                PipeIns_textBox.Text = "보온단열재";
+                PipeIns = "보온단열재";
             }
         }
 

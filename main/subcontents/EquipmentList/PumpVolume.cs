@@ -139,7 +139,7 @@ namespace main.subcontents
             }
             if (Qwmax > 0)
             {
-                double Volume = Qwmax * 3.6 / (4.18 * 5) ; // m3/h
+                double Volume = Qwmax * 3.6 / (4.18 * 5) * 1000 / 60; // m3/h
                 PumpVolume_textBox.Text = Volume.ToString();
                 Program.UTIL.textBox_doubleComa(PumpVolume_textBox, true, 1);
             }

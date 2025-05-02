@@ -91,7 +91,7 @@ namespace main
                 AHUOptions = AHUValue[0][0];
             }
             SelectZone_split.Clear();
-            string[][] value = Program.DB.getValue(ProjNum, "ZoneGeneral_Form", "존번호", "선택열회수기 = '" + AHUNum + "'");
+            string[][] value = Program.DB.getValue(ProjNum, "ZoneGeneral_Form", "존번호", "선택열회수기 = '" + AHUNum + "' and 환기유무='True'");
             if (value.Length > 0)
             {
                 for (int k = 0; k < value.Length; k++)
