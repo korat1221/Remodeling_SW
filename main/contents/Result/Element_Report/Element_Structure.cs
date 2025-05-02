@@ -111,8 +111,12 @@ namespace main.contents.Result
                 }
 
                 d = (wall_saving / Total_Energy_pre * 100);
-                Wall_data[0].Add(new { idx = i, val = wall_saving.ToString("#,##0") }); ; //절감량 
-                Wall_data[1].Add(new { idx = i, val = d.ToString("0.0") + " %" }); ; //절감률
+
+                double v = double.IsNaN(wall_saving) ? 0 : wall_saving; 
+                Wall_data[0].Add(new { idx = i, val = v.ToString("#,##0") }); ; //절감량 
+
+                v = double.IsNaN(d) ? 0 :d;
+                Wall_data[1].Add(new { idx = i, val = v.ToString("0.0") + " %" }); ; //절감률
                 data.Add(new { cname = "wall_saving", data = Wall_data[0] });
                 data.Add(new { cname = "wall_savingpercent", data = Wall_data[1] });
                 charts += "{donut:" + d + "},";
@@ -123,8 +127,12 @@ namespace main.contents.Result
                 double wall_TOE_noelec = wall_saving_noelec / 38.9 / 0.277778 * 0.00103;
                 double wall_tCO2 = wall_tCO2_elec + wall_tCO2_noelec;
                 double wall_TOE = wall_TOE_elec + wall_TOE_noelec;
-                Wall_data[2].Add(new { idx = i, val = wall_tCO2.ToString("0.0") });  //tco2
-                Wall_data[3].Add(new { idx = i, val = wall_TOE.ToString("0.0") });  //TOE 
+
+                v = double.IsNaN(wall_tCO2) ? 0 : wall_tCO2;
+                Wall_data[2].Add(new { idx = i, val =v.ToString("0.0") });  //tco2
+
+                v = double.IsNaN(wall_TOE) ? 0 : wall_TOE;  
+                Wall_data[3].Add(new { idx = i, val = v.ToString("0.0") });  //TOE 
                 data.Add(new { cname = "wall_tco2", data = Wall_data[2] });
                 data.Add(new { cname = "wall_toe", data = Wall_data[3] });
 
@@ -304,8 +312,12 @@ namespace main.contents.Result
                 }
 
                 d = (roof_saving / Total_Energy_pre * 100);
-                Roof_data[0].Add(new { idx = i, val = roof_saving.ToString("#,##0") }); ; //절감량 
-                Roof_data[1].Add(new { idx = i, val = d.ToString("0.0") + " %" }); ; //절감률
+
+                double v2 = double.IsNaN(roof_saving) ? 0 : roof_saving;
+                Roof_data[0].Add(new { idx = i, val = v2.ToString("#,##0") }); ; //절감량 
+
+                v2 = double.IsNaN(d) ? 0 : d;
+                Roof_data[1].Add(new { idx = i, val = v2.ToString("0.0") + " %" }); ; //절감률
                 data.Add(new { cname = "roof_saving", data = Roof_data[0] });
                 data.Add(new { cname = "roof_savingpercent", data = Roof_data[1] });
                 charts += "{donut:" + d + "},";
@@ -315,8 +327,12 @@ namespace main.contents.Result
                 double roof_TOE_noelec = roof_saving_noelec / 38.9 / 0.277778 * 0.00103;
                 double roof_tCO2 = roof_tCO2_elec + roof_tCO2_noelec;
                 double roof_TOE = roof_TOE_elec + roof_TOE_noelec;
-                Roof_data[2].Add(new { idx = i, val = roof_tCO2.ToString("0.0") });  //tco2
-                Roof_data[3].Add(new { idx = i, val = roof_TOE.ToString("0.0") });  //TOE 
+
+                v2 = double.IsNaN(roof_tCO2) ? 0 : roof_tCO2; 
+                Roof_data[2].Add(new { idx = i, val = v2.ToString("0.0") });  //tco2
+
+                v2 = double.IsNaN(roof_TOE) ? 0 : roof_TOE;
+                Roof_data[3].Add(new { idx = i, val = v2.ToString("0.0") });  //TOE 
                 data.Add(new { cname = "roof_tco2", data = Roof_data[2] });
                 data.Add(new { cname = "roof_toe", data = Roof_data[3] });
 
@@ -502,8 +518,12 @@ namespace main.contents.Result
                     floor_saving_noelec = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
                 }
                 d = (floor_saving / Total_Energy_pre * 100);
-                Floor_data[0].Add(new { idx = i, val = floor_saving.ToString("#,##0") }); ; //절감량 
-                Floor_data[1].Add(new { idx = i, val = d.ToString("0.0") + " %" }); ; //절감률
+
+                double v3 = double.IsNaN(floor_saving) ? 0 : floor_saving;
+                Floor_data[0].Add(new { idx = i, val = v3.ToString("#,##0") }); ; //절감량 
+
+                v3 = double.IsNaN(d) ? 0 : d;
+                Floor_data[1].Add(new { idx = i, val = v3.ToString("0.0") + " %" }); ; //절감률
                 data.Add(new { cname = "floor_saving", data = Floor_data[0] });
                 data.Add(new { cname = "floor_savingpercent", data = Floor_data[1] });
                 charts += "{donut:" + d + "},";
@@ -513,8 +533,12 @@ namespace main.contents.Result
                 double floor_TOE_noelec = floor_saving_noelec / 38.9 / 0.277778 * 0.00103;
                 double floor_tCO2 = floor_tCO2_elec + floor_tCO2_noelec;
                 double floor_TOE = floor_TOE_elec + floor_TOE_noelec;
-                Floor_data[2].Add(new { idx = i, val = floor_tCO2.ToString("0.0") });  //tco2
-                Floor_data[3].Add(new { idx = i, val = floor_TOE.ToString("0.0") });  //TOE 
+
+                v3 = double.IsNaN(floor_tCO2) ? 0 : floor_tCO2;
+                Floor_data[2].Add(new { idx = i, val = v3.ToString("0.0") });  //tco2
+
+                v3 = double.IsNaN(floor_TOE) ? 0 : floor_TOE;
+                Floor_data[3].Add(new { idx = i, val = v3.ToString("0.0") });  //TOE 
                 data.Add(new { cname = "floor_tco2", data = Floor_data[2] });
                 data.Add(new { cname = "floor_toe", data = Floor_data[3] });
 
@@ -734,8 +758,12 @@ namespace main.contents.Result
                     double wall_saving = Math.Max(Element_EnergySaving[j_외벽], 0);
 
                     d = (wall_saving / Total_Energy_pre * 100);
-                    Wall_data[0].Add(new { idx = i, val = wall_saving.ToString("#,##0") }); ; //절감량 
-                    Wall_data[1].Add(new { idx = i, val = d.ToString("0.0") + " %" }); ; //절감률
+
+                    double v = double.IsNaN(wall_saving) ? 0 : wall_saving;
+                    Wall_data[0].Add(new { idx = i, val = v.ToString("#,##0") }); ; //절감량 
+
+                    v = double.IsNaN(d) ? 0 : d;
+                    Wall_data[1].Add(new { idx = i, val = v.ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "wall_saving", data = Wall_data[0] });
                     data.Add(new { cname = "wall_savingpercent", data = Wall_data[1] });
 
@@ -751,8 +779,12 @@ namespace main.contents.Result
                     double wall_TOE_noelec = wall_saving_noelec / 38.9 / 0.277778 * 0.00103;
                     double wall_tCO2 = wall_tCO2_elec + wall_tCO2_noelec;
                     double wall_TOE = wall_TOE_elec + wall_TOE_noelec;
-                    Wall_data[2].Add(new { idx = i, val = wall_tCO2.ToString("0.0") });  //tco2
-                    Wall_data[3].Add(new { idx = i, val = wall_TOE.ToString("0.0") });  //TOE 
+
+                    v= double.IsNaN(wall_tCO2) ? 0 : wall_tCO2;
+                    Wall_data[2].Add(new { idx = i, val = v.ToString("0.0") });  //tco2
+
+                    v= double.IsNaN(wall_TOE) ? 0 : wall_TOE;
+                    Wall_data[3].Add(new { idx = i, val = v.ToString("0.0") });  //TOE 
                     data.Add(new { cname = "wall_tco2", data = Wall_data[2] });
                     data.Add(new { cname = "wall_toe", data = Wall_data[3] });
 
@@ -960,8 +992,11 @@ namespace main.contents.Result
 
                     d = (roof_saving / Total_Energy_pre * 100);
 
-                    Roof_data[0].Add(new { idx = i, val = roof_saving.ToString("#,##0") }); ; //절감량 
-                    Roof_data[1].Add(new { idx = i, val = d.ToString("0.0") + " %" }); ; //절감률
+                    double v2 = double.IsNaN(roof_saving) ? 0 : roof_saving;
+                    Roof_data[0].Add(new { idx = i, val = v2.ToString("#,##0") }); ; //절감량 
+                    
+                    v2 = double.IsNaN(d) ? 0 : d;
+                    Roof_data[1].Add(new { idx = i, val = v2.ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "roof_saving", data = Roof_data[0] });
                     data.Add(new { cname = "roof_savingpercent", data = Roof_data[1] });
 
@@ -977,8 +1012,12 @@ namespace main.contents.Result
                     double roof_TOE_noelec = roof_saving_noelec / 38.9 / 0.277778 * 0.00103;
                     double roof_tCO2 = roof_tCO2_elec + roof_tCO2_noelec;
                     double roof_TOE = roof_TOE_elec + roof_TOE_noelec;
-                    Roof_data[2].Add(new { idx = i, val = roof_tCO2.ToString("0.0") });  //tco2
-                    Roof_data[3].Add(new { idx = i, val = roof_TOE.ToString("0.0") });  //TOE 
+ 
+                    v2 = double.IsNaN(roof_tCO2) ? 0 : roof_tCO2;
+                    Roof_data[2].Add(new { idx = i, val = v2.ToString("0.0") });  //tco2
+
+                    v2 = double. IsNaN(roof_TOE) ? 0 : roof_TOE;
+                    Roof_data[3].Add(new { idx = i, val = v2.ToString("0.0") });  //TOE 
                     data.Add(new { cname = "roof_tco2", data = Roof_data[2] });
                     data.Add(new { cname = "roof_toe", data = Roof_data[3] });
 
@@ -1192,8 +1231,12 @@ namespace main.contents.Result
                     double floor_saving = Math.Max(Element_EnergySaving[j_최하층바닥], 0);
 
                     d = (floor_saving / Total_Energy_pre * 100);
-                    Floor_data[0].Add(new { idx = i, val = floor_saving.ToString("#,##0") }); ; //절감량 
-                    Floor_data[1].Add(new { idx = i, val = d.ToString("0.0") + " %" }); ; //절감률
+
+                    double v3 = double.IsNaN(floor_saving ) ? 0 : floor_saving;
+                    Floor_data[0].Add(new { idx = i, val = v3.ToString("#,##0") }); ; //절감량
+                                                                                      
+                    v3 = double.IsNaN(d ) ? 0 : d;                                                                
+                    Floor_data[1].Add(new { idx = i, val = v3.ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "floor_saving", data = Floor_data[0] });
                     data.Add(new { cname = "floor_savingpercent", data = Floor_data[1] });
 
@@ -1209,8 +1252,12 @@ namespace main.contents.Result
                     double floor_TOE_noelec = floor_saving_noelec / 38.9 / 0.277778 * 0.00103;
                     double floor_tCO2 = floor_tCO2_elec + floor_tCO2_noelec;
                     double floor_TOE = floor_TOE_elec + floor_TOE_noelec;
-                    Floor_data[2].Add(new { idx = i, val = floor_tCO2.ToString("0.0") });  //tco2
-                    Floor_data[3].Add(new { idx = i, val = floor_TOE.ToString("0.0") });  //TOE 
+
+                    v3 = double.IsNaN(floor_tCO2) ? 0 : floor_tCO2;
+                    Floor_data[2].Add(new { idx = i, val = v3.ToString("0.0") });  //tco2
+
+                    v3 = double.IsNaN(floor_TOE) ? 0 : floor_TOE;
+                    Floor_data[3].Add(new { idx = i, val = v3.ToString("0.0") });  //TOE 
                     data.Add(new { cname = "floor_tco2", data = Floor_data[2] });
                     data.Add(new { cname = "floor_toe", data = Floor_data[3] });
 

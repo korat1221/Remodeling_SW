@@ -181,13 +181,21 @@ namespace main.contents.Result
                     Air_Point_total = Math.Min(100, Air_Point_total / Air_Power.Sum());
                     Air_COP_Rule_total = Air_COP_Rule_total / Air_Power.Sum();
                 }
-                Air_data[216].Add(new { idx = i, val = air_total_saving.ToString("#,##0") });//절감량 전체 
+
+                double v = double.IsNaN(air_total_saving) ? 0 : air_total_saving;
+                Air_data[216].Add(new { idx = i, val = v.ToString("#,##0") });//절감량 전체 
                 data.Add(new { cname = "air_saving_total", data = Air_data[216] });
-                Air_data[217].Add(new { idx = i, val = (air_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
+
+                v = double.IsNaN(air_total_saving / Total_Energy_pre * 100) ? 0 : air_total_saving / Total_Energy_pre * 100;
+                Air_data[217].Add(new { idx = i, val = v.ToString("0.0") + " %" });//절감률 전체 
                 data.Add(new { cname = "air_saving_percent", data = Air_data[217] });
-                Air_data[218].Add(new { idx = i, val = (air_total_elec * 0.4747 / 1000000 * 1000 + air_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+
+                v = double.IsNaN(air_total_elec * 0.4747 / 1000000 * 1000 + air_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000) ? 0 : air_total_elec * 0.4747 / 1000000 * 1000 + air_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                Air_data[218].Add(new { idx = i, val = v.ToString("0.0") });//tco2
                 data.Add(new { cname = "air_tco2", data = Air_data[218] });
-                Air_data[219].Add(new { idx = i, val = (air_total_elec * 0.00023 + air_total_gas / 38.9 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
+
+                v = double.IsNaN(air_total_elec * 0.00023 + air_total_gas / 38.9 / 0.277778 * 0.00103) ? 0 : air_total_elec * 0.00023 + air_total_gas / 38.9 / 0.277778 * 0.00103;
+                Air_data[219].Add(new { idx = i, val = v.ToString("0.0") });//절감량 전체 
                 data.Add(new { cname = "air_toe", data = Air_data[219] });
 
                 d = (air_total_saving / Total_Energy_pre * 100);
@@ -332,13 +340,19 @@ namespace main.contents.Result
                     Water_COP_Rule_total = Water_COP_Rule_total / Water_Power.Sum();
                 }
 
-
-                Water_data[216].Add(new { idx = i, val = water_total_saving.ToString("#,##0") });//절감량 전체 
+                double v2 = double.IsNaN(water_total_saving) ? 0 : water_total_saving;
+                Water_data[216].Add(new { idx = i, val = v2.ToString("#,##0") });//절감량 전체 
                 data.Add(new { cname = "water_saving_total", data = Water_data[216] });
-                Water_data[217].Add(new { idx = i, val = (water_total_saving / Total_Energy_pre * 100).ToString("0.0") + " %" });//절감률 전체 
+
+                v2 = double.IsNaN(water_total_saving / Total_Energy_pre * 100) ? 0 : water_total_saving / Total_Energy_pre * 100;
+                Water_data[217].Add(new { idx = i, val = v2.ToString("0.0") + " %" });//절감률 전체 
                 data.Add(new { cname = "water_saving_percent", data = Water_data[217] });
-                Water_data[218].Add(new { idx = i, val = (water_total_elec * 0.4747 / 1000000 * 1000 + water_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000).ToString("0.0") });//tco2
+
+                v2 = double.IsNaN(water_total_elec * 0.4747 / 1000000 * 1000 + water_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000) ? 0 : water_total_elec * 0.4747 / 1000000 * 1000 + water_total_gas / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                Water_data[218].Add(new { idx = i, val = v2.ToString("0.0") });//tco2
                 data.Add(new { cname = "water_tco2", data = Water_data[218] });
+
+                v2 = double.IsNaN(water_total_elec * 0.00023 + water_total_gas / 38.9 / 0.277778 * 0.00103) ? 0 : water_total_elec * 0.00023 + water_total_gas / 38.9 / 0.277778 * 0.00103;
                 Water_data[219].Add(new { idx = i, val = (water_total_elec * 0.00023 + water_total_gas / 38.9 / 0.277778 * 0.00103).ToString("0.0") });//절감량 전체 
                 data.Add(new { cname = "water_toe", data = Water_data[219] });
 

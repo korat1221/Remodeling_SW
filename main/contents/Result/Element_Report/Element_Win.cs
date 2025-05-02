@@ -111,8 +111,11 @@ namespace main.contents.Result
                         win_saving_noelec = Math.Max(0, Convert.ToDouble(value4[0][0]) - Convert.ToDouble(value[0][0]));
                     }
                     d = (win_saving / Total_Energy_pre * 100);
-                    Win_data[0].Add(new { idx = i, val = win_saving.ToString("#,##0") }); ; //절감량 
-                    Win_data[1].Add(new { idx = i, val = (win_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
+                    double v = double.IsNaN(win_saving) ? 0 : win_saving;
+                    Win_data[0].Add(new { idx = i, val = v.ToString("#,##0") }); ; //절감량 
+
+                    v = double.IsNaN(d) ? 0 : d;
+                    Win_data[1].Add(new { idx = i, val = v.ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "win_saving", data = Win_data[0] });
                     data.Add(new { cname = "win_savingpercent", data = Win_data[1] });
 
@@ -124,8 +127,12 @@ namespace main.contents.Result
                     double win_TOE_noelec = win_saving_noelec / 38.9 / 0.277778 * 0.00103;
                     double win_tCO2 = win_tCO2_elec + win_tCO2_noelec;
                     double win_TOE = win_TOE_elec + win_TOE_noelec;
-                    Win_data[2].Add(new { idx = i, val = win_tCO2.ToString("0.0") });  //tco2
-                    Win_data[3].Add(new { idx = i, val = win_TOE.ToString("0.0") });  //TOE 
+
+                    v = double.IsNaN(win_tCO2) ? 0 : win_tCO2;
+                    Win_data[2].Add(new { idx = i, val = v.ToString("0.0") });  //tco2
+
+                    v = double.IsNaN(win_TOE) ? 0 : win_TOE;
+                    Win_data[3].Add(new { idx = i, val = v.ToString("0.0") });  //TOE 
                     data.Add(new { cname = "win_tco2", data = Win_data[2] });
                     data.Add(new { cname = "win_toe", data = Win_data[3] });
                     string[][] 상위창호 = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호", "");
@@ -327,13 +334,13 @@ namespace main.contents.Result
                                 north_p = north * 100 / Convert.ToDouble(area[0][0]);
                             }
 
-                            Win_data[98].Add(new { idx = i, val = east.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
+                            Win_data[98].Add(new { idx = i, val = east.ToString("0.0") + " m" + Program.UTIL.Subscript(2, true) });
                             data.Add(new { cname = "win_east", data = Win_data[98] });
-                            Win_data[99].Add(new { idx = i, val = west.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
+                            Win_data[99].Add(new { idx = i, val = west.ToString("0.0") + " m" + Program.UTIL.Subscript(2, true) });
                             data.Add(new { cname = "win_west", data = Win_data[99] });
-                            Win_data[100].Add(new { idx = i, val = south.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
+                            Win_data[100].Add(new { idx = i, val = south.ToString("0.0") + " m" + Program.UTIL.Subscript(2, true) });
                             data.Add(new { cname = "win_south", data = Win_data[100] });
-                            Win_data[101].Add(new { idx = i, val = north.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
+                            Win_data[101].Add(new { idx = i, val = north.ToString("0.0") + " m" + Program.UTIL.Subscript(2, true) });
                             data.Add(new { cname = "win_north", data = Win_data[101] });
 
                             Win_data[102].Add(new { idx = i, val = east_p.ToString("0.0") + " %" });
@@ -383,8 +390,12 @@ namespace main.contents.Result
                         cw_saving_noelec = Math.Max(0, Convert.ToDouble(value4[0][0]) - Convert.ToDouble(value[0][0]));
                     }
                     d = (cw_saving / Total_Energy_pre * 100);
-                    CW_data[0].Add(new { idx = i, val = cw_saving.ToString("#,##0") }); ; //절감량 
-                    CW_data[1].Add(new { idx = i, val = (cw_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
+
+                    double v2 = double.IsNaN(cw_saving) ? 0 : cw_saving;
+                    CW_data[0].Add(new { idx = i, val = v2.ToString("#,##0") }); ; //절감량
+
+                    v2 = double.IsNaN(d) ? 0 : d;
+                    CW_data[1].Add(new { idx = i, val = v2.ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "cw_saving", data = CW_data[0] });
                     data.Add(new { cname = "cw_savingpercent", data = CW_data[1] });
                     charts += "{donut:" + d + "},";
@@ -395,8 +406,12 @@ namespace main.contents.Result
                     double cw_TOE_noelec = cw_saving_noelec / 38.9 / 0.277778 * 0.00103;
                     double cw_tCO2 = cw_tCO2_elec + cw_tCO2_noelec;
                     double cw_TOE = cw_TOE_elec + cw_TOE_noelec;
-                    CW_data[2].Add(new { idx = i, val = cw_tCO2.ToString("0.0") });  //tco2
-                    CW_data[3].Add(new { idx = i, val = cw_TOE.ToString("0.0") });  //TOE 
+
+                    v2 = double.IsNaN(cw_tCO2) ? 0 : cw_tCO2;
+                    CW_data[2].Add(new { idx = i, val = v2.ToString("0.0") });  //tco2
+
+                    v2 = double.IsNaN(cw_TOE) ? 0 : cw_TOE;
+                    CW_data[3].Add(new { idx = i, val = v2.ToString("0.0") });  //TOE 
                     data.Add(new { cname = "cw_tco2", data = CW_data[2] });
                     data.Add(new { cname = "cw_toe", data = CW_data[3] });
 
@@ -581,13 +596,13 @@ namespace main.contents.Result
                         {
                             north_p = north / Convert.ToDouble(area[0][0]) * 100;
                         }
-                        CW_data[98].Add(new { idx = i, val = east.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
+                        CW_data[98].Add(new { idx = i, val = east.ToString("0.0") + " m" + Program.UTIL.Subscript(2, true) });
                         data.Add(new { cname = "cw_east", data = CW_data[98] });
-                        CW_data[99].Add(new { idx = i, val = west.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
+                        CW_data[99].Add(new { idx = i, val = west.ToString("0.0") + " m" + Program.UTIL.Subscript(2, true) });
                         data.Add(new { cname = "cw_west", data = CW_data[99] });
-                        CW_data[100].Add(new { idx = i, val = south.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
+                        CW_data[100].Add(new { idx = i, val = south.ToString("0.0") + " m" + Program.UTIL.Subscript(2, true) });
                         data.Add(new { cname = "cw_south", data = CW_data[100] });
-                        CW_data[101].Add(new { idx = i, val = north.ToString("0.0") + " m"+ Program.UTIL.Subscript(2, true) });
+                        CW_data[101].Add(new { idx = i, val = north.ToString("0.0") + " m" + Program.UTIL.Subscript(2, true) });
                         data.Add(new { cname = "cw_north", data = CW_data[101] });
 
                         CW_data[102].Add(new { idx = i, val = east_p.ToString("0.0") + " %" });
@@ -637,8 +652,12 @@ namespace main.contents.Result
                         door_saving_noelec = Math.Max(0, Convert.ToDouble(value4[0][0]) - Convert.ToDouble(value[0][0]));
                     }
                     d = (door_saving / Total_Energy_pre * 100);
-                    Door_data[0].Add(new { idx = i, val = door_saving.ToString("#,##0") }); ; //절감량 
-                    Door_data[1].Add(new { idx = i, val = (door_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
+
+                    double v3 = double.IsNaN(door_saving) ? 0 : door_saving;
+                    Door_data[0].Add(new { idx = i, val = v3.ToString("#,##0") }); ; //절감량
+
+                    v3 = double.IsNaN(d) ? 0 : d;                                                                                   
+                    Door_data[1].Add(new { idx = i, val = v3.ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "door_saving", data = Door_data[0] });
                     data.Add(new { cname = "door_savingpercent", data = Door_data[1] });
                     charts += "{donut:" + d + "},";
@@ -649,8 +668,12 @@ namespace main.contents.Result
                     double door_TOE_noelec = door_saving_noelec / 38.9 / 0.277778 * 0.00103;
                     double door_tCO2 = door_tCO2_elec + door_tCO2_noelec;
                     double door_TOE = door_TOE_elec + door_TOE_noelec;
-                    Door_data[2].Add(new { idx = i, val = door_tCO2.ToString("0.0") });  //tco2
-                    Door_data[3].Add(new { idx = i, val = door_TOE.ToString("0.0") });  //TOE 
+
+                    v3 = double.IsNaN(door_tCO2) ? 0 : door_tCO2; 
+                    Door_data[2].Add(new { idx = i, val = v3.ToString("0.0") });  //tco2
+
+                    v3 = double.IsNaN(door_TOE) ? 0 : door_TOE;
+                    Door_data[3].Add(new { idx = i, val = v3.ToString("0.0") });  //TOE 
                     data.Add(new { cname = "door_tco2", data = Door_data[2] });
                     data.Add(new { cname = "door_toe", data = Door_data[3] });
 
@@ -862,8 +885,12 @@ namespace main.contents.Result
 
                     double win_saving = Math.Max(Element_EnergySaving[j_창호], 0);
                     d = (win_saving / Total_Energy_pre * 100);
-                    Win_data[0].Add(new { idx = i, val = win_saving.ToString("#,##0") }); ; //절감량 
-                    Win_data[1].Add(new { idx = i, val = (win_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
+
+                    double v = double.IsNaN(win_saving) ? 0 : win_saving;
+                    Win_data[0].Add(new { idx = i, val = v.ToString("#,##0") }); ; //절감량 
+
+                    v = double.IsNaN(d) ? 0 : d;
+                    Win_data[1].Add(new { idx = i, val = v.ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "win_saving", data = Win_data[0] });
                     data.Add(new { cname = "win_savingpercent", data = Win_data[1] });
 
@@ -879,8 +906,12 @@ namespace main.contents.Result
                     double win_TOE_noelec = win_saving_noelec / 38.9 / 0.277778 * 0.00103;
                     double win_tCO2 = win_tCO2_elec + win_tCO2_noelec;
                     double win_TOE = win_TOE_elec + win_TOE_noelec;
-                    Win_data[2].Add(new { idx = i, val = win_tCO2.ToString("0.0") });  //tco2
-                    Win_data[3].Add(new { idx = i, val = win_TOE.ToString("0.0") });  //TOE 
+
+                    v = double.IsNaN(win_tCO2) ? 0 : win_tCO2;
+                    Win_data[2].Add(new { idx = i, val = v.ToString("0.0") });  //tco2
+
+                    v = double.IsNaN(win_TOE) ? 0 : win_TOE;
+                    Win_data[3].Add(new { idx = i, val = v.ToString("0.0") });  //TOE 
                     data.Add(new { cname = "win_tco2", data = Win_data[2] });
                     data.Add(new { cname = "win_toe", data = Win_data[3] });
                     string[][] 상위창호 = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호", "");
@@ -1172,8 +1203,12 @@ namespace main.contents.Result
                     }
                     double cw_saving = Math.Max(Element_EnergySaving[j_커튼월창], 0);
                     d = (cw_saving / Total_Energy_pre * 100);
-                    CW_data[0].Add(new { idx = i, val = cw_saving.ToString("#,##0") }); ; //절감량 
-                    CW_data[1].Add(new { idx = i, val = (cw_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
+
+                    double v2 = double.IsNaN(cw_saving) ? 0 : cw_saving; 
+                    CW_data[0].Add(new { idx = i, val = v2.ToString("#,##0") }); ; //절감량 
+
+                    v2 = double.IsNaN(d) ? 0 : d;
+                    CW_data[1].Add(new { idx = i, val = v2.ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "cw_saving", data = CW_data[0] });
                     data.Add(new { cname = "cw_savingpercent", data = CW_data[1] });
 
@@ -1189,8 +1224,12 @@ namespace main.contents.Result
                     double cw_TOE_noelec = cw_saving_noelec / 38.9 / 0.277778 * 0.00103;
                     double cw_tCO2 = cw_tCO2_elec + cw_tCO2_noelec;
                     double cw_TOE = cw_TOE_elec + cw_TOE_noelec;
-                    CW_data[2].Add(new { idx = i, val = cw_tCO2.ToString("0.0") });  //tco2
-                    CW_data[3].Add(new { idx = i, val = cw_TOE.ToString("0.0") });  //TOE 
+
+                    v2 = double.IsNaN(cw_tCO2 ) ? 0 : cw_tCO2;
+                    CW_data[2].Add(new { idx = i, val = v2.ToString("0.0") });  //tco2
+                    
+                    v2 = double.IsNaN(cw_TOE) ? 0 : cw_TOE;
+                    CW_data[3].Add(new { idx = i, val = v2.ToString("0.0") });  //TOE 
                     data.Add(new { cname = "cw_tco2", data = CW_data[2] });
                     data.Add(new { cname = "cw_toe", data = CW_data[3] });
 
@@ -1479,8 +1518,12 @@ namespace main.contents.Result
                     }
                     double door_saving = Math.Max(Element_EnergySaving[j_외부출입문], 0);
                     d = (door_saving / Total_Energy_pre * 100);
-                    Door_data[0].Add(new { idx = i, val = door_saving.ToString("#,##0") }); ; //절감량 
-                    Door_data[1].Add(new { idx = i, val = (door_saving / Total_Energy_pre * 100).ToString("0.0") + " %" }); ; //절감률
+
+                    double v3 = double.IsNaN(door_saving) ? 0 : door_saving;
+                    Door_data[0].Add(new { idx = i, val = v3.ToString("#,##0") }); ; //절감량 
+                    
+                    v3 = double.IsNaN(d) ? 0 : d;
+                    Door_data[1].Add(new { idx = i, val = v3.ToString("0.0") + " %" }); ; //절감률
                     data.Add(new { cname = "door_saving", data = Door_data[0] });
                     data.Add(new { cname = "door_savingpercent", data = Door_data[1] });
 
@@ -1495,8 +1538,12 @@ namespace main.contents.Result
                     double door_TOE_noelec = door_saving_noelec / 38.9 / 0.277778 * 0.00103;
                     double door_tCO2 = door_tCO2_elec + door_tCO2_noelec;
                     double door_TOE = door_TOE_elec + door_TOE_noelec;
-                    Door_data[2].Add(new { idx = i, val = door_tCO2.ToString("0.0") });  //tco2
-                    Door_data[3].Add(new { idx = i, val = door_TOE.ToString("0.0") });  //TOE 
+
+                    v3 = double.IsNaN(door_tCO2) ? 0 : door_tCO2;
+                    Door_data[2].Add(new { idx = i, val = v3.ToString("0.0") });  //tco2
+
+                    v3 = double.IsNaN(door_TOE) ? 0 : door_TOE;
+                    Door_data[3].Add(new { idx = i, val = v3.ToString("0.0") });  //TOE 
                     data.Add(new { cname = "door_tco2", data = Door_data[2] });
                     data.Add(new { cname = "door_toe", data = Door_data[3] });
 
