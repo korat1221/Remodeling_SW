@@ -120,8 +120,8 @@ namespace main.contents.Result
                     FormData[7].Add(new { idx = i, val = Value[0][4] });
                     FormData[8].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][5],1) });
                 }
-                string[][] List = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭,주요설비,보일러종류,외기히트펌프번호,흡수식온수기번호,지역난방번호,태양열번호", "번호='" + Num + "'");
-                string[][] count_ = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭,주요설비,보일러대수,외기히트펌프대수,흡수식온수기대수,지역난방번호,모듈개수", "번호='" + Num + "'");
+                string[][] List = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭,주요설비,보일러종류,외기히트펌프번호,흡수식온수기번호,지역난방번호,태양열번호,지열히트펌프번호,지하수히트펌프번호", "번호='" + Num + "'");
+                string[][] count_ = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭,주요설비,보일러대수,외기히트펌프대수,흡수식온수기대수,지역난방번호,모듈개수,지열히트펌프대수,지하수히트펌프대수", "번호='" + Num + "'");
                 if (List.Length > 0 && count_.Length > 0)
                 {
 
@@ -152,6 +152,20 @@ namespace main.contents.Result
                         systemnum = List[0][6];
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DH", "용량", "번호 ='" + systemnum + "'");
                         count = count_[0][6] != "" ? Convert.ToDouble(count_[0][6]) : 0;
+                    }
+                    else if (MainSystem == "지열 히트펌프")
+                    {
+                        systemnum = List[0][7];
+                        etaunit = "W/W";
+                        SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_GroundHP", "난방정격용량,난방정격COP", "번호 ='" + systemnum + "'");
+                        count = count_[0][7] != "" ? Convert.ToDouble(count_[0][7]) : 0;
+                    }
+                    else if (MainSystem == "지하수 히트펌프")
+                    {
+                        systemnum = List[0][8];
+                        etaunit = "W/W";
+                        SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_GroundHP", "난방정격용량,난방정격COP", "번호 ='" + systemnum + "'");
+                        count = count_[0][8] != "" ? Convert.ToDouble(count_[0][8]) : 0;
                     }
 
                     if (SystemValue.Length > 0)
