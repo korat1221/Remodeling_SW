@@ -76,8 +76,15 @@ namespace main.contents
             //외장재색 콤보박스
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, Color_comboBox, "외벽", "외장재색", "1");
             //직접간접 콤보박스
-            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi_comboBox, "외벽", "직접/간접", "1");
-            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DiIndi2_comboBox, "외벽", "직접/간접", "1");
+            DiIndi_comboBox.Items.Clear();
+            DiIndi_comboBox.Items.Add("직접외기");
+            DiIndi_comboBox.Items.Add("간접외기");
+            DiIndi_comboBox.Items.Add("지면");
+            DiIndi2_comboBox.Items.Clear();
+            DiIndi2_comboBox.Items.Add("직접외기");
+            DiIndi2_comboBox.Items.Add("간접외기");
+            DiIndi2_comboBox.Items.Add("지면");
+            DiIndi2_comboBox.Items.Add("통기층");
             //표면열전달저항기준 콤보박스 
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, ISO_KS_comboBox, "외벽", "실내외표면열전달저항", "1");
             Load_table();
@@ -981,7 +988,7 @@ namespace main.contents
                     }
                     if (Value.Length > 0)
                     {
-                        if (Type == "기존외벽" && DiIndi == "지면" && DiIndi == "통기층")
+                        if (Type == "기존외벽" && DiIndi == "지면" )
                         {
                             Uvalue = 1 / (0.13 + 0 + 150 / 1000 / 2.3);
                         }
@@ -1009,12 +1016,6 @@ namespace main.contents
                     Rsi = Convert.ToDouble(RsiValue[0][0]);
                     Rsi_textBox.Text = string.Format("{0:F3}", Rsi);
 
-                    if (DiIndi == "통기층")
-                    {
-                        String[][] RsiValue2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "표면열전달저항", "저항값", "구조체 ='외벽' And 유형 = '통기층' AND 기준 = '" + ISO_KS + "'");
-                        Rsi = Convert.ToDouble(RsiValue2[0][0]);
-                        Rsi_textBox.Text = string.Format("{0:F3}", Rsi);
-                    }
                 }
 
                 String[][] RseValue = Program.DB.getValue(DB.type.BaseDB_HCneed, "표면열전달저항", "저항값", "구조체 ='외벽' And 유형 = '" + DiIndi + "' AND 기준 = '" + ISO_KS + "'");
@@ -1023,12 +1024,6 @@ namespace main.contents
                     Rse = Convert.ToDouble(RseValue[0][0]);
                     Rse_textBox.Text = string.Format("{0:F3}", Rse);
 
-                    if (DiIndi == "통기층")
-                    {
-                        String[][] RseValue2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "표면열전달저항", "저항값", "구조체 ='외벽' And 유형 = '통기층' AND 기준 = '" + ISO_KS + "'");
-                        Rse = Convert.ToDouble(RseValue2[0][0]);
-                        Rse_textBox.Text = string.Format("{0:F3}", Rse);
-                    }
                 }
                
             }
