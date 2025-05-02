@@ -1389,8 +1389,8 @@ namespace main.contents
                 PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
                 Program.UTIL.textBox_doubleComa(PipeIns_Ramda_textBox, true, 3);
 
-                PipeIns_textBox.Text = "일반 보온재";
-                PipeIns = "일반 보온재";
+                PipeIns_textBox.Text = "보온단열재";
+                PipeIns = "보온단열재";
             }
         }
 
