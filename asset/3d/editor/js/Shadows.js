@@ -273,11 +273,11 @@ Shadows.prototype = {
 			if (vert && vert.length == 2) {
 				let L = [vert[0],vert[1]];
 
-				for (const [key2, val2] of Object.entries(verts)) {
-					if (key != key2 && val2.length == 2) {
-						L = _unionLine(L, val2);						
-					}
-				}
+			//	for (const [key2, val2] of Object.entries(verts)) {
+			//		if (key != key2 && val2.length == 2) {
+			//			L = _unionLine(L, val2);						
+			//		}
+			//	}
 
 				for (const [key2, val2] of Object.entries(verts)) {
 					if (key != key2 && val2.length == 2) {
@@ -303,18 +303,8 @@ Shadows.prototype = {
 			obj.add(mesh);
             return mesh.uuid;
 		};
-		let _getPID = (cardi, pos, walls) => {
-			let i = -1;
-
-			while(++i < walls.length) {
-				let po = walls[i];
-				let p = _getSamePoints(po.pos, pos);
-
-				if (p.length > 2 && po.cardi === cardi) {
-					return po.id;
-				}
-			}
-			return null;
+		let _getPID = (pidx, walls) => {
+			return walls[pidx] ? walls[pidx].id : null;
 		};
 
 		let _getObjectByUuid = ( uuid ) => {
@@ -329,11 +319,41 @@ Shadows.prototype = {
             return null;
         }
 
-	
+        let _drawPolygon = (a, color, loc) => {
+            const geometry = new THREE.BufferGeometry();
+            geometry.setFromPoints(a);
+            geometry.translate(loc ? loc : offset);
+            const mesh = new THREE.Line(geometry,
+                new THREE.LineBasicMaterial({
+                    color: new THREE.Color(color),
+                    opacity: 1.0,
+                    transparent: true,
+                })
+            );
+            this.editor.addObject(mesh);
+        };
+		let _drawPoint = (a, color, loc) => {
+            const geometry = new THREE.BufferGeometry();
+            geometry.setFromPoints(a);
+            geometry.translate(loc ? loc : offset);
+
+            const material = new THREE.PointsMaterial({ color: color, size: 0.5 });
+
+            const points = new THREE.Points(geometry, material);
+
+            this.editor.scene.add(points);
+        };
+
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		let zones = obj.userData.zones;
 		let h, i, j, k, pnt;
+//        const box = new Box3().setFromObject(obj);
+  //      const center = box.getCenter(new Vector3());
+    //    const offset = new Vector3(obj.position.x - center.x, 0, obj.position.z - center.z);
+
+	//	obj.position.copy(offset);
+      //  obj.updateMatrixWorld(true);
 
 		for (const [id, el] of Object.entries(zones)) {
 		
@@ -501,11 +521,8 @@ Shadows.prototype = {
 								
 							}
 						}
-	
-						let pid = _getPID(el2.cardi, el2.pos, el.userData.walls);
+						let pid = _getPID(el2.pidx, el.userData.walls);
 						if (pid) {
-					
-		
 							let left = _getProjWall(verts2, el2.cardi, pid, false, ctr);
 							let right = _getProjWall(verts2, el2.cardi, pid, true, ctr);
 							let up = _getProjWall(verts2, el2.cardi, pid, true, ctr);
