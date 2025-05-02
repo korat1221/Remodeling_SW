@@ -84,6 +84,7 @@ namespace main.subcontents.HeatingSystem
                     AS_dataGridView.Columns.Add("A6", "온수.출구온도.[℃]");
                     AS_dataGridView.Columns.Add("A7", "대기전력.[W]");
                     AS_dataGridView.Columns.Add("A8", "통합성능.IPLV");
+                    AS_dataGridView.Columns[8].Visible = false;
                 }
             }
 
