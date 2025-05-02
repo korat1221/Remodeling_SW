@@ -1,5 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections;
+using System.Diagnostics.Eventing.Reader;
+using System.Drawing;
+using System.IO;
 
 namespace main
 {
@@ -11,7 +15,7 @@ namespace main
         public String SelectBoiler_nonsplit, BoilerNum_nonsplit;
         public String SelectABS_nonsplit, ABSNum_nonsplit;
         public String SelectDH_nonsplit;
-        public String SelectSolar_nonsplit, SolarNum_nonsplit, SolarDirection_nonsplit, SolarDegree_nonsplit; public String SelectFC_nonsplit, FCNum_nonsplit, FCElecInstall_nonsplit;
+        public String SelectSolar_nonsplit, SolarNum_nonsplit, SolarDirection_nonsplit, SolarDegree_nonsplit; public String SelectFC_nonsplit, FCNum_nonsplit, FCElecInstall_nonsplit, FCElecHeat_nonsplit;
         public String[] SelectHP_nonsplit = new String[3], HPNum_nonsplit = new String[3], HPSupply_nonsplit = new String[3], HPControl_nonsplit = new String[3]; //외기/지열/지하수 순 
         String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; int Pump1Count, Pump2Count;
         public String ce1Type, ce2Type; int ce_SelectRow;
@@ -25,7 +29,7 @@ namespace main
         public ArrayList SelectZone_split = new ArrayList(); public ArrayList SelectAHU_split = new ArrayList(); public ArrayList SelectBoiler_split = new ArrayList(); public ArrayList BoilerNum_split = new ArrayList(); public ArrayList SelectABS_split = new ArrayList(); public ArrayList ABSNum_split = new ArrayList(); public ArrayList SelectDH_split = new ArrayList();
         public double[] Qhb_mth_sum = new double[12];  public double[] theta_ih_avg = new double[12]; public double[] theta_e = new double[12]; public double[] theta_u = new double[12];
         public double Qh_max_sum, Qh_a_sum, th_op_day_avg, theta_i_h_set_avg; public double[] th_avg = new double[12]; public double[] dop_mth_avg = new double[12];
-        double SL, RL;
+        double theta_SL, theta_RL;
         double[] dmth = new double[12] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         public double[] thrL = new double[12], thrL_day = new double[12], dhrB = new double[12], fLNA = new double[12], fLwe = new double[12];
         public double[] beta_h_ce = new double[12], beta_h_d = new double[12], beta_h_s = new double[12], beta_h_gen = new double[12];
@@ -42,7 +46,7 @@ namespace main
         public ArrayList AirHPControl_split = new ArrayList(); ArrayList GroundHPControl_split = new ArrayList(); ArrayList GWHPControl_split = new ArrayList();
         public ArrayList AirHPNum_split = new ArrayList(); ArrayList GroundHPNum_split = new ArrayList(); ArrayList GWHPNum_split = new ArrayList();
         public ArrayList SelectSolar_split = new ArrayList(); ArrayList SolarNum_split = new ArrayList(); ArrayList SolarDirection_split = new ArrayList(); ArrayList SolarDegree_split = new ArrayList();
-        public ArrayList SelectFC_split = new ArrayList(); ArrayList FCNum_split = new ArrayList(); ArrayList FCElecInstall_split = new ArrayList();
+        public ArrayList SelectFC_split = new ArrayList(); ArrayList FCNum_split = new ArrayList(); ArrayList FCElecInstall_split = new ArrayList(); ArrayList FCElecHeat_split = new ArrayList();
         public double[] Qhb_z = new double[12], Qh_ce_z = new double[12], Qh_d_z = new double[12], Qh_s_z = new double[12], Qh_outg_z = new double[12];
         public double[] Wh_ce_z = new double[12], Wh_d_z = new double[12], Wh_s_z = new double[12];
         public double[] Qhb_ahu = new double[12], Qh_ce_ahu = new double[12], Qh_d_ahu = new double[12], Qh_s_ahu = new double[12], Qh_outg_ahu = new double[12];
@@ -406,8 +410,8 @@ namespace main
                     string[][] Value2 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급환수온도", "공급온도,환수온도", "공급환수온도 = '" + SLRL + "'");
                     if (Value2.Length > 0)
                     {
-                        SL = Convert.ToDouble(Value2[0][0]);
-                        RL = Convert.ToDouble(Value2[0][1]);
+                        theta_SL = Convert.ToDouble(Value2[0][0]);
+                        theta_RL = Convert.ToDouble(Value2[0][1]);
                     }
                 }
 
@@ -451,7 +455,7 @@ namespace main
         }
         public void Load_FC_general(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "연료전지번호,연료전지대수,연료전지설치유형", "번호 = '" + HeatingNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "연료전지번호,연료전지대수,연료전지설치유형,연료전지생산유형", "번호 = '" + HeatingNum + "'");
             if (Value.Length > 0)
             {
                 SelectFC_nonsplit = Value[0][0];
@@ -462,6 +466,9 @@ namespace main
 
                 FCElecInstall_nonsplit = Value[0][2];
                 FCElecInstall_split = Split_(FCElecInstall_nonsplit);
+
+                FCElecHeat_nonsplit = Value[0][3];
+                FCElecHeat_split = Split_(FCElecHeat_nonsplit);
             }
         }
 
@@ -669,8 +676,8 @@ namespace main
                 {
                     beta_h_ce[mth] = 0;
                 }
-                theta_SL_beta[mth] = (SL - theta_i_h_set_avg) * Math.Pow(beta_h_ce[mth], 1 / 1.3) + theta_i_h_set_avg;
-                theta_RL_beta[mth] = (RL - theta_i_h_set_avg) * Math.Pow(beta_h_ce[mth], 1 / 1.3) + theta_i_h_set_avg;
+                theta_SL_beta[mth] = (theta_SL - theta_i_h_set_avg) * Math.Pow(beta_h_ce[mth], 1 / 1.3) + theta_i_h_set_avg;
+                theta_RL_beta[mth] = (theta_RL - theta_i_h_set_avg) * Math.Pow(beta_h_ce[mth], 1 / 1.3) + theta_i_h_set_avg;
 
                 dtheta_ce[mth] = theta_SL_beta[mth] - theta_RL_beta[mth];
                 theta_av_ce[mth] = 0.5 * (theta_SL_beta[mth] + theta_RL_beta[mth]);
@@ -955,8 +962,8 @@ namespace main
                 beta_h_d[mth] = (Qhb_mth_sum[mth] + Qh_ce[mth]) / (Qh_max_sum / 1000 * th_avg[mth]);
                 if (double.IsNaN(beta_h_d[mth])) { beta_h_d[mth] = 0; }
 
-                theta_SL_beta[mth] = (SL - theta_i_h_set_avg) * Math.Pow(beta_h_d[mth], 1 / 1.3) + theta_i_h_set_avg;
-                theta_RL_beta[mth] = (RL - theta_i_h_set_avg) * Math.Pow(beta_h_d[mth], 1 / 1.3) + theta_i_h_set_avg;
+                theta_SL_beta[mth] = (theta_SL - theta_i_h_set_avg) * Math.Pow(beta_h_d[mth], 1 / 1.3) + theta_i_h_set_avg;
+                theta_RL_beta[mth] = (theta_RL - theta_i_h_set_avg) * Math.Pow(beta_h_d[mth], 1 / 1.3) + theta_i_h_set_avg;
 
                 dtheta_d[mth] = theta_SL_beta[mth] - theta_RL_beta[mth];
                 theta_av_d[mth] = 0.5 * (theta_SL_beta[mth] + theta_RL_beta[mth]);
@@ -1115,8 +1122,8 @@ namespace main
                 beta_h_s[mth] = (Qhb_mth_sum[mth] + Qh_ce[mth] + Qh_d[mth]) / (Qh_max_sum / 1000 * th_avg[mth]);
                 if (double.IsNaN(beta_h_s[mth])) { beta_h_s[mth] = 0; }
 
-                theta_SL_beta[mth] = (SL - theta_i_h_set_avg) * Math.Pow(beta_h_s[mth], 1 / 1.3) + theta_i_h_set_avg;
-                theta_RL_beta[mth] = (RL - theta_i_h_set_avg) * Math.Pow(beta_h_s[mth], 1 / 1.3) + theta_i_h_set_avg;
+                theta_SL_beta[mth] = (theta_SL - theta_i_h_set_avg) * Math.Pow(beta_h_s[mth], 1 / 1.3) + theta_i_h_set_avg;
+                theta_RL_beta[mth] = (theta_RL - theta_i_h_set_avg) * Math.Pow(beta_h_s[mth], 1 / 1.3) + theta_i_h_set_avg;
 
                 dtheta_s[mth] = theta_SL_beta[mth] - theta_RL_beta[mth];
                 theta_av_s[mth] = 0.5 * (theta_SL_beta[mth] + theta_RL_beta[mth]);
@@ -1169,8 +1176,8 @@ namespace main
             {
                 beta_h_gen[mth] = (Qhb_mth_sum[mth] + Qh_ce[mth] + Qh_d[mth] + Qh_s[mth]) / (Qh_max_sum / 1000 * th_avg[mth]);
                 if (double.IsNaN(beta_h_gen[mth])) { beta_h_gen[mth] = 0; }
-                theta_SL_beta[mth] = (SL - theta_i_h_set_avg) * Math.Pow(beta_h_s[mth], 1 / 1.3) + theta_i_h_set_avg;
-                theta_RL_beta[mth] = (RL - theta_i_h_set_avg) * Math.Pow(beta_h_s[mth], 1 / 1.3) + theta_i_h_set_avg;
+                theta_SL_beta[mth] = (theta_SL - theta_i_h_set_avg) * Math.Pow(beta_h_s[mth], 1 / 1.3) + theta_i_h_set_avg;
+                theta_RL_beta[mth] = (theta_RL - theta_i_h_set_avg) * Math.Pow(beta_h_s[mth], 1 / 1.3) + theta_i_h_set_avg;
 
                 dtheta_gen[mth] = theta_SL_beta[mth] - theta_RL_beta[mth];
                 theta_av_gen[mth] = 0.5 * (theta_SL_beta[mth] + theta_RL_beta[mth]);
@@ -1187,27 +1194,76 @@ namespace main
                 string[][] Value = Program.DB.getValue(ProjNum, "User_FC", "번호, 명칭, 연료, 전기출력, 전기효율, 열출력, 열효율", "번호 = '" + SelectFC_split[n].ToString() + "'");
                 if(Value.Length > 0 )
                 {
-                    double percent = 0.4;//20%미만이면 0.4 이상이면 0.6
-                    double power = Convert.ToDouble(Value[0][5]);
-                    double eta_elec = Convert.ToDouble(Value[0][4])/100;
-                    double eta_heat = Convert.ToDouble(Value[0][6])/100;
-                    if ( Qh_max_sum / power >= 0.2)
-                    {
-                        percent = 0.6;
-                    }
-                    for(int mth  =0; mth <12; mth++)
-                    {
-                        Qfc_heat[mth] = Math.Min(power * 24 * dmth[mth], Qh_outg[mth]);
-                        Qfc_elec[mth] = Qfc_heat[mth] * eta_elec;
-                        Qfc_f[mth] = Qfc_heat[mth] * 1 / eta_heat;
+                    int FC_nea = Convert.ToInt16(FCNum_split[n]);
+                    double power_el = Convert.ToDouble(Value[0][3]);
+                    double eta_el = Convert.ToDouble(Value[0][4])/100;
+                    double power_th = Convert.ToDouble(Value[0][5]);
+                    double eta_th = Convert.ToDouble(Value[0][6])/100;
+                    double eta_tot = eta_el + eta_th;
 
-                        Qh_outg[mth] = Math.Max(0, Qh_outg[mth] - Qfc_heat[mth]);
-                    }                    
-
+                    double Pfc_th = power_th * FC_nea;
+                    double Pfc_el = power_el * FC_nea;
+                    Calc_FC(Pfc_th, Pfc_el, eta_th, eta_el, eta_tot, FCElecInstall_split[n].ToString(), FCElecHeat_split[n].ToString(), FC_nea);
                 }
             }
         }
 
+        private void Calc_FC(double Pfc_th, double Pfc_el, double eta_th, double eta_el, double eta_tot, string FCElecInstall,string FCElecHeat, int FC_nea)
+        {
+            double top = 0;
+            double Pth_min = 0, Pls_sb = 0, Pth_sb = 0, Pel_out_sb = 0, Paux_sb = 0, Ppilot = 0;
+            double[] Qw_outg = new double[12];
+            double[] QCHW_gen_out = new double[12];
+            double[] dop = new double[12], Pth_gen_out = new double[12], Eth_gen_out = new double[12];
+            double[] Eth_gen_out_h = new double[12], Eth_gen_out_w = new double[12];
+            double[] Pel_gen_out = new double[12], Eel_gen_out = new double[12];
+            double Pgen_ls_sb = 0, Pgen_in_chp = 0, Pgen_ls_chp = 0;
+            double[] pgen_ls = new double[12], Qgen_ls = new double[12];
+            double[] Pgen_in = new double[12], Egen_in = new double[12];
+            double[] Egen_in_h = new double[12], Egen_in_c = new double[12], Egen_in_w = new double[12], Egen_in_v = new double[12], Egen_in_l = new double[12];
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                //string[][] DValue = Program.DB.querySQL(ProjNum, "Select b.Qw_outg From DHWSystem_Result as a Inner Join DHWSystem_Form as b on a.번호=b.번호 Where a.연료전지번호='" + SelectFC_split[n].ToString() + "' and 월='" + mth + "월'");
+                //if(DValue.Length >0)
+                //{
+                //    Qw_outg[mth]= Convert.ToDouble(DValue[0][0]);
+                //}
+                QCHW_gen_out[mth] = Qh_outg[mth] + Qw_outg[mth];
+
+                top = th_op_day_avg;
+                dop[mth] = dop_mth_avg[mth];
+                if (FCElecInstall == "단독형" && FCElecHeat == "전기와 열")
+                {
+                    top = th_op_day_avg;
+                    dop[mth] = dop_mth_avg[mth];
+                }
+                else
+                {
+                    top = 24;
+                    dop = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+                }
+                Pth_gen_out[mth] = Math.Min(Pfc_th, QCHW_gen_out[mth] / (top * dop[mth]));
+                Eth_gen_out[mth] = Pth_gen_out[mth] * top * dop[mth];
+                Eth_gen_out_h[mth] = Eth_gen_out[mth] * Qh_outg[mth] / QCHW_gen_out[mth]; 
+            }
+            for(int mth=0; mth < 12; mth ++)
+            {
+                Pgen_ls_sb = Pls_sb + Ppilot;
+                Pgen_in_chp = Pfc_th / FC_nea / eta_th;
+                Pgen_ls_chp = (1 - eta_th - eta_el) * Pgen_in_chp;
+                pgen_ls[mth] = Pgen_ls_sb + (Pgen_ls_chp - Pgen_ls_sb) * ((Pth_gen_out[mth] - Pth_sb) / (Pfc_th / FC_nea - Pth_sb));
+                Qgen_ls[mth] = pgen_ls[mth] * top * dop[mth];
+                Pgen_in[mth] = Pth_gen_out[mth] + Pel_gen_out[mth] + pgen_ls[mth];
+                Egen_in[mth] = Pgen_in[mth] * top * dop[mth];
+
+                if(FCElecHeat =="전기와 열")
+                {
+                    Qh_outg[mth] = Qh_outg[mth] - Eth_gen_out[mth];
+                }
+            }
+            
+        }
 
         public void LoadCalc_Boiler(string ProjNum)
         {
@@ -1404,10 +1460,10 @@ namespace main
                 double[] COP_standard = new double[4];
                
                 double themp_상수 = 10.00;
-                COP_standard[0] = ((-7 + 15 - themp_상수) * (-7 + 15 + 273.15) / 15 + SL + 7 - 15) / (SL - themp_상수) + (-7 + 273.15) / (SL - themp_상수) * Math.Log(Math.E, (themp_상수 + 7)) / 15; //-7일 경우,
-                COP_standard[1] = ((2 + 15 - themp_상수) * (2 + 15 + 273.15) / 15 + SL - 2 - 15) / (SL - themp_상수) + (2 + 273.15) / (SL - themp_상수) * Math.Log(Math.E, (themp_상수 - 2)) / 15; //2일 경우,
-                COP_standard[2] = ((7 + 15 - themp_상수) * (7 + 15 + 273.15) / 15 + SL - 7 - 15) / (SL - themp_상수) + (7 + 273.15) / (SL - themp_상수) * Math.Log(Math.E, (themp_상수 - 7)) / 15; //7일 경우,
-                COP_standard[3] = ((-15 + 15 - themp_상수) * (-15 + 15 + 273.15) / 15 + SL - (-15) - 15) / (SL - themp_상수) + (-15 + 273.15) / (SL - themp_상수) * Math.Log(Math.E, (themp_상수 - (-15))) / 15; //-15일 경우,
+                COP_standard[0] = ((-7 + 15 - themp_상수) * (-7 + 15 + 273.15) / 15 + theta_SL + 7 - 15) / (theta_SL - themp_상수) + (-7 + 273.15) / (theta_SL - themp_상수) * Math.Log(Math.E, (themp_상수 + 7)) / 15; //-7일 경우,
+                COP_standard[1] = ((2 + 15 - themp_상수) * (2 + 15 + 273.15) / 15 + theta_SL - 2 - 15) / (theta_SL - themp_상수) + (2 + 273.15) / (theta_SL - themp_상수) * Math.Log(Math.E, (themp_상수 - 2)) / 15; //2일 경우,
+                COP_standard[2] = ((7 + 15 - themp_상수) * (7 + 15 + 273.15) / 15 + theta_SL - 7 - 15) / (theta_SL - themp_상수) + (7 + 273.15) / (theta_SL - themp_상수) * Math.Log(Math.E, (themp_상수 - 7)) / 15; //7일 경우,
+                COP_standard[3] = ((-15 + 15 - themp_상수) * (-15 + 15 + 273.15) / 15 + theta_SL - (-15) - 15) / (theta_SL - themp_상수) + (-15 + 273.15) / (theta_SL - themp_상수) * Math.Log(Math.E, (themp_상수 - (-15))) / 15; //-15일 경우,
 
                 if (Pi_15 > 0)
                 {
@@ -1709,6 +1765,420 @@ namespace main
                     }
             }
         }
+
+        public void LoadCalc_GroundHP(string ProjNum)
+        {
+            for (int n = 0; n < SelectGroundHP_split.Count; n++)
+            {
+                string[][] GroundHP = Program.DB.getValue(ProjNum, "User_GroundHP", "번호,연료,공급유형,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력,대기전력,수직수평", "번호 = '" + SelectGroundHP_split[n] + "'");
+                String Num = null;
+                Carrier = null;
+                String SupplyType = null;
+                double Pi_nom = 0; //정격용량
+                double COP_nom = 0; //정격COP
+                double W_nom = 0; //정격소비전력 
+                double Pi_5 = 0; //정격용량
+                double COP_5 = 0; //정격COP
+                double W_5 = 0; //정격소비전력 
+                double W_0 = 0; //대기전력
+                string 수직수평 = "수직형";
+                if (GroundHP.Length > 0)
+                {
+                    Num = GroundHP[0][0];
+                    Carrier = GroundHP[0][1];
+                    SupplyType = GroundHP[0][2];
+                    Pi_nom = Convert.ToDouble(GroundHP[0][3]) * Convert.ToDouble(GroundHPNum_split[n]); ; //정격용량
+                    COP_nom = Convert.ToDouble(GroundHP[0][4]); //정격COP
+                    W_nom = Pi_nom / COP_nom;
+                    Pi_5 = Convert.ToDouble(GroundHP[0][6]) * Convert.ToDouble(GroundHPNum_split[n]); //정격용량
+                    COP_5 = Convert.ToDouble(GroundHP[0][7]); //정격COP
+                    W_5 = Pi_5 / COP_5;
+                    W_0 = Convert.ToDouble(GroundHP[0][9]);
+                    수직수평 = GroundHP[0][10];
+                    Calc_Q_Ground_HP(Num, SupplyType, Pi_nom, COP_nom, W_nom, Pi_5, COP_5, W_5, W_0,수직수평);
+                }
+            }
+        }
+        public void Calc_Q_Ground_HP(String Num, String SupplyType, double Pi_nom, double COP_nom, double W_nom, double Pi_5, double COP_5, double W_5, double W_0, string 수직수평)
+        {
+            double Pi__5=0, W__5=0, COP__5 = 0;
+            double[] fLg = new double[12], theta_ground = new double[12], th_gen_op_sng_cor = new double[12];
+            double[] COPc_standard = new double[12], COPc_eff = new double[12], COPcor_Tki_n = new double[12];
+            double[] Pi_cor_Tki_n = new double[12], W_cor_Tki_n = new double[12], beta_hp_source_dash= new double[12], beta_hp_source = new double[12];
+            double Pi_hp_source_max, Pi_hp_source_min;
+            double[] COP_hp_source_max = new double[12],  COP_hp_source_min = new double[12], COP_hp_source= new double[12];
+            double[] Qh_outg_sng_prel_i = new double[12], Qh_outg_sng_max = new double[12], Qh_outg_sng_min = new double[12], th_gen_op_sng_i = new double[12], Pi_hp_source_sng_i = new double[12];
+            double[] beta_hp_i = new double[12];
+            double[] Qh_outg_sng_i = new double[12], COPhp_pint_i = new double[12], FC= new double[12], fpint = new double[12], COPpint_i = new double[12];
+
+            if (Pi_5 > 0 && W_5 > 0)
+            {
+                Pi__5 = Math.Max(0, (Pi_5 - Pi_nom) / (5 - 0) * (-5 - 0) + Pi_nom);
+                W__5 = Math.Max(0, (W_5 - W_nom) / (5 - 0) * (-5 - 0) + W_nom);
+                if (W__5 > 0)
+                { COP__5 = Pi__5 / W__5; }
+            }
+
+            for (int n = 0; n < SelectGroundHP_split.Count; n++)
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    if (SupplyType == "직팽식")
+                    { fLg[mth] = 1; }
+                    else
+                    {
+                        fLg[mth] = Math.Min(1, 1 - (Math.Max(theta_av_gen[mth], 60) - 60) / dtheta_gen[mth]);
+                    }
+                    if (수직수평 == "수직형")
+                    {
+                        theta_ground[mth] = 0.15 * theta_e[mth] + 1.5;
+                    }
+                    else
+                    {
+                        theta_ground[mth] = 0.15 * theta_e[mth] - 0.5;
+                    }
+                    th_gen_op_sng_cor[mth] = th_avg[mth];
+                    COPc_standard[mth] = ((0 + 4 - 10) * (0 + 4 + 273.15) / 4 + theta_SL - 0 - 4) / (theta_SL - 10) + (0 + 273.15) / (theta_SL - 10) * Math.Log((theta_SL - 0) / 4);
+                    COPc_eff[mth] = ((theta_ground[mth] + 4 - 10) * (theta_ground[mth] + 4 + 273.15) / 4 + theta_SL - theta_ground[mth] - 4) / (theta_SL - 10) + (theta_ground[mth] + 273.15) / (theta_SL - 10) * Math.Log((theta_SL - theta_ground[mth]) / 4);
+
+                    if (COP__5 > 0 && COP_5 > 0)
+                    {
+                        Pi_cor_Tki_n[mth] = COP_nom;
+                        COPcor_Tki_n[mth] = COP_nom * COPc_eff[mth] / COPc_standard[mth];
+                    }
+                    else
+                    {
+                        if (theta_ground[mth]< 0)
+                        {
+                            Pi_cor_Tki_n[mth] = (Pi_nom - Pi__5) / (0 - (-5)) * (theta_ground[mth]) - (Pi_nom - Pi__5) / (0 - (-5)) * 0 + Pi_nom;
+                            W_cor_Tki_n[mth] = (W_nom - W__5) / (0 - (-5)) * (theta_ground[mth]) - (W_nom - W__5) / (0 - (-5)) * 0 + W_nom;
+                        }
+                        else
+                        {
+                            Pi_cor_Tki_n[mth] = (Pi_nom - Pi_5) / (0 - (5)) * (theta_ground[mth]) - (Pi_nom - Pi_5) / (0 - (5)) * 0 + Pi_nom;
+                            W_cor_Tki_n[mth] = (W_nom - W_5) / (0 - (5)) * (theta_ground[mth]) - (W_nom - W_5) / (0 - (5)) * 0 + W_nom;
+                        }
+                        COPcor_Tki_n[mth] = Pi_cor_Tki_n[mth] / W_cor_Tki_n[mth];
+                    }
+                    if (GroundHPControl_split[n].ToString() != "인버터제어")
+                    {
+                        Pi_hp_source_max = Pi_nom;
+                        Pi_hp_source_min = Pi_hp_source_max;
+                    }
+                    else
+                    {
+                        Pi_hp_source_max = Pi_nom /0.8;
+                        Pi_hp_source_min = Pi_nom *0.2;
+                    }
+                    beta_hp_source_dash[mth] = Pi_cor_Tki_n[mth] / Pi_hp_source_max;
+
+                    if (beta_hp_source_dash[mth] >= 0.8)
+                    {
+                        COP_hp_source_max[mth] = COPcor_Tki_n[mth];
+                    }
+                    else
+                    {
+                        COP_hp_source_max[mth] = COPcor_Tki_n[mth] - 0.4;
+                    }
+                    if (GroundHPControl_split[n].ToString() != "인버터제어")
+                    {
+                        COP_hp_source_min[mth] = COP_hp_source_max[mth];
+                    }
+                    else
+                    {
+                        COP_hp_source_min[mth] = COP_hp_source_max[mth] - 0.2;
+                    }
+
+                    if (beta_hp_source_dash[mth]>= 0.8)
+                    {
+                        COP_hp_source[mth] = COPcor_Tki_n[mth] + 0.2;
+                        beta_hp_source[mth] = 0.6;
+                    }
+                    else
+                    {
+                        COP_hp_source[mth] = COPcor_Tki_n[mth];
+                        beta_hp_source[mth] = beta_hp_source_dash[mth];
+                    }
+                    Qh_outg_sng_prel_i[mth] = Qh_outg[mth] * fLg[mth];
+                    Qh_outg_sng_max[mth] = Pi_hp_source_max * th_gen_op_sng_cor[mth];
+                    Qh_outg_sng_min[mth] = Pi_hp_source_min * th_gen_op_sng_cor[mth];
+
+                    if (Qh_outg_sng_prel_i[mth] < Qh_outg_sng_min[mth])
+                    {
+                        th_gen_op_sng_i[mth] = Qh_outg_sng_prel_i[mth] / Pi_hp_source_min;
+                    }
+                    else
+                    {
+                        th_gen_op_sng_i[mth] = th_gen_op_sng_cor[mth];
+                    }
+                    if (th_gen_op_sng_i[mth] ==th_gen_op_sng_cor[mth])
+                    {
+                        Pi_hp_source_sng_i[mth] = Math.Min(Pi_hp_source_max, Qh_outg_sng_prel_i[mth] / th_gen_op_sng_i[mth]);
+                    }
+                    else
+                    {
+                        Pi_hp_source_sng_i[mth] = Pi_hp_source_min;
+                    }
+                    if (GroundHPControl_split[n].ToString() != "인버터제어")
+                    {
+                        beta_hp_i[mth] = Math.Max(Pi_hp_source_sng_i[mth] / Pi_hp_source_max, 1);
+                    }
+                    else
+                    {
+                        beta_hp_i[mth] = Math.Max(Pi_hp_source_sng_i[mth] / Pi_hp_source_max, 0.2);
+                    }
+                    Qh_outg_sng_i[mth] = Pi_hp_source_sng_i[mth] * th_gen_op_sng_i[mth];
+
+                    if(beta_hp_source[mth] <= beta_hp_i[mth])
+                    {
+                        COPhp_pint_i[mth] = COP_hp_source[mth] + (beta_hp_i[mth] - beta_hp_source[mth]) / (1 - beta_hp_source[mth]) * (COP_hp_source_max[mth] - COP_hp_source[mth]);
+                    }
+                    else
+                    {
+                        COPhp_pint_i[mth] = COP_hp_source_min[mth] + (beta_hp_i[mth] - 0.2) / (beta_hp_source[mth] - 0.2) * (COP_hp_source[mth] - COP_hp_source_min[mth]);
+                    }
+
+                    if (SupplyType == "수방식")
+                    {
+                        FC[mth] = (th_gen_op_sng_i[mth]) / th_avg[mth]; 
+                    }
+                    else{
+                        FC[mth] = Qh_outg_sng_i[mth] / Qh_outg_sng_max[mth];
+                    }
+                    if(ce1Type=="복사난방" || ce2Type=="복사난방")
+                    {
+                        fpint[mth] = 0.99;
+                    }
+                    else
+                    {
+                        if (FC[mth] >= 0.9)
+                        { fpint[mth] = 0.98; }
+                        else if (FC[mth] >= 0.8)
+                        { fpint[mth] = 0.97; }
+                        else if (FC[mth] >= 0.7)
+                        { fpint[mth] = 0.96; }
+                        else if (FC[mth] >= 0.6)
+                        { fpint[mth] = 0.94; }
+                        else
+                        {
+                            fpint[mth] = 0.89;
+                        }
+                    }
+                    if (FC[mth]<1)
+                    {
+                        COPpint_i[mth]= fpint[mth]* COP_hp_source_min[mth];
+                    }
+                    else
+                    {
+                        COPpint_i[mth] = fpint[mth] * COP_hp_source_max[mth];
+                    }
+                    if(Carrier=="전기")
+                    {
+                        Qh_f[mth] = Qh_outg_sng_i[mth] / COPhp_pint_i[mth];
+                    }
+                    else
+                    {
+                        Qh_f[mth] = Qh_outg_sng_i[mth] / COPhp_pint_i[mth];
+                    }
+
+                }
+            }             
+        }
+
+
+        public void LoadCalc_GWHP(string ProjNum)
+        {
+            for (int n = 0; n < SelectGWHP_split.Count; n++)
+            {
+                string[][] GWHP = Program.DB.getValue(ProjNum, "User_GroundWHP", "번호,연료,공급유형,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력,대기전력,수직수평", "번호 = '" + SelectGWHP_split[n] + "'");
+                String Num = null;
+                Carrier = null;
+                String SupplyType = null;
+                double Pi_nom = 0; //정격용량
+                double COP_nom = 0; //정격COP
+                double W_nom = 0; //정격소비전력 
+                double Pi_15 = 0; //정격용량
+                double COP_15 = 0; //정격COP
+                double W_15 = 0; //정격소비전력 
+                double W_0 = 0; //대기전력
+                string 수직수평 = "수직형";
+                if (GWHP.Length > 0)
+                {
+                    Num = GWHP[0][0];
+                    Carrier = GWHP[0][1];
+                    SupplyType = GWHP[0][2];
+                    Pi_nom = Convert.ToDouble(GWHP[0][3]) * Convert.ToDouble(GroundHPNum_split[n]); ; //정격용량
+                    COP_nom = Convert.ToDouble(GWHP[0][4]); //정격COP
+                    W_nom = Pi_nom / COP_nom;
+                    Pi_15 = Convert.ToDouble(GWHP[0][6]) * Convert.ToDouble(GroundHPNum_split[n]); //정격용량
+                    COP_15 = Convert.ToDouble(GWHP[0][7]); //정격COP
+                    W_15 = Pi_15 / COP_15;
+                    W_0 = Convert.ToDouble(GWHP[0][9]);
+                    수직수평 = GWHP[0][10];
+                    Calc_Q_GWHP(Num, SupplyType, Pi_nom, COP_nom, W_nom, Pi_15, COP_15, W_15, W_0);
+                }
+            }
+        }
+        public void Calc_Q_GWHP(String Num, String SupplyType, double Pi_nom, double COP_nom, double W_nom, double Pi_15, double COP_15, double W_15, double W_0)
+        {
+            double[] fLg = new double[12], theta_ground = new double[12], th_gen_op_sng_cor = new double[12];
+            double[] COPc_standard = new double[12], COPc_eff = new double[12], COPcor_Tki_n = new double[12];
+            double[] Pi_cor_Tki_n = new double[12], W_cor_Tki_n = new double[12], beta_hp_source_dash = new double[12], beta_hp_source = new double[12];
+            double Pi_hp_source_max, Pi_hp_source_min;
+            double[] COP_hp_source_max = new double[12], COP_hp_source_min = new double[12], COP_hp_source = new double[12];
+            double[] Qh_outg_sng_prel_i = new double[12], Qh_outg_sng_max = new double[12], Qh_outg_sng_min = new double[12], th_gen_op_sng_i = new double[12], Pi_hp_source_sng_i = new double[12];
+            double[] beta_hp_i = new double[12];
+            double[] Qh_outg_sng_i = new double[12], COPhp_pint_i = new double[12], FC = new double[12], fpint = new double[12], COPpint_i = new double[12];
+
+
+            for (int n = 0; n < SelectGroundHP_split.Count; n++)
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    if (SupplyType == "직팽식")
+                    { fLg[mth] = 1; }
+                    else
+                    {
+                        fLg[mth] = Math.Min(1, 1 - (Math.Max(theta_av_gen[mth], 60) - 60) / dtheta_gen[mth]);
+                    }
+                    theta_ground[mth] = 0.134 * theta_e[mth] + 9.32;
+
+                    Pi_cor_Tki_n[mth] = (Pi_nom - Pi_15) / (10 - 15) * (theta_ground[mth]) - (Pi_nom - Pi_15) / (10 - 15) * 0 + Pi_nom;
+                    W_cor_Tki_n[mth] = (W_nom - W_15) / (0 - 15) * (theta_ground[mth]) - (W_nom - W_15) / (0 - 15) * 0 + W_nom;
+
+                    th_gen_op_sng_cor[mth] = th_avg[mth];
+                    COPc_standard[mth] = ((0 + 4 - 10) * (0 + 4 + 273.15) / 4 + theta_SL - 0 - 4) / (theta_SL - 10) + (0 + 273.15) / (theta_SL - 10) * Math.Log((theta_SL - 0) / 4);
+                    COPc_eff[mth] = ((theta_ground[mth] + 4 - 10) * (theta_ground[mth] + 4 + 273.15) / 4 + theta_SL - theta_ground[mth] - 4) / (theta_SL - 10) + (theta_ground[mth] + 273.15) / (theta_SL - 10) * Math.Log((theta_SL - theta_ground[mth]) / 4);
+                    COPcor_Tki_n[mth] = COP_nom * COPc_eff[mth] / COPc_standard[mth];
+                    
+                    if (GroundHPControl_split[n].ToString() != "인버터제어")
+                    {
+                        Pi_hp_source_max = Pi_nom;
+                        Pi_hp_source_min = Pi_hp_source_max;
+                    }
+                    else
+                    {
+                        Pi_hp_source_max = Pi_nom / 0.8;
+                        Pi_hp_source_min = Pi_nom * 0.2;
+                    }
+                    beta_hp_source_dash[mth] = Pi_cor_Tki_n[mth] / Pi_hp_source_max;
+
+                    if (beta_hp_source_dash[mth] >= 0.8)
+                    {
+                        COP_hp_source_max[mth] = COPcor_Tki_n[mth];
+                    }
+                    else
+                    {
+                        COP_hp_source_max[mth] = COPcor_Tki_n[mth] - 0.4;
+                    }
+                    if (GroundHPControl_split[n].ToString() != "인버터제어")
+                    {
+                        COP_hp_source_min[mth] = COP_hp_source_max[mth];
+                    }
+                    else
+                    {
+                        COP_hp_source_min[mth] = COP_hp_source_max[mth] - 0.2;
+                    }
+
+                    if (beta_hp_source_dash[mth] >= 0.8)
+                    {
+                        COP_hp_source[mth] = COPcor_Tki_n[mth] + 0.2;
+                        beta_hp_source[mth] = 0.6;
+                    }
+                    else
+                    {
+                        COP_hp_source[mth] = COPcor_Tki_n[mth];
+                        beta_hp_source[mth] = beta_hp_source_dash[mth];
+                    }
+                    Qh_outg_sng_prel_i[mth] = Qh_outg[mth] * fLg[mth];
+                    Qh_outg_sng_max[mth] = Pi_hp_source_max * th_gen_op_sng_cor[mth];
+                    Qh_outg_sng_min[mth] = Pi_hp_source_min * th_gen_op_sng_cor[mth];
+
+                    if (Qh_outg_sng_prel_i[mth] < Qh_outg_sng_min[mth])
+                    {
+                        th_gen_op_sng_i[mth] = Qh_outg_sng_prel_i[mth] / Pi_hp_source_min;
+                    }
+                    else
+                    {
+                        th_gen_op_sng_i[mth] = th_gen_op_sng_cor[mth];
+                    }
+                    if (th_gen_op_sng_i[mth] == th_gen_op_sng_cor[mth])
+                    {
+                        Pi_hp_source_sng_i[mth] = Math.Min(Pi_hp_source_max, Qh_outg_sng_prel_i[mth] / th_gen_op_sng_i[mth]);
+                    }
+                    else
+                    {
+                        Pi_hp_source_sng_i[mth] = Pi_hp_source_min;
+                    }
+                    if (GroundHPControl_split[n].ToString() != "인버터제어")
+                    {
+                        beta_hp_i[mth] = Math.Max(Pi_hp_source_sng_i[mth] / Pi_hp_source_max, 1);
+                    }
+                    else
+                    {
+                        beta_hp_i[mth] = Math.Max(Pi_hp_source_sng_i[mth] / Pi_hp_source_max, 0.2);
+                    }
+                    Qh_outg_sng_i[mth] = Pi_hp_source_sng_i[mth] * th_gen_op_sng_i[mth];
+
+                    if (beta_hp_source[mth] <= beta_hp_i[mth])
+                    {
+                        COPhp_pint_i[mth] = COP_hp_source[mth] + (beta_hp_i[mth] - beta_hp_source[mth]) / (1 - beta_hp_source[mth]) * (COP_hp_source_max[mth] - COP_hp_source[mth]);
+                    }
+                    else
+                    {
+                        COPhp_pint_i[mth] = COP_hp_source_min[mth] + (beta_hp_i[mth] - 0.2) / (beta_hp_source[mth] - 0.2) * (COP_hp_source[mth] - COP_hp_source_min[mth]);
+                    }
+
+                    if (SupplyType == "수방식")
+                    {
+                        FC[mth] = (th_gen_op_sng_i[mth]) / th_avg[mth];
+                    }
+                    else
+                    {
+                        FC[mth] = Qh_outg_sng_i[mth] / Qh_outg_sng_max[mth];
+                    }
+                    if (ce1Type == "복사난방" || ce2Type == "복사난방")
+                    {
+                        fpint[mth] = 0.99;
+                    }
+                    else
+                    {
+                        if (FC[mth] >= 0.9)
+                        { fpint[mth] = 0.98; }
+                        else if (FC[mth] >= 0.8)
+                        { fpint[mth] = 0.97; }
+                        else if (FC[mth] >= 0.7)
+                        { fpint[mth] = 0.96; }
+                        else if (FC[mth] >= 0.6)
+                        { fpint[mth] = 0.94; }
+                        else
+                        {
+                            fpint[mth] = 0.89;
+                        }
+                    }
+                    if (FC[mth] < 1)
+                    {
+                        COPpint_i[mth] = fpint[mth] * COP_hp_source_min[mth];
+                    }
+                    else
+                    {
+                        COPpint_i[mth] = fpint[mth] * COP_hp_source_max[mth];
+                    }
+                    if (Carrier == "전기")
+                    {
+                        Qh_f[mth] = Qh_outg_sng_i[mth] / COPhp_pint_i[mth];
+                    }
+                    else
+                    {
+                        Qh_f[mth] = Qh_outg_sng_i[mth] / COPhp_pint_i[mth];
+                    }
+
+                }
+            }
+        }
+
+
+
 
         public void LoadCalc_ABS(string ProjNum)
         {
