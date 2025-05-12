@@ -547,13 +547,65 @@ namespace main.contents.Result.Building_Report
                 소요량합계 = 소요량합계 / 순바닥면적;
 
                 //1차에너지소요량 계산식: 지역난방,전기,가스,기름 [임시작성]
-                double 난방1차=0, 냉방1차=0, 급탕1차=0, 조명1차=0, 공조1차 = 0, 합계1차=0;
-                for(int g=0; g < 12; g++)
+                double 난방1차=0, 냉방1차=0, 급탕1차=0, 조명1차=0, 공조1차 = 0, 전기1차=0, 열1차=0, 총소요1차=0;
+                double[] 난방1 = new double[12], 냉방1 = new double[12], 급탕1 = new double[12], 조명1 = new double[12], 공조1 = new double[12], 신재생1 = new double[12], 전기1 = new double[12], 열1 = new double[12], 총소요1 = new double[12];
+                for (int mth = 0; mth < 12; mth++)
                 {
-
+                    string[][] Fi1 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] Fi2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "(연료='가스' OR 연료='기름')  and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] Fi3 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "연료='지역난방' and 월 ='" + (mth + 1).ToString() + "월'");
+                    if (Fi1.Length > 0)
+                    {
+                        난방1[mth] = Convert.ToDouble(Fi1[0][0]) * 2.75;
+                        냉방1[mth] = Convert.ToDouble(Fi1[0][1]) * 2.75;
+                        급탕1[mth] = Convert.ToDouble(Fi1[0][2]) * 2.75;
+                        조명1[mth] = Convert.ToDouble(Fi1[0][3]) * 2.75;
+                        공조1[mth] = Convert.ToDouble(Fi1[0][4]) * 2.75;
+                        전기1[mth] = Convert.ToDouble(Fi1[0][5]) * 2.75;
+                        총소요1[mth] = Convert.ToDouble(Fi1[0][6]) * 2.75;
+                    }
+                    if (Fi2.Length > 0)
+                    {
+                        난방1[mth] = 난방1[mth] + Convert.ToDouble(Fi2[0][0]) * 1.1;
+                        냉방1[mth] = 냉방1[mth] + Convert.ToDouble(Fi2[0][1]) * 1.1;
+                        급탕1[mth] = 급탕1[mth] + Convert.ToDouble(Fi2[0][2]) * 1.1;
+                        조명1[mth] = 조명1[mth] + Convert.ToDouble(Fi2[0][3]) * 1.1;
+                        공조1[mth] = 공조1[mth] + Convert.ToDouble(Fi2[0][4]) * 1.1;
+                        열1[mth] = Convert.ToDouble(Fi2[0][5]) * 1.1;
+                        총소요1[mth] = 총소요1[mth] + Convert.ToDouble(Fi2[0][6]) * 1.1;
+                    }
+                    if (Fi3.Length > 0)
+                    {
+                        난방1[mth] = 난방1[mth] + Convert.ToDouble(Fi3[0][0]) * 0.728;
+                        냉방1[mth] = 냉방1[mth] + Convert.ToDouble(Fi3[0][1]) * 0.728 ;
+                        급탕1[mth] = 급탕1[mth] + Convert.ToDouble(Fi3[0][2]) * 0.728 ;
+                        조명1[mth] = 조명1[mth] + Convert.ToDouble(Fi3[0][3]) * 0.728 ;
+                        공조1[mth] = 공조1[mth] + Convert.ToDouble(Fi3[0][4]) * 0.728 ;
+                        총소요1[mth] = 총소요1[mth] + Convert.ToDouble(Fi3[0][6]) * 0.728;
+                    }
                 }
 
+                for(int g= 0; g < 12; g++)
+                {
+                    난방1차 += 난방1[g];
+                    냉방1차 += 냉방1[g];
+                    급탕1차 += 급탕1[g];
+                    조명1차 += 조명1[g];
+                    공조1차 += 공조1[g];
+                    전기1차 += 전기1[g];
+                    열1차 += 열1[g];
+                    총소요1차 += 총소요1[g];
+                }
 
+                __data[155].Add(new { idx = i, val = (난방1차/순바닥면적).ToString("0.0") });
+                __data[156].Add(new { idx = i, val = (냉방1차/순바닥면적).ToString("0.0") });
+                __data[157].Add(new { idx = i, val = (급탕1차/순바닥면적).ToString("0.0") });
+                __data[158].Add(new { idx = i, val = (조명1차/순바닥면적).ToString("0.0") });
+                __data[159].Add(new { idx = i, val = (공조1차/순바닥면적).ToString("0.0") });
+                __data[160].Add(new { idx = i, val = (총소요1차/순바닥면적).ToString("#,##0") });
+                __data[161].Add(new { idx = i, val = (전기1차 / 순바닥면적).ToString("#,##0") });
+                __data[162].Add(new { idx = i, val = (열1차 / 순바닥면적).ToString("#,##0") });
+                __data[163].Add(new { idx = i, val = ((전기1차+열1차)/ 총소요1차 ).ToString("P1") });
 
 
                 탄소배출량 = tCO2 / 순바닥면적 * 1000;
@@ -597,7 +649,35 @@ namespace main.contents.Result.Building_Report
                 data.Add(new { cname = "lightEnd", data = __data[152] }); //단위면적당 조명에너지소요량
                 data.Add(new { cname = "ventEnd", data = __data[153] }); //단위면적당 공조에너지소요량
                 data.Add(new { cname = "sumEnd", data = __data[154] }); //단위면적당 총에너지소요량
-        
+
+                data.Add(new { cname = "heatingPri", data = __data[155] }); //1차난방에너지소요량
+                data.Add(new { cname = "coolingPri", data = __data[156] }); //1차냉방에너지소요량
+                data.Add(new { cname = "hotwaterPri", data = __data[157] }); //1차급탕에너지소요량
+                data.Add(new { cname = "lightPri", data = __data[158] }); //1차조명에너지소요량
+                data.Add(new { cname = "ventPri", data = __data[159] }); //1차공조에너지소요량
+                data.Add(new { cname = "sumPri", data = __data[160] }); //1차총에너지소요량
+                data.Add(new { cname = "elecProd", data = __data[161] }); //1차전기에너지생산량
+                data.Add(new { cname = "heatProd", data = __data[162] }); //1차열에너지생산량
+                data.Add(new { cname = "rer", data = __data[163] }); //자립률
+
+                //에너지등급
+                 
+                string 등급;
+                if (총소요1차 <= 140)
+                {
+                    if((전기1차 + 열1차) / 총소요1차 < 0.2) 등급 = "none";
+                    else if ((전기1차 + 열1차) / 총소요1차 <0.4) 등급 = "ZEB 5등급";
+                    else if ((전기1차 + 열1차) / 총소요1차 <0.6) 등급 = "ZEB 4등급";
+                    else if ((전기1차 + 열1차) / 총소요1차 < 0.8) 등급 = "ZEB 3등급";
+                    else if ((전기1차 + 열1차) / 총소요1차 < 1) 등급 = "ZEB 2등급";
+                    else if ((전기1차 + 열1차) / 총소요1차 >= 1) 등급 = "ZEB 1등급";
+                    else 등급 = "None";
+                }
+                else 등급 = "None";
+                
+                __data[164].Add(new { idx = i, val = 등급 });
+                data.Add(new { cname = "zebLevel", data = __data[164] }); //등급
+
                 List<object> 난방소요량chart = new List<object>();
                 List<object> 냉방소요량chart = new List<object>();
                 List<object> 급탕소요량chart = new List<object>();
@@ -973,7 +1053,7 @@ namespace main.contents.Result.Building_Report
                 #endregion
 
 
-                items.Add("buildingform_one.htm");
+                items.Add("buildingform_one.html");
                 s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
                 s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
                 System.Text.Json.JsonSerializer.Serialize(__data[10].ToArray());
