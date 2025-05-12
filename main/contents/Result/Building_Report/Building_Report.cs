@@ -114,7 +114,7 @@ namespace main.contents.Result.Building_Report
             while (++i < 번호.Length)
             {
                 #region 건물정보
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,주소,지역,지역구분,준공시기,연면적,건축면적,지상층수,지하층수,작성자회사,작성자,작성시기,프로젝트번호");
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트명,주소,지역,지역구분,준공시기,연면적,건축면적,지상층수,지하층수,작성자회사,작성자,작성시기,프로젝트번호,프로젝트유형,건물용도");
                 if (Value.Length > 0)
                 {
                     __data[0].Add(new { idx = i, val = Value[0][0] }); //프로젝트명
@@ -122,8 +122,8 @@ namespace main.contents.Result.Building_Report
                     __data[2].Add(new { idx = i, val = Value[0][2] }); //지역
                     __data[3].Add(new { idx = i, val = Value[0][3] }); //지역구분
                     __data[4].Add(new { idx = i, val = Value[0][4] }); //준공시기
-                    __data[5].Add(new { idx = i, val = Value[0][5] }); //연면적
-                    __data[6].Add(new { idx = i, val = Value[0][6] }); //건축면적
+                    __data[5].Add(new { idx = i, val = Convert.ToDouble(Value[0][5]).ToString("0.00") }); //연면적
+                    __data[6].Add(new { idx = i, val = Convert.ToDouble(Value[0][6]).ToString("0.00") }); //건축면적
                     __data[7].Add(new { idx = i, val = Value[0][7] }); //지상층수
                     __data[8].Add(new { idx = i, val = Value[0][8] }); //지하층수
                     __data[9].Add(new { idx = i, val = Value[0][9] }); //작성자회사
@@ -131,13 +131,15 @@ namespace main.contents.Result.Building_Report
                     __data[11].Add(new { idx = i, val = Value[0][11] }); //작성시기      
                     __data[136].Add(new { idx = i, val = Value[0][12] }); //프로젝트번호
                     __data[137].Add(new { idx = i, val = Value[0][0]+ " 검토보고서" }); //프로젝트 명칭 
+                    __data[138].Add(new { idx = i, val = Value[0][13] }); //프로젝트유형
+                    __data[139].Add(new { idx = i, val = Value[0][14] }); //건물용도   
                 }
                 ////////////////////////////////////////////////////////////////////
                 data.Add(new { cname = "projectName", data = __data[0] });
                 data.Add(new { cname = "buildinglocation", data = __data[1] });
                 data.Add(new { cname = "climate", data = __data[2] });
                 data.Add(new { cname = "bylawclimate", data = __data[3] });
-                data.Add(new { cname = "construcitondate", data = __data[4] });
+                data.Add(new { cname = "constructiondate", data = __data[4] });
                 data.Add(new { cname = "grossarea", data = __data[5] });
                 data.Add(new { cname = "buildingarea", data = __data[6] });
                 data.Add(new { cname = "aboveground", data = __data[7] });
@@ -147,8 +149,103 @@ namespace main.contents.Result.Building_Report
                 data.Add(new { cname = "reviewdate", data = __data[11] });
                 data.Add(new { cname = "projectnum", data = __data[136] });
                 data.Add(new { cname = "projectName2", data = __data[137] });
+                data.Add(new { cname = "projectType", data = __data[138] });
+                data.Add(new { cname = "buildingType", data = __data[139] });
                 #endregion
+                #region 온실가스정보
 
+                // 단위면적당CO2  
+                
+                string[][] 존정보 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호, 일일급탕요구량,순바닥면적","");
+
+                //총순바닥면적 구하기
+                double 순바닥면적 = 0;
+                
+                for(int l =0; l < 존정보.Length; l++)
+                {
+                    순바닥면적 += Convert.ToDouble(존정보[l][2]);
+                }
+                //요구량값 가져오기
+                double[] 난방요구량 = new double[12], 냉방요구량 = new double[12], 급탕요구량 = new double[12], 조명요구량 = new double[12], 공조요구량 = new double[12];
+                             
+                for (int mt = 0; mt < 12; mt++)
+                {
+                    string[][] heat = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "난방_냉방 = '난방' and 비이용일_이용일='이용일' and 월 ='" + (mt + 1).ToString() + "월'");
+                    if (heat.Length > 0)
+                    {
+                        for (int h = 0; h < heat.Length; h++)
+                        {
+                            난방요구량[mt] += Convert.ToDouble(heat[h][0]);
+                        }
+                    }
+                    string[][] cool = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "난방_냉방 = '냉방' and 비이용일_이용일='이용일' and 월 ='" + (mt + 1).ToString() + "월'");
+                    if (cool.Length > 0)
+                    {
+                        for (int h = 0; h < cool.Length; h++)
+                        {
+                             냉방요구량[mt] += Convert.ToDouble(cool[h][0]);
+                        }
+                    }
+                    string[][] hotw = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "번호, dwd_mth", "비이용일_이용일='이용일' and 월 ='" + (mt + 1).ToString() + "월'");
+                    if (hotw.Length > 0)
+                    {
+                        for(int aaa = 0; aaa<hotw.Length ; aaa++)
+                        {
+                            for (int k = 0; k < 존정보.Length; k++)
+                            {
+                                if (존정보[k][0] == hotw[aaa][0])
+                                {
+                                    급탕요구량[mt] += Convert.ToDouble(hotw[aaa][1]) * Convert.ToDouble(존정보[k][1]);
+                                }
+                            }
+                        }
+                    }
+                   
+                    string[][] 요구량2 = Program.DB.getValue(DB.type.ProjDB, "Zone_LightResult", "Final_kWh", "월 ='" + (mt + 1).ToString() + "월'");
+                    if (요구량2.Length > 0)
+                    {
+                        for (int h = 0; h < 요구량2.Length; h++)
+                        {
+                            조명요구량[mt] += Convert.ToDouble(요구량2[h][0]);
+                        }
+                    }
+                    string[][] 요구량3 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "공조요구량,가습요구량", "월 ='" + (mt + 1).ToString() + "월'");
+                    if (요구량3.Length > 0)
+                    {
+                        for (int h = 0; h < 요구량3.Length; h++)
+                        {
+                            공조요구량[mt] += Convert.ToDouble(요구량3[h][0]) + Convert.ToDouble(요구량3[h][1]);
+                        }
+                    }
+                }
+                //요구량값 구하기
+                double 난방요 = 0, 냉방요 = 0, 급탕요 = 0, 조명요 = 0, 공조요 = 0, 탄소배출량=0, 요구량합계=0;
+                for(int val = 0; val<12; val++)
+                {
+                    난방요 += 난방요구량[val];
+                    냉방요 += 냉방요구량[val];
+                    급탕요 += 급탕요구량[val];
+                    조명요 += 조명요구량[val];
+                    공조요 += 공조요구량[val];
+                }
+                요구량합계 = (난방요 + 냉방요 + 급탕요 + 조명요 + 공조요) / 순바닥면적;
+                __data[140].Add(new { idx = i, val = (난방요 / 순바닥면적).ToString("0.0")}); //난방에너지요구량
+                __data[141].Add(new { idx = i, val = (냉방요 / 순바닥면적).ToString("0.0")}); //냉방에너지요구량
+                __data[142].Add(new { idx = i, val = (급탕요 / 순바닥면적).ToString("0.0")}); //급탕에너지요구량
+                __data[143].Add(new { idx = i, val = (조명요 / 순바닥면적).ToString("0.0") }); //조명에너지요구량
+                __data[144].Add(new { idx = i, val = (공조요 / 순바닥면적).ToString("0.0") }); //공조에너지요구량
+                __data[145].Add(new { idx = i, val = 순바닥면적.ToString("0.00") }); //순바닥면적
+                __data[146].Add(new { idx = i, val = 요구량합계.ToString("#,##0") }); //요구량합계
+
+                data.Add(new { cname = "heatingNeeds", data = __data[140] });
+                data.Add(new { cname = "coolingNeeds", data = __data[141] });
+                data.Add(new { cname = "hotwaterNeeds", data = __data[142] });
+                data.Add(new { cname = "lightNeeds", data = __data[143] });
+                data.Add(new { cname = "ventNeeds", data = __data[144] });
+                data.Add(new { cname = "energyArea", data = __data[145] });
+                data.Add(new { cname = "sumNeeds", data = __data[146] });
+
+                #endregion
                 #region 외벽정보
                 Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호", "외피유형='외벽'");
                 if (Value.Length > 0)
@@ -184,7 +281,6 @@ namespace main.contents.Result.Building_Report
                 data.Add(new { cname = "wall_rulevalue", data = __data[15] });
                 data.Add(new { cname = "wall_rulevalue_point", data = __data[47] });
                 #endregion
-
                 #region 지붕정보
                 Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호", "외피유형='지붕'");
                 if (Value.Length > 0)
@@ -220,7 +316,6 @@ namespace main.contents.Result.Building_Report
                 data.Add(new { cname = "roof_rulevalue", data = __data[19] });
                 data.Add(new { cname = "roof_rulevalue_point", data = __data[48] });
                 #endregion
-
                 #region 최하층바닥정보
                 Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호", "외피유형='최하층바닥'");
                 if (Value.Length > 0)
@@ -256,7 +351,6 @@ namespace main.contents.Result.Building_Report
                 data.Add(new { cname = "floor_rulevalue", data = __data[23] });
                 data.Add(new { cname = "floor_rulevalue_point", data = __data[49] });
                 #endregion
-
                 #region 창호정보
                 Value = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호", "외피유형='창호'");
                 if (Value.Length > 0)
@@ -292,7 +386,6 @@ namespace main.contents.Result.Building_Report
                 data.Add(new { cname = "win_rulevalue", data = __data[27] });
                 data.Add(new { cname = "win_rulevalue_point", data = __data[50] });
                 #endregion
-
                 #region 커튼월창정보
                 Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호", "외피유형='커튼월창'");
                 if (Value.Length > 0)
@@ -348,7 +441,6 @@ namespace main.contents.Result.Building_Report
                 data.Add(new { cname = "cw_rulevalue", data = __data[31] });
                 data.Add(new { cname = "cw_rulevalue_point", data = __data[51] });
                 #endregion
-
                 #region 출입문정보
                 Value = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호", "외피유형='외부출입문'");
                 if (Value.Length > 0)
@@ -384,7 +476,6 @@ namespace main.contents.Result.Building_Report
                 data.Add(new { cname = "door_rulevalue", data = __data[35] });
                 data.Add(new { cname = "door_rulevalue_point", data = __data[52] });
                 #endregion
-
                 #region 소요량
                 double[] 난방 = new double[12], 냉방 = new double[12], 급탕 = new double[12], 조명 = new double[12], 공조 = new double[12], 기저 = new double[12], 신재생 = new double[12], 총전기 = new double[12], 총가스 = new double[12], 총소요량 = new double[12];
                 double 연간소요량 = 0, 연간전기 = 0, 연간가스 = 0;
@@ -423,6 +514,8 @@ namespace main.contents.Result.Building_Report
 
                     총소요량[mth] = 총전기[mth] + 총가스[mth];
                 }
+
+                double 난방소 = 0, 냉방소 = 0, 급탕소 = 0, 조명소 = 0, 공조소 = 0, 소요량합계 = 0; //단위면적당값
                 for (int mth = 0; mth < 12; mth++)
                 {
                     연간전기 += 총전기[mth];
@@ -435,33 +528,59 @@ namespace main.contents.Result.Building_Report
                     __data[40].Add(new { idx = i * 12 + mth, val = 공조[mth].ToString("#,##0") });
                     __data[41].Add(new { idx = i * 12 + mth, val = 신재생[mth].ToString("#,##0") });
                     __data[42].Add(new { idx = i * 12 + mth, val = 총소요량[mth].ToString("#,##0") });
+                    난방소 += 난방[mth];
+                    냉방소 += 냉방[mth];
+                    급탕소 += 급탕[mth];
+                    조명소 += 조명[mth];
+                    공조소 += 공조[mth];
                 }
                 double tCO2 = 연간전기 * 0.4747 / 1000000 * 1000 + 연간가스 / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
                 double TOE = 연간전기 * 0.00023 + 연간가스 / 38.9 / 0.277778 * 0.00103;
                 double 연간1차 = 연간전기 * 2.75 + 연간가스  * 1.1;
-                double Area = 0;
-                string[][] A = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "냉난방유무 <> '비냉난방'");
-                if (A.Length > 0)
+
+                소요량합계 += 난방소 + 냉방소 + 급탕소 + 조명소 + 공조소;
+                난방소 = 난방소 / 순바닥면적;
+                냉방소 = 냉방소 / 순바닥면적;
+                급탕소 = 급탕소 / 순바닥면적;
+                조명소 = 조명소 / 순바닥면적;
+                공조소 = 공조소 / 순바닥면적;
+                소요량합계 = 소요량합계 / 순바닥면적;
+
+                //1차에너지소요량 계산식: 지역난방,전기,가스,기름 [임시작성]
+                double 난방1차=0, 냉방1차=0, 급탕1차=0, 조명1차=0, 공조1차 = 0, 합계1차=0;
+                for(int g=0; g < 12; g++)
                 {
-                    for (int a = 0; a < A.Length; a++)
-                    {
-                        Area += Convert.ToDouble(A[a][0]);
-                    }
+
                 }
-                __data[43].Add(new { idx = i, val = (연간소요량).ToString("#,##0") });
-                __data[44].Add(new { idx = i, val = (연간소요량 / Area).ToString("0.0") });
+
+
+
+
+                탄소배출량 = tCO2 / 순바닥면적 * 1000;
+                __data[147].Add(new { idx = i, val = 탄소배출량.ToString("#,##0") });
+                __data[148].Add(new { idx = i, val = 순바닥면적.ToString("0.00") });
+
+                __data[149].Add(new { idx = i, val = 난방소.ToString("0.00") });
+                __data[150].Add(new { idx = i, val = 냉방소.ToString("0.00") });
+                __data[151].Add(new { idx = i, val = 급탕소.ToString("0.00") });
+                __data[152].Add(new { idx = i, val = 조명소.ToString("0.00") });
+                __data[153].Add(new { idx = i, val = 공조소.ToString("0.00") });
+                __data[154].Add(new { idx = i, val = 소요량합계.ToString("#,##0") });
+
+                __data[43].Add(new { idx = i, val = (연간소요량).ToString("#,##0") }); 
+                __data[44].Add(new { idx = i, val = (연간소요량 / 순바닥면적).ToString("0.0") });
                 __data[45].Add(new { idx = i, val = tCO2.ToString("0.0") });
                 __data[46].Add(new { idx = i, val = TOE.ToString("0.0") });
                 __data[53].Add(new { idx = i, val = (연간1차).ToString("#,##0") });
-                __data[54].Add(new { idx = i, val = (연간1차 / Area).ToString("0.0") });
+                __data[54].Add(new { idx = i, val = (연간1차 / 순바닥면적).ToString("0.0") });
                 ////////////////////////////////////////////////////////////////////
-                data.Add(new { cname = "qh_mth", data = __data[36] });
-                data.Add(new { cname = "qc_mth", data = __data[37] });
-                data.Add(new { cname = "qw_mth", data = __data[38] });
-                data.Add(new { cname = "ql_mth", data = __data[39] });
-                data.Add(new { cname = "qv_mth", data = __data[40] });
-                data.Add(new { cname = "qreg_mth", data = __data[41] });
-                data.Add(new { cname = "qf_mth", data = __data[42] });
+                data.Add(new { cname = "qh_mth", data = __data[36] }); //난방에너지소요량
+                data.Add(new { cname = "qc_mth", data = __data[37] }); //냉방에너지소요량
+                data.Add(new { cname = "qw_mth", data = __data[38] }); //급탕에너지소요량
+                data.Add(new { cname = "ql_mth", data = __data[39] }); //조명에너지소요량
+                data.Add(new { cname = "qv_mth", data = __data[40] }); //공조에너지소요량
+                data.Add(new { cname = "qreg_mth", data = __data[41] }); //신재생에너지생산량
+                data.Add(new { cname = "qf_mth", data = __data[42] });  //총에너지소요량
                 data.Add(new { cname = "qfa", data = __data[43] });
                 data.Add(new { cname = "qfa_area", data = __data[44] });
                 data.Add(new { cname = "tco2", data = __data[45] });
@@ -469,6 +588,16 @@ namespace main.contents.Result.Building_Report
                 data.Add(new { cname = "qpa", data = __data[53] });
                 data.Add(new { cname = "qpa_area", data = __data[54] });
 
+                data.Add(new { cname = "tco2Area", data = __data[147] }); //단위면적당 CO2 배출량
+                data.Add(new { cname = "energyArea", data = __data[148] }); //단위면적당 CO2 배출량
+                
+                data.Add(new { cname = "heatingEnd", data = __data[149] }); //단위면적당 난방에너지소요량
+                data.Add(new { cname = "coolingEnd", data = __data[150] }); //단위면적당 냉방에너지소요량
+                data.Add(new { cname = "hotwaterEnd", data = __data[151] }); //단위면적당 급탕에너지소요량
+                data.Add(new { cname = "lightEnd", data = __data[152] }); //단위면적당 조명에너지소요량
+                data.Add(new { cname = "ventEnd", data = __data[153] }); //단위면적당 공조에너지소요량
+                data.Add(new { cname = "sumEnd", data = __data[154] }); //단위면적당 총에너지소요량
+        
                 List<object> 난방소요량chart = new List<object>();
                 List<object> 냉방소요량chart = new List<object>();
                 List<object> 급탕소요량chart = new List<object>();
@@ -490,7 +619,6 @@ namespace main.contents.Result.Building_Report
                 chart_공조소요량.Add(System.Text.Json.JsonSerializer.Serialize(공조소요량chart.ToArray()));
                 chart_공조소요량.Add(System.Text.Json.JsonSerializer.Serialize(공조소요량chart.ToArray()));
                 #endregion
-
                 #region 보일러정보   
                 double boiler_count = 0; double boiler_power = 0; double boiler_eta_avg = 0; double boiler_eta_rule = 0; double boiler_point = 0;
                 string[][] Value1 = Program.DB.querySQL(DB.type.ProjDB, "Select b.보일러종류,a.명칭,b.존,a.용량,a.전부하효율,a.난방급탕,b.번호,b.보일러대수 From User_Boiler as a Inner Join HeatingSystem_Form as b ON a.번호 = b.보일러종류 Where a.난방급탕='난방+급탕'");
@@ -845,7 +973,7 @@ namespace main.contents.Result.Building_Report
                 #endregion
 
 
-                items.Add("MainReport_Before.htm");
+                items.Add("buildingform_one.htm");
                 s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
                 s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
                 System.Text.Json.JsonSerializer.Serialize(__data[10].ToArray());
@@ -867,7 +995,7 @@ namespace main.contents.Result.Building_Report
                 "{type:\"bar\",barPercentage:0.4,label:\"냉방 에너지소요량 [kWh]\",data:" + chart_냉방소요량[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
                 "],max:" + (Math.Round(max / 1000) * 1000 + 500).ToString() + ",step:100,legend:true,stacked:true}";
                 runScript("init(" + s + "," + s2 + "," + "[" + charts + "])");
-            }
+             }
         }
 
         private void Report_After()
@@ -893,10 +1021,7 @@ namespace main.contents.Result.Building_Report
             {
                 __data[i] = new List<object>();
             }
-
-
             string charts = "";
-
             i = -1;
             while (++i < 번호.Length)
             {
@@ -938,7 +1063,6 @@ namespace main.contents.Result.Building_Report
                     data.Add(new { cname = "projectnum", data = __data[136] });
                     data.Add(new { cname = "projectName2", data = __data[137] });
                     #endregion
-
                     #region 외벽정보
                     //리모델링후
                     Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호", "외피유형='외벽'");
@@ -996,7 +1120,6 @@ namespace main.contents.Result.Building_Report
                     data.Add(new { cname = "wall_area_before", data = __data[17] });
                     data.Add(new { cname = "wall_uvalue_before", data = __data[18] });
                     #endregion
-
                     #region 지붕정보
                     //리모델링 후 
                     Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호", "외피유형='지붕'");
@@ -1054,7 +1177,6 @@ namespace main.contents.Result.Building_Report
                     data.Add(new { cname = "roof_uvalue_before", data = __data[25] });
 
                     #endregion
-
                     #region 최하층바닥정보
                     //리모델링 후
                     Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호", "외피유형='최하층바닥'");
@@ -1111,7 +1233,6 @@ namespace main.contents.Result.Building_Report
                     data.Add(new { cname = "floor_area_before", data = __data[31] });
                     data.Add(new { cname = "floor_uvalue_before", data = __data[32] });
                     #endregion
-
                     #region 창호정보
                     //리모델링 후
                     Value = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호", "외피유형='창호'");
@@ -1168,7 +1289,6 @@ namespace main.contents.Result.Building_Report
                     data.Add(new { cname = "win_area_before", data = __data[38] });
                     data.Add(new { cname = "win_uvalue_before", data = __data[39] });
                     #endregion
-
                     #region 커튼월창정보
                     //리모델링 후 
                     Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호", "외피유형='커튼월창'");
@@ -1266,7 +1386,6 @@ namespace main.contents.Result.Building_Report
                     data.Add(new { cname = "cw_area_before", data = __data[45] });
                     data.Add(new { cname = "cw_uvalue_before", data = __data[46] });
                     #endregion
-
                     #region 출입문정보
                     //리모델링 후 
                     Value = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호", "외피유형='외부출입문'");
@@ -1323,7 +1442,6 @@ namespace main.contents.Result.Building_Report
                     data.Add(new { cname = "door_area_before", data = __data[52] });
                     data.Add(new { cname = "door_uvalue_before", data = __data[53] });
                     #endregion
-
                     #region 소요량
                     //리모델링 후 
                     double[] 난방_후 = new double[12], 냉방_후 = new double[12], 급탕_후 = new double[12], 조명_후 = new double[12], 공조_후 = new double[12], 기저_후 = new double[12], 신재생_후 = new double[12], 총전기_후 = new double[12], 총가스_후 = new double[12], 총소요량_후 = new double[12];
