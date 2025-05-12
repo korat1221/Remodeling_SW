@@ -1348,6 +1348,28 @@ Zoning.prototype = {
                 }
             }
 
+            for (const [id, el] of Object.entries(zones)) {
+                i = el.userData.walls.length;
+
+                while (--i >= 0) {
+                    if (el.userData.walls[i].splitted)  {
+                        if (el.userData.children) {
+                            let el2 = el.userData.walls[i];
+
+                            k = -1;
+                            while (++k < el.userData.children.length) {
+                                let el3 = el.userData.children[k];
+
+                                if (_pointInArea(el2.pos, _getCenterPosition(el3.pos))) {
+                                    el3.pidx = i;
+                                    el3.atteched = false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             i = -1;
             while (++i < obj.children.length) {
                 let el = obj.children[i];
