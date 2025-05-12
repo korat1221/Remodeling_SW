@@ -1849,19 +1849,17 @@ namespace main
                 //        goto goto_;
                 //    }
                 //}
-               
+
                 if (CG != nameof(_TYPE.실외기12kW))
                 {
                     sum += ce._ceElec; //소비전력
                 }
-                else sum = 0;
-
-                for (int i = 0; i < 12; i++)
-                {
-                    W_ce[i] = sum * tC_op[i];
-                }
-                //goto_: int a = 0; a = a;
             }
+            for (int i = 0; i < 12; i++)
+            {
+                W_ce[i] = sum * tC_op[i];
+            }
+                //goto_: int a = 0; a = a;
         }
 
         // ///////////////////////////////////////////////////분배 보조설비 에너지 소요량 계산//////////////////////////////////////////////
