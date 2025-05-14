@@ -62,6 +62,7 @@ namespace main.contents
         }
         private void Load_TBDB()
         {
+            fillFilterCombos();
             dataGridView1.Rows.Clear();
 
             string[][] Value;

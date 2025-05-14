@@ -962,6 +962,7 @@ namespace main.contents
                         if (dataGridView1.Rows[i].Cells[10].Value == null || dataGridView1.Rows[i].Cells[10].Value.ToString() == "")
                         {
                             MessageBox.Show(dataGridView1.Rows[i].Cells[1].Value.ToString() + "의 구조체를 선택하세요.");
+                            return;
                         }
                         else { }
                     }
