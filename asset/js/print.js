@@ -32,7 +32,37 @@ window.addEventListener("message", async (event) => {
           $("." + item.cname)
             .eq(el.idx)
             .html(el.val); 
-        } 
+        }
+        
+       if (item.cname === "zebLevel") {
+         item.data.forEach(el => {
+          let $target = $(".zebLevel").eq(el.idx);
+
+            switch (el.val) {
+              case "ZEB 5등급":
+              $target.css("background-color", "#FFC000"); // 연한 빨강
+              break;
+              case "ZEB 4등급":
+                $target.css("background-color", "#FFF2CC"); // 연한 초록
+                break;
+              case "ZEB 3등급":
+                $target.css("background-color", "#C6E0B4"); // 연한 파랑
+                break;
+              case "ZEB 2등급":
+                $target.css("background-color", "#92D050"); // 연한 파랑
+                break;
+              case "ZEB 1등급":
+                $target.css("background-color", "#009900"); // 연한 파랑
+                break;
+              case "None":
+                $target.css("background-color", "red"); // 연한 파랑
+                break;
+              default:
+                $target.css("background-color", "red"); // 기본 회색
+                break;
+            }       
+          });
+        }
 
         let projectNumValue = o.items.find(item => item.cname === "projectnum");
         let zoneNumValue = o.items.find(item => item.cname === "zonenum");
