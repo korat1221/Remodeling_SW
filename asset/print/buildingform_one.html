@@ -11,6 +11,32 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <!--table
 	{mso-displayed-decimal-separator:"\.";
 	mso-displayed-thousand-separator:"\,";}
+
+.cls-sparkline {
+  position: absolute;
+  border: 1px solid #aaa;
+  height: 18px;
+  background-image: linear-gradient(to right, #656565, lightgray);
+}
+
+.cls-sparkline-blue {
+  position: absolute;
+  border: 1px solid #aaa;
+  height: 18px;
+  background-image: linear-gradient(to right, #0070C0, #D5EDFF);
+}
+.cls-sparkline-red {
+  position: absolute;
+  border: 1px solid #aaa;
+  height: 18px;
+  background-image: linear-gradient(to right, #ed6f26, #ffefef);
+}
+
+.cls-sparkline-text {
+  width: 100%;
+  position: relative;
+}	
+
 .font517733
 	{color:windowtext;
 	font-size:8.0pt;
@@ -2186,141 +2212,141 @@ rt
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl13917733 style='height:16.5pt;border-top:none'><span
   style='mso-spacerun:yes'> </span>외벽</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 wall_count" style='border-top:none'></td>
+  <td class="xl10617733 wall_area" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 wall_rulevalue" style='border-top:none'></td>
   <td class=xl10717733>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 wall_count2" style='border-top:none'></td>
+  <td class="xl10617733 wall_area2" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 wall_uvalue" style='border-top:none'></td>
   <td class=xl15117733 style='border-top:none;border-left:none'>W/m<font
   class="font917733"><sup>2</sup></font><font class="font817733">∙K</font></td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 wall_rulevalue_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>지붕</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>2323</td>
+  <td class="xl10617733 roof_count" style='border-top:none'></td>
+  <td class="xl10617733 roof_area" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>2323</td>
+  <td class="xl10617733 roof_rulevalue" style='border-top:none'></td>
   <td class=xl10717733>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td class=xl10617733 style='border-top:none'>2323</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>2323</td>
+  <td class="xl10617733 roof_count2" style='border-top:none'></td>
+  <td class="xl10617733 roof_area2" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>2323</td>
+  <td class="xl10617733 roof_uvalue" style='border-top:none'></td>
   <td class=xl15217733 style='border-left:none'>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 roof_rulevalue_point" >　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>바닥</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 floor_count" style='border-top:none'></td>
+  <td class="xl10617733 floor_area" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 floor_rulevalue" style='border-top:none'></td>
   <td class=xl10717733>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 floor_count2" style='border-top:none'></td>
+  <td class="xl10617733 floor_area2" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 floor_uvalue"style='border-top:none'></td>
   <td class=xl15217733 style='border-left:none'>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 floor_rulevalue_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>창호</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 win_count" style='border-top:none'></td>
+  <td class="xl10617733 win_area" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 win_rulevalue" style='border-top:none'></td>
   <td class=xl10717733>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 win_count2" style='border-top:none'></td>
+  <td class="xl10617733 win_area2" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 win_uvalue" style='border-top:none'></td>
   <td class=xl15217733 style='border-left:none'>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 win_rulevalue_point" >　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
-  style='mso-spacerun:yes'> </span>커튼월</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  style='mso-spacerun:yes'> </span>커튼월창</td>
+  <td class="xl10617733 cw_count" style='border-top:none'></td>
+  <td class="xl10617733 cw_area" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 cw_rulevalue" style='border-top:none'></td>
   <td class=xl10717733>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 cw_count2" style='border-top:none'></td>
+  <td class="xl10617733 cw_area2" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl15217733 style='border-left:none'>W/m<font class="font917733"><sup>2</sup></font><font
+  <td class="xl10617733 cw_uvalue" style='border-top:none'></td>
+  <td class="xl15217733 cw_ruelvalue_point" style='border-left:none'>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
   <td colspan=3 class=xl11717733>　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>출입문</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>233</td>
+  <td class="xl10617733 door_count" style='border-top:none'></td>
+  <td class="xl10617733 door_area" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>233</td>
+  <td class="xl10617733 door_rulevalue" style='border-top:none'></td>
   <td class=xl10717733>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td class=xl10617733 style='border-top:none'>233</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>233</td>
+  <td class="xl10617733 door_count2" style='border-top:none'></td>
+  <td class="xl10617733 door_area2" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>233</td>
+  <td class="xl10617733 door_uvalue" style='border-top:none'></td>
   <td class=xl15217733 style='border-left:none'>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 door_rulevalue_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>기밀</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'>-</td>
+  <td class="xl10617733 cmh_rule" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>CMH</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 n50_rule" style='border-top:none'></td>
   <td class=xl10717733>h<font class="font917733"><sup>-1</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'>-</td>
+  <td class="xl10617733 cmh" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>CMH</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 n50" style='border-top:none'></td>
   <td class=xl15217733 style='border-left:none'>h<font class="font917733"><sup>-1</sup></font></td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 n50_rulevalue_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl13717733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>열교</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
-  <td class=xl10717733>　</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class=xl10617733 style='border-top:none'>-</td>
+  <td class=xl10617733 style='border-top:none;border-left:none'>-</td>
+  <td class=xl10717733 >　</td>
+  <td class="xl10617733 utb_rule"style='border-top:none'></td>
   <td class=xl10717733>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'>-</td>
+  <td class=xl10617733 style='border-top:none;border-left:none'>-</td>
   <td class=xl10717733>　</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 utb"style='border-top:none'></td>
   <td class=xl15317733 style='border-left:none'>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 utb_rulevalue_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td rowspan=2 height=44 class=xl10217733 style='height:33.0pt;border-top:
   none'>액티브기술</td>
-  <td colspan=5 class=xl13517733 style='border-left:none'>법규</td>
+  <td colspan=5 class=xl13517733 style='border-left:none'>권장</td>
   <td colspan=5 class=xl13517733 style='border-left:none'>계획</td>
   <td colspan=3 rowspan=2 class=xl11317733 style='border-bottom:.5pt solid #BFBFBF'>권장성능대비
   성능수준</td>
@@ -2341,120 +2367,120 @@ rt
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>난방설비</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 h_count" style='border-top:none'></td>
+  <td class="xl10617733 h_power" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10717733>　</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 h_eta_rule" style='border-top:none'></td>
+  <td class="xl10717733 h_unit">　</td>
+  <td class="xl10617733 h_count2" style='border-top:none'></td>
+  <td class="xl10617733 h_power2" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl15117733 style='border-top:none;border-left:none'>　</td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td class="xl10617733 h_eta" style='border-top:none'></td>
+  <td class="xl15117733 h_unit2" style='border-top:none;border-left:none'>　</td>
+  <td colspan=3 class="xl11717733 h_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>냉방설비</td>
-  <td class=xl10617733 style='border-top:none'>2323</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>2323</td>
+  <td class="xl10617733 c_count" style='border-top:none'></td>
+  <td class="xl10617733 c_power" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>2323</td>
-  <td class=xl10717733>W/W</td>
-  <td class=xl10617733 style='border-top:none'>2323</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>2323</td>
+  <td class="xl10617733 c_eta_rule" style='border-top:none'></td>
+  <td class=xl10717733 c_unit>W/W</td>
+  <td class="xl10617733 c_count2" style='border-top:none'></td>
+  <td class="xl10617733 c_power2" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>2323</td>
-  <td class=xl15217733 style='border-left:none'>W/W</td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td class="xl10617733 c_eta" style='border-top:none'></td>
+  <td class=xl15117733 style='border-top:none;border-left:none'>W/W</td>
+  <td colspan=3 class="xl11717733 c_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>급탕설비</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 w_count" style='border-top:none'></td>
+  <td class="xl10617733 w_power" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10717733>　</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 w_eta_rule" style='border-top:none'></td>
+  <td class="xl10717733 w_unit">　</td>
+  <td class="xl10617733 w_count2" style='border-top:none'></td>
+  <td class="xl10617733 w_power2" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl15217733 style='border-left:none'>　</td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td class="xl10617733 w_eta" style='border-top:none'></td>
+  <td class="xl15117733 w_unit2" style='border-top:none;border-left:none'>　</td>
+  <td colspan=3 class="xl11717733 w_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>조명설비</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 l_count" style='border-top:none'></td>
+  <td class="xl10617733 l_power" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>W</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 l_eta_rule" style='border-top:none'></td>
   <td class=xl10717733>lm/W</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 l_count2" style='border-top:none'></td>
+  <td class="xl10617733 l_power2" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>W</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 l_eta" style='border-top:none'></td>
   <td class=xl15217733 style='border-left:none'>lm/W</td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 l_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>공조설비</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'></td>
+  <td class=xl10617733 style='border-top:none;border-left:none'></td>
   <td class=xl10717733>CMH</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class=xl10617733 style='border-top:none'></td>
   <td class=xl10717733>%</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'></td>
+  <td class=xl10617733 style='border-top:none;border-left:none'></td>
   <td class=xl10717733>CMH</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class=xl10617733 style='border-top:none'></td>
   <td class=xl15217733 style='border-left:none'>%</td>
   <td colspan=3 class=xl11717733>　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>태양광</td>
-  <td class=xl10617733 style='border-top:none'>233</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>233</td>
+  <td class="xl10617733 pv_count" style='border-top:none'></td>
+  <td class="xl10617733 pv_power" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>233</td>
+  <td class="xl10617733 pv_eta_rule" style='border-top:none'></td>
   <td class=xl10717733>%</td>
-  <td class=xl10617733 style='border-top:none'>233</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>233</td>
+  <td class="xl10617733 pv_count2" style='border-top:none'></td>
+  <td class="xl10617733 pv_power2" style='border-top:none;border-left:none'></td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>233</td>
+  <td class="xl10617733 pv_eta_avg" style='border-top:none'></td>
   <td class=xl15217733 style='border-left:none'>%</td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 pv_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>풍력</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'></td>
+  <td class=xl10617733 style='border-top:none;border-left:none'></td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class=xl10617733 style='border-top:none'></td>
   <td class=xl10717733>%</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'></td>
+  <td class=xl10617733 style='border-top:none;border-left:none'></td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class=xl10617733 style='border-top:none'></td>
   <td class=xl15217733 style='border-left:none'>%</td>
   <td colspan=3 class=xl11717733>　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>연료전지</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'></td>
+  <td class=xl10617733 style='border-top:none;border-left:none'></td>
   <td class=xl15417733 style='border-left:none'>kW</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none;border-left:none'></td>
   <td class=xl10717733>%</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'></td>
+  <td class=xl10617733 style='border-top:none;border-left:none'></td>
   <td class=xl15417733 style='border-left:none'>kW</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none;border-left:none'></td>
   <td class=xl15217733 style='border-left:none'>%</td>
   <td colspan=3 class=xl11717733>　</td>
  </tr>
