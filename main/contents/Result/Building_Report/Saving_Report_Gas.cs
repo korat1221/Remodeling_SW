@@ -81,7 +81,7 @@ namespace main.contents.Result.Building_Report
                     List<object> 후_가스Chart = new List<object>();
                     List<object> 절감률_가스Chart = new List<object>();
 
-                    double Qh_a2_가스 = 0, Qc_a2_가스 = 0, Qw_a2_가스 = 0, Ql_a2_가스 = 0, Qv_a2_가스 = 0, Qbase_a2_가스 = 0, Qreg_a2_가스 = 0, Qtot_a2_가스 = 0;
+                    double Qh_a2_가스 = 0, Qc_a2_가스 = 0, Qw_a2_가스 = 0, Ql_a2_가스 = 0, Qv_a2_가스 = 0, Qbase_a2_가스 = 0, Qtot_a2_가스 = 0;
                     for (int mth = 0; mth < 12; mth++)
                     { //리모델링전 가스 소요량 
                         string[][] Final = Program.DB.querySQL(res[0][0], "SELECT 난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량 FROM FinalEnergy_Result where not  연료 = '전기' and 월 = '" + (mth + 1).ToString() + "월'");
@@ -114,17 +114,15 @@ namespace main.contents.Result.Building_Report
                             Ql_a2_가스 += Convert.ToDouble(Final[0][3]);
                             Qv_a2_가스 += Convert.ToDouble(Final[0][4]);
                             Qbase_a2_가스 += Convert.ToDouble(Final[0][5]);
-                            Qreg_a2_가스 += Convert.ToDouble(Final[0][6]);
                         }
                     }
-                    Qtot_a2_가스 = Qh_a2_가스 + Qc_a2_가스 + Qw_a2_가스 + Ql_a2_가스 + Qv_a2_가스 + Qbase_a2_가스 - Qreg_a2_가스;
+                    Qtot_a2_가스 = Qh_a2_가스 + Qc_a2_가스 + Qw_a2_가스 + Ql_a2_가스 + Qv_a2_가스 + Qbase_a2_가스;
                     __data[7].Add(new { idx = i, val = Qh_a2_가스.ToString("#,##0") });
                     __data[8].Add(new { idx = i, val = Qc_a2_가스.ToString("#,##0") });
                     __data[9].Add(new { idx = i, val = Qw_a2_가스.ToString("#,##0") });
                     __data[10].Add(new { idx = i, val = Ql_a2_가스.ToString("#,##0") });
                     __data[11].Add(new { idx = i, val = Qv_a2_가스.ToString("#,##0") });
                     __data[12].Add(new { idx = i, val = Qbase_a2_가스.ToString("#,##0") });
-                    __data[101].Add(new { idx = i, val = Qreg_a2_가스.ToString("#,##0") });
                     __data[13].Add(new { idx = i, val = Qtot_a2_가스.ToString("#,##0") });
 
 
@@ -134,7 +132,6 @@ namespace main.contents.Result.Building_Report
                     __data[3].Add(new { idx = i * 13 + 12, val = Ql_a2_가스.ToString("#,##0") }); //월별 조명 
                     __data[4].Add(new { idx = i * 13 + 12, val = Qv_a2_가스.ToString("#,##0") }); //월별 공조
                     __data[5].Add(new { idx = i * 13 + 12, val = Qbase_a2_가스.ToString("#,##0") }); //월별 기저 >>>리모델링 전 값 가져옴 
-                    __data[100].Add(new { idx = i * 13 + 12, val = Qreg_a2_가스.ToString("#,##0") });  //월별 신재생 생산량 
                     __data[6].Add(new { idx = i * 13 + 12, val = Qtot_a2_가스.ToString("#,##0") }); //월별 가스 에너지소요량 
 
                     double Area2_가스 = 0;
@@ -152,11 +149,10 @@ namespace main.contents.Result.Building_Report
                     __data[17].Add(new { idx = i, val = (Ql_a2_가스 / Area2_가스).ToString("0.0") });
                     __data[18].Add(new { idx = i, val = (Qv_a2_가스 / Area2_가스).ToString("0.0") });
                     __data[19].Add(new { idx = i, val = (Qbase_a2_가스 / Area2_가스).ToString("0.0") });
-                    __data[102].Add(new { idx = i, val = (Qreg_a2_가스 / Area2_가스).ToString("0.0") });
                     __data[20].Add(new { idx = i, val = (Qtot_a2_가스 / Area2_가스).ToString("0.0") });
 
 
-                    double Qh_a_가스 = 0, Qc_a_가스 = 0, Qw_a_가스 = 0, Ql_a_가스 = 0, Qv_a_가스 = 0, Qbase_a_가스 = 0, Qreg_a_가스 = 0, Qtot_a_가스 = 0;
+                    double Qh_a_가스 = 0, Qc_a_가스 = 0, Qw_a_가스 = 0, Ql_a_가스 = 0, Qv_a_가스 = 0, Qbase_a_가스 = 0, Qtot_a_가스 = 0;
                     for (int mth = 0; mth < 12; mth++)
                     { //리모델링후 가스 소요량 
                         string[][] Final = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량", "not 연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
@@ -170,8 +166,6 @@ namespace main.contents.Result.Building_Report
                             __data[25].Add(new { idx = i * 13 + mth, val = Convert.ToDouble(Final[0][4]).ToString("#,##0") }); //월별 공조
                             if (Final2[0][0] != null && Final2[0][0] != "")
                             { __data[26].Add(new { idx = i * 13 + mth, val = Convert.ToDouble(Final2[0][0]).ToString("#,##0") }); } //월별 기저 >>>리모델링 전 값 가져옴 
-                            if (Final[0][6] != null && Final[0][6] != "")
-                            { __data[103].Add(new { idx = i * 13 + mth, val = Convert.ToDouble(Final[0][6]).ToString("#,##0") }); } //월별 신재생 생산량 
                             Qtot_mth_가스[mth] = Convert.ToDouble(Final[0][7]);
                             __data[27].Add(new { idx = i * 13 + mth, val = Qtot_mth_가스[mth].ToString("#,##0") }); //월별 가스 에너지소요량 
 
@@ -192,18 +186,15 @@ namespace main.contents.Result.Building_Report
                             Qv_a_가스 += Convert.ToDouble(Final[0][4]);
                             if (Final2[0][0] != null && Final2[0][0] != "")
                             { Qbase_a_가스 += Convert.ToDouble(Final2[0][0]); }//리모델링전 값 가져옴 
-                            if (Final[0][6] != null && Final[0][6] != "")
-                            { Qreg_a_가스 += Convert.ToDouble(Final[0][6]); }
                         }
                     }
-                    Qtot_a_가스 = Qh_a_가스 + Qc_a_가스 + Qw_a_가스 + Ql_a_가스 + Qv_a_가스 + Qbase_a_가스 - Qreg_a_가스;
+                    Qtot_a_가스 = Qh_a_가스 + Qc_a_가스 + Qw_a_가스 + Ql_a_가스 + Qv_a_가스 + Qbase_a_가스;
                     __data[28].Add(new { idx = i, val = Qh_a_가스.ToString("#,##0") });
                     __data[29].Add(new { idx = i, val = Qc_a_가스.ToString("#,##0") });
                     __data[30].Add(new { idx = i, val = Qw_a_가스.ToString("#,##0") });
                     __data[31].Add(new { idx = i, val = Ql_a_가스.ToString("#,##0") });
                     __data[32].Add(new { idx = i, val = Qv_a_가스.ToString("#,##0") });
                     __data[33].Add(new { idx = i, val = Qbase_a_가스.ToString("#,##0") });
-                    __data[104].Add(new { idx = i, val = Qreg_a_가스.ToString("#,##0") });
                     __data[34].Add(new { idx = i, val = Qtot_a_가스.ToString("#,##0") });
 
 
@@ -214,7 +205,6 @@ namespace main.contents.Result.Building_Report
                     __data[24].Add(new { idx = i * 13 + 12, val = Ql_a_가스.ToString("#,##0") }); //월별 조명 
                     __data[25].Add(new { idx = i * 13 + 12, val = Qv_a_가스.ToString("#,##0") }); //월별 공조
                     __data[26].Add(new { idx = i * 13 + 12, val = Qbase_a_가스.ToString("#,##0") }); //월별 기저 >>>리모델링 전 값 가져옴 
-                    __data[103].Add(new { idx = i * 13 + 12, val = Qreg_a_가스.ToString("#,##0") });  //월별 신재생 생산량 
                     __data[27].Add(new { idx = i * 13 + 12, val = Qtot_a_가스.ToString("#,##0") }); //월별 가스 에너지소요량 
 
                     double Area_가스 = 0;
@@ -232,7 +222,6 @@ namespace main.contents.Result.Building_Report
                     __data[38].Add(new { idx = i, val = (Ql_a_가스 / Area_가스).ToString("0.0") });
                     __data[39].Add(new { idx = i, val = (Qv_a_가스 / Area_가스).ToString("0.0") });
                     __data[40].Add(new { idx = i, val = (Qbase_a_가스 / Area_가스).ToString("0.0") });
-                    __data[105].Add(new { idx = i, val = (Qreg_a_가스 / Area_가스).ToString("0.0") });
                     __data[41].Add(new { idx = i, val = (Qtot_a_가스 / Area_가스).ToString("0.0") });
 
                     double SavingPercent_mth_avg_가스 = 0; double Saving_mth_avg_가스 = 0; double Saving_a_가스 = 0;
@@ -336,12 +325,6 @@ namespace main.contents.Result.Building_Report
                     data.Add(new { cname = "SavingPercent_mth_avg", data = __data[45] });
                     data.Add(new { cname = "Saving_mth", data = __data[46] });
 
-                    data.Add(new { cname = "qreg_mth_old", data = __data[100] });
-                    data.Add(new { cname = "qreg_a_old", data = __data[101] });
-                    data.Add(new { cname = "qreg_a_area_old", data = __data[102] });
-                    data.Add(new { cname = "qreg_mth_new", data = __data[103] });
-                    data.Add(new { cname = "qreg_a_new", data = __data[104] });
-                    data.Add(new { cname = "qreg_a_area_new", data = __data[105] });
                     data.Add(new { cname = "tCO2", data = __data[106] });
                     data.Add(new { cname = "toe", data = __data[107] });
                     #endregion

@@ -220,7 +220,7 @@ namespace main.contents.Result.Building_Report
                 __data[12].Add(new { idx = i * 13 + 12, val = Quse_gas_a[2].ToString("#,##0") });
                 __data[13].Add(new { idx = i * 13 + 12, val = Quse_gas_a[3].ToString("#,##0") });
 
-                double Qh_a_가스 = 0, Qc_a_가스 = 0, Qw_a_가스 = 0, Ql_a_가스 = 0, Qv_a_가스 = 0, Qbase_a_가스 = 0, Qreg_a_가스 = 0, Qtot_a_가스 = 0;
+                double Qh_a_가스 = 0, Qc_a_가스 = 0, Qw_a_가스 = 0, Ql_a_가스 = 0, Qv_a_가스 = 0, Qbase_a_가스 = 0, Qtot_a_가스 = 0;
                 double[] Qtot_mth_가스 = new double[12];
                 double Error_mth_avg_가스 = 0;
                 double max_use = 0;
@@ -248,7 +248,6 @@ namespace main.contents.Result.Building_Report
                         조명가스소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Final[0][3])), 3) + 0);
                         공조가스소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Final[0][4])), 3) + 0);
                         기저가스소요량chart.Add(Math.Round(Double.Parse(Program.UTIL.asFixed(Final[0][5])), 3) + 0);
-                        string[][] PV = Program.DB.getValue(DB.type.ProjDB, "PV_Result", "PV생산량", "월 ='" + (mth + 1).ToString() + "월'");
 
                         __data[101].Add(new { idx = i * 13 + mth, val = Convert.ToDouble(Final[0][7]).ToString("#,##0") }); //월별 신재생 
                         Qtot_mth_가스[mth] = Convert.ToDouble(Final[0][8]);
@@ -275,11 +274,10 @@ namespace main.contents.Result.Building_Report
                         Ql_a_가스 += Convert.ToDouble(Final[0][3]);
                         Qv_a_가스 += Convert.ToDouble(Final[0][4]);
                         Qbase_a_가스 += Convert.ToDouble(Final[0][5]);
-                        Qreg_a_가스 += Convert.ToDouble(Final[0][7]);
                     }
                 }
 
-                Qtot_a_가스 = Qh_a_가스 + Qc_a_가스 + Qw_a_가스 + Ql_a_가스 + Qv_a_가스 + Qbase_a_가스 - Qreg_a_가스;
+                Qtot_a_가스 = Qh_a_가스 + Qc_a_가스 + Qw_a_가스 + Ql_a_가스 + Qv_a_가스 + Qbase_a_가스;
                 double tCO2 = (Qtot_a_가스 - Qbase_a_가스) / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
                 double TOE = (Qtot_a_가스 - Qbase_a_가스 )/ 38.9 / 0.277778 * 0.00103;
                 __data[104].Add(new { idx = i, val = (tCO2).ToString("0.0") }); //온실가스
@@ -291,7 +289,6 @@ namespace main.contents.Result.Building_Report
                 __data[17].Add(new { idx = i * 13 + 12, val = Ql_a_가스.ToString("#,##0") }); //월별 조명 
                 __data[18].Add(new { idx = i * 13 + 12, val = Qv_a_가스.ToString("#,##0") }); //월별 공조
                 __data[19].Add(new { idx = i * 13 + 12, val = Qbase_a_가스.ToString("#,##0") }); //월별 기저 
-                __data[101].Add(new { idx = i * 13 + 12, val = Qreg_a_가스.ToString("#,##0") }); //월별 신재생 
                 __data[20].Add(new { idx = i * 13 + 12, val = Qtot_a_가스.ToString("#,##0") }); //월별 전기 에너지소요량 
 
                 __data[21].Add(new { idx = i, val = Qh_a_가스.ToString("#,##0") });
@@ -301,7 +298,6 @@ namespace main.contents.Result.Building_Report
                 __data[25].Add(new { idx = i, val = Qv_a_가스.ToString("#,##0") });
                 __data[26].Add(new { idx = i, val = Qbase_a_가스.ToString("#,##0") });
                 __data[27].Add(new { idx = i, val = Qtot_a_가스.ToString("#,##0") });
-                __data[102].Add(new { idx = i, val = Qreg_a_가스.ToString("#,##0") });
 
 
                 __data[32].Add(new { idx = i, val = (Qh_a_가스 / Area).ToString("0.0") });
@@ -311,7 +307,6 @@ namespace main.contents.Result.Building_Report
                 __data[36].Add(new { idx = i, val = (Qv_a_가스 / Area).ToString("0.0") });
                 __data[37].Add(new { idx = i, val = (Qbase_a_가스 / Area).ToString("0.0") });
                 __data[38].Add(new { idx = i, val = (Qtot_a_가스 / Area).ToString("0.0") });
-                __data[103].Add(new { idx = i, val = (Qreg_a_가스 / Area).ToString("0.0") });
 
                 double Error_a_가스 = 0;
                 if (check_use)
@@ -401,9 +396,6 @@ namespace main.contents.Result.Building_Report
                 data.Add(new { cname = "error_mth_avg", data = __data[40] });
                 data.Add(new { cname = "error_a", data = __data[41] });
 
-                data.Add(new { cname = "qreg_mth", data = __data[101] }); ;
-                data.Add(new { cname = "qreg_a", data = __data[102] });
-                data.Add(new { cname = "qreg_a_area", data = __data[103] });
                 data.Add(new { cname = "tCO2", data = __data[104] });
                 data.Add(new { cname = "toe", data = __data[105] });
 
