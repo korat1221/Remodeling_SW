@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using main.subcontents.EquipmentList;
+using main.subcontents;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Diagnostics.Eventing.Reader;
@@ -17,7 +19,8 @@ namespace main
         public String SelectDH_nonsplit;
         public String SelectSolar_nonsplit, SolarNum_nonsplit, SolarDirection_nonsplit, SolarDegree_nonsplit; public String SelectFC_nonsplit, FCNum_nonsplit, FCElecInstall_nonsplit, FCElecHeat_nonsplit;
         public String[] SelectHP_nonsplit = new String[3], HPNum_nonsplit = new String[3], HPSupply_nonsplit = new String[3], HPControl_nonsplit = new String[3]; //외기/지열/지하수 순 
-        String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; int Pump1Count, Pump2Count;
+        String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; int Pump1Count, Pump2Count; double Pump1Volume, Pump2Volume,Pump1Head,Pump2Head;
+        String GPumpMethod, GPump1, GPump2, GPump1Valve, GPump2Valve, GPump1Control, GPump2Control; int GPump1Count, GPump2Count; double GPump1Volume, GPump2Volume, GPump1Head, GPump2Head;
         public String ce1Type, ce2Type; int ce_SelectRow;
         public ArrayList ce_Type1 = new ArrayList(); public ArrayList ce_Type2 = new ArrayList(); public ArrayList Pump = new ArrayList();
         String StorageUse, StoragePumpUse, StoragePump; public double Vs;
@@ -51,9 +54,9 @@ namespace main
         public double[] Wh_ce_z = new double[12], Wh_d_z = new double[12], Wh_s_z = new double[12];
         public double[] Qhb_ahu = new double[12], Qh_ce_ahu = new double[12], Qh_d_ahu = new double[12], Qh_s_ahu = new double[12], Qh_outg_ahu = new double[12];
         public double[] Wh_ce_ahu = new double[12], Wh_d_ahu = new double[12], Wh_s_ahu = new double[12];
-
-        double[] Qfc_heat = new double[12], Qfc_elec = new double[12];
-        double[] Qfc_f= new double[12];
+        public  double[] Eth_gen_out = new double[12];// 연료전지 열 생산량
+        public double[] Eel_gen_out = new double[12];//연료전지 전기생산량
+        public double[] Egen_in = new double[12];//연료전지 연료소비량 
 
         public double[] Qh_sol = new double[12];
         string[][] 프로젝트번호 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
@@ -474,20 +477,104 @@ namespace main
 
         public void Load_PumpData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수", "번호 = '" + HeatingNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수,펌프1유량,펌프2유량,펌프1양정,펌프2양정", "번호 = '" + HeatingNum + "'");
             if (Value.Length > 0)
             {
-                PumpUse = Value[0][0];
-                PumpMethod = Value[0][1];
-
-                Pump1 = Value[0][2];
-                Pump2 = Value[0][3];
-                Pump1Valve = Value[0][4];
-                Pump2Valve = Value[0][5];
-                Pump1Control = Value[0][6];
-                Pump2Control = Value[0][7];
-                Pump1Count = Convert.ToInt16(Value[0][8]);
-                Pump2Count = Convert.ToInt16(Value[0][9]);
+                if (PumpUse == "펌프 있음")
+                {
+                    ArrayList arr = new ArrayList();
+                    arr = Split_(Value[0][1]);
+                    PumpMethod = arr[0].ToString();
+                    if (arr.Count > 1)
+                    {
+                        GPumpMethod = arr[1].ToString();
+                    }
+                    ///
+                    arr = Split_(Value[0][2]);
+                    Pump1 = arr[0].ToString();
+                    if (arr.Count > 1)
+                    {
+                        GPump1 = arr[1].ToString();
+                    }
+                    ///
+                    arr = Split_(Value[0][3]);
+                    Pump2 = arr[0].ToString();
+                    if (arr.Count > 1)
+                    {
+                        GPump2 = arr[1].ToString();
+                    }
+                    ///
+                    arr = Split_(Value[0][4]);
+                    Pump1Valve = arr[0].ToString();
+                    if (arr.Count > 1)
+                    {
+                        GPump1Valve = arr[1].ToString();
+                    }
+                    ///
+                    arr = Split_(Value[0][5]);
+                    Pump2Valve = arr[0].ToString();
+                    if (arr.Count > 1)
+                    {
+                        GPump2Valve = arr[1].ToString();
+                    }
+                    ///
+                    arr = Split_(Value[0][6]);
+                    Pump1Control = arr[0].ToString();
+                    if (arr.Count > 1)
+                    {
+                        GPump1Control = arr[1].ToString();
+                    }
+                    ///
+                    arr = Split_(Value[0][7]);
+                    Pump2Control = arr[0].ToString();
+                    if (arr.Count > 1)
+                    {
+                        GPump2Control = arr[1].ToString();
+                    }
+                    ///
+                    arr = Split_(Value[0][8]);
+                    Pump1Count = Convert.ToInt16(arr[0].ToString());
+                    if (arr.Count > 1)
+                    {
+                        GPump1Count = Convert.ToInt16(arr[1].ToString());
+                    }
+                    ///
+                    arr = Split_(Value[0][9]);
+                    Pump2Count = Convert.ToInt16(arr[0].ToString());
+                    if (arr.Count > 1)
+                    {
+                        GPump2Count = Convert.ToInt16(arr[1].ToString());
+                    }
+                    ///
+                    arr = Split_(Value[0][10]);
+                    Pump1Volume = Convert.ToDouble(arr[0].ToString());
+                    if (arr.Count > 1)
+                    {
+                        GPump1Volume = Convert.ToDouble(arr[1].ToString());
+                    }
+                    ///
+                    arr = Split_(Value[0][11]);
+                    Pump2Volume = Convert.ToDouble(arr[0].ToString());
+                    if (arr.Count > 1)
+                    {
+                        GPump2Volume = Convert.ToDouble(arr[1].ToString());
+                    }
+                    ///
+                    arr = Split_(Value[0][12]);
+                    Pump1Head = Convert.ToDouble(arr[0].ToString());
+                    if (arr.Count > 1)
+                    {
+                        GPump1Head = Convert.ToDouble(arr[1].ToString());
+                    }
+                    ///
+                    arr = Split_(Value[0][13]);
+                    Pump2Head = Convert.ToDouble(arr[0].ToString());
+                    if (arr.Count > 1)
+                    {
+                        GPump2Head = Convert.ToDouble(arr[1].ToString());
+                    }
+                    ///
+                }
             }
         }
 
@@ -1005,112 +1092,59 @@ namespace main
             }
             //펌프
             {
-                string[][] Value = Program.DB.getValue(ProjNum, "User_Pump", "A효율,B효율,유량,동력,양정,대수", "번호 = '" + Pump1 + "'");
-                string[][] Value2 = Program.DB.getValue(ProjNum, "User_Pump", "A효율,B효율,유량,동력,양정,대수", "번호 = '" + Pump2 + "'");
+                
                 Pump.Clear();
+                string[][] Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + Pump1 + "'");
                 if (Value.Length > 0)
-                {
-                    for (int n = 0; n < Value.Length; n++)
-                    {
-                        String Num_pump; double A_pump; double B_pump; double V_pump; double Power_pump; double H_pump; double count_pump;
-                        double Cp1, Cp2, Ppump, fhydr = 1, dPz, f_dpm;
-                        double[] Vz = new double[12], P_hydr = new double[12], fe = new double[12], e_hydr = new double[12], Wh_hydr = new double[12];
-                        double theta;
-                        Num_pump = Pump1;
-                        A_pump = Value[0][0]!=""? Convert.ToDouble(Value[0][0]) :0  ;
-                        B_pump = Convert.ToDouble(Value[0][1]);
-                        V_pump = Convert.ToDouble(Value[0][2]);
-                        Power_pump = Convert.ToDouble(Value[0][3]);
-                        H_pump = Convert.ToDouble(Value[0][4]);
-                        count_pump = Convert.ToDouble(Value[0][5]);
-                        Pump pump1 = new Pump(Num_pump, A_pump, B_pump, V_pump, Power_pump, H_pump, Pump1Count, Pump1Valve, Pump1Control); ;
-                        Pump.Add(pump1);
-                        string[][] Value_Control = Program.DB.getValue(DB.type.BaseDB_Heating, "펌프제어", "Cp1,Cp2", "펌프제어 = '" + Pump1Control + "'");
-                        Cp1 = Convert.ToDouble(Value_Control[0][0]);
-                        Cp2 = Convert.ToDouble(Value_Control[0][1]);
-                        if (Pump1Valve == "있음")
-                        {
-                            fhydr = 1;
-                        }
-                        else
-                        {
-                            fhydr = 1.25;
-                        }
-                        if (Pump1 == null || Pump1 == "")
-                        {
-                            f_dpm = 1;
-                        }
-                        else
-                        {
-                            f_dpm = 0.45;
-                        }
-                        dPz = H_pump * 1000 * 9.81;
-                        for (int mth = 0; mth < 12; mth++)
-                        {
-                            if (Value2.Length > 0)
-                            { Vz[mth] = Qh_max_sum / 1000 * Convert.ToDouble(Value[0][3]) * Pump1Count / (Convert.ToDouble(Value[0][3]) * Pump1Count + Convert.ToDouble(Value2[0][3]) * Pump2Count) * 3.6 / (dtheta_d[mth] * 4.18); } //2개일 경우 펌프 파워별로 나눠서 분담한 것으로 계산 
-                            else
-                            { Vz[mth] = Qh_max_sum / 1000 * 3.6 / (dtheta_d[mth] * 4.18); } //2개일 경우 펌프 파워별로 나눠서 분담한 것으로 계산 
-                            P_hydr[mth] = dPz * Vz[mth] / 3600;
-                            fe[mth] = (Power_pump / P_hydr[mth]) ;
-                            e_hydr[mth] = fe[mth] * (Cp1 + Cp2 / beta_h_d[mth]) * 0.25 / 0.25;
-                            Wh_hydr[mth] = P_hydr[mth] / 1000 * beta_h_d[mth] * th_avg[mth] * f_dpm * 1;
-                            Wh_d[mth] = Wh_hydr[mth] * e_hydr[mth];
-                        }
-                    }
-                    if (Value2.Length > 0)
-                    {
-                        for (int n = 0; n < Value2.Length; n++)
-                        {
-                            String Num_pump; double A_pump; double B_pump; double V_pump; double Power_pump; double H_pump; double count_pump;
-                            double Cp1, Cp2, Ppump, fhydr = 1, dPz, f_dpm;
-                            double[] Vz = new double[12], P_hydr = new double[12], fe = new double[12], e_hydr = new double[12], Wh_hydr = new double[12];
-                            double theta;
-                            Num_pump = Pump1;
-                            A_pump = Value2[0][0] != "" ? Convert.ToDouble(Value2[0][0]) : 0;
-                            B_pump = Convert.ToDouble(Value2[0][1]);
-                            V_pump = Convert.ToDouble(Value2[0][2]);
-                            Power_pump = Convert.ToDouble(Value2[0][3]);
-                            H_pump = Convert.ToDouble(Value2[0][4]);
-                            count_pump = Convert.ToDouble(Value2[0][5]);
-                            Pump pump1 = new Pump(Num_pump, A_pump, B_pump, V_pump, Power_pump, H_pump, Pump1Count, Pump1Valve, Pump1Control); ;
-                            Pump.Add(pump1);
-                            string[][] Value_Control = Program.DB.getValue(DB.type.BaseDB_Heating, "펌프제어", "Cp1,Cp2", "펌프제어 = '" + Pump1Control + "'");
-                            Cp1 = Convert.ToDouble(Value_Control[0][0]);
-                            Cp2 = Convert.ToDouble(Value_Control[0][1]);
-                            if (Pump1Valve == "있음")
-                            {
-                                fhydr = 1;
-                            }
-                            else
-                            {
-                                fhydr = 1.25;
-                            }
-                            if (Pump1 == null || Pump1 == "")
-                            {
-                                f_dpm = 1;
-                            }
-                            else
-                            {
-                                f_dpm = 0.45;
-                            }
-                            dPz = H_pump * 1000 * 9.81;
-                            for (int mth = 0; mth < 12; mth++)
-                            {
-                                if (Value2.Length > 0)
-                                { Vz[mth] = Qh_max_sum / 1000 * Convert.ToDouble(Value2[0][3]) * Pump2Count / (Convert.ToDouble(Value[0][3]) * Pump1Count + Convert.ToDouble(Value2[0][3]) * Pump2Count) * 3.6 / (dtheta_d[mth] * 4.18); } //2개일 경우 펌프 파워별로 나눠서 분담한 것으로 계산 
-                                else
-                                { Vz[mth] = Qh_max_sum / 1000 * 3.6 / (dtheta_d[mth] * 4.18); } //2개일 경우 펌프 파워별로 나눠서 분담한 것으로 계산 
-                                P_hydr[mth] = dPz * Vz[mth] / 3600;
-                                fe[mth] = (Power_pump/ P_hydr[mth]) ;
-                                e_hydr[mth] = fe[mth] * (Cp1 + Cp2 / beta_h_d[mth]) * 0.25 / 0.25;
-                                Wh_hydr[mth] = P_hydr[mth] / 1000 * beta_h_d[mth] * th_avg[mth] * f_dpm * 1;
-                                Wh_d[mth] += Wh_hydr[mth] * e_hydr[mth] + Wh_d[mth];
-                            }
-                        }
-                    }
-                }
-
+                { Cal_Pump(Pump1, Pump1Valve, Pump1Control, Pump1Count, Pump1Volume, Pump1Head, Convert.ToDouble(Value[0][0])); }
+                Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + Pump2 + "'");
+                if (Value.Length > 0)
+                { Cal_Pump(Pump2, Pump2Valve, Pump2Control, Pump2Count, Pump2Volume, Pump2Head, Convert.ToDouble(Value[0][0])); }
+                Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + GPump1 + "'");
+                if (Value.Length > 0)
+                { Cal_Pump(GPump1, GPump1Valve, GPump1Control, GPump1Count, GPump1Volume, GPump1Head, Convert.ToDouble(Value[0][0])); }
+                Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + GPump2 + "'");
+                if (Value.Length > 0)
+                { Cal_Pump(GPump2, GPump2Valve, GPump2Control, GPump2Count, GPump2Volume, GPump2Head, Convert.ToDouble(Value[0][0])); }
+            }
+        }
+        private void Cal_Pump( string Pump, string PumpValve, string PumpControl, int PumpCount, double PumpVolume, double PumpHead, double PumpPower)
+        {
+            String Num_pump; 
+            double Cp1, Cp2, Ppump, fhydr = 1, dPz, f_dpm;
+            double[] Vz = new double[12], P_hydr = new double[12], fe = new double[12], e_hydr = new double[12], Wh_hydr = new double[12];
+            double theta;
+            Num_pump = Pump;
+            Pump pump1 = new Pump(Num_pump, PumpVolume, PumpPower, PumpHead, PumpCount, PumpValve, PumpControl); ;
+            this.Pump.Add(pump1);
+            string[][] Value_Control = Program.DB.getValue(DB.type.BaseDB_Heating, "펌프제어", "Cp1,Cp2", "펌프제어 = '" + PumpControl + "'");
+            Cp1 = Convert.ToDouble(Value_Control[0][0]);
+            Cp2 = Convert.ToDouble(Value_Control[0][1]);
+            if (PumpValve == "있음")
+            {
+                fhydr = 1;
+            }
+            else
+            {
+                fhydr = 1.25;
+            }
+            if (Pump == null || Pump == "")
+            {
+                f_dpm = 1;
+            }
+            else
+            {
+                f_dpm = 0.45;
+            }
+            dPz = PumpHead * 1000 * 9.81;
+            for (int mth = 0; mth < 12; mth++)
+            {
+                Vz[mth] = Qh_max_sum / 1000 * 3.6 / (dtheta_d[mth] * 4.18);
+                P_hydr[mth] = dPz * Vz[mth] / 3600;
+                fe[mth] = (PumpPower * PumpCount / P_hydr[mth]);
+                e_hydr[mth] = fe[mth] * (Cp1 + Cp2 / beta_h_d[mth]) * 0.25 / 0.25;
+                Wh_hydr[mth] = P_hydr[mth] / 1000 * beta_h_d[mth] * th_avg[mth] * f_dpm * 1;
+                Wh_d[mth] = Wh_hydr[mth] * e_hydr[mth];
             }
         }
         public void Calc_beta_s()
@@ -1203,28 +1237,31 @@ namespace main
 
                     double Pfc_th = power_th * FC_nea;
                     double Pfc_el = power_el * FC_nea;
-                    Calc_FC(Pfc_th, Pfc_el, eta_th, eta_el, eta_tot, FCElecInstall_split[n].ToString(), FCElecHeat_split[n].ToString(), FC_nea);
+                    Calc_FC(ProjNum, SelectFC_split[n].ToString(), Pfc_th, Pfc_el, eta_th, eta_el, eta_tot, FCElecInstall_split[n].ToString(), FCElecHeat_split[n].ToString(), FC_nea);
                 }
             }
         }
 
-        private void Calc_FC(double Pfc_th, double Pfc_el, double eta_th, double eta_el, double eta_tot, string FCElecInstall,string FCElecHeat, int FC_nea)
+        private void Calc_FC(string ProjNum, string FCNum, double Pfc_th, double Pfc_el, double eta_th, double eta_el, double eta_tot, string FCElecInstall,string FCElecHeat, int FC_nea)
         {
             double top = 0;
             double Pth_min = 0, Pls_sb = 0, Pth_sb = 0, Pel_out_sb = 0, Paux_sb = 0, Ppilot = 0;
-            double[] Qw_outg = new double[12];
+            double[] Qw_outg = new double[12]; string DHWNum = "";
             double[] QCHW_gen_out = new double[12];
-            double[] dop = new double[12], Pth_gen_out = new double[12], Eth_gen_out = new double[12];
-            double[] Eth_gen_out_h = new double[12], Eth_gen_out_w = new double[12];
-            double[] Pel_gen_out = new double[12], Eel_gen_out = new double[12];
+            double[] dop = new double[12], Pth_gen_out = new double[12]; 
+            double[] Eth_gen_out_h = new double[12],Eth_gen_out_w = new double[12];
+            double[] Pel_gen_out = new double[12]; 
             double Pgen_ls_sb = 0, Pgen_in_chp = 0, Pgen_ls_chp = 0;
             double[] pgen_ls = new double[12], Qgen_ls = new double[12];
-            double[] Pgen_in = new double[12], Egen_in = new double[12];
-            double[] Egen_in_h = new double[12], Egen_in_c = new double[12], Egen_in_w = new double[12], Egen_in_v = new double[12], Egen_in_l = new double[12];
-
+            double[] Pgen_in = new double[12];
+            //string[][] DValue = Program.DB.querySQL(ProjNum, "Select b.번호 From DHWSystem_Result as a Inner Join DHWSystem_Form as b on a.번호=b.번호 Where a.연료전지번호='" + FCNum + "' and 월='" + mth + "월'");
+            //if(DValue.Length >0)
+            //{
+            //    DHNum = DValue[0][0];
+            //}
             for (int mth = 0; mth < 12; mth++)
             {
-                //string[][] DValue = Program.DB.querySQL(ProjNum, "Select b.Qw_outg From DHWSystem_Result as a Inner Join DHWSystem_Form as b on a.번호=b.번호 Where a.연료전지번호='" + SelectFC_split[n].ToString() + "' and 월='" + mth + "월'");
+                //DValue = Program.DB.querySQL(ProjNum, "Select b.Qw_outg,b.번호 From DHWSystem_Result as a Inner Join DHWSystem_Form as b on a.번호=b.번호 Where a.연료전지번호='" + FCNum + "' and 월='" + mth + "월'");
                 //if(DValue.Length >0)
                 //{
                 //    Qw_outg[mth]= Convert.ToDouble(DValue[0][0]);
@@ -1249,6 +1286,8 @@ namespace main
             }
             for(int mth=0; mth < 12; mth ++)
             {
+                Pel_gen_out[mth] = Pel_out_sb + (Pfc_el - Pel_out_sb) * ((Pth_gen_out[mth] - Pth_sb) / (Pfc_th / FC_nea - Pth_sb));
+                Eel_gen_out[mth] = Pel_gen_out[mth] * top * dop[mth];
                 Pgen_ls_sb = Pls_sb + Ppilot;
                 Pgen_in_chp = Pfc_th / FC_nea / eta_th;
                 Pgen_ls_chp = (1 - eta_th - eta_el) * Pgen_in_chp;
@@ -1262,9 +1301,62 @@ namespace main
                     Qh_outg[mth] = Qh_outg[mth] - Eth_gen_out[mth];
                 }
             }
-            
+            Boolean Now_Check = true;
+            if (ProjNum == 프로젝트번호[0][0])
+            { Now_Check = true; }
+            else
+            { Now_Check = false; }
+            if (Now_Check) {
+              //  Save_FC(DHWNum,FCNum); 
+            }
         }
-
+        private void Save_FC(string DHWNum, string FCNum)
+        {
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
+            string RESystemNum = "";
+            string[][] value = Program.DB.getValue(DB.type.ProjDB,"RESystem_Result", "번호", "난방설비='" + HeatingNum + "' and 신재생시스템='"+FCNum+"'");
+            if (value.Length > 0)
+            {
+                RESystemNum = value[0][0];
+            }
+            else
+            {
+                RESystemNum = Program.UTIL.CreateNum("RESystem_Result", "번호", "RE");
+            }
+            for (int mth = 0; mth <= 11; mth++)
+            {
+                string MTH = (mth + 1).ToString() + "월";
+                Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                 "월," +
+                 "난방설비,급탕설비,신재생시스템,신재생시스템유형,생산소비,생산유형,총에너지",
+                 "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + RESystemNum + "','" + MTH + "','" +
+                HeatingNum + "','" + DHWNum + "','" + FCNum + "','연료전지','생산','열','" +
+                Eth_gen_out[mth]
+                  + "'", "번호,월,생산소비,생산유형"); ;
+            }
+            for (int mth = 0; mth <= 11; mth++)
+            {
+                string MTH = (mth + 1).ToString() + "월";
+                Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                 "월," +
+                 "난방설비,급탕설비,신재생시스템,신재생시스템유형,생산소비,생산유형,총에너지",
+                 "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + RESystemNum + "','" + MTH + "','" +
+                HeatingNum + "','" + DHWNum + "','" + FCNum + "','연료전지','생산','전기','" +
+                Eel_gen_out[mth]
+                  + "'", "번호,월,생산소비,생산유형"); ;
+            }
+            for (int mth = 0; mth <= 11; mth++)
+            {
+                string MTH = (mth + 1).ToString() + "월";
+                Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                 "월," +
+                 "난방설비,급탕설비,신재생시스템,신재생시스템유형,생산소비,소비연료,총에너지",
+                 "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + RESystemNum + "','" + MTH + "','" +
+                HeatingNum + "','" + DHWNum + "','" + FCNum + "','연료전지','소비','가스','" +
+                Egen_in[mth]
+                  + "'", "번호,월,생산소비,소비연료"); ;
+            }
+        }
         public void LoadCalc_Boiler(string ProjNum)
         {
             for (int n = 0; n < SelectBoiler_split.Count; n++)
@@ -1380,13 +1472,26 @@ namespace main
 
         public void Calc_Solar(Solar solar,string direction, string degree)
         {
+            
+
             double qsol_HN_d, dtheta_korr;
             double[] qsol_HN_mth = new double[12], eta = new double[12], qsol_mth = new double[12], Qsol_mth = new double[12],  Wh_gen = new double[12];
             string[][] Solarvalue;
             double Ac;
-
+            double[] Qw_outg = new double[12]; string DHNum = "";
+            string[][] DValue = Program.DB.querySQL(DB.type.ProjDB, "Select b.번호 From DHWSystem_Result as a Inner Join DHWSystem_Form as b on a.번호=b.번호 Where a.태양열번호='" + solar.Num + "'");
+            if(DValue.Length >0)
+            {
+                DHNum = DValue[0][0];
+            }
             for (int mth = 0; mth < 12; mth++)
             {
+                 DValue = Program.DB.querySQL(DB.type.ProjDB, "Select b.Qw_outg,b.번호 From DHWSystem_Result as a Inner Join DHWSystem_Form as b on a.번호=b.번호 Where a.태양열번호='" + solar.Num + "' and 월='" + mth + "월'");
+                if (DValue.Length > 0)
+                {
+                    Qw_outg[mth] = Convert.ToDouble(DValue[0][0]);
+                }
+
                 string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "'and 방향='" + direction+ "' and 각도 ='" +degree + "' and 기간 ='" + (mth + 1) + "월'");
                 qsol_HN_d = Convert.ToDouble(value[0][0]);
                 qsol_HN_mth[mth] = qsol_HN_d * dmth[mth] * 24 / 1000;
@@ -1408,7 +1513,7 @@ namespace main
                 qsol_mth[mth] = eta[mth] * qsol_HN_mth[mth];
                 Qsol_mth[mth] = qsol_mth[mth] * solar.M_Area() * solar.M_Count() / 1.03 / 1.03;
                 if (MainSystem != "태양열 융합 히트펌프")
-                { Qh_sol[mth] = Math.Min(Qsol_mth[mth], Qh_outg[mth]); }
+                { Qh_sol[mth] = Math.Min(Qsol_mth[mth], (Qh_outg[mth] + Qw_outg[mth])); }
 
                 Wh_gen[mth] = 0.025 * Qh_sol[mth];
             }
@@ -1416,6 +1521,45 @@ namespace main
             {
                 Wh_g[mth] = Wh_g[mth] + Wh_gen[mth];
                 Qh_outg[mth] = Qh_outg[mth] - Qh_sol[mth];
+            }
+
+            Save_Solar (DHNum, solar.Num());
+        }
+
+        private void Save_Solar(string DHWNum, string SolarNum)
+        {
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
+            string RESystemNum = "";
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "신재생시스템='" + SolarNum + "'");
+            if (value.Length > 0)
+            {
+                RESystemNum = value[0][0];
+            }
+            else
+            {
+                RESystemNum = Program.UTIL.CreateNum("RESystem_Result", "번호", "RE");
+            }
+            for (int mth = 0; mth <= 11; mth++)
+            {
+                string MTH = (mth + 1).ToString() + "월";
+                Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                 "월," +
+                 "난방설비,급탕설비,신재생시스템,신재생시스템유형,생산소비,생산유형,총에너지",
+                 "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + RESystemNum + "','" + MTH + "','" +
+                HeatingNum + "','" + DHWNum + "','" + SolarNum + "','태양열시스템','생산','열','" +
+                 Qh_sol[mth]
+                  + "'", "번호,월,생산소비,생산유형"); ;
+            }
+            for (int mth = 0; mth <= 11; mth++)
+            {
+                string MTH = (mth + 1).ToString() + "월";
+                Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                 "월," +
+                 "난방설비,급탕설비,신재생시스템,신재생시스템유형,생산소비,소비연료,총에너지",
+                 "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + RESystemNum + "','" + MTH + "','" +
+                HeatingNum + "','" + DHWNum + "','" + SolarNum + "','태양열시스템','소비','전기','" +
+                (0.025 * Qh_sol[mth])
+                  + "'", "번호,월,생산소비,소비연료") ;
             }
         }
 
@@ -1982,6 +2126,8 @@ namespace main
                     }
 
                 }
+
+                Save_GroundHP(SelectGroundHP_split[n].ToString(), "지하수 히트펌프", Qh_outg_sng_i);
             }             
         }
 
@@ -2031,7 +2177,7 @@ namespace main
             double[] Qh_outg_sng_i = new double[12], COPhp_pint_i = new double[12], FC = new double[12], fpint = new double[12], COPpint_i = new double[12];
 
 
-            for (int n = 0; n < SelectGroundHP_split.Count; n++)
+            for (int n = 0; n < SelectGWHP_split.Count; n++)
             {
                 for (int mth = 0; mth < 12; mth++)
                 {
@@ -2174,10 +2320,51 @@ namespace main
                     }
 
                 }
+
+                Save_GroundHP(SelectGWHP_split[n].ToString(), "지하수 히트펌프", Qh_outg_sng_i);
             }
         }
 
 
+
+        private void Save_GroundHP(string Num, string 지열지하수, double[] Qh_outg)
+        {
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
+            string RESystemNum = "";
+            string DHWNum = "";
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "신재생시스템='" + Num + "'");
+            if (value.Length > 0)
+            {
+                RESystemNum = value[0][0];
+            }
+            else
+            {
+                RESystemNum = Program.UTIL.CreateNum("RESystem_Result", "번호", "RE");
+            }
+            //for (int mth = 0; mth <= 11; mth++)
+            //{
+             
+            //    string MTH = (mth + 1).ToString() + "월";
+            //    Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호," +
+            //     "월," +
+            //     "난방설비,급탕설비,신재생시스템,신재생시스템유형,생산소비,생산유형,총에너지",
+            //     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + RESystemNum + "','" + MTH + "','" +
+            //    HeatingNum + "','" + DHWNum + "','" + Num + "','"+ 지열지하수 +"','생산','열','" +
+            //     Qh_outg[mth]
+            //      + "'", "번호,월,생산소비,생산유형"); ;
+            //}
+            //for (int mth = 0; mth <= 11; mth++)
+            //{
+            //    string MTH = (mth + 1).ToString() + "월";
+            //    Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호," +
+            //     "월," +
+            //     "난방설비,급탕설비,신재생시스템,신재생시스템유형,생산소비,소비연료,총에너지",
+            //     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + RESystemNum + "','" + MTH + "','" +
+            //    HeatingNum + "','" + DHWNum + "','" + Num + "','"+지열지하수+"','소비','전기','" +
+            //    Qh_f[mth]
+            //      + "'", "번호,월,생산소비,소비연료");
+            //}
+        }
 
 
         public void LoadCalc_ABS(string ProjNum)
@@ -2426,12 +2613,10 @@ namespace main
     }
     public class Pump
     {
-        String Num_pump; double A_pump; double B_pump; double V_pump; double Power_pump; double H_pump; double count_pump; String Valve_pump; String Control_pump;
-        public Pump(String Num, double A, double B, double V, double Power, double H, double count, String Valve, String Control)
+        String Num_pump;  double V_pump; double Power_pump; double H_pump; double count_pump; String Valve_pump; String Control_pump;
+        public Pump(String Num, double V, double Power, double H, double count, String Valve, String Control)
         {
             this.Num_pump = Num;
-            this.A_pump = A;
-            this.B_pump = B;
             this.V_pump = V;
             this.Power_pump = Power;
             this.H_pump = H;
@@ -2442,14 +2627,6 @@ namespace main
         public String Num()
         {
             return this.Num_pump;
-        }
-        public double A()
-        {
-            return this.A_pump;
-        }
-        public double B()
-        {
-            return this.B_pump;
         }
         public double V()
         {

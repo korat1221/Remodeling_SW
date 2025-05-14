@@ -1,4 +1,6 @@
-﻿namespace main
+﻿using System;
+
+namespace main
 {
     internal class Final
     {
@@ -6,9 +8,8 @@
         public double[] Qhf_gas = new double[12], Qhf_elec = new double[12];
         public double[] Qcf_gas = new double[12], Qcf_elec = new double[12];
         public double[] Qwf_gas = new double[12], Qwf_elec = new double[12];
-        public double[] Qlf_elec = new double[12];
-        public double[] Qvf_elec = new double[12]; //공조
-        public double[] Qreg_elec = new double[12];//신재생
+        public double[] Qlf_gas = new double[12], Qlf_elec = new double[12];
+        public double[] Qvf_gas = new double[12], Qvf_elec = new double[12];
         public double[] Qfwps = new double[12]; //풍력
         public double[] Qbase_gas = new double[12], Qbase_elec = new double[12];
         public double[] Qf_gas_tot1 = new double[12], Qf_elec_tot1 = new double[12];
@@ -16,9 +17,23 @@
         public double Qf_gas_tot_a, Qf_elec_tot_a; 
         public double[] Quse_gas_mth = new double[12], Quse_elec_mth = new double[12];
         public double Quse_gas_a, Quse_elec_a;
-      
+        public double[] Qreg_elec_tot = new double[12];//신재생
+
+        public double[] Qreg_elec_h = new double[12]; //용도별 전기생산량
+        public double[] Qreg_elec_c = new double[12];
+        public double[] Qreg_elec_w = new double[12];
+        public double[] Qreg_elec_l = new double[12];
+        public double[] Qreg_elec_v = new double[12];
+
+        public double[] Qreg_gas_h = new double[12]; //용도별 연료소비량
+        public double[] Qreg_gas_c = new double[12];
+        public double[] Qreg_gas_w = new double[12];
+        public double[] Qreg_gas_l = new double[12];
+        public double[] Qreg_gas_v = new double[12];
+        string[][] 프로젝트유형 = null;
         public Final(string ProjNum)
         {
+            프로젝트유형 = Program.DB.getValue(ProjNum, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
             #region 조명
             string[][] Num = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호");
             if (Num.Length > 0)
@@ -237,7 +252,7 @@
                 {
                     for (int i = 0; i < Value.Length; i++)
                     {
-                        Qreg_elec[mth] += Convert.ToDouble(Value[i][0]);
+                        Qreg_elec_tot[mth] += Convert.ToDouble(Value[i][0]);
                     }
                 }
                 Value = Program.DB.getValue(ProjNum, "WindPower_Result", "Qfwps", "월 ='" + (mth + 1).ToString() + "월'");
@@ -248,6 +263,7 @@
                         Qfwps[mth] += Convert.ToDouble(Value[i][0]);
                     }
                 }
+                
             }
         }
         public void Calc_Qtot()
@@ -257,6 +273,94 @@
                 Qf_elec_tot1[mth] = Qhf_elec[mth] + Qcf_elec[mth] + Qwf_elec[mth] + Qlf_elec[mth] + Qvf_elec[mth];
                 Qf_gas_tot1[mth] = Qhf_gas[mth] + Qcf_gas[mth] + Qwf_gas[mth];
             }
+           Calc_RESystem();
+        }
+
+        public void Calc_RESystem()
+        {
+            for(int mth =0; mth<12; mth++)
+            {
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호,총에너지", "생산유형='전기' and 월='" + (mth + 1) + "월'");
+                if(Value.Length > 0)
+                {
+                    for(int a=0; a < Value.Length; a++)
+                    {
+                        double h =0, c = 0, w = 0, l = 0, v = 0;
+
+                        h = Convert.ToDouble(Value[a][1]) * Qhf_elec[mth] / Qf_elec_tot1[mth];
+                        c = Convert.ToDouble(Value[a][1]) * Qcf_elec[mth] / Qf_elec_tot1[mth];
+                        w = Convert.ToDouble(Value[a][1]) * Qwf_elec[mth] / Qf_elec_tot1[mth];
+                        l = Convert.ToDouble(Value[a][1]) * Qlf_elec[mth] / Qf_elec_tot1[mth];
+                        v = Convert.ToDouble(Value[a][1]) * Qvf_elec[mth] / Qf_elec_tot1[mth];
+                        Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호,월,생산유형," +
+                       "난방,냉방,급탕,조명,공조,총에너지",
+                       "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + Value[a][0] + "','" + (mth+1) + "월','" + "전기" + "','" +
+                       h + "','" + c + "','" + w + "','" + l + "','" +
+                       v + "','" + Value[a][1]
+                       + "'", "번호,월,생산유형");
+                        Qreg_elec_h[mth] += h;
+                        Qreg_elec_c[mth] += c;
+                        Qreg_elec_w[mth] += w;
+                        Qreg_elec_l[mth] += l;
+                        Qreg_elec_v[mth] += v;
+                    }
+                   
+
+                }
+                Value = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호,총에너지,소비연료", "Not 소비연료='전기' and 월='" + (mth + 1) + "월'");
+                if (Value.Length > 0)
+                {
+                    for (int a = 0; a < Value.Length; a++)
+                    {
+                        double h = 0, c = 0, w = 0, l = 0, v = 0;
+                        h = Convert.ToDouble(Value[a][1]) * Qhf_elec[mth] / Qf_elec_tot1[mth]; //용도별 전기소요량 만큼씩 소비량 분배 
+                        c = Convert.ToDouble(Value[a][1]) * Qcf_elec[mth] / Qf_elec_tot1[mth];
+                        w = Convert.ToDouble(Value[a][1]) * Qwf_elec[mth] / Qf_elec_tot1[mth];
+                        l = Convert.ToDouble(Value[a][1]) * Qlf_elec[mth] / Qf_elec_tot1[mth];
+                        v = Convert.ToDouble(Value[a][1]) * Qvf_elec[mth] / Qf_elec_tot1[mth];
+
+                        Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호,월,소비연료," +
+                       "난방,냉방,급탕,조명,공조,총에너지",
+                       "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + Value[a][0] + "','" + (mth + 1) + "월','"+ Value[a][2] +"','" +
+                       h + "','" + c + "','" + w + "','" + l + "','" +
+                       v + "','" + Value[a][1]
+                       + "'", "번호,월,소비연료");
+
+                        Qreg_gas_h[mth] += h;
+                        Qreg_gas_c[mth] += c;
+                        Qreg_gas_w[mth] += w;
+                        Qreg_gas_l[mth] += l;
+                        Qreg_gas_v[mth] += v;
+                    }
+                }
+                Value = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호,총에너지", "소비연료='전기' and 월='" + (mth + 1) + "월'");
+                if (Value.Length > 0)
+                {
+                    for (int a = 0; a < Value.Length; a++)
+                    {
+                        double h = 0, c = 0, w = 0, l = 0, v = 0;
+                        h = Convert.ToDouble(Value[a][1]) * Qhf_elec[mth] / Qf_elec_tot1[mth]; //용도별 전기소요량 만큼씩 소비량 분배 
+                        c = Convert.ToDouble(Value[a][1]) * Qcf_elec[mth] / Qf_elec_tot1[mth];
+                        w = Convert.ToDouble(Value[a][1]) * Qwf_elec[mth] / Qf_elec_tot1[mth];
+                        l = Convert.ToDouble(Value[a][1]) * Qlf_elec[mth] / Qf_elec_tot1[mth];
+                        v = Convert.ToDouble(Value[a][1]) * Qvf_elec[mth] / Qf_elec_tot1[mth];
+
+                        Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호,월,소비연료," +
+                       "난방,냉방,급탕,조명,공조,총에너지",
+                       "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + Value[a][0] + "','" + (mth + 1) + "월','전기','" +
+                       h + "','" + c + "','" + w + "','" + l + "','" +
+                       v + "','" + Value[a][1]
+                       + "'", "번호,월,소비연료");
+
+                        Qreg_gas_h[mth] += h;
+                        Qreg_gas_c[mth] += c;
+                        Qreg_gas_w[mth] += w;
+                        Qreg_gas_l[mth] += l;
+                        Qreg_gas_v[mth] += v;
+                    }
+                }
+            }
+           
         }
           public void Calc_Qbase_elec()
           {
@@ -268,7 +372,7 @@
             double[] Error_elec = new double[12];
             for (int mth = 0; mth < 12; mth++)
             {
-                Error_elec[mth] = Quse_elec_mth[mth] - Qf_elec_tot1[mth] + Qreg_elec[mth];
+                Error_elec[mth] = Quse_elec_mth[mth] - Qf_elec_tot1[mth] + Qreg_elec_tot[mth];
                 x[mth] = Qhf_elec[mth]; y[mth] = Error_elec[mth];
             }
 
@@ -309,7 +413,12 @@
             }
              for (int mth = 0; mth < 12; mth++)
             {
-                Qf_elec_tot_mth[mth] = Qf_elec_tot1[mth] + Qbase_elec[mth] - Qreg_elec[mth];
+                Qhf_elec[mth] = Math.Max(0, Qhf_elec[mth] - Qreg_elec_h[mth]);
+                Qcf_elec[mth] = Math.Max(0, Qcf_elec[mth] - Qreg_elec_c[mth]);
+                Qwf_elec[mth] = Math.Max(0, Qwf_elec[mth] - Qreg_elec_w[mth]);
+                Qlf_elec[mth] = Math.Max(0, Qlf_elec[mth] - Qreg_elec_l[mth]);
+                Qvf_elec[mth] = Math.Max(0, Qvf_elec[mth] - Qreg_elec_v[mth]);
+                Qf_elec_tot_mth[mth] = Qhf_elec[mth] + Qcf_elec[mth] + Qwf_elec[mth] + Qlf_elec[mth] + Qvf_elec[mth] + Qbase_elec[mth];
             }
         }
 
@@ -367,7 +476,12 @@
             }
             for (int mth = 0; mth < 12; mth++)
             {
-                Qf_gas_tot_mth[mth] = Qf_gas_tot1[mth] + Qbase_gas[mth];
+                Qhf_gas[mth] = Qhf_gas[mth] + Qreg_gas_h[mth];
+                Qcf_gas[mth] = Qcf_gas[mth] + Qreg_gas_c[mth];
+                Qwf_gas[mth] = Qwf_gas[mth] + Qreg_gas_w[mth];
+                Qlf_gas[mth] = Qlf_gas[mth] + Qreg_gas_l[mth];
+                Qvf_gas[mth] = Qvf_gas[mth] + Qreg_gas_v[mth];
+                Qf_gas_tot_mth[mth] = Qhf_gas[mth] + Qcf_gas[mth] + Qwf_gas[mth] + Qlf_gas[mth] + Qvf_gas[mth] + Qbase_gas[mth];
             }
         }
 

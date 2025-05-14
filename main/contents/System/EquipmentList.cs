@@ -25,6 +25,7 @@ using Microsoft.VisualBasic;
 using main.subcontents.CoolingSystem;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using main.subcontents.RESystem_WP;
+using Newtonsoft.Json.Linq;
 
 namespace main.contents
 {
@@ -155,15 +156,15 @@ namespace main.contents
                 Program.UTIL.textBox_doubleComa(Qcmax_textBox, true, 1);
             }
             string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "일일급탕요구량,용도프로필");
-            if (ZoneValue.Length > 0 )
+            if (ZoneValue.Length > 0)
             {
                 double Qmax_w = 0;
-                for(int a=0; a< ZoneValue.Length; a++)
+                for (int a = 0; a < ZoneValue.Length; a++)
                 {
                     string[][] Usage = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "급탕시간당비율", "용도명 = '" + ZoneValue[0][1] + "'");
                     if (Usage.Length > 0)
                     {
-                        if(ZoneValue[a][0]!="" && Usage[0][0]!="")
+                        if (ZoneValue[a][0] != "" && Usage[0][0] != "")
                         {
                             Qmax_w += Convert.ToDouble(ZoneValue[a][0]) * Convert.ToDouble(Usage[0][0]);
                         }
@@ -313,7 +314,7 @@ namespace main.contents
                 {
                     if (Boiler_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                     {
-                        if (Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, e.RowIndex, e.ColumnIndex, 1) < 1 && Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, e.RowIndex, e.ColumnIndex, 1)!=0)
+                        if (Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, e.RowIndex, e.ColumnIndex, 1) < 1 && Program.UTIL.dataGridView_doubleComa(Boiler_dataGridView, e.RowIndex, e.ColumnIndex, 1) != 0)
                         {
                             MessageBox.Show("퍼센트 단위로 입력하세요.(Ex : 90.1% ⇒ 90.1)");
                             Boiler_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = null;
@@ -572,7 +573,7 @@ namespace main.contents
             ABS_dataGridView.Columns[5].Width = 60;
             ABS_dataGridView.Columns[17].Width = 60;
             ABS_dataGridView.Columns[18].Width = 60;
-            ABS_dataGridView.Columns[16].Visible = false; 
+            ABS_dataGridView.Columns[16].Visible = false;
         }
         private void UserABS_Add_button_Click(object sender, EventArgs e)
         {
@@ -664,7 +665,7 @@ namespace main.contents
 
                 DataGridViewComboBoxCell 설치Combo = new DataGridViewComboBoxCell();
                 설치Combo.Items.AddRange(new string[] { "기존", "신규", "철거후신규" });
-                ABS_dataGridView.Rows[nRow].Cells[18] = 설치Combo; 
+                ABS_dataGridView.Rows[nRow].Cells[18] = 설치Combo;
             }
         }
         private void ABS_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -675,7 +676,7 @@ namespace main.contents
                 ABS_SelectRow = e.RowIndex;
             }
         }
-       
+
 
         private void ABS_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -710,7 +711,7 @@ namespace main.contents
                     {
                         DataGridViewComboBoxCell 지역난방Combo = new DataGridViewComboBoxCell();
                         string[][] value = Program.DB.getValue(DB.type.ProjDB, "User_DH", "번호", "용도='흡수식'");
-                        for(int a=0; a< value.Length; a++)
+                        for (int a = 0; a < value.Length; a++)
                         {
                             지역난방Combo.Items.Add(value[a][0]);
                         }
@@ -874,7 +875,7 @@ namespace main.contents
             용도Combo.Items.Add("급탕예열용");
             용도Combo.Items.Add("흡수식");
             DH_dataGridView.Rows[nRow].Cells[4] = 용도Combo;
-            DH_DB DH_db = new DH_DB("기본DB 적용", null,null);
+            DH_DB DH_db = new DH_DB("기본DB 적용", null, null);
             DialogResult result = DH_db.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -1033,16 +1034,16 @@ namespace main.contents
             PV_dataGridView.Columns.Add("A5", "모듈(변경가능).길이.[m]");
             PV_dataGridView.Columns.Add("A6", "모듈(변경가능).높이.[m]");
             PV_dataGridView.Columns.Add("A7", "모듈(변경가능).정격출력.[W]");
-            PV_dataGridView.Columns.Add("A8","Kpk");
+            PV_dataGridView.Columns.Add("A8", "Kpk");
 
-           
+
             DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
             설치유형Combo.HeaderText = "설치";
             설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
             PV_dataGridView.Columns.Add(설치유형Combo);
 
             PV_dataGridView.Columns[0].Width = 40;
-            
+
         }
 
 
@@ -1102,10 +1103,10 @@ namespace main.contents
                     string[][] Value = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광모듈DB", "CELLTYPE,Kpk", "번호 = '" + pv_DB.SelectPV + "'");
                     if (Value.Length > 0)
                     {
-                       
+
                         PV_dataGridView.Rows[nRow].Cells[4].Value = Value[0][0].ToString();
                         PV_dataGridView.Rows[nRow].Cells[8].Value = Value[0][1].ToString();
-                    }                  
+                    }
 
                 }
             }
@@ -1163,21 +1164,22 @@ namespace main.contents
         private void PV_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             double Length, Height, Power; double Power_m2;
-            if (e.ColumnIndex == 5|| e.ColumnIndex == 6 || e.ColumnIndex == 7 )
+            if (e.ColumnIndex == 5 || e.ColumnIndex == 6 || e.ColumnIndex == 7)
             {
-                if(Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 5,1)&& Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 6,1)&& Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 7, 1))
+                if (Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 5, 1) && Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 6, 1) && Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 7, 1))
                 {
                     Length = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString());
                     Height = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString());
                     Power = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString());
-                    Power_m2 = Power / 1000 / ( Length * Height) ;
+                    Power_m2 = Power / 1000 / (Length * Height);
                     PV_dataGridView.Rows[e.RowIndex].Cells[8].Value = string.Format("{0:F3}", Power_m2);
-                }else if(Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 5, 1) && Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 6, 1) && Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 8, 1))
+                }
+                else if (Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 5, 1) && Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 6, 1) && Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 8, 1))
                 {
                     Length = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString());
                     Height = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString());
                     Power_m2 = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString());
-                    Power = Power_m2 * 1000 * (Length * Height) ;
+                    Power = Power_m2 * 1000 * (Length * Height);
                     PV_dataGridView.Rows[e.RowIndex].Cells[7].Value = Power.ToString("0");
                 }
             }
@@ -1209,20 +1211,20 @@ namespace main.contents
                         {
                             Value[i - 1] = parsedValue.ToString();
                         }
-                        else if(PV_dataGridView.Rows[k].Cells[i].Value !="")
+                        else if (PV_dataGridView.Rows[k].Cells[i].Value != "")
                         {
                             Value[i - 1] = PV_dataGridView.Rows[k].Cells[i].Value.ToString();
                         }
-                        else 
-                        { 
-                            MessageBox.Show(string.Format("{0}에서 {1}항목의 빈칸을 채워주세요", PV_dataGridView.Rows[k].Cells[i].Value.ToString(), PV_dataGridView.Columns[i].HeaderText), "주의", MessageBoxButtons.OK, MessageBoxIcon.Warning); 
-                            return; 
+                        else
+                        {
+                            MessageBox.Show(string.Format("{0}에서 {1}항목의 빈칸을 채워주세요", PV_dataGridView.Rows[k].Cells[i].Value.ToString(), PV_dataGridView.Columns[i].HeaderText), "주의", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
                         }
                     }
-                    else 
-                    { 
-                        MessageBox.Show(string.Format("{0}에서 '{1}'항목의 빈칸을 채워주세요", PV_dataGridView.Rows[k].Cells[1].Value.ToString(), PV_dataGridView.Columns[i].HeaderText), "주의", MessageBoxButtons.OK, MessageBoxIcon.Warning); 
-                        return; 
+                    else
+                    {
+                        MessageBox.Show(string.Format("{0}에서 '{1}'항목의 빈칸을 채워주세요", PV_dataGridView.Rows[k].Cells[1].Value.ToString(), PV_dataGridView.Columns[i].HeaderText), "주의", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
                 }
 
@@ -1461,7 +1463,7 @@ namespace main.contents
             WP_dataGridView.Columns.Add("A5", "타입");
             WP_dataGridView.Columns.Add("A6", "세부타입");
             WP_dataGridView.Columns.Add("A7", "정격출력.[kW]");
-            WP_dataGridView.Columns.Add("A8", "허브면적.[m"+ Program.UTIL.Subscript(2, true) +"]");
+            WP_dataGridView.Columns.Add("A8", "허브면적.[m" + Program.UTIL.Subscript(2, true) + "]");
             WP_dataGridView.Columns.Add("A9", "허브높이.[m]");
             WP_dataGridView.Columns.Add("A10", "풍속.시동.[m/s]");
             WP_dataGridView.Columns.Add("A11", "풍속.최적.[m/s]");
@@ -1822,7 +1824,7 @@ namespace main.contents
                     {
                         if (AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "")
                         {
-                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != ""&& AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-")
+                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "" && AirHP_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-")
                             {
                                 AirHP_dataGridView.Rows[e.RowIndex].Cells[12].Value = (Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 10, 1) / Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 11, 1)).ToString("0.00");
                             }
@@ -1842,7 +1844,7 @@ namespace main.contents
                     {
                         if (AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "")
                         {
-                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value != null &&AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
+                            if (AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value != null && AirHP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-" && AirHP_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
                             {
                                 AirHP_dataGridView.Rows[e.RowIndex].Cells[15].Value = (Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 13, 1) / Program.UTIL.dataGridView_doubleComa(AirHP_dataGridView, e.RowIndex, 14, 1)).ToString("0.00");
                             }
@@ -1862,7 +1864,7 @@ namespace main.contents
                 catch { }
 
 
-               
+
                 if (e.ColumnIndex == 4)
                 {
                     if (AirHP_dataGridView.Rows[e.RowIndex].Cells[4].Value != null)
@@ -2574,29 +2576,20 @@ namespace main.contents
             Pump_dataGridView.Columns.Add("P3", "종류");
             Pump_dataGridView.Columns.Add("P4", "A효율" + Environment.NewLine + "[%]");
             Pump_dataGridView.Columns.Add("P5", "B효율" + Environment.NewLine + "[%]");
-            Pump_dataGridView.Columns.Add("P6", "유량" + Environment.NewLine + "[CMH]");
+            Pump_dataGridView.Columns.Add("P6", "동력" + Environment.NewLine + "[W]");
             Pump_dataGridView.Columns.Add("P7", "");
-            Pump_dataGridView.Columns.Add("P8", "양정" + Environment.NewLine + "[m]");
-            Pump_dataGridView.Columns.Add("P9", "");
-            Pump_dataGridView.Columns.Add("P10", "동력" + Environment.NewLine + "[W]");
-            Pump_dataGridView.Columns.Add("P11", "");
-            Pump_dataGridView.Columns.Add("P12", "대수" + Environment.NewLine + "[EA]");
+            Pump_dataGridView.Columns.Add("P8", "대수" + Environment.NewLine + "[EA]");
             Pump_dataGridView.Columns[0].Width = 40;
             Pump_dataGridView.Columns[1].Width = 60;
             Pump_dataGridView.Columns[3].Width = 130;
             Pump_dataGridView.Columns[7].Width = 30;
-            Pump_dataGridView.Columns[8].Width = 100;
-            Pump_dataGridView.Columns[9].Width = 30;
-            Pump_dataGridView.Columns[10].Width = 100;
-            Pump_dataGridView.Columns[11].Width = 30;
             DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
             설치유형Combo.HeaderText = "설치";
             설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
             Pump_dataGridView.Columns.Add(설치유형Combo);
-            Pump_dataGridView.Columns[12].Width = 100;
-            Pump_dataGridView.Columns[13].Width = 100;
+            Pump_dataGridView.Columns[8].Width = 100;
+            Pump_dataGridView.Columns[9].Width = 100;
             Pump_dataGridView.Columns[4].Visible = false;
-
         }
 
         private void Pump_Add_button_Click(object sender, EventArgs e)
@@ -2614,14 +2607,8 @@ namespace main.contents
             펌프종류comboBox.Items.Add("지열순환펌프");
             Pump_dataGridView.Rows[nRow].Cells[3] = 펌프종류comboBox;
 
-            DataGridViewButtonCell PumpVolume_ButtonCell = new DataGridViewButtonCell();
-            Pump_dataGridView.Rows[nRow].Cells[7] = PumpVolume_ButtonCell;
-            PumpVolume_ButtonCell.Value = "+";
-            DataGridViewButtonCell PumpHead_ButtonCell = new DataGridViewButtonCell();
-            Pump_dataGridView.Rows[nRow].Cells[9] = PumpHead_ButtonCell;
-            PumpHead_ButtonCell.Value = "+";
             DataGridViewButtonCell PumpPower_ButtonCell = new DataGridViewButtonCell();
-            Pump_dataGridView.Rows[nRow].Cells[11] = PumpPower_ButtonCell;
+            Pump_dataGridView.Rows[nRow].Cells[7] = PumpPower_ButtonCell;
             PumpPower_ButtonCell.Value = "+";
             for (int k = 4; k < 13; k++)
             {
@@ -2679,15 +2666,8 @@ namespace main.contents
             펌프종류comboBox.Items.Add("지열순환펌프");
             Pump_dataGridView.Rows[nRow].Cells[3] = 펌프종류comboBox;
 
-            DataGridViewButtonCell PumpVolume_ButtonCell = new DataGridViewButtonCell();
-            Pump_dataGridView.Rows[nRow].Cells[7] = PumpVolume_ButtonCell;
-            PumpVolume_ButtonCell.Value = "+";
-
-            DataGridViewButtonCell PumpHead_ButtonCell = new DataGridViewButtonCell();
-            Pump_dataGridView.Rows[nRow].Cells[9] = PumpHead_ButtonCell;
-            PumpHead_ButtonCell.Value = "+";
             DataGridViewButtonCell PumpPower_ButtonCell = new DataGridViewButtonCell();
-            Pump_dataGridView.Rows[nRow].Cells[11] = PumpPower_ButtonCell;
+            Pump_dataGridView.Rows[nRow].Cells[7] = PumpPower_ButtonCell;
             PumpPower_ButtonCell.Value = "+";
 
             for (int k = 2; k < 14; k++)
@@ -2706,8 +2686,7 @@ namespace main.contents
             {
                 Pump_dataGridView.Rows[nRow].Cells[2].Value = Pump_dataGridView.Rows[Pump_SelectRow].Cells[2].Value.ToString() + "_복사";
             }
-            Pump_dataGridView.Rows[nRow].Cells[9].Style.BackColor = Color.White;
-            Pump_dataGridView.Rows[nRow].Cells[11].Style.BackColor = Color.White;
+            Pump_dataGridView.Rows[nRow].Cells[7].Style.BackColor = Color.White;
         }
         private void Pump_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -2717,48 +2696,13 @@ namespace main.contents
                 Pump_SelectRow = e.RowIndex;
                 if (e.ColumnIndex == 7)
                 {
-                    PumpVolume form = new PumpVolume(Pump_dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString());
-                    DialogResult result = form.ShowDialog();
+                    double eta = Pump_dataGridView.Rows[e.RowIndex].Cells[5].Value != null ? Convert.ToDouble(Pump_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()) : 0; 
+                    PumpPower pumppower_form = new PumpPower(Pump_dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString(), eta);
+                    DialogResult result = pumppower_form.ShowDialog();
                     if (result == DialogResult.OK)
                     {
-                        double Volume = form.Volume;
-                        Pump_dataGridView.Rows[e.RowIndex].Cells[6].Value = String.Format("{0:F1}",Volume);
-                    }
-                }
-                if (e.ColumnIndex == 9)
-                {
-                    double Lmax; double PumpHead;
-                    PumpCal pumpcal_form = new PumpCal(Pump_dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString());
-                    DialogResult result = pumpcal_form.ShowDialog();
-                    if (result == DialogResult.OK)
-                    {
-                        Lmax = pumpcal_form.Lmax;
-                        PumpHead = pumpcal_form.PumpHead;
-                        Pump_dataGridView.Rows[e.RowIndex].Cells[8].Value = String.Format("{0:F1}", PumpHead);
-                    }
-                }
-                if (e.ColumnIndex == 11)
-                {
-                    if (Pump_dataGridView.Rows[e.RowIndex].Cells[5].Value == null)
-                    {
-                        MessageBox.Show("효율을 입력하세요.");
-                    }
-                    else if (Pump_dataGridView.Rows[e.RowIndex].Cells[6].Value == null)
-                    {
-                        MessageBox.Show("유량을 입력하세요.");
-                    }
-                    else if (Pump_dataGridView.Rows[e.RowIndex].Cells[8].Value == null)
-                    {
-                        MessageBox.Show("양정을 입력하세요.");
-                    }
-                    else
-                    {
-                        double 효율 = Convert.ToDouble(Pump_dataGridView.Rows[e.RowIndex].Cells[5].Value);
-                        double 유량 = Convert.ToDouble(Pump_dataGridView.Rows[e.RowIndex].Cells[6].Value);
-                        double 양정 = Convert.ToDouble(Pump_dataGridView.Rows[e.RowIndex].Cells[8].Value);
-                        double Power;
-                        Power = (양정 * 1000 * 9.81) * 유량 / 3600 / (효율 / 100);
-                        Pump_dataGridView.Rows[e.RowIndex].Cells[10].Value = String.Format("{0:F1}", Power);
+                       double  PumpPower = pumppower_form.Power;
+                        Pump_dataGridView.Rows[e.RowIndex].Cells[6].Value = String.Format("{0:F1}", PumpPower);
                     }
                 }
             }
@@ -2780,44 +2724,10 @@ namespace main.contents
 
             for (int k = 0; k < Pump_dataGridView.RowCount; k++)
             {
-                String[] Value = new String[10];
-                for (int i = 1; i < 7; i++)
-                {
-                    if (Pump_dataGridView.Rows[k].Cells[i].Value != null)
-                    {
-                        double parsedValue;
-                        if (double.TryParse(Pump_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
-                        {
-                            Value[i - 1] = parsedValue.ToString();
-                        }
-                        else
-                        {
-                            Value[i - 1] = Pump_dataGridView.Rows[k].Cells[i].Value.ToString();
-                        }
-                    }
-                    else { Value[i - 1] = ""; }
-                }
-                //동력
-                if (Pump_dataGridView.Rows[k].Cells[10].Value != null)
-                { Value[6] = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView,k,10,0).ToString(); }
-                else { Value[6] = ""; }
-                //양정
-                if (Pump_dataGridView.Rows[k].Cells[8].Value != null)
-                { Value[7] = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, k, 8, 0).ToString(); }
-                else { Value[7] = ""; }
-                //대수
-                if (Pump_dataGridView.Rows[k].Cells[12].Value != null)
-                { Value[8] = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, k, 12, 0).ToString(); }
-                else { Value[8] = ""; }
-                //신규기존
-                if (Pump_dataGridView.Rows[k].Cells[13].Value != null)
-                { Value[9] = Pump_dataGridView.Rows[k].Cells[13].Value.ToString(); }
-                else { Value[9] = ""; }
-
-                Program.DB.setValue(DB.type.ProjDB, "User_Pump", "번호,프로젝트유형,명칭,종류,A효율,B효율,유량,동력,양정,대수,신규기존",
-                "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
-                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','"
-                 + Value[9]
+                Program.DB.setValue(DB.type.ProjDB, "User_Pump", "번호,프로젝트유형,명칭,종류,B효율,동력,대수,신규기존",
+                "'" + Pump_dataGridView.Rows[k].Cells[1].Value.ToString() + "','" + 프로젝트유형[0][0] + "','"
+                 + Pump_dataGridView.Rows[k].Cells[2].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[3].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[5].Value.ToString() + "','" 
+                 + Pump_dataGridView.Rows[k].Cells[6].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[8].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[9].Value.ToString() 
                  + "'", "번호");
             }
             Program.DB.saveProject();
@@ -2827,34 +2737,22 @@ namespace main.contents
         private void Load_Pump()
         {
             Pump_dataGridView.Rows.Clear();
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정,대수,신규기존", "");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,B효율,동력,대수,신규기존", "");
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
                 {
-                    string A효율 = "", B효율 = "", 유량 = "", 동력 = "", 양정 = "";
+                    string B효율 = "", 동력 = "";
                     Pump_dataGridView.Rows.Add();
                     int nRow = Pump_dataGridView.Rows.Count - 1;
 
                     if (Value[n][3] != null && Value[n][3] != "")
                     {
-                        A효율 = string.Format("{0:F1}", Convert.ToDouble(Value[n][3]));
+                        B효율 = string.Format("{0:F1}", Convert.ToDouble(Value[n][3]));
                     }
                     if (Value[n][4] != null && Value[n][4] != "")
                     {
-                        B효율 = string.Format("{0:F1}", Convert.ToDouble(Value[n][4]));
-                    }
-                    if (Value[n][5] != null && Value[n][5] != "")
-                    {
-                        유량 = string.Format("{0:F0}", Convert.ToDouble(Value[n][5]));
-                    }
-                    if (Value[n][6] != null && Value[n][6] != "")
-                    {
-                        동력 = string.Format("{0:F0}", Convert.ToDouble(Value[n][6]));
-                    }
-                    if (Value[n][7] != null && Value[n][7] != "")
-                    {
-                        양정 = string.Format("{0:F0}", Convert.ToDouble(Value[n][7]));
+                        동력 = string.Format("{0:F0}", Convert.ToDouble(Value[n][4]));
                     }
 
                     Pump_dataGridView.Rows[nRow].Cells[1].Value = Value[n][0];
@@ -2862,19 +2760,11 @@ namespace main.contents
                     Pump_dataGridView.Rows[nRow].Cells[3].Value = Value[n][2];
                     Pump_dataGridView.Rows[nRow].Cells[4].Value = 100;
                     Pump_dataGridView.Rows[nRow].Cells[5].Value = B효율;
-                    Pump_dataGridView.Rows[nRow].Cells[6].Value = 유량;
-                    Pump_dataGridView.Rows[nRow].Cells[8].Value = 양정;
-                    Pump_dataGridView.Rows[nRow].Cells[10].Value = 동력;
-                    Pump_dataGridView.Rows[nRow].Cells[12].Value = Value[n][8];
-                    Pump_dataGridView.Rows[nRow].Cells[13].Value = Value[n][9];
-                    DataGridViewButtonCell PumpVolume_ButtonCell = new DataGridViewButtonCell();
-                    Pump_dataGridView.Rows[nRow].Cells[7] = PumpVolume_ButtonCell;
-                    PumpVolume_ButtonCell.Value = "+";
-                    DataGridViewButtonCell PumpHead_ButtonCell = new DataGridViewButtonCell();
-                    Pump_dataGridView.Rows[nRow].Cells[9] = PumpHead_ButtonCell;
-                    PumpHead_ButtonCell.Value = "+";
+                    Pump_dataGridView.Rows[nRow].Cells[6].Value = 동력;
+                    Pump_dataGridView.Rows[nRow].Cells[8].Value = Value[n][5];
+                    Pump_dataGridView.Rows[nRow].Cells[9].Value = Value[n][6];
                     DataGridViewButtonCell PumpPower_ButtonCell = new DataGridViewButtonCell();
-                    Pump_dataGridView.Rows[nRow].Cells[11] = PumpPower_ButtonCell;
+                    Pump_dataGridView.Rows[nRow].Cells[7] = PumpPower_ButtonCell;
                     PumpPower_ButtonCell.Value = "+";
                 }
             }
@@ -2924,7 +2814,7 @@ namespace main.contents
                 }
                 else { return false; }
             }
-           else if (ce_dataGridView.Rows[row].Cells[4].Value != null && ce_dataGridView.Rows[row].Cells[4].Value.ToString() == "CAV유닛")
+            else if (ce_dataGridView.Rows[row].Cells[4].Value != null && ce_dataGridView.Rows[row].Cells[4].Value.ToString() == "CAV유닛")
             {
                 if (column == 5 || column == 6 || column == 7 || column == 8)
                 {
@@ -2938,7 +2828,7 @@ namespace main.contents
             }
             else if (ce_dataGridView.Rows[row].Cells[4].Value != null && ce_dataGridView.Rows[row].Cells[4].Value.ToString() == "방열기")
             {
-                if (column == 5 || column == 6 ||  column == 8)
+                if (column == 5 || column == 6 || column == 8)
                 {
                     cell.Style.BackColor = Color.FromArgb(255, 255, 255);
                     cell.Style.ForeColor = Color.Black;
@@ -2948,7 +2838,7 @@ namespace main.contents
                 }
                 else { return false; }
             }
-            else if (ce_dataGridView.Rows[row].Cells[4].Value != null &&  ce_dataGridView.Rows[row].Cells[4].Value.ToString() == "VAV유닛")
+            else if (ce_dataGridView.Rows[row].Cells[4].Value != null && ce_dataGridView.Rows[row].Cells[4].Value.ToString() == "VAV유닛")
             {
                 if (column == 5 || column == 6 || column == 7)
                 {
@@ -2962,7 +2852,7 @@ namespace main.contents
             }
             else if (ce_dataGridView.Rows[row].Cells[3].Value != null && ce_dataGridView.Rows[row].Cells[3].Value.ToString() == "난방")
             {
-                if (column == 5 || column == 6 )
+                if (column == 5 || column == 6)
                 {
                     cell.Style.BackColor = Color.FromArgb(255, 255, 255);
                     cell.Style.ForeColor = Color.Black;
@@ -3369,7 +3259,7 @@ namespace main.contents
             {
                 String[] Value = new String[16];
 
-                for (int i = 1; i< 16; i++)
+                for (int i = 1; i < 16; i++)
                 {
                     if (AirCooler_dataGridView.Rows[k].Cells[i].Value != null && AirCooler_dataGridView.Rows[k].Cells[i].Value != "")
                     {
@@ -3574,7 +3464,7 @@ namespace main.contents
                     if (WaterCooler_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString() != "-" && WaterCooler_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString() != "-")
                     {
                         WaterCooler_dataGridView.Rows[e.RowIndex].Cells[5].Value = (Program.UTIL.dataGridView_doubleComa(WaterCooler_dataGridView, e.RowIndex, 4, 1) / Program.UTIL.dataGridView_doubleComa(WaterCooler_dataGridView, e.RowIndex, 6, 1)).ToString("0.00");
-                    }                        
+                    }
                 }
             }
             if (e.ColumnIndex == 6)
@@ -3662,7 +3552,7 @@ namespace main.contents
             Solar_dataGridView.Columns.Add("A2", "DB유형");
             Solar_dataGridView.Columns.Add("A3", "명칭");
             Solar_dataGridView.Columns.Add("A4", "난방/급탕");
-            Solar_dataGridView.Columns.Add("A5", "모듈면적.A[m"+Program.UTIL.Subscript(2, true)+"]");
+            Solar_dataGridView.Columns.Add("A5", "모듈면적.A[m" + Program.UTIL.Subscript(2, true) + "]");
             Solar_dataGridView.Columns.Add("A6", "효율.ηo");
             Solar_dataGridView.Columns.Add("A7", "손실계수.1차.k1");
             Solar_dataGridView.Columns.Add("A8", "손실계수.2차.k2");
@@ -4110,7 +4000,7 @@ namespace main.contents
             double 열교환후온도 = 외기온도 - temp_eta / 100 * (외기온도 - 실내온도);
             double 총엔탈피 = 외기엔탈피 - all_eta / 100 * (외기엔탈피 - 실내엔탈피);
             double 수증기엔탈피 = 총엔탈피 - 열교환후온도 * 1.006;
-            double 교환후습도 = 수증기엔탈피  / (2500 + 1.86 * 열교환후온도);
+            double 교환후습도 = 수증기엔탈피 / (2500 + 1.86 * 열교환후온도);
             double eta = (외기절대습도 - 교환후습도) / (외기절대습도 - 실내절대습도) * 100;
             return eta;
         }
@@ -4693,7 +4583,7 @@ namespace main.contents
                 }
                 catch { }
             }
-                  
+
         }
         private void Load_CoolingTop()
         {
@@ -5039,7 +4929,7 @@ namespace main.contents
         private void Qmax_button_Click(object sender, EventArgs e)
         {
             string[][] 결과 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a,Q_max", "");
-            if(결과.Length >0)
+            if (결과.Length > 0)
             {
                 ZoneResult pumpcal_form = new ZoneResult();
                 DialogResult result = pumpcal_form.ShowDialog();
@@ -5051,7 +4941,7 @@ namespace main.contents
             {
                 MessageBox.Show("에너지요구량 해석 시뮬레이션을 진행하시고 확인하세요.");
             }
-           
+
         }
     }
 }

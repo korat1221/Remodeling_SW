@@ -48,7 +48,7 @@ namespace main
                 Qlf_elec_a += final1.Qlf_elec[mth];
                 Qvf_elec_a += final1.Qvf_elec[mth];
                 Qbase_elec_a += final1.Qbase_elec[mth];
-                Qreg_elec_a += final1.Qreg_elec[mth];
+                Qreg_elec_a += final1.Qreg_elec_tot[mth];
             }
             Qf_elec_tot_a = Qhf_elec_a + Qcf_elec_a + Qwf_elec_a + Qlf_elec_a + Qvf_elec_a + Qbase_elec_a - Qreg_elec_a;
             Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
@@ -866,7 +866,7 @@ namespace main
 
             for (int mth = 0; mth < 12; mth++)
             {
-                final1.Qf_elec_tot_mth[mth] = final1.Qhf_elec[mth] + final1.Qcf_elec[mth] + final1.Qwf_elec[mth] + final1.Qlf_elec[mth] + final1.Qvf_elec[mth] + final1.Qbase_elec[mth] - final1.Qreg_elec[mth];
+                final1.Qf_elec_tot_mth[mth] = final1.Qhf_elec[mth] + final1.Qcf_elec[mth] + final1.Qwf_elec[mth] + final1.Qlf_elec[mth] + final1.Qvf_elec[mth] + final1.Qbase_elec[mth] - final1.Qreg_elec_tot[mth];
                 final1.Qf_gas_tot_mth[mth] = final1.Qhf_gas[mth] + final1.Qcf_gas[mth] + final1.Qwf_gas[mth] + final1.Qbase_gas[mth];
             }
             Save_Alt(final1, 검토유형);

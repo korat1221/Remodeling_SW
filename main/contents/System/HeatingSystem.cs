@@ -1,6 +1,7 @@
 ﻿using main.contentslist;
 using main.subcontents;
 using main.subcontents.ConstructionCW;
+using main.subcontents.EquipmentList;
 using main.subcontents.HeatingSystem;
 using System;
 using System.Collections;
@@ -35,7 +36,8 @@ namespace main.contents
         String SelectSolar_nonsplit, SolarNum_nonsplit, SolarDirection_nonsplit, SolarDegree_nonsplit, SelectFC_nonsplit, FCNum_nonsplit, FCElecInstall_nonsplit, FCElecHeat_nonsplit;
         String SelectAS_nonsplit, ASNum_nonsplit; String SelectDH_nonsplit;
         String[] SelectHP_nonsplit = new String[3], HPNum_nonsplit = new String[3], HPSupply_nonsplit = new String[3], HPControl_nonsplit = new String[3]; //외기/지열/지하수 순 
-        String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; double Pump1Num, Pump2Num;
+        String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; double Pump1Num, Pump2Num, Pump1Head, Pump2Head, Pump1Volume, Pump2Volume;
+        String GPumpUse, GPumpMethod, GPump1, GPump2, GPump1Valve, GPump2Valve, GPump1Control, GPump2Control; double GPump1Num, GPump2Num, GPump1Head, GPump2Head, GPump1Volume, GPump2Volume;
         String ce1Type, ce2Type; int ce_SelectRow; int Boiler_SelectRow; int HP_SelectRow; int AS_SelectRow; int DH_SelectRow; int Solar_SelectRow; int FC_SelectRow;
         String StorageUse, StoragePumpUse, StoragePump; double Vs;
         String[] SystemType = { "보일러", "외기 히트펌프", "지열 히트펌프", "지하수 히트펌프", "태양열 융합 히트펌프", "흡수식온수기", "지역난방", "태양열시스템", "연료전지" };
@@ -120,6 +122,10 @@ namespace main.contents
             PumpMethod_comboBox.Items.Clear();
             PumpMethod_comboBox.Items.Add("1차펌프");
             PumpMethod_comboBox.Items.Add("1차폐회로+2차펌프");
+            //펌프 방식 콤보박스
+            GPumpMethod_comboBox.Items.Clear();
+            GPumpMethod_comboBox.Items.Add("1차펌프");
+            GPumpMethod_comboBox.Items.Add("1차폐회로+2차펌프");
 
             //공급설비 콤보박스
             ce1Type_comboBox.Items.Clear();
@@ -419,7 +425,7 @@ namespace main.contents
         {
             if (MainSystem_comboBox.SelectedItem != null)
             {
-                if(MainSystem!= null & MainSystem != MainSystem_comboBox.SelectedItem.ToString())
+                if (MainSystem != null & MainSystem != MainSystem_comboBox.SelectedItem.ToString())
                 {
                     MessageBox.Show("기존 선택한 설비는 삭제하세요.");
                 }
@@ -2106,11 +2112,8 @@ namespace main.contents
             StoragePump_dataGridView.Columns.Add("A1", "펌프번호");
             StoragePump_dataGridView.Columns.Add("A2", "명칭");
             StoragePump_dataGridView.Columns.Add("A3", "종류");
-            StoragePump_dataGridView.Columns.Add("A4", "A효율.[%]");
-            StoragePump_dataGridView.Columns.Add("A5", "B효율.[%]");
-            StoragePump_dataGridView.Columns.Add("A6", "유량.[CMH]");
-            StoragePump_dataGridView.Columns.Add("A7", "동력.[kW]");
-            StoragePump_dataGridView.Columns.Add("A8", "양정.[m]");
+            StoragePump_dataGridView.Columns.Add("A4", "B효율.[%]");
+            StoragePump_dataGridView.Columns.Add("A5", "동력.[kW]");
             StoragePump_dataGridView.Columns[0].Width = 70;
             StoragePump_dataGridView.Columns[1].Width = 50;
 
@@ -2135,7 +2138,7 @@ namespace main.contents
         }
         private void Load_StoragePump(String StoragePump)
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "번호 = '" + StoragePump.ToString() + "'");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,B효율,동력", "번호 = '" + StoragePump.ToString() + "'");
             if (Value.Length > 0)
             {
 
@@ -2145,10 +2148,7 @@ namespace main.contents
                     StoragePump_dataGridView.Rows[0].Cells[a + 1].Value = Value[0][a];
                 }
                 Program.UTIL.dataGridView_doubleComa(StoragePump_dataGridView, 0, 4, 1);
-                Program.UTIL.dataGridView_doubleComa(StoragePump_dataGridView, 0, 5, 1);
-                Program.UTIL.dataGridView_doubleComa(StoragePump_dataGridView, 0, 6, 0);
-                Program.UTIL.dataGridView_doubleComa(StoragePump_dataGridView, 0, 7, 0);
-                Program.UTIL.dataGridView_doubleComa(StoragePump_dataGridView, 0, 8, 0);
+                Program.UTIL.dataGridView_doubleComa(StoragePump_dataGridView, 0, 5, 0);
             }
         }
 
@@ -2270,6 +2270,11 @@ namespace main.contents
                 {
                     PumpMethod_label.Visible = true;
                     PumpMethod_comboBox.Visible = true;
+                    if ((MainSystem == "지열 히트펌프" || MainSystem == "지하수 히트펌프") || (Sub1System == "지열 히트펌프" || Sub1System == "지하수 히트펌프") || (Sub2System == "지열 히트펌프" || Sub2System == "지하수 히트펌프"))
+                    {
+                        GPumpMethod_label.Visible = true;
+                        GPumpMethod_comboBox.Visible = true;
+                    }
                     Create_Pump_Table();
                 }
                 else
@@ -2277,6 +2282,11 @@ namespace main.contents
                     PumpMethod_label.Visible = false;
                     PumpMethod_comboBox.Visible = false;
                     PumpMethod_comboBox.SelectedItem = null;
+
+                    GPumpMethod_label.Visible = false;
+                    GPumpMethod_comboBox.Visible = false;
+                    GPumpMethod_comboBox.SelectedItem = null;
+
                     Pump_dataGridView.Columns.Clear();
                     ChangeVisble_Pump(null);
                 }
@@ -2301,6 +2311,22 @@ namespace main.contents
                 ChangeVisble_Pump("");
             }
         }
+
+        private void GPumpMethod_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (GPumpMethod_comboBox.SelectedItem != null)
+            {
+                GPumpMethod = GPumpMethod_comboBox.SelectedItem.ToString();
+                ChangeVisble_GPump(GPumpMethod);
+            }
+            else
+            {
+                GPumpMethod = null;
+                ChangeVisble_GPump("");
+            }
+
+        }
+
 
         private void ChangeVisble_Pump(String PumpMethod)
         {
@@ -2376,6 +2402,83 @@ namespace main.contents
             }
         }
 
+        private void ChangeVisble_GPump(String PumpMethod)
+        {
+            if (PumpMethod == "1차펌프")
+            {
+                GPump2 = null;
+                GPump1_label.Visible = true;
+                GPump1_textBox.Visible = true;
+                GPump1_button.Visible = true;
+                GPump2_label.Visible = false;
+                GPump2_textBox.Visible = false;
+                GPump2_button.Visible = false;
+                GPump2 = null;
+                GPump2_textBox.Text = null;
+                if (GPump1 != null)
+                {
+                    if (Pump_dataGridView.Rows.Count == 1)
+                    {
+                        Pump_dataGridView.Rows.Add();
+                        Load_Pump_Table(1, GPump1);
+                    }
+                    if (Pump_dataGridView.Rows.Count == 2)
+                    { Load_Pump_Table(1, GPump1); }
+                }
+                if (Pump_dataGridView.Rows.Count == 3)
+                { Pump_dataGridView.Rows.Remove(Pump_dataGridView.Rows[2]); }
+            }
+            else if (PumpMethod == "1차폐회로+2차펌프")
+            {
+                GPump1_label.Visible = true;
+                GPump1_textBox.Visible = true;
+                GPump1_button.Visible = true;
+                GPump2_label.Visible = true;
+                GPump2_textBox.Visible = true;
+                GPump2_button.Visible = true;
+                if (GPump1 != null && GPump2 != null)
+                {
+                    if (Pump_dataGridView.Rows.Count == 1)
+                    {
+                        Pump_dataGridView.Rows.Add();
+                        Pump_dataGridView.Rows.Add();
+                        Load_Pump_Table(1, GPump1);
+                        Load_Pump_Table(2, GPump2);
+                    }
+                    else if (Pump_dataGridView.Rows.Count == 2)
+                    {
+                        Pump_dataGridView.Rows.Add();
+                        Load_Pump_Table(1, GPump1);
+                        Load_Pump_Table(2, GPump2);
+                    }
+                    else if (Pump_dataGridView.Rows.Count == 3)
+                    {
+                        Load_Pump_Table(1, GPump1);
+                        Load_Pump_Table(2, GPump2);
+                    }
+                    else if (Pump_dataGridView.Rows.Count == 4)
+                    {
+                        Load_Pump_Table(2, GPump1);
+                        Load_Pump_Table(3, GPump2);
+                    }
+                }
+            }
+            else
+            {
+                GPump1 = null;
+                GPump2 = null;
+                GPump1_label.Visible = false;
+                GPump1_textBox.Visible = false;
+                GPump1_button.Visible = false;
+                GPump2_label.Visible = false;
+                GPump2_textBox.Visible = false;
+                GPump2_button.Visible = false;
+                GPump2 = null;
+                GPump1 = null;
+                GPump2_textBox.Text = null;
+                GPump1_textBox.Text = null;
+            }
+        }
         private void Pump1_button_Click(object sender, EventArgs e)
         {
             if (Pump_dataGridView.Rows.Count == 0)
@@ -2414,6 +2517,46 @@ namespace main.contents
             }
         }
 
+        private void GPump1_button_Click(object sender, EventArgs e)
+        {
+            if (Pump_dataGridView.Rows.Count == 1)
+            {
+                Pump_dataGridView.Rows.Add();
+            }
+            Heating_Pump heating_pump = new Heating_Pump(GPump1);
+            DialogResult result = heating_pump.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                GPump1 = heating_pump.SelectPump;
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "명칭", "번호 = '" + GPump1.ToString() + "'");
+                if (Value.Length > 0)
+                { GPump1_textBox.Text = Value[0][0]; }
+                if (Pump_dataGridView.Rows.Count == 2)
+                { Load_Pump_Table(1, GPump1); }
+            }
+        }
+
+        private void GPump2_button_Click(object sender, EventArgs e)
+        {
+            if (Pump_dataGridView.Rows.Count >= 2)
+            {
+                Pump_dataGridView.Rows.Add();
+            }
+            Heating_Pump heating_pump = new Heating_Pump(GPump2);
+            DialogResult result = heating_pump.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                GPump2 = heating_pump.SelectPump;
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "명칭", "번호 = '" + GPump2.ToString() + "'");
+                if (Value.Length > 0)
+                { GPump2_textBox.Text = Value[0][0]; }
+                if (Pump_dataGridView.Rows.Count == 3)
+                { Load_Pump_Table(2, Pump2); }
+                else if (Pump_dataGridView.Rows.Count == 4)
+                { Load_Pump_Table(3, Pump2); }
+            }
+        }
+
         private void Create_Pump_Table()
         {
             Pump_dataGridView.Columns.Clear();
@@ -2422,20 +2565,45 @@ namespace main.contents
             Pump_dataGridView.Columns.Add("A1", "펌프번호");
             Pump_dataGridView.Columns.Add("A2", "명칭");
             Pump_dataGridView.Columns.Add("A3", "종류");
-            Pump_dataGridView.Columns.Add("A4", "A효율.[%]");
-            Pump_dataGridView.Columns.Add("A5", "B효율.[%]");
+            Pump_dataGridView.Columns.Add("A4", "B효율.[%]");
+            Pump_dataGridView.Columns.Add("A5", "동력.[W]");
             Pump_dataGridView.Columns.Add("A6", "유량.[CMH]");
-            Pump_dataGridView.Columns.Add("A7", "동력.[W]");
-            Pump_dataGridView.Columns.Add("A8", "양정.[m]");
+            Pump_dataGridView.Columns.Add("A7", "양정.[m]");
+            Pump_dataGridView.Columns.Add("A8", "");
             Pump_dataGridView.Columns.Add("A9", "정유량 밸브");
             Pump_dataGridView.Columns.Add("A10", "펌프 제어");
             Pump_dataGridView.Columns.Add("A11", "대수.[EA]");
             Pump_dataGridView.Columns[0].Width = 50;
             Pump_dataGridView.Columns[1].Width = 50;
+            Pump_dataGridView.Columns[8].Width = 30;
 
         }
+
+
+        private void Pump_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                if (e.ColumnIndex == 8)
+                {
+                    double eta = Pump_dataGridView.Rows[e.RowIndex].Cells[5].Value != null ? Convert.ToDouble(Pump_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()) : 0;
+                    PumpCal pumppower_form = new PumpCal(Pump_dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString());
+                    DialogResult result = pumppower_form.ShowDialog();
+                    if (result == DialogResult.OK)
+                    {
+                        double PumpHead = pumppower_form.PumpHead;
+                        Pump_dataGridView.Rows[e.RowIndex].Cells[7].Value = String.Format("{0:F1}", PumpHead);
+                    }
+                }
+            }
+        }
+
         private void Load_Pump_Table(int nRow, String PumpNum)
         {
+            DataGridViewButtonCell PumpHead_ButtonCell = new DataGridViewButtonCell();
+            Pump_dataGridView.Rows[nRow].Cells[8] = PumpHead_ButtonCell;
+            PumpHead_ButtonCell.Value = "+";
+
             DataGridViewComboBoxCell 정유량밸브comboBox = new DataGridViewComboBoxCell();
             정유량밸브comboBox.Items.Add("있음");
             정유량밸브comboBox.Items.Add("없음");
@@ -2447,26 +2615,34 @@ namespace main.contents
             제어comboBox.Items.Add("제어없음");
             Pump_dataGridView.Rows[nRow].Cells[10] = 제어comboBox;
 
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "번호 = '" + PumpNum.ToString() + "'");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,B효율,동력", "번호 = '" + PumpNum.ToString() + "'");
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
                 {
 
-                    if (nRow == 1)
-                    {
-                        Pump_dataGridView.Rows[nRow].Cells[0].Value = "2차펌프";
-                    }
-                    else { Pump_dataGridView.Rows[nRow].Cells[0].Value = "1차펌프"; }
+                    Pump_dataGridView.Rows[nRow].Cells[0].Value = nRow + 1;
                     for (int a = 0; a < Value[0].Length; a++)
                     {
                         Pump_dataGridView.Rows[nRow].Cells[a + 1].Value = Value[0][a];
                     }
+
+                    double Max = AHU_Qmax_textBox.Text == null || AHU_Qmax_textBox.Text.ToString() == "" ? 0 : Convert.ToDouble(AHU_Qmax_textBox.Text.ToString());
+                    Max = Max + Zone_Qmax_textBox.Text == null || Zone_Qmax_textBox.Text.ToString() == "" ? 0 : Convert.ToDouble(Zone_Qmax_textBox.Text.ToString());
+
+                    double dtheta = 10;
+                    string[][] v = Program.DB.getValue(DB.type.BaseDB_Heating, "공급환순온도", "공급온도,환수온도", "공급환수온도='" + SLRL + "'");
+                    if (v.Length > 0)
+                    {
+                        dtheta = Convert.ToDouble(v[0][0]) - Convert.ToDouble(v[0][1]);
+                    }
+                    double Volume = Max * 3.6 / (dtheta * 4.18);
+                    Pump_dataGridView.Rows[nRow].Cells[6].Value = Volume.ToString();
+
                     Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 4, 1);
                     Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 5, 1);
-                    Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 6, 0);
-                    Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 7, 0);
-                    Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 8, 0);
+                    Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 6, 1);
+                    Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 7, 1);
                 }
             }
         }
@@ -2476,29 +2652,131 @@ namespace main.contents
             if (Pump_dataGridView.Rows.Count == 0) { return; }
             for (int k = 0; k < Pump_dataGridView.Rows.Count; k++)
             {
-                if (k == 0)
+                
+                if(PumpMethod =="1차펌프")
                 {
-                    if (Pump_dataGridView.Rows[0].Cells[9].Value != null)
-                    { Pump1Valve = Pump_dataGridView.Rows[0].Cells[9].Value.ToString(); }
-                    else { MessageBox.Show("펌프 밸브를 선택하세요."); }
-                    if (Pump_dataGridView.Rows[0].Cells[10].Value != null)
-                    { Pump1Control = Pump_dataGridView.Rows[0].Cells[10].Value.ToString(); }
-                    else { MessageBox.Show("펌프 제어를 선택하세요."); }
-                    if (Pump_dataGridView.Rows[0].Cells[11].Value != null)
-                    { Pump1Num = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 11, 0); }
-                    else { MessageBox.Show("펌프 제어를 선택하세요."); }
+                    if (k == 0)
+                    {
+                        if (Pump_dataGridView.Rows[0].Cells[6].Value != null)
+                        { Pump1Volume = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 6, 0); }
+                        if (Pump_dataGridView.Rows[0].Cells[7].Value != null)
+                        { Pump1Head = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 7, 0); }
+                        else { MessageBox.Show("펌프 양정을 선택하세요."); }
+                        if (Pump_dataGridView.Rows[0].Cells[9].Value != null)
+                        { Pump1Valve = Pump_dataGridView.Rows[0].Cells[9].Value.ToString(); }
+                        else { MessageBox.Show("펌프 밸브를 선택하세요."); }
+                        if (Pump_dataGridView.Rows[0].Cells[10].Value != null)
+                        { Pump1Control = Pump_dataGridView.Rows[0].Cells[10].Value.ToString(); }
+                        else { MessageBox.Show("펌프 제어를 선택하세요."); }
+                        if (Pump_dataGridView.Rows[0].Cells[11].Value != null)
+                        { Pump1Num = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 11, 0); }
+                        else { MessageBox.Show("펌프 대수를 선택하세요."); }
+                    }
+                    if (k == 1)
+                    {
+                        if (Pump_dataGridView.Rows[1].Cells[6].Value != null)
+                        { GPump1Volume = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 1, 6, 0); }
+                        if (Pump_dataGridView.Rows[1].Cells[7].Value != null)
+                        { GPump1Head = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 1, 7, 0); }
+                        else { MessageBox.Show("펌프 양정을 선택하세요."); }
+                        if (Pump_dataGridView.Rows[1].Cells[9].Value != null)
+                        { GPump1Valve = Pump_dataGridView.Rows[1].Cells[9].Value.ToString(); }
+                        else { MessageBox.Show("펌프 밸브를 선택하세요."); }
+                        if (Pump_dataGridView.Rows[1].Cells[10].Value != null)
+                        { GPump1Control = Pump_dataGridView.Rows[1].Cells[10].Value.ToString(); }
+                        else { MessageBox.Show("펌프 제어를 선택하세요."); }
+                        if (Pump_dataGridView.Rows[1].Cells[11].Value != null)
+                        { GPump1Num = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 1, 11, 0); }
+                        else { MessageBox.Show("펌프 대수를 선택하세요."); }
+                    }
+                    if (k == 2)
+                    {
+                        if (Pump_dataGridView.Rows[2].Cells[6].Value != null)
+                        { GPump2Volume = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 2, 6, 0); }
+                        if (Pump_dataGridView.Rows[2].Cells[7].Value != null)
+                        { GPump2Head = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 2, 7, 0); }
+                        else { MessageBox.Show("펌프 양정을 선택하세요."); }
+                        if (Pump_dataGridView.Rows[2].Cells[9].Value != null)
+                        { GPump2Valve = Pump_dataGridView.Rows[1].Cells[9].Value.ToString(); }
+                        else { MessageBox.Show("펌프 밸브를 선택하세요."); }
+                        if (Pump_dataGridView.Rows[2].Cells[10].Value != null)
+                        { GPump2Control = Pump_dataGridView.Rows[1].Cells[10].Value.ToString(); }
+                        else { MessageBox.Show("펌프 제어를 선택하세요."); }
+                        if (Pump_dataGridView.Rows[2].Cells[11].Value != null)
+                        { GPump2Num = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 2, 11, 0); }
+                        else { MessageBox.Show("펌프 대수를 선택하세요."); }
+                    }
                 }
-                else if (k == 1)
+                else
                 {
-                    if (Pump_dataGridView.Rows[1].Cells[9].Value != null)
-                    { Pump2Valve = Pump_dataGridView.Rows[1].Cells[9].Value.ToString(); }
-                    else { MessageBox.Show("펌프 밸브를 선택하세요."); }
-                    if (Pump_dataGridView.Rows[1].Cells[10].Value != null)
-                    { Pump2Control = Pump_dataGridView.Rows[1].Cells[10].Value.ToString(); }
-                    else { MessageBox.Show("펌프 제어를 선택하세요."); }
-                    if (Pump_dataGridView.Rows[1].Cells[11].Value != null)
-                    { Pump2Num = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 1, 11, 0); }
-                    else { MessageBox.Show("펌프 제어를 선택하세요."); }
+                    if (k == 0)
+                    {
+                        if (Pump_dataGridView.Rows[0].Cells[6].Value != null)
+                        { Pump1Volume = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 6, 0); }
+                        if (Pump_dataGridView.Rows[0].Cells[7].Value != null)
+                        { Pump1Head = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 7, 0); }
+                        else { MessageBox.Show("펌프 양정을 선택하세요."); }
+                        if (Pump_dataGridView.Rows[0].Cells[9].Value != null)
+                        { Pump1Valve = Pump_dataGridView.Rows[0].Cells[9].Value.ToString(); }
+                        else { MessageBox.Show("펌프 밸브를 선택하세요."); }
+                        if (Pump_dataGridView.Rows[0].Cells[10].Value != null)
+                        { Pump1Control = Pump_dataGridView.Rows[0].Cells[10].Value.ToString(); }
+                        else { MessageBox.Show("펌프 제어를 선택하세요."); }
+                        if (Pump_dataGridView.Rows[0].Cells[11].Value != null)
+                        { Pump1Num = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 11, 0); }
+                        else { MessageBox.Show("펌프 대수를 선택하세요."); }
+                    }
+                    if (k == 1)
+                    {
+                        if (Pump_dataGridView.Rows[1].Cells[6].Value != null)
+                        { Pump2Volume = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 1, 6, 0); }
+                        if (Pump_dataGridView.Rows[1].Cells[7].Value != null)
+                        { Pump2Head = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 1, 7, 0); }
+                        else { MessageBox.Show("펌프 양정을 선택하세요."); }
+                        if (Pump_dataGridView.Rows[1].Cells[9].Value != null)
+                        { Pump2Valve = Pump_dataGridView.Rows[1].Cells[9].Value.ToString(); }
+                        else { MessageBox.Show("펌프 밸브를 선택하세요."); }
+                        if (Pump_dataGridView.Rows[1].Cells[10].Value != null)
+                        { Pump2Control = Pump_dataGridView.Rows[1].Cells[10].Value.ToString(); }
+                        else { MessageBox.Show("펌프 제어를 선택하세요."); }
+                        if (Pump_dataGridView.Rows[1].Cells[11].Value != null)
+                        { Pump2Num = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 1, 11, 0); }
+                        else { MessageBox.Show("펌프 대수를 선택하세요."); }
+                    }
+                    if (k == 2)
+                    {
+                        if (Pump_dataGridView.Rows[2].Cells[6].Value != null)
+                        { GPump1Volume = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 2, 6, 0); }
+                        if (Pump_dataGridView.Rows[2].Cells[7].Value != null)
+                        { GPump1Head = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 2, 7, 0); }
+                        else { MessageBox.Show("펌프 양정을 선택하세요."); }
+                        if (Pump_dataGridView.Rows[2].Cells[9].Value != null)
+                        { GPump1Valve = Pump_dataGridView.Rows[1].Cells[9].Value.ToString(); }
+                        else { MessageBox.Show("펌프 밸브를 선택하세요."); }
+                        if (Pump_dataGridView.Rows[2].Cells[10].Value != null)
+                        { GPump1Control = Pump_dataGridView.Rows[1].Cells[10].Value.ToString(); }
+                        else { MessageBox.Show("펌프 제어를 선택하세요."); }
+                        if (Pump_dataGridView.Rows[2].Cells[11].Value != null)
+                        { GPump1Num = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 2, 11, 0); }
+                        else { MessageBox.Show("펌프 대수를 선택하세요."); }
+                    }
+                    if (k == 3)
+                    {
+                        if (Pump_dataGridView.Rows[3].Cells[6].Value != null)
+                        { GPump2Volume = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 3, 6, 0); }
+                        if (Pump_dataGridView.Rows[3].Cells[7].Value != null)
+                        { GPump2Head = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 3, 7, 0); }
+                        else { MessageBox.Show("펌프 양정을 선택하세요."); }
+                        if (Pump_dataGridView.Rows[3].Cells[9].Value != null)
+                        { GPump2Valve = Pump_dataGridView.Rows[1].Cells[9].Value.ToString(); }
+                        else { MessageBox.Show("펌프 밸브를 선택하세요."); }
+                        if (Pump_dataGridView.Rows[3].Cells[10].Value != null)
+                        { GPump2Control = Pump_dataGridView.Rows[1].Cells[10].Value.ToString(); }
+                        else { MessageBox.Show("펌프 제어를 선택하세요."); }
+                        if (Pump_dataGridView.Rows[3].Cells[11].Value != null)
+                        { GPump2Num = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 3, 11, 0); }
+                        else { MessageBox.Show("펌프 대수를 선택하세요."); }
+                    }
                 }
             }
         }
@@ -2874,17 +3152,8 @@ namespace main.contents
         {
             try
             {
-                // 캡쳐할 영역의 위치와 크기 설정
-                Rectangle captureRectangle = ImagePanel.RectangleToScreen(ImagePanel.ClientRectangle); //RectangleToScree는 화면 상 좌표를 읽음, ClientRectangle는 그림의 크기를 읽음 
-
-                // 비트맵 생성
-                Bitmap bmp = new Bitmap(captureRectangle.Width, captureRectangle.Height);
-
-                using (Graphics g = Graphics.FromImage(bmp))
-                {
-                    // 특정 영역을 캡쳐
-                    g.CopyFromScreen(captureRectangle.Location, Point.Empty, captureRectangle.Size);
-                }
+                Bitmap bmp = new Bitmap(ImagePanel.Width, ImagePanel.Height);
+                ImagePanel.DrawToBitmap(bmp, new Rectangle(0, 0, ImagePanel.Width, ImagePanel.Height));
 
                 string pid = "0000-00-00";
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
@@ -2892,13 +3161,12 @@ namespace main.contents
                 {
                     pid = Value[0][0];
                 }
+
                 Directory.CreateDirectory(Program.gPath + "threejs\\public\\print\\img\\" + pid);
-                // 저장할 파일 경로 설정
+
                 string ImageName = "/print/img/" + pid + "/" + Num + ".png";
-                string imagePath = Program.gPath + ImageName; // 최종 경로
+                string imagePath = Program.gPath + ImageName;
 
-
-                // 비트맵을 파일로 저장
                 bmp.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
             }
             catch (Exception ex)
@@ -2949,13 +3217,20 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,지하수히트펌프번호,지하수히트펌프공급방식,지하수히트펌프제어방식,지하수히트펌프대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectHP_nonsplit[2] + "','" + HPSupply_nonsplit[2] + "','" + HPControl_nonsplit[2] + "','" + HPNum_nonsplit[2] + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,흡수식온수기번호,흡수식온수기대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectAS_nonsplit + "','" + ASNum_nonsplit + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,지역난방번호", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectDH_nonsplit + "'", "번호");
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PumpUse + "','" + PumpMethod + "','" + Pump1 + "','" + Pump2 + "','" + Pump1Valve + "','" + Pump2Valve + "','" + Pump1Control + "','" + Pump2Control + "','" + Pump1Num.ToString() + "','" + Pump2Num.ToString() + "'", "번호");
+          
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,공급설비1종류,공급설비2종류", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + ce1Type + "','" + ce2Type + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,축열유무,축열펌프유무,축열펌프,축열용량", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + StorageUse + "','" + StoragePumpUse + "','" + StoragePump + "','" + Vs.ToString() + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,배관관경,배관보온두께,보온열전도율,배관보온재,노출배관길이", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PipeD.ToString() + "','" + PipeInsD.ToString() + "','" + PipeIns_Ramda.ToString() + "','" + PipeIns + "','" + PipeL.ToString() + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,연료전지번호,연료전지대수,연료전지설치유형,연료전지생산유형", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectFC_nonsplit + "','" + FCNum_nonsplit + "','" + FCElecInstall_nonsplit + "','" + FCElecHeat_nonsplit + "'", "번호");
 
-
+            if ((MainSystem == "지열 히트펌프" || MainSystem == "지하수 히트펌프") || (Sub1System == "지열 히트펌프" || Sub1System == "지하수 히트펌프") || (Sub2System == "지열 히트펌프" || Sub2System == "지하수 히트펌프"))
+            {
+                Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수,펌프1유량,펌프2유량,펌프1양정,펌프2양정", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PumpUse + "','" + (PumpMethod + "+" + GPumpMethod) + "','" + (Pump1 + "+" + GPump1) + "','" + (Pump2 + "+" + GPump2) + "','" + (Pump1Valve + "+" + GPump1Valve) + "','" + (Pump2Valve + "+" + GPump2Valve) + "','" + (Pump1Control + "+" + GPump1Control) + "','" + (Pump2Control + "+" + GPump2Control) + "','" + (Pump1Num.ToString() + "+" + GPump1Num.ToString()) + "','" + (Pump2Num.ToString() + "+" + GPump2Num.ToString()) + "','" + (Pump1Volume.ToString() + "+" + GPump1Volume.ToString()) + "','" + (Pump2Volume.ToString() + "+" + GPump2Volume.ToString()) + "','" + (Pump1Head.ToString() + "+" + GPump1Head.ToString()) + "','" + (Pump2Head.ToString() + "+" + GPump2Head.ToString()) + "'", "번호");
+            }
+            else
+            {
+                Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수,펌프1유량,펌프2유량,펌프1양정,펌프2양정", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PumpUse + "','" + PumpMethod + "','" + Pump1 + "','" + Pump2 + "','" + Pump1Valve + "','" + Pump2Valve + "','" + Pump1Control + "','" + Pump2Control + "','" + Pump1Num.ToString() + "','" + Pump2Num.ToString() + "','" + Pump1Volume.ToString() + "','" + Pump2Volume.ToString() + "','" + Pump1Head.ToString() + "','" + Pump2Head.ToString() + "'", "번호");
+            }
             Program.DB.saveProject();
             this.DialogResult = DialogResult.OK;
             this.Hide();
@@ -3222,18 +3497,109 @@ namespace main.contents
 
             }
 
-            Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수", "번호 = '" + ID + "'");
+            Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수,펌프1유량,펌프2유량,펌프1양정,펌프2양정", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
+                
                 PumpUse_comboBox.SelectedItem = Value[0][0];
                 PumpUse = Value[0][0];
                 if (PumpUse == "펌프 있음")
                 {
                     Pump_dataGridView.Visible = true;
-                    PumpMethod_comboBox.SelectedItem = Value[0][1];
-                    PumpMethod = Value[0][1];
-
-                    Pump1 = Value[0][2];
+                    ArrayList arr = new ArrayList();
+                    arr = Split_(Value[0][1]);
+                    PumpMethod_comboBox.SelectedItem = arr[0].ToString();
+                    PumpMethod = arr[0].ToString();
+                    if(arr.Count>1)
+                    {
+                        GPumpMethod_comboBox.SelectedItem = arr[1].ToString();
+                        GPumpMethod = arr[1].ToString();
+                    }
+                    ///
+                    arr = Split_(Value[0][2]);
+                    Pump1 = arr[0].ToString();
+                    if (arr.Count > 1)
+                    {
+                        GPump1 = arr[1].ToString();
+                    }
+                    ///
+                    arr = Split_(Value[0][3]);
+                    Pump2 = arr[0].ToString();
+                    if (arr.Count > 1)
+                    {
+                        GPump2 = arr[1].ToString();
+                    }
+                    ///
+                    arr = Split_(Value[0][4]);
+                    Pump1Valve = arr[0].ToString();
+                    if (arr.Count > 1)
+                    {
+                        GPump1Valve = arr[1].ToString();
+                    }
+                    ///
+                    arr = Split_(Value[0][5]);
+                    Pump2Valve = arr[0].ToString();
+                    if (arr.Count > 1)
+                    {
+                        GPump2Valve = arr[1].ToString();
+                    }
+                    ///
+                    arr = Split_(Value[0][6]);
+                    Pump1Control = arr[0].ToString();
+                    if (arr.Count > 1)
+                    {
+                        GPump1Control = arr[1].ToString();
+                    }
+                    ///
+                    arr = Split_(Value[0][7]);
+                    Pump2Control = arr[0].ToString();
+                    if (arr.Count > 1)
+                    {
+                        GPump2Control = arr[1].ToString();
+                    }
+                    ///
+                    arr = Split_(Value[0][8]);
+                    Pump1Num = Convert.ToInt16(arr[0].ToString());
+                    if (arr.Count > 1)
+                    {
+                        GPump1Num = Convert.ToInt16(arr[1].ToString());
+                    }
+                    ///
+                    arr = Split_(Value[0][9]);
+                    Pump2Num = Convert.ToInt16(arr[0].ToString());
+                    if (arr.Count > 1)
+                    {
+                        GPump2Num = Convert.ToInt16(arr[1].ToString());
+                    }
+                    ///
+                    arr = Split_(Value[0][10]);
+                    Pump1Volume = Convert.ToDouble(arr[0].ToString());
+                    if (arr.Count > 1)
+                    {
+                        GPump1Volume = Convert.ToDouble(arr[1].ToString());
+                    }
+                    ///
+                    arr = Split_(Value[0][11]);
+                    Pump2Volume = Convert.ToDouble(arr[0].ToString());
+                    if (arr.Count > 1)
+                    {
+                        GPump2Volume = Convert.ToDouble(arr[1].ToString());
+                    }
+                    ///
+                    arr = Split_(Value[0][12]);
+                    Pump1Head = Convert.ToDouble(arr[0].ToString());
+                    if (arr.Count > 1)
+                    {
+                        GPump1Head = Convert.ToDouble(arr[1].ToString());
+                    }
+                    ///
+                    arr = Split_(Value[0][13]);
+                    Pump2Head = Convert.ToDouble(arr[0].ToString());
+                    if (arr.Count > 1)
+                    {
+                        GPump2Head = Convert.ToDouble(arr[1].ToString());
+                    }
+                    ///
                     if (Pump1 != null && Pump1 != "")
                     {
                         string[][] Pump_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "명칭", "번호 = '" + Pump1.ToString() + "'");
@@ -3243,9 +3609,13 @@ namespace main.contents
                             Pump_dataGridView.Rows.Add();
                         }
                         Load_Pump_Table(0, Pump1);
+                        Pump_dataGridView.Rows[0].Cells[7].Value = Pump1Head;
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 7, 1);
+                        Pump_dataGridView.Rows[0].Cells[9].Value = Pump1Valve;
+                        Pump_dataGridView.Rows[0].Cells[10].Value = Pump1Control;
+                        Pump_dataGridView.Rows[0].Cells[11].Value = Pump1Num;
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 11, 0);
                     }
-
-                    Pump2 = Value[0][3];
                     if (Pump2 != null && Pump2 != "")
                     {
                         string[][] Pump_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "명칭", "번호 = '" + Pump2.ToString() + "'");
@@ -3255,32 +3625,39 @@ namespace main.contents
                             Pump_dataGridView.Rows.Add();
                         }
                         Load_Pump_Table(1, Pump2);
-                    }
-
-                    Pump1Valve = Value[0][4];
-                    Pump2Valve = Value[0][5];
-                    Pump1Control = Value[0][6];
-                    Pump2Control = Value[0][7];
-                    Pump1Num = Convert.ToInt16(Value[0][8]);
-                    Pump2Num = Convert.ToInt16(Value[0][9]);
-
-                    if (Pump_dataGridView.Rows.Count > 0)
-                    {
-                        Pump_dataGridView.Rows[0].Cells[9].Value = Pump1Valve;
-                        Pump_dataGridView.Rows[0].Cells[10].Value = Pump1Control;
-                        Pump_dataGridView.Rows[0].Cells[11].Value = Pump1Num;
-                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 11, 0);
-                    }
-                    else if (Pump_dataGridView.Rows.Count > 1)
-                    {
-                        Pump_dataGridView.Rows[0].Cells[9].Value = Pump1Valve;
-                        Pump_dataGridView.Rows[0].Cells[10].Value = Pump1Control;
-                        Pump_dataGridView.Rows[0].Cells[11].Value = Pump1Num;
-                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 11, 0);
+                        Pump_dataGridView.Rows[1].Cells[7].Value = Pump2Head;
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 1, 7, 1);
                         Pump_dataGridView.Rows[1].Cells[9].Value = Pump2Valve;
                         Pump_dataGridView.Rows[1].Cells[10].Value = Pump2Control;
                         Pump_dataGridView.Rows[1].Cells[11].Value = Pump2Num;
                         Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 1, 11, 0);
+                    }
+
+                    if (GPump1 != null && GPump1 != "")
+                    {
+                        string[][] Pump_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "명칭", "번호 = '" + GPump1.ToString() + "'");
+                        GPump1_textBox.Text = Pump_Value[0][0];
+                        Pump_dataGridView.Rows.Add();
+                        Load_Pump_Table(Pump_dataGridView.Rows.Count -1, GPump1);
+                        Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[7].Value = GPump1Head;
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, Pump_dataGridView.Rows.Count - 1, 7, 1);
+                        Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[9].Value = GPump1Valve;
+                        Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[10].Value =GPump1Control;
+                        Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[11].Value = GPump1Num;
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, Pump_dataGridView.Rows.Count - 1, 11, 0);
+                    }
+                    if (GPump2 != null && GPump2 != "")
+                    {
+                        string[][] Pump_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "명칭", "번호 = '" + GPump2.ToString() + "'");
+                        GPump2_textBox.Text = Pump_Value[0][0];
+                        Pump_dataGridView.Rows.Add();
+                        Load_Pump_Table(Pump_dataGridView.Rows.Count - 1, GPump2);
+                        Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[7].Value = GPump2Head;
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, Pump_dataGridView.Rows.Count - 1, 7, 1);
+                        Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[9].Value = GPump2Valve;
+                        Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[10].Value = GPump2Control;
+                        Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[11].Value = GPump2Num;
+                        Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, Pump_dataGridView.Rows.Count - 1, 11, 0);
                     }
                 }
                 else { Pump_dataGridView.Visible = false; }
@@ -3419,6 +3796,35 @@ namespace main.contents
             }
         }
 
+        private ArrayList Split_(String nonSplit)
+        {
+            if (nonSplit != null)
+            {
+                if (nonSplit.Contains('+'))
+                {
+                    ArrayList split = new ArrayList();
+
+                    string[] token = nonSplit.Split('+');
+                    split.Clear();
+                    foreach (var item in token)
+                    {
+                        split.Add(item.ToString());
+                    }
+                    return split;
+                }
+                else
+                {
+                    ArrayList split = new ArrayList();
+
+                    split.Clear(); 
+                    split.Add(nonSplit);
+                    return split;
+                }
+            }
+            else { return null; }
+
+        }
+
         #endregion
 
         #region 리셋 
@@ -3434,7 +3840,7 @@ namespace main.contents
         {
             if ((MessageBox.Show(Boiler_dataGridView.Rows[Boiler_SelectRow].Cells[1].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
             {
-              Boiler_dataGridView.Rows.Remove(Boiler_dataGridView.Rows[Boiler_SelectRow]);
+                Boiler_dataGridView.Rows.Remove(Boiler_dataGridView.Rows[Boiler_SelectRow]);
             }
         }
 
@@ -3513,5 +3919,6 @@ namespace main.contents
             FC_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
             FC_SelectRow = e.RowIndex;
         }
+
     }
 }

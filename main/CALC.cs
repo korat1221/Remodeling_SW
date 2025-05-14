@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 
 namespace main
 {
@@ -1092,8 +1093,8 @@ namespace main
                       "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + Heating1.HeatingNum + "','" + MTH + "','" +
                       Heating1.Qhb_z[mth]+ "','" + Heating1.Qh_ce_z[mth] + "','" + Heating1.Qh_d_z[mth] + "','" + Heating1.Qh_s_z[mth] + "','" + Heating1.Qh_outg_z[mth]  + "','" +
                       Heating1.Qhb_ahu[mth] + "','" + Heating1.Qh_ce_ahu[mth] + "','" + Heating1.Qh_d_ahu[mth] + "','" + Heating1.Qh_s_ahu[mth] + "','" + Heating1.Qh_outg_ahu[mth]
-                       + "'", "번호,월"); ;
-
+                       + "'", "번호,월");
+               
             }
         }
         #endregion
@@ -1477,7 +1478,7 @@ namespace main
                 }
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    final1.Qf_elec_tot_mth[mth] = final1.Qf_elec_tot1[mth] + final1.Qbase_elec[mth] - final1.Qreg_elec[mth];
+                    final1.Qf_elec_tot_mth[mth] = final1.Qf_elec_tot1[mth] + final1.Qbase_elec[mth] - final1.Qreg_elec_tot[mth];
                     final1.Qf_gas_tot_mth[mth] = final1.Qf_gas_tot1[mth] + final1.Qbase_gas[mth];
                 }
 
@@ -1497,7 +1498,7 @@ namespace main
                     "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + MTH + "','" + "전기" + "','" +
                     final1.Qhf_elec[mth] + "','" + final1.Qcf_elec[mth] + "','" + final1.Qwf_elec[mth] + "','" + final1.Qlf_elec[mth] + "','" +
-                    final1.Qvf_elec[mth] + "','" + final1.Qbase_elec[mth] + "','" + final1.Qreg_elec[mth] + "','" + Math.Max( final1.Qf_elec_tot_mth[mth],0)
+                    final1.Qvf_elec[mth] + "','" + final1.Qbase_elec[mth] + "','" + final1.Qreg_elec_tot[mth] + "','" + Math.Max( final1.Qf_elec_tot_mth[mth],0)
                     + "'", "번호,월,연료"); 
 
             }
@@ -1511,7 +1512,7 @@ namespace main
                 Qwf_elec_a += final1.Qwf_elec[mth];
                 Qlf_elec_a += final1.Qlf_elec[mth];
                 Qvf_elec_a += final1.Qvf_elec[mth];
-                Qreg_elec_a += final1.Qreg_elec[mth];
+                Qreg_elec_a += final1.Qreg_elec_tot[mth];
                 Qbase_elec_a += final1.Qbase_elec[mth];
             }
             Qf_elec_tot_a = Qhf_elec_a + Qcf_elec_a + Qwf_elec_a + Qlf_elec_a + Qvf_elec_a + Qbase_elec_a - Qreg_elec_a;
@@ -1534,26 +1535,28 @@ namespace main
                     Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
                         "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                         "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + MTH + "','" + Carrier + "','" +
-                        final1.Qhf_gas[mth] + "','" + final1.Qcf_gas[mth] + "','" + final1.Qwf_gas[mth] + "','" + "0" + "','" +
-                        "0" + "','" + final1.Qbase_gas[mth] + "','" + "0" + "','" + final1.Qf_gas_tot_mth[mth]
+                        final1.Qhf_gas[mth] + "','" + final1.Qcf_gas[mth] + "','" + final1.Qwf_gas[mth] + "','" + final1.Qlf_gas[mth] + "','" +
+                        final1.Qvf_gas[mth] + "','" + final1.Qbase_gas[mth] + "','" + "0" + "','" + final1.Qf_gas_tot_mth[mth]
                         + "'", "번호,월,연료"); 
                 }
             }
-            double Qhf_gas_a = 0, Qcf_gas_a = 0, Qwf_gas_a = 0, Qbase_gas_a = 0, Qf_gas_tot_a = 0;
+            double Qhf_gas_a = 0, Qcf_gas_a = 0, Qwf_gas_a = 0, Qlf_gas_a = 0, Qvf_gas_a = 0, Qbase_gas_a = 0, Qf_gas_tot_a = 0;
 
             for (int mth = 0; mth < 12; mth++)
             {
                 Qhf_gas_a += final1.Qhf_gas[mth];
                 Qcf_gas_a += final1.Qcf_gas[mth];
                 Qwf_gas_a += final1.Qwf_gas[mth];
+                Qlf_gas_a += final1.Qlf_gas[mth];
+                Qvf_gas_a += final1.Qvf_gas[mth];
                 Qbase_gas_a += final1.Qbase_gas[mth];
             }
             Qf_gas_tot_a = Qhf_gas_a + Qcf_gas_a + Qwf_gas_a + Qbase_gas_a;
             Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
                      "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                      "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + "연간" + "','" + Carrier + "','" +
-                     Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_gas_a + "','" + "0" + "','" +
-                     "0" + "','" + Qbase_gas_a + "','" + "0" + "','" + Qf_gas_tot_a
+                     Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_gas_a + "','" + Qlf_gas_a + "','" +
+                     Qvf_gas_a + "','" + Qbase_gas_a + "','" + "0" + "','" + Qf_gas_tot_a
                      + "'", "번호,월,연료");
             #endregion
 
@@ -1565,7 +1568,7 @@ namespace main
                     "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + MTH + "','" + "전체" + "','" +
                     (final1.Qhf_elec[mth]+ final1.Qhf_gas[mth]) + "','" + (final1.Qcf_elec[mth]+final1.Qcf_gas[mth]) + "','" + (final1.Qwf_elec[mth]+final1.Qwf_gas[mth]) + "','" + final1.Qlf_elec[mth] + "','" +
-                    final1.Qvf_elec[mth] + "','" + (final1.Qbase_elec[mth]+final1.Qbase_gas[mth]) + "','" + final1.Qreg_elec[mth]  + "','" + Math.Max((final1.Qf_elec_tot_mth[mth]+final1.Qf_gas_tot_mth[mth]),0)
+                    final1.Qvf_elec[mth] + "','" + (final1.Qbase_elec[mth]+final1.Qbase_gas[mth]) + "','" + final1.Qreg_elec_tot[mth]  + "','" + Math.Max((final1.Qf_elec_tot_mth[mth]+final1.Qf_gas_tot_mth[mth]),0)
                     + "'", "번호,월,연료"); 
             }
 
@@ -1576,6 +1579,7 @@ namespace main
                    Qvf_elec_a + "','" + (Qbase_elec_a + Qbase_gas_a) + "','" + Qreg_elec_a + "','" + Math.Max((Qf_elec_tot_a + Qf_gas_tot_a),0)
                    + "'", "번호,월,연료");
             #endregion
+
         }
         #endregion
 
@@ -1626,7 +1630,28 @@ namespace main
                                  "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + WPNum[i][0] + "','" + MTH + "','" +
                                  WP.h_mth[mth] + "','" + WP.Pwindwk_mth[mth] + "','" + WP.Pwps_mth[mth] + "','" + WP.Qfwps_mth[mth]
                                   + "'", "번호,월"); ;
-                    
+
+                }
+                string RESystemNum = "";
+                string[][] value = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "신재생시스템='" + WPNum[i][0] + "'");
+                if (value.Length > 0)
+                {
+                    RESystemNum = value[0][0];
+                }
+                else
+                {
+                    RESystemNum = Program.UTIL.CreateNum("RESystem_Result", "번호", "RE");
+                }
+                for (int mth = 0; mth <= 11; mth++)
+                {
+                    MTH = (mth + 1).ToString() + "월";
+                    Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                     "월," +
+                     "신재생시스템,신재생시스템유형,생산소비,생산유형,총에너지",
+                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형 + "','" + RESystemNum + "','" + MTH + "','" +
+                    WPNum[i][0] + "','풍력시스템','생산','전기','" +
+                    WP.Qfwps_mth[mth]
+                      + "'", "번호,월,생산소비,생산유형"); ;
                 }
             }
 

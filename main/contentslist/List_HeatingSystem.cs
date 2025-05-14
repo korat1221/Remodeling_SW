@@ -97,8 +97,8 @@ namespace main.contentslist
         public void load_List()
         {
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
-            string[][] List = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭,주요설비,보일러종류,외기히트펌프번호,흡수식온수기번호,지역난방번호,태양열번호", "");
-            string[][] count_ = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭,주요설비,보일러대수,외기히트펌프대수,흡수식온수기대수,지역난방번호,모듈개수", "");
+            string[][] List = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭,주요설비,보일러종류,외기히트펌프번호,흡수식온수기번호,지역난방번호,태양열번호,지열히트펌프번호,지하수히트펌프번호", "");
+            string[][] count_ = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭,주요설비,보일러대수,외기히트펌프대수,흡수식온수기대수,지역난방번호,모듈개수,지열히트펌프대수,지하수히트펌프대수", "");
             if (List.Length > 0&& count_.Length>0)
             {
                 String Blank = "";
@@ -146,6 +146,22 @@ namespace main.contentslist
                         if (SystemValue.Length > 0)
                         {
                             this.List.Rows.Add(List[n][0], List[n][1], List[n][2], (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][7])).ToString("0.0") + "m2", Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " %");
+                        }
+                    }
+                    else if (List[n][2] == "지열 히트펌프")
+                    {
+                        SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_GroundHP", "난방정격용량,난방정격COP", "번호 ='" + List[n][8] + "'");
+                        if (SystemValue.Length > 0)
+                        {
+                            this.List.Rows.Add(List[n][0], List[n][1], List[n][2], (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][8])).ToString("0.0"), Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " [kW/kW]");
+                        }
+                    }
+                    else if (List[n][2] == "지하수 히트펌프")
+                    {
+                        SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_GroundWHP", "난방정격용량,난방정격COP", "번호 ='" + List[n][9] + "'");
+                        if (SystemValue.Length > 0)
+                        {
+                            this.List.Rows.Add(List[n][0], List[n][1], List[n][2], (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][9])).ToString("0.0"), Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " [kW/kW]");
                         }
                     }
 
