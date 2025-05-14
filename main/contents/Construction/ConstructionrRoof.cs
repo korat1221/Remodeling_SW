@@ -84,7 +84,7 @@ namespace main.contents
             //구조유형콤보박스
             //Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, StructureType_comboBox, "지붕", "구조유형", "3");
             Load_table();
-            webView21.Source = new Uri(Program.gPath + "threejs\\public\\transmit.html?type=roof", true);
+            webView21.Source = new Uri(Program.gPath + "transmit.html?type=roof", true);
             InitializeAsync();
         }
         async void InitializeAsync()

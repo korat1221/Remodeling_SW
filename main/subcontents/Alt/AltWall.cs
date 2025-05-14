@@ -28,7 +28,7 @@ namespace main.subcontents.Alt
         public AltWall(String SelectValue)
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
-            webView21.Source = new Uri(Program.gPath + "threejs\\public\\transmit.html", true);
+            webView21.Source = new Uri(Program.gPath + "transmit.html", true);
             WallRemodelingType_comboBox.Items.Clear();
             WallRemodelingType_comboBox.Items.Add("외부덧댐");
             WallRemodelingType_comboBox.Items.Add("내부덧댐");

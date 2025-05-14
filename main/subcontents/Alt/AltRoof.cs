@@ -28,7 +28,7 @@ namespace main.subcontents.Alt
         public AltRoof(String SelectValue)
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
-            webView21.Source = new Uri(Program.gPath + "threejs\\public\\transmit.html?type=roof", true);
+            webView21.Source = new Uri(Program.gPath + "transmit.html?type=roof", true);
             RoofRemodelingType_comboBox.Items.Clear();
             RoofRemodelingType_comboBox.Items.Add("외부덧댐");
             RoofRemodelingType_comboBox.Items.Add("내부덧댐");
