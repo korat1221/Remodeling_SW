@@ -11,6 +11,22 @@ namespace main
         [DllImport("shell32.dll")]
         static extern bool SHGetSpecialFolderPath(IntPtr hwndOwner, [Out] StringBuilder lpszPath, int nFolder, bool fCreate);
 
+        [DllImport("user32.dll")]
+        private static extern bool SetProcessDpiAwarenessContext(IntPtr dpiFlag);
+
+        private static readonly IntPtr DPI_AWARENESS_CONTEXT_UNAWARE = new IntPtr(-1);
+        private static readonly IntPtr DPI_AWARENESS_CONTEXT_SYSTEM_AWARE = new IntPtr(-2);
+        private static readonly IntPtr DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = new IntPtr(-4);
+
+
+        private enum PROCESS_DPI_AWARENESS
+        {
+            Process_DPI_Unaware = 0,
+            Process_System_DPI_Aware = 1,
+            Process_Per_Monitor_DPI_Aware = 2
+        }
+
+
         public const string VIRTUAL_PATH_NAME = "ZEROFIX";
 
         public static String? gPath;
@@ -24,6 +40,16 @@ namespace main
         [STAThread]
         static void Main()
         {
+            try
+            {
+                // 최신 Windows면 SetProcessDpiAwarenessContext 사용
+                SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_UNAWARE);  // ?? 100% 무조건 강제 설정
+            }
+            catch
+            {
+                // 안되면 무시
+            }
+
 #if !DEBUG
             gPath = get_virtual_store_path();
 
