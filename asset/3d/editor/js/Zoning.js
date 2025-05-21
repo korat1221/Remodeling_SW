@@ -12,7 +12,7 @@ function Zoning(editor) {
         "SL": { color: 0xaaaaaa, opacity: 0.9 },
         "WN": { color: 0x315b7d, opacity: 0.7, duplicate: true },
         "CW1": { color: 0x505edb, opacity: 0.7, duplicate: true },
-        "CW2": { color: 0xfcde00, opacity: 0.7, duplicate: true },
+        "CW2": { color: 0xd8bfd8, opacity: 0.7, duplicate: true },
         "CW3": { color: 0x0014be, opacity: 0.7, duplicate: true },
         "DR": { color: 0x553830, opacity: 0.7, duplicate: true },
     };
@@ -90,9 +90,15 @@ Zoning.prototype = {
                 }
             }
         };
+
         let _equalPoint = (a, b) => {
+            if (!a || !b || typeof a.distanceTo !== 'function' || typeof b.distanceTo !== 'function') {
+                console.warn("Invalid point(s):", a, b);
+                return false;
+            }
             return a.distanceTo(b) < 0.00000001;
         };
+
         let _getSamePoints = (a, b) => {
             var ret = [], i = -1, j;
 
@@ -245,6 +251,7 @@ Zoning.prototype = {
 
         let _addMeshObject = (pos, opt, pid, wired) => {
             let _pos = [].concat(pos);
+
 
             if (opt.duplicate && _pos.length > 2) {
                 let pos2 = [], i = -1;
@@ -673,7 +680,7 @@ Zoning.prototype = {
             }
         };
         let _getSubType = (name) => {
-            let arr = [ "+DR ", "+CW ", "+RF ", "+WL ", "+WN "], _i = -1, n;
+            let arr = [ "+DR ", "+CW ", "+RF ", "+WL ", "+WN ", "+CW2", "+CW3" ], _i = -1, n;
 
             while (++_i < arr.length) {
                 if ((n = name.indexOf(arr[_i])) >= 0) {
@@ -686,12 +693,14 @@ Zoning.prototype = {
             return {
                 "DR": "DR",
                 "CW": "CW1",
+                "CW2":"CW2",
                 "RF": "RF",
                 "WL": "WL",
                 "WN": "WN",
                 "IW": "IW",
                 "SL": "SL",
                 "FL": "FL",
+                "CW3":"CW3"
             }[type];
 
         };
@@ -1294,6 +1303,7 @@ Zoning.prototype = {
                             el.material.side = THREE.DoubleSide;
                             el.material.color.set(el.userData.color);
                             el.material.opacity = el.userData.opacity;
+                            el.material.transparent = true; // 🔥 핵심
                         }
                     }
                 }
@@ -1549,10 +1559,16 @@ Zoning.prototype = {
                         let el2 = el.userData.walls[i];
                         let o = obj.getObjectByProperty('uuid', el2.uuid);
                         if (o) {
-                            let opt = this.colors[_getTypeColor(el2.type)];
+                       let opt = this.colors[_getTypeColor(el2.type)];
 
-                            o.material.color.set(opt.color);
-                            o.material.opacity = opt.opacity;
+                            o.material.dispose(); // 기존 material 제거
+                            o.material = new THREE.MeshBasicMaterial({
+                                color: opt.color,
+                                transparent: true,
+                                opacity: opt.opacity,
+                                side: THREE.DoubleSide
+                            });
+
                             o.userData.color = opt.color;
                             o.userData.opacity = opt.opacity;
                         }
@@ -1577,7 +1593,7 @@ Zoning.prototype = {
                     while (++i < el.userData.children.length) {
                         let el2 = el.userData.children[i];
 
-                        if (el2.type === 'CW') {
+                        if (el2.type === 'CW' || el2.type === 'CW2'|| el2.type === 'CW3') {
                             el2.id = nm + "_" + el2.type + "_" + (struCW.length + 1);
                             struCW.push({});
                         }

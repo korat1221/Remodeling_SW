@@ -47,7 +47,7 @@ SQLExport.prototype = {
             return b;
         };
         let _getTitle = (type) => {
-            return {  "DR": "외부출입문", "CW": "커튼월창", "WN": "창호", "RF": "지붕", "FL": "최하층바닥", "SL": "층간바닥", "IW": "내벽", "WL": "외벽" }[type];
+            return {  "DR": "외부출입문", "CW": "커튼월창", "WN": "창호", "RF": "지붕", "FL": "최하층바닥", "SL": "층간바닥", "IW": "내벽", "WL": "외벽", "CW2": "커튼월창", "CW3": "커튼월창"  }[type];
         };
 
         let _asVal = (v, def = "") => {
@@ -193,7 +193,9 @@ SQLExport.prototype = {
                 let height = _getZoneHeight(id);
                 let stru = {}, struCW = [];
                 let floorType = "", floorArea = 0, mainCardi = "", mainWidth = 0, mainHeight = 0, mainDepth = 0;
-
+                let cw1Children = [];
+                let cw2Children = [];
+                let cw3Children = [];
                 if (el.userData.children) {
                     let i = -1;
                     let WNArea = 0, mainWN = null;
@@ -202,12 +204,19 @@ SQLExport.prototype = {
                         let el2 = el.userData.children[i];
                         let o = _getObjectByUuid(el2.uuid);
 
-                        if (el2.type === 'CW') {
-                            struCW.push({
-                                "text": el2.id,
-                                "id": "selectWN::" + el2.type + "::" + el2.uuid
-                            });
-                            o.userData.tkey = "selectWN::" + el2.type + "::" + el2.uuid;
+                       // ✅ 커튼월 타입 분기 처리
+                        if (['CW', 'CW2', 'CW3'].includes(el2.type)) {
+                            let item = {
+                                type: el2.type,
+                                text: el2.id,
+                                id: "selectWN::" + el2.type + "::" + el2.uuid
+                            };
+
+                            if (el2.type === 'CW') cw1Children.push(item);
+                            else if (el2.type === 'CW2') cw2Children.push(item);
+                            else if (el2.type === 'CW3') cw3Children.push(item);
+
+                            o.userData.tkey = item.id;
                         }
                         else if(el2.type === 'WN') {
                             if (!stru[el2.type]) {
@@ -287,47 +296,72 @@ SQLExport.prototype = {
                     }
                 }
 
-                let children = [];
+               let children = [];
 
-                for (const [id2, el2] of Object.entries(stru)) {
-                    if (!children.find(el3 => el3.type === id2)) {
-                        children.push({
-                            "type": id2,
-                            "text": _getTitle(id2),
-                            "id": "---::" + id2 + "::" + num,
-                            "children": el2,
-                        });
-                    }
-                }
+    for (const [id2, el2] of Object.entries(stru)) {
+        if (!children.find(el3 => el3.type === id2)) {
+            children.push({
+                type: id2,
+                text: _getTitle(id2),
+                id: "---::" + id2 + "::" + num,
+                children: el2
+            });
+        }
+    }
 
-                if (struCW.length > 0) {
-    
-                    children.push({
-                        "type": 'CW',
-                        "text": '커튼월창',
-                        "id": "---::CW::" + num,
-                        "children": [{
-                            "type": 'CW1',
-                            "text": '유리부분',
-                            "id": "---::CW1::" + num,
-                            "children": struCW 
-                        }],
-                    });
-                }
+    // ✅ 커튼월 트리 구성 (zkey별로 분리됨)
+    if (cw1Children.length > 0 || cw2Children.length > 0 || cw3Children.length > 0) {
+        let cwNode = {
+            type: 'CW',
+            text: '커튼월창',
+            id: "---::CW::" + num,
+            children: []
+        };
 
-                tree[0].push({
-                    "type": "space",
-                    "text": num,
-                    "Name": name,
-                    "id": "selectspc::" + id + "::" + el.uuid,
-                    "skey": parseInt(num.split('_')[1].replace("Zone", "")),
-                    "floor": el.userData.floor,
-                    "floorType": floorType,
-                    "floorArea": area,
-                    "height": height,
-                    "children": children
-                });
-            }
+        if (cw1Children.length > 0) {
+            cwNode.children.push({
+                type: 'CW1',
+                text: '유리부분',
+                id: "---::CW1::" + num,
+                children: cw1Children
+            });
+        }
+
+        if (cw2Children.length > 0) {
+            cwNode.children.push({
+                type: 'CW2',
+                text: '패널부분',
+                id: "---::CW2::" + num,
+                children: cw2Children
+            });
+        }
+
+        if (cw3Children.length > 0) {
+            cwNode.children.push({
+                type: 'CW3',
+                text: '출입문부분',
+                id: "---::CW3::" + num,
+                children: cw3Children
+            });
+        }
+
+        children.push(cwNode);
+    }
+
+    // ✅ 트리에 추가
+    tree[0].push({
+        type: "space",
+        text: num,
+        Name: name,
+        id: "selectspc::" + id + "::" + el.uuid,
+        skey: parseInt(num.split('_')[1].replace("Zone", "")),
+        floor: el.userData.floor,
+        floorType: floorType,
+        floorArea: area,
+        height: height,
+        children: children
+    });
+}
 
             tree[0].sort(function (_a, _b) {
                 if (_a.skey > _b.skey) return 1;
@@ -354,7 +388,9 @@ SQLExport.prototype = {
                         "','" +
                         _getTitle(el2.type) +
                         "','" +
-                        (el2.type === 'CW' ? '유리부분' : '') +
+                            (el2.type === 'CW' ? '유리부분' :
+                             el2.type === 'CW2' ? '패널부분' :
+                             el2.type === 'CW3' ? '출입문부분' : '') + 
                         "','" +
                         el2.area +
                         "','','" + _realCardinal(cardinal[el2.cardi]) + 
