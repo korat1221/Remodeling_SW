@@ -29,10 +29,11 @@ namespace main.contents
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            info = new Button();
             label1 = new Label();
             OldRoof_comboBox = new CustomComboBox();
             OldRoof_label = new Label();
@@ -112,7 +113,7 @@ namespace main.contents
             Ueff2_textBox = new TextBox();
             label16 = new Label();
             label15 = new Label();
-            info = new Button();
+            label4 = new Label();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -148,6 +149,21 @@ namespace main.contents
             GeneralPanel.Size = new Size(1000, 80);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(970, 9);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 114;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
             // 
             // label1
             // 
@@ -373,7 +389,7 @@ namespace main.contents
             TB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             TB_button.FlatStyle = FlatStyle.System;
             TB_button.Font = new Font("나눔바른고딕", 12F, FontStyle.Bold);
-            TB_button.Location = new Point(295, 84);
+            TB_button.Location = new Point(148, 113);
             TB_button.Margin = new Padding(0);
             TB_button.Name = "TB_button";
             TB_button.Size = new Size(23, 23);
@@ -389,7 +405,7 @@ namespace main.contents
             TBName_textBox.Enabled = false;
             TBName_textBox.Font = new Font("나눔바른고딕", 9.75F);
             TBName_textBox.ForeColor = SystemColors.ControlDark;
-            TBName_textBox.Location = new Point(318, 88);
+            TBName_textBox.Location = new Point(175, 117);
             TBName_textBox.Name = "TBName_textBox";
             TBName_textBox.Size = new Size(120, 15);
             TBName_textBox.TabIndex = 91;
@@ -450,6 +466,7 @@ namespace main.contents
             // panel2
             // 
             panel2.BackColor = Color.White;
+            panel2.Controls.Add(label4);
             panel2.Controls.Add(Ueff_label2);
             panel2.Controls.Add(Color_comboBox);
             panel2.Controls.Add(dU_label2);
@@ -485,9 +502,8 @@ namespace main.contents
             Ueff_label2.ForeColor = SystemColors.ControlDark;
             Ueff_label2.Location = new Point(824, 117);
             Ueff_label2.Name = "Ueff_label2";
-            Ueff_label2.Size = new Size(60, 15);
+            Ueff_label2.Size = new Size(0, 15);
             Ueff_label2.TabIndex = 132;
-            Ueff_label2.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // Color_comboBox
             // 
@@ -507,9 +523,8 @@ namespace main.contents
             dU_label2.ForeColor = SystemColors.ControlDark;
             dU_label2.Location = new Point(824, 88);
             dU_label2.Name = "dU_label2";
-            dU_label2.Size = new Size(60, 15);
+            dU_label2.Size = new Size(0, 15);
             dU_label2.TabIndex = 113;
-            dU_label2.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // Ueff_textBox
             // 
@@ -761,33 +776,33 @@ namespace main.contents
             Ucalc_dataGridView.BorderStyle = BorderStyle.None;
             Ucalc_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             Ucalc_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle10.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle10.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle10.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
-            Ucalc_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            Ucalc_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             Ucalc_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Ucalc_dataGridView.Location = new Point(15, 63);
             Ucalc_dataGridView.Name = "Ucalc_dataGridView";
-            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = SystemColors.Control;
-            dataGridViewCellStyle11.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
-            Ucalc_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            Ucalc_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             Ucalc_dataGridView.RowHeadersVisible = false;
             Ucalc_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle12.ForeColor = Color.Black;
-            dataGridViewCellStyle12.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle12.SelectionForeColor = Color.Black;
-            Ucalc_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle6.ForeColor = Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
+            Ucalc_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
             Ucalc_dataGridView.Size = new Size(555, 234);
             Ucalc_dataGridView.TabIndex = 96;
             Ucalc_dataGridView.CellContentClick += dataGridView1_CellContentClick;
@@ -1066,9 +1081,8 @@ namespace main.contents
             U_label2.ForeColor = SystemColors.ControlDark;
             U_label2.Location = new Point(824, 59);
             U_label2.Name = "U_label2";
-            U_label2.Size = new Size(60, 15);
+            U_label2.Size = new Size(0, 15);
             U_label2.TabIndex = 64;
-            U_label2.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // U_textBox
             // 
@@ -1160,9 +1174,8 @@ namespace main.contents
             label16.ForeColor = SystemColors.ControlDark;
             label16.Location = new Point(1145, 247);
             label16.Name = "label16";
-            label16.Size = new Size(60, 15);
+            label16.Size = new Size(0, 15);
             label16.TabIndex = 138;
-            label16.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             // 
             // label15
             // 
@@ -1175,20 +1188,15 @@ namespace main.contents
             label15.TabIndex = 136;
             label15.Text = "유효열관류율";
             // 
-            // info
+            // label4
             // 
-            info.BackColor = SystemColors.ControlLight;
-            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            info.FlatStyle = FlatStyle.System;
-            info.Font = new Font("나눔바른고딕", 9.75F);
-            info.Location = new Point(970, 9);
-            info.Margin = new Padding(0);
-            info.Name = "info";
-            info.Size = new Size(23, 23);
-            info.TabIndex = 114;
-            info.Text = "?";
-            info.UseVisualStyleBackColor = false;
-            info.Click += info_Click;
+            label4.AutoSize = true;
+            label4.Font = new Font("나눔바른고딕", 9.75F);
+            label4.Location = new Point(28, 117);
+            label4.Name = "label4";
+            label4.Size = new Size(75, 15);
+            label4.TabIndex = 133;
+            label4.Text = "1D 열교검토";
             // 
             // ConstructionRoof
             // 
@@ -1315,5 +1323,6 @@ namespace main.contents
         private Label label16;
         private Label label15;
         private Button info;
+        private Label label4;
     }
 }

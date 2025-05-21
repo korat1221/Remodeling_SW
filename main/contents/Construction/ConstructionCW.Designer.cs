@@ -111,6 +111,7 @@
             label47 = new Label();
             CWGlass_pictureBox = new PictureBox();
             Install_tabPage = new TabPage();
+            label84 = new Label();
             label49 = new Label();
             d_InstallButtom_textBox = new TextBox();
             label51 = new Label();
@@ -232,7 +233,6 @@
             DiIndi_comboBox = new CustomComboBox();
             label7 = new Label();
             CWType_pictureBox = new PictureBox();
-            label84 = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             groupBox1.SuspendLayout();
@@ -487,7 +487,7 @@
             SpacerName_textBox.Enabled = false;
             SpacerName_textBox.Font = new Font("나눔바른고딕", 9.75F);
             SpacerName_textBox.ForeColor = SystemColors.ControlDark;
-            SpacerName_textBox.Location = new Point(374, 137);
+            SpacerName_textBox.Location = new Point(410, 137);
             SpacerName_textBox.Name = "SpacerName_textBox";
             SpacerName_textBox.Size = new Size(120, 15);
             SpacerName_textBox.TabIndex = 93;
@@ -499,7 +499,7 @@
             Spacer_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Spacer_button.FlatStyle = FlatStyle.System;
             Spacer_button.Font = new Font("나눔바른고딕", 11.9999981F, FontStyle.Bold);
-            Spacer_button.Location = new Point(352, 133);
+            Spacer_button.Location = new Point(388, 133);
             Spacer_button.Margin = new Padding(0);
             Spacer_button.Name = "Spacer_button";
             Spacer_button.Size = new Size(23, 23);
@@ -517,9 +517,8 @@
             FixGlassName_textBox.ForeColor = SystemColors.ControlDark;
             FixGlassName_textBox.Location = new Point(198, 105);
             FixGlassName_textBox.Name = "FixGlassName_textBox";
-            FixGlassName_textBox.Size = new Size(120, 15);
+            FixGlassName_textBox.Size = new Size(150, 15);
             FixGlassName_textBox.TabIndex = 91;
-            FixGlassName_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // FixGlassDB_button
             // 
@@ -561,7 +560,7 @@
             // 
             Spacer_label.AutoSize = true;
             Spacer_label.Font = new Font("나눔바른고딕", 9.75F);
-            Spacer_label.Location = new Point(321, 137);
+            Spacer_label.Location = new Point(357, 137);
             Spacer_label.Name = "Spacer_label";
             Spacer_label.Size = new Size(31, 15);
             Spacer_label.TabIndex = 45;
@@ -730,9 +729,8 @@
             Area_textBox2.ForeColor = SystemColors.ControlDark;
             Area_textBox2.Location = new Point(198, 305);
             Area_textBox2.Name = "Area_textBox2";
-            Area_textBox2.Size = new Size(120, 15);
+            Area_textBox2.Size = new Size(150, 15);
             Area_textBox2.TabIndex = 148;
-            Area_textBox2.TextAlign = HorizontalAlignment.Center;
             // 
             // tabControl1
             // 
@@ -1363,6 +1361,16 @@
             Install_tabPage.Size = new Size(992, 210);
             Install_tabPage.TabIndex = 1;
             Install_tabPage.Text = "설치열교 정보";
+            // 
+            // label84
+            // 
+            label84.AutoSize = true;
+            label84.Font = new Font("나눔바른고딕", 9.75F);
+            label84.ForeColor = SystemColors.ControlDark;
+            label84.Location = new Point(482, 22);
+            label84.Name = "label84";
+            label84.Size = new Size(0, 15);
+            label84.TabIndex = 136;
             // 
             // label49
             // 
@@ -2139,7 +2147,7 @@
             DoorSpacer_textBox.Enabled = false;
             DoorSpacer_textBox.Font = new Font("나눔바른고딕", 9.75F);
             DoorSpacer_textBox.ForeColor = SystemColors.ControlDark;
-            DoorSpacer_textBox.Location = new Point(374, 273);
+            DoorSpacer_textBox.Location = new Point(410, 273);
             DoorSpacer_textBox.Name = "DoorSpacer_textBox";
             DoorSpacer_textBox.Size = new Size(120, 15);
             DoorSpacer_textBox.TabIndex = 145;
@@ -2151,7 +2159,7 @@
             DoorSpacerDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             DoorSpacerDB_button.FlatStyle = FlatStyle.System;
             DoorSpacerDB_button.Font = new Font("나눔바른고딕", 11.9999981F, FontStyle.Bold);
-            DoorSpacerDB_button.Location = new Point(352, 269);
+            DoorSpacerDB_button.Location = new Point(388, 269);
             DoorSpacerDB_button.Margin = new Padding(0);
             DoorSpacerDB_button.Name = "DoorSpacerDB_button";
             DoorSpacerDB_button.Size = new Size(23, 23);
@@ -2199,7 +2207,7 @@
             // 
             DoorSpacer_label.AutoSize = true;
             DoorSpacer_label.Font = new Font("나눔바른고딕", 9.75F);
-            DoorSpacer_label.Location = new Point(321, 273);
+            DoorSpacer_label.Location = new Point(357, 273);
             DoorSpacer_label.Name = "DoorSpacer_label";
             DoorSpacer_label.Size = new Size(31, 15);
             DoorSpacer_label.TabIndex = 140;
@@ -2246,9 +2254,8 @@
             DoorGlass_textBox.ForeColor = SystemColors.ControlDark;
             DoorGlass_textBox.Location = new Point(198, 273);
             DoorGlass_textBox.Name = "DoorGlass_textBox";
-            DoorGlass_textBox.Size = new Size(120, 15);
+            DoorGlass_textBox.Size = new Size(150, 15);
             DoorGlass_textBox.TabIndex = 135;
-            DoorGlass_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // DoorGlassDB_button
             // 
@@ -2295,9 +2302,8 @@
             DoorFrame_textBox.ForeColor = SystemColors.ControlDark;
             DoorFrame_textBox.Location = new Point(198, 240);
             DoorFrame_textBox.Name = "DoorFrame_textBox";
-            DoorFrame_textBox.Size = new Size(120, 15);
+            DoorFrame_textBox.Size = new Size(150, 15);
             DoorFrame_textBox.TabIndex = 131;
-            DoorFrame_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // DoorFrameDB_button
             // 
@@ -2387,7 +2393,7 @@
             // 
             dPanel_label.AutoSize = true;
             dPanel_label.Font = new Font("나눔바른고딕", 9.75F);
-            dPanel_label.Location = new Point(319, 169);
+            dPanel_label.Location = new Point(355, 169);
             dPanel_label.Name = "dPanel_label";
             dPanel_label.Size = new Size(31, 15);
             dPanel_label.TabIndex = 123;
@@ -2421,7 +2427,7 @@
             dPanel_label2.AutoSize = true;
             dPanel_label2.Font = new Font("나눔바른고딕", 9.75F);
             dPanel_label2.ForeColor = SystemColors.ControlDark;
-            dPanel_label2.Location = new Point(496, 169);
+            dPanel_label2.Location = new Point(532, 169);
             dPanel_label2.Name = "dPanel_label2";
             dPanel_label2.Size = new Size(31, 15);
             dPanel_label2.TabIndex = 120;
@@ -2430,7 +2436,7 @@
             // dPanel_textBox
             // 
             dPanel_textBox.BorderStyle = BorderStyle.FixedSingle;
-            dPanel_textBox.Location = new Point(374, 165);
+            dPanel_textBox.Location = new Point(410, 165);
             dPanel_textBox.Name = "dPanel_textBox";
             dPanel_textBox.Size = new Size(120, 23);
             dPanel_textBox.TabIndex = 119;
@@ -2440,7 +2446,7 @@
             // 
             PanelGlass_label.AutoSize = true;
             PanelGlass_label.Font = new Font("나눔바른고딕", 9.75F);
-            PanelGlass_label.Location = new Point(321, 205);
+            PanelGlass_label.Location = new Point(357, 205);
             PanelGlass_label.Name = "PanelGlass_label";
             PanelGlass_label.Size = new Size(31, 15);
             PanelGlass_label.TabIndex = 118;
@@ -2463,7 +2469,7 @@
             PanelGlass_textBox.Enabled = false;
             PanelGlass_textBox.Font = new Font("나눔바른고딕", 9.75F);
             PanelGlass_textBox.ForeColor = SystemColors.ControlDark;
-            PanelGlass_textBox.Location = new Point(374, 205);
+            PanelGlass_textBox.Location = new Point(410, 205);
             PanelGlass_textBox.Name = "PanelGlass_textBox";
             PanelGlass_textBox.Size = new Size(120, 15);
             PanelGlass_textBox.TabIndex = 116;
@@ -2475,7 +2481,7 @@
             PanelGlassDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             PanelGlassDB_button.FlatStyle = FlatStyle.System;
             PanelGlassDB_button.Font = new Font("나눔바른고딕", 11.9999981F, FontStyle.Bold);
-            PanelGlassDB_button.Location = new Point(352, 201);
+            PanelGlassDB_button.Location = new Point(388, 201);
             PanelGlassDB_button.Margin = new Padding(0);
             PanelGlassDB_button.Name = "PanelGlassDB_button";
             PanelGlassDB_button.Size = new Size(23, 23);
@@ -2514,9 +2520,8 @@
             Panel_textBox.ForeColor = SystemColors.ControlDark;
             Panel_textBox.Location = new Point(198, 169);
             Panel_textBox.Name = "Panel_textBox";
-            Panel_textBox.Size = new Size(120, 15);
+            Panel_textBox.Size = new Size(150, 15);
             Panel_textBox.TabIndex = 112;
-            Panel_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // PanelDB_button
             // 
@@ -2589,9 +2594,8 @@
             OpenGlassName_textBox.ForeColor = SystemColors.ControlDark;
             OpenGlassName_textBox.Location = new Point(198, 137);
             OpenGlassName_textBox.Name = "OpenGlassName_textBox";
-            OpenGlassName_textBox.Size = new Size(120, 15);
+            OpenGlassName_textBox.Size = new Size(150, 15);
             OpenGlassName_textBox.TabIndex = 105;
-            OpenGlassName_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // OpenGlassDB_button
             // 
@@ -2637,7 +2641,7 @@
             Install_textBox.Enabled = false;
             Install_textBox.Font = new Font("나눔바른고딕", 9.75F);
             Install_textBox.ForeColor = SystemColors.ControlDark;
-            Install_textBox.Location = new Point(374, 341);
+            Install_textBox.Location = new Point(410, 341);
             Install_textBox.Name = "Install_textBox";
             Install_textBox.Size = new Size(120, 15);
             Install_textBox.TabIndex = 95;
@@ -2649,7 +2653,7 @@
             Install_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Install_button.FlatStyle = FlatStyle.System;
             Install_button.Font = new Font("나눔바른고딕", 11.9999981F, FontStyle.Bold);
-            Install_button.Location = new Point(352, 337);
+            Install_button.Location = new Point(388, 337);
             Install_button.Margin = new Padding(0);
             Install_button.Name = "Install_button";
             Install_button.Size = new Size(23, 23);
@@ -2665,7 +2669,7 @@
             FrameName_textBox.Enabled = false;
             FrameName_textBox.Font = new Font("나눔바른고딕", 9.75F);
             FrameName_textBox.ForeColor = SystemColors.ControlDark;
-            FrameName_textBox.Location = new Point(375, 69);
+            FrameName_textBox.Location = new Point(411, 69);
             FrameName_textBox.Name = "FrameName_textBox";
             FrameName_textBox.Size = new Size(120, 15);
             FrameName_textBox.TabIndex = 89;
@@ -2677,7 +2681,7 @@
             FrameDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             FrameDB_button.FlatStyle = FlatStyle.System;
             FrameDB_button.Font = new Font("나눔바른고딕", 11.9999981F, FontStyle.Bold);
-            FrameDB_button.Location = new Point(352, 65);
+            FrameDB_button.Location = new Point(388, 65);
             FrameDB_button.Margin = new Padding(0);
             FrameDB_button.Name = "FrameDB_button";
             FrameDB_button.Size = new Size(23, 23);
@@ -2796,7 +2800,7 @@
             DiIndi_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             DiIndi_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             DiIndi_comboBox.FormattingEnabled = true;
-            DiIndi_comboBox.Location = new Point(374, 25);
+            DiIndi_comboBox.Location = new Point(410, 25);
             DiIndi_comboBox.Name = "DiIndi_comboBox";
             DiIndi_comboBox.Size = new Size(120, 23);
             DiIndi_comboBox.TabIndex = 55;
@@ -2819,16 +2823,6 @@
             CWType_pictureBox.Size = new Size(178, 386);
             CWType_pictureBox.TabIndex = 97;
             CWType_pictureBox.TabStop = false;
-            // 
-            // label84
-            // 
-            label84.AutoSize = true;
-            label84.Font = new Font("나눔바른고딕", 9.75F);
-            label84.ForeColor = SystemColors.ControlDark;
-            label84.Location = new Point(482, 22);
-            label84.Name = "label84";
-            label84.Size = new Size(0, 15);
-            label84.TabIndex = 136;
             // 
             // ConstructionCW
             // 
