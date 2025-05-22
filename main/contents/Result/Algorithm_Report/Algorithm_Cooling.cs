@@ -40,6 +40,20 @@ namespace main.contents.Result
             }
         }
 
+        private void Split(string nonSplit, List<string> type)
+        {
+            type.Clear();
+            if (nonSplit != null)
+            {
+                string[] token = nonSplit.Split('+');
+                foreach (string item in token)
+                {
+                    string _item = item.Trim();
+                    type.Add(_item);
+                }
+            }
+        }
+
         public void LoadData(string ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             string s, s2;
@@ -124,6 +138,7 @@ namespace main.contents.Result
                     ZoneData[3].Add(new { idx = i, val = Value[0][3] });
                     ZoneData[4].Add(new { idx = i, val = Value[0][4] });
                     ZoneData[5].Add(new { idx = i, val = Num+ ". 냉방 에너지소요량 검토 보고서" }); //title
+                    //면적 및 zone 개수 배열 작성
                 }
 
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct 개수_ahu, QCb_a_ahu,QC_Max_ahu, 공급설비1_ahu, 공급설비2_ahu From CoolingSystem_Result Where 번호='" + Num + "'");
@@ -141,6 +156,42 @@ namespace main.contents.Result
                     ZahuData[3].Add(new { idx = i, val = Value[0][3] });
                     ZahuData[4].Add(new { idx = i, val = Value[0][4] });
                 }
+                else
+                {
+                    ZahuData[0].Add(new { idx = i, val = "-" });
+                    ZahuData[1].Add(new { idx = i, val = "-" });
+                    ZahuData[2].Add(new { idx = i, val = "-" });
+                    ZahuData[3].Add(new { idx = i, val = "-" });
+                    ZahuData[4].Add(new { idx = i, val = "-" });
+                }
+                List<string> zonelist = new List<string>();
+                List<string> zahulist = new List<string>();
+                double totArea = 0;
+                string[][] checkarea = Program.DB.querySQL(DB.type.ProjDB, "Select 공급존, 공급AHU, 냉수펌프1, 냉수펌프2 From CoolingSystem_Form Where 번호='" + Num + "'");
+                if (checkarea.Length > 0)
+                {
+                    if (checkarea[0][0] != "" && checkarea[0][0] != null)
+                    {
+                        Split(checkarea[0][0], zonelist);
+                    }
+                    if (checkarea[0][1] != "" && checkarea[0][1] != null)
+                    {
+                        Split(checkarea[0][1], zahulist);
+                    }
+                }
+                //공조결과값에서 존을 찾기
+                if(zahulist.Count > 0)
+                {
+                    string[][] zonecheck = Program.DB.querySQL(DB.type.ProjDB, "Select 공급존, 공급AHU, 냉수펌프1, 냉수펌프2 From CoolingSystem_Form Where 번호='" + Num + "'");
+                }
+                
+
+
+
+
+
+
+
 
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select 열원설비,냉각탑 From CoolingSystem_Form Where 번호='" + Num + "'");
                 if (Value.Length > 0)
