@@ -575,7 +575,7 @@ namespace main
             zonelight1.LoadData_NaturalLight();
             zonelight1.LoadData_Renew();
             zone1.LoadData_ZoneGeneral();
-            zone1.LoadData_Shade(zone1.ZoneNum);
+            //zone1.LoadData_Shade(zone1.ZoneNum);
             zone1.LoadData_q50();
             zone1.LoadData_dUtb_2D();
             zone1.LoadData_Ventil();
@@ -1720,6 +1720,7 @@ namespace main
         public static Dictionary<string, AHU> AHUs = new Dictionary<string, AHU>();
         public static Dictionary<string, DHW> DHWs = new Dictionary<string, DHW>();
         public static Dictionary<string, Final> Finals = new Dictionary<string, Final>();
+        public static Dictionary<string, RESystem> RESystems = new Dictionary<string, RESystem>();
         public static string[] ElementAlt = { "조닝", "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀+열회수기", "난방", "냉방", "급탕", "조명", "공조", "태양광", "기밀" }; //기밀은 요소기술별 합계 계산 시 제외되어야 하므로 마지막 순서여야 함 
       //  public static string[] RuleAlt = { "기밀", "기밀+열회수기" };
         public static string[] RuleAlt = { "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀", "기밀+열회수기", "조명", "보일러", "냉난방EHP", "냉방EHP", "공냉식냉동기", "수냉식냉동기", "냉난방GHP", "흡수식냉온수기", "태양광" };
@@ -1776,6 +1777,14 @@ namespace main
             if (Finals.ContainsKey(Num))
             {
                 return Finals[Num];
+            }
+            else return null;
+        }
+        public RESystem getRESystem(string Num)
+        {
+            if (RESystems.ContainsKey(Num))
+            {
+                return RESystems[Num];
             }
             else return null;
         }
