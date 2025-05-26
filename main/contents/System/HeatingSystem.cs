@@ -423,9 +423,10 @@ namespace main.contents
         }
         private void MainSystem_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+           
             if (MainSystem_comboBox.SelectedItem != null)
             {
-                if (MainSystem != null & MainSystem != MainSystem_comboBox.SelectedItem.ToString())
+                if (MainSystem != null && MainSystem != "보일러" && MainSystem != MainSystem_comboBox.SelectedItem.ToString())
                 {
                     MessageBox.Show("기존 선택한 설비는 삭제하세요.");
                 }
@@ -457,14 +458,15 @@ namespace main.contents
 
         private void SubSystem1_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Sub1System != null & Sub1System_comboBox.SelectedItem != null)
+            if (Sub1System_comboBox.SelectedItem != null)
             {
-                if (Sub1System != Sub1System_comboBox.SelectedItem.ToString())
+                if (Sub1System != null && Sub1System != Sub1System_comboBox.SelectedItem.ToString())
                 {
                     MessageBox.Show("기존 선택한 설비는 삭제하세요.");
                 }
                 Sub1System = Sub1System_comboBox.SelectedItem.ToString();
                 LoadtabPage(Sub1System);
+
                 if (Sub1System == MainSystem)
                 {
                     MessageBox.Show("이미 Main설비로 선택되어 있습니다. 다른 설비를 선택하세요.");
@@ -492,14 +494,15 @@ namespace main.contents
 
         private void Sub2System_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Sub2System != null & Sub2System_comboBox.SelectedItem != null)
+            if (Sub2System_comboBox.SelectedItem != null)
             {
-                if (Sub2System != Sub2System_comboBox.SelectedItem.ToString())
+                if (Sub2System != null && Sub2System != Sub2System_comboBox.SelectedItem.ToString())
                 {
                     MessageBox.Show("기존 선택한 설비는 삭제하세요.");
                 }
                 Sub2System = Sub2System_comboBox.SelectedItem.ToString();
                 LoadtabPage(Sub2System);
+
                 if (Sub2System == MainSystem)
                 {
                     MessageBox.Show("이미 Main설비로 선택되어 있습니다. 다른 설비를 선택하세요.");
@@ -2628,7 +2631,7 @@ namespace main.contents
                     }
 
                     double Max = AHU_Qmax_textBox.Text == null || AHU_Qmax_textBox.Text.ToString() == "" ? 0 : Convert.ToDouble(AHU_Qmax_textBox.Text.ToString());
-                    Max = Max + Zone_Qmax_textBox.Text == null || Zone_Qmax_textBox.Text.ToString() == "" ? 0 : Convert.ToDouble(Zone_Qmax_textBox.Text.ToString());
+                    Max =Zone_Qmax_textBox.Text == null || Zone_Qmax_textBox.Text.ToString() == "" ? Max + 0 : Max + Convert.ToDouble(Zone_Qmax_textBox.Text.ToString());
 
                     double dtheta = 10;
                     string[][] v = Program.DB.getValue(DB.type.BaseDB_Heating, "공급환순온도", "공급온도,환수온도", "공급환수온도='" + SLRL + "'");
@@ -3096,7 +3099,15 @@ namespace main.contents
 
         private void ce_Image(string _type, string _Install) //공급설비 그림 넣기
         {
-            string[][] image = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형= '공급설비' And 설비유형='" + _type + "' And 설치유형 = '" + _Install + "'");
+            string[][] image;
+            if (_type == "CAV유닛" || _type == "VAV유닛")
+            {
+                image = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형= '공급설비' And 설비유형='공조기' And 설치유형 = '" + _Install + "'");
+            }
+            else
+            {
+                image = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형= '공급설비' And 설비유형='" + _type + "' And 설치유형 = '" + _Install + "'");
+            }
             if (image.Length > 0)
             {
                 if (_type == ce1Type)
