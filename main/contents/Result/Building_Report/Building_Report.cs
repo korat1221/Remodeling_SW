@@ -520,8 +520,8 @@ namespace main.contents.Result.Building_Report
                     }
                     CMH = n50 * Volume;
                     CMH_rule = 0.6 * Volume;
-                    __Edata[44].Add(new { idx = i, val = CMH.ToString("0.0") }); 
-                    __Edata[45].Add(new { idx = i, val = CMH_rule.ToString("0.0") });
+                    __Edata[44].Add(new { idx = i, val = CMH.ToString("0") }); 
+                    __Edata[45].Add(new { idx = i, val = CMH_rule.ToString("0") });
                 }
                 d = 0.6 / n50 * 100; if (d >= 100) { d = 100; }
                 if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 205) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
@@ -876,6 +876,8 @@ namespace main.contents.Result.Building_Report
                 double 연간소요량 = 0, 연간전기 = 0, 연간가스 = 0;
                 for (int mth = 0; mth < 12; mth++)
                 {
+                    string[][] RES1 = Program.DB.getValue(DB.type.ProjDB,"RESystem_Result","총에너지", "생산유형='전기'and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] RES2 = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "총에너지", "not 생산유형='전기'and 월 ='" + (mth + 1).ToString() + "월'");
                     string[][] Final1 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
                     string[][] Final2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량", "not 연료='전기' and not 연료='전체'  and 월 ='" + (mth + 1).ToString() + "월'");
                     if (Final1.Length > 0)
@@ -888,8 +890,9 @@ namespace main.contents.Result.Building_Report
                         if (Final1[0][5] != null && Final1[0][5] != "")
                         {
                             기저[mth] = Convert.ToDouble(Final1[0][5]);
-                        }                        
-                        신재생[mth] = Convert.ToDouble(Final1[0][6]);
+                        }
+                        if (RES1.Length > 0)
+                        { 신재생[mth] = Convert.ToDouble(RES1[0][0]); }
                         총전기[mth] = Convert.ToDouble(Final1[0][7]) - 기저[mth] ;
                     }
                     if (Final2.Length > 0)
@@ -903,7 +906,10 @@ namespace main.contents.Result.Building_Report
                         {
                             기저[mth] =  Convert.ToDouble(Final2[0][5]);
                         }
-                        신재생[mth] = 신재생[mth] + Convert.ToDouble(Final2[0][6]);
+                        if (RES2.Length > 0)
+                        {
+                            신재생[mth] = 신재생[mth] + Convert.ToDouble(RES2[0][0]);
+                        }
                         총가스[mth] = Convert.ToDouble(Final2[0][7]) - 기저[mth];
                     }
 
@@ -960,6 +966,8 @@ namespace main.contents.Result.Building_Report
                 double[] 난방1 = new double[12], 냉방1 = new double[12], 급탕1 = new double[12], 조명1 = new double[12], 공조1 = new double[12], 신재생1 = new double[12], 전기1 = new double[12], 열1 = new double[12], 총소요1 = new double[12];
                 for (int mth = 0; mth < 12; mth++)
                 {
+                    string[][] RES1 = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "총에너지", "생산유형='전기'and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] RES2 = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "총에너지", "not 생산유형='전기'and 월 ='" + (mth + 1).ToString() + "월'");
                     string[][] Fi1 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
                     string[][] Fi2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "(연료='가스' OR 연료='기름')  and 월 ='" + (mth + 1).ToString() + "월'");
                     string[][] Fi3 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "연료='지역난방' and 월 ='" + (mth + 1).ToString() + "월'");
@@ -970,7 +978,10 @@ namespace main.contents.Result.Building_Report
                         급탕1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][2]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][2]) * 2.75;
                         조명1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][3]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][3]) * 2.75;
                         공조1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][4]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][4]) * 2.75;
-                        전기1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][5]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][5]) * 2.75;
+                        if (RES1.Length > 0)
+                        {
+                            전기1[mth] = double.IsNaN(Convert.ToDouble(RES1[0][0]) * 2.75) ? 0 : Convert.ToDouble(RES1[0][0]) * 2.75;
+                        }
                         총소요1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][6]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][6]) * 2.75;
                     }
                     if (Fi2.Length > 0)
@@ -980,7 +991,10 @@ namespace main.contents.Result.Building_Report
                         급탕1[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][2]) *1.1) ? 0 : Convert.ToDouble(Fi2[0][2]) *1.1;
                         조명1[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][3]) *1.1) ? 0 : Convert.ToDouble(Fi2[0][3]) *1.1;
                         공조1[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][4]) *1.1) ? 0 : Convert.ToDouble(Fi2[0][4]) * 1.1;
-                        열1[mth] = double.IsNaN(Convert.ToDouble(Fi2[0][5]) * 1.1) ? 0 : Convert.ToDouble(Fi2[0][5]) * 1.1;
+                        if (RES2.Length > 0)
+                        {
+                            열1[mth] = double.IsNaN(Convert.ToDouble(RES2[0][0]) * 1.1) ? 0 : Convert.ToDouble(RES2[0][0]) * 1.1;
+                        }
                         총소요1[mth] = double.IsNaN(총소요1[mth] + Convert.ToDouble(Fi2[0][6]) * 1.1) ?  0 : 총소요1[mth] + Convert.ToDouble(Fi2[0][6]) * 1.1;
                     }
                     if (Fi3.Length > 0)

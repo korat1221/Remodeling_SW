@@ -155,17 +155,17 @@ namespace main.contents.Result
                     }
                     else if (MainSystem == "지열 히트펌프")
                     {
-                        systemnum = List[0][7];
-                        etaunit = "W/W";
-                        SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_GroundHP", "난방정격용량,난방정격COP", "번호 ='" + systemnum + "'");
-                        count = count_[0][7] != "" ? Convert.ToDouble(count_[0][7]) : 0;
-                    }
-                    else if (MainSystem == "지하수 히트펌프")
-                    {
                         systemnum = List[0][8];
                         etaunit = "W/W";
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_GroundHP", "난방정격용량,난방정격COP", "번호 ='" + systemnum + "'");
                         count = count_[0][8] != "" ? Convert.ToDouble(count_[0][8]) : 0;
+                    }
+                    else if (MainSystem == "지하수 히트펌프")
+                    {
+                        systemnum = List[0][9];
+                        etaunit = "W/W";
+                        SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_GroundWHP", "난방정격용량,난방정격COP", "번호 ='" + systemnum + "'");
+                        count = count_[0][9] != "" ? Convert.ToDouble(count_[0][9]) : 0;
                     }
 
                     if (SystemValue.Length > 0)
@@ -393,7 +393,7 @@ namespace main.contents.Result
                 }
 
                 data.Add(new { cname = "projectnum", data = FormData[0] });
-                data.Add(new { cname = "num", data = FormData[1] });
+                data.Add(new { cname = "heatingnum", data = FormData[1] });
                 data.Add(new { cname = "heatingnum2", data = FormData[2] });
                 data.Add(new { cname = "heatingname", data = FormData[3] });
                 data.Add(new { cname = "mainsystem", data = FormData[4] });
