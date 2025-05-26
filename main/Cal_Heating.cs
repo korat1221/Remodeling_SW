@@ -480,6 +480,7 @@ namespace main
             string[][] Value = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수,펌프1유량,펌프2유량,펌프1양정,펌프2양정", "번호 = '" + HeatingNum + "'");
             if (Value.Length > 0)
             {
+                PumpUse = Value[0][0];
                 if (PumpUse == "펌프 있음")
                 {
                     ArrayList arr = new ArrayList();
@@ -491,84 +492,120 @@ namespace main
                     }
                     ///
                     arr = Split_(Value[0][2]);
-                    Pump1 = arr[0].ToString();
+                    if (arr.Count > 0)
+                    {
+                        Pump1 = arr[0].ToString();
+                    }
                     if (arr.Count > 1)
                     {
                         GPump1 = arr[1].ToString();
                     }
                     ///
                     arr = Split_(Value[0][3]);
-                    Pump2 = arr[0].ToString();
+                    if (arr.Count > 0)
+                    {
+                        Pump2 = arr[0].ToString();
+                    }
                     if (arr.Count > 1)
                     {
                         GPump2 = arr[1].ToString();
                     }
                     ///
                     arr = Split_(Value[0][4]);
-                    Pump1Valve = arr[0].ToString();
+                    if (arr.Count > 0)
+                    {
+                        Pump1Valve = arr[0].ToString();
+                    }
                     if (arr.Count > 1)
                     {
                         GPump1Valve = arr[1].ToString();
                     }
                     ///
                     arr = Split_(Value[0][5]);
-                    Pump2Valve = arr[0].ToString();
+                    if (arr.Count > 0)
+                    {
+                        Pump2Valve = arr[0].ToString();
+                    }
                     if (arr.Count > 1)
                     {
                         GPump2Valve = arr[1].ToString();
                     }
                     ///
                     arr = Split_(Value[0][6]);
-                    Pump1Control = arr[0].ToString();
+                    if (arr.Count > 0)
+                    {
+                        Pump1Control = arr[0].ToString();
+                    }
                     if (arr.Count > 1)
                     {
                         GPump1Control = arr[1].ToString();
                     }
                     ///
                     arr = Split_(Value[0][7]);
-                    Pump2Control = arr[0].ToString();
+                    if (arr.Count > 0)
+                    {
+                        Pump2Control = arr[0].ToString();
+                    }
                     if (arr.Count > 1)
                     {
                         GPump2Control = arr[1].ToString();
                     }
                     ///
                     arr = Split_(Value[0][8]);
-                    Pump1Count = Convert.ToInt16(arr[0].ToString());
+                    if (arr.Count > 0)
+                    {
+                        Pump1Count = Convert.ToInt16(arr[0].ToString());
+                    }
                     if (arr.Count > 1)
                     {
                         GPump1Count = Convert.ToInt16(arr[1].ToString());
                     }
                     ///
                     arr = Split_(Value[0][9]);
-                    Pump2Count = Convert.ToInt16(arr[0].ToString());
+                    if (arr.Count > 0)
+                    {
+                        Pump2Count = Convert.ToInt16(arr[0].ToString());
+                    }
                     if (arr.Count > 1)
                     {
                         GPump2Count = Convert.ToInt16(arr[1].ToString());
                     }
                     ///
                     arr = Split_(Value[0][10]);
-                    Pump1Volume = Convert.ToDouble(arr[0].ToString());
+                    if (arr.Count > 0)
+                    {
+                        Pump1Volume = Convert.ToDouble(arr[0].ToString());
+                    }
                     if (arr.Count > 1)
                     {
                         GPump1Volume = Convert.ToDouble(arr[1].ToString());
                     }
                     ///
                     arr = Split_(Value[0][11]);
-                    Pump2Volume = Convert.ToDouble(arr[0].ToString());
+                    if (arr.Count > 0)
+                    {
+                        Pump2Volume = Convert.ToDouble(arr[0].ToString());
+                    }
                     if (arr.Count > 1)
                     {
                         GPump2Volume = Convert.ToDouble(arr[1].ToString());
                     }
                     ///
                     arr = Split_(Value[0][12]);
-                    Pump1Head = Convert.ToDouble(arr[0].ToString());
+                    if (arr.Count > 0)
+                    {
+                        Pump1Head = Convert.ToDouble(arr[0].ToString());
+                    }
                     if (arr.Count > 1)
                     {
                         GPump1Head = Convert.ToDouble(arr[1].ToString());
                     }
                     ///
                     arr = Split_(Value[0][13]);
-                    Pump2Head = Convert.ToDouble(arr[0].ToString());
+                    if (arr.Count > 0)
+                    {
+                        Pump2Head = Convert.ToDouble(arr[0].ToString());
+                    }
                     if (arr.Count > 1)
                     {
                         GPump2Head = Convert.ToDouble(arr[1].ToString());
@@ -1307,10 +1344,10 @@ namespace main
             else
             { Now_Check = false; }
             if (Now_Check) {
-              //  Save_FC(DHWNum,FCNum); 
+              Save_FC(DHWNum,FCNum, Eth_gen_out_h, Eth_gen_out_w); 
             }
         }
-        private void Save_FC(string DHWNum, string FCNum)
+        private void Save_FC(string DHWNum, string FCNum, double[] Eth_gen_out_h, double[] Eth_gen_out_w)
         {
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
             string RESystemNum = "";
@@ -1328,10 +1365,10 @@ namespace main
                 string MTH = (mth + 1).ToString() + "월";
                 Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호," +
                  "월," +
-                 "난방설비,급탕설비,신재생시스템,신재생시스템유형,생산소비,생산유형,총에너지",
+                 "난방설비,급탕설비,신재생시스템,신재생시스템유형,생산소비,생산유형,총에너지,난방,급탕",
                  "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + RESystemNum + "','" + MTH + "','" +
                 HeatingNum + "','" + DHWNum + "','" + FCNum + "','연료전지','생산','열','" +
-                Eth_gen_out[mth]
+                Eth_gen_out[mth] + "','" + Eth_gen_out_h[mth] +"','" + Eth_gen_out_w[mth]
                   + "'", "번호,월,생산소비,생산유형"); ;
             }
             for (int mth = 0; mth <= 11; mth++)
@@ -1356,6 +1393,7 @@ namespace main
                 Egen_in[mth]
                   + "'", "번호,월,생산소비,소비연료"); ;
             }
+            Program.DB.saveProject();
         }
         public void LoadCalc_Boiler(string ProjNum)
         {
@@ -1561,6 +1599,7 @@ namespace main
                 (0.025 * Qh_sol[mth])
                   + "'", "번호,월,생산소비,소비연료") ;
             }
+            Program.DB.saveProject();
         }
 
         public void LoadCalc_AirHP(string ProjNum)
@@ -2127,7 +2166,7 @@ namespace main
 
                 }
 
-                Save_GroundHP(SelectGroundHP_split[n].ToString(), "지하수 히트펌프", Qh_outg_sng_i);
+                Save_GroundHP(SelectGroundHP_split[n].ToString(), "지열 히트펌프", Qh_outg_sng_i);
             }             
         }
 
@@ -2341,29 +2380,30 @@ namespace main
             {
                 RESystemNum = Program.UTIL.CreateNum("RESystem_Result", "번호", "RE");
             }
-            //for (int mth = 0; mth <= 11; mth++)
-            //{
-             
-            //    string MTH = (mth + 1).ToString() + "월";
-            //    Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호," +
-            //     "월," +
-            //     "난방설비,급탕설비,신재생시스템,신재생시스템유형,생산소비,생산유형,총에너지",
-            //     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + RESystemNum + "','" + MTH + "','" +
-            //    HeatingNum + "','" + DHWNum + "','" + Num + "','"+ 지열지하수 +"','생산','열','" +
-            //     Qh_outg[mth]
-            //      + "'", "번호,월,생산소비,생산유형"); ;
-            //}
-            //for (int mth = 0; mth <= 11; mth++)
-            //{
-            //    string MTH = (mth + 1).ToString() + "월";
-            //    Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호," +
-            //     "월," +
-            //     "난방설비,급탕설비,신재생시스템,신재생시스템유형,생산소비,소비연료,총에너지",
-            //     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + RESystemNum + "','" + MTH + "','" +
-            //    HeatingNum + "','" + DHWNum + "','" + Num + "','"+지열지하수+"','소비','전기','" +
-            //    Qh_f[mth]
-            //      + "'", "번호,월,생산소비,소비연료");
-            //}
+            for (int mth = 0; mth <= 11; mth++)
+            {
+
+                string MTH = (mth + 1).ToString() + "월";
+                Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                 "월," +
+                 "난방설비,급탕설비,신재생시스템,신재생시스템유형,생산소비,생산유형,총에너지",
+                 "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + RESystemNum + "','" + MTH + "','" +
+                HeatingNum + "','" + DHWNum + "','" + Num + "','" + 지열지하수 + "','생산','열','" +
+                 Qh_outg[mth]
+                  + "'", "번호,월,생산소비,생산유형"); ;
+            }
+            for (int mth = 0; mth <= 11; mth++)
+            {
+                string MTH = (mth + 1).ToString() + "월";
+                Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                 "월," +
+                 "난방설비,급탕설비,신재생시스템,신재생시스템유형,생산소비,소비연료,총에너지",
+                 "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + RESystemNum + "','" + MTH + "','" +
+                HeatingNum + "','" + DHWNum + "','" + Num + "','" + 지열지하수 + "','소비','전기','" +
+                Qh_f[mth]
+                  + "'", "번호,월,생산소비,소비연료");
+            }
+            Program.DB.saveProject();
         }
 
 
