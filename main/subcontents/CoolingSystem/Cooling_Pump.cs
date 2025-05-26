@@ -85,7 +85,7 @@ namespace main.subcontents.CoolingSystem
             }
             else if(_SelectPT == "냉각수1차"|| _SelectPT == "냉각수2차")
             {
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "종류 ='냉각수순환펌프''"); //냉각수순환펌프         if (User_Value.Length > 0)
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "종류 ='냉각수순환펌프'"); //냉각수순환펌프         if (User_Value.Length > 0)
                 if (User_Value.Length > 0)
                 {
                  
