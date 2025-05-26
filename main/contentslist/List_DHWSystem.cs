@@ -211,7 +211,7 @@ namespace main.contentslist
 
         private void Copy_button_Click(object sender, EventArgs e)
         {
-            Num = Program.UTIL.CreateNum("DHWSystem_Form", "번호", "HS");
+            Num = Program.UTIL.CreateNum("DHWSystem_Form", "번호", "DW");
             int k = dataGridView1.CurrentCell.RowIndex;
             if (k > -1)
             {
