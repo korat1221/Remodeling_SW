@@ -1,4 +1,7 @@
-﻿namespace main
+﻿using main.subcontents.CoolingSystem;
+using main.subcontents.HeatingSystem;
+
+namespace main
 {
     internal class Cal_RESystem
     {
@@ -219,6 +222,7 @@
                 Qfpvm_kWh[mth]
                   + "'", "번호,월,생산소비,생산유형"); ;
             }
+
         }
         #endregion
 
@@ -597,5 +601,89 @@
         }
 
         #endregion
+    }
+
+    public class RESystem
+    {
+        public string RE_Num, RE_RESystem_Num, RE_RESystem_Type, RE_Production_Consumption, RE_Production_Type, RE_Consumption_Carrier, RE_Heating_Num, RE_Cooling_Num, RE_DHW_Num;
+        public double[] RE_TotalE = new double[12], RE_HeatingE = new double[12], RE_CoolingE = new double[12], RE_DHWE = new double[12], RE_LightingE = new double[12], RE_AHUE = new double[12];
+        public RESystem(string Num, string RESystem_Num, string RESystem_Type, string Production_Consumption, string Production_Type, string Consumption_Carrier, string Heating_Num, string Cooling_Num, string DHW_Num, double[] TotalE, double[] HeatingE, double[] CoolingE, double[] DHWE, double[] LightingE, double[] AHUE)
+        {
+            this.RE_Num = Num;
+            this.RE_RESystem_Num = RESystem_Num;
+            this.RE_RESystem_Type = RESystem_Type;
+            this.RE_Production_Type = Production_Type;
+            this.RE_Production_Consumption = Production_Consumption;
+            this.RE_Consumption_Carrier = Consumption_Carrier;
+            this.RE_Heating_Num = Heating_Num;
+            this.RE_DHW_Num = DHW_Num;
+            this.RE_Cooling_Num = Cooling_Num;
+            this.RE_TotalE = TotalE;
+            this.RE_HeatingE = HeatingE;
+            this.RE_CoolingE = CoolingE;
+            this.RE_DHWE = DHWE;
+            this.RE_LightingE = LightingE;
+            this.RE_AHUE = AHUE;
+        }
+        public String Num()
+        {
+            return RE_Num;
+        }
+        public String RESystem_Num()
+        {
+            return RE_RESystem_Num;
+        }
+        public String RESystem_Type()
+        {
+            return RE_RESystem_Type;
+        }
+        public String Production_Consumption()
+        {
+            return RE_Production_Consumption;
+        }
+        public String Production_Type()
+        {
+            return RE_Production_Type;
+        }
+        public String Consumption_Carrier()
+        {
+            return RE_Consumption_Carrier;
+        }
+        public String Heating_Num()
+        {
+            return RE_Heating_Num;
+        }
+        public String Cooling_Num()
+        {
+            return RE_Cooling_Num;
+        }
+        public String DHW_Num()
+        {
+            return RE_DHW_Num;
+        }
+        public double[] TotalE()
+        {
+            return RE_TotalE;
+        }
+        public double[] HeatingE()
+        {
+            return RE_HeatingE;
+        }
+        public double[] CoolingE()
+        {
+            return RE_CoolingE;
+        }
+        public double[] DHWE()
+        {
+            return RE_DHWE;
+        }
+        public double[] LightingE()
+        {
+            return RE_LightingE;
+        }
+        public double[] AHUE()
+        {
+            return RE_AHUE;
+        }
     }
 }
