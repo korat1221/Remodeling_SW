@@ -2610,12 +2610,11 @@ namespace main.contents
             DataGridViewButtonCell PumpPower_ButtonCell = new DataGridViewButtonCell();
             Pump_dataGridView.Rows[nRow].Cells[7] = PumpPower_ButtonCell;
             PumpPower_ButtonCell.Value = "+";
-            for (int k = 4; k < 13; k++)
+            for (int k = 4; k < 9; k++)
             {
                 Pump_dataGridView.Rows[nRow].Cells[k].Style.BackColor = SystemColors.Info;
             }
             Pump_dataGridView.Rows[nRow].Cells[9].Style.BackColor = Color.White;
-            Pump_dataGridView.Rows[nRow].Cells[11].Style.BackColor = Color.White;
         }
 
         private void Pump_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -2670,7 +2669,7 @@ namespace main.contents
             Pump_dataGridView.Rows[nRow].Cells[7] = PumpPower_ButtonCell;
             PumpPower_ButtonCell.Value = "+";
 
-            for (int k = 2; k < 14; k++)
+            for (int k = 2; k < 10; k++)
             {
                 if (Pump_dataGridView.Rows[Pump_SelectRow].Cells[k].Value != null)
                 {
