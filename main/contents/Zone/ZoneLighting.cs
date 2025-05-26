@@ -1552,7 +1552,7 @@ namespace main.contents
         {
             //facade1 가져오기 
             ////////////////////////////////////////////////////////주향 기준 실너비(그 향의 벽체길이) 깊이 계산하기////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            String[][] Wall_Length = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이", "존 = '" + ZoneNum + "' AND 방위 = '" + facade_di + "' And 외피유형 = '외벽'");
+            String[][] Wall_Length = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이", "존 = '" + ZoneNum + "' AND 방위 = '" + facade_di + "' And (외피유형 = '외벽'or  외피유형='커튼월창')");
             if (Wall_Length.Length > 0)
             {
                 Wr = 0;
@@ -1785,7 +1785,7 @@ namespace main.contents
         {
             //rooflight1 가져오기 
             ////////////////////////////////////////////////////////주향 기준 실너비(그 향의 벽체길이) 깊이 계산하기////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            String[][] Wall_Length = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이", "존 = '" + ZoneNum + "' AND 방위 = '" + roof_di + "' And 외피유형 = '외벽'");
+            String[][] Wall_Length = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이", "존 = '" + ZoneNum + "' AND 방위 = '" + roof_di + "'  And (외피유형 = '외벽'or  외피유형='커튼월창')");
 
             Wr = 0;
             if (Wall_Length.Length > 0)
@@ -2008,7 +2008,7 @@ namespace main.contents
         private void Calc_None_Data()
         {
             ////////////////////////////////////////////////////////주향 기준 실너비(그 향의 벽체길이) 깊이 계산하기////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            String[][] Wall_Length = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이", "존 = '" + ZoneNum + "' AND 방위 = '" + none_di + "' And 외피유형 = '외벽'");
+            String[][] Wall_Length = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이", "존 = '" + ZoneNum + "' AND 방위 = '" + none_di + "'  And (외피유형 = '외벽'or  외피유형='커튼월창')");
 
             if (Wall_Length.Length > 0)
             {
