@@ -333,7 +333,7 @@ namespace main
                         Qreg_gas_v[mth] += v;
                     }
                 }
-                Value = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호,총에너지", "소비연료='전기' and 월='" + (mth + 1) + "월'");
+                Value = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호,총에너지", "소비연료='전기' and 월='" + (mth + 1) + "월' Not 신재생시스템유형='지열 히트펌프' and Not 신재생시스템유형='지하수 히트펌프'");
                 if (Value.Length > 0)
                 {
                     for (int a = 0; a < Value.Length; a++)
