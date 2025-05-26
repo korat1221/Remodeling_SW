@@ -90,7 +90,7 @@ namespace main.subcontents
         {
             if(SelectType == "Zone")
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름,용도프로필,순바닥면적", "냉난방유무 ='냉난방' OR 냉난방유무 = '냉방'");
+                string[][] Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름,용도프로필,순바닥면적", "냉난방유무 ='냉난방' OR 냉난방유무 = '냉방'");
 
                 if (Value.Length > 0)
                 {
@@ -140,7 +140,7 @@ namespace main.subcontents
             }
             else
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "번호,명칭,유형", "유형='공조기'"); //시스템번호는 반영안됨
+                string[][] Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "AHUSystem_Form", "번호,명칭,유형", "유형='공조기'"); //시스템번호는 반영안됨
                 if (Value.Length > 0)
                 {
                     for (int n = 0; n < Value.Length; n++) //존번호로 작성함

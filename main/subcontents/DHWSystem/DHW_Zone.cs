@@ -51,7 +51,7 @@ namespace main.subcontents.DHWSystem
             Zone_dataGridView.Columns.Add("A5", "일일급탕요구량.[kWh/d]");
             Zone_dataGridView.Columns.Add("A6", "면적.[m"+Program.UTIL.Subscript(2, true)+"]");
 
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름,용도프로필,순바닥면적,일일급탕요구량", "일일급탕요구량 <>'0'");
+            string[][] Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름,용도프로필,순바닥면적,일일급탕요구량", "일일급탕요구량 <>'0'");
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
