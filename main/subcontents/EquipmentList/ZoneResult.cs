@@ -57,12 +57,12 @@ namespace main.subcontents
             ZoneResult_dataGridView.Columns[0].Width = 40;
             ZoneResult_dataGridView.Columns[2].Width = 60;
 
-            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 존번호,존이름,용도프로필,순바닥면적,일일급탕요구량 from ZoneGeneral_Form where Not 냉난방유무 ='비냉난방'  Order by  존번호");
+            string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct 존번호,존이름,용도프로필,순바닥면적,일일급탕요구량 from ZoneGeneral_Form where Not 냉난방유무 ='비냉난방'  Order by  존번호");
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
                 {
-                    string[][] 층 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "층", "존 ='" + Value[n][0] + "'");
+                    string[][] 층 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "층", "존 ='" + Value[n][0] + "'");
 
 
                     int nRow = ZoneResult_dataGridView.Rows.Add();
