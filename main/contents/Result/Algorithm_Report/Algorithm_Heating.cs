@@ -98,7 +98,7 @@ namespace main.contents.Result
             {
                 string Num = 번호[i][0]; string MainSystem = "", sub1 ="-", sub2 ="-";
                 double power = 0; double count = 0; double eta = 0; string systemnum = ""; string etaunit = "";
-                items.Add("Algorithm_Heating.htm"); // 예시 코드: 메인 메뉴 동적 할당
+                items.Add("heatingReport_new.html"); // 예시 코드: 메인 메뉴 동적 할당
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
                 if (Value.Length > 0)
                 {
@@ -185,11 +185,14 @@ namespace main.contents.Result
                 FormData[14].Add(new { idx = i, val = etaunit });
                 FormData[15].Add(new { idx = i, val = Num + ". 난방 에너지소요량 검토 보고서" }); //title
                 #endregion
+
+                ArrayList ZoneZahu = new ArrayList();//존과 공조존 모두
+                ArrayList splitzone = new ArrayList();
+                ArrayList splitAHU_Zone = new ArrayList();
                 #region 존정보
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select 존,공조기 From heatingSystem_Form Where 번호='" + Num + "'");
                 if (Value.Length > 0)
                 {
-                    ArrayList splitzone = new ArrayList();
                     splitzone = Split_(Value[0][0]);
                     ZoneData[0].Add(new { idx = i, val = splitzone.Count });
                     string[][] ZoneValue = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(Qhb_z) From heatingSystem_Result Where 번호='" + Num + "'");
@@ -197,7 +200,7 @@ namespace main.contents.Result
                     {
                         ZoneData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(ZoneValue[0][0], 0) });
                     }
-                    double Zmax = 0;
+                    double Zmax = 0; double ZArea = 0.00000001;
                     for(int a=0; a<splitzone.Count; a++)
                     {
                         ZoneValue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct Q_max From Zone_HCneed_Result Where 번호='" + splitzone[a].ToString() + "' and 난방_냉방='난방' and 비이용일_이용일='이용일'");
@@ -205,8 +208,14 @@ namespace main.contents.Result
                         {
                             Zmax += Convert.ToDouble(ZoneValue[0][0]);
                         }
+                        ZoneValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호='" + splitzone[a].ToString() + "'");
+                        if (ZoneValue.Length > 0)
+                        {
+                            ZArea += Convert.ToDouble(ZoneValue[0][0]);
+                        }
                     }
                     ZoneData[2].Add(new { idx = i, val = Program.UTIL.doubleComa((Zmax/1000).ToString(), 1) });
+                    ZoneData[5].Add(new { idx = i, val = Program.UTIL.doubleComa((ZArea).ToString(), 1) });
                     ZoneValue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct 공급설비종류 From Heating_ce_Form Where 난방시스템='" + Num + "' and (Not 공급설비종류='CAV유닛' and Not 공급설비종류 ='VAV유닛' and Not 공급설비종류='파워팬유닛')");
                    if(ZoneValue.Length > 0)
                     {
@@ -230,19 +239,23 @@ namespace main.contents.Result
                     {
                         ZahuData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(ZoneValue[0][0], 0) });
                     }
-                    double Zmax = 0;
+                    double Zmax = 0; double ZArea = 0.00000001;
                     for (int a = 0; a < splitAHU.Count; a++)
                     {
-                        ZoneValue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.Q_max From Zone_HCneed_Result as a Inner Join ZoneGeneral_Form as b on a.번호=b.존번호 Where b.선택열회수기='" + splitAHU[a].ToString() + "' and a.난방_냉방='난방' and a.비이용일_이용일='이용일' and 월='1월' and not b.선택열회수기=''");
+                        ZoneValue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.Q_max, b.존번호,b.순바닥면적 From Zone_HCneed_Result as a Inner Join ZoneGeneral_Form as b on a.번호=b.존번호 Where b.선택열회수기='" + splitAHU[a].ToString() + "' and a.난방_냉방='난방' and a.비이용일_이용일='이용일' and 월='1월' and not b.선택열회수기=''");
                         if (ZoneValue.Length > 0)
                         {
                             for(int aa=0; aa<ZoneValue.Length; aa++)
                             {
                                 Zmax += Convert.ToDouble(ZoneValue[aa][0]);
+                                splitAHU_Zone.Add(ZoneValue[aa][1]);
+                                ZArea += Convert.ToDouble(ZoneValue[aa][2]);
+
                             }
                         }
                     }
                     ZahuData[2].Add(new { idx = i, val = Program.UTIL.doubleComa((Zmax / 1000).ToString(), 1) });
+                    ZahuData[5].Add(new { idx = i, val = Program.UTIL.doubleComa((ZArea).ToString(), 1) });
                     ZoneValue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct 공급설비종류 From Heating_ce_Form Where 난방시스템='" + Num + "' and (공급설비종류='CAV유닛' OR 공급설비종류 ='VAV유닛' OR 공급설비종류='파워팬유닛')");
                     if (ZoneValue.Length > 0)
                     {
@@ -252,38 +265,74 @@ namespace main.contents.Result
                     {
                         ZahuData[4].Add(new { idx = i, val = ZoneValue[0][1] });
                     }
+                    foreach (var item in splitzone)
+                    {
+                        if (!ZoneZahu.Contains(item))
+                        {
+                            ZoneZahu.Add(item);
+                        }
+                    }
+
+                    // B의 요소도 중복 없이 C에 추가
+                    foreach (var item in splitAHU_Zone)
+                    {
+                        if (!ZoneZahu.Contains(item))
+                        {
+                            ZoneZahu.Add(item);
+                        }
+                    }
                 }
                 #endregion
+
                 #region 연간정보 
-                Value = Program.DB.querySQL(DB.type.ProjDB, "Select  sum(Qhb_mth_sum),  sum(Qh_ce),  sum(Qh_d), sum(Qh_s),  sum(Qh_outg), sum(Qh_f),sum(Wh_ce),sum(Wh_d),sum(Wh_s),sum(Wh_g),연료 From HeatingSystem_Result Where 번호='" + Num + "'");
+                double ZoneZahu_Area = 0.00000001;
+                for(int a=0; a< ZoneZahu.Count; a++)
+                {
+                    string[][] Z = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form","순바닥면적", "존번호='" + ZoneZahu[a].ToString() +"'");
+                    if(Z.Length>0)
+                    {
+                        ZoneZahu_Area += Convert.ToDouble(Z[0][0]);
+                    }
+                }
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select  sum(Qhb_mth_sum),  sum(Qh_ce),  sum(Qh_d), sum(Qh_s),  sum(Qh_gen), sum(Qh_f),sum(Wh_ce),sum(Wh_d),sum(Wh_s),sum(Wh_g),연료 From HeatingSystem_Result Where 번호='" + Num + "'");
                 if (Value.Length > 0)
                 {
-                    AnnualData[0].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][0], 0) });
-                    AnnualData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][1], 0) });
-                    AnnualData[2].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][2], 0) });
-                    AnnualData[3].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][3], 0) });
-                    AnnualData[4].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][4], 0) });
-                    AnnualData[5].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][5], 0) });
+                    double ce = 0, d = 0, st = 0, g = 0, f = 0;
+
+                    ce = (Convert.ToDouble(Value[0][1]) + Convert.ToDouble(Value[0][6])) / ZoneZahu_Area;
+                    d = (Convert.ToDouble(Value[0][2]) + Convert.ToDouble(Value[0][7])) / ZoneZahu_Area;
+                    st = (Convert.ToDouble(Value[0][3]) + Convert.ToDouble(Value[0][8])) / ZoneZahu_Area;
+                    g = (Convert.ToDouble(Value[0][4]) + Convert.ToDouble(Value[0][9])) / ZoneZahu_Area;
+                    AnnualData[0].Add(new { idx = i, val = Program.UTIL.doubleComa((Convert.ToDouble(Value[0][0])/ZoneZahu_Area).ToString(), 1) });
+                    AnnualData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(ce.ToString(), 1) });
+                    AnnualData[2].Add(new { idx = i, val = Program.UTIL.doubleComa(d.ToString(), 1) });
+                    AnnualData[3].Add(new { idx = i, val = Program.UTIL.doubleComa(st.ToString(), 1) });
+                    AnnualData[4].Add(new { idx = i, val = Program.UTIL.doubleComa(g.ToString(), 1) });
                     double w = 0;
                     for(int a=6; a<10; a++)
                     {
                         w += Value[0][a]!="" ? Convert.ToDouble(Value[0][a]) : 0;
                     }
+                    w = w / ZoneZahu_Area;
+                    f= (Convert.ToDouble(Value[0][5]) + w) / ZoneZahu_Area;
+                    AnnualData[5].Add(new { idx = i, val = Program.UTIL.doubleComa(f.ToString(), 1) });
 
                     AnnualData[6].Add(new { idx = i, val = Program.UTIL.doubleComa(w.ToString(), 0) });
-                    double primary = 0, tco2 = 0;
+                    double primary = 0, kgco2 = 0;
                     if (Value[0][10] == "전기")
                     {
                         primary = (Convert.ToDouble(Value[0][5]) + w) * 2.75;
-                        tco2 = (Convert.ToDouble(Value[0][5]) + w) * 0.4747 / 1000000 * 1000;
+                        kgco2 = (Convert.ToDouble(Value[0][5]) + w) * 0.4747 / 1000000 * 1000 * 1000;
                     }
                     else
                     {
                         primary = Convert.ToDouble(Value[0][5]) * 1.1 + w * 2.75;
-                        tco2 = Convert.ToDouble(Value[0][5]) * 0.4747 / 1000000 * 1000 + w / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                        kgco2 = Convert.ToDouble(Value[0][5]) * 0.4747 / 1000000 * 1000 * 1000 + w / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000 * 1000;
                     }
-                    AnnualData[7].Add(new { idx = i, val = primary.ToString("#,##0") });
-                    AnnualData[8].Add(new { idx = i, val = tco2.ToString("0.0") });
+                    primary = primary / ZoneZahu_Area;
+                    kgco2 = kgco2 / ZoneZahu_Area;
+                    AnnualData[7].Add(new { idx = i, val = primary.ToString("0.0") });
+                    AnnualData[8].Add(new { idx = i, val = kgco2.ToString("0.0") });
                 }
                 #endregion
 
@@ -334,38 +383,18 @@ namespace main.contents.Result
                 }
                 #endregion
 
-                #region 에너지소요량 월별 
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select  Qh_f,  Qh_outg, Qh_ce, Qh_d, Qh_s, Qh_gen From HeatingSystem_Result Where 번호='" + Num + "' and 월='" + (mth + 1) + "월'");
-                    if (Value.Length > 0)
-                    {
-                        MthData[0].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
-                        MthData[1].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(Value[0][1], 0) });
-                        MthData[2].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(Value[0][2], 0) });
-                        MthData[3].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(Value[0][3], 0) });
-                        MthData[4].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(Value[0][4], 0) });
-                        MthData[5].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(Value[0][5], 0) });
-                    }
-                }
-                Value = Program.DB.querySQL(DB.type.ProjDB, "Select  Sum(Qh_f), Sum(Qh_outg), sum(Qh_ce), sum(Qh_d), sum(Qh_s),sum(Qh_gen)  From HeatingSystem_Result Where 번호='" + Num + "'");
-                if (Value.Length > 0)
-                {
-                    MthData[0].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][0], 0) });
-                    MthData[1].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][1], 0) });
-                    MthData[2].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][2], 0) });
-                    MthData[3].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][3], 0) });
-                    MthData[4].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][4], 0) });
-                    MthData[5].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][5], 0) });
-                }
-                #endregion
-
+                double[] ce_mth = new double[12], d_mth = new double[12], s_mth = new double[12], g_mth = new double[12], f_mth = new double[12];
+                double ce_a = 0, d_a = 0, s_a = 0, g_a = 0, f_a = 0;
+                #region 보조에너지
                 for (int mth = 0; mth < 12; mth++)
                 {
                     double w = 0;
                     Value = Program.DB.querySQL(DB.type.ProjDB, "Select Wh_ce, Wh_d, Wh_s, Wh_g From HeatingSystem_Result Where 번호='" + Num + "' and 월='" + (mth + 1) + "월'");
                     if (Value.Length > 0)
                     {
+                        ce_mth[mth] = Convert.ToDouble(Value[0][0]); d_mth[mth] = Convert.ToDouble(Value[0][1]); s_mth[mth] = Convert.ToDouble(Value[0][2]); g_mth[mth] = Convert.ToDouble(Value[0][3]);
+                        f_mth[mth] = Convert.ToDouble(Value[0][0]) + Convert.ToDouble(Value[0][1])+ Convert.ToDouble(Value[0][2])+ Convert.ToDouble(Value[0][3]);
+
                         WMthData[1].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(Value[0][0], 1) });
                         WMthData[2].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(Value[0][1], 1) });
                         WMthData[3].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(Value[0][2], 1) });
@@ -381,6 +410,8 @@ namespace main.contents.Result
                 if (Value.Length > 0)
                 {
                     double w = 0;
+                    ce_a = Convert.ToDouble(Value[0][0]); d_a = Convert.ToDouble(Value[0][1]); s_a = Convert.ToDouble(Value[0][2]); g_a = Convert.ToDouble(Value[0][3]);
+                    f_a = Convert.ToDouble(Value[0][0]) + Convert.ToDouble(Value[0][1]) + Convert.ToDouble(Value[0][2]) + Convert.ToDouble(Value[0][3]);
                     WMthData[1].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][0], 1) });
                     WMthData[2].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][1], 1) });
                     WMthData[3].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][2], 1) });
@@ -391,7 +422,40 @@ namespace main.contents.Result
                     }
                     WMthData[0].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(w.ToString(), 1) });
                 }
-
+                #endregion 
+                #region 에너지소요량 월별 
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select  Qh_f,  Qh_outg, Qh_ce, Qh_d, Qh_s, Qh_gen, Qhb_z, Qhb_ahu From HeatingSystem_Result Where 번호='" + Num + "' and 월='" + (mth + 1) + "월'");
+                    if (Value.Length > 0)
+                    {
+                        ce_mth[mth] = ce_mth[mth] + Convert.ToDouble(Value[0][2]); d_mth[mth] = d_mth[mth] + Convert.ToDouble(Value[0][3]); s_mth[mth] = s_mth[mth] + Convert.ToDouble(Value[0][4]); g_mth[mth] = g_mth[mth] + Convert.ToDouble(Value[0][5]);
+                        f_mth[mth] = Convert.ToDouble(Value[0][0]) + f_mth[mth];
+                        MthData[0].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(f_mth[mth].ToString(), 0) });
+                        MthData[1].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(Value[0][1], 0) });
+                        MthData[2].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(ce_mth[mth].ToString(), 0) });
+                        MthData[3].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(d_mth[mth].ToString(), 0) });
+                        MthData[4].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(s_mth[mth].ToString(), 0) });
+                        MthData[5].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(g_mth[mth].ToString(), 0) });
+                        double sum = Convert.ToDouble(Value[0][6]) + Convert.ToDouble(Value[0][7]);
+                        MthData[6].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(sum.ToString(), 0) });
+                    }
+                }
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select  Sum(Qh_f), Sum(Qh_outg), sum(Qh_ce), sum(Qh_d), sum(Qh_s),sum(Qh_gen), sum(Qhb_z), sum(Qhb_ahu)  From HeatingSystem_Result Where 번호='" + Num + "'");
+                if (Value.Length > 0)
+                {
+                    ce_a = ce_a + Convert.ToDouble(Value[0][2]); d_a = d_a + Convert.ToDouble(Value[0][3]); s_a = s_a + Convert.ToDouble(Value[0][4]); g_a = g_a + Convert.ToDouble(Value[0][5]);
+                    f_a = Convert.ToDouble(Value[0][0]) + f_a;
+                    MthData[0].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(f_a.ToString(), 0) });
+                    MthData[1].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][1], 0) });
+                    MthData[2].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(ce_a.ToString(), 0) });
+                    MthData[3].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(d_a.ToString(), 0) });
+                    MthData[4].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(s_a.ToString(), 0) });
+                    MthData[5].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(g_a.ToString(), 0) });
+                    double sum = Convert.ToDouble(Value[0][6]) + Convert.ToDouble(Value[0][7]);
+                    MthData[6].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(sum.ToString(), 0) });
+                }
+                #endregion
                 data.Add(new { cname = "projectnum", data = FormData[0] });
                 data.Add(new { cname = "heatingnum", data = FormData[1] });
                 data.Add(new { cname = "heatingnum2", data = FormData[2] });
@@ -415,6 +479,7 @@ namespace main.contents.Result
                 data.Add(new { cname = "zone_max", data = ZoneData[2] });
                 data.Add(new { cname = "zone_ce1", data = ZoneData[3] });
                 data.Add(new { cname = "zone_ce2", data = ZoneData[4] });
+                data.Add(new { cname = "zone_area", data = ZoneData[5] });
 
 
                 data.Add(new { cname = "zahu_count", data = ZahuData[0] });
@@ -422,6 +487,7 @@ namespace main.contents.Result
                 data.Add(new { cname = "zahu_max", data = ZahuData[2] });
                 data.Add(new { cname = "zahu_ce1", data = ZahuData[3] });
                 data.Add(new { cname = "zahu_ce2", data = ZahuData[4] });
+                data.Add(new { cname = "zahu_area", data = ZahuData[5] });
 
 
                 data.Add(new { cname = "heatsource", data = SourceData[0] });
@@ -438,7 +504,7 @@ namespace main.contents.Result
                 data.Add(new { cname = "annual_f", data = AnnualData[5] });
                 data.Add(new { cname = "annual_w", data = AnnualData[6] });
                 data.Add(new { cname = "annual_p", data = AnnualData[7] });
-                data.Add(new { cname = "annual_tco2", data = AnnualData[8] });
+                data.Add(new { cname = "annual_kgco2", data = AnnualData[8] });
 
 
                 data.Add(new { cname = "zone_mth_outg", data = ZoneMthData[0] });
@@ -459,6 +525,7 @@ namespace main.contents.Result
                 data.Add(new { cname = "mth_d", data = MthData[3] });
                 data.Add(new { cname = "mth_s", data = MthData[4] });
                 data.Add(new { cname = "mth_g", data = MthData[5] });
+                data.Add(new { cname = "mth_nd", data = MthData[6] });
 
                 data.Add(new { cname = "w", data = WMthData[0] });
                 data.Add(new { cname = "w_ce", data = WMthData[1] });

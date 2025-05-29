@@ -15,7 +15,7 @@ namespace main
         String SelectSolar_nonsplit, SolarNum_nonsplit, SolarDirection_nonsplit, SolarDegree_nonsplit;
         String SelectHP_nonsplit, HPNum_nonsplit, HPControl_nonsplit;
         String SelectDH_nonsplit;
-        String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; int Pump1Count, Pump2Count;
+        String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; int Pump1Count, Pump2Count; double Pump1Volume, Pump2Volume, Pump1Head, Pump2Head;
         public ArrayList Pump = new ArrayList();
         String StorageUse, StoragePumpUse, StoragePump,StorageType; public double Vs;
         String[] SystemType = { "보일러","지역난방", "태양열시스템" };
@@ -270,7 +270,7 @@ namespace main
         }
         public void Load_PumpData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(ProjNum, "DHWSystem_Form", "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수", "번호 = '" + DHWNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "DHWSystem_Form", "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수,펌프1유량,펌프2유량,펌프1양정,펌프2양정", "번호 = '" + DHWNum + "'");
             if (Value.Length > 0)
             {
                 PumpUse = Value[0][0];
@@ -284,6 +284,10 @@ namespace main
                 Pump2Control = Value[0][7];
                 Pump1Count = Convert.ToInt16(Value[0][8]);
                 Pump2Count = Convert.ToInt16(Value[0][9]);
+                Pump1Volume = Value[0][10] == "" || Value[0][10] == null ? 0 : Convert.ToDouble(Value[0][10]);
+                Pump2Volume = Value[0][11] == "" || Value[0][11] == null ? 0 : Convert.ToDouble(Value[0][11]);
+                Pump1Head = Value[0][12] == "" || Value[0][12] == null ? 0 : Convert.ToDouble(Value[0][12]);
+                Pump2Head = Value[0][13] == "" || Value[0][13] == null ? 0 : Convert.ToDouble(Value[0][13]);
             }
         }
        
@@ -361,7 +365,7 @@ namespace main
                 }
 
             //펌프
-            string[][] Value2 = Program.DB.getValue(ProjNum, "User_Pump", "A효율,B효율,유량,동력,양정,대수", "번호 = '" + Pump1 + "'");
+            string[][] Value2 = Program.DB.getValue(ProjNum, "User_Pump", "B효율,동력", "번호 = '" + Pump1 + "'");
             Pump.Clear();
             if (Value2.Length > 0)
             {
@@ -372,13 +376,12 @@ namespace main
                     double[] Vz = new double[12], P_hydr = new double[12], fe = new double[12], e_hydr = new double[12], Wh_hydr = new double[12];
                     double theta;
                     Num_pump = Pump1;
-                    A_pump = Value2[0][0] != "" ? Convert.ToDouble(Value2[0][0]) : 0;
-                    B_pump = Convert.ToDouble(Value2[0][1]);
-                    V_pump = Convert.ToDouble(Value2[0][2]);
-                    Power_pump = Convert.ToDouble(Value2[0][3]);
-                    H_pump = Convert.ToDouble(Value2[0][4]);
-                    count_pump = Convert.ToDouble(Value2[0][5]);
-                    DHW_Pump pump1 = new DHW_Pump(Num_pump, A_pump, B_pump, V_pump, Power_pump, H_pump, Pump1Count, Pump1Valve, Pump1Control); ;
+                    B_pump = Convert.ToDouble(Value2[0][0]);
+                    V_pump = Pump1Volume;
+                    Power_pump = Convert.ToDouble(Value2[0][1]);
+                    H_pump = Pump1Head;
+                    count_pump = Pump1Count;
+                    DHW_Pump pump1 = new DHW_Pump(Num_pump,B_pump, V_pump, Power_pump, H_pump, Pump1Count, Pump1Valve, Pump1Control); ;
                     Pump.Add(pump1);
                     string[][] Value_Control = Program.DB.getValue(DB.type.BaseDB_Heating, "펌프제어", "Cp1,Cp2", "펌프제어 = '" + Pump1Control + "'");
                     Cp1 = Convert.ToDouble(Value_Control[0][0]);
@@ -736,11 +739,10 @@ namespace main
 
     public class DHW_Pump
     {
-        String Num_pump; double A_pump; double B_pump; double V_pump; double Power_pump; double H_pump; double count_pump; String Valve_pump; String Control_pump;
-        public DHW_Pump(String Num, double A, double B, double V, double Power, double H, double count, String Valve, String Control)
+        String Num_pump; double B_pump; double V_pump; double Power_pump; double H_pump; double count_pump; String Valve_pump; String Control_pump;
+        public DHW_Pump(String Num, double B, double V, double Power, double H, double count, String Valve, String Control)
         {
             this.Num_pump = Num;
-            this.A_pump = A;
             this.B_pump = B;
             this.V_pump = V;
             this.Power_pump = Power;
@@ -752,10 +754,6 @@ namespace main
         public String Num()
         {
             return this.Num_pump;
-        }
-        public double A()
-        {
-            return this.A_pump;
         }
         public double B()
         {

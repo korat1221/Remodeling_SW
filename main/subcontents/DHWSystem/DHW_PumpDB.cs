@@ -57,14 +57,9 @@ namespace main.subcontents.DHWSystem
             Pump_dataGridView.Columns.Add("A6", " .유량.[CMH]");
             Pump_dataGridView.Columns.Add("A7", " .동력.[kW]");
             Pump_dataGridView.Columns.Add("A8", " .양정.[m]");
-            //Pump_table.Columns.Add("번호", typeof(string));
-            //Pump_table.Columns.Add("명칭", typeof(string));
-            //Pump_table.Columns.Add("종류", typeof(string));           
-            //Pump_table.Columns.Add("A효율" + Environment.NewLine + "[%]", typeof(string));
-            //Pump_table.Columns.Add("B효율" + Environment.NewLine + "[%]", typeof(string));
-            //Pump_table.Columns.Add("유량" + Environment.NewLine + "[CMH]", typeof(string));
-            //Pump_table.Columns.Add("동력" + Environment.NewLine + "[kW]", typeof(string));
-            //Pump_table.Columns.Add("양정" + Environment.NewLine + "[m]", typeof(string));
+            Pump_dataGridView.Columns[4].Visible = false;
+            Pump_dataGridView.Columns[6].Visible = false;
+            Pump_dataGridView.Columns[8].Visible = false;
 
 
             string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,A효율,B효율,유량,동력,양정", "종류 ='급탕펌프' or 종류 = '온수순환펌프'");

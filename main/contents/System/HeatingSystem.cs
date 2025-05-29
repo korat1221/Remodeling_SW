@@ -2935,6 +2935,7 @@ namespace main.contents
                         설치위치comboBox.Items.Add("내벽 설치");
                         설치위치comboBox.Items.Add("외벽 설치");
                         설치위치comboBox.Items.Add("창호측 설치");
+                        설치위치comboBox.Items.Add("천장 설치");
                         ce_dataGridView.Rows[nRow].Cells[7] = 설치위치comboBox;
                     }
                     else

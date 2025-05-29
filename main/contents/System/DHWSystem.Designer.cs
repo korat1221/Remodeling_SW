@@ -50,13 +50,15 @@
             DataGridViewCellStyle dataGridViewCellStyle20 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle21 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
-            label15 = new Label();
-            OldSystem_textBox = new TextBox();
-            Oldsystem_comboBox = new CustomComboBox();
-            label13 = new Label();
-            groupBox1 = new GroupBox();
+            label20 = new Label();
+            Zone_Qmax_textBox = new TextBox();
+            Zone_Qba_textBox = new TextBox();
+            Zone_Area_textBox = new TextBox();
+            label7 = new Label();
+            label10 = new Label();
             radioButton4 = new RadioButton();
             radioButton3 = new RadioButton();
+            OldSystem_textBox = new TextBox();
             radioButton1 = new RadioButton();
             Zone_button = new Button();
             label1 = new Label();
@@ -158,7 +160,6 @@
             panel2 = new Panel();
             panel5 = new Panel();
             GeneralPanel.SuspendLayout();
-            groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             tabControl1.SuspendLayout();
             Qhg_tabPage.SuspendLayout();
@@ -197,11 +198,16 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = SystemColors.GradientActiveCaption;
-            GeneralPanel.Controls.Add(label15);
+            GeneralPanel.Controls.Add(label20);
+            GeneralPanel.Controls.Add(Zone_Qmax_textBox);
+            GeneralPanel.Controls.Add(Zone_Qba_textBox);
+            GeneralPanel.Controls.Add(Zone_Area_textBox);
+            GeneralPanel.Controls.Add(label7);
+            GeneralPanel.Controls.Add(label10);
+            GeneralPanel.Controls.Add(radioButton4);
+            GeneralPanel.Controls.Add(radioButton3);
             GeneralPanel.Controls.Add(OldSystem_textBox);
-            GeneralPanel.Controls.Add(Oldsystem_comboBox);
-            GeneralPanel.Controls.Add(label13);
-            GeneralPanel.Controls.Add(groupBox1);
+            GeneralPanel.Controls.Add(radioButton1);
             GeneralPanel.Controls.Add(Zone_button);
             GeneralPanel.Controls.Add(label1);
             GeneralPanel.Controls.Add(Zone_textBox);
@@ -215,14 +221,96 @@
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
             // 
-            // label15
+            // label20
             // 
-            label15.AutoSize = true;
-            label15.Location = new Point(341, 18);
-            label15.Name = "label15";
-            label15.Size = new Size(31, 15);
-            label15.TabIndex = 125;
-            label15.Text = "기존";
+            label20.AutoSize = true;
+            label20.Font = new Font("나눔바른고딕", 10F);
+            label20.Location = new Point(669, 12);
+            label20.Name = "label20";
+            label20.Size = new Size(63, 16);
+            label20.TabIndex = 164;
+            label20.Text = "면적[m2]";
+            // 
+            // Zone_Qmax_textBox
+            // 
+            Zone_Qmax_textBox.BackColor = SystemColors.GradientActiveCaption;
+            Zone_Qmax_textBox.BorderStyle = BorderStyle.None;
+            Zone_Qmax_textBox.Enabled = false;
+            Zone_Qmax_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            Zone_Qmax_textBox.ForeColor = SystemColors.ControlDark;
+            Zone_Qmax_textBox.Location = new Point(504, 50);
+            Zone_Qmax_textBox.Name = "Zone_Qmax_textBox";
+            Zone_Qmax_textBox.Size = new Size(120, 15);
+            Zone_Qmax_textBox.TabIndex = 163;
+            Zone_Qmax_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // Zone_Qba_textBox
+            // 
+            Zone_Qba_textBox.BackColor = SystemColors.GradientActiveCaption;
+            Zone_Qba_textBox.BorderStyle = BorderStyle.None;
+            Zone_Qba_textBox.Enabled = false;
+            Zone_Qba_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            Zone_Qba_textBox.ForeColor = SystemColors.ControlDark;
+            Zone_Qba_textBox.Location = new Point(369, 50);
+            Zone_Qba_textBox.Name = "Zone_Qba_textBox";
+            Zone_Qba_textBox.Size = new Size(120, 15);
+            Zone_Qba_textBox.TabIndex = 162;
+            Zone_Qba_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // Zone_Area_textBox
+            // 
+            Zone_Area_textBox.BackColor = SystemColors.GradientActiveCaption;
+            Zone_Area_textBox.BorderStyle = BorderStyle.None;
+            Zone_Area_textBox.Enabled = false;
+            Zone_Area_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            Zone_Area_textBox.ForeColor = SystemColors.ControlDark;
+            Zone_Area_textBox.Location = new Point(640, 50);
+            Zone_Area_textBox.Name = "Zone_Area_textBox";
+            Zone_Area_textBox.Size = new Size(120, 15);
+            Zone_Area_textBox.TabIndex = 161;
+            Zone_Area_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("나눔바른고딕", 10F);
+            label7.Location = new Point(519, 12);
+            label7.Name = "label7";
+            label7.Size = new Size(90, 16);
+            label7.TabIndex = 160;
+            label7.Text = "최대부하 [kW]";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("나눔바른고딕", 10F);
+            label10.Location = new Point(348, 12);
+            label10.Name = "label10";
+            label10.Size = new Size(163, 16);
+            label10.TabIndex = 159;
+            label10.Text = "연간 에너지요구량 [kWh/a]";
+            // 
+            // radioButton4
+            // 
+            radioButton4.AutoSize = true;
+            radioButton4.Location = new Point(809, 55);
+            radioButton4.Name = "radioButton4";
+            radioButton4.Size = new Size(49, 19);
+            radioButton4.TabIndex = 2;
+            radioButton4.TabStop = true;
+            radioButton4.Text = "보수";
+            radioButton4.UseVisualStyleBackColor = true;
+            // 
+            // radioButton3
+            // 
+            radioButton3.AutoSize = true;
+            radioButton3.Location = new Point(809, 33);
+            radioButton3.Name = "radioButton3";
+            radioButton3.Size = new Size(49, 19);
+            radioButton3.TabIndex = 1;
+            radioButton3.TabStop = true;
+            radioButton3.Text = "신규";
+            radioButton3.UseVisualStyleBackColor = true;
             // 
             // OldSystem_textBox
             // 
@@ -237,62 +325,10 @@
             OldSystem_textBox.TabIndex = 122;
             OldSystem_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // Oldsystem_comboBox
-            // 
-            Oldsystem_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Oldsystem_comboBox.FormattingEnabled = true;
-            Oldsystem_comboBox.Location = new Point(699, 45);
-            Oldsystem_comboBox.Name = "Oldsystem_comboBox";
-            Oldsystem_comboBox.Size = new Size(120, 24);
-            Oldsystem_comboBox.TabIndex = 120;
-            Oldsystem_comboBox.Visible = false;
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Location = new Point(341, 50);
-            label13.Name = "label13";
-            label13.Size = new Size(31, 15);
-            label13.TabIndex = 124;
-            label13.Text = "신규";
-            // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(radioButton4);
-            groupBox1.Controls.Add(radioButton3);
-            groupBox1.Controls.Add(radioButton1);
-            groupBox1.Location = new Point(378, 2);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(283, 75);
-            groupBox1.TabIndex = 121;
-            groupBox1.TabStop = false;
-            // 
-            // radioButton4
-            // 
-            radioButton4.AutoSize = true;
-            radioButton4.Location = new Point(146, 48);
-            radioButton4.Name = "radioButton4";
-            radioButton4.Size = new Size(93, 19);
-            radioButton4.TabIndex = 2;
-            radioButton4.TabStop = true;
-            radioButton4.Text = "철거 후 신규";
-            radioButton4.UseVisualStyleBackColor = true;
-            // 
-            // radioButton3
-            // 
-            radioButton3.AutoSize = true;
-            radioButton3.Location = new Point(17, 48);
-            radioButton3.Name = "radioButton3";
-            radioButton3.Size = new Size(49, 19);
-            radioButton3.TabIndex = 1;
-            radioButton3.TabStop = true;
-            radioButton3.Text = "신규";
-            radioButton3.UseVisualStyleBackColor = true;
-            // 
             // radioButton1
             // 
             radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(17, 13);
+            radioButton1.Location = new Point(809, 8);
             radioButton1.Name = "radioButton1";
             radioButton1.Size = new Size(49, 19);
             radioButton1.TabIndex = 0;
@@ -1414,6 +1450,7 @@
             Pump_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle21;
             Pump_dataGridView.Size = new Size(986, 108);
             Pump_dataGridView.TabIndex = 185;
+            Pump_dataGridView.CellContentClick += Pump_dataGridView_CellContentClick;
             // 
             // Pump2_textBox
             // 
@@ -1727,8 +1764,6 @@
             Text = "Form3";
             GeneralPanel.ResumeLayout(false);
             GeneralPanel.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
             tabControl1.ResumeLayout(false);
             Qhg_tabPage.ResumeLayout(false);
@@ -1836,11 +1871,7 @@
         private Label StoragePump_label;
         private Button Previous_button;
         private Button Save_button;
-        private Label label15;
         private TextBox OldSystem_textBox;
-        private CustomComboBox Oldsystem_comboBox;
-        private Label label13;
-        private GroupBox groupBox1;
         private RadioButton radioButton4;
         private RadioButton radioButton3;
         private RadioButton radioButton1;
@@ -1880,5 +1911,11 @@
         private Label label14;
         private Label label5;
         private CustomComboBox PipeD_comboBox;
+        private Label label20;
+        private TextBox Zone_Qmax_textBox;
+        private TextBox Zone_Qba_textBox;
+        private TextBox Zone_Area_textBox;
+        private Label label7;
+        private Label label10;
     }
 }
