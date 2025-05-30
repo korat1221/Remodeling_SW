@@ -1104,7 +1104,8 @@ namespace main
                 R_pipe = Math.Log(((PipeD / 2 + PipeInsD) / 1000) / (PipeD / 2 / 1000)) / 2 / Math.PI / PipeIns_Ramda;
                 Ramda_se = 5 + 0.15 * 5.67 / 100000000 * 4 * 1000;
                 R_se = 1 / (Ramda_se * 2 * Math.PI * (PipeD / 2 + PipeInsD) / 1000);
-                
+                Psi_pipe = 1 / (R_pipe + R_se);
+
 
                 double[] theta_i = new double[12];               
 
@@ -1182,6 +1183,7 @@ namespace main
                 e_hydr[mth] = fe[mth] * (Cp1 + Cp2 / beta_h_d[mth]) * 0.25 / 0.25;
                 Wh_hydr[mth] = P_hydr[mth] / 1000 * beta_h_d[mth] * th_avg[mth] * f_dpm * 1;
                 Wh_d[mth] = Wh_hydr[mth] * e_hydr[mth];
+                Wh_d[mth] = Wh_d[mth] * PumpCount;
             }
         }
         public void Calc_beta_s()

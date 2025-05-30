@@ -876,8 +876,8 @@ namespace main.contents.Result.Building_Report
                 double 연간소요량 = 0, 연간전기 = 0, 연간가스 = 0;
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    string[][] RES1 = Program.DB.getValue(DB.type.ProjDB,"RESystem_Result","총에너지", "생산유형='전기'and 월 ='" + (mth + 1).ToString() + "월'");
-                    string[][] RES2 = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "총에너지", "not 생산유형='전기'and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] RES1 = Program.DB.getValue(DB.type.ProjDB,"RESystem_Result","SUM(총에너지)", "생산유형='전기'and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] RES2 = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "not 생산유형='전기'and 월 ='" + (mth + 1).ToString() + "월'");
                     string[][] Final1 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
                     string[][] Final2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량", "not 연료='전기' and not 연료='전체'  and 월 ='" + (mth + 1).ToString() + "월'");
                     if (Final1.Length > 0)
@@ -891,7 +891,7 @@ namespace main.contents.Result.Building_Report
                         {
                             기저[mth] = Convert.ToDouble(Final1[0][5]);
                         }
-                        if (RES1.Length > 0)
+                        if (RES1.Length > 0 && RES1[0][0]!="")
                         { 신재생[mth] = Convert.ToDouble(RES1[0][0]); }
                         총전기[mth] = Convert.ToDouble(Final1[0][7]) - 기저[mth] ;
                     }
@@ -906,7 +906,7 @@ namespace main.contents.Result.Building_Report
                         {
                             기저[mth] =  Convert.ToDouble(Final2[0][5]);
                         }
-                        if (RES2.Length > 0)
+                        if (RES2.Length > 0 && RES2[0][0] != "")
                         {
                             신재생[mth] = 신재생[mth] + Convert.ToDouble(RES2[0][0]);
                         }
@@ -966,8 +966,8 @@ namespace main.contents.Result.Building_Report
                 double[] 난방1 = new double[12], 냉방1 = new double[12], 급탕1 = new double[12], 조명1 = new double[12], 공조1 = new double[12], 신재생1 = new double[12], 전기1 = new double[12], 열1 = new double[12], 총소요1 = new double[12];
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    string[][] RES1 = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "총에너지", "생산유형='전기'and 월 ='" + (mth + 1).ToString() + "월'");
-                    string[][] RES2 = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "총에너지", "not 생산유형='전기'and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] RES1 = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "생산유형='전기'and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] RES2 = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "not 생산유형='전기'and 월 ='" + (mth + 1).ToString() + "월'");
                     string[][] Fi1 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
                     string[][] Fi2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "(연료='가스' OR 연료='기름')  and 월 ='" + (mth + 1).ToString() + "월'");
                     string[][] Fi3 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "연료='지역난방' and 월 ='" + (mth + 1).ToString() + "월'");
@@ -978,7 +978,7 @@ namespace main.contents.Result.Building_Report
                         급탕1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][2]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][2]) * 2.75;
                         조명1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][3]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][3]) * 2.75;
                         공조1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][4]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][4]) * 2.75;
-                        if (RES1.Length > 0)
+                        if (RES1.Length > 0 && RES1[0][0] != "")
                         {
                             전기1[mth] = double.IsNaN(Convert.ToDouble(RES1[0][0]) * 2.75) ? 0 : Convert.ToDouble(RES1[0][0]) * 2.75;
                         }
@@ -991,7 +991,7 @@ namespace main.contents.Result.Building_Report
                         급탕1[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][2]) *1.1) ? 0 : Convert.ToDouble(Fi2[0][2]) *1.1;
                         조명1[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][3]) *1.1) ? 0 : Convert.ToDouble(Fi2[0][3]) *1.1;
                         공조1[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][4]) *1.1) ? 0 : Convert.ToDouble(Fi2[0][4]) * 1.1;
-                        if (RES2.Length > 0)
+                        if (RES2.Length > 0 && RES2[0][0] != "")
                         {
                             열1[mth] = double.IsNaN(Convert.ToDouble(RES2[0][0]) * 1.1) ? 0 : Convert.ToDouble(RES2[0][0]) * 1.1;
                         }
@@ -1032,7 +1032,7 @@ namespace main.contents.Result.Building_Report
 
 
                 탄소배출량 = tCO2 / 순바닥면적 * 1000;
-                __data[147].Add(new { idx = i, val = 탄소배출량.ToString("#,##0") });
+                __data[147].Add(new { idx = i, val = 탄소배출량.ToString("0.00") });
                 __data[148].Add(new { idx = i, val = 순바닥면적.ToString("0.00") });
 
                 __data[149].Add(new { idx = i, val = 난방소.ToString("0.00") });
@@ -1109,11 +1109,11 @@ namespace main.contents.Result.Building_Report
                 List<object> 기저소요량chart = new List<object>();
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    난방소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(난방[mth].ToString())), 3) + 0);
-                    냉방소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(냉방[mth].ToString())), 3) + 0);
-                    급탕소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(급탕[mth].ToString())), 3) + 0);
-                    조명소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(조명[mth].ToString())), 3) + 0);
-                    공조소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(공조[mth].ToString())), 3) + 0);
+                    난방소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(난방[mth].ToString())), 0) + 0);
+                    냉방소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(냉방[mth].ToString())), 0) + 0);
+                    급탕소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(급탕[mth].ToString())), 0) + 0);
+                    조명소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(조명[mth].ToString())), 0) + 0);
+                    공조소요량chart.Add(Math.Round(double.Parse(Program.UTIL.asFixed(공조[mth].ToString())), 0) + 0);
                 }
                 chart_난방소요량.Add(System.Text.Json.JsonSerializer.Serialize(난방소요량chart.ToArray()));
                 chart_냉방소요량.Add(System.Text.Json.JsonSerializer.Serialize(냉방소요량chart.ToArray()));
@@ -1144,7 +1144,7 @@ namespace main.contents.Result.Building_Report
                 "{type:\"bar\",barPercentage:0.4,label:\"조명 에너지소요량 [kWh]\",data:" + chart_조명소요량[i] + ",borderColor:\"#FFD966\",backgroundColor:\"#FFD966\",dash:false}," +
                 "{type:\"bar\",barPercentage:0.4,label:\"난방 에너지소요량 [kWh]\",data:" + chart_난방소요량[i] + ",borderColor:\"#F4B183\",backgroundColor:\"#F4B183\",dash:false}," +
                 "{type:\"bar\",barPercentage:0.4,label:\"냉방 에너지소요량 [kWh]\",data:" + chart_냉방소요량[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
-                "],max:" + (Math.Round(max / 1000) * 1000 + 500).ToString() + ",step:100,legend:true,stacked:true}";
+                "],max:" + (Math.Round(max / 1000) * 1000 + 500).ToString("0") + ",step:100,legend:true,stacked:true}";
                 runScript("init(" + s + "," + s2 + "," + "[" + charts + "])");
              }
         }
