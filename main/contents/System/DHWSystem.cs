@@ -1697,6 +1697,7 @@ namespace main.contents
                 }
                 double Volume = Max * 3.6 / (dtheta * 4.18);
                 Pump_dataGridView.Rows[nRow].Cells[6].Value = Volume.ToString();
+                Pump_dataGridView.Rows[nRow].Cells[7].Value = Pump1Head.ToString();
                 Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 4, 1);
                 Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 5, 1);
                 Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 6, 1);

@@ -340,7 +340,7 @@ namespace main.contents
                                 Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,프로젝트유형,난방시스템,공급설비종류,공급설비",
                                  "'" + zone[aa][0] + "','" + 프로젝트유형[0][0] + "','"
                                  + Num + "','CAV유닛','"
-                                + 공급설비일람표[0][0] + "_1'", "존번호,프로젝트유형,난방시스템,공급설비종류");
+                                + 공급설비일람표[0][0] + "_1'", "존번호,난방시스템,공급설비종류,공급설비");
                             }
                         }
 
@@ -350,6 +350,7 @@ namespace main.contents
             }
 
             Load_ce("CAV유닛");
+            ce_Image("CAV유닛", "신규");
         }
         #endregion
 
@@ -3131,6 +3132,18 @@ namespace main.contents
                     ce2_pictureBox.BackColor = Color.Transparent;
                     ce2_pictureBox.Parent = DistpictureBox;
                 }
+                else
+                {
+                    ce1Type = "CAV유닛";
+                    ce1_pictureBox.Visible = true;
+                    ce1_pictureBox.Size = new System.Drawing.Size(260, 60);
+                    ce1_pictureBox.Location = new Point(250, 10);
+                    ce1_pictureBox.Load(Program.gPath + image[0][0]);
+                    ce1_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    ce1_pictureBox.BackColor = Color.Transparent;
+                    ce1_pictureBox.Parent = DistpictureBox;
+
+                }
             }
 
         }
@@ -3723,24 +3736,6 @@ namespace main.contents
                             ce_dataGridView.Rows[n].Cells[7].Value = CE_Value[0][0].ToString();
                             ce_dataGridView.Rows[n].Cells[8].Value = CE_Value[0][1].ToString();
                         }
-                    }
-                }
-            }
-            if (SelectAHU_nonsplit != null)
-            {
-                Load_ce("CAV유닛");
-                for (int n = 0; n < ce_dataGridView.Rows.Count; n++)
-                {
-                    String 존번호, 공급설비;
-                    int index = ce_dataGridView.Rows[n].Cells[1].Value.ToString().IndexOf("CE");
-                    존번호 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(0, index - 1);
-                    공급설비 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(index, ce_dataGridView.Rows[n].Cells[1].Value.ToString().Length - index);
-
-                    string[][] CE_Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "설치위치,가동시간", "난방시스템 = '" + ID + "' And 존번호 = '" + 존번호 + "' And 공급설비 = '" + 공급설비 + "'");
-                    if (CE_Value.Length > 0)
-                    {
-                        ce_dataGridView.Rows[n].Cells[7].Value = CE_Value[0][0].ToString();
-                        ce_dataGridView.Rows[n].Cells[8].Value = CE_Value[0][1].ToString();
                     }
                 }
             }

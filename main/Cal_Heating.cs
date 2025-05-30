@@ -231,6 +231,13 @@ namespace main
             }
             if (Value_ce.Length > 0)
             {
+                for (int n = 0; n < Value_ce.Length; n++)
+                {
+                    if (!SelectZone_split.Contains(Value_ce[n][1]))
+                    {
+                        SelectZone_split.Add(Value_ce[n][1]);
+                    }
+                }
                 double[,] Qhb_mth = new double[Value_ce.Length, 12];
                 double[,] theta_ih = new double[Value_ce.Length, 12];
                 double[,] th = new double[Value_ce.Length, 12];
@@ -284,7 +291,7 @@ namespace main
                     if (Now_Check == true)
                     {
                         zone = Program.CALC.getZone(SelectZone_split[k].ToString());
-                        string[][] value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "선택열회수기", "존번호='" + zone.zoneName+"'");
+                        string[][] value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "선택열회수기", "존번호='" + zone.ZoneNum+"'");
                         if (value.Length > 0  && value[0][0]!="")
                         {
                             AHU ahu = Program.CALC.getAHU(value[0][0]);
@@ -304,7 +311,7 @@ namespace main
                                     if (split[m].ToString() == SelectZone_split[k].ToString())
                                     {
                                         zone = Program.CALC.getZone(PostZone[j][0]);
-                                        string[][] value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "선택열회수기", "존번호='" + zone.zoneName + "'");
+                                        string[][] value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "선택열회수기", "존번호='" + zone.ZoneNum + "'");
                                         if (value.Length > 0 && value[0][0] != "")
                                         {
                                             AHU ahu = Program.CALC.getAHU(value[0][0]);
