@@ -861,8 +861,8 @@ namespace main
 
         public void Cal_S_Z()
         {
-            string[][] value = Program.DB.getValue(DB.type.BaseDB_Cooling, "저장제어운영계수", "이용계수", " 항목= '" + Sto_Tank + "' And 종류 = '" + Sto_Type + "'");
-
+            string[][] value = Program.DB.getValue_SameCheck(DB.type.BaseDB_Cooling, "저장제어운영계수", "이용계수", " 항목= '" + Sto_Tank + "' And 종류 = '" + Sto_Type + "'");
+            
             if (value.Length > 0)
             {
                 nc_s = Convert.ToDouble(value[0][0]);
@@ -1032,11 +1032,11 @@ namespace main
                     string[][] v2;
                     if (Now_Check == true)
                     {
-                        v2 = Program.DB.querySQL(DB.type.ProjDB, "Select a.부하율, b.존번호 From Cooling_ce_Form as a Inner Join ZoneGeneral_Form as b on a.존번호=b.존번호 Where b.선택열회수기 = '" + ahu.AHUNum + "' AND a.냉방시스템 = '" + CoolingNum + "' and (a.공급설비종류='CAV유닛' or a.공급설비종류='VAV유닛') ");
+                        v2 = Program.DB.querySQL(DB.type.ProjDB, "Select a.부하율, b.존번호 From Cooling_ce_Form as a Inner Join ZoneGeneral_Form as b on a.존번호=b.존번호 Where b.선택열회수기 = '" + ahu.AHUNum + "' AND a.냉방시스템 = '" + CoolingNum + "' and (a.공급설비종류='CAV유닛' or a.공급설비종류='VAV유닛' or a.공급설비종류='파워팬유닛') ");
                     }
                     else
                     {
-                        v2 = Program.DB.querySQL(DB.type.ProjDB, "Select a.부하율, b.존번호 From Cooling_ce_Form_Element as a Inner Join ZoneGeneral_Form as b on a.존번호=b.존번호 Where b.선택열회수기 = '" + ahu.AHUNum + "' AND 냉방시스템 = '" + CoolingNum + "' and (a.공급설비종류='CAV유닛' or a.공급설비종류='VAV유닛') ");
+                        v2 = Program.DB.querySQL(DB.type.ProjDB, "Select a.부하율, b.존번호 From Cooling_ce_Form_Element as a Inner Join ZoneGeneral_Form as b on a.존번호=b.존번호 Where b.선택열회수기 = '" + ahu.AHUNum + "' AND 냉방시스템 = '" + CoolingNum + "' and (a.공급설비종류='CAV유닛' or a.공급설비종류='VAV유닛' or a.공급설비종류='파워팬유닛') ");
                     }
 
                     for (int k = 0; k < v2.Length; k++)
@@ -1097,60 +1097,82 @@ namespace main
             }
             else
             {
-                int x0 = 0, x1 = 0;
-                double t0 = 0, t1 = 0, y0 = 0, y1 = 0, u0 = 0, u1 = 0;
-                
                 if (CWout <= 6)
                 {
-                    x0 = 6;
-                    x1 = 6;
-          
+                    string[][] value = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce,nc_d", " 공급온도 = '6' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
+                    nc_ce_sens = Convert.ToDouble(value[0][0]);
+                    nc_ce = Convert.ToDouble(value[0][1]);
+                    nc_d = Convert.ToDouble(value[0][2]);
                 }
                 else if (CWout <= 14)
                 {
+                    string[][] value1 = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce,nc_d", " 공급온도 = '6' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
+                    string[][] value2 = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce,nc_d", " 공급온도 = '14' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
+
+                    double x0, x1, x, y0, y1;
                     x0 = 6;
                     x1 = 14;
+                    y0 = Convert.ToDouble(value1[0][0].ToString());
+                    y1 = Convert.ToDouble(value2[0][0].ToString());
+                    nc_ce_sens = y0 + (y1 -y0)*(CWout-x0) / (x1 - x0);
+                    y0 = Convert.ToDouble(value1[0][1].ToString());
+                    y1 = Convert.ToDouble(value2[0][1].ToString());
+                    nc_ce = y0 + (y1 - y0) * (CWout - x0) / (x1 - x0);
+                    y0 = Convert.ToDouble(value1[0][2].ToString());
+                    y1 = Convert.ToDouble(value2[0][2].ToString());
+                    nc_d = y0 + (y1 - y0) * (CWout - x0) / (x1 - x0);
                 }
                 else if (CWout <= 16)
                 {
+                    string[][] value1 = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce,nc_d", " 공급온도 = '14' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
+                    string[][] value2 = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce,nc_d", " 공급온도 = '16' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
+
+                    double x0, x1, x, y0, y1;
                     x0 = 14;
                     x1 = 16;
+                    y0 = Convert.ToDouble(value1[0][0].ToString());
+                    y1 = Convert.ToDouble(value2[0][0].ToString());
+                    nc_ce_sens = y0 + (y1 - y0) * (CWout - x0) / (x1 - x0);
+                    y0 = Convert.ToDouble(value1[0][1].ToString());
+                    y1 = Convert.ToDouble(value2[0][1].ToString());
+                    nc_ce = y0 + (y1 - y0) * (CWout - x0) / (x1 - x0);
+                    y0 = Convert.ToDouble(value1[0][2].ToString());
+                    y1 = Convert.ToDouble(value2[0][2].ToString());
+                    nc_d = y0 + (y1 - y0) * (CWout - x0) / (x1 - x0);
+                }
+                else if (CWout <= 20)
+                {
+                    string[][] value1 = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce,nc_d", " 공급온도 = '16' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
+                    string[][] value2 = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce,nc_d", " 공급온도 = '20' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
+
+                    double x0, x1, x, y0, y1;
+                    x0 = 16;
+                    x1 = 20;
+                    y0 = Convert.ToDouble(value1[0][0].ToString());
+                    y1 = Convert.ToDouble(value2[0][0].ToString());
+                    nc_ce_sens = y0 + (y1 - y0) * (CWout - x0) / (x1 - x0);
+                    y0 = Convert.ToDouble(value1[0][1].ToString());
+                    y1 = Convert.ToDouble(value2[0][1].ToString());
+                    nc_ce = y0 + (y1 - y0) * (CWout - x0) / (x1 - x0);
+                    y0 = Convert.ToDouble(value1[0][2].ToString());
+                    y1 = Convert.ToDouble(value2[0][2].ToString());
+                    nc_d = y0 + (y1 - y0) * (CWout - x0) / (x1 - x0);
                 }
                 else
                 {
-                    x0 = 20;
-                    x1 = 20;
+                    nc_ce_sens = 1;
+                    nc_ce = 1;
+                    nc_d = 1;
                 }
-                t0 = ced_valuefind(x0, Install_ahu)[0];
-                y0 = ced_valuefind(x0, Install_ahu)[1];
-                u0 = ced_valuefind(x0, Install_ahu)[2];
-                t1 = ced_valuefind(x1, Install_ahu)[0];
-                y1 = ced_valuefind(x1, Install_ahu)[1];
-                u1 = ced_valuefind(x1, Install_ahu)[2];
-                
-                nc_ce_sens = t0 + (t1 - t0) / (x1 - x0) * (CWout - x0);
-                nc_ce = y0 + (y1 - y0) / (x1 - x0) * (CWout - x0);
-                nc_d = u0 + (u1 - u0) / (x1 - x0) * (CWout - x0);
             }
-            
+
             for (int i = 0; i < 12; i++)
             {
                 QC_ce_ahu[i] = ((1 - nc_ce_sens) + (1 - nc_ce)) * QC_nd_ahu[i];
                 QC_d_ahu[i] = (1 - nc_d) * QC_nd_ahu[i];
             }
-
         }
-        public double[] ced_valuefind(int 공급온도, string _install)
-        {
-            
-            double[] ced = new double[3];
-            string[][] value = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce,nc_d", " 공급온도 = '" + 공급온도 + "' And AHU설치위치 = '" + _install + "' And 공급유형 = 'AHU'");
-            ced[0] = Convert.ToDouble(value[0][0]);
-            ced[1] = Convert.ToDouble(value[0][1]);
-            ced[2] = Convert.ToDouble(value[0][2]);
-            return ced;
-        }
-
+        
         public void Cal_S_Ahu()//완료
         {
             string check;
