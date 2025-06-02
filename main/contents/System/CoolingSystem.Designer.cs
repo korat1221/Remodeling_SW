@@ -106,26 +106,16 @@ namespace main.contents
             label13 = new Label();
             Pump1_label = new Label();
             tabPage4 = new TabPage();
-            ce2Ahu_textBox = new TextBox();
-            ce2Ahu_button = new Button();
-            ce2AhuText2 = new Label();
-            ce2AhuText = new Label();
-            ce2Ahu_comboBox = new CustomComboBox();
-            ce1Ahu_textBox = new TextBox();
-            ce1Ahu_button = new Button();
-            ce1AhuText2 = new Label();
-            ce1AhuText = new Label();
-            ce1Ahu_comboBox = new CustomComboBox();
             ce_Remove_button = new Button();
             ce_dataGridView = new DataGridView();
-            ce2Zone_textBox = new TextBox();
-            ce2Zone_button = new Button();
-            ce2ZoneText = new Label();
+            ce2Text = new TextBox();
+            ce2Button = new Button();
+            ce2Label = new Label();
             label15 = new Label();
             ce2Type_comboBox = new CustomComboBox();
-            ce1Zone_textBox = new TextBox();
-            ce1Zone_button = new Button();
-            ce1ZoneText = new Label();
+            ce1Text = new TextBox();
+            ce1Button = new Button();
+            ce1Label = new Label();
             label17 = new Label();
             ce1Type_comboBox = new CustomComboBox();
             ZoneS_label = new Label();
@@ -1122,26 +1112,16 @@ namespace main.contents
             // tabPage4
             // 
             tabPage4.BackColor = Color.White;
-            tabPage4.Controls.Add(ce2Ahu_textBox);
-            tabPage4.Controls.Add(ce2Ahu_button);
-            tabPage4.Controls.Add(ce2AhuText2);
-            tabPage4.Controls.Add(ce2AhuText);
-            tabPage4.Controls.Add(ce2Ahu_comboBox);
-            tabPage4.Controls.Add(ce1Ahu_textBox);
-            tabPage4.Controls.Add(ce1Ahu_button);
-            tabPage4.Controls.Add(ce1AhuText2);
-            tabPage4.Controls.Add(ce1AhuText);
-            tabPage4.Controls.Add(ce1Ahu_comboBox);
             tabPage4.Controls.Add(ce_Remove_button);
             tabPage4.Controls.Add(ce_dataGridView);
-            tabPage4.Controls.Add(ce2Zone_textBox);
-            tabPage4.Controls.Add(ce2Zone_button);
-            tabPage4.Controls.Add(ce2ZoneText);
+            tabPage4.Controls.Add(ce2Text);
+            tabPage4.Controls.Add(ce2Button);
+            tabPage4.Controls.Add(ce2Label);
             tabPage4.Controls.Add(label15);
             tabPage4.Controls.Add(ce2Type_comboBox);
-            tabPage4.Controls.Add(ce1Zone_textBox);
-            tabPage4.Controls.Add(ce1Zone_button);
-            tabPage4.Controls.Add(ce1ZoneText);
+            tabPage4.Controls.Add(ce1Text);
+            tabPage4.Controls.Add(ce1Button);
+            tabPage4.Controls.Add(ce1Label);
             tabPage4.Controls.Add(label17);
             tabPage4.Controls.Add(ce1Type_comboBox);
             tabPage4.Location = new Point(4, 25);
@@ -1150,132 +1130,6 @@ namespace main.contents
             tabPage4.Size = new Size(992, 275);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "공급";
-            // 
-            // ce2Ahu_textBox
-            // 
-            ce2Ahu_textBox.BackColor = Color.White;
-            ce2Ahu_textBox.BorderStyle = BorderStyle.None;
-            ce2Ahu_textBox.Enabled = false;
-            ce2Ahu_textBox.Font = new Font("나눔바른고딕", 9.75F);
-            ce2Ahu_textBox.ForeColor = SystemColors.ControlDark;
-            ce2Ahu_textBox.Location = new Point(737, 34);
-            ce2Ahu_textBox.Name = "ce2Ahu_textBox";
-            ce2Ahu_textBox.Size = new Size(120, 15);
-            ce2Ahu_textBox.TabIndex = 216;
-            ce2Ahu_textBox.TextAlign = HorizontalAlignment.Center;
-            ce2Ahu_textBox.Visible = false;
-            // 
-            // ce2Ahu_button
-            // 
-            ce2Ahu_button.BackColor = SystemColors.ControlLight;
-            ce2Ahu_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            ce2Ahu_button.FlatStyle = FlatStyle.System;
-            ce2Ahu_button.Font = new Font("나눔바른고딕", 12F, FontStyle.Bold);
-            ce2Ahu_button.Location = new Point(859, 30);
-            ce2Ahu_button.Margin = new Padding(0);
-            ce2Ahu_button.Name = "ce2Ahu_button";
-            ce2Ahu_button.Size = new Size(23, 23);
-            ce2Ahu_button.TabIndex = 215;
-            ce2Ahu_button.Text = "+";
-            ce2Ahu_button.UseVisualStyleBackColor = false;
-            ce2Ahu_button.Visible = false;
-            ce2Ahu_button.Click += ce2Ahu_button_Click;
-            // 
-            // ce2AhuText2
-            // 
-            ce2AhuText2.AutoSize = true;
-            ce2AhuText2.Font = new Font("나눔바른고딕", 9.75F);
-            ce2AhuText2.Location = new Point(679, 34);
-            ce2AhuText2.Name = "ce2AhuText2";
-            ce2AhuText2.Size = new Size(60, 15);
-            ce2AhuText2.TabIndex = 214;
-            ce2AhuText2.Text = "공급 AHU";
-            ce2AhuText2.Visible = false;
-            // 
-            // ce2AhuText
-            // 
-            ce2AhuText.AutoSize = true;
-            ce2AhuText.Font = new Font("나눔바른고딕", 9.75F);
-            ce2AhuText.Location = new Point(461, 34);
-            ce2AhuText.Name = "ce2AhuText";
-            ce2AhuText.Size = new Size(94, 15);
-            ce2AhuText.TabIndex = 213;
-            ce2AhuText.Text = "공조기공급 종류";
-            ce2AhuText.Visible = false;
-            // 
-            // ce2Ahu_comboBox
-            // 
-            ce2Ahu_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            ce2Ahu_comboBox.Font = new Font("나눔바른고딕", 9.75F);
-            ce2Ahu_comboBox.FormattingEnabled = true;
-            ce2Ahu_comboBox.Location = new Point(558, 30);
-            ce2Ahu_comboBox.Name = "ce2Ahu_comboBox";
-            ce2Ahu_comboBox.Size = new Size(120, 23);
-            ce2Ahu_comboBox.TabIndex = 212;
-            ce2Ahu_comboBox.Visible = false;
-            // 
-            // ce1Ahu_textBox
-            // 
-            ce1Ahu_textBox.BackColor = Color.White;
-            ce1Ahu_textBox.BorderStyle = BorderStyle.None;
-            ce1Ahu_textBox.Enabled = false;
-            ce1Ahu_textBox.Font = new Font("나눔바른고딕", 9.75F);
-            ce1Ahu_textBox.ForeColor = SystemColors.ControlDark;
-            ce1Ahu_textBox.Location = new Point(737, 10);
-            ce1Ahu_textBox.Name = "ce1Ahu_textBox";
-            ce1Ahu_textBox.Size = new Size(120, 15);
-            ce1Ahu_textBox.TabIndex = 211;
-            ce1Ahu_textBox.TextAlign = HorizontalAlignment.Center;
-            ce1Ahu_textBox.Visible = false;
-            // 
-            // ce1Ahu_button
-            // 
-            ce1Ahu_button.BackColor = SystemColors.ControlLight;
-            ce1Ahu_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            ce1Ahu_button.FlatStyle = FlatStyle.System;
-            ce1Ahu_button.Font = new Font("나눔바른고딕", 12F, FontStyle.Bold);
-            ce1Ahu_button.Location = new Point(859, 6);
-            ce1Ahu_button.Margin = new Padding(0);
-            ce1Ahu_button.Name = "ce1Ahu_button";
-            ce1Ahu_button.Size = new Size(23, 23);
-            ce1Ahu_button.TabIndex = 210;
-            ce1Ahu_button.Text = "+";
-            ce1Ahu_button.UseVisualStyleBackColor = false;
-            ce1Ahu_button.Visible = false;
-            ce1Ahu_button.Click += ce1Ahu_button_Click;
-            // 
-            // ce1AhuText2
-            // 
-            ce1AhuText2.AutoSize = true;
-            ce1AhuText2.Font = new Font("나눔바른고딕", 9.75F);
-            ce1AhuText2.Location = new Point(679, 10);
-            ce1AhuText2.Name = "ce1AhuText2";
-            ce1AhuText2.Size = new Size(60, 15);
-            ce1AhuText2.TabIndex = 209;
-            ce1AhuText2.Text = "공급 AHU";
-            ce1AhuText2.Visible = false;
-            // 
-            // ce1AhuText
-            // 
-            ce1AhuText.AutoSize = true;
-            ce1AhuText.Font = new Font("나눔바른고딕", 9.75F);
-            ce1AhuText.Location = new Point(461, 10);
-            ce1AhuText.Name = "ce1AhuText";
-            ce1AhuText.Size = new Size(94, 15);
-            ce1AhuText.TabIndex = 208;
-            ce1AhuText.Text = "공조기공급 종류";
-            ce1AhuText.Visible = false;
-            // 
-            // ce1Ahu_comboBox
-            // 
-            ce1Ahu_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            ce1Ahu_comboBox.Font = new Font("나눔바른고딕", 9.75F);
-            ce1Ahu_comboBox.FormattingEnabled = true;
-            ce1Ahu_comboBox.Location = new Point(558, 5);
-            ce1Ahu_comboBox.Name = "ce1Ahu_comboBox";
-            ce1Ahu_comboBox.Size = new Size(120, 23);
-            ce1Ahu_comboBox.TabIndex = 207;
-            ce1Ahu_comboBox.Visible = false;
             // 
             // ce_Remove_button
             // 
@@ -1335,49 +1189,48 @@ namespace main.contents
             ce_dataGridView.TabIndex = 205;
             ce_dataGridView.CellContentClick += ce_dataGridView_CellContentClick;
             // 
-            // ce2Zone_textBox
+            // ce2Text
             // 
-            ce2Zone_textBox.BackColor = Color.White;
-            ce2Zone_textBox.BorderStyle = BorderStyle.None;
-            ce2Zone_textBox.Enabled = false;
-            ce2Zone_textBox.Font = new Font("나눔바른고딕", 9.75F);
-            ce2Zone_textBox.ForeColor = SystemColors.ControlDark;
-            ce2Zone_textBox.Location = new Point(310, 36);
-            ce2Zone_textBox.Name = "ce2Zone_textBox";
-            ce2Zone_textBox.Size = new Size(120, 15);
-            ce2Zone_textBox.TabIndex = 204;
-            ce2Zone_textBox.TextAlign = HorizontalAlignment.Center;
+            ce2Text.BackColor = Color.White;
+            ce2Text.BorderStyle = BorderStyle.None;
+            ce2Text.Enabled = false;
+            ce2Text.Font = new Font("나눔바른고딕", 9.75F);
+            ce2Text.ForeColor = SystemColors.ControlDark;
+            ce2Text.Location = new Point(351, 34);
+            ce2Text.Name = "ce2Text";
+            ce2Text.Size = new Size(160, 15);
+            ce2Text.TabIndex = 204;
             // 
-            // ce2Zone_button
+            // ce2Button
             // 
-            ce2Zone_button.BackColor = SystemColors.ControlLight;
-            ce2Zone_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            ce2Zone_button.FlatStyle = FlatStyle.System;
-            ce2Zone_button.Font = new Font("나눔바른고딕", 12F, FontStyle.Bold);
-            ce2Zone_button.Location = new Point(432, 32);
-            ce2Zone_button.Margin = new Padding(0);
-            ce2Zone_button.Name = "ce2Zone_button";
-            ce2Zone_button.Size = new Size(23, 23);
-            ce2Zone_button.TabIndex = 203;
-            ce2Zone_button.Text = "+";
-            ce2Zone_button.UseVisualStyleBackColor = false;
-            ce2Zone_button.Click += ce2Zone_button_Click;
+            ce2Button.BackColor = SystemColors.ControlLight;
+            ce2Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            ce2Button.FlatStyle = FlatStyle.System;
+            ce2Button.Font = new Font("나눔바른고딕", 12F, FontStyle.Bold);
+            ce2Button.Location = new Point(325, 30);
+            ce2Button.Margin = new Padding(0);
+            ce2Button.Name = "ce2Button";
+            ce2Button.Size = new Size(23, 23);
+            ce2Button.TabIndex = 203;
+            ce2Button.Text = "+";
+            ce2Button.UseVisualStyleBackColor = false;
+            ce2Button.Click += ce2Button_Click;
             // 
-            // ce2ZoneText
+            // ce2Label
             // 
-            ce2ZoneText.AutoSize = true;
-            ce2ZoneText.Font = new Font("나눔바른고딕", 9.75F);
-            ce2ZoneText.Location = new Point(257, 36);
-            ce2ZoneText.Name = "ce2ZoneText";
-            ce2ZoneText.Size = new Size(46, 15);
-            ce2ZoneText.TabIndex = 202;
-            ce2ZoneText.Text = "공급 존";
+            ce2Label.AutoSize = true;
+            ce2Label.Font = new Font("나눔바른고딕", 9.75F);
+            ce2Label.Location = new Point(260, 34);
+            ce2Label.Name = "ce2Label";
+            ce2Label.Size = new Size(46, 15);
+            ce2Label.TabIndex = 202;
+            ce2Label.Text = "공급 존";
             // 
             // label15
             // 
             label15.AutoSize = true;
             label15.Font = new Font("나눔바른고딕", 9.75F);
-            label15.Location = new Point(35, 36);
+            label15.Location = new Point(35, 34);
             label15.Name = "label15";
             label15.Size = new Size(90, 15);
             label15.TabIndex = 201;
@@ -1388,49 +1241,49 @@ namespace main.contents
             ce2Type_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             ce2Type_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             ce2Type_comboBox.FormattingEnabled = true;
-            ce2Type_comboBox.Location = new Point(131, 31);
+            ce2Type_comboBox.Location = new Point(131, 30);
             ce2Type_comboBox.Name = "ce2Type_comboBox";
             ce2Type_comboBox.Size = new Size(120, 23);
             ce2Type_comboBox.TabIndex = 200;
+            ce2Type_comboBox.DropDown += ce2Type_comboBox_DropDown;
             ce2Type_comboBox.SelectedIndexChanged += ce2Type_comboBox_SelectedIndexChanged;
             // 
-            // ce1Zone_textBox
+            // ce1Text
             // 
-            ce1Zone_textBox.BackColor = Color.White;
-            ce1Zone_textBox.BorderStyle = BorderStyle.None;
-            ce1Zone_textBox.Enabled = false;
-            ce1Zone_textBox.Font = new Font("나눔바른고딕", 9.75F);
-            ce1Zone_textBox.ForeColor = SystemColors.ControlDark;
-            ce1Zone_textBox.Location = new Point(310, 10);
-            ce1Zone_textBox.Name = "ce1Zone_textBox";
-            ce1Zone_textBox.Size = new Size(120, 15);
-            ce1Zone_textBox.TabIndex = 199;
-            ce1Zone_textBox.TextAlign = HorizontalAlignment.Center;
+            ce1Text.BackColor = Color.White;
+            ce1Text.BorderStyle = BorderStyle.None;
+            ce1Text.Enabled = false;
+            ce1Text.Font = new Font("나눔바른고딕", 9.75F);
+            ce1Text.ForeColor = SystemColors.ControlDark;
+            ce1Text.Location = new Point(351, 10);
+            ce1Text.Name = "ce1Text";
+            ce1Text.Size = new Size(160, 15);
+            ce1Text.TabIndex = 199;
             // 
-            // ce1Zone_button
+            // ce1Button
             // 
-            ce1Zone_button.BackColor = SystemColors.ControlLight;
-            ce1Zone_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            ce1Zone_button.FlatStyle = FlatStyle.System;
-            ce1Zone_button.Font = new Font("나눔바른고딕", 12F, FontStyle.Bold);
-            ce1Zone_button.Location = new Point(432, 6);
-            ce1Zone_button.Margin = new Padding(0);
-            ce1Zone_button.Name = "ce1Zone_button";
-            ce1Zone_button.Size = new Size(23, 23);
-            ce1Zone_button.TabIndex = 198;
-            ce1Zone_button.Text = "+";
-            ce1Zone_button.UseVisualStyleBackColor = false;
-            ce1Zone_button.Click += ce1Zone_button_Click;
+            ce1Button.BackColor = SystemColors.ControlLight;
+            ce1Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            ce1Button.FlatStyle = FlatStyle.System;
+            ce1Button.Font = new Font("나눔바른고딕", 12F, FontStyle.Bold);
+            ce1Button.Location = new Point(325, 6);
+            ce1Button.Margin = new Padding(0);
+            ce1Button.Name = "ce1Button";
+            ce1Button.Size = new Size(23, 23);
+            ce1Button.TabIndex = 198;
+            ce1Button.Text = "+";
+            ce1Button.UseVisualStyleBackColor = false;
+            ce1Button.Click += ce1Button_Click;
             // 
-            // ce1ZoneText
+            // ce1Label
             // 
-            ce1ZoneText.AutoSize = true;
-            ce1ZoneText.Font = new Font("나눔바른고딕", 9.75F);
-            ce1ZoneText.Location = new Point(257, 10);
-            ce1ZoneText.Name = "ce1ZoneText";
-            ce1ZoneText.Size = new Size(46, 15);
-            ce1ZoneText.TabIndex = 197;
-            ce1ZoneText.Text = "공급 존";
+            ce1Label.AutoSize = true;
+            ce1Label.Font = new Font("나눔바른고딕", 9.75F);
+            ce1Label.Location = new Point(260, 10);
+            ce1Label.Name = "ce1Label";
+            ce1Label.Size = new Size(60, 15);
+            ce1Label.TabIndex = 197;
+            ce1Label.Text = "공급 AHU";
             // 
             // label17
             // 
@@ -1447,10 +1300,11 @@ namespace main.contents
             ce1Type_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             ce1Type_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             ce1Type_comboBox.FormattingEnabled = true;
-            ce1Type_comboBox.Location = new Point(131, 5);
+            ce1Type_comboBox.Location = new Point(131, 6);
             ce1Type_comboBox.Name = "ce1Type_comboBox";
             ce1Type_comboBox.Size = new Size(120, 23);
             ce1Type_comboBox.TabIndex = 195;
+            ce1Type_comboBox.DropDown += ce1Type_comboBox_DropDown;
             ce1Type_comboBox.SelectedIndexChanged += ce1Type_comboBox_SelectedIndexChanged;
             // 
             // ZoneS_label
@@ -2305,24 +2159,19 @@ namespace main.contents
         private Label label13;
         private Button ce_Remove_button;
         private DataGridView ce_dataGridView;
-        private TextBox ce2Zone_textBox;
-        private Button ce2Zone_button;
-        private Label ce2ZoneText;
+        private TextBox ce2Text;
+        private Button ce2Button;
+        private Label ce2Label;
         private Label label15;
         private CustomComboBox ce2Type_comboBox;
-        private TextBox ce1Zone_textBox;
-        private Button ce1Zone_button;
-        private Label ce1ZoneText;
+        private TextBox ce1Text;
+        private Button ce1Button;
+        private Label ce1Label;
         private Label label17;
         private CustomComboBox ce1Type_comboBox;
         private PictureBox ce1_pictureBox;
         private PictureBox ce3_pictureBox;
         private PictureBox ce2_pictureBox;
-        private TextBox ce1Ahu_textBox;
-        private Button ce1Ahu_button;
-        private Label ce1AhuText2;
-        private Label ce1AhuText;
-        private CustomComboBox ce1Ahu_comboBox;
         private Label G_label;
         private PictureBox Pump_pictureBox;
         private PictureBox eva;
@@ -2344,11 +2193,6 @@ namespace main.contents
         private TabPage SoilCooler_tabPage;
         private TabPage SoilWaterCooler_tabPage;
         private Label AhuS_label;
-        private TextBox ce2Ahu_textBox;
-        private Button ce2Ahu_button;
-        private Label ce2AhuText2;
-        private Label ce2AhuText;
-        private CustomComboBox ce2Ahu_comboBox;
         private Button pump_removeBuutton;
         private Panel panel7;
         private Panel panel5;

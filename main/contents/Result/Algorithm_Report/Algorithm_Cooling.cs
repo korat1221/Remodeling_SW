@@ -1,5 +1,6 @@
 ﻿using Microsoft.Web.WebView2.Core;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 namespace main.contents.Result
 {
@@ -75,6 +76,8 @@ namespace main.contents.Result
             List<string> chart_d = new List<string>();
             List<string> chart_s = new List<string>();
             List<string> chart_f = new List<string>();
+
+            List<object>[] AuxData = new List<object>[30];
             int i = -1;
             while (++i < 30)
             {
@@ -83,6 +86,7 @@ namespace main.contents.Result
                 ZahuData[i] = new List<object>();
                 SourceData[i] = new List<object>();
                 AnnualData[i] = new List<object>();
+                AuxData[i] = new List<object>();
             }
             i = -1;
             while (++i < 100)
@@ -138,6 +142,7 @@ namespace main.contents.Result
                     ZoneData[3].Add(new { idx = i, val = Value[0][3] });
                     ZoneData[4].Add(new { idx = i, val = Value[0][4] });
                     ZoneData[5].Add(new { idx = i, val = Num+ ". 냉방 에너지소요량 검토 보고서" }); //title
+                   
                     //면적 및 zone 개수 배열 작성
                 }
 
@@ -164,9 +169,13 @@ namespace main.contents.Result
                     ZahuData[3].Add(new { idx = i, val = "-" });
                     ZahuData[4].Add(new { idx = i, val = "-" });
                 }
-                List<string> zonelist = new List<string>();
-                List<string> zahulist = new List<string>();
-                double totArea = 0;
+                
+                //존면적 계산하기                
+                List<string> zonelist = new List<string>(); //존리스트
+                List<string> zahulist = new List<string>(); //공조기리스트
+                List<string> zoneAhulist = new List<string>(); //공조기있는 존리스트
+                List<string> totallist = new List<string>();
+                double zoneArea=0, zahuArea=0, totalArea = 0;
                 string[][] checkarea = Program.DB.querySQL(DB.type.ProjDB, "Select 공급존, 공급AHU, 냉수펌프1, 냉수펌프2 From CoolingSystem_Form Where 번호='" + Num + "'");
                 if (checkarea.Length > 0)
                 {
@@ -179,19 +188,150 @@ namespace main.contents.Result
                         Split(checkarea[0][1], zahulist);
                     }
                 }
-                //공조결과값에서 존을 찾기
-                if(zahulist.Count > 0)
-                {
-                    string[][] zonecheck = Program.DB.querySQL(DB.type.ProjDB, "Select 공급존, 공급AHU, 냉수펌프1, 냉수펌프2 From CoolingSystem_Form Where 번호='" + Num + "'");
-                }
                 
+                //1.냉방존 면적 찾기
+                if(zonelist.Count > 0)
+                {
+                    foreach (string k in zonelist)
+                    {
+                        string[][] zonecheck = Program.DB.querySQL(DB.type.ProjDB, "Select 순바닥면적 From ZoneGeneral_Form Where 존번호 ='" + k + "'");
+                        zoneArea += Convert.ToDouble(zonecheck[0][0].ToString());
+                    }
+                    ZoneData[6].Add(new { idx = i, val = string.Format("{0:F2}", zoneArea) });
+                }
 
+                //2. 공조존 면적 찾기
+                if (zahulist.Count > 0)
+                {
+                    foreach (string k in zahulist)
+                    {
+                        string[][] zonecheck = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form","존번호,순바닥면적", "선택열회수기 = '" + k + "'");
+                        
+                        for(int g = 0; g < zonecheck.Length; g++)
+                        {
+                            zahuArea += Convert.ToDouble(zonecheck[g][1].ToString());
+                            zoneAhulist.Add(zonecheck[g][0]);
+                        }
+                        ZahuData[5].Add(new { idx = i, val = string.Format("{0:N2}", zahuArea) });
+                    }
+                }
+                //3. 총면적 찾기
+                if (zonelist.Count > 0)
+                {
+                    foreach (string g in zonelist)
+                    {
+                        totallist.Add(g);
+                    }
+                    //공조존이 있는경우
+                    if (zahulist.Count > 0)
+                    {
+                        foreach (string k in zoneAhulist)
+                        {
+                            totallist.Add(k);
+                        }
+                    }
+                }
+                else if (zahulist.Count > 0)
+                {
+                    foreach (string g in zoneAhulist)
+                    {
+                        totallist.Add(g);
+                    }
+                    //공조존이 있는경우
+                    if (zonelist.Count > 0)
+                    {
+                        foreach (string k in zonelist)
+                        {
+                            totallist.Add(k);
+                        }
+                    }
+                }
 
+                HashSet<string> uniquelist = new HashSet<string>(totallist); //중복되는 존 명칭 제거
+                foreach (string k in uniquelist)
+                {
+                    string[][] zonecheck = Program.DB.querySQL(DB.type.ProjDB, "Select 순바닥면적 From ZoneGeneral_Form Where 존번호 ='" + k + "'");
+                    totalArea += Convert.ToDouble(zonecheck[0][0].ToString());
+                }
 
+                //보조설비 항목 작성
+                List<string> pump1 = new List<string>();
+                List<string> pump2 = new List<string>();
+                List<string> sourcepump1 = new List<string>();
+                List<string> sourcepump2 = new List<string>();
 
-
-
-
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select 저장탱크, 저장유형,냉수펌프1,냉수펌프2,냉각수펌프1,냉각수펌프2 From CoolingSystem_Form Where 번호='" + Num + "'");
+                if (Value.Length > 0)
+                {
+                    for(int check =0; check<6 ; check++)
+                    {
+                        if (Value[0][check]!=""&& Value[0][check] != "")
+                        {
+                            switch (check)
+                            {
+                                case 0:
+                                    AuxData[0].Add(new { idx = i, val = Value[0][0] }); // 축열탱크종류
+                                    break;
+                                case 1:
+                                    AuxData[1].Add(new { idx = i, val = Value[0][1] }); //저장유형
+                                    break;
+                                case 2: //냉수펌프1, 제어유형
+                                    Split(Value[0][2], pump1);
+                                    if (pump1.Count > 0)
+                                    {
+                                        string[][] Value2 = Program.DB.querySQL(DB.type.ProjDB, "Select 동력 From  User_Pump Where 번호='" + pump1[0] + "'");
+                                        if (Value2.Length > 0)
+                                        {
+                                            double val = Convert.ToDouble(Value2[0][0].ToString()) * Convert.ToDouble(pump1[2].ToString());
+                                            AuxData[2].Add(new { idx = i, val = string.Format("{0:N2}", val)});
+                                        }
+                                        AuxData[4].Add(new { idx = i, val = pump1[4] });
+                                    }
+                                    break;
+                                case 3: //냉수펌프2
+                                    Split(Value[0][3], pump2);
+                                    if (pump2.Count > 0)
+                                    {
+                                        string[][] Value2 = Program.DB.querySQL(DB.type.ProjDB, "Select 동력 From  User_Pump Where 번호='" + pump2[0] + "'");
+                                        if (Value2.Length > 0)
+                                        {
+                                            double val = Convert.ToDouble(Value2[0][0].ToString()) * Convert.ToDouble(pump2[2].ToString());
+                                            AuxData[3].Add(new { idx = i, val = string.Format("{0:N2}", val) });
+                                        }
+                                    }
+                                    break;
+                                case 4: //냉각수펌프1, 제어유형
+                                    Split(Value[0][4], sourcepump1);
+                                    if (sourcepump1.Count > 0)
+                                    {
+                                        string[][] Value2 = Program.DB.querySQL(DB.type.ProjDB, "Select 동력 From  User_Pump Where 번호='" + sourcepump1[0] + "'");
+                                        if (Value2.Length > 0)
+                                        {
+                                            double val = Convert.ToDouble(Value2[0][0].ToString()) * Convert.ToDouble(sourcepump1[2].ToString());
+                                            AuxData[5].Add(new { idx = i, val = string.Format("{0:N2}", val) });
+                                        }
+                                        AuxData[7].Add(new { idx = i, val = sourcepump1[4] });
+                                    }
+                                    break;
+                                case 5: //냉각수펌프2
+                                    Split(Value[0][4], sourcepump2);
+                                    if (sourcepump2.Count > 0)
+                                    {
+                                        string[][] Value2 = Program.DB.querySQL(DB.type.ProjDB, "Select 동력 From  User_Pump Where 번호='" + sourcepump2[0] + "'");
+                                        if (Value2.Length > 0)
+                                        {
+                                            double val = Convert.ToDouble(Value2[0][0].ToString()) * Convert.ToDouble(sourcepump2[2].ToString());
+                                            AuxData[6].Add(new { idx = i, val = string.Format("{0:N2}", val) });
+                                        }
+                                    }
+                                    break;
+                                default:
+                                    break;                                    
+                            }
+                        }
+                    }                    
+                    
+                }
 
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select 열원설비,냉각탑 From CoolingSystem_Form Where 번호='" + Num + "'");
                 if (Value.Length > 0)
@@ -230,14 +370,28 @@ namespace main.contents.Result
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select  sum(QC_nd),  sum(QC_ce),  sum(QC_d), sum(QC_s),  sum(QC_out), sum(QC_f),sum(W), Fuel From CoolingSystem_Result Where 번호='" + Num + "'");
                 if (Value.Length > 0)
                 {
-                    AnnualData[0].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][0], 0) });
-                    AnnualData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][1], 0) });
-                    AnnualData[2].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][2], 0) });
-                    AnnualData[3].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][3], 0) });
-                    AnnualData[4].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][4], 0) });
-                    AnnualData[5].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][5], 0) });
-                    AnnualData[6].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][6], 0) });
-                    double primary = 0, tco2 = 0; 
+                    if (totalArea > 0)
+                    {
+                        AnnualData[0].Add(new { idx = i, val = string.Format("{0:N2}", Convert.ToDouble(Value[0][0]) / totalArea) });
+                        AnnualData[1].Add(new { idx = i, val = string.Format("{0:N2}", Convert.ToDouble(Value[0][1]) / totalArea) });
+                        AnnualData[2].Add(new { idx = i, val = string.Format("{0:N2}", Convert.ToDouble(Value[0][2]) / totalArea) });
+                        AnnualData[3].Add(new { idx = i, val = string.Format("{0:N2}", Convert.ToDouble(Value[0][3]) / totalArea) });
+                        AnnualData[4].Add(new { idx = i, val = string.Format("{0:N2}", Convert.ToDouble(Value[0][4]) / totalArea) });
+                        AnnualData[5].Add(new { idx = i, val = string.Format("{0:N2}", Convert.ToDouble(Value[0][5]) / totalArea) });
+                        AnnualData[6].Add(new { idx = i, val = string.Format("{0:N2}", Convert.ToDouble(Value[0][6]) / totalArea) });
+                    }
+                    else
+                    {
+                        AnnualData[0].Add(new { idx = i, val = "-"});
+                        AnnualData[1].Add(new { idx = i, val = "-" });
+                        AnnualData[2].Add(new { idx = i, val = "-" });
+                        AnnualData[3].Add(new { idx = i, val = "-" });
+                        AnnualData[4].Add(new { idx = i, val = "-" });
+                        AnnualData[5].Add(new { idx = i, val = "-" });
+                        AnnualData[6].Add(new { idx = i, val = "-" });
+                    }
+
+                        double primary = 0, tco2 = 0; 
                     if(Value[0][7]=="전기")
                     {
                         primary = (Convert.ToDouble(Value[0][5]) + Convert.ToDouble(Value[0][6])) * 2.75;
@@ -248,8 +402,17 @@ namespace main.contents.Result
                         primary = Convert.ToDouble(Value[0][5]) * 1.1 + Convert.ToDouble(Value[0][6]) *2.75;
                         tco2 = Convert.ToDouble(Value[0][5]) * 0.4747 / 1000000 * 1000 + Convert.ToDouble(Value[0][6]) / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
                     }
-                    AnnualData[7].Add(new { idx = i, val = primary.ToString("#,##0") });
-                    AnnualData[8].Add(new { idx = i, val = tco2.ToString("0.0") });
+
+                    if (totalArea > 0)
+                    {
+                        AnnualData[7].Add(new { idx = i, val = string.Format("{0:N2}", Convert.ToDouble(primary / totalArea))});
+                        AnnualData[8].Add(new { idx = i, val = string.Format("{0:N2}", Convert.ToDouble(tco2 / totalArea * 1000))}); //kgCO2로 변경함
+                    }
+                    else
+                    {
+                        AnnualData[7].Add(new { idx = i, val = "-" });
+                        AnnualData[8].Add(new { idx = i, val = "-" });
+                    }
                 }                
                 
                 for(int mth =0; mth < 12; mth++)    
@@ -298,7 +461,7 @@ namespace main.contents.Result
 
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select  QC_f,  SEER_c,  EER_c, QC_out, QC_ce, QC_d, QC_s From CoolingSystem_Result Where 번호='" + Num + "' and 월='" + (mth +1) + "월'");
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select  QC_f,  SEER_c,  EER_c, QC_out, QC_ce, QC_d, QC_s, QC_nd  From CoolingSystem_Result Where 번호='" + Num + "' and 월='" + (mth +1) + "월'");
                     if (Value.Length > 0)
                     {
                         MthData[0].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
@@ -309,9 +472,10 @@ namespace main.contents.Result
                         MthData[5].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(Value[0][5], 0) });
                         MthData[6].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(Value[0][6], 0) });
                         MthData[7].Add(new { idx = i * 13 + mth, val = 0});
+                        MthData[8].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(Value[0][7], 0) });
                     }
                 }
-                Value = Program.DB.querySQL(DB.type.ProjDB, "Select  Sum(QC_f),  AVG(SEER_c),  AVG(EER_c), Sum(QC_out), sum(QC_ce), sum(QC_d), sum(QC_s)  From CoolingSystem_Result Where 번호='" + Num + "'");
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select  Sum(QC_f),  AVG(SEER_c),  AVG(EER_c), Sum(QC_out), sum(QC_ce), sum(QC_d), sum(QC_s), sum(QC_nd)  From CoolingSystem_Result Where 번호='" + Num + "'");
                 if (Value.Length > 0)
                 {
                     MthData[0].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][0], 0) });
@@ -322,6 +486,7 @@ namespace main.contents.Result
                     MthData[5].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][5], 0) });
                     MthData[6].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][6], 0) });
                     MthData[7].Add(new { idx = i * 13 + 12, val = 0 });
+                    MthData[8].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][7], 0) });
                 }
 
                 for (int mth = 0; mth < 12; mth++)
@@ -363,6 +528,7 @@ namespace main.contents.Result
                 data.Add(new { cname = "zone_ce1", data = ZoneData[3] });
                 data.Add(new { cname = "zone_ce2", data = ZoneData[4] });
                 data.Add(new { cname = "title", data = ZoneData[5] });
+                data.Add(new { cname = "zone_area", data = ZoneData[6] });
 
 
                 data.Add(new { cname = "zahu_count", data = ZahuData[0] });
@@ -370,12 +536,22 @@ namespace main.contents.Result
                 data.Add(new { cname = "zahu_qcmax", data = ZahuData[2] });
                 data.Add(new { cname = "zahu_ce1", data = ZahuData[3] });
                 data.Add(new { cname = "zahu_ce2", data = ZahuData[4] });
+                data.Add(new { cname = "zahu_area", data = ZahuData[5] });
 
 
                 data.Add(new { cname = "heatsource", data = SourceData[0] });
                 data.Add(new { cname = "top_power", data = SourceData[1] });
                 data.Add(new { cname = "top_in", data = SourceData[2] });
                 data.Add(new { cname = "top_out", data = SourceData[3] });
+
+                data.Add(new { cname = "storage", data = AuxData[0] });
+                data.Add(new { cname = "stotype", data = AuxData[1] });
+                data.Add(new { cname = "load1_power", data = AuxData[2] });
+                data.Add(new { cname = "load2_power", data = AuxData[3] });
+                data.Add(new { cname = "loadp_type", data = AuxData[4] });
+                data.Add(new { cname = "source1_power", data = AuxData[5] });
+                data.Add(new { cname = "source2_power", data = AuxData[6] });
+                data.Add(new { cname = "sourcep_type", data = AuxData[7] });
 
 
                 data.Add(new { cname = "annual_nd", data = AnnualData[0] });
@@ -421,6 +597,7 @@ namespace main.contents.Result
                 data.Add(new { cname = "mth_d", data = MthData[5] });
                 data.Add(new { cname = "mth_s", data = MthData[6] });
                 data.Add(new { cname = "mth_g", data = MthData[7] });
+                data.Add(new { cname = "mth_nd", data = MthData[8] });
 
                 //data.Add(new { cname = "mth_f", data = MthData[8] });
                 //data.Add(new { cname = "mth_seer", data = MthData[9] });
