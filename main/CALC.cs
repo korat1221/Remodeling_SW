@@ -95,8 +95,9 @@ namespace main
             Cal_Qfw(NowProjNum[0][0]);
             Cal_Qfh(NowProjNum[0][0]);
             Cal_Qfc(NowProjNum[0][0]);
-            Cal_Qf(NowProjNum[0][0]);
+           Final final1 = Cal_Qf1(NowProjNum[0][0]);
             RESystemCalc(NowProjNum[0][0]);
+            Cal_Qf2(final1);
             // MessageBox.Show("계산되었습니다.");
 
             Program.DB.saveProject();
@@ -233,7 +234,7 @@ namespace main
                 }
             }
         }
-        private static void Cal_Qf(string ProjNum)
+        private static Final Cal_Qf1(string ProjNum)
         {
             Final final1 = new Final(ProjNum);
             final1.Load_Heating_Final(ProjNum);
@@ -241,10 +242,15 @@ namespace main
             final1.Load_DHW_Final(ProjNum);
             final1.Load_AHU_Final(ProjNum);
             final1.Load_REG_Final(ProjNum);
-            Final_Calc(final1);
+            Final_Calc1(final1);
+            Final_Save(final1);
+            return final1;
+        }
+        private static void Cal_Qf2(Final final1)
+        {
+            Final_Calc2(final1);
             Final_Save(final1);
         }
-
         #region 기밀
         public static double[] Cal_q50(double n50)
         {
@@ -1446,7 +1452,7 @@ namespace main
         #endregion
 
         #region 파이널       
-        public static void Final_Calc(Final final1)
+        public static void Final_Calc1(Final final1) //신재생 제외 에너지소요량 
         {
 
             final1.Calc_Qtot();
@@ -1478,13 +1484,24 @@ namespace main
                 }
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    final1.Qf_elec_tot_mth[mth] = final1.Qf_elec_tot1[mth] + final1.Qbase_elec[mth] - final1.Qreg_elec_tot[mth];
+                    final1.Qf_elec_tot_mth[mth] = final1.Qf_elec_tot1[mth] + final1.Qbase_elec[mth] ;
                     final1.Qf_gas_tot_mth[mth] = final1.Qf_gas_tot1[mth] + final1.Qbase_gas[mth];
                 }
 
             }
             
         }
+
+        public static void Final_Calc2(Final final1)
+        {
+            for (int mth = 0; mth < 12; mth++)
+            {
+                final1.Qf_elec_tot_mth[mth] = final1.Qf_elec_tot1[mth] + final1.Qbase_elec[mth] - final1.Qreg_elec_tot[mth];
+                final1.Qf_gas_tot_mth[mth] = final1.Qf_gas_tot1[mth] + final1.Qbase_gas[mth];
+            }
+
+        }
+
         private static void Final_Save(Final final1)
         {
             #region 전기
