@@ -349,26 +349,14 @@ namespace main.contents
         {
             if (LightType != null)
             {
-                if (dbform == "표준")
+                if (dbform == "표준" || U_LightFi==0)
                 {
                     Pj = Em * KA * LightFL * (0.8 / 0.67) * Pj_lx;
                     Pn = Pj * A;
                     N = 0;
                 }
                 else
-                {
-                    //if (LightType.Contains("LED"))
-                    //{
-                    //    N = (Em * A) / (U_LightFi * UFF * 0.67 * 1.1);
-                    //    Pn = U_LightPi * N;
-                    //    Pj = Pn / A;
-                    //}
-                    //else
-                    //{
-                    //    N = (Em * A) / (U_LightFi * UFF * 0.67);
-                    //    Pn = U_LightPi * N;
-                    //    Pj = Pn / A;
-                    //}                    
+                {             
                     N = Em / (U_LightFi / A);
                     if (double.IsNaN(N))
                     { N = 0; }
