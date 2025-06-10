@@ -196,12 +196,12 @@ namespace main.subcontents.ZoneLighting
 
                 if (Converter_comboBox.SelectedItem == "있음")
                 {
-                    UserDB_FL = Math.Round((64 * (UserDB_lm / UserDB_W)) / (1 / 0.89),2 );
+                    UserDB_FL = Math.Round((64 / (UserDB_lm / UserDB_W)) / (1 / 0.89),2 );
                     UserDB_FL_textBox.Text = Convert.ToString(UserDB_FL);
                 }
                 else
                 {
-                    UserDB_FL = Math.Round(64 * (UserDB_lm / UserDB_W), 2);
+                    UserDB_FL = Math.Round(64 / (UserDB_lm / UserDB_W), 2);
                     UserDB_FL_textBox.Text = Convert.ToString(UserDB_FL);
                 }
             }
