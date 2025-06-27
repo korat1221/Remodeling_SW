@@ -1098,8 +1098,8 @@ namespace main.contents
                 Method + "','" + control + "','" + dimming + "','" + Pj.ToString() + "','" + Pn.ToString() + "','" +
                 Pci.ToString() + "','" + Fo.ToString() + "','" + Fc.ToString() + "','" +
                 LightNumber + "','" + LightType + "','" + LightType2 + "','" + LightConverter + "','" + lm_W + "','" + LightFL.ToString() + "','" + N.ToString() + "','" +
-                Renew_checkBox.Checked.ToString()
-                + "','"+bd+",'"+ad+"','"+AD+"','"+unAD+"'", "번호");
+                Renew_checkBox.Checked.ToString() + "','" +
+                bd +"','"+ ad+"','"+AD+"','"+unAD+"'", "번호");
 
             if (LightNumber.Contains("LP"))
             {
