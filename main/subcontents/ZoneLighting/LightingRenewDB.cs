@@ -16,11 +16,11 @@ namespace main.subcontents.ZoneLighting
     {
 
         int SelectRow;
-        public String[] Select_Renew = new string[9];
+        public string Select_Renew, Select_dbType;
         double Count_RenewDB;
         
 
-        string UserNum, UserDB_Name, UserDB_Manufacture, UserDB_RenewType;
+        string UserNum, UserDB_Name, UserDB_Manufacture, UserDB_RenewType, 프로젝트유형;
         double UserDB_Length1, UserDB_Length2, UserDB_eff, UserDB_A;
 
 
@@ -42,9 +42,14 @@ namespace main.subcontents.ZoneLighting
             UserNum = Program.UTIL.CreateNum("User_Renew", "번호", "UL_0");
             UserNum_textBox.Text = UserNum;
 
-
-
+            string[][] 프로젝트 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            if (프로젝트.Length > 0)
+            {
+                프로젝트유형 = 프로젝트[0][0];
+            }
         }
+
+
 
         void load_table_RenewDB()
         {
@@ -158,7 +163,7 @@ namespace main.subcontents.ZoneLighting
        private void calc_A()
         {
             UserDB_A = UserDB_Length1 * UserDB_Length2;
-            UserDB_A_textBox.Text = UserDB_A.ToString();
+            UserDB_A_textBox.Text = string.Format("{0:N2}", UserDB_A);
         }
 
         private void UserDB_eff_textBox_TextChanged(object sender, EventArgs e)
@@ -171,11 +176,10 @@ namespace main.subcontents.ZoneLighting
         //SetValue 
         private void AddUserDB_button_Click(object sender, EventArgs e)
         {
-            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             if (UserDB_Name != null && UserDB_Manufacture != null && UserDB_RenewType != null && UserDB_eff != 0 && UserDB_Length1 != 0 && UserDB_Length2 != 0 && UserDB_A != 0)
             {
                 Program.DB.setValue(DB.type.ProjDB, "User_Renew", "번호,프로젝트유형,DB유형,집광채광명칭,집광채광종류,제조사,집광채광효율,산광부가로길이,산광부세로길이,산광부면적",
-                    "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + UserDB_Name + "','" + UserDB_RenewType + "','" + UserDB_Manufacture + "','" + UserDB_eff.ToString() + "','" + UserDB_Length1.ToString() + "','" + UserDB_Length2.ToString() + "','" + UserDB_A.ToString() + "'", "번호");
+                    "'" + UserNum + "','" + 프로젝트유형 + "','" + "사용자" + "','" + UserDB_Name + "','" + UserDB_RenewType + "','" + UserDB_Manufacture + "','" + UserDB_eff.ToString() + "','" + UserDB_Length1.ToString() + "','" + UserDB_Length2.ToString() + "','" + UserDB_A.ToString() + "'", "번호");
                 load_table_RenewDB();
                 Program.DB.saveProject();
             }
@@ -206,14 +210,7 @@ namespace main.subcontents.ZoneLighting
                     MessageBox.Show("기본 DB는 삭제할 수 없습니다.");
                 }
             }
-
-
         }
-
-
-
-
-
         //데이터그리드뷰 체크박스 선택 시
         private void Renew_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -240,29 +237,50 @@ namespace main.subcontents.ZoneLighting
                     }
                 }
             }
+
+            if (e.ColumnIndex == 0 && e.RowIndex >= 0)
+            {
+                foreach (DataGridViewRow row in Renew_dataGridView.Rows)
+                {
+                    // 현재 클릭된 행이면 true, 나머지는 false로 설정
+                    row.Cells[0].Value = (row.Index == e.RowIndex);
+                }
+            }
         }
-
- 
-
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-            DataGridViewRow row = Renew_dataGridView.Rows[SelectRow];
-            Select_Renew[0] = row.Cells[1].Value.ToString(); //번호
-            Select_Renew[1] = row.Cells[2].Value.ToString(); //DB유형
-            Select_Renew[2] = row.Cells[3].Value.ToString(); //집광채광명칭
-            Select_Renew[3] = row.Cells[4].Value.ToString(); //집광채광종류
-            Select_Renew[4] = row.Cells[5].Value.ToString(); //제조사
-            Select_Renew[5] = row.Cells[6].Value.ToString(); //집광채광효율
-            Select_Renew[6] = row.Cells[7].Value.ToString(); //산광부가로길이
-            Select_Renew[7] = row.Cells[8].Value.ToString(); //산광부세로길이
-            Select_Renew[8] = row.Cells[9].Value.ToString(); //산광부면적
+            bool hasCheckedItem = false;
 
+            foreach (DataGridViewRow row in Renew_dataGridView.Rows)
+            {
+                if (row.Cells[0].Value != null && (bool)row.Cells[0].Value == true)
+                {
+                    hasCheckedItem = true;
+                    break; // 하나만 체크되어 있어도 true면 바로 중단
+                }
+            }
 
+            if (!hasCheckedItem)
+            {
+                MessageBox.Show("선택된 항목이 없습니다.");
+                return; // 이후 처리를 하지 않음
+            }
+
+            foreach (DataGridViewRow row in Renew_dataGridView.Rows)
+            {
+                // 체크박스 셀이 null이 아닌 경우에만 체크 상태 확인
+                if (row.Cells[0].Value != null && (bool)row.Cells[0].Value == true)
+                {
+                    Select_Renew = row.Cells[1].Value.ToString();
+                    Select_dbType = row.Cells[2].Value.ToString();
+                }
+            }
+           
             this.DialogResult = DialogResult.OK;
             this.Close();
-
         }
+        
 
 
 

@@ -184,7 +184,7 @@ namespace main
                     Pn = Convert.ToDouble(ValueA[kk][1]);
                     Fo = Convert.ToDouble(ValueA[kk][2]);
                     Fc = Convert.ToDouble(ValueA[kk][3]);
-                    lm_W = Convert.ToDouble(ValueA[kk][4]);
+                    lm_W = Convert.ToDouble(ValueA[kk][4]); //광효율과 조명계수
                     wsp = Convert.ToDouble(ValueA[kk][5]);
                     N = Convert.ToDouble(ValueA[kk][6]);
                 }
@@ -330,35 +330,12 @@ namespace main
                     energy_type = ValueA[kk][1];
                     if (energy_type != null && energy_type != "")
                     {
-                        if (energy_type.Contains("DL"))
-                        {
-                            if (ValueA[0][2] == "")
-                            { energy_area = 0; }
-                            else { energy_area = Convert.ToDouble(ValueA[0][2]); }
-                        }
-                        else
-                        {
-                            if (ValueA[0][3] == "")
-                            { energy_area = 0; }
-                            else { energy_area = Convert.ToDouble(ValueA[0][3]); }
-                        }
-                        if (ValueA[kk][4] == "")
-                        {
-                            energy_eff = 0;
-                            energy_di = ValueA[kk][5];
-                            energy_slope = 0;
-                        }
-                        else
-                        {
-                            energy_eff = Convert.ToDouble(ValueA[kk][4]);
-                            energy_di = ValueA[kk][5];
-                            energy_slope = Convert.ToDouble(ValueA[kk][6]);
-                        }
+                        energy_area = Convert.ToDouble(ValueA[kk][2]);
+                        energy_eff = Convert.ToDouble(ValueA[kk][4]);
+                        energy_di = ValueA[kk][5];
+                        energy_slope = Convert.ToDouble(ValueA[kk][6]);
                     }
-                    else { }
-                    
-                    
-                }
+                }  
             }
         }
 

@@ -13,8 +13,8 @@ namespace main.contents
         String ZoneNum, ZoneName;
         //존 정보(가져오는 값)
         double Em, KA, FA;
-        double Wr, Lr, A, hR, hm, hLi, hTa, K, admax, ad, bdsimple, bd, AD, unAD;
-        string facade_di, Main_WinCW, facade_shade, facade_dimming, Usage;
+        double Wr, Lr, A, hR, hm, hLi, hTa, K, admax, ad, bdsimple, bd, AD, unAD, LightInstallHeight; //hm: 조명과 작업면사이의 거리, hR: 천장과 작업면사이의 거리
+        string facade_di, Main_WinCW=null, facade_shade, facade_dimming, Usage;
         double Zone_f_Aca, Zone_f_a, Zone_f_b, Zone_f_AD, f_τD65_SNA, K1, K2, K3, γSh_lsh, γSh_hA, γSh_vA, f_τD65_SA;// AVG_Height, AVG_Width;
         String Main_glass, MainType_ID;
         public string roof_di, roof_glass, roof_shade, roof_dimming;
@@ -31,9 +31,8 @@ namespace main.contents
         //선택해야하는 정보(save 되어야 함)
 
         //RenewDB저장값
-        public double Reneweff, U_RenewLenght1, U_RenewLenght2, U_RenewA, RenewSlope;
-        public string D_RenewLenght1, D_RenewLenght2, D_RenewA, RenewDi;
-        public string RenewNum, RenewName, RenewName2, RenewA;
+        public string RenewNum, RenewType, RenewName, RenewArt, RenewEff, RenewL1, RenewL2, RenewA, RenewDirec, RenewSlope;
+        bool RenewBool; //적용 여부
         //LightDB저장값
         string LightNumber, LightType, LightType2, LightConverter, LightFi, LightW;
         double LightFL, lm_W;
@@ -94,8 +93,14 @@ namespace main.contents
             //자연채광 대분류 콤보박스
             //Program.UTIL.FillComboBox(DB.type.BaseDB_Lighting, NaturalType_comboBox, "조명", "자연채광 유형1", "1");
 
+            //면적기호작성
+            label18.Text = "m\u00B2";
+            label19.Text = "m\u00B2";
+            label20.Text = "m\u00B2";
+            lightload_unit.Text = "W/m\u00B2";
+            areaunit1.Text = "m\u00B2";
+            areaunit2.Text = "m\u00B2";
         }
-
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -161,14 +166,12 @@ namespace main.contents
                     U_LightPi = Convert.ToDouble(lightingdb_form.Select_Light[7]);
                 }
             }
-
             LightInfo();
             Match_Pjlx();
             Calc_Pj();
             Calc_Fo();
             Calc_Fc();
-            Pci_Value();
-            //Load_Lamp_image();
+            Pci_Value(); 
             Calc_AD();
         }
 
@@ -178,10 +181,52 @@ namespace main.contents
             if (LightMethod_comboBox.SelectedItem != null)
             {
                 Method = LightMethod_comboBox.SelectedItem.ToString();
-                Match_Pjlx();
-                Calc_Pj();
-                Calc_Fo();
-                Calc_Fc();
+
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_램프분류이미지", "이미지", "조명분류 = '" + Method + "'");
+                if (Image.Length > 0)
+                {
+                    Ltype_pictureBox.Size = new System.Drawing.Size(60, 120);
+                    Ltype_pictureBox.Location = new Point(250, 33);
+                    Ltype_pictureBox.Load(Program.gPath + Image[0][0]);
+                    Ltype_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    Ltype_pictureBox.BackColor = Color.Transparent;
+                    Ltype_pictureBox.Parent = Main_pictureBox3;
+                }
+
+                string[][] val = Program.DB.getValue_SameCheck(DB.type.BaseDB_Lighting, "조명_럭스당조명밀도", "UFF", "조명방식='" + Method + "'");
+                UFF = Convert.ToDouble(val[0][0]);
+
+                if (LightType_textBox.Text != null && LightType_textBox.Text != "")
+                {
+                    string[][] check = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_DB", "DB유형", "등기구명칭 = '" + LightType_textBox.Text + "'");
+                    dbform = check[0][0];
+                }
+                else
+                {
+                    return;
+                }
+
+                if (lightHeight_textBox.Text != null && lightHeight_textBox.Text != "")
+                {
+                    Match_Pjlx();
+                    Calc_Pj();
+                    Calc_Fo();
+                    Calc_Fc();
+                }
+            }
+        }
+        private void lightHeight_textBox_Leave(object sender, EventArgs e)
+        {
+            if (double.TryParse(lightHeight_textBox.Text, out double result))
+            {
+                LightInstallHeight = Convert.ToDouble(lightHeight_textBox.Text);
+                LightMethod_comboBox_SelectedIndexChanged(sender, e);
+                Calc_AD();
+                //이미지보이도록
+            }
+            else
+            {
+                MessageBox.Show("유효한 숫자를 입력하세요.");
             }
         }
 
@@ -206,7 +251,6 @@ namespace main.contents
                 Calc_Fo();
                 Calc_Fc();
                 Pci_Value();
-
             }
         }
         private void DimmingType_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -261,8 +305,6 @@ namespace main.contents
             Load_AD2_image();
             Calc_AD();
             Load_NaturalType2_image();
-
-
         }
 
         private void RenewDB_button_Click(object sender, EventArgs e)
@@ -272,46 +314,47 @@ namespace main.contents
             DialogResult result = renewdb_form.ShowDialog();
             if (result == DialogResult.OK)
             {
-                RenewNum = renewdb_form.Select_Renew[0];
-                RenewName = renewdb_form.Select_Renew[2];
-                RenewName2 = renewdb_form.Select_Renew[3];
-                Reneweff = Convert.ToDouble(renewdb_form.Select_Renew[5]);
-                RenewA = renewdb_form.Select_Renew[8];
-
-                RenewType_textBox.Text = RenewName;
-
-                R1_textBox.Text = RenewName2;
-                R2_textBox.Text = RenewA;
-                R3_textBox.Text = Reneweff.ToString();
-
-                if (RenewNum.Contains("DL"))
+                RenewNum = renewdb_form.Select_Renew; //번호
+                RenewType = renewdb_form.Select_dbType; //사용자, 표준
+                RenewBool = true; //
+                if (RenewType == "사용자")
                 {
-                    D_RenewLenght1 = renewdb_form.Select_Renew[6];
-                    D_RenewLenght2 = renewdb_form.Select_Renew[7];
-                    D_RenewA = renewdb_form.Select_Renew[8];
+                    string[][] check = Program.DB.getValue(DB.type.ProjDB, "User_Renew", "집광채광명칭,집광채광종류,집광채광효율,산광부가로길이,산광부세로길이,산광부면적", "번호 = '" + RenewNum + "'");
+                    if (check.Length > 0)
+                    {
+                        RenewName = check[0][0].ToString();
+                        RenewArt = check[0][1].ToString();
+                        RenewEff = check[0][2].ToString();
+                        RenewL1 = check[0][3].ToString();
+                        RenewL2 = check[0][4].ToString();
+                        RenewA = check[0][5].ToString();
+                    }
 
-                    R1_textBox.Text = RenewName2;
-                    R2_textBox.Text = D_RenewA;
-                    R3_textBox.Text = Reneweff.ToString();
                 }
                 else
                 {
-                    U_RenewLenght1 = Convert.ToDouble(renewdb_form.Select_Renew[6]);
-                    U_RenewLenght2 = Convert.ToDouble(renewdb_form.Select_Renew[7]);
-                    U_RenewA = Convert.ToDouble(renewdb_form.Select_Renew[8]);
-
-                    R1_textBox.Text = RenewName2;
-                    R2_textBox.Text = U_RenewA.ToString();
-                    R3_textBox.Text = Reneweff.ToString();
+                    string[][] check = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_집광채광DB", "집광채광명칭,집광채광종류,집광채광효율,산광부가로길이,산광부세로길이,산광부면적", "번호 = '" + RenewNum + "'");
+                    if (check.Length > 0)
+                    {
+                        RenewName = check[0][0].ToString();
+                        RenewArt = check[0][1].ToString();
+                        RenewEff = check[0][2].ToString();
+                        RenewL1 = check[0][3].ToString();
+                        RenewL2 = check[0][4].ToString();
+                        RenewA = check[0][5].ToString();
+                    }
                 }
+                RenewType_textBox.Text = RenewName;
+                R1_textBox.Text = RenewArt;
+                R2_textBox.Text = RenewA;
+                R3_textBox.Text = RenewEff;
             }
-
         }
         private void Renew_checkBox_CheckedChanged(object sender, EventArgs e)
         {
             RenewCheck();
 
-            RenewDi_comboBox.SelectedItem = RenewDi;
+            RenewDi_comboBox.SelectedItem = RenewDirec;
             Slope_comboBox.SelectedItem = RenewSlope;
         }
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -320,18 +363,50 @@ namespace main.contents
         {
             try
             {
+                if(double.TryParse(lightHeight_textBox.Text, out double result))
+                {
+                    LightInstallHeight = result;
+                }
+                               
+                hm = LightInstallHeight - hTa; //조명과 작업면 사이의 거리
                 K = Lr * Wr / (hm * (Lr + Wr));
                 double[] data = { 0.6, 0.8, 1, 1.25, 1.5, 2, 2.5, 3, 4, 5 };
-                double target = K;
-                var min = data.Min(x => Math.Abs(x - target));
-                K = data.First(y => Math.Abs(y - target) == min);
-
-
-                String[][] value = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_럭스당조명밀도", "값,UFF", "조명방식='" + Method + "' AND K = '" + K + "'");
-                if (value.Length > 0)
+                double x0 = 0, x1 = 0, y0 = 0, y1 = 0;
+                if (K <= 0.6)
                 {
-                    Pj_lx = Convert.ToDouble(value[0][0]);
-                    UFF = Convert.ToDouble(value[0][1]);
+                    x0 = data[0];
+                    x1 = data[0];
+                }
+                else if (0.6 < K && K < 5)
+                {
+                    for (int i = 0; i < 10; i++)
+                    {
+                        if (K < data[i])
+                        {
+                            x0 = data[i - 1];
+                            x1 = data[i];
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    x0 = data[9];
+                    x1 = data[9];
+                }
+                //선형보간법 적용
+                String[][] val1 = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_럭스당조명밀도", "값", "조명방식='" + Method + "' AND K = '" + x0.ToString() + "'");
+                String[][] val2 = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_럭스당조명밀도", "값", "조명방식='" + Method + "' AND K = '" + x1.ToString() + "'");
+                if (val1.Length > 0 && val2.Length > 0)
+                {
+                    y0 = Convert.ToDouble(val1[0][0].ToString());
+                    y1 = Convert.ToDouble(val2[0][0].ToString());
+
+                    if (x1 - x0 == 0)
+                    {
+                        Pj_lx = y0;
+                    }
+                    else Pj_lx = y0 + (K - x0) * (y1 - y0) / (x1 - x0);
                 }
             }
             catch { }
@@ -349,14 +424,26 @@ namespace main.contents
         {
             if (LightType != null)
             {
-                if (dbform == "표준" || U_LightFi==0)
+                if (dbform == "표준")
                 {
                     Pj = Em * KA * LightFL * (0.8 / 0.67) * Pj_lx;
                     Pn = Pj * A;
                     N = 0;
                 }
                 else
-                {             
+                {
+                    //if (LightType.Contains("LED"))
+                    //{
+                    //    N = (Em * A) / (U_LightFi * UFF * 0.67 * 1.1);
+                    //    Pn = U_LightPi * N;
+                    //    Pj = Pn / A;
+                    //}
+                    //else
+                    //{
+                    //    N = (Em * A) / (U_LightFi * UFF * 0.67);
+                    //    Pn = U_LightPi * N;
+                    //    Pj = Pn / A;
+                    //}                    
                     N = Em / (U_LightFi / A);
                     if (double.IsNaN(N))
                     { N = 0; }
@@ -549,6 +636,8 @@ namespace main.contents
                 }
                 AD = ad * bd;
                 unAD = A - AD;
+                areaunit1.Visible = true;
+                areaunit2.Visible = true;
             }
             else if (NaturalType == "천창")
             {
@@ -565,11 +654,21 @@ namespace main.contents
                 }
                 AD = ad * bd;
                 unAD = A - AD;
+                areaunit1.Visible = true;
+                areaunit2.Visible = true;
             }
-            else;
+            else 
+            {
+                ad = 0;
+                bd = 0;
+                AD = 0;
+                unAD = A;
+            }
+            AD_textBox.Text = string.Format("{0:N2}", AD);
+            aad_textBox.Text = string.Format("{0:N2}", ad);
+            bbd_textBox.Text = string.Format("{0:N2}", bd);
+            NA_textBox.Text = string.Format("{0:N2}", unAD);
         }
-
-
 
         // 주창 정보 들어오기 
         private void WindowInfo2()
@@ -673,7 +772,6 @@ namespace main.contents
                     Main_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
             }
-
         }
 
         private void Load_NaturalType2_image()
@@ -705,8 +803,6 @@ namespace main.contents
             // this.Main_pictureBox.Location = new Point(0, 0);
         }
 
-
-
         //자연채광 체크박스 활성화 비활성화
         public void NaturalCheck()
         {
@@ -723,22 +819,7 @@ namespace main.contents
                 Acam2_label.Visible = true;
                 type_pictureBox.Visible = true;
             }
-
-            else
-            {
-                roofButton.Visible = false;
-                facadeButton.Visible = false;
-                //NaturalType_comboBox.Visible = false;
-                NaturalDB_button.Visible = false;
-                Direction_label.Visible = false;
-                Aca_label.Visible = false;
-                direction_textBox.Visible = false;
-                Aca_textBox.Visible = false;
-                Acam2_label.Visible = false;
-                type_pictureBox.Visible = false;
-            }
         }
-
 
         //집광채광 체크박스 활성화 비활성화
         public void RenewCheck()
@@ -760,6 +841,7 @@ namespace main.contents
                 R2_textBox.Visible = true;
                 R3_textBox.Visible = true;
                 Load_RenewType_image(true);
+                RenewBool = true;
             }
 
             else
@@ -779,10 +861,27 @@ namespace main.contents
                 R2_textBox.Visible = false;
                 R3_textBox.Visible = false;
                 Load_RenewType_image(false);
+
+                RenewNum = null;
+                RenewType = null;
+                RenewName = null;
+                RenewArt = null;
+                RenewEff = null;
+                RenewL1 = null;
+                RenewL2 = null;
+                RenewA = null;
+                RenewDirec = null;
+                RenewSlope = null;
+                R1_textBox.Text = null;
+                R2_textBox.Text = null;
+                R3_textBox.Text = null;
+                RenewBool = false;
+                RenewType_textBox.Text = null;
+                RenewDi_comboBox.Text = null;
+                Slope_comboBox.Text = null;
             }
 
         }
-
 
         private void Load_RenewType_image(Boolean check)
         {
@@ -830,7 +929,6 @@ namespace main.contents
             }
         }
 
-
         //차양 유무에 따른 그림 로드 
         private void Load_Shade_image(String Type)
         {
@@ -868,51 +966,64 @@ namespace main.contents
         }
 
         //상세 선택에 따른 변화 (체크박스에 걸기)
-        private void Load_AD2_image()
+        private void Load_AD2_image() //주광면적 이미지 작성
         {
-            if (facadeButton.Checked == true || roofButton.Checked == true && NaturalType == "파사드" && facade == "일반 파사드")
+            if(facade !="" && facade != null)
             {
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '" + "일반 파사드" + "'");
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '" + facade + "'");
                 type_pictureBox.Load(Program.gPath + Image[0][0]);
                 type_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
+            else
+            {
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '일반 파사드'");
+                type_pictureBox.Load(Program.gPath + Image[0][0]);
+                type_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+            
 
-            else if (facadeButton.Checked == true || roofButton.Checked == true && NaturalType == "파사드" && facade == "이중외피")
-            {
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '" + "이중외피" + "'");
-                type_pictureBox.Load(Program.gPath + Image[0][0]);
-                type_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            }
+            //if (facadeButton.Checked == true || roofButton.Checked == true && NaturalType == "파사드" && facade == "일반 파사드")
+            //{
+            //    string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '" + "일반 파사드" + "'");
+            //    type_pictureBox.Load(Program.gPath + Image[0][0]);
+            //    type_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            //}
 
-            else if (facadeButton.Checked == true || roofButton.Checked == true && NaturalType == "파사드" && facade == "중정")
-            {
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '" + "중정" + "'");
-                type_pictureBox.Load(Program.gPath + Image[0][0]);
-                type_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            }
+            //else if (facadeButton.Checked == true || roofButton.Checked == true && NaturalType == "파사드" && facade == "이중외피")
+            //{
+            //    string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '" + "이중외피" + "'");
+            //    type_pictureBox.Load(Program.gPath + Image[0][0]);
+            //    type_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            //}
 
-            else if (facadeButton.Checked == true || roofButton.Checked == true && NaturalType == "파사드" && facade == "아트리움")
-            {
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '" + "아트리움" + "'");
-                type_pictureBox.Load(Program.gPath + Image[0][0]);
-                type_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            }
+            //else if (facadeButton.Checked == true || roofButton.Checked == true && NaturalType == "파사드" && facade == "중정")
+            //{
+            //    string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '" + "중정" + "'");
+            //    type_pictureBox.Load(Program.gPath + Image[0][0]);
+            //    type_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            //}
 
-            else if (facadeButton.Checked == true || roofButton.Checked == true && NaturalType == "천창")
-            {
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '" + "천창" + "'");
-                type_pictureBox.Load(Program.gPath + Image[0][0]);
-                type_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            }
-            else;
+            //else if (facadeButton.Checked == true || roofButton.Checked == true && NaturalType == "파사드" && facade == "아트리움")
+            //{
+            //    string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '" + "아트리움" + "'");
+            //    type_pictureBox.Load(Program.gPath + Image[0][0]);
+            //    type_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            //}
+
+            //else if (facadeButton.Checked == true || roofButton.Checked == true && NaturalType == "천창")
+            //{
+            //    string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '" + "천창" + "'");
+            //    type_pictureBox.Load(Program.gPath + Image[0][0]);
+            //    type_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            //}
+            //else
+            //{
+
+            //}
         }
 
-
-        //사이드 활성화 
         private void side_active()
-        {
-            if (facadeButton.Checked == true || roofButton.Checked == true)
-            {
+        {       
                 A_label.Visible = true;
                 A_textBox.Visible = true;
                 AD_label.Visible = true;
@@ -928,27 +1039,6 @@ namespace main.contents
                 label12.Visible = true;
                 label13.Visible = true;
                 label14.Visible = true;
-
-            }
-
-            else
-            {
-                A_label.Visible = false;
-                A_textBox.Visible = false;
-                AD_label.Visible = false;
-                AD_textBox.Visible = false;
-                aad_label.Visible = false;
-                aad_textBox.Visible = false;
-                bbd_label.Visible = false;
-                bbd_textBox.Visible = false;
-                NA_label.Visible = false;
-                NA_textBox.Visible = false;
-                label10.Visible = false;
-                label11.Visible = false;
-                label12.Visible = false;
-                label13.Visible = false;
-                label14.Visible = false;
-            }
         }
 
         public static bool OnLoadListProc(Form form)
@@ -963,6 +1053,10 @@ namespace main.contents
             if (LightType == null)
             {
                 MessageBox.Show("조명 종류를 선택하세요.");
+            }
+            else if (lightHeight_textBox.Text == "" || lightHeight_textBox.Text == null)
+            {
+                MessageBox.Show("조명 설치 높이를 입력하세요.");
             }
             else if (Renew_checkBox.Checked == true && RenewNum == null)
             {
@@ -982,25 +1076,30 @@ namespace main.contents
                 MessageBox.Show(" 중정 상세 길이 정보를 입력하세요.");
 
             }
+            else if(LightType_textBox.Text == "" || LightType_textBox.Text == null)
+            {
+                MessageBox.Show(" 조명 종류를 선택해 주세요.");
+            }
             else
             {
                 Save();
+                Save_Image();
             }
         }
 
-        private void Save()
+        private void Save() //공간계수 대신 조명설치 높이값을 저장함
         {
             Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,너비,길이,순바닥면적,상인방높이,작업면높이,공간계수,기준조도," +
                 "조명방식,제어방식,디밍유형,조명밀도,조명예상전력," +
                 "대기전력,재실계수,조도제어계수," +
                 "조명번호, 등기구명칭, 램프유형, 컨버터_안정기, 광효율, 조명계수,조명개수," +
-                "집광채광체크",
-                "'" + Num_textBox.Text + "','" + Wr + "','" + Lr + "','" + A + "','" + hLi + "','" + hTa + "','" + K + "','" + Em + "','" +
+                "집광채광체크,주광길이,주광깊이,주광면적,비주광면적",
+                "'" + Num_textBox.Text + "','" + Wr + "','" + Lr + "','" + A + "','" + hLi + "','" + hTa + "','" + LightInstallHeight + "','" + Em + "','" +
                 Method + "','" + control + "','" + dimming + "','" + Pj.ToString() + "','" + Pn.ToString() + "','" +
                 Pci.ToString() + "','" + Fo.ToString() + "','" + Fc.ToString() + "','" +
                 LightNumber + "','" + LightType + "','" + LightType2 + "','" + LightConverter + "','" + lm_W + "','" + LightFL.ToString() + "','" + N.ToString() + "','" +
                 Renew_checkBox.Checked.ToString()
-                + "'", "번호");
+                + "','"+bd+",'"+ad+"','"+AD+"','"+unAD+"'", "번호");
 
             if (LightNumber.Contains("LP"))
             {
@@ -1017,14 +1116,11 @@ namespace main.contents
               + "'", "번호");
             }
 
-
-
             if (facadeButton.Checked == true || roofButton.Checked == true)
             {
-                Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,자연채광유형,주향,주창면적합,주창유리종류,주창아이디,차양,주광길이,주광깊이,주광면적,비주광면적",
+                Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,자연채광유형,주향,주창면적합,주창유리종류,주창아이디,차양",
                     "'" + Num_textBox.Text + "','" +
-                   NaturalType + "','" + direction_textBox.Text + "','" + Convert.ToDouble(Aca_textBox.Text.ToString()) + "','" + Main_glass + "','" + MainType_ID + "','" + Blind3_textBox.Text + "','" + bd + "','" + ad + "','" + AD + "','" + unAD
-                    + "'", "번호");
+                   NaturalType + "','" + direction_textBox.Text + "','" + Convert.ToDouble(Aca_textBox.Text.ToString()) + "','" + Main_glass + "','" + MainType_ID + "','" + Blind3_textBox.Text + "'", "번호");
 
 
                 if (facadeButton.Checked == true)
@@ -1045,39 +1141,54 @@ namespace main.contents
             }
             else { }
 
-
-
-            if (Renew_checkBox.Checked == true)
+            Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,집광채광체크,집광채광번호,집광채광명칭,집광채광종류,집광채광향,집광채광각도,집광채광효율,집광채광면적,사용자면적",
+               "'" + ZoneNum + "','" + RenewBool.ToString() + "','" + RenewNum + "','" + RenewName + "','" + RenewArt + "','" + RenewDirec + "','" + RenewSlope + "','" + RenewEff + "','" + RenewA + "','" + RenewType + "'", "번호");
+            if (RenewType == "사용자")
             {
-                Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,집광채광번호,집광채광명칭,집광채광종류,집광채광향,집광채광각도,집광채광효율,집광채광면적",
-               "'" + Num_textBox.Text + "','" +
-                 RenewNum + "','" + RenewName + "','" + RenewName2 + "','" + RenewDi_comboBox.Text + "','" + RenewSlope.ToString() + "','" + Reneweff.ToString() + "','" + Convert.ToDouble(R2_textBox.Text.ToString())
-               + "'", "번호");
-
-                if (RenewNum.Contains("DL"))
-                {
-                    Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,표준길이1,표준길이2",
-              "'" + Num_textBox.Text + "','" +
-                D_RenewLenght1 + "','" + D_RenewLenght2
-              + "'", "번호");
-                }
-
-                else
-                {
-                    Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,사용자길이1,사용자길이2,사용자면적",
-             "'" + Num_textBox.Text + "','" +
-               U_RenewLenght1.ToString() + "','" + U_RenewLenght2.ToString() + "','" + U_RenewA.ToString()
-             + "'", "번호");
-                }
+                Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,사용자길이1,사용자길이2",
+                   "'" + ZoneNum + "','" + RenewL1 + "','" + RenewL2 + "'", "번호");
             }
-            else { }
-
+            else
+            {
+                Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,표준길이1,표준길이2",
+                   "'" + ZoneNum + "','" + RenewL1 + "','" + RenewL2 + "'", "번호");
+            }
+            
             Program.DB.saveProject();
             MessageBox.Show(ZoneNum + "[" + ZoneName + "] 정보를 저장하였습니다.");
             this.DialogResult = DialogResult.OK;
             this.Hide();
             Program.getMenuForm().DoLoadForm(33, OnLoadListProc);
         }
+
+        private void Save_Image()
+        {
+            try
+            {
+                Bitmap bmp = new Bitmap(panel4.Width, panel4.Height);
+                panel4.DrawToBitmap(bmp, new Rectangle(0, 0, panel4.Width, panel4.Height));
+
+                string pid = "0000-00-00";
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
+                if (Value.Length > 0)
+                {
+                    pid = Value[0][0];
+                }
+
+                Directory.CreateDirectory(Program.gPath + "threejs\\public\\print\\img\\" + pid);
+
+                string ImageName = "/print/img/" + pid + "/" + ZoneNum + "_light" + ".png";
+                string imagePath = Program.gPath + ImageName;
+
+                bmp.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("오류 발생: " + ex.Message);
+            }
+        }
+
+
         private void reset()
         {
             Num_textBox.Text = "";
@@ -1089,7 +1200,10 @@ namespace main.contents
             roofButton.Checked = false;
             direction_textBox.Text = "";
             Aca_textBox.Text = ""; ;
-            Renew_checkBox.Checked = true;
+
+            areaunit1.Visible = false;
+            areaunit2.Visible = false;
+
             Renew_checkBox.Checked = false;
             RenewName = null;
             LightType = null;
@@ -1122,6 +1236,8 @@ namespace main.contents
             L8_textBox.Text = "";
             RenewDi_comboBox.Text = "";
             Slope_comboBox.Text = "";
+
+            lightHeight_textBox.Text = "";
         }
 
         //존 리스트 클릭시 로드
@@ -1129,12 +1245,15 @@ namespace main.contents
         {
 
             reset();
+            side_active();
+
+
             Load_OtherFormData();
 
 
             Num_textBox.Text = ID;
 
-            String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,조명방식,제어방식,디밍유형,조명밀도,대기전력,재실계수,조도제어계수",
+            String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,조명방식,제어방식,디밍유형,조명밀도,대기전력,재실계수,조도제어계수,광효율",
             "번호 = '" + ZoneNum + "'");
             if (Load.Length > 0)
             {
@@ -1162,6 +1281,8 @@ namespace main.contents
                 Fc = Convert.ToDouble(Load[0][7]);
                 fc_textBox.Text = (Fc * Fo).ToString();
                 Program.UTIL.textBox_doubleComa(fc_textBox, true, 2);
+
+                lm_W = Convert.ToDouble(Load[0][8]);
 
                 String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "주이용일", "존번호='" + ZoneNum + "'");
                 dayofuse = Convert.ToDouble(Value[0][0]);
@@ -1214,49 +1335,44 @@ namespace main.contents
                     }
                 }
             }
-
-            Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "집광채광번호,집광채광명칭,집광채광종류,집광채광효율,집광채광면적,표준길이1,표준길이2,사용자길이1,사용자길이2,사용자면적,집광채광체크,집광채광향,집광채광각도",
+            //사용자면적은 집광채광유형임 (사용자 or 표준)
+            Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "집광채광체크,집광채광번호,사용자면적,집광채광명칭,집광채광종류,집광채광효율,집광채광면적,표준길이1,표준길이2,사용자길이1,사용자길이2,집광채광향,집광채광각도",
             "번호 = '" + ZoneNum + "'");
             if (Load.Length > 0)
             {
-                Renew_checkBox.Checked = Convert.ToBoolean(Load[0][10]);
+                Renew_checkBox.Checked = Convert.ToBoolean(Load[0][0]);
                 if (Renew_checkBox.Checked)
                 {
-                    RenewNum = Load[0][0];
-                    RenewName = Load[0][1];
-                    RenewName2 = Load[0][2];
-                    Reneweff = Convert.ToDouble(Load[0][3]);
-                    RenewA = Load[0][4];
+                    RenewNum = Load[0][1];
+                    RenewType = Load[0][2];
+                    RenewName = Load[0][3];
+                    RenewArt = Load[0][4];
+                    RenewEff = Load[0][5];
+                    RenewA = Load[0][6];
                     RenewType_textBox.Text = RenewName;
-                    R1_textBox.Text = RenewName2;
+                    R1_textBox.Text = RenewArt;
                     R2_textBox.Text = RenewA;
-                    R3_textBox.Text = Reneweff.ToString();
-                    if (RenewNum.Contains("DL"))
+                    R3_textBox.Text = RenewEff;
+                    if (RenewType == "사용자")
                     {
-                        D_RenewLenght1 = Load[0][5];
-                        D_RenewLenght2 = Load[0][6];
-                        D_RenewA = Load[0][4];
-                        R1_textBox.Text = RenewName2;
-                        R2_textBox.Text = D_RenewA;
-                        R3_textBox.Text = Reneweff.ToString();
+                        RenewL1 = Load[0][9];
+                        RenewL2 = Load[0][10];
                     }
-
                     else
                     {
-                        U_RenewLenght1 = Convert.ToDouble(Load[0][7]);
-                        U_RenewLenght2 = Convert.ToDouble(Load[0][8]);
-                        U_RenewA = Convert.ToDouble(Load[0][9]);
-                        R1_textBox.Text = RenewName2;
-                        R2_textBox.Text = U_RenewA.ToString();
-                        R3_textBox.Text = Reneweff.ToString();
+                        RenewL1 = Load[0][7];
+                        RenewL2 = Load[0][8];
                     }
-                    RenewDi_comboBox.Text = Load[0][11];
-                    Slope_comboBox.Text = Load[0][12];
+                    RenewDirec = Load[0][11];
+                    RenewSlope = Load[0][12];
+
+                    RenewDi_comboBox.Text = RenewDirec;
+                    Slope_comboBox.Text = RenewSlope;
                 }
 
             }
 
-            Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "조명번호, 등기구명칭, 램프유형, 컨버터_안정기, 광속, 소비전력, 조명계수, 표준광속, 표준소비전력,사용자광속, 사용자소비전력,조명예상전력",
+            Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "조명번호, 등기구명칭, 램프유형, 컨버터_안정기, 광속, 소비전력, 조명계수, 표준광속, 표준소비전력,사용자광속, 사용자소비전력,조명예상전력,공간계수",
             "번호 = '" + ZoneNum + "'");
             if (Load.Length > 0)
             {
@@ -1288,6 +1404,22 @@ namespace main.contents
                 }
 
                 Pn = Convert.ToDouble(Load[0][11]);
+                hm = Convert.ToDouble(Load[0][12]); //조명설치높이 반영함-공간계수
+
+                if (hm > 0)
+                {
+                    lightHeight_textBox.Text = hm.ToString();
+                    string[][] Img = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_램프분류이미지", "이미지", "조명분류 = '" + Method + "'");
+                    if (Img.Length > 0)
+                    {
+                        Ltype_pictureBox.Size = new System.Drawing.Size(60, 120);
+                        Ltype_pictureBox.Location = new Point(250, 33);
+                        Ltype_pictureBox.Load(Program.gPath + Img[0][0]);
+                        Ltype_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                        Ltype_pictureBox.BackColor = Color.Transparent;
+                        Ltype_pictureBox.Parent = Main_pictureBox3;
+                    }
+                }
             }
 
             Load_AD2_image();
@@ -1300,7 +1432,6 @@ namespace main.contents
             }
 
         }
-
 
         //존명칭 로드
         private void ZoneLighting_VisibleChanged(object sender, EventArgs e)
@@ -1328,7 +1459,6 @@ namespace main.contents
                 if (Value[0][1] != "")
                 {
                     hR = Convert.ToDouble(Value[0][1]);
-                    hm = hR;
                 }
 
                 Usage = Value[0][2];
@@ -1344,7 +1474,7 @@ namespace main.contents
                 String[][] General_3D = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "층,층고", "존번호 = '" + ZoneNum + "'");
 
                 Layer = General_3D[0][0] + "F";
-                hLi = 2.5;
+               
 
                 //Zonelight profile 가져오기 
                 string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "조도,이용영역계수,조명이용시부재율,작업면높이", "용도명 = '" + Usage + "'");
@@ -1365,7 +1495,6 @@ namespace main.contents
                     hTa = Convert.ToDouble(ValueA[0][3]);
                 }
 
-
                 Check_MainDirection();
                 if (NaturalType == "파사드")
                 {
@@ -1382,6 +1511,11 @@ namespace main.contents
                 WindowInfo2();
                 CheckNaturalType();
                 LightInfo();
+                string[][] val = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "공간계수", "번호='" + ZoneNum + "'");
+                if (val.Length > 0)
+                {
+                    LightInstallHeight = Convert.ToDouble(val[0][0].ToString());
+                }
                 Match_Pjlx();
                 Calc_Pj();
                 Calc_Fo();
@@ -1525,13 +1659,11 @@ namespace main.contents
                 {
                     NaturalType = "파사드";
                     facadeButton.Checked = true;
-                    Load_AD2_image();
                 }
                 else
                 {
                     roofButton.Checked = true;
                     NaturalType = "천창";
-                    Load_AD2_image();
                 }
             }
 
@@ -1551,8 +1683,10 @@ namespace main.contents
                 }
                 Lr = A / Wr;
             }
+            else
+            {
 
-
+            }
             ////////////////////////////////////////////////////////주 향의 창호 커튼월 높이, 너비 계산하기////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             // String[][] MEnvelope_Wina = Program.DB.querySQL(DB.type.ProjDB, " select b.창호높이,b.창호면적 FROM ZoneEnvelope_3D AS a INNER JOIN SubWindow AS b ON a.구조체 = b.명칭");
 
@@ -1598,78 +1732,83 @@ namespace main.contents
                                     AreaSum_ConstructionWin[k] += Convert.ToDouble(MEnvelope_Win[j][1]);
                                 }
                             }
+
+
                         }
                     }
-                }
-                MaxSum_Win = AreaSum_ConstructionWin.Max(); //창호 구조체 타입별로 면적 합계 중 가장 큰 값
-                index = 0;
-                for (int k = 0; k < Win_Type.Length; k++)
-                {
-                    if (AreaSum_ConstructionWin[k] == AreaSum_ConstructionWin.Max())
-                    { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
-                }
-
-
-                MainType_SubWin = Win_Type[index][1]; // 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형 > SubWindow(사이즈별)임 MainWindow(창호 자재 조합유형별)아님 
-                MainType_ID = Win_Type[index][2];/////////////////////////// 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 ID
-
-                //찾은 SubWindow정보에서 MainWindow 찾기 
-                MainType_Win = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "상위창호번호,유리면적비", "번호 = '" + MainType_SubWin + "'");
-                if (MainType_Win.Length > 0)
-                {
-                    //찾은 주 창호 유형의 빛투과율 찾기 
-                    MainType_Win_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "빛투과율, 유리종류", "번호 = '" + MainType_Win[0][0].ToString() + "'");
-                    Main_WinCW = MainType_Win[0][0];
-                    K1 = Convert.ToDouble(MainType_Win[0][1]);
-                    if (MainType_Win_Value.Length > 0)
+                    MaxSum_Win = AreaSum_ConstructionWin.Max(); //창호 구조체 타입별로 면적 합계 중 가장 큰 값
+                    index = 0;
+                    for (int k = 0; k < Win_Type.Length; k++)
                     {
-                        f_τD65_SNA = Convert.ToDouble(MainType_Win_Value[0][0]);
-                        Main_glass = MainType_Win_Value[0][1];
+                        if (AreaSum_ConstructionWin[k] == AreaSum_ConstructionWin.Max())
+                        { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
                     }
-                }
 
-            }
-            else if (Win_Type.Length == 0)
-            {
-                //커튼월창 구조체 타입별로 면적 합계 구하기
-                double[] AreaSum_ConstructionCW = new double[CW_Type.Length];
-                if (MEnvelope_CW.Length > 0 && CW_Type.Length > 0)
-                {
-                    for (int j = 0; j < MEnvelope_CW.Length; j++)
+                    MainType_SubWin = Win_Type[index][1]; // 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형 > SubWindow(사이즈별)임 MainWindow(창호 자재 조합유형별)아님 
+                    MainType_ID = Win_Type[index][2];/////////////////////////// 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 ID
+
+                    //찾은 SubWindow정보에서 MainWindow 찾기 
+
+                    MainType_Win = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "상위창호번호,유리면적비,명칭", "번호 = '" + MainType_SubWin + "'");
+                    if (MainType_Win.Length > 0)
                     {
-                        if (MEnvelope_CW[j][2] != "천창있음")
+                        //찾은 주 창호 유형의 빛투과율 찾기 
+                        MainType_Win_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "빛투과율, 유리종류", "번호 = '" + MainType_Win[0][0].ToString() + "'");
+                        Main_WinCW = MainType_Win[0][0];
+                        K1 = Convert.ToDouble(MainType_Win[0][1]);
+                        if (MainType_Win_Value.Length > 0)
                         {
-                            for (int k = 0; k < CW_Type.Length; k++)
+                            f_τD65_SNA = Convert.ToDouble(MainType_Win_Value[0][0]);
+                            Main_glass = MainType_Win_Value[0][1];
+                        }
+                        string[][] 상인방높이 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "상인방높이", "방위='" + facade_di + "' AND 존 = '" + ZoneNum + "' AND 구조체 = '" + MainType_Win[0][2].ToString() + "'");
+                        hLi = Convert.ToDouble(상인방높이[0][0].ToString());
+                    }
+                    else { }
+                }
+                else if (Win_Type.Length == 0)
+                {
+                    //커튼월창 구조체 타입별로 면적 합계 구하기
+                    double[] AreaSum_ConstructionCW = new double[CW_Type.Length];
+                    if (MEnvelope_CW.Length > 0 && CW_Type.Length > 0)
+                    {
+                        for (int j = 0; j < MEnvelope_CW.Length; j++)
+                        {
+                            if (MEnvelope_CW[j][2] != "천창있음")
                             {
-                                if (MEnvelope_CW[j][4] == CW_Type[k][1])
-                                { AreaSum_ConstructionCW[k] += Convert.ToDouble(MEnvelope_CW[j][1]); }
+                                for (int k = 0; k < CW_Type.Length; k++)
+                                {
+                                    if (MEnvelope_CW[j][4] == CW_Type[k][1])
+                                    { AreaSum_ConstructionCW[k] += Convert.ToDouble(MEnvelope_CW[j][1]); }
+                                }
                             }
                         }
                     }
-                }
 
-                MaxSum_CW = AreaSum_ConstructionCW.Max(); //커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값
-                index = 0;
-                for (int k = 0; k < CW_Type.Length; k++)
-                {
-                    if (AreaSum_ConstructionCW[k] == AreaSum_ConstructionCW.Max())
-                    { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
-                }
-                if (CW_Type.Length > 0)
-                {
-                    MainType_CW_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "빛투과율, 고정유리종류, 번호, 유리부분유리면적비", "번호 = '" + CW_Type[index][1] + "'");
-                    if (MainType_CW_Value.Length > 0)
+                    MaxSum_CW = AreaSum_ConstructionCW.Max(); //커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값
+                    index = 0;
+                    for (int k = 0; k < CW_Type.Length; k++)
                     {
-                        MainType_CW = MainType_CW_Value[0][2].ToString(); // 커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형  
-                        MainType_ID = CW_Type[index][2];
+                        if (AreaSum_ConstructionCW[k] == AreaSum_ConstructionCW.Max())
+                        { index = k; }  //창호 구조체 타입별로 면적 합계 중 가장 큰 값의 인덱스
+                    }
+                    if (CW_Type.Length > 0)
+                    {
+                        MainType_CW_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "빛투과율, 고정유리종류, 번호, 유리부분유리면적비", "번호 = '" + CW_Type[index][1] + "'");
+                        if (MainType_CW_Value.Length > 0)
+                        {
+                            MainType_CW = MainType_CW_Value[0][2].ToString(); // 커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 유형  
+                            MainType_ID = CW_Type[index][2];
 
-                        Main_WinCW = CW_Type[index][0];
-                        f_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
-                        Main_glass = MainType_CW_Value[0][1];
-                        K1 = Convert.ToDouble(MainType_CW_Value[0][3]);
+                            Main_WinCW = CW_Type[index][0];
+                            f_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
+                            Main_glass = MainType_CW_Value[0][1];
+                            K1 = Convert.ToDouble(MainType_CW_Value[0][3]);
+                            string[][] 상인방높이 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "상인방높이", "방위='" + facade_di + "' AND 존 = '" + ZoneNum + "' AND 구조체 = '" + MainType_CW + "'");
+                            hLi = Convert.ToDouble(상인방높이[0][0].ToString());
+                        }
                     }
                 }
-
             }
             else
             {
@@ -1762,6 +1901,8 @@ namespace main.contents
                                     Main_glass = MainType_Win_Value[0][1];
                                     K1 = Convert.ToDouble(MainType_Win[0][1]);
                                 }
+                                string[][] 상인방높이 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "상인방높이", "방위='" + facade_di + "' AND 존 = '" + ZoneNum + "' AND 구조체 = '" + Main_WinCW + "'");
+                                hLi = Convert.ToDouble(상인방높이[0][0].ToString());
                             }
                         }
                     }
@@ -1926,7 +2067,7 @@ namespace main.contents
                     MainType_ID = Win_Type[index][2];/////////////////////////// 창호 구조체 타입별로 면적 합계 중 가장 큰 값의 구조체 ID
 
                     //찾은 SubWindow정보에서 MainWindow 찾기 
-                    MainType_Win = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "상위창호번호, 유리면적비", "번호 = '" + MainType_SubWin + "'");
+                    MainType_Win = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "상위창호번호, 유리면적비,명칭", "번호 = '" + MainType_SubWin + "'");
                     if (MainType_Win.Length > 0)
                     {
                         //찾은 주 창호 유형의 빛투과율 찾기 
@@ -1942,7 +2083,6 @@ namespace main.contents
                                 { AreaSum_ConstructionCW[k] += Convert.ToDouble(MEnvelope_CW[j][1]); }
                             }
                         }
-
                         MaxSum_CW = AreaSum_ConstructionCW.Max(); //커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값
                         index = 0;
                         for (int k = 0; k < CW_Type.Length; k++)
@@ -2015,9 +2155,18 @@ namespace main.contents
             NaturalCheck();
             NaturalType_case1();
             WindowInfo();
-            side_active();
+            
         }
 
+        private void RenewDi_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RenewDirec = RenewDi_comboBox.Text;
+        }
+
+        private void Slope_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RenewSlope = Slope_comboBox.Text;
+        }
     }
 
 }
