@@ -3764,7 +3764,6 @@ namespace main.contents
                     Load_StoragePump(StoragePump);
                 }
 
-
                 if (Value[0][3] != null && Value[0][3] != "")
                 {
                     Vs = Convert.ToDouble(Value[0][3]);

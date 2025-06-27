@@ -805,6 +805,12 @@ namespace main
 
                     f.LoadData("");
                 }
+                else if (i == 44)
+                {
+                    Algorithm_Lighting f = (Algorithm_Lighting)forms[i];
+
+                    f.LoadData("");
+                }
                 else if (i == 46)
                 {
                     Algorithm_Cooling f = (Algorithm_Cooling)forms[i];

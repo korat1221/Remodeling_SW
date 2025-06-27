@@ -595,6 +595,24 @@ namespace main.contents
                     break;
             }
 
+            if (int.TryParse(AboveGround_comboBox.Text, out int abovefloornum))
+            {
+                AboveGround = AboveGround_comboBox.Text;
+            }
+            else
+            {
+                MessageBox.Show("지상층수를 입력해주세요");
+            }
+
+            if (int.TryParse(UnderGround_comboBox.Text, out int underfloornum))
+            {
+               UnderGround = UnderGround_comboBox.Text;
+            }
+            else
+            {
+                MessageBox.Show("지하층수를 입력해주세요");
+            }
+
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
             Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,프로젝트명,프로젝트유형,프로젝트유형번호,기존프로젝트," +
                 "건물대상,건물용도,건물명,주소,지역인덱스,지역,지역구분," +

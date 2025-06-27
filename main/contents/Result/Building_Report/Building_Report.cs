@@ -923,8 +923,6 @@ namespace main.contents.Result.Building_Report
                     총가스[mth] = double.IsNaN(총가스[mth]) ? 0 : 총가스[mth];
                     총전기[mth] = double.IsNaN(총전기[mth]) ? 0 : 총전기[mth];
 
-
-
                     총소요량[mth] = 총전기[mth] + 총가스[mth];
 
                 }
