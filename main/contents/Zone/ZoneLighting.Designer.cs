@@ -64,6 +64,7 @@ namespace main.contents
             Direction_label = new Label();
             Aca_label = new Label();
             panel3 = new Panel();
+            subtype = new Label();
             areaunit1 = new Label();
             roofButton = new RadioButton();
             Acam2_label = new Label();
@@ -575,6 +576,7 @@ namespace main.contents
             // panel3
             // 
             panel3.BackColor = Color.White;
+            panel3.Controls.Add(subtype);
             panel3.Controls.Add(areaunit1);
             panel3.Controls.Add(roofButton);
             panel3.Controls.Add(Acam2_label);
@@ -591,6 +593,17 @@ namespace main.contents
             panel3.Size = new Size(500, 143);
             panel3.TabIndex = 93;
             panel3.Paint += panel3_Paint;
+            // 
+            // subtype
+            // 
+            subtype.AutoSize = true;
+            subtype.Font = new Font("나눔바른고딕", 9.75F);
+            subtype.ForeColor = SystemColors.ButtonShadow;
+            subtype.Location = new Point(353, 39);
+            subtype.Name = "subtype";
+            subtype.Size = new Size(70, 15);
+            subtype.TabIndex = 220;
+            subtype.Text = "일반 파사드";
             // 
             // areaunit1
             // 
@@ -613,7 +626,6 @@ namespace main.contents
             roofButton.TabIndex = 127;
             roofButton.Text = "천창";
             roofButton.UseVisualStyleBackColor = true;
-            roofButton.Visible = false;
             // 
             // Acam2_label
             // 
@@ -635,7 +647,6 @@ namespace main.contents
             facadeButton.TabIndex = 126;
             facadeButton.Text = "파사드";
             facadeButton.UseVisualStyleBackColor = true;
-            facadeButton.Visible = false;
             // 
             // direction_textBox
             // 
@@ -663,7 +674,6 @@ namespace main.contents
             NaturalDB_button.TabIndex = 97;
             NaturalDB_button.Text = "+";
             NaturalDB_button.UseVisualStyleBackColor = false;
-            NaturalDB_button.Visible = false;
             NaturalDB_button.Click += NaturalDB_button_Click;
             // 
             // Aca_textBox
@@ -997,7 +1007,7 @@ namespace main.contents
             L8_textBox.Enabled = false;
             L8_textBox.Font = new Font("나눔바른고딕", 9.75F);
             L8_textBox.ForeColor = SystemColors.ControlDark;
-            L8_textBox.Location = new Point(225, 201);
+            L8_textBox.Location = new Point(225, 198);
             L8_textBox.Name = "L8_textBox";
             L8_textBox.Size = new Size(120, 15);
             L8_textBox.TabIndex = 152;
@@ -1010,7 +1020,7 @@ namespace main.contents
             L6_textBox.Enabled = false;
             L6_textBox.Font = new Font("나눔바른고딕", 9.75F);
             L6_textBox.ForeColor = SystemColors.ControlDark;
-            L6_textBox.Location = new Point(225, 179);
+            L6_textBox.Location = new Point(225, 175);
             L6_textBox.Name = "L6_textBox";
             L6_textBox.Size = new Size(120, 15);
             L6_textBox.TabIndex = 150;
@@ -1023,7 +1033,7 @@ namespace main.contents
             L5_textBox.Enabled = false;
             L5_textBox.Font = new Font("나눔바른고딕", 9.75F);
             L5_textBox.ForeColor = SystemColors.ControlDark;
-            L5_textBox.Location = new Point(225, 155);
+            L5_textBox.Location = new Point(225, 152);
             L5_textBox.Name = "L5_textBox";
             L5_textBox.Size = new Size(120, 15);
             L5_textBox.TabIndex = 149;
@@ -1061,15 +1071,15 @@ namespace main.contents
             L8_label.Font = new Font("나눔바른고딕", 9.75F);
             L8_label.Location = new Point(63, 198);
             L8_label.Name = "L8_label";
-            L8_label.Size = new Size(55, 15);
+            L8_label.Size = new Size(92, 15);
             L8_label.TabIndex = 146;
-            L8_label.Text = "조명계수";
+            L8_label.Text = "광효율 [lm/W]";
             // 
             // L6_label
             // 
             L6_label.AutoSize = true;
             L6_label.Font = new Font("나눔바른고딕", 9.75F);
-            L6_label.Location = new Point(63, 176);
+            L6_label.Location = new Point(63, 175);
             L6_label.Name = "L6_label";
             L6_label.Size = new Size(83, 15);
             L6_label.TabIndex = 144;
@@ -1394,6 +1404,7 @@ namespace main.contents
             // 
             // Ltype_pictureBox
             // 
+            Ltype_pictureBox.BackColor = Color.Transparent;
             Ltype_pictureBox.Location = new Point(233, 52);
             Ltype_pictureBox.Name = "Ltype_pictureBox";
             Ltype_pictureBox.Size = new Size(54, 50);
@@ -1402,14 +1413,20 @@ namespace main.contents
             // 
             // Main_pictureBox3
             // 
+            Main_pictureBox3.BackColor = Color.Transparent;
+            Main_pictureBox3.ErrorImage = null;
+            Main_pictureBox3.InitialImage = null;
             Main_pictureBox3.Location = new Point(14, 20);
             Main_pictureBox3.Name = "Main_pictureBox3";
-            Main_pictureBox3.Size = new Size(473, 239);
+            Main_pictureBox3.Size = new Size(300, 96);
             Main_pictureBox3.TabIndex = 2;
             Main_pictureBox3.TabStop = false;
             // 
             // Main_pictureBox2
             // 
+            Main_pictureBox2.BackColor = Color.Transparent;
+            Main_pictureBox2.ErrorImage = null;
+            Main_pictureBox2.InitialImage = null;
             Main_pictureBox2.Location = new Point(14, 20);
             Main_pictureBox2.Name = "Main_pictureBox2";
             Main_pictureBox2.Size = new Size(473, 239);
@@ -1418,6 +1435,9 @@ namespace main.contents
             // 
             // Main_pictureBox
             // 
+            Main_pictureBox.BackColor = Color.Transparent;
+            Main_pictureBox.ErrorImage = null;
+            Main_pictureBox.InitialImage = null;
             Main_pictureBox.Location = new Point(14, 20);
             Main_pictureBox.Name = "Main_pictureBox";
             Main_pictureBox.Size = new Size(473, 239);
@@ -1657,7 +1677,6 @@ namespace main.contents
             label19.Size = new Size(19, 15);
             label19.TabIndex = 221;
             label19.Text = "m";
-            label19.Visible = false;
             // 
             // label20
             // 
@@ -1843,8 +1862,6 @@ namespace main.contents
         private TextBox Blind3_textBox;
         private Label Shade5_label;
         private PictureBox Main_pictureBox;
-        private PictureBox Main_pictureBox2;
-        private PictureBox Main_pictureBox3;
         private Label label15;
         private TextBox Pci_textBox;
         private TextBox Num_textBox;
@@ -1860,5 +1877,8 @@ namespace main.contents
         private Label label18;
         private Label label19;
         private Label label20;
+        private Label subtype;
+        private PictureBox Main_pictureBox3;
+        private PictureBox Main_pictureBox2;
     }
 }

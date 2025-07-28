@@ -642,7 +642,7 @@ namespace main
                     "as_bs,hs_bs,hg_hw," +
                     "normal_ηR,saw_ηR,r_DSNA,r_DSA,r_dclass," +
                     "r_nearEm_FDS,r_fd_sna,r_fd_sa,r_nearEm_DC,r_fd_c,r_FDS,r_FD," +
-                    "Sunlight_SCW,Sunlight_PjSC,Final_kWh",
+                    "Sunlight_SCW,Sunlight_PjSC,Final_kWh,Aux_kWh,Prod_kWh,OutdoorLux",
 
                 "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + zonelight1.ZoneNum + "','" + MTH + "','" +
                  zonelight1.Zone_ITr.ToString() + "','" + zonelight1.Zone_IRD.ToString() + "','" + zonelight1.Zone_Ish[mth].ToString() + "','" + zonelight1.Zone_Ish_In_At.ToString() + "','" + zonelight1.Zone_Wi.ToString() + "','" + zonelight1.Zone_Ish_GDF.ToString() + "','" + zonelight1.Zone_Calc_Ish[mth].ToString() + "','" +
@@ -651,7 +651,7 @@ namespace main
                  zonelight1.find_normal_ηR.ToString() + "','" + zonelight1.find_saw_ηR.ToString() + "','" + zonelight1.Zone_Roof_DSNA.ToString() + "','" + zonelight1.Zone_Roof_DSA.ToString() + "','" + zonelight1.roof_dclass + "','" +
                  zonelight1.r_nearEm_FDS.ToString() + "','" + zonelight1.find_roof_fd_sna.ToString() + "','" + zonelight1.find_roof_fd_sa.ToString() + "','" + zonelight1.r_nearEm_DC.ToString() + "','" + zonelight1.find_roof_fd_c.ToString() + "','" + zonelight1.Zone_Roof_FDS[mth].ToString() + "','" + zonelight1.Zone_Roof_FD[mth].ToString() + "','" +
                  zonelight1.Zone_Sunlight_SCW[mth].ToString() + "','" + zonelight1.Zone_Sunlight_PjSC[mth].ToString() + "','" + zonelight1.Zone_Final_kWh[mth].ToString()
-                 + "'", "번호,월");
+                 + "','"+ zonelight1.Zone_AuxLight[mth].ToString() + "','"+ zonelight1.Zone_Prodlight[mth].ToString() + "','"+ zonelight1.Zone_Lux[mth].ToString() + "'", "번호,월");
             }
 
             //[난방/냉방,비이용일/이용일,mth] = [h/c,we/wd,mth]=[0/1,0/1,12]

@@ -69,7 +69,8 @@ window.addEventListener("message", async (event) => {
         let coolingNumValue = o.items.find(item => item.cname === "coolingnum");
         let heatingNumValue = o.items.find(item => item.cname === "heatingnum");
         let lightingNumValue = o.items.find(item => item.cname === "lightingnum");
-
+        let lightingH = o.items.find(item => item.cname === "lightingHeightnum");
+        let lightingT = o.items.find(item => item.cname === "lightingType");
 
         $(".buildingImage").each((idx,al) => {
           let projectNum = projectNumValue.data[idx].val; 
@@ -89,6 +90,21 @@ window.addEventListener("message", async (event) => {
           let projectNum = projectNumValue.data[idx].val; 
           let heatingNum = heatingNumValue.data[idx].val; 
           al.setAttribute("src", "img/" + projectNum + "/"+ heatingNum + ".png"); 
+        });
+         $(".lightingImage").each((idx,al) => {
+          let projectNum = projectNumValue.data[idx].val; 
+          let lightingNum = lightingNumValue.data[idx].val; 
+          al.setAttribute("src", "img/" + projectNum + "/"+ lightingNum + ".png"); 
+        });
+         
+          $(".lightingHeightImage").each((idx,al) => {
+          let lightingHeight = lightingH.data[idx].val; 
+          al.setAttribute("src", "image/light/" + lightingHeight + ".png"); 
+        });
+         
+          $(".lightingType").each((idx,al) => {
+          let lightingType = lightingT.data[idx].val;
+          al.setAttribute("src", "image/light/" + lightingType + ".png"); 
         });
         
       }

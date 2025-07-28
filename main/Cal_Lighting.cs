@@ -23,8 +23,8 @@ namespace main
 
         //public double[] ddaytime = new double[12];   //존 낮시간 csv 변수 
         //public double[] nnighttime = new double[12];  //존 밤시간 csv 변수
-        public double Pj, Pn, Fo, Fc, lm_W, wsp,N; //존 인공조명 csv 변수
-        public double[] Calc_wsp = new double[12]; //최종 대기전력
+        public double Pj, Pn, Fo, Fc, lm_W, wsp, N; //존 인공조명 csv 변수
+        public double Calc_wsp; //대기전력
 
         public string facade_di, glass1, facade_shade, facade_dimming; //파사드정보1 csv 변수
         public double Zone_f_Aca, Zone_f_a, Zone_f_b, Zone_f_AD, f_τD65_SNA, K1, K2, K3;
@@ -59,9 +59,9 @@ namespace main
         public double Zone_ITr, Zone_IRD; //facade_general ITr Calc 객체 변수 
         public double Zone_Wi, Zone_Ish_In_At, Zone_Ish_GDF; //facade_shade 객체 변수   
         public double[] Zone_Ish = new double[12];//월별 수직,수평,주변 음영계수 
-       
 
-        public double[] Zone_DCA = new double[12];  
+
+        public double[] Zone_DCA = new double[12];
         public double[] Zone_D = new double[12];
         public double[] Zone_nearD = new double[12];
         public double Zone_τeff_SNA_j; //facade_FDS 객체 변수 
@@ -95,8 +95,8 @@ namespace main
 
         public double[] Zone_Sunlight_SCW = new double[12];
         public double[] Zone_Sunlight_PjSC = new double[12];
-  
-        public double[] Zone_Final_kWh = new double[12]; //최종 조명에너지소요량
+
+        public double[] Zone_Final_kWh = new double[12], Zone_AuxLight = new double[12], Zone_Prodlight = new double[12], Zone_Lux = new double[12]; //최종 조명에너지소요량
 
         //public double[] monthday = new double[12], weekdays = new double[12], sunrise = new double[12], sunset = new double[12]; // 월별 일수, 평일수, 주이용일
         public double[] monthday = new double[12], weekdays = new double[12];
@@ -112,12 +112,13 @@ namespace main
         {
             this.ZoneNum = zoneNum;
 
-            지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", ""); 
-
+            지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
+            string gakdo = energy_slope + "˚";
             for (int i = 0; i < 12; i++)
             {
                 //string[][] Valueaaaa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_외부조도", "외부조도", " 지역명='" + 지역[0][0] + "' and 방향='" + energy_di + "' and 각도='" + energy_slope + "' and 기간 = '"+(i+1)+"월' ");
-                String[][] Valueaaaa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_외부조도", "외부조도", " 지역명 = '" + 지역[0][0] + "' and 방향 = '" + energy_di + "' and 각도 = '" + energy_slope + "' and 기간 = '" + (i + 1) + "월'");
+
+                String[][] Valueaaaa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_외부조도", "외부조도", " 지역명 = '" + 지역[0][0] + "' and 방향 = '" + energy_di + "' and 각도 = '" + gakdo + "' and 기간 = '" + (i + 1) + "월'");
                 if (Valueaaaa.Length > 0)
                 {
                     ext[i] = Convert.ToDouble(Valueaaaa[0][0]);
@@ -209,7 +210,7 @@ namespace main
             if (ValueA.Length > 0)
             {
                 while (++kk < ValueA.Length)
-                {if (ValueA[0][1] == "")
+                { if (ValueA[0][1] == "")
                     { }
                     else
                     {
@@ -253,9 +254,9 @@ namespace main
                 String[][] BlindValue = null;
                 if (Blind.Length > 0 && Blind[0][0] != "")
                 { BlindValue = Program.DB.getValue(DB.type.ProjDB, "ConstructionBlind", "제어방식2", "번호='" + Blind[0][0] + "'"); }
-                
-                
-                
+
+
+
                 for (int i = 0; i < 12; i++)
                 {
                     if (BlindValue != null && BlindValue.Length > 0)
@@ -295,7 +296,7 @@ namespace main
                 }
 
             }
-            else 
+            else
             {
                 ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,천창유리각,천창수평측면각,천창장변부길이,천창단변부길이,천창수평상부높이", "번호='" + ZoneNum + "'");
                 kk = -1;
@@ -335,7 +336,7 @@ namespace main
                         energy_di = ValueA[kk][5];
                         energy_slope = Convert.ToDouble(ValueA[kk][6]);
                     }
-                }  
+                }
             }
         }
 
@@ -364,10 +365,10 @@ namespace main
                     for (int i = 0; i < 12; i++)
                     {
                         string 주간일수;
-                        if(dayofuse == 5.5) { 주간일수 = "주 "+dayofuse+" 일 근무"; }
+                        if (dayofuse == 5.5) { 주간일수 = "주 " + dayofuse + " 일 근무"; }
                         else { 주간일수 = "주 " + dayofuse + ".0 일 근무"; }
-                        string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "이용일수", "이용일수", "월= '" + (i+1) + "월' and 주간일수 ='" + 주간일수 + "'");
-                        Zone_useofdays[i]  = Convert.ToDouble(value[0][0]);
+                        string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "이용일수", "이용일수", "월= '" + (i + 1) + "월' and 주간일수 ='" + 주간일수 + "'");
+                        Zone_useofdays[i] = Convert.ToDouble(value[0][0]);
                         //Zone_useofdays[i] = time.Calc_useofdays(dayofuse, monthday[i], weekdays[i]);
                         Zone_daytime[i] = time.Calc_daytime(starttime, endtime, sunrise[i], sunset[i], Zone_useofdays[i], dayofuse);
                         Zone_nighttime[i] = time.Calc_nighttime(starttime, endtime, sunrise[i], sunset[i], Zone_useofdays[i], dayofuse);
@@ -379,7 +380,7 @@ namespace main
             //MessageBox.Show(Zone_nighttime[0].ToString());
         }
 
-      
+
         //파사드 계산 
         //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
@@ -499,7 +500,7 @@ namespace main
                 //유리 유효 투과율 계산
                 Zone_τeff_SNA_j = FDS.Calc_τeff_SNA_j(f_τD65_SNA, K1, K2, K3);
                 //Console.WriteLine("유리 유효 투과율 : " + "  " + Zone_τeff_SNA_j);
-                
+
                 for (int i = 0; i < 12; i++)
                 {    //DCA 계산 
                     Zone_DCA[i] = FDS.Calc_Facade_DCA(Zone_ITr, Zone_IRD, Zone_Calc_Ish[i]);
@@ -549,18 +550,23 @@ namespace main
 
                 for (int i = 0; i < 12; i++)
                 {
-                   
-                    //조건에 맞는 값 가져오기
-                    String[][] ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_파사드차양가동주광공급계수", "파사드차양가동주광공급계수", "차양시스템종류='" + facade_shade + "' AND 주광이용가능성 = '" + dclass[i] + "'");
-                    int kk = -1;
-                    if (ValueA.Length > 0)
+
+                    if (facade_shade == "차양없음")
                     {
-                        while (++kk < ValueA.Length)
+                        find_fd_sa[i] = find_fd_sna[i];
+                    }
+                    else
+                    {
+                        String[][] ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_파사드차양가동주광공급계수", "파사드차양가동주광공급계수", "차양시스템종류='" + facade_shade + "' AND 주광이용가능성 = '" + dclass[i] + "'");
+                        int kk = -1;
+                        if (ValueA.Length > 0)
                         {
-                            find_fd_sa[i] = Convert.ToDouble(ValueA[0][0]);
+                            while (++kk < ValueA.Length)
+                            {
+                                find_fd_sa[i] = Convert.ToDouble(ValueA[0][0]);
+                            }
                         }
                     }
-                    //MessageBox.Show(find_fd_sa.ToString());
                 }
 
                 //FD_S_SNA 용 기준조도 근사값
@@ -590,7 +596,7 @@ namespace main
                 double[] fdcem_data = { 50, 100, 150, 200, 300, 500, 750, 1000 };
                 double fdcem_target = Em;
                 var fdcem_min = fdcem_data.Min(x => Math.Abs(x - fdcem_target));
-                 f_naerEm_DC = fdcem_data.First(y => Math.Abs(y - fdcem_target) == fdcem_min);
+                f_naerEm_DC = fdcem_data.First(y => Math.Abs(y - fdcem_target) == fdcem_min);
                 //Console.WriteLine("FDC_기준조도: " + "  " + fdcnearEm_SNA);
 
 
@@ -665,12 +671,12 @@ namespace main
 
                 if (Middle == "일반형" || Middle == "돔형")
                 {
-                    Zone_as_bs = general.Calc_near_as_bs(As,Bs);
-                    Zone_hs_bs = general.Calc_near_hs_bs(hs,Bs);
+                    Zone_as_bs = general.Calc_near_as_bs(As, Bs);
+                    Zone_hs_bs = general.Calc_near_hs_bs(hs, Bs);
                 }
                 else if (Middle == "톱니형")
                 {
-                    Zone_hg_hw = general.Calc_near_hg_hw(hg,hw);  
+                    Zone_hg_hw = general.Calc_near_hg_hw(hg, hw);
                 }
                 else return;
 
@@ -841,7 +847,7 @@ namespace main
 
                 //천창 차양 가동 
                 kk = -1;
-                 ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_천창차양시간", "trel_D_SA_j", "방위 ='" + roof_di + "' AND γF ='" + γF + "'");
+                ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_천창차양시간", "trel_D_SA_j", "방위 ='" + roof_di + "' AND γF ='" + γF + "'");
                 if (ValueA.Length > 0)
                 {
                     while (++kk < ValueA.Length)
@@ -940,7 +946,7 @@ namespace main
 
         // 신재생에너지 계산
         //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
-        
+
         public void Calc_Sunlight_SCW()
         {
             if (Sub == "True")
@@ -949,9 +955,11 @@ namespace main
 
                 for (int i = 0; i < 12; i++)
                 {
+                    string[][] ext_value = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_외부조도", "외부조도", " 지역 = '" + 지역[0][0] + "' and 방위 = '" + energy_di + "' and 각도 = '" + energy_slope + "' and 월 = '" + (i + 1) + "월'");
+                    ext[i] = Convert.ToDouble(ext_value[0][0].ToString());
                     Zone_Sunlight_SCW[i] = sunlight_scw.Calc_SCW(energy_eff, ext[i], energy_area, lm_W);
-
-                    //Console.WriteLine("집광채광" + " " + (i + 1) + "월 전력 : " + "  " + Zone_Sunlight_SCW[i]);
+                    
+                    Zone_Lux[i] = energy_eff * ext[i] * energy_area;
                 }
             }
             else return;
@@ -979,33 +987,40 @@ namespace main
 
         public void Calc_kWh()
         {
+            double[] monthdays = new double[] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 12 }; 
             Final_kW final_w = new Final_kW();
 
             for (int i = 0; i < 12; i++)
             {
                 useofdays += Zone_useofdays[i];
             }
-            for (int i = 0; i < 12; i++)
-            {
-                Calc_wsp[i] = ((wsp * N) /1000 / A )*(Zone_useofdays[i] / useofdays);
-            }
+           Calc_wsp = wsp * N / 1000 / A ;  
+           
             //Pci = (Convert.ToDouble(Pci_textBox.Text) * N)/1000/A;
 
             if (Sub == "True")
             {
-                for (int i = 0; i < 12; i++)
+                for (int i = 0; i < 12; i++) //집광채광시
                 {
-                    Zone_Final_kWh[i] = Math.Round(final_w.Calc_W_re_yes(Fc, Zone_Sunlight_PjSC[i], Pj, Fo, Zone_daytime[i], Zone_Facade_FD[i], Zone_Roof_FD[i], Zone_nighttime[i], Calc_wsp[i], A, Zone_f_AD),3);
+                    Zone_Final_kWh[i] = Math.Round(final_w.Calc_W_re_yes(Fc, Zone_Sunlight_PjSC[i], Pj, Fo, Zone_daytime[i], Zone_Facade_FD[i], Zone_Roof_FD[i], Zone_nighttime[i], Calc_wsp, A, Zone_f_AD), 3);
                     //MessageBox.Show((i + 1) + "월 조명에너지 소요량 : " + " " + Zone_Final_W[i]);
+                    Zone_AuxLight[i] = ( monthdays[i]*24 - ( Zone_daytime[i] + Zone_nighttime[i] ) ) * Calc_wsp * A;
+                  
+                    Zone_Prodlight[i] = Math.Round(final_w.Calc_W_re_no(Fc, Pj, Fo, Zone_daytime[i], Zone_Facade_FD[i], Zone_Roof_FD[i], Zone_nighttime[i], Calc_wsp, A, Zone_f_AD), 3);
+                    Zone_Prodlight[i] = Zone_Prodlight[i] - Zone_Final_kWh[i];
+                   
                 }
             }
 
             else if (Sub == "False")
             {
-                for (int i = 0; i < 12; i++)
+                for (int i = 0; i < 12; i++)//집광채광이 없는경우
                 {
-                    Zone_Final_kWh[i] = Math.Round(final_w.Calc_W_re_no(Fc, Pj, Fo, Zone_daytime[i], Zone_Facade_FD[i], Zone_Roof_FD[i], Zone_nighttime[i], Calc_wsp[i], A, Zone_f_AD),3);
+                    Zone_Final_kWh[i] = Math.Round(final_w.Calc_W_re_no(Fc, Pj, Fo, Zone_daytime[i], Zone_Facade_FD[i], Zone_Roof_FD[i], Zone_nighttime[i], Calc_wsp, A, Zone_f_AD), 3);
                     //MessageBox.Show((i + 1) + "월 조명에너지 소요량 : " + " " + Zone_Final_W[i]);
+                    Zone_AuxLight[i] = (monthdays[i] * 24 - (Zone_daytime[i] + Zone_nighttime[i])) * Calc_wsp * A; 
+                    Zone_Prodlight[i] = 0;
+                    Zone_Lux[i] = 0;
                 }
             }
             else return;
@@ -1447,18 +1462,20 @@ namespace main
 
     public class Final_kW
     {
+        //집광채광이 있는 경우
         public double Calc_W_re_yes(double Fc, double Pj_SC, double P, double Fo, double daytime, double facade_FD, double roof_FD, double nighttime, double wsp, double A, double Zone_f_AD)
         {
             double W1, W_11, W_12;
             W_11 = ((Fc * (Pj_SC / 1000)) * Fo * daytime * (facade_FD + roof_FD) + (Fc * (P / 1000) * Fo * nighttime) + wsp ) * Zone_f_AD;
             W_12 = ((Fc * (Pj_SC / 1000)) * Fo * daytime + (Fc * (P / 1000) * Fo * nighttime) + wsp) * (A - Zone_f_AD);//추가
-            W1 = W_11 + W_12;//추가
+            W1 = W_11 + W_12;//추가          
             return W1;
         }
+        //집광채광이 없는 경우
         public double Calc_W_re_no(double Fc, double P, double Fo, double daytime, double facade_FD, double roof_FD, double nighttime, double wsp, double A, double Zone_f_AD)
         {
             double W2, W2_11, W2_12;
-            W2_11 = ((Fc * (P / 1000)) * Fo * daytime * (facade_FD + roof_FD) + (Fc * (P / 1000) * Fo * nighttime) + wsp) * Zone_f_AD;
+            W2_11 = (Fc * P / 1000 * Fo * daytime * (facade_FD + roof_FD) + (Fc * P / 1000 * Fo * nighttime) + wsp) * Zone_f_AD;
             W2_12 = ((Fc * (P / 1000)) * Fo * daytime + (Fc * (P / 1000) * Fo * nighttime) + wsp) * (A-Zone_f_AD);//추가
             
             W2 = W2_11 + W2_12;//추가
