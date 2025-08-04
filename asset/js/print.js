@@ -71,6 +71,7 @@ window.addEventListener("message", async (event) => {
         let lightingNumValue = o.items.find(item => item.cname === "lightingnum");
         let lightingH = o.items.find(item => item.cname === "lightingHeightnum");
         let lightingT = o.items.find(item => item.cname === "lightingType");
+        let ahu = o.items.find(item => item.cname === "ahu_num");
 
         $(".buildingImage").each((idx,al) => {
           let projectNum = projectNumValue.data[idx].val; 
@@ -96,15 +97,18 @@ window.addEventListener("message", async (event) => {
           let lightingNum = lightingNumValue.data[idx].val; 
           al.setAttribute("src", "img/" + projectNum + "/"+ lightingNum + ".png"); 
         });
-         
           $(".lightingHeightImage").each((idx,al) => {
           let lightingHeight = lightingH.data[idx].val; 
           al.setAttribute("src", "image/light/" + lightingHeight + ".png"); 
         });
-         
           $(".lightingType").each((idx,al) => {
           let lightingType = lightingT.data[idx].val;
           al.setAttribute("src", "image/light/" + lightingType + ".png"); 
+        });
+          $(".ahuImage").each((idx,al) => {
+          let projectNum = projectNumValue.data[idx].val; 
+          let ahuNum = ahu.data[idx].val; 
+          al.setAttribute("src", "img/" + projectNum + "/"+ ahuNum + ".png"); 
         });
         
       }
