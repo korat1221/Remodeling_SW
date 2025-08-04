@@ -755,11 +755,11 @@ namespace main
         }
         public static void AHUSystem_PreCalc(AHU AHU1)
         {
-            AHU1.Cal_CoolTube();
-            AHU1.Cal_Preheating();
-            AHU1.Cal_Duct();
+            AHU1.Cal_CoolTube();//
+            AHU1.Cal_Preheating();//온도
+            AHU1.Cal_Duct();//덕트열손실량
             AHU1.Cal_DuctLoss_OA();
-            AHU1.Cal_DuctLoss_RA();
+            AHU1.Cal_DuctLoss_RA(); //온도만 계산함
             AHU1.Cal_HeatRecovery();
         }
         public static void AHUSystem_PostCalc(AHU AHU1)
@@ -768,28 +768,28 @@ namespace main
             AHU1.Cal_Preheating();
             AHU1.Cal_Duct();
             AHU1.Cal_DuctLoss_OA();
-            AHU1.Cal_DuctLoss_RA();
+            AHU1.Cal_DuctLoss_RA();//온도만 계산함
             AHU1.Cal_HeatRecovery();
             AHU1.Cal_DuctLoss_EA();
-            AHU1.Cal_SA_set();
-            AHU1.Cal_RCA();
-            AHU1.Cal_DuctLoss_SA();
+            AHU1.Cal_SA_set();//
+            AHU1.Cal_RCA();//
+            AHU1.Cal_DuctLoss_SA(); //RA덕트 열손실량을 포함하여 계산함
             AHU1.Cal_Qv_b();
             AHU1.Cal_HU();
             AHU1.Cal_W();
         }
         public static void HRV_PostCalc(AHU HRV1)
         {
-            HRV1.Cal_CoolTube();
+            HRV1.Cal_CoolTube();//
             HRV1.Cal_Preheating();
             HRV1.Cal_Duct();
             HRV1.Cal_DuctLoss_OA();
-            HRV1.Cal_DuctLoss_RA();
+            HRV1.Cal_DuctLoss_RA();//온도만 계산함
             HRV1.Cal_HeatRecovery();
             HRV1.Cal_DuctLoss_EA();
-            HRV1.Cal_SA_set();
-            HRV1.Cal_RCA();
-            HRV1.Cal_DuctLoss_SA();
+            HRV1.Cal_SA_set();//
+            HRV1.Cal_RCA();//
+            HRV1.Cal_DuctLoss_SA();//RA덕트 열손실량을 포함하여 계산함
             HRV1.Cal_W();
         }
         private static void AHUSystem_PostSave(AHU AHU1)
@@ -820,7 +820,7 @@ namespace main
                              AHU1.theta_SA_prh[mth] + "','" + AHU1.theta_OA_du[hc, mth] + "','" + AHU1.theta_RA_du[hc, mth] + "','" + AHU1.theta_SA_hr[hc, mth] + "','" + AHU1.theta_SA_rca[hc, mth] + "','" + AHU1.theta_SA_du[hc, mth] + "','" + AHU1.X_iset[mth] + "','" +
                              AHU1.X_SA_prh[mth] + "','" + AHU1.X_SA_hr[mth] + "','" + AHU1.X_SA_rca[mth] + "','" +
                              AHU1.Vmin_tot + "','" + AHU1.Qb_mth_tot[hc, mth] + "','" + AHU1.Qmax_tot[hc] + "','" + AHU1.theta_iset_avg[hc] + "','" + AHU1.dvmechmth_avg[mth] + "','" + AHU1.tvmech_avg + "','" +
-                             AHU1.Q_gnd[mth] + "','" + AHU1.Wpreh_k[mth] + "','" + AHU1.Q_loss_OA_du[hc, mth] + "','" + AHU1.Q_loss_EA_du[hc, mth] + "','" + AHU1.Q_loss_SA_du[hc, mth] + "','" +
+                             AHU1.Q_gnd[mth] + "','" + AHU1.Wpreh_k[mth] + "','" + AHU1.Q_loss_OA_du[hc, mth] + "','" + AHU1.Q_loss_EA_du[hc, mth] + "','" + (AHU1.Q_loss_SA_du[hc, mth] + AHU1.Q_loss_RA_du[hc, mth]) + "','" +
                              AHU1.dtheta_prh[mth] + "','" + AHU1.dtheta_du_OA[hc, mth] + "','" + AHU1.dtheta_du_RA[hc, mth] + "','" + AHU1.dtheta_hr[hc, mth] + "','" + AHU1.dtheta_rca[hc, mth] + "','" + AHU1.dtheta_du_EA[hc, mth] + "','" + AHU1.dtheta_du_SA[hc, mth] + "','" +
                              AHU1.flea_du + "','" + AHU1.flea_ahu + "','" + AHU1.fins_ahu + "','" + AHU1.theta_defrost + "','" + AHU1.theta_sur_nc[hc, mth] + "','" + AHU1.Hduct_OA[mth] + "','" + AHU1.Hduct_RA[mth] + "','" + AHU1.Hduct_EA[mth] + "','" + AHU1.Hduct_SA[mth]
                               + "'", "번호,난방_냉방,월");
@@ -853,7 +853,7 @@ namespace main
                              HRV1.theta_SA_prh[mth] + "','" + HRV1.theta_OA_du[hc, mth] + "','" + HRV1.theta_RA_du[hc, mth] + "','" + HRV1.theta_SA_hr[hc, mth] + "','" + HRV1.theta_SA_rca[hc, mth] + "','" + HRV1.theta_SA_du[hc, mth] + "','" + HRV1.X_iset[mth] + "','" +
                              HRV1.X_SA_prh[mth] + "','" + HRV1.X_SA_hr[mth] + "','" + HRV1.X_SA_rca[mth] + "','" +
                              HRV1.Vmin_tot + "','" + HRV1.Qb_mth_tot[hc, mth] + "','" + HRV1.Qmax_tot[hc] + "','" + HRV1.theta_iset_avg[hc] + "','" + HRV1.dvmechmth_avg[mth] + "','" + HRV1.tvmech_avg + "','" +
-                             HRV1.Q_gnd[mth] + "','" + HRV1.Wpreh_k[mth] + "','" + HRV1.Q_loss_OA_du[hc, mth] + "','" + HRV1.Q_loss_EA_du[hc, mth] + "','" + HRV1.Q_loss_SA_du[hc, mth] + "','" +
+                             HRV1.Q_gnd[mth] + "','" + HRV1.Wpreh_k[mth] + "','" + HRV1.Q_loss_OA_du[hc, mth] + "','" + HRV1.Q_loss_EA_du[hc, mth] + "','" + (HRV1.Q_loss_SA_du[hc, mth] + HRV1.Q_loss_RA_du[hc, mth]) + "','" +
                              HRV1.dtheta_prh[mth] + "','" + HRV1.dtheta_du_OA[hc, mth] + "','" + HRV1.dtheta_du_RA[hc, mth] + "','" + HRV1.dtheta_hr[hc, mth] + "','" + HRV1.dtheta_rca[hc, mth] + "','" + HRV1.dtheta_du_EA[hc, mth] + "','" + HRV1.dtheta_du_SA[hc, mth] + "','" +
                              HRV1.flea_du + "','" + HRV1.flea_ahu + "','" + HRV1.fins_ahu + "','" + HRV1.theta_defrost + "','" + HRV1.theta_sur_nc[hc, mth] + "','" + HRV1.Hduct_OA[mth] + "','" + HRV1.Hduct_RA[mth] + "','" + HRV1.Hduct_EA[mth] + "','" + HRV1.Hduct_SA[mth]
                               + "'", "번호,난방_냉방,월");

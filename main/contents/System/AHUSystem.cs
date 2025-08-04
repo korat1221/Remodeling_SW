@@ -1,7 +1,11 @@
 ﻿using main.contentslist;
 using main.subcontents.AHUSystem;
 using main.subcontents.ConstructionCW;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections;
+using System.Diagnostics;
+using System.Diagnostics.Contracts;
 
 
 namespace main.contents
@@ -23,6 +27,7 @@ namespace main.contents
         double CoolingLoad, HeatingLoad;
         double 계산된_냉방출력, 계산된_난방출력;
         string HRVType, CoilType;
+        double maxhumid, minhumid;
 
 
         string[][] 프로젝트유형;
@@ -107,6 +112,16 @@ namespace main.contents
             PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
             PipeIns_textBox.Text = "보온단열재";
             PipeIns = "보온단열재";
+
+            LocationpictureBox.Parent = ImagePanel;
+            MainpictureBox.Parent = LocationpictureBox;
+            PrehPrecpictureBox.Parent = MainpictureBox;
+            hcoilpictureBox.Parent = MainpictureBox;
+            ccoilpictureBox.Parent = MainpictureBox;
+            HumidifierpictureBox.Parent = MainpictureBox; 
+            VAVpictureBox.Parent = MainpictureBox;
+            //maxhumid_label.Parent = ImagePanel;
+            //minhumid_label.Parent = ImagePanel;
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -374,13 +389,16 @@ namespace main.contents
                         Num = AHU_HRV.SelectSystem;
                         load_Table_HRV(Num);
                         Load_Zone();
-                        CoilpictureBox.Visible = false;
-                        HumidifierpictureBox.Visible = false;
-                        VAVpictureBox.Visible = false;
-                        LoadMainImage();
                         LoadLocationImage();
+                        LoadMainImage();
                         LoadPrehPrecImage();
+                        humincheck();
+                        maxhumid_label.Visible = true;
+                        minhumid_label.Visible = true;
+                        maxhumid_label.Text = "최대습도: " + maxhumid + " g/kg'";
+                        minhumid_label.Text = "최소습도: " + minhumid + " g/kg'";
                     }
+                    
                 }
             }
             else
@@ -397,6 +415,11 @@ namespace main.contents
                         LoadMainImage();
                         LoadLocationImage();
                         LoadPrehPrecImage();
+                        humincheck();
+                        maxhumid_label.Visible = true;
+                        minhumid_label.Visible = true;
+                        maxhumid_label.Text = "최대습도: " + maxhumid + " g/kg'";
+                        minhumid_label.Text = "최소습도: " + minhumid + " g/kg'";
                     }
                 }
             }
@@ -508,7 +531,7 @@ namespace main.contents
             double 냉각코일_출구_엔탈피 = 1.006 * 냉각코일_출구_건구온도 + 냉각코일_출구_절대습도 * (2500 + 1.86 * 냉각코일_출구_건구온도);
 
             계산된_냉방출력 = (냉각코일_입구_엔탈피 - 냉각코일_출구_엔탈피) * 1.204 * 급기풍량 / 3600;
-            계산된_난방출력 = (난방코일_입구온도 - 난방코일_출구온도) * 0.34 * 급기풍량 / 3600;
+            계산된_난방출력 = (난방코일_출구온도 - 난방코일_입구온도) * 0.34 * 급기풍량 / 1000;
         }
 
         private void AHULocation_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -652,20 +675,66 @@ namespace main.contents
             if (PrehPrecOptions == "쿨튜브")
             {
                 GroundInfo_groupBox.Visible = true;
+                GroundInfo_groupBox.BringToFront();
                 CooltubeInfo_groupBox.Visible = true;
+                PrehInfo_groupBox.Visible = false;
             }
             else if (PrehPrecOptions == "프리히터")
             {
+                PrehInfo_groupBox.Visible = true;
+                PrehInfo_groupBox.BringToFront();
                 GroundInfo_groupBox.Visible = false;
                 CooltubeInfo_groupBox.Visible = false;
-                PrehInfo_groupBox.Visible = true;
+                int a = preheating_power();
+                prepower_label.Text = Program.UTIL.doubleComa(a.ToString(), 0);
             }
+
+
             else
             {
                 GroundInfo_groupBox.Visible = false;
                 CooltubeInfo_groupBox.Visible = false;
                 PrehInfo_groupBox.Visible = false;
             }
+        }
+
+        int preheating_power()
+        {
+            //제품 풍량
+            //기후최소온도
+            //결빙방지온도
+            string[][] Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
+            double[] theta_e_min = new double[12];
+            double Volume = 0, theta_defrost = 0;
+            if (Location.Length > 0)
+            {
+                for (int mth = 1; mth < 13; mth++)
+                {
+                    string[][]  기후 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_온도습도", "최소온도", "지역명 ='" + Location[0][0] + "'And 기간 = '" + mth + "월'");
+                    theta_e_min[mth - 1] = Convert.ToDouble(기후[0][0].ToString());
+                }
+            }
+
+            if (AHUOptions == "열회수기")
+            {
+                string[][] 풍량 = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "팬풍량,열회수유형", "번호 = '"+Num+"'");
+                Volume = Convert.ToDouble(풍량[0][0].ToString());
+                string[][] 결빙방지 = Program.DB.getValue(DB.type.BaseDB_AHU, "결빙방지온도", "결빙방지온도", "건물유형 ='비주거건물' And 열회수기유형 = '" + 풍량[0][1].ToString() + "'");
+                {
+                    theta_defrost = Convert.ToDouble(결빙방지[0][0].ToString());
+                }
+            }
+            else
+            {
+                string[][] 풍량 = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "급기풍량,열회수유형", "번호 = '" + Num + "'");
+                Volume = Convert.ToDouble(풍량[0][0].ToString());
+                string[][] 결빙방지 = Program.DB.getValue(DB.type.BaseDB_AHU, "결빙방지온도", "결빙방지온도", "건물유형 ='비주거건물' And 열회수기유형 = '" + 풍량[0][1].ToString() +"'");
+                {
+                    theta_defrost = Convert.ToDouble(결빙방지[0][0].ToString());
+                }
+            }
+            double Ppreh_default = 0.34 * Volume * (theta_defrost - (theta_e_min.Min()));
+            return (int)Ppreh_default;
         }
 
         private void PrehControlOptions_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -756,8 +825,13 @@ namespace main.contents
                         HRVType = "판형";
                     }
                 }
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '" + AHUOptions + "' And 설비유형='" + HRVType + "'");
+                MainpictureBox.Load(Program.gPath + Image[0][0]);
+                MainpictureBox.Location = new Point(0, 0);
+                MainpictureBox.Size = new Size(790, 365);
+                MainpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
-            else
+            else if( AHUOptions == "공조기" )
             {
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "열회수유형", "번호 ='" + Num_textBox.Text + "'");
                 if (Value.Length > 0)
@@ -775,41 +849,31 @@ namespace main.contents
                         HRVType = "없음";
                     }
                 }
-            }
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '" + AHUOptions + "' And 설비유형='" + HRVType + "'");
-            if (Image.Length > 0)
-            {
-                MainpictureBox.Visible = true;
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '" + AHUOptions + "' And 설비유형='" + HRVType + "'");
                 MainpictureBox.Load(Program.gPath + Image[0][0]);
                 MainpictureBox.Location = new Point(0, 0);
+                MainpictureBox.Size = new Size(790, 365);
                 MainpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                MainpictureBox.BackColor = Color.Transparent;
-                MainpictureBox.Parent = LocationpictureBox;
+                LoadCoilImage();
+                LoadHumidifierImage();
+                LoadVAVImage();
             }
-            LoadCoilImage();
-            LoadHumidifierImage();
-            LoadVAVImage();
         }
 
-        private void LoadLocationImage() // 2.설치위치 그림넣기
+        private void LoadLocationImage() // 2. 설치위치 그림넣기
         {
-            if (AHULocation == "단열외피 내부")
+            if(AHULocation==""|| AHULocation == null)
             {
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '설치위치'");
-                if (Image.Length > 0)
-                {
-                    LocationpictureBox.Load(Program.gPath + Image[0][0]);
-                    LocationpictureBox.Location = new Point(0, 0);
-                    LocationpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                }
+                AHULocation_comboBox.SelectedItem = "단열외피 내부";
             }
             else
             {
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '" + AHUOptions + "' And 설비유형='" + AHULocation + "'");
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '" + AHUOptions + "' And 설비유형 = '" + AHULocation + "'");
                 if (Image.Length > 0)
                 {
                     LocationpictureBox.Load(Program.gPath + Image[0][0]);
-                    LocationpictureBox.Location = new Point(0, 0);
+                    LocationpictureBox.Location = new Point(100, 0);
+                    LocationpictureBox.Size = new Size(790, 365);
                     LocationpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
             }
@@ -817,48 +881,24 @@ namespace main.contents
 
         private void LoadPrehPrecImage() // 3.예열/예냉 그림넣기
         {
-            if (AHUOptions == "열회수기")
+            if (PrehPrecOptions == "프리히터")
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "열회수유형", "번호 ='" + Num_textBox.Text + "'");
-                if (Value.Length > 0)
-                {
-                    if (Value[0][0] != "판형")
-                    {
-                        HRVType = "회전형";
-                    }
-                    else
-                    {
-                        HRVType = "판형";
-                    }
-                }
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '예열예냉' And 설비유형='" + PrehPrecOptions + "'");
+                PrehPrecpictureBox.Visible = true;
+                PrehPrecpictureBox.Load(Program.gPath + Image[0][0]);
+                PrehPrecpictureBox.Location = new Point(220, 190);
+                PrehPrecpictureBox.Size = new Size(40, 80);
+                PrehPrecpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+          
             }
-            else
+            else if(PrehPrecOptions == "쿨튜브")
             {
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "열회수유형", "번호 ='" + Num_textBox.Text + "'");
-                if (Value.Length > 0)
-                {
-                    if (Value[0][0] != "판형")
-                    {
-                        HRVType = "회전형";
-                    }
-                    else
-                    {
-                        HRVType = "판형";
-                    }
-                }
-            }
-
-            if (PrehPrecOptions != "없음")
-            {
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '" + PrehPrecOptions + "' And 설비유형='" + HRVType + "'");
-                if (Image.Length > 0)
-                {
-                    PrehPrecpictureBox.Visible = true;
-                    PrehPrecpictureBox.Load(Program.gPath + Image[0][0]);
-                    PrehPrecpictureBox.Location = new Point(2, 0);
-                    PrehPrecpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                    PrehPrecpictureBox.Parent = VAVpictureBox;
-                }
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '예열예냉' And 설비유형='" + PrehPrecOptions + "'");
+                PrehPrecpictureBox.Visible = true;
+                PrehPrecpictureBox.Load(Program.gPath + Image[0][0]);
+                PrehPrecpictureBox.Location = new Point(12, 177);
+                PrehPrecpictureBox.Size = new Size(240, 170);
+                PrehPrecpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
             else
             {
@@ -871,124 +911,104 @@ namespace main.contents
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "냉각코일출력,난방코일출력", "번호 ='" + Num_textBox.Text + "'");
             if (Value.Length > 0)
             {
-                if (Value[0][0] != null && Value[0][1] != null)
+                if (double.TryParse(Value[0][0].ToString(), out double coolresult)&&coolresult>0) //냉방코일 그림
                 {
-                    CoilType = "냉각난방";
+                    if(HRVType == "판형")
+                    {
+                        string[][] image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '냉방코일' And 설비유형='" + HRVType + "'");
+                        ccoilpictureBox.Visible = true;
+                        ccoilpictureBox.Load(Program.gPath + image[0][0]);
+                        ccoilpictureBox.Location = new Point(395,100);
+                        ccoilpictureBox.Size = new Size(40, 80);
+                        ccoilpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    }
+                    else if(HRVType == "회전형")
+                    {
+                        string[][] image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '냉방코일' And 설비유형='" + HRVType + "'");
+                        ccoilpictureBox.Visible = true;
+                        ccoilpictureBox.Load(Program.gPath + image[0][0]);
+                        ccoilpictureBox.Location = new Point(395, 188);
+                        ccoilpictureBox.Size = new Size(40, 80);
+                        ccoilpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    }
                 }
-                else if (Value[0][0] != null && Value[0][1] == null)
+                if (double.TryParse(Value[0][0].ToString(), out double heatresult) && heatresult > 0) //난방코일 그림
                 {
-                    CoilType = "냉각";
+                    if (HRVType == "판형")
+                    {
+                        string[][] image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '난방코일' And 설비유형='" + HRVType + "'");
+                        hcoilpictureBox.Visible = true;
+                        hcoilpictureBox.Load(Program.gPath + image[0][0]);
+                        hcoilpictureBox.Location = new Point(427, 100);
+                        hcoilpictureBox.Size = new Size(40, 80);
+                        hcoilpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    }
+                    else if (HRVType == "회전형")
+                    {
+                        string[][] image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '난방코일' And 설비유형='" + HRVType + "'");
+                        hcoilpictureBox.Visible = true;
+                        hcoilpictureBox.Load(Program.gPath + image[0][0]);
+                        hcoilpictureBox.Location = new Point(427, 188);
+                        hcoilpictureBox.Size = new Size(40, 80);
+                        hcoilpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    }
                 }
-                else if (Value[0][0] == null && Value[0][1] != null)
-                {
-                    CoilType = "난방";
-                }
-                else
-                {
-                    CoilType = "무";
-                }
-            }
-            else
-            {
-                CoilType = "무";
-            }
-
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '코일' And 설비유형='" + CoilType + "'");
-            if (Image.Length > 0)
-            {
-                CoilpictureBox.Visible = true;
-                CoilpictureBox.Load(Program.gPath + Image[0][0]);
-                CoilpictureBox.Location = new Point(0,0);
-                CoilpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                CoilpictureBox.Parent = MainpictureBox;
             }
         }
 
         private void LoadHumidifierImage() // 5.가습기 그림넣기
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "가습기유형", "번호 ='" + Num_textBox.Text + "'");
-            if (Value.Length > 0)
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "가습기용량", "번호 ='" + Num_textBox.Text + "'");
+            
+            if (double.TryParse(Value[0][0].ToString(), out double heatresult) && heatresult > 0) 
             {
-                if (Value[0][0] != "없음")
+                if (HRVType == "판형")
                 {
-                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '가습기' And 설비유형 = '유'");
-                    if (Image.Length > 0)
-                    {
-                        HumidifierpictureBox.Visible = true;
-                        HumidifierpictureBox.Load(Program.gPath + Image[0][0]);
-                        HumidifierpictureBox.Location = new Point(0, 0);
-                        HumidifierpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                        HumidifierpictureBox.Parent = CoilpictureBox;
-                    }
-                }
-                else
-                {
-                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '가습기' And 설비유형 = '무'");
-                    if (Image.Length > 0)
-                    {
-                        HumidifierpictureBox.Visible = true;
-                        HumidifierpictureBox.Load(Program.gPath + Image[0][0]);
-                        HumidifierpictureBox.Location = new Point(0, 0);
-                        HumidifierpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                        HumidifierpictureBox.Parent = CoilpictureBox;
-                    }
-                }
-            }
-            else
-            {
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '가습기' And 설비유형 = '무'");
-                if (Image.Length > 0)
-                {
+                    string[][] image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '가습기' And 설비유형='" + HRVType + "'");
                     HumidifierpictureBox.Visible = true;
-                    HumidifierpictureBox.Load(Program.gPath + Image[0][0]);
-                    HumidifierpictureBox.Location = new Point(0, 0);
+                    HumidifierpictureBox.Load(Program.gPath + image[0][0]);
+                    HumidifierpictureBox.Location = new Point(459, 100);
+                    HumidifierpictureBox.Size = new Size(30, 80);
                     HumidifierpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                    HumidifierpictureBox.Parent = CoilpictureBox;
+                }
+                else if (HRVType == "회전형")
+                {
+                    string[][] image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '가습기' And 설비유형='" + HRVType + "'");
+                    HumidifierpictureBox.Visible = true;
+                    HumidifierpictureBox.Load(Program.gPath + image[0][0]);
+                    HumidifierpictureBox.Location = new Point(459, 188);
+                    HumidifierpictureBox.Size = new Size(30, 80);
+                    HumidifierpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
             }
         }
 
-        private void LoadVAVImage() // 6.정풍량/변풍량 그림넣기
+        private void LoadVAVImage() // 6.변풍량 그림넣기
         {
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "공조방식", "번호 ='" + Num_textBox.Text + "'");
-            if (Value.Length > 0)
+            if (Value[0][0] == "변풍량")
             {
-                if (Value[0][0] == "정풍량")
+                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = 'VAV' And 설비유형 = '" + Value[0][0].ToString() +"'");
+                if (HRVType == "판형")
                 {
-                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '공조방식' And 설비유형 = '정풍량'");
-                    if (Image.Length > 0)
-                    {
-                        VAVpictureBox.Visible = true;
-                        VAVpictureBox.Load(Program.gPath + Image[0][0]);
-                        HumidifierpictureBox.Location = new Point(-23, 0);
-                        VAVpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                        VAVpictureBox.Parent = HumidifierpictureBox;
-                    }
+                    VAVpictureBox.Visible = true;
+                    VAVpictureBox.Load(Program.gPath + Image[0][0]);
+                    VAVpictureBox.Location = new Point(608, 122);
+                    VAVpictureBox.Size = new Size(118, 55);
+                    VAVpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
-                else
+                else if (HRVType == "회전형")
                 {
-                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '공조방식' And 설비유형 = '변풍량'");
-                    if (Image.Length > 0)
-                    {
-                        VAVpictureBox.Visible = true;
-                        VAVpictureBox.Load(Program.gPath + Image[0][0]);
-                        HumidifierpictureBox.Location = new Point(-23, 0);
-                        VAVpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                        VAVpictureBox.Parent = HumidifierpictureBox;
-                    }
+                    VAVpictureBox.Visible = true;
+                    VAVpictureBox.Load(Program.gPath + Image[0][0]);
+                    VAVpictureBox.Location = new Point(608, 196);
+                    VAVpictureBox.Size = new Size(118, 55);
+                    VAVpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
             }
             else
             {
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '공조방식' And 설비유형 = '정풍량'");
-                if (Image.Length > 0)
-                {
-                    VAVpictureBox.Visible = true;
-                    VAVpictureBox.Load(Program.gPath + Image[0][0]);
-                    HumidifierpictureBox.Location = new Point(-23, 0);
-                    VAVpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                    VAVpictureBox.Parent = HumidifierpictureBox;
-                }
+                VAVpictureBox.Visible = false;
             }
         }
 
@@ -998,6 +1018,8 @@ namespace main.contents
         private void Save_button_Click(object sender, EventArgs e)
         {
             Save();
+            Save_Image();
+            none_AHU_HRV_check();
 
         }
         private void Save()
@@ -1006,12 +1028,52 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,유형", "'" + Num_textBox.Text + "','" + AHUOptions + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,설치위치,풍량제어,누기시험방법,누기등급1,누기등급2,공조기단열두께,TAB실시유무", "'" + Num_textBox.Text + "','" + AHULocation + "','" + AHUVolumeControl + "','" + AHULeakageTestMethod + "','" + AHULeakageLevel1 + "','" + AHULeakageLevel2 + "','" + AHUInsulationThickness.ToString() + "','" + TABOptions + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,덕트누기수준,OA덕트길이,EA덕트길이,SA덕트길이,RA덕트길이,덕트단열두께,덕트관경,덕트단열재,덕트단열재열전도율", "'" + Num_textBox.Text + "','" + DuctLeakageLevel + "','" + OALength.ToString() + "','" + EALength.ToString() + "','" + SALength.ToString() + "','" + RALength.ToString() + "','" + DuctInsulationThickness.ToString() + "','" + DuctDiameter.ToString() + "','" + PipeIns + "','" + PipeIns_Ramda.ToString() + "'", "번호");
+            if(PrehPrecOptions != "프리히터")
+            {
+                PrehControlOptions = "";
+                PrehPower = 0;
+            }
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,예열예냉유형,프리히터제어유형,프리히터용량", "'" + Num_textBox.Text + "','" + PrehPrecOptions + "','" + PrehControlOptions + "','" + PrehPower + "'", "번호");
+            if (PrehPrecOptions != "쿨튜브")
+            {
+                GroundOptions = "";
+                GroundDepth = 0;
+                CooltubeDiameter = 0;
+                CooltubeThickness = 0;
+                CooltubeLength = 0;
+                CooltubeMaterial = "";
+            }
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,토양유형,지중깊이,쿨튜브관경,쿨튜브두께,쿨튜브길이,쿨튜브재질", "'" + Num_textBox.Text + "','" + GroundOptions + "','" + GroundDepth.ToString() + "','" + CooltubeDiameter.ToString() + "','" + CooltubeThickness.ToString() + "','" + CooltubeLength.ToString() + "','" + CooltubeMaterial + "'", "번호");
             Program.DB.saveProject();
             this.DialogResult = DialogResult.OK;
             this.Hide();
             Program.getMenuForm().DoLoadForm(57, OnLoadListProc);
+        }
+        private void Save_Image()
+        {
+            try
+            {
+                Bitmap bmp = new Bitmap(ImagePanel.Width, ImagePanel.Height);
+                ImagePanel.DrawToBitmap(bmp, new Rectangle(0, 0, ImagePanel.Width, ImagePanel.Height));
+
+                string pid = "0000-00-00";
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
+                if (Value.Length > 0)
+                {
+                    pid = Value[0][0];
+                }
+
+                Directory.CreateDirectory(Program.gPath + "threejs\\public\\print\\img\\" + pid);
+
+                string ImageName = "/print/img/" + pid + "/" + Num + ".png";
+                string imagePath = Program.gPath + ImageName;
+
+                bmp.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("오류 발생: " + ex.Message);
+            }
         }
 
         public static bool OnLoadListProc(Form form)
@@ -1078,6 +1140,7 @@ namespace main.contents
         #endregion
 
         #region 로드
+        
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             reset();
@@ -1085,16 +1148,18 @@ namespace main.contents
             Num_textBox.Text = ID;
             Num = ID;
 
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "명칭,유형", "번호 = '" + ID + "'");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "명칭,유형,설치위치", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
                 Name_textBox.Text = Value[0][0];
                 Name = Value[0][0];
-
                 AHUOptions = Value[0][1];
-                AHUOptions_comboBox.SelectedItem = Value[0][1];
+                AHULocation = Value[0][2];
+                AHULocation_comboBox.SelectedItem = AHULocation;
+                AHUOptions_comboBox.SelectedItem = AHUOptions;
+
                 ChangeAHUOptions(AHUOptions);
-                Cal_Qb();
+                Load_Zone();
                 LoadMainImage();
 
                 if (AHUOptions == "공조기")
@@ -1110,8 +1175,7 @@ namespace main.contents
             Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "설치위치, 풍량제어, 누기시험방법, 누기등급1, 공조기단열두께, TAB실시유무", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
-                AHULocation_comboBox.SelectedItem = Value[0][0];
-                AHULocation = Value[0][0];
+               
                 Change_DuctLabel(AHULocation);
 
                 AHUVolumeControl_comboBox.SelectedItem = Value[0][1];
@@ -1169,8 +1233,7 @@ namespace main.contents
 
                 PipeIns = Value[0][6];
                 PipeIns_textBox.Text = PipeIns.ToString();
-                Program.UTIL.textBox_doubleComa(PipeIns_textBox, true, 3);
-
+                
                 PipeIns_Ramda = Convert.ToDouble(Value[0][7]);
                 PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
                 Program.UTIL.textBox_doubleComa(PipeIns_Ramda_textBox, true, 3);
@@ -1180,16 +1243,13 @@ namespace main.contents
             if (Value.Length > 0)
             {
                 PrehPrecOptions_comboBox.SelectedItem = Value[0][0];
-                PrehPrecOptions = Value[0][0];
-                ChangeVisble_PrehPrecOptions(PrehPrecOptions);
             }
 
             Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "프리히터제어유형,프리히터용량", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
                 PrehControlOptions_comboBox.SelectedItem = Value[0][0];
-                PrehControlOptions = Value[0][0];
-
+               
                 PrehPower_textBox.Text = Value[0][1];
                 PrehPower = Convert.ToDouble(Value[0][1]);
             }
@@ -1228,6 +1288,13 @@ namespace main.contents
                 GroundInfo_groupBox.Visible = false;
                 CooltubeInfo_groupBox.Visible = false;
             }
+
+            humincheck();
+            maxhumid_label.Visible = true;
+            minhumid_label.Visible = true;
+            maxhumid_label.Text = "최대습도: " + maxhumid + " g/kg'";
+            minhumid_label.Text = "최소습도: " + minhumid + " g/kg'";
+
         }
 
         #endregion
@@ -1240,6 +1307,70 @@ namespace main.contents
         }
 
         #endregion
+        void humincheck()
+        {
+            if(AHUOptions == "열회수기")
+            {
+                maxhumid = 14.75;// 26도70% EN16798-5식 이용 (단위g/kg')
+                minhumid = 1.44;// 20도10% EN16798-5식 이용 (단위g/kg')
+            }
+            else if(AHUOptions == "공조기")
+            {
+                string[][] check = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "가습기습도수준", "번호 = '"+Num+"'");
+                               
+                string type = check[0][0].ToString();
+                if(type =="" || type == null)
+                {
+                    MessageBox.Show("먼저 장비일람표 공조기에 습도수준을 입력하세요.");
+                }
+                else
+                {
+                    switch (type) //DIN V 18599-3:2018 표11 (단위g/kg')
+                    {
+                        case "항온항습":
+                            maxhumid = 8.20; // 22도50% EN16798-5식 이용 (단위g/kg')
+                            minhumid = 8.20; // 22도50% EN16798-5식 이용 (단위g/kg')
+                            break;
+                        case "습도고려":
+                            maxhumid = 12.60;// 26도60% EN16798-5식 이용(단위g/kg')
+                            minhumid = 5.78;// 20도 40% EN16798-5식 이용(단위g/kg')
+                            break;
+                        case "고려안함":
+                            maxhumid = 14.75;// 26도70% EN16798-5식 이용 (단위g/kg')
+                            minhumid = 1.44;// 20도10% EN16798-5식 이용 (단위g/kg')
+                            break;
+                        default:
+                            maxhumid = 14.75;// 26도70% EN16798-5식 이용 (단위g/kg')
+                            minhumid = 1.44;// 20도10% EN16798-5식 이용 (단위g/kg')
+                            break;
 
+                    }
+                }
+                    
+            }
+        }
+        void none_AHU_HRV_check()
+        {
+            string[][] check = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "번호", "");
+            if (check.Length > 0)
+            {
+                int j = 0;
+                string[][] zonecheck = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,선택열회수기", "");
+                for (int i = 0; i<check.Length;i++)
+                {
+                    for(int k =0; k < zonecheck.Length; k++)
+                    {
+                        if (check[i][0] == zonecheck[k][1])
+                        {
+                            j ++;
+                        }
+                    }
+                    if (j == 0)
+                    {
+                        Program.DB.deleteValue(DB.type.ProjDB, "AHUSystem_Form", "번호 = '" + check[i][0] + "'");
+                    }
+                }
+            }
+        }
     }
 }
