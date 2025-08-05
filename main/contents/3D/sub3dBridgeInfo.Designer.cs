@@ -44,6 +44,7 @@ namespace main.contents
             label4 = new Label();
             Icon_pictureBox = new PictureBox();
             dataGridView1 = new DataGridView();
+            info = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -52,6 +53,7 @@ namespace main.contents
             // panel1
             // 
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(info);
             panel1.Controls.Add(dUtbFloor_label);
             panel1.Controls.Add(dUtbRoof_label);
             panel1.Controls.Add(dUtbWall_label);
@@ -71,7 +73,7 @@ namespace main.contents
             // dUtbFloor_label
             // 
             dUtbFloor_label.AutoSize = true;
-            dUtbFloor_label.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            dUtbFloor_label.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             dUtbFloor_label.Location = new Point(811, 68);
             dUtbFloor_label.Name = "dUtbFloor_label";
             dUtbFloor_label.Size = new Size(31, 15);
@@ -81,7 +83,7 @@ namespace main.contents
             // dUtbRoof_label
             // 
             dUtbRoof_label.AutoSize = true;
-            dUtbRoof_label.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            dUtbRoof_label.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             dUtbRoof_label.Location = new Point(683, 68);
             dUtbRoof_label.Name = "dUtbRoof_label";
             dUtbRoof_label.Size = new Size(31, 15);
@@ -91,7 +93,7 @@ namespace main.contents
             // dUtbWall_label
             // 
             dUtbWall_label.AutoSize = true;
-            dUtbWall_label.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            dUtbWall_label.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             dUtbWall_label.Location = new Point(555, 68);
             dUtbWall_label.Name = "dUtbWall_label";
             dUtbWall_label.Size = new Size(31, 15);
@@ -101,7 +103,7 @@ namespace main.contents
             // dUtb_label
             // 
             dUtb_label.AutoSize = true;
-            dUtb_label.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            dUtb_label.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             dUtb_label.Location = new Point(482, 68);
             dUtb_label.Name = "dUtb_label";
             dUtb_label.Size = new Size(67, 15);
@@ -123,7 +125,7 @@ namespace main.contents
             // Check_checkBox
             // 
             Check_checkBox.AutoSize = true;
-            Check_checkBox.Font =  new Font(UTIL.Families[0], 9.75F);
+            Check_checkBox.Font = new Font("나눔바른고딕", 9.75F);
             Check_checkBox.Location = new Point(616, 17);
             Check_checkBox.Name = "Check_checkBox";
             Check_checkBox.Size = new Size(15, 14);
@@ -135,13 +137,14 @@ namespace main.contents
             // TB_comboBox
             // 
             TB_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            TB_comboBox.Font =  new Font(UTIL.Families[0], 9.75F);
+            TB_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             TB_comboBox.FormattingEnabled = true;
             TB_comboBox.Location = new Point(663, 12);
             TB_comboBox.Name = "TB_comboBox";
-            TB_comboBox.Size = new Size(120, 24);
+            TB_comboBox.Size = new Size(120, 23);
             TB_comboBox.TabIndex = 122;
             TB_comboBox.Visible = false;
+            TB_comboBox.DrawItem += TB_comboBox_DrawItem;
             TB_comboBox.SelectedIndexChanged += TB_comboBox_SelectedIndexChanged;
             // 
             // TB_button
@@ -158,7 +161,7 @@ namespace main.contents
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            label4.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label4.Location = new Point(95, 51);
             label4.Name = "label4";
             label4.Size = new Size(55, 15);
@@ -185,7 +188,7 @@ namespace main.contents
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font =  new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -196,7 +199,7 @@ namespace main.contents
             dataGridView1.Name = "dataGridView1";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -205,7 +208,7 @@ namespace main.contents
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
@@ -214,6 +217,21 @@ namespace main.contents
             dataGridView1.Size = new Size(902, 324);
             dataGridView1.TabIndex = 1;
             dataGridView1.CellPainting += dataGridView1_CellPainting;
+            // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(925, 12);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 129;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
             // 
             // sub3dBridgeInfo
             // 
@@ -252,5 +270,6 @@ namespace main.contents
         private Label dUtbWall_label;
         private Label dUtb_label;
         private Label dUtbFloor_label;
+        private Button info;
     }
 }

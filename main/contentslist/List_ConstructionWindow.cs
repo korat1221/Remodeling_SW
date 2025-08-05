@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.info;
 using main.subcontents.ConstructionWindow;
 using System;
 using System.Collections;
@@ -25,11 +26,11 @@ namespace main.contentslist
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '창호'");
-            if(Image.Length > 0 )
+            if (Image.Length > 0)
             {
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            }            
+            }
             Program.DB.initTable(DB.type.ProjDB, "SubWindow");
             Program.DB.initTable(DB.type.ProjDB, "ConstructionWindow");
             Create_Table();
@@ -117,11 +118,11 @@ namespace main.contentslist
             dataGridView1.Columns.Add("A2", "하위번호");
             dataGridView1.Columns.Add("A3", "창호 명칭");
             dataGridView1.Columns.Add("A4", "Type");
-            dataGridView1.Columns.Add("A5", "유효열관류율.[W/m"+Program.UTIL.Subscript(2, true)+"·K]");
+            dataGridView1.Columns.Add("A5", "유효열관류율.[W/m" + Program.UTIL.Subscript(2, true) + "·K]");
             dataGridView1.Columns.Add("A6", "태양열취득률.[-]");
             dataGridView1.Columns.Add("A7", "빛투과율.[-]");
             dataGridView1.Columns.Add("A8", "유리종류");
-            dataGridView1.Columns.Add("A9", "면적.[m"+ Program.UTIL.Subscript(2, true) + "]");
+            dataGridView1.Columns.Add("A9", "면적.[m" + Program.UTIL.Subscript(2, true) + "]");
             dataGridView1.Columns.Add("A10", "개수.[EA]");
             dataGridView1.Columns[0].Width = 40;
 
@@ -184,7 +185,7 @@ namespace main.contentslist
                         string[][] Area = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "구조체번호='" + SubList[k][0] + "'");
                         if (Area.Length > 0)
                         {
-                            dataGridView1.Rows[nRow2].Cells[10].Value = Area.Length; 
+                            dataGridView1.Rows[nRow2].Cells[10].Value = Area.Length;
                         }
                         subMenu.Add(new { text = SubList[k][0], id = "{\\\"formID\\\":31,\\\"ID\\\":\\\"" + SubList[k][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
                     }
@@ -278,6 +279,23 @@ namespace main.contentslist
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             load_List();
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\3.contentslist\\4.Window";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 }

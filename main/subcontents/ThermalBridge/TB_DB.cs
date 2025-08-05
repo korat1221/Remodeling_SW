@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -144,7 +145,7 @@ public partial class TB_DB : Form
             Load_Image2();
         }
     }
-  
+
     private void Load_Image2()
     {
         if (TB_dataGridView.Rows[SelectRow].Cells[2].Value != null && TB_dataGridView.Rows[SelectRow].Cells[2].Value.ToString() != "사용자DB")
@@ -167,7 +168,7 @@ public partial class TB_DB : Form
         }
         else
         {
-            if(TB_dataGridView.Rows[SelectRow].Cells[5].Value != null && TB_dataGridView.Rows[SelectRow].Cells[6].Value != null)
+            if (TB_dataGridView.Rows[SelectRow].Cells[5].Value != null && TB_dataGridView.Rows[SelectRow].Cells[6].Value != null)
             {
                 string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교", "명칭", "열교유형 ='" + TBType + "' and 구조체1_단열유형 = '" + TB_dataGridView.Rows[SelectRow].Cells[5].Value.ToString() + "' and 구조체2_단열유형 = '" + TB_dataGridView.Rows[SelectRow].Cells[6].Value.ToString() + "'");
                 if (value.Length > 0)
@@ -187,7 +188,7 @@ public partial class TB_DB : Form
             }
             pictureBox3.Visible = false;
         }
-       
+
     }
 
 
@@ -261,7 +262,7 @@ public partial class TB_DB : Form
         if (TB_dataGridView.Rows[SelectRow].Cells[2].Value.ToString() == "사용자DB")
         {
             pictureBox4.Load(Program.gPath + "images/TB/User/.png");
-           // System.IO.File.Delete(Program.gPath + "images/TB/User/" + TB_dataGridView.Rows[SelectRow].Cells[1].Value.ToString() + ".jpg");
+            // System.IO.File.Delete(Program.gPath + "images/TB/User/" + TB_dataGridView.Rows[SelectRow].Cells[1].Value.ToString() + ".jpg");
             Program.DB.deleteValue(DB.type.ProjDB, "User_TB", "번호 ='" + TB_dataGridView.Rows[SelectRow].Cells[1].Value.ToString() + "'");
             TB_dataGridView.Rows.Remove(TB_dataGridView.Rows[SelectRow]);
         }
@@ -325,5 +326,21 @@ public partial class TB_DB : Form
         Program.DB.saveProject();
         this.DialogResult = DialogResult.OK;
         this.Close();
+    }
+
+    private void info_Click(object sender, EventArgs e)
+    {
+        string basePath = Program.gPath + "Manual\\2.subcontents\\9.3D_TB\\2.TB_DB";
+
+        // 경로가 존재하는지 확인
+        if (Directory.Exists(basePath))
+        {
+            SlideViewer slideViewer = new SlideViewer(basePath);
+            slideViewer.Show();
+        }
+        else
+        {
+            MessageBox.Show("The folder path does not exist.");
+        }
     }
 }

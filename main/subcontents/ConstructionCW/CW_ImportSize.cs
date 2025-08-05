@@ -1,4 +1,6 @@
-﻿namespace main.subcontents
+﻿using main.info;
+
+namespace main.subcontents
 {
     public partial class CW_ImportSize : Form
     {
@@ -79,19 +81,19 @@
             Size_dataGridView.Columns.Add(checkBoxColumn);
 
             Size_dataGridView.Columns.Add("A1", "명칭");
-            Size_dataGridView.Columns.Add("A2", "커튼월전체.면적.[m"+Program.UTIL.Subscript(2, true)+"]");
+            Size_dataGridView.Columns.Add("A2", "커튼월전체.면적.[m" + Program.UTIL.Subscript(2, true) + "]");
             Size_dataGridView.Columns.Add("A3", "커튼월전체.너비.[m]");
             Size_dataGridView.Columns.Add("A4", "커튼월전체.높이.[m]");
-            Size_dataGridView.Columns.Add("A5", "유리.고정창 면적.[m"+Program.UTIL.Subscript(2, true)+"]");
-            Size_dataGridView.Columns.Add("A6", "유리.개폐창 면적.[m"+Program.UTIL.Subscript(2, true)+"]");
+            Size_dataGridView.Columns.Add("A5", "유리.고정창 면적.[m" + Program.UTIL.Subscript(2, true) + "]");
+            Size_dataGridView.Columns.Add("A6", "유리.개폐창 면적.[m" + Program.UTIL.Subscript(2, true) + "]");
             Size_dataGridView.Columns.Add("A5", "유리.고정창 둘레길이.[m]");
             Size_dataGridView.Columns.Add("A6", "유리.개폐창 둘레길이.[m]");
-            Size_dataGridView.Columns.Add("A7", "패널.면적.[m"+Program.UTIL.Subscript(2, true)+"]");
+            Size_dataGridView.Columns.Add("A7", "패널.면적.[m" + Program.UTIL.Subscript(2, true) + "]");
             Size_dataGridView.Columns.Add("A8", "패널.둘레길이.[m]");
-            Size_dataGridView.Columns.Add("A9", "프레임.M/T면적.[m"+Program.UTIL.Subscript(2, true)+"]");
-            Size_dataGridView.Columns.Add("A10", "프레임.개폐면적.[m"+Program.UTIL.Subscript(2, true)+"]");
-            Size_dataGridView.Columns.Add("A11", "출입문.프레임면적.[m"+Program.UTIL.Subscript(2, true)+"]");
-            Size_dataGridView.Columns.Add("A12", "출입문.유리면적.[m"+Program.UTIL.Subscript(2, true)+"]");
+            Size_dataGridView.Columns.Add("A9", "프레임.M/T면적.[m" + Program.UTIL.Subscript(2, true) + "]");
+            Size_dataGridView.Columns.Add("A10", "프레임.개폐면적.[m" + Program.UTIL.Subscript(2, true) + "]");
+            Size_dataGridView.Columns.Add("A11", "출입문.프레임면적.[m" + Program.UTIL.Subscript(2, true) + "]");
+            Size_dataGridView.Columns.Add("A12", "출입문.유리면적.[m" + Program.UTIL.Subscript(2, true) + "]");
             Size_dataGridView.Columns.Add("A13", "출입문.둘레길이.[m]");
 
             string[][] CWSize = Program.DB.getValue(DB.type.ProjDB, "Import_CWSize", "명칭,커튼월면적,너비,높이,고정창유리면적,개폐창유리면적,고정창유리둘레길이,개폐창유리둘레길이,패널면적,패널둘레길이,M_T프레임면적,개폐창프레임면적,출입문프레임면적,출입문유리면적,출입문유리둘레길이");
@@ -141,28 +143,28 @@
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-            if(Size_dataGridView.Rows.Count >0)
+            if (Size_dataGridView.Rows.Count > 0)
             {
                 DataGridViewRow row = Size_dataGridView.Rows[SelectRow];
                 SizeNum = "Size_" + CWNum.ToString();
 
                 for (int i = 3; i < 17; i++)
                 {
-                    if (row.Cells[i - 1].Value !=null)
+                    if (row.Cells[i - 1].Value != null)
                     {
                         Select[i] = row.Cells[i - 1].Value.ToString();
-                    }                    
+                    }
                 }
                 Select[0] = SizeNum;
-                if(row.Cells[1].Value!= null)
+                if (row.Cells[1].Value != null)
                 {
                     Select[1] = row.Cells[1].Value.ToString();
-                }                
+                }
                 Select[2] = CWNum;
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
-            }           
+            }
         }
 
         private void Calc_button_Click(object sender, EventArgs e)
@@ -180,7 +182,7 @@
                 {
                     MessageBox.Show("개폐창 또는 패널 비율을 확인하세요.");
                 }
-                else if (Area*(1-percent_open/100-percent_panel/100)  < door_width * door_height)
+                else if (Area * (1 - percent_open / 100 - percent_panel / 100) < door_width * door_height)
                 {
                     MessageBox.Show("출입문 사이즈 정보를 확인하세요.");
                 }
@@ -243,7 +245,7 @@
         private void percent_open_textBox_TextChanged(object sender, EventArgs e)
         {
             percent_open = Program.UTIL.textBox_doubleComa(percent_open_textBox, false, 1);
-            if (percent_open!= 0 && percent_open < 1)
+            if (percent_open != 0 && percent_open < 1)
             {
                 MessageBox.Show("퍼센트 단위로 입력하세요.(Ex : 90.1% ⇒ 90.1)");
             }
@@ -278,5 +280,21 @@
             door_height = Program.UTIL.textBox_doubleComa(door_height_textBox, false, 2);
         }
 
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\2.subcontents\\8.CW\\6.ImportSize";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

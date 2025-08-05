@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.info;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace main.subcontents.ConstructionBlind
             //heatingSystem = system;
             load_table_DB();
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '차양정보'");
-            if(Image.Length > 0 )
+            if (Image.Length > 0)
             {
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -59,7 +60,7 @@ namespace main.subcontents.ConstructionBlind
             Blind_dataGridView.Columns.Add("A11", "흡수율");
 
             string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "차양", "구분,DB유형,제품명,종류,설치,투과수준,색깔,외부반사율,내부반사율,투과율,흡수율", "");
-            if(DefaultDB_Value.Length > 0)
+            if (DefaultDB_Value.Length > 0)
             {
                 for (int n = 0; n < DefaultDB_Value.Length; n++)
                 {
@@ -78,8 +79,8 @@ namespace main.subcontents.ConstructionBlind
                     Blind_dataGridView.Rows[nRow].Cells[11].Value = DefaultDB_Value[n][10];
                 }
             }
-           string[][] UserDB_Value = Program.DB.getValue(DB.type.ProjDB, "User_Blind", "번호,DB유형,제품명,종류,설치,투과수준,색깔,외부반사율,내부반사율,투과율,흡수율", "");
-            if(UserDB_Value.Length > 0 )
+            string[][] UserDB_Value = Program.DB.getValue(DB.type.ProjDB, "User_Blind", "번호,DB유형,제품명,종류,설치,투과수준,색깔,외부반사율,내부반사율,투과율,흡수율", "");
+            if (UserDB_Value.Length > 0)
             {
                 for (int n = 0; n < UserDB_Value.Length; n++)
                 {
@@ -211,48 +212,48 @@ namespace main.subcontents.ConstructionBlind
                 Blind_dataGridView.Rows[nRow].Cells[k].Value = Blind_dataGridView.Rows[SelectRowIndex].Cells[k].Value;
             }
 
-           
+
         }
 
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-                string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "차양", "구분", "");
-                if (Blind_dataGridView.Rows.Count > DefaultDB_Value.Length)
+            string[][] DefaultDB_Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "차양", "구분", "");
+            if (Blind_dataGridView.Rows.Count > DefaultDB_Value.Length)
+            {
+                for (int k = DefaultDB_Value.Length; k < Blind_dataGridView.Rows.Count; k++)
                 {
-                    for (int k = DefaultDB_Value.Length; k < Blind_dataGridView.Rows.Count; k++)
-                    {
-                        string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
-                        Program.DB.setValue(DB.type.ProjDB, "User_Blind", "번호,프로젝트유형,DB유형,제품명,종류,설치,투과수준,색깔,외부반사율,내부반사율,투과율,흡수율",
-                           "'" + Blind_dataGridView.Rows[k].Cells[1].Value + "','" +
-                           프로젝트유형[0][0] + "','" +
-                           Blind_dataGridView.Rows[k].Cells[2].Value + "','" +
-                           Blind_dataGridView.Rows[k].Cells[3].Value + "','" +
-                           Blind_dataGridView.Rows[k].Cells[4].Value + "','" +
-                           Blind_dataGridView.Rows[k].Cells[5].Value + "','" +
-                           Blind_dataGridView.Rows[k].Cells[6].Value + "','" +
-                           Blind_dataGridView.Rows[k].Cells[7].Value + "','" +
-                           Blind_dataGridView.Rows[k].Cells[8].Value + "','" +
-                           Blind_dataGridView.Rows[k].Cells[9].Value + "','" +
-                           Blind_dataGridView.Rows[k].Cells[10].Value + "','" +
-                           Blind_dataGridView.Rows[k].Cells[11].Value + "'", "번호");
-                    }
+                    string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+                    Program.DB.setValue(DB.type.ProjDB, "User_Blind", "번호,프로젝트유형,DB유형,제품명,종류,설치,투과수준,색깔,외부반사율,내부반사율,투과율,흡수율",
+                       "'" + Blind_dataGridView.Rows[k].Cells[1].Value + "','" +
+                       프로젝트유형[0][0] + "','" +
+                       Blind_dataGridView.Rows[k].Cells[2].Value + "','" +
+                       Blind_dataGridView.Rows[k].Cells[3].Value + "','" +
+                       Blind_dataGridView.Rows[k].Cells[4].Value + "','" +
+                       Blind_dataGridView.Rows[k].Cells[5].Value + "','" +
+                       Blind_dataGridView.Rows[k].Cells[6].Value + "','" +
+                       Blind_dataGridView.Rows[k].Cells[7].Value + "','" +
+                       Blind_dataGridView.Rows[k].Cells[8].Value + "','" +
+                       Blind_dataGridView.Rows[k].Cells[9].Value + "','" +
+                       Blind_dataGridView.Rows[k].Cells[10].Value + "','" +
+                       Blind_dataGridView.Rows[k].Cells[11].Value + "'", "번호");
                 }
+            }
 
-                DataGridViewRow row = Blind_dataGridView.Rows[SelectRowIndex];
-                
-                for (int i = 1; i < 12; i++)
-                {
-                    if (row.Cells[i].Value == null) { Select_Blind[i - 1] = null; }
-                    else { Select_Blind[i - 1] = row.Cells[i].Value.ToString(); }
-                }
+            DataGridViewRow row = Blind_dataGridView.Rows[SelectRowIndex];
+
+            for (int i = 1; i < 12; i++)
+            {
+                if (row.Cells[i].Value == null) { Select_Blind[i - 1] = null; }
+                else { Select_Blind[i - 1] = row.Cells[i].Value.ToString(); }
+            }
 
             Program.DB.saveProject();
 
             this.DialogResult = DialogResult.OK;
-                this.Close();
+            this.Close();
 
-        
+
 
         }
         private void reset()
@@ -266,15 +267,15 @@ namespace main.subcontents.ConstructionBlind
         private void Load_Select()
         {
             reset();
-          
-                for(int n = 0; n< Blind_dataGridView.Rows.Count;n++)
+
+            for (int n = 0; n < Blind_dataGridView.Rows.Count; n++)
+            {
+                if (Blind_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectNum)
                 {
-                    if (Blind_dataGridView.Rows[n].Cells[1].Value.ToString() == SelectNum)
-                    {
-                        Blind_dataGridView.Rows[n].Cells[0].Value = true;
-                    }
+                    Blind_dataGridView.Rows[n].Cells[0].Value = true;
                 }
-               
+            }
+
         }
 
         private void Blind_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -283,6 +284,23 @@ namespace main.subcontents.ConstructionBlind
             {
                 Blind_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 SelectRowIndex = e.RowIndex;
+            }
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\2.subcontents\\7.Blind";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
             }
         }
     }

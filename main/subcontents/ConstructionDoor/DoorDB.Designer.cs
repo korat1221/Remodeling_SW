@@ -37,6 +37,7 @@
             label1 = new Label();
             Save_button = new Button();
             Door_dataGridView = new DataGridView();
+            info = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Door_dataGridView).BeginInit();
@@ -45,6 +46,7 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.AliceBlue;
+            GeneralPanel.Controls.Add(info);
             GeneralPanel.Controls.Add(label2);
             GeneralPanel.Controls.Add(pictureBox1);
             GeneralPanel.Controls.Add(label1);
@@ -135,6 +137,21 @@
             Door_dataGridView.CellContentClick += Door_dataGridView_CellContentClick;
             Door_dataGridView.CellValueChanged += Door_dataGridView_CellValueChanged;
             // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(1236, 9);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 155;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
+            // 
             // DoorDB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -162,5 +179,6 @@
         private Button Save_button;
         private Label label7;
         private DataGridView Door_dataGridView;
+        private Button info;
     }
 }

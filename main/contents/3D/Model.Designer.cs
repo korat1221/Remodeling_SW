@@ -34,6 +34,7 @@
             splitContainer1 = new SplitContainer();
             timer1 = new System.Windows.Forms.Timer(components);
             tmSQLExec = new System.Windows.Forms.Timer(components);
+            info = new Button();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
@@ -44,11 +45,11 @@
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1018, 693);
+            Save_button.Location = new Point(999, 12);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(88, 25);
             Save_button.TabIndex = 92;
-            Save_button.Text = "SAVE";
+            Save_button.Text = "SAVE IMAGE";
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
             // 
@@ -80,6 +81,21 @@
             splitContainer1.SplitterDistance = 385;
             splitContainer1.TabIndex = 96;
             // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(1090, 14);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 114;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
+            // 
             // Model
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -87,6 +103,7 @@
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
+            Controls.Add(info);
             Controls.Add(splitContainer1);
             Controls.Add(Save_button);
             FormBorderStyle = FormBorderStyle.None;
@@ -106,5 +123,6 @@
         private SplitContainer splitContainer1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Timer tmSQLExec;
+        private Button info;
     }
 }

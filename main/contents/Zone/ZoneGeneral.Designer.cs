@@ -161,6 +161,7 @@ namespace main.contents
             label9 = new System.Windows.Forms.Label();
             label13 = new System.Windows.Forms.Label();
             Save_button = new System.Windows.Forms.Button();
+            info = new System.Windows.Forms.Button();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -174,6 +175,7 @@ namespace main.contents
             // GeneralPanel
             // 
             GeneralPanel.BackColor = SystemColors.GradientActiveCaption;
+            GeneralPanel.Controls.Add(info);
             GeneralPanel.Controls.Add(Num_textBox);
             GeneralPanel.Controls.Add(PreZone_button);
             GeneralPanel.Controls.Add(groupBox1);
@@ -1570,6 +1572,21 @@ namespace main.contents
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
             // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(970, 4);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 191;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
+            // 
             // ZoneGeneral
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1731,5 +1748,6 @@ namespace main.contents
         private System.Windows.Forms.TextBox Wall_textBox;
         private System.Windows.Forms.TextBox Roof_textBox;
         private PictureBox Ground_pictureBox;
+        private System.Windows.Forms.Button info;
     }
 }

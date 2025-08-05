@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,6 @@ namespace main.contentslist
         String Num;
         double CountDB;
         int SelectRow;
-        DataTable List = new DataTable();
         DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
 
         public List_HeatingSystem()
@@ -77,20 +77,38 @@ namespace main.contentslist
             Program.getMenuForm().DoLoadForm(19, OnLoadProc);
         }
 
-
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = SystemColors.InactiveBorder;
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = SystemColors.InactiveBorder;
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else
+            {
+                cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+        }
         public void Create_Table()
         {
-
+            new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             dataGridView1.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             dataGridView1.Columns.Add(checkBoxColumn);
-            List.Columns.Add("번호", typeof(string));
-            List.Columns.Add("명칭", typeof(string));
-            List.Columns.Add("난방설비", typeof(string));
-            List.Columns.Add("난방출력 [kW]", typeof(string));
-            List.Columns.Add("난방성능", typeof(string));
-            dataGridView1.DataSource = List;
+            dataGridView1.Columns.Add("A1", "번호");
+            dataGridView1.Columns.Add("A2", "명칭");
+            dataGridView1.Columns.Add("A3", "난방설비");
+            dataGridView1.Columns.Add("A4", "난방출력.[kW]");
+            dataGridView1.Columns.Add("A5", "난방성능");
+            dataGridView1.Columns[0].Width = 40;
 
         }
 
@@ -102,17 +120,20 @@ namespace main.contentslist
             if (List.Length > 0&& count_.Length>0)
             {
                 String Blank = "";
-                this.List.Rows.Clear();
+                dataGridView1.Rows.Clear();
                 string[][] SystemValue;
                 for (int n = 0; n < List.Length; n++)
                 {
+                    dataGridView1.Rows.Add();
+                    int nRow = dataGridView1.Rows.Count - 1;
                     //"보일러", "외기 히트펌프", "지열 히트펌프", "지하수 히트펌프", "태양열 융합 히트펌프", "흡수식온수기", "지역난방", "태양열시스템" 
                     if (List[n][2] == "보일러") 
                     { 
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "용량,전부하효율", "번호 ='" + List[n][3] + "'");
                         if (SystemValue.Length > 0)
                         {
-                            this.List.Rows.Add(List[n][0], List[n][1], List[n][2],(Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][3])).ToString("0.0"), Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " %") ;
+                            dataGridView1.Rows[nRow].Cells[4].Value = (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][3])).ToString("0.0");
+                            dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " %" ;
                         }
                     }
                     else if (List[n][2] =="외기 히트펌프")
@@ -120,7 +141,8 @@ namespace main.contentslist
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "난방정격용량,난방정격COP", "번호 ='" + List[n][4] + "'");
                         if (SystemValue.Length > 0)
                         {
-                            this.List.Rows.Add(List[n][0], List[n][1], List[n][2], (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][4])).ToString("0.0"), Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " [kW/kW]");
+                            dataGridView1.Rows[nRow].Cells[4].Value = (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][4])).ToString("0.0");
+                            dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " [W/W]";
                         }
                     }
                     else if(List[n][2] == "흡수식온수기")
@@ -128,7 +150,8 @@ namespace main.contentslist
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "난방용량,난방성능", "번호 ='" + List[n][5] + "'");
                         if (SystemValue.Length > 0)
                         {
-                            this.List.Rows.Add(List[n][0], List[n][1], List[n][2], (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][5])).ToString("0.0"), Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " [kW/kW]");
+                            dataGridView1.Rows[nRow].Cells[4].Value = (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][5])).ToString("0.0");
+                            dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " [W/W]";
                         }
                     }
                     else if (List[n][2] == "지역난방")
@@ -136,7 +159,8 @@ namespace main.contentslist
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DH", "용량", "번호 ='" + List[n][6] + "'");
                         if (SystemValue.Length > 0)
                         {
-                            this.List.Rows.Add(List[n][0], List[n][1], List[n][2], Convert.ToDouble(SystemValue[0][0]).ToString("0.0"), "-");
+                            dataGridView1.Rows[nRow].Cells[4].Value = Convert.ToDouble(SystemValue[0][0]).ToString("0.0");
+                            dataGridView1.Rows[nRow].Cells[5].Value = "-";
                         }
                     }
                     else if (List[n][2] == "태양열시스템")
@@ -145,7 +169,8 @@ namespace main.contentslist
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "모듈면적,효율", "번호 ='" + List[n][7] + "'");
                         if (SystemValue.Length > 0)
                         {
-                            this.List.Rows.Add(List[n][0], List[n][1], List[n][2], (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][7])).ToString("0.0") + "m2", Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " %");
+                            dataGridView1.Rows[nRow].Cells[4].Value = (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][7])).ToString("0.0") + "m2";
+                            dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " %";
                         }
                     }
                     else if (List[n][2] == "지열 히트펌프")
@@ -153,7 +178,8 @@ namespace main.contentslist
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_GroundHP", "난방정격용량,난방정격COP", "번호 ='" + List[n][8] + "'");
                         if (SystemValue.Length > 0)
                         {
-                            this.List.Rows.Add(List[n][0], List[n][1], List[n][2], (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][8])).ToString("0.0"), Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " [kW/kW]");
+                            dataGridView1.Rows[nRow].Cells[4].Value = (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][8])).ToString("0.0");
+                            dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " [W/W]";
                         }
                     }
                     else if (List[n][2] == "지하수 히트펌프")
@@ -161,13 +187,20 @@ namespace main.contentslist
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_GroundWHP", "난방정격용량,난방정격COP", "번호 ='" + List[n][9] + "'");
                         if (SystemValue.Length > 0)
                         {
-                            this.List.Rows.Add(List[n][0], List[n][1], List[n][2], (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][9])).ToString("0.0"), Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " [kW/kW]");
+                            dataGridView1.Rows[nRow].Cells[4].Value = (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][9])).ToString("0.0");
+                            dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " [W/W]";
                         }
                     }
+                    dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];
+                    dataGridView1.Rows[nRow].Cells[2].Value = List[n][1];
+                    dataGridView1.Rows[nRow].Cells[3].Value = List[n][2];
 
                     mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":19,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
                 }
-                dataGridView1.DataSource = this.List;
+            }
+            else
+            {
+                dataGridView1.Rows.Clear();
             }
             CountDB = List.Length;
             Program.UTIL.resetMainTree(5, 1, mainMenu.ToArray(), "39"); // 예시 코드: 메인 메뉴 동적 할당

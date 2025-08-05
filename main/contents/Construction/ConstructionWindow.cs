@@ -1,4 +1,5 @@
 ﻿using main.contentslist;
+using main.info;
 using main.Properties;
 using main.subcontents;
 using System;
@@ -1510,6 +1511,23 @@ namespace main.contents
         private void FrameCert_pictureBox_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\1.contents\\6.Window";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 }

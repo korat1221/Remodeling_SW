@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,7 +19,7 @@ namespace main.subcontents
         double Count_FrameDB;
         int SelectRow;
         public String[] Select_Glass = new string[11];
-        String UserNum, UserDBName, UserDB_Manufacture, UserDB_SingleDoubleTriple="", UserDB_ArAir="", UserDB_LE_CL_V="";
+        String UserNum, UserDBName, UserDB_Manufacture, UserDB_SingleDoubleTriple = "", UserDB_ArAir = "", UserDB_LE_CL_V = "";
         Double UserDB_Ug, UserDB_g, UserDB_Tao, UserDB_RExternal, UserDB_RInternal;
         public GlassDB()
         {
@@ -42,7 +43,7 @@ namespace main.subcontents
         }
         void load_table_GlassDB()
         {
-            new StackedHeaderDecorator(Glass_dataGridView,DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
+            new StackedHeaderDecorator(Glass_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
             Glass_dataGridView.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
@@ -77,7 +78,7 @@ namespace main.subcontents
             }
 
             string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "");
-            if(WinGlass.Length > 0)
+            if (WinGlass.Length > 0)
             {
                 for (int n = 0; n < WinGlass.Length; n++)
                 {
@@ -86,9 +87,9 @@ namespace main.subcontents
                     for (int k = 0; k < 12; k++)
                     {
                         Glass_dataGridView.Rows[nRow].Cells[k + 1].Value = WinGlass[n][k];
-                    }                   
+                    }
                 }
-            }            
+            }
             Count_FrameDB = WinGlass.Length;
         }
 
@@ -135,7 +136,7 @@ namespace main.subcontents
             else if (UserDB_SingleDoubleTriple != "" && UserDB_ArAir == "" && UserDB_LE_CL_V == "")
             {
                 User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "복층_삼중_단창='" + UserDB_SingleDoubleTriple + "'");
-                WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "복층_삼중_단창='" + UserDB_SingleDoubleTriple  + "'");
+                WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "복층_삼중_단창='" + UserDB_SingleDoubleTriple + "'");
             }
             else if (UserDB_SingleDoubleTriple == "" && UserDB_ArAir != "" && UserDB_LE_CL_V == "")
             {
@@ -164,7 +165,7 @@ namespace main.subcontents
                     }
                 }
             }
-            if (WinGlass.Length >0)
+            if (WinGlass.Length > 0)
             {
                 for (int n = 0; n < WinGlass.Length; n++)
                 {
@@ -198,7 +199,7 @@ namespace main.subcontents
 
         private void AddUserDB_button_Click(object sender, EventArgs e)
         {
-           int nRow = Glass_dataGridView.Rows.Add();
+            int nRow = Glass_dataGridView.Rows.Add();
 
             UserNum = Program.UTIL.CreateNum("User_Glass", "번호", "UWG_0");
             Glass_dataGridView.Rows[nRow].Cells[1].Value = UserNum;
@@ -248,7 +249,7 @@ namespace main.subcontents
                 }
             }
 
-            
+
         }
 
         //데이터그리드뷰 체크박스 선택 시
@@ -262,7 +263,7 @@ namespace main.subcontents
         }
         private void Save_button_Click(object sender, EventArgs e)
         {
-            for(int a=0; a< Glass_dataGridView.Rows.Count; a++)
+            for (int a = 0; a < Glass_dataGridView.Rows.Count; a++)
             {
                 if (Glass_dataGridView.Rows[a].Cells[2].Value != null && Glass_dataGridView.Rows[a].Cells[2].Value.ToString() == "사용자")
                 {
@@ -277,7 +278,7 @@ namespace main.subcontents
                         }
                     }
 
-                    for(int aa=8; aa< 13; aa++)
+                    for (int aa = 8; aa < 13; aa++)
                     {
                         if (Glass_dataGridView.Rows[a].Cells[aa].Value != null && Glass_dataGridView.Rows[a].Cells[aa].Value.ToString() != "")
                         {
@@ -294,12 +295,12 @@ namespace main.subcontents
                         }
 
                     }
-                        Program.DB.setValue(DB.type.ProjDB, "User_Glass", "번호,프로젝트유형,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율",
-                           "'" + Glass_dataGridView.Rows[a].Cells[1].Value.ToString() + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + Glass_dataGridView.Rows[a].Cells[3].Value.ToString() + "','" + Glass_dataGridView.Rows[a].Cells[4].Value.ToString() + "','" + Glass_dataGridView.Rows[a].Cells[5].Value.ToString() + "','" +
-                           Glass_dataGridView.Rows[a].Cells[6].Value.ToString() + "','" + Glass_dataGridView.Rows[a].Cells[7].Value.ToString() + "','" +
-                           Program.UTIL.dataGridView_doubleComa(Glass_dataGridView, a, 8, 3) + "','" + Program.UTIL.dataGridView_doubleComa(Glass_dataGridView, a, 9, 3) + "','" +
-                           Program.UTIL.dataGridView_doubleComa(Glass_dataGridView, a, 10, 3) + "','" + Program.UTIL.dataGridView_doubleComa(Glass_dataGridView, a, 11, 3) + "','" +
-                           Program.UTIL.dataGridView_doubleComa(Glass_dataGridView, a, 12, 3) + "'", "번호");
+                    Program.DB.setValue(DB.type.ProjDB, "User_Glass", "번호,프로젝트유형,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율",
+                       "'" + Glass_dataGridView.Rows[a].Cells[1].Value.ToString() + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + Glass_dataGridView.Rows[a].Cells[3].Value.ToString() + "','" + Glass_dataGridView.Rows[a].Cells[4].Value.ToString() + "','" + Glass_dataGridView.Rows[a].Cells[5].Value.ToString() + "','" +
+                       Glass_dataGridView.Rows[a].Cells[6].Value.ToString() + "','" + Glass_dataGridView.Rows[a].Cells[7].Value.ToString() + "','" +
+                       Program.UTIL.dataGridView_doubleComa(Glass_dataGridView, a, 8, 3) + "','" + Program.UTIL.dataGridView_doubleComa(Glass_dataGridView, a, 9, 3) + "','" +
+                       Program.UTIL.dataGridView_doubleComa(Glass_dataGridView, a, 10, 3) + "','" + Program.UTIL.dataGridView_doubleComa(Glass_dataGridView, a, 11, 3) + "','" +
+                       Program.UTIL.dataGridView_doubleComa(Glass_dataGridView, a, 12, 3) + "'", "번호");
                 }
             }
             DataGridViewRow row = Glass_dataGridView.Rows[SelectRow];
@@ -313,9 +314,25 @@ namespace main.subcontents
             Program.DB.saveProject();
             this.DialogResult = DialogResult.OK;
             this.Close();
-           그만: int x = 1; 
+        그만: int x = 1;
 
         }
 
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\2.subcontents\\5.Window\\1.GlassDB";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

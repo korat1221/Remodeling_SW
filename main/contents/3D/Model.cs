@@ -37,6 +37,7 @@ using System.Drawing.Imaging;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
 using System.Security.Cryptography;
 using System.Reflection.Emit;
+using main.info;
 
 
 namespace main.contents
@@ -127,7 +128,7 @@ namespace main.contents
                     Program.DB.executeSQL(DB.type.ProjDB, sql);
                     Program.DB.deleteTable(DB.type.ProjDB, "Shade_3D");
 
-                    
+
                     resetZoneDraw();
                     Program.DB.saveProject();
 
@@ -186,13 +187,13 @@ namespace main.contents
 
                             if (Value.Length > 0)
                             {
-                                Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,구조체,구조체번호", "'" + value[a][0] + "','" + Value[0][1] + "','" + Value[0][0]  + "'", "번호");
+                                Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,구조체,구조체번호", "'" + value[a][0] + "','" + Value[0][1] + "','" + Value[0][0] + "'", "번호");
 
                             }
 
                         }
                     }
-                        return;
+                    return;
                 }
             }
         }
@@ -248,13 +249,13 @@ namespace main.contents
                 }
                 string pid = "0000-00-00";
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
-                if(Value.Length > 0)
+                if (Value.Length > 0)
                 {
                     pid = Value[0][0];
                 }
                 Directory.CreateDirectory(Program.gPath + "\\print\\img\\" + pid);
                 // 저장할 파일 경로 설정
-                string ImageName = "/print/img/"+pid+ "/Building.png";
+                string ImageName = "/print/img/" + pid + "/Building.png";
                 string imagePath = Program.gPath + ImageName; // 최종 경로
 
                 // 비트맵을 파일로 저장
@@ -274,15 +275,34 @@ namespace main.contents
                 {
                     sub3dZoneInfo f = (sub3dZoneInfo)form;
                     Save_Image();
-                    string s = f.Save();
-                    runScript("updateObjInfo(" + s + ")");
+                    Program.DB.deleteTable(DB.type.ProjDB, "Shade_3D");
+                    string[][] Win = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호", "외피유형 = '창호' or 외피유형 = '커튼월창'");
+                    if (Win.Length > 0)
+                    {
+                        for (int k = 0; k < Win.Length; k++)
+                        {
+                            ZoneShade zoneshade = new ZoneShade(Win[k][0]);
+                            zoneshade.Calc_방위각();
+                            zoneshade.Calc_지형물음영();
+
+                            zoneshade.Calc_상부음영();
+                            zoneshade.Calc_좌측음영();
+                            zoneshade.Calc_우측음영();
+                            zoneshade.Calc_음영계수();
+                            zoneshade.Save();
+                        }
+                    }
+                    //           redrawList();
+
+                    Program.DB.saveProject();
+
                     MessageBox.Show("저장되었습니다.");
                     return;
                 }
             }
         }
 
-       
+
 
         private void Model_VisibleChanged(object sender, EventArgs e)
         {
@@ -310,6 +330,22 @@ namespace main.contents
             else if (force)
             {
                 runScript("location.reload();");
+            }
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\10.3D\\1.Main";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
             }
         }
     }

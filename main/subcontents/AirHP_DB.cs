@@ -134,10 +134,10 @@ namespace main.subcontents.HeatingSystem
                 HP_dataGridView.Columns.Add("A3", "연료");
                 HP_dataGridView.Columns.Add("A4", "공급유형");
                 HP_dataGridView.Columns.Add("A5", "정격.용량" + Environment.NewLine + "[kW]");
-                HP_dataGridView.Columns.Add("A6", "정격.COP" + Environment.NewLine + "[kW]");
+                HP_dataGridView.Columns.Add("A6", "정격.COP" + Environment.NewLine + "[W/W]");
                 HP_dataGridView.Columns.Add("A7", "정격.소비전력" + Environment.NewLine + "[kW]");
                 HP_dataGridView.Columns.Add("A8", "한랭지.용량" + Environment.NewLine + "[kW]");
-                HP_dataGridView.Columns.Add("A9", "한랭지.COP" + Environment.NewLine + "[kW]");
+                HP_dataGridView.Columns.Add("A9", "한랭지.COP" + Environment.NewLine + "[W/W]");
                 HP_dataGridView.Columns.Add("A10", "한랭지.소비전력" + Environment.NewLine + "[kW]");
             }
             HP_dataGridView.Columns[0].Width = 40;

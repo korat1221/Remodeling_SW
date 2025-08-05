@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.info;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +21,7 @@ namespace main.contentslist
         String CWNum;
         double CountDB;
         int SelectRow;
-       // DataTable CWList = new DataTable();
+        // DataTable CWList = new DataTable();
         DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
 
         public List_ConstructionCW()
@@ -93,11 +94,11 @@ namespace main.contentslist
             dataGridView1.Columns.Add("A1", "번호");
             dataGridView1.Columns.Add("A2", "명칭");
             dataGridView1.Columns.Add("A3", "Type");
-            dataGridView1.Columns.Add("A4", "유효열관류율.[W/m"+Program.UTIL.Subscript(2, true)+"·K]");
+            dataGridView1.Columns.Add("A4", "유효열관류율.[W/m" + Program.UTIL.Subscript(2, true) + "·K]");
             dataGridView1.Columns.Add("A5", "태양열취득률.[-]");
             dataGridView1.Columns.Add("A6", "빛투과율.[-]");
             dataGridView1.Columns.Add("A7", "유리종류");
-            dataGridView1.Columns.Add("A8", "면적.[m"+ Program.UTIL.Subscript(2, true) + "]");
+            dataGridView1.Columns.Add("A8", "면적.[m" + Program.UTIL.Subscript(2, true) + "]");
             dataGridView1.Columns.Add("A9", "개수.[EA]");
         }
 
@@ -124,7 +125,7 @@ namespace main.contentslist
         public void load_List()
         {
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
-            string[][] List = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭,Type,유리부분유효열관류율,태양열취득률,빛투과율,커튼월면적,고정유리종류", "");
+            string[][] List = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭,Type,커튼월창유효열관류율,태양열취득률,빛투과율,커튼월면적,고정유리종류", "");
             if (List.Length > 0)
             {
                 String Blank = "";
@@ -199,6 +200,23 @@ namespace main.contentslist
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             load_List();
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\3.contentslist\\7.CW";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 }

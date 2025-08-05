@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -29,7 +30,7 @@ namespace main.subcontents.ConstructionCW
             UserNum_textBox.Text = UserNum;
 
             string[][] Type2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "종류2", "구분 = '단열재'");
-            if(Type2.Length > 0 )
+            if (Type2.Length > 0)
             {
                 List.Add(Type2[0][0]);
                 for (int n = 1; n < Type2.Length; n++)
@@ -68,7 +69,7 @@ namespace main.subcontents.ConstructionCW
             Panel_dataGridView.Columns.Add("A11", "비고");
 
             string[][] User_CWPanel = Program.DB.getValue(DB.type.ProjDB, "User_Material", "번호,DB유형,재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '단열재'");
-            if(User_CWPanel.Length>0)
+            if (User_CWPanel.Length > 0)
             {
                 for (int n = 0; n < User_CWPanel.Length; n++)
                 {
@@ -77,13 +78,13 @@ namespace main.subcontents.ConstructionCW
                     for (int k = 0; k < 11; k++)
                     {
                         Panel_dataGridView.Rows[nRow].Cells[k + 1].Value = User_CWPanel[n][k];
-                    }                   
+                    }
                 }
             }
-               
+
             string[][] CWPanel = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '단열재'");
             String dbnum;
-            if(CWPanel.Length>0)
+            if (CWPanel.Length > 0)
             {
                 for (int n = 0; n < CWPanel.Length; n++)
                 {
@@ -106,7 +107,7 @@ namespace main.subcontents.ConstructionCW
                     }
                 }
             }
-          Count_FrameDB = CWPanel.Length;
+            Count_FrameDB = CWPanel.Length;
         }
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
@@ -179,7 +180,7 @@ namespace main.subcontents.ConstructionCW
             if (UserDBName != null && UserDBType1 != null && UserDB_Conductivity != 0)
             {
                 Program.DB.setValue(DB.type.ProjDB, "User_Material", "번호,프로젝트유형,DB유형,구분,재료명,종류2,종류1,열전도율,밀도,투습저항계수dry,투습저항계수wet,비열,비고",
-                    "'" + UserNum + "','" + 프로젝트유형[0][0] +"','" + "사용자" + "','" + "단열재" + "','" + UserDBName + "','" + UserDBType1 + "','" + UserDBType2 + "','" + UserDB_Conductivity.ToString() + "','" + UserDB_Density.ToString() + "','" + UserDB_dry.ToString() + "','" + UserDB_wet.ToString() + "','" + UserDB_c.ToString() + "','" + UserDB_Note + "'", "번호");
+                    "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + "단열재" + "','" + UserDBName + "','" + UserDBType1 + "','" + UserDBType2 + "','" + UserDB_Conductivity.ToString() + "','" + UserDB_Density.ToString() + "','" + UserDB_dry.ToString() + "','" + UserDB_wet.ToString() + "','" + UserDB_c.ToString() + "','" + UserDB_Note + "'", "번호");
                 load_table_PanelDB();
                 Program.DB.saveProject();
             }
@@ -236,5 +237,21 @@ namespace main.subcontents.ConstructionCW
 
         }
 
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\2.subcontents\\8.CW\\2.PanelDB";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

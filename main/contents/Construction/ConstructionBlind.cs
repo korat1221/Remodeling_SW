@@ -1,4 +1,5 @@
 ﻿using main.contentslist;
+using main.info;
 using main.subcontents;
 using main.subcontents.ConstructionBlind;
 using Microsoft.Web.WebView2.Core;
@@ -313,7 +314,7 @@ namespace main.contents
 
                 }
                 string unit = "kWh/m" + Program.UTIL.Subscript(2, true) + "·mth";
-                runScript("drawChart_blind([{type:\"line\",label:\"차양가동율(남향)\",data:[" + s + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",label:\"일사량("+ unit +")\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:" + max + ",dash:false,barPercentage:0.7}])");
+                runScript("drawChart_blind([{type:\"line\",label:\"차양가동율(남향)\",data:[" + s + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",label:\"일사량(" + unit + ")\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:" + max + ",dash:false,barPercentage:0.7}])");
                 // runScript("drawChart_blind([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:150}])");
             }
             else
@@ -429,5 +430,20 @@ namespace main.contents
             Num = ID;
         }
 
+        private void info_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\8.Blind";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

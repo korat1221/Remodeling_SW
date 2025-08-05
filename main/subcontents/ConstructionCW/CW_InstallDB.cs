@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -113,7 +114,7 @@ namespace main.subcontents.ConstructionCW
             {
                 CWInstall = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
             }
-            if(CWInstall.Length > 0)
+            if (CWInstall.Length > 0)
             {
                 for (int n = 0; n < CWInstall.Length; n++)
                 {
@@ -126,7 +127,7 @@ namespace main.subcontents.ConstructionCW
 
                 }
             }
-          Count_InstallDB = CWInstall.Length;
+            Count_InstallDB = CWInstall.Length;
         }
 
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
@@ -185,7 +186,7 @@ namespace main.subcontents.ConstructionCW
             {
                 string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
                 Program.DB.setValue(DB.type.ProjDB, "User_CWInstall", "번호,DB유형,프로젝트유형,제품명,구분1,구분2,구분3,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율",
-                    "'" + UserNum + "','" + 프로젝트유형[0][0] +"','" + "사용자" + "','" + UserDBName + "','" + UserDBType1 + "','" + UserDBType2 + "','" + UserDBType3 + "','" + UserDB_Psi_InstallTop.ToString() + "','" + UserDB_Psi_InstallSide.ToString() + "','" + UserDB_Psi_InstallSide.ToString() + "'", "번호");
+                    "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + UserDBName + "','" + UserDBType1 + "','" + UserDBType2 + "','" + UserDBType3 + "','" + UserDB_Psi_InstallTop.ToString() + "','" + UserDB_Psi_InstallSide.ToString() + "','" + UserDB_Psi_InstallSide.ToString() + "'", "번호");
                 load_table_InstallDB();
                 UserNum = Program.UTIL.CreateNum("User_CWInstall", "번호", "UCWS_0");
                 UserNum_textBox.Text = UserNum;
@@ -240,6 +241,23 @@ namespace main.subcontents.ConstructionCW
             Select_CWInstall[0] = row.Cells[1].Value.ToString();
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\2.subcontents\\8.CW\\5.InstallDB";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 }

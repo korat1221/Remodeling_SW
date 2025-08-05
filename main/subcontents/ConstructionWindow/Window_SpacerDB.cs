@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
+﻿using main.info;
+using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -68,9 +69,9 @@ namespace main.subcontents
             Spacer_dataGridView.Columns[9].Width = 80;
             Spacer_dataGridView.Columns[10].Width = 100;
             Spacer_dataGridView.Columns[11].Width = 100;
-           
+
             string[][] User_WinSpacer = Program.DB.getValue(DB.type.ProjDB, "User_WindowSpacer", "번호,DB유형,제품명,제조사,구분1,구분2,구분3,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + FrameMaterial + "'");
-            if(User_WinSpacer.Length > 0)
+            if (User_WinSpacer.Length > 0)
             {
                 for (int n = 0; n < User_WinSpacer.Length; n++)
                 {
@@ -79,14 +80,14 @@ namespace main.subcontents
                     for (int k = 0; k < 11; k++)
                     {
                         Spacer_dataGridView.Rows[nRow].Cells[k + 1].Value = User_WinSpacer[n][k];
-                    }                   
+                    }
                 }
             }
-                
-         
+
+
 
             string[][] WinSpacer = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호간봉", "번호,DB유형,제품명,구분1,구분2,구분3,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + FrameMaterial + "'");
-            if(WinSpacer.Length > 0) 
+            if (WinSpacer.Length > 0)
             {
                 for (int n = 0; n < WinSpacer.Length; n++)
                 {
@@ -103,7 +104,7 @@ namespace main.subcontents
                     for (int k = 3; k < 10; k++)
                     {
                         Spacer_dataGridView.Rows[nRow].Cells[k + 2].Value = WinSpacer[n][k];
-                    }                   
+                    }
                 }
             }
             Count_FrameDB = WinSpacer.Length;
@@ -239,5 +240,21 @@ namespace main.subcontents
 
         }
 
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\2.subcontents\\5.Window\\5.SpacerDB";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

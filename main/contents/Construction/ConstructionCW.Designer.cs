@@ -233,6 +233,7 @@
             DiIndi_comboBox = new CustomComboBox();
             label7 = new Label();
             CWType_pictureBox = new PictureBox();
+            info = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             groupBox1.SuspendLayout();
@@ -252,6 +253,7 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = SystemColors.GradientActiveCaption;
+            GeneralPanel.Controls.Add(info);
             GeneralPanel.Controls.Add(label64);
             GeneralPanel.Controls.Add(AdditionalCW_textBox);
             GeneralPanel.Controls.Add(OldCW_comboBox);
@@ -2824,6 +2826,21 @@
             CWType_pictureBox.TabIndex = 97;
             CWType_pictureBox.TabStop = false;
             // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(970, 9);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 117;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
+            // 
             // ConstructionCW
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -3071,5 +3088,6 @@
         private Button FrameCert_button;
         private PictureBox FrameCert_pictureBox;
         private Label label84;
+        private Button info;
     }
 }

@@ -33,6 +33,7 @@ namespace main.contents
         private void InitializeComponent()
         {
             GeneralPanel = new Panel();
+            info = new Button();
             AdditionalWindow_textBox = new TextBox();
             Icon_pictureBox = new PictureBox();
             WinNum_textBox = new TextBox();
@@ -155,6 +156,7 @@ namespace main.contents
             // GeneralPanel
             // 
             GeneralPanel.BackColor = SystemColors.GradientActiveCaption;
+            GeneralPanel.Controls.Add(info);
             GeneralPanel.Controls.Add(AdditionalWindow_textBox);
             GeneralPanel.Controls.Add(Icon_pictureBox);
             GeneralPanel.Controls.Add(WinNum_textBox);
@@ -172,6 +174,21 @@ namespace main.contents
             GeneralPanel.Size = new Size(1000, 80);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(970, 9);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 116;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
             // 
             // AdditionalWindow_textBox
             // 
@@ -1639,5 +1656,6 @@ namespace main.contents
         private Label label28;
         private Button FrameCert_button;
         private PictureBox FrameCert_pictureBox;
+        private Button info;
     }
 }

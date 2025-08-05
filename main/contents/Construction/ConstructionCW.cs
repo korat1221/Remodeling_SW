@@ -13,6 +13,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using main.subcontents;
 using main.subcontents.ConstructionCW;
 using System.Reflection.Emit;
+using main.info;
 
 
 namespace main.contents
@@ -66,7 +67,7 @@ namespace main.contents
                 CWGlass_pictureBox.Load(Program.gPath + Image[0][0]);
                 CWGlass_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
-           
+
             string[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호", "");
             if (value.Length > 0)
             {
@@ -92,7 +93,7 @@ namespace main.contents
             string unit = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             Ug_unit_label.Text = unit;
             UCW_p_label2.Text = unit;
-            UCW_d_label2.Text= unit;
+            UCW_d_label2.Text = unit;
             label34.Text = unit;
             label32.Text = unit;
             label35.Text = unit;
@@ -524,7 +525,7 @@ namespace main.contents
 
 
         }
-        
+
         private void LoadCert_Pic()
         {
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월프레임", "이미지", "제품명 = '" + FrameName + "'");
@@ -1167,7 +1168,7 @@ namespace main.contents
                 MessageBox.Show("치수 선택이 취소되었습니다.");
             }
         }
-            
+
 
         public void Rule_Ucw_g()
         {
@@ -1266,7 +1267,7 @@ namespace main.contents
 
             if (UcwMethod == "계산")
             {
-                if (Ug_Fix != 0 && Uf_open != 0 && Psi_g_fix != 0 && Area != 0)
+                if ( Area != 0)
                 {
                     Ucw = ((Ug_Fix * Ag_fix) + (Ug_Open * Ag_open) + (Up * Ag_open) + (Ug_Door * Ag_d) + (Uf_mt * Af_mt) + (Uf_open * Af_open) + (Uf_door * Af_d) + (Psi_g_fix * Lg_fix) + (Psi_g_open * Lg_open) + (Psi_p * Lp) + (Psi_g_Door * Lg_d)) / Area;
                 }
@@ -1381,10 +1382,6 @@ namespace main.contents
             {
                 MessageBox.Show("커튼월 리모델링 유형을 선택하세요.");
             }
-            else if (FixGlassName == null)
-            {
-                MessageBox.Show("유리를 선택하세요.");
-            }
             else if (InstallName == null)
             {
                 MessageBox.Show("설치열교를 선택하세요.");
@@ -1394,10 +1391,6 @@ namespace main.contents
                 if (FrameName == null)
                 {
                     MessageBox.Show("프레임을 선택하세요.");
-                }
-                else if (SpacerName == null)
-                {
-                    MessageBox.Show("간봉을 선택하세요.");
                 }
                 else if (Panel_checkBox.Checked)
                 {
@@ -1492,6 +1485,14 @@ namespace main.contents
                     Ucw.ToString() + "','" + Ucw_g.ToString() + "','" + dUinst.ToString() + "','" + Ucw_inst.ToString() + "','" + Ucw_g_inst.ToString() + "','" + Ff_g.ToString() + "','" +
                     법규Ucw_g.ToString()
                     + "'", "번호");
+
+            if(Convert.ToDouble(g)==0 &&Convert.ToDouble(gd)>0 && Convert.ToDouble(τd) >0)
+            {
+                Program.DB.setValue(DB.type.ProjDB, "ConstructionCW", "번호,태양열취득률,빛투과율",
+                         "'" + CWNum_textBox.Text + "','" + gd.ToString() + "','" + τd.ToString() 
+                        + "'", "번호");
+
+            }
 
             if (Panel_checkBox.Checked)
             {
@@ -1970,6 +1971,23 @@ namespace main.contents
                 popup.ShowDialog();
             }
 
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\1.contents\\9.CW";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 }

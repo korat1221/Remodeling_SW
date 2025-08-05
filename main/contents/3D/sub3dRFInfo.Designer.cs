@@ -53,6 +53,7 @@
             Name_textBox1 = new TextBox();
             Name_textBox = new TextBox();
             panel2 = new Panel();
+            info = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Ucalc_dataGridView).BeginInit();
@@ -85,7 +86,7 @@
             // 
             textBox3.BackColor = Color.White;
             textBox3.BorderStyle = BorderStyle.None;
-            textBox3.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            textBox3.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             textBox3.Location = new Point(51, 12);
             textBox3.Name = "textBox3";
             textBox3.ReadOnly = true;
@@ -113,7 +114,7 @@
             TBType2_textBox.BackColor = Color.White;
             TBType2_textBox.BorderStyle = BorderStyle.None;
             TBType2_textBox.Enabled = false;
-            TBType2_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            TBType2_textBox.Font = new Font("나눔바른고딕", 9.75F);
             TBType2_textBox.ForeColor = Color.Black;
             TBType2_textBox.Location = new Point(838, 298);
             TBType2_textBox.Name = "TBType2_textBox";
@@ -127,7 +128,7 @@
             TBType_textBox.BackColor = Color.White;
             TBType_textBox.BorderStyle = BorderStyle.None;
             TBType_textBox.Enabled = false;
-            TBType_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            TBType_textBox.Font = new Font("나눔바른고딕", 9.75F);
             TBType_textBox.ForeColor = Color.Black;
             TBType_textBox.Location = new Point(656, 298);
             TBType_textBox.Name = "TBType_textBox";
@@ -141,7 +142,7 @@
             Type_textBox.BackColor = Color.White;
             Type_textBox.BorderStyle = BorderStyle.None;
             Type_textBox.Enabled = false;
-            Type_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Type_textBox.Font = new Font("나눔바른고딕", 9.75F);
             Type_textBox.ForeColor = Color.Black;
             Type_textBox.Location = new Point(656, 95);
             Type_textBox.Name = "Type_textBox";
@@ -163,7 +164,7 @@
             Ucalc_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -174,7 +175,7 @@
             Ucalc_dataGridView.Name = "Ucalc_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -183,7 +184,7 @@
             Ucalc_dataGridView.RowHeadersVisible = false;
             Ucalc_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
@@ -208,9 +209,8 @@
             label1.ForeColor = SystemColors.ControlDark;
             label1.Location = new Point(449, 95);
             label1.Name = "label1";
-            label1.Size = new Size(49, 15);
+            label1.Size = new Size(0, 15);
             label1.TabIndex = 180;
-            label1.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
             label1.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // uw_textBox
@@ -241,7 +241,7 @@
             abs_textBox.BackColor = Color.White;
             abs_textBox.BorderStyle = BorderStyle.None;
             abs_textBox.Enabled = false;
-            abs_textBox.Font = new Font(UTIL.Families[0], 9.75F);
+            abs_textBox.Font = new Font("나눔바른고딕", 9.75F);
             abs_textBox.ForeColor = Color.Black;
             abs_textBox.Location = new Point(93, 93);
             abs_textBox.Name = "abs_textBox";
@@ -256,9 +256,8 @@
             label14.ForeColor = SystemColors.ControlDark;
             label14.Location = new Point(212, 58);
             label14.Name = "label14";
-            label14.Size = new Size(23, 15);
+            label14.Size = new Size(0, 15);
             label14.TabIndex = 175;
-            label14.Text = "m" + Program.UTIL.Subscript(2, true);
             label14.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // DI_textBox
@@ -311,7 +310,7 @@
             // 
             Name_textBox1.BackColor = Color.White;
             Name_textBox1.BorderStyle = BorderStyle.None;
-            Name_textBox1.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            Name_textBox1.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             Name_textBox1.Location = new Point(244, 22);
             Name_textBox1.Name = "Name_textBox1";
             Name_textBox1.ReadOnly = true;
@@ -322,7 +321,7 @@
             // 
             Name_textBox.BackColor = Color.White;
             Name_textBox.BorderStyle = BorderStyle.None;
-            Name_textBox.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            Name_textBox.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             Name_textBox.Location = new Point(38, 22);
             Name_textBox.Name = "Name_textBox";
             Name_textBox.ReadOnly = true;
@@ -333,6 +332,7 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
+            panel2.Controls.Add(info);
             panel2.Controls.Add(label11);
             panel2.Controls.Add(label1);
             panel2.Controls.Add(uw_textBox);
@@ -358,6 +358,21 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(960, 436);
             panel2.TabIndex = 181;
+            // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(922, 9);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 181;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
             // 
             // sub3dRFInfo
             // 
@@ -402,5 +417,6 @@
         private TextBox Name_textBox1;
         private TextBox Name_textBox;
         private Panel panel2;
+        private Button info;
     }
 }

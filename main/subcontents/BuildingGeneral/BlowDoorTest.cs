@@ -213,7 +213,7 @@ public partial class BlowDoorTest : Form
 
     private void info_Click(object sender, EventArgs e)
     {        
-        string basePath = Program.gPath + "ZEROFIX manual_final\\3.general\\3.2.blowdoortest";
+        string basePath = Program.gPath + "Manual\\2.subcontents\\1.BlowDoorTest";
 
         // 경로가 존재하는지 확인
         if (Directory.Exists(basePath))

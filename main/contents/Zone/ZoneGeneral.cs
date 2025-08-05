@@ -1,4 +1,5 @@
 ﻿using main.contentslist;
+using main.info;
 using main.subcontents.AHUSystem;
 using main.subcontents.ZoneGeneral;
 using System.Collections;
@@ -10,13 +11,13 @@ namespace main.contents
     {
         String ZoneNum; String SelectPreZone_nonsplit; ArrayList SelectPreZone_split = new ArrayList();
         String RoomControl = "일반", Ground, HCType, AHUType;
-        double DHWneed_1p, DHWneed, UseTime, HCTime, AHUTime, PersonNum, Length, Depth, NetArea, CeilingHeight, NetVolume, VentilationRate, Volume_wd, Volume_we, AnnualUseDay, WeekUseDay;
-        double PersonIHG_1day, PersonIHG, PersonIHG_Low, PersonIHG_Medium, PersonIHG_High; //PersonIHG 단위 : W/m2
-        double EquipIHG_1day, EquipIHG, EquipIHG_Low, EquipIHG_Medium, EquipIHG_High, EquipIHG_Time; //EquipIHG 단위 : W/m2
-        double theta_i_h_set, theta_i_c_set, Em, VA, VA_we;
-        double OccupancyDensity, OccupancyDensity_Low, OccupancyDensity_Medium, OccupancyDensity_High;
-        String OccupancyDensity_index, EquipIHG_index;
-        String ZoneName, BuildingCategory, BuildingUse, Usage, StartTime, EndTime;
+        public double DHWneed_1p, DHWneed, UseTime, HCTime, AHUTime, PersonNum, Length, Depth, NetArea, CeilingHeight, NetVolume, VentilationRate, Volume_wd, Volume_we, AnnualUseDay, WeekUseDay;
+        public double PersonIHG_1day, PersonIHG, PersonIHG_Low, PersonIHG_Medium, PersonIHG_High; //PersonIHG 단위 : W/m2
+        public double EquipIHG_1day, EquipIHG, EquipIHG_Low, EquipIHG_Medium, EquipIHG_High, EquipIHG_Time; //EquipIHG 단위 : W/m2
+        public double theta_i_h_set, theta_i_c_set, Em, VA, VA_we;
+        public double OccupancyDensity, OccupancyDensity_Low, OccupancyDensity_Medium, OccupancyDensity_High;
+        public String OccupancyDensity_index, EquipIHG_index;
+        public String ZoneName, BuildingCategory, BuildingUse, Usage, StartTime, EndTime;
         string SelectHRV; string 증축여부;
         static string Layer;
         public ZoneGeneral()
@@ -942,7 +943,7 @@ namespace main.contents
                 String ID = main.MainContents.selID;
                 int v1 = ID.IndexOf("Zone") + 4; //Zone 번호 위치 
                 int v2 = ID.IndexOf("_", v1); //Zone 다음 "_"의 위치 
-                if(v2 <0)
+                if (v2 < 0)
                 {
                     v2 = ID.IndexOf("\"", v1); //Zone 다음 "_"의 위치 
                 }
@@ -1055,105 +1056,105 @@ namespace main.contents
                 ZoneName_textBox.Text = ZoneName;
                 /////////////////////////////// //순바닥면적계산/////////////////////////////////////////////////////
 
-               
-                    String[][] Wall = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체번호", "존 = '" + ZoneNum + "' And 외피유형 = '외벽'");
-                    double Area_WallInWall = 0;
-                    if (Wall.Length > 0)
+
+                String[][] Wall = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체번호", "존 = '" + ZoneNum + "' And 외피유형 = '외벽'");
+                double Area_WallInWall = 0;
+                if (Wall.Length > 0)
+                {
+                    if (Wall[0][1] == "" || Wall[0][1] == null)
                     {
-                        if (Wall[0][1] == "" || Wall[0][1] == null)
-                        {
-                            MessageBox.Show("3D 모델 화면에서 외피 구조체종류부터 입력해주세요.");
-                        }
-                        for (int j = 0; j < Wall.Length; j++)
-                        {
-                            double Wall_d, Wall_A;
-                            String[][] Wall_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall",
-                             "U적용방법, 두께합계,단열재두께,구조유형,열관류율," +
-                             "재료1종류,재료1두께," +
-                             "재료2종류,재료2두께," +
-                             "재료3종류,재료3두께," +
-                             "재료4종류,재료4두께," +
-                             "재료5종류,재료5두께," +
-                             "재료6종류,재료6두께," +
-                             "재료7종류,재료7두께," +
-                             "재료8종류,재료8두께," +
-                             "재료9종류,재료9두께," +
-                             "재료10종류,재료10두께", "번호 = '" + Wall[j][1] + "'");
+                        MessageBox.Show("3D 모델 화면에서 외피 구조체종류부터 입력해주세요.");
+                    }
+                    for (int j = 0; j < Wall.Length; j++)
+                    {
+                        double Wall_d, Wall_A;
+                        String[][] Wall_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall",
+                         "U적용방법, 두께합계,단열재두께,구조유형,열관류율," +
+                         "재료1종류,재료1두께," +
+                         "재료2종류,재료2두께," +
+                         "재료3종류,재료3두께," +
+                         "재료4종류,재료4두께," +
+                         "재료5종류,재료5두께," +
+                         "재료6종류,재료6두께," +
+                         "재료7종류,재료7두께," +
+                         "재료8종류,재료8두께," +
+                         "재료9종류,재료9두께," +
+                         "재료10종류,재료10두께", "번호 = '" + Wall[j][1] + "'");
 
-                            if (Wall_Value[0][3] == "콘크리트조")
+                        if (Wall_Value[0][3] == "콘크리트조")
+                        {
+                            if (Wall_Value[0][0] == "계산")
                             {
-                                if (Wall_Value[0][0] == "계산")
-                                {
-                                    Wall_d = 0;
+                                Wall_d = 0;
 
-                                    for (int k = 0; k < 10; k++)
+                                for (int k = 0; k < 10; k++)
+                                {
+                                    if (Wall_Value[0][2 * k + 5] != "")
                                     {
-                                        if (Wall_Value[0][2 * k + 5] != "")
+                                        String[][] Material = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "구분", "재료명 = '" + Wall_Value[0][2 * k + 5] + "'");
+                                        if (Material.Length > 0)
                                         {
-                                            String[][] Material = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "구분", "재료명 = '" + Wall_Value[0][2 * k + 5] + "'");
-                                            if (Material.Length > 0)
+                                            if (Material[0][0] != "콘크리트")
                                             {
-                                                if (Material[0][0] != "콘크리트")
-                                                {
-                                                    Wall_d += Convert.ToDouble(Wall_Value[0][2 * k + 6]) / 1000;
-                                                }
-                                                else
-                                                {
-                                                    break;
-                                                }
+                                                Wall_d += Convert.ToDouble(Wall_Value[0][2 * k + 6]) / 1000;
+                                            }
+                                            else
+                                            {
+                                                break;
                                             }
                                         }
-                                        else
-                                        {
-                                            break;
-                                        }
+                                    }
+                                    else
+                                    {
+                                        break;
                                     }
                                 }
-                                else
-                                {
-                                    Wall_d = 0.075 + Convert.ToDouble(Wall_Value[0][2]) / 1000; //내단열로 가정함
-                                }
                             }
                             else
                             {
-
-                                // Wall_d = 0.015 + Convert.ToDouble(Wall[j][2]) / 2;
-                                Wall_d = 0.015 + Convert.ToDouble(Wall_Value[0][2]) / 1000;
-                            }
-
-                            double value;
-                            if (double.TryParse(Wall[j][0], out value))
-                            {
-                                Wall_A = Wall_d * Convert.ToDouble(Wall[j][0]);
-                                Area_WallInWall += Wall_A;
-                            }
-                            else
-                            {
-                                string[][] floor = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", "바닥면적", "존번호='" + ZoneNum + "'");
-                                if (floor.Length > 0)
-                                {
-                                NetArea = Convert.ToDouble(floor[0][0]) * 0.85;
-                                    goto _goto;
-                                }
+                                Wall_d = 0.075 + Convert.ToDouble(Wall_Value[0][2]) / 1000; //내단열로 가정함
                             }
                         }
-                    }
-
-                    String[][] InWall = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이", "존 = '" + ZoneNum + "' And 외피유형 = '내벽'");
-                    if (InWall.Length > 0)
-                    {
-                        for (int j = 0; j < InWall.Length; j++)
+                        else
                         {
-                            double InWall_d, InWall_A;
-                            InWall_d = 0.05;
-                            InWall_A = InWall_d * Convert.ToDouble(InWall[j][0]);
-                            Area_WallInWall += InWall_A;
+
+                            // Wall_d = 0.015 + Convert.ToDouble(Wall[j][2]) / 2;
+                            Wall_d = 0.015 + Convert.ToDouble(Wall_Value[0][2]) / 1000;
+                        }
+
+                        double value;
+                        if (double.TryParse(Wall[j][0], out value))
+                        {
+                            Wall_A = Wall_d * Convert.ToDouble(Wall[j][0]);
+                            Area_WallInWall += Wall_A;
+                        }
+                        else
+                        {
+                            string[][] floor = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", "바닥면적", "존번호='" + ZoneNum + "'");
+                            if (floor.Length > 0)
+                            {
+                                NetArea = Convert.ToDouble(floor[0][0]) * 0.85;
+                                goto _goto;
+                            }
                         }
                     }
+                }
 
-                    NetArea = Convert.ToDouble(General_3D[0][2]) - Area_WallInWall;
+                String[][] InWall = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이", "존 = '" + ZoneNum + "' And 외피유형 = '내벽'");
+                if (InWall.Length > 0)
+                {
+                    for (int j = 0; j < InWall.Length; j++)
+                    {
+                        double InWall_d, InWall_A;
+                        InWall_d = 0.05;
+                        InWall_A = InWall_d * Convert.ToDouble(InWall[j][0]);
+                        Area_WallInWall += InWall_A;
+                    }
+                }
 
-                _goto:
+                NetArea = Convert.ToDouble(General_3D[0][2]) - Area_WallInWall;
+
+            _goto:
                 NetArea_textBox.Text = string.Format("{0:F2}", NetArea);
             }
         }
@@ -1273,6 +1274,22 @@ namespace main.contents
             else
             {
                 증축여부 = "true";
+            }
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\13.ZoneGeneral";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
             }
         }
     }

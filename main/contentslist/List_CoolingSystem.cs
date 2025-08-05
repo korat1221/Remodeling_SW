@@ -92,7 +92,7 @@ namespace main.contentslist
             List.Columns.Add("명칭", typeof(string));
             List.Columns.Add("냉방설비", typeof(string));
             List.Columns.Add("냉방출력[kW]", typeof(string));
-            List.Columns.Add("냉방성능[kW/kW]", typeof(string));
+            List.Columns.Add("냉방성능[W/W]", typeof(string));
             dataGridView1.DataSource = List;
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -47,11 +48,11 @@ namespace main.subcontents.ConstructionCW
             Door_dataGridView.Columns.Add("A3", "제품명");
             Door_dataGridView.Columns.Add("A4", "제조사");
             Door_dataGridView.Columns.Add("A5", "구분");
-            Door_dataGridView.Columns.Add("A6", "프레임.열관류율.Uf,d\r\n[W/m"+Program.UTIL.Subscript(2, true)+"·K]");
+            Door_dataGridView.Columns.Add("A6", "프레임.열관류율.Uf,d\r\n[W/m" + Program.UTIL.Subscript(2, true) + "·K]");
             Door_dataGridView.Columns.Add("A7", "프레임.두께.dd\r\n[m]");
-         
-                string[][] User_CWDoorFrame = Program.DB.getValue(DB.type.ProjDB, "User_CWDoorFrame", "번호,DB유형,제품명,제조사,구분,프레임열관류율,프레임두께", "");
-            if(User_CWDoorFrame.Length > 0 )
+
+            string[][] User_CWDoorFrame = Program.DB.getValue(DB.type.ProjDB, "User_CWDoorFrame", "번호,DB유형,제품명,제조사,구분,프레임열관류율,프레임두께", "");
+            if (User_CWDoorFrame.Length > 0)
             {
                 for (int n = 0; n < User_CWDoorFrame.Length; n++)
                 {
@@ -62,9 +63,9 @@ namespace main.subcontents.ConstructionCW
                         Door_dataGridView.Rows[nRow].Cells[k + 1].Value = User_CWDoorFrame[n][k];
                     }
                 }
-            }               
+            }
             string[][] CWDoorFrame = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월도어프레임", "번호,DB유형,제품명,제조사,프레임열관류율,프레임두께", "");
-            if(CWDoorFrame.Length > 0 )
+            if (CWDoorFrame.Length > 0)
             {
                 for (int n = 0; n < CWDoorFrame.Length; n++)
                 {
@@ -185,5 +186,21 @@ namespace main.subcontents.ConstructionCW
 
         }
 
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "subcontents\\8.CW\\3.DoorFrameDB";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

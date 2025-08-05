@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(sub3dCWInfo));
             tabControl1 = new CustomTabControl();
             tabPage1 = new TabPage();
+            info = new Button();
             label7 = new Label();
             shgc_textBox = new TextBox();
             light_textBox = new TextBox();
@@ -63,6 +64,7 @@
             label5 = new Label();
             label1 = new Label();
             tabPage2 = new TabPage();
+            info_shade = new Button();
             L1_textBox = new TextBox();
             T2_textBox = new TextBox();
             T1_textBox = new TextBox();
@@ -154,6 +156,7 @@
             // tabPage1
             // 
             tabPage1.BackColor = Color.White;
+            tabPage1.Controls.Add(info);
             tabPage1.Controls.Add(label7);
             tabPage1.Controls.Add(shgc_textBox);
             tabPage1.Controls.Add(light_textBox);
@@ -191,6 +194,21 @@
             tabPage1.Size = new Size(945, 421);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "커튼월 정보";
+            // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(907, 9);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 146;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
             // 
             // label7
             // 
@@ -532,6 +550,7 @@
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(info_shade);
             tabPage2.Controls.Add(L1_textBox);
             tabPage2.Controls.Add(T2_textBox);
             tabPage2.Controls.Add(T1_textBox);
@@ -554,6 +573,21 @@
             tabPage2.TabIndex = 1;
             tabPage2.Text = "음영 정보";
             tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // info_shade
+            // 
+            info_shade.BackColor = SystemColors.ControlLight;
+            info_shade.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info_shade.FlatStyle = FlatStyle.System;
+            info_shade.Font = new Font("나눔바른고딕", 9.75F);
+            info_shade.Location = new Point(907, 9);
+            info_shade.Margin = new Padding(0);
+            info_shade.Name = "info_shade";
+            info_shade.Size = new Size(23, 23);
+            info_shade.TabIndex = 147;
+            info_shade.Text = "?";
+            info_shade.UseVisualStyleBackColor = false;
+            info_shade.Click += info_shade_Click;
             // 
             // L1_textBox
             // 
@@ -1228,5 +1262,7 @@
         private Label label30;
         private Label label24;
         private Label label23;
+        private Button info;
+        private Button info_shade;
     }
 }

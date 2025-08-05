@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static CustomComboBox;
 using static main.MainContents;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using main.subcontents.ThermalBridge;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
+using main.info;
 
 namespace main.contents
 {
@@ -62,7 +62,6 @@ namespace main.contents
         }
         private void Load_TBDB()
         {
-            fillFilterCombos();
             dataGridView1.Rows.Clear();
 
             string[][] Value;
@@ -76,7 +75,7 @@ namespace main.contents
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct 번호,열교항목,열교길이,선택열교 from ThermalBridge_3D Where 열교항목 ='" + SelectTBType + "'");
             }
 
-            if(Value.Length > 0)
+            if (Value.Length > 0)
             {
                 for (int i = 0; i < Value.Length; i++)
                 {
@@ -107,21 +106,21 @@ namespace main.contents
                 }
             }
             string[][] dU = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "외벽dUtb, 지붕dUtb, 바닥dUtb");
-            if(dU.Length > 0 && dU[0][0]!="")
+            if (dU.Length > 0 && dU[0][0] != "")
             {
                 dUtb_label.Visible = true;
                 dUtbWall_label.Visible = true;
                 dUtbRoof_label.Visible = true;
                 dUtbFloor_label.Visible = true;
-                
-            string script = Program.UTIL.Subscript(2, true);
-                dUtbWall_label.Text ="외벽 : " + Convert.ToDouble(dU[0][0]).ToString("0.00") + " W/m" + script + "·K";
+
+                string script = Program.UTIL.Subscript(2, true);
+                dUtbWall_label.Text = "외벽 : " + Convert.ToDouble(dU[0][0]).ToString("0.00") + " W/m" + script + "·K";
                 dUtbRoof_label.Text = "지붕 : " + Convert.ToDouble(dU[0][1]).ToString("0.00") + " W/m" + script + "·K";
                 dUtbFloor_label.Text = "바닥 : " + Convert.ToDouble(dU[0][2]).ToString("0.00") + " W/m" + script + "·K";
             }
             else
             {
-                dUtb_label.Visible = false; 
+                dUtb_label.Visible = false;
                 dUtbWall_label.Visible = false;
                 dUtbRoof_label.Visible = false;
                 dUtbFloor_label.Visible = false;
@@ -140,7 +139,7 @@ namespace main.contents
             if (TB_comboBox.SelectedItem != null)
             {
                 SelectTBType = TB_comboBox.SelectedItem.ToString();
-                if(SelectTBType !=null && SelectTBType !="")
+                if (SelectTBType != null && SelectTBType != "")
                 {
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
@@ -215,6 +214,29 @@ namespace main.contents
                 }
             }
         }
+        private void TB_comboBox_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            ComboBox combo = sender as ComboBox;
+
+            if (e.Index < 0 || combo == null) return;
+
+            // 배경 그리기
+            e.DrawBackground();
+
+            // 텍스트 브러시 선택
+            Brush brush = (e.State & DrawItemState.Selected) == DrawItemState.Selected
+                ? SystemBrushes.HighlightText
+                : new SolidBrush(combo.ForeColor);
+
+            // 항목 문자열 가져오기
+            string text = combo.GetItemText(combo.Items[e.Index]);
+
+            // 문자열 출력
+            e.Graphics.DrawString(text, e.Font, brush, e.Bounds);
+
+            // 포커스 표시
+            e.DrawFocusRectangle();
+        }
 
         private void fillFilterCombos()
         {
@@ -266,7 +288,7 @@ namespace main.contents
 
                         string[][] tb2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교", "번호,명칭,값", "번호 ='" + TBNum + "'");
                         if (tb2.Length == 0) { tb2 = Program.DB.getValue(DB.type.ProjDB, "User_TB", "번호,명칭,값", "번호 ='" + TBNum + "'"); }
-                       
+
 
                         if (tb2.Length > 0)
                         {
@@ -290,10 +312,10 @@ namespace main.contents
                 }
             }
         }
-        
+
         private void Save_button_Click(object sender, EventArgs e)
         {
-            for(int i =0; i < dataGridView1.Rows.Count; i++)
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 Program.DB.setValue(DB.type.ProjDB, "ThermalBridge_3D", "번호,선택열교",
                  "'" + dataGridView1.Rows[i].Cells[1].Value + "','" + dataGridView1.Rows[i].Cells[3].Value + "'",
@@ -302,6 +324,22 @@ namespace main.contents
             Program.DB.saveProject();
             MessageBox.Show("저장되었습니다.");
 
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\12.3D_TB";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 }

@@ -29,9 +29,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             Size_dataGridView = new DataGridView();
             Save_button = new Button();
             CSVImport_button = new Button();
@@ -64,6 +64,7 @@
             label18 = new Label();
             label19 = new Label();
             door_width_textBox = new TextBox();
+            info = new Button();
             ((System.ComponentModel.ISupportInitialize)Size_dataGridView).BeginInit();
             SuspendLayout();
             // 
@@ -78,33 +79,33 @@
             Size_dataGridView.BorderStyle = BorderStyle.None;
             Size_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             Size_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle7.Font = new Font(UTIL.Families[0], 9.75F);
-            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle7.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            Size_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            Size_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             Size_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Size_dataGridView.Location = new Point(3, 154);
             Size_dataGridView.Name = "Size_dataGridView";
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = SystemColors.Control;
-            dataGridViewCellStyle8.Font = new Font(UTIL.Families[0], 9.75F);
-            dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-            Size_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            Size_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             Size_dataGridView.RowHeadersVisible = false;
             Size_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Font = new Font(UTIL.Families[0], 9.75F);
-            dataGridViewCellStyle9.ForeColor = Color.Black;
-            dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle9.SelectionForeColor = Color.Black;
-            Size_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle6.ForeColor = Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
+            Size_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
             Size_dataGridView.Size = new Size(1144, 259);
             Size_dataGridView.TabIndex = 19;
             Size_dataGridView.CellContentClick += Size_dataGridView_CellContentClick_1;
@@ -126,7 +127,7 @@
             CSVImport_button.BackColor = SystemColors.ControlLight;
             CSVImport_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             CSVImport_button.FlatStyle = FlatStyle.System;
-            CSVImport_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            CSVImport_button.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             CSVImport_button.Location = new Point(206, 9);
             CSVImport_button.Margin = new Padding(0);
             CSVImport_button.Name = "CSVImport_button";
@@ -160,7 +161,7 @@
             Calc_button.BackColor = SystemColors.ControlLight;
             Calc_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Calc_button.FlatStyle = FlatStyle.System;
-            Calc_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            Calc_button.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             Calc_button.Location = new Point(206, 47);
             Calc_button.Margin = new Padding(0);
             Calc_button.Name = "Calc_button";
@@ -173,20 +174,20 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            label12.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label12.Location = new Point(87, 13);
             label12.Name = "label12";
-            label12.Size = new Size(100, 15);
+            label12.Size = new Size(97, 15);
             label12.TabIndex = 135;
             label12.Text = "CSV를 통한 입력";
             // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            label10.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label10.Location = new Point(87, 51);
             label10.Name = "label10";
-            label10.Size = new Size(99, 15);
+            label10.Size = new Size(97, 15);
             label10.TabIndex = 134;
             label10.Text = "계산을 통한 입력";
             // 
@@ -414,12 +415,28 @@
             door_width_textBox.TextAlign = HorizontalAlignment.Center;
             door_width_textBox.TextChanged += door_width_textBox_TextChanged;
             // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(1112, 9);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 157;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
+            // 
             // CW_ImportSize
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientInactiveCaption;
             ClientSize = new Size(1147, 459);
+            Controls.Add(info);
             Controls.Add(label16);
             Controls.Add(label17);
             Controls.Add(door_height_textBox);
@@ -492,5 +509,6 @@
         private Label label18;
         private Label label19;
         private TextBox door_width_textBox;
+        private Button info;
     }
 }

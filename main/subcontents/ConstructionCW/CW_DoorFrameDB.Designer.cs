@@ -53,6 +53,7 @@
             label4 = new Label();
             Deletebutton = new Button();
             Door_dataGridView = new DataGridView();
+            info = new Button();
             GeneralPanel.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Door_dataGridView).BeginInit();
@@ -61,6 +62,7 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.AliceBlue;
+            GeneralPanel.Controls.Add(info);
             GeneralPanel.Controls.Add(label1);
             GeneralPanel.Location = new Point(0, -2);
             GeneralPanel.Name = "GeneralPanel";
@@ -138,7 +140,7 @@
             AddUserDB_button.BackColor = SystemColors.ControlLight;
             AddUserDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AddUserDB_button.FlatStyle = FlatStyle.System;
-            AddUserDB_button.Font = new System.Drawing.Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            AddUserDB_button.Font = new Font("나눔바른고딕", 11.9999981F, FontStyle.Bold);
             AddUserDB_button.Location = new Point(71, 11);
             AddUserDB_button.Margin = new Padding(0);
             AddUserDB_button.Name = "AddUserDB_button";
@@ -153,9 +155,8 @@
             label11.AutoSize = true;
             label11.Location = new Point(434, 48);
             label11.Name = "label11";
-            label11.Size = new Size(48, 15);
+            label11.Size = new Size(0, 15);
             label11.TabIndex = 48;
-            label11.Text = "W/m"+Program.UTIL.Subscript(2, true)+"·K";
             // 
             // label9
             // 
@@ -202,11 +203,12 @@
             // 
             // UserDB_Type_comboBox
             // 
-            UserDB_Type_comboBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            UserDB_Type_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            UserDB_Type_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             UserDB_Type_comboBox.FormattingEnabled = true;
             UserDB_Type_comboBox.Location = new Point(701, 10);
             UserDB_Type_comboBox.Name = "UserDB_Type_comboBox";
-            UserDB_Type_comboBox.Size = new Size(120, 24);
+            UserDB_Type_comboBox.Size = new Size(120, 23);
             UserDB_Type_comboBox.TabIndex = 53;
             UserDB_Type_comboBox.SelectedIndexChanged += UserDB_Type_comboBox_SelectedIndexChanged;
             // 
@@ -259,7 +261,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label4.Location = new Point(8, 15);
             label4.Name = "label4";
             label4.Size = new Size(60, 15);
@@ -271,7 +273,7 @@
             Deletebutton.BackColor = SystemColors.ControlLight;
             Deletebutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Deletebutton.FlatStyle = FlatStyle.System;
-            Deletebutton.Font = new System.Drawing.Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            Deletebutton.Font = new Font("나눔바른고딕", 11.9999981F, FontStyle.Bold);
             Deletebutton.Location = new Point(98, 11);
             Deletebutton.Margin = new Padding(0);
             Deletebutton.Name = "Deletebutton";
@@ -294,7 +296,7 @@
             Door_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -305,7 +307,7 @@
             Door_dataGridView.Name = "Door_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -314,15 +316,29 @@
             Door_dataGridView.RowHeadersVisible = false;
             Door_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             Door_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            Door_dataGridView.RowTemplate.Height = 25;
             Door_dataGridView.Size = new Size(862, 171);
             Door_dataGridView.TabIndex = 19;
             Door_dataGridView.CellContentClick += Spacer_dataGridView_CellContentClick;
+            // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(830, 9);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 157;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
             // 
             // CW_DoorFrameDB
             // 
@@ -369,5 +385,6 @@
         private DataGridView Door_dataGridView;
         private Label label2;
         private CustomComboBox UserDB_Type_comboBox;
+        private Button info;
     }
 }

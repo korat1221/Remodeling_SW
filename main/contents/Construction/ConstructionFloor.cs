@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Microsoft.Web.WebView2.Core;
+using main.info;
 
 namespace main.contents.Construction
 {
@@ -31,7 +32,7 @@ namespace main.contents.Construction
         double[] Material_R = new double[10];
         double[] Material_T = new double[12]; //온도
         bool scriptable = false;
-        string Frost; 
+        string Frost;
 
         public ConstructionFloor()
         {
@@ -201,8 +202,12 @@ namespace main.contents.Construction
             }
             else
             {
-                //기초설치콤보박스
-                Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, Base_comboBox, "바닥", "기초설치", "1");
+                Base_comboBox.Items.Clear();
+                Base_comboBox.Items.Add("지면위");
+                Base_comboBox.Items.Add("단열지하실");
+                Base_comboBox.Items.Add("비단열지하실");
+                Base_comboBox.Items.Add("바닥(직접외기)");
+                Base_comboBox.Items.Add("바닥(간접외기)");
             }
         }
 
@@ -910,7 +915,7 @@ namespace main.contents.Construction
                     }
                     if (Value.Length > 0)
                     {
-                        if (Type == "기존바닥" && DiIndi == "지면" && Frost =="단열없음")
+                        if (Type == "기존바닥" && DiIndi == "지면" && Frost == "단열없음")
                         {
                             Uvalue = 1 / (0.13 + 0 + 200 / 1000 / 2.3);
                         }
@@ -1020,7 +1025,7 @@ namespace main.contents.Construction
                 Rtot = Rsi + Rse + Rtot;
                 double Q = (20 - (-5)) / Rtot;
 
-               // Material_T[0] = (20 - Q * Rsi);
+                // Material_T[0] = (20 - Q * Rsi);
                 Material_T[0] = 20;
                 for (int k = 1; k < Ucalc_dataGridView.RowCount + 1; k++)
                 {
@@ -1595,6 +1600,23 @@ namespace main.contents.Construction
             {
                 Frost = Frost_comboBox.SelectedItem.ToString();
                 Rule_U();
+            }
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\1.contents\\5.Floor";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
             }
         }
     }

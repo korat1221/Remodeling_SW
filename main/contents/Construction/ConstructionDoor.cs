@@ -1,4 +1,5 @@
 ﻿using main.contentslist;
+using main.info;
 using main.subcontents;
 using main.subcontents.ConstructionCW;
 using main.subcontents.ConstructionDoor;
@@ -504,7 +505,7 @@ namespace main.contents
                 DoorArea_textBox.Text = String.Format("{0:F1}", DoorArea / 1000000);
                 DoorArea2_textBox.Text = String.Format("{0:F1}", DoorArea / 1000000);
 
-                OverL_textBox.Text = ((DoorL  + DoorH* 2)/ 1000).ToString();
+                OverL_textBox.Text = ((DoorL + DoorH * 2) / 1000).ToString();
                 UnderL_textBox.Text = (DoorL / 1000).ToString();
             }
         }
@@ -764,7 +765,7 @@ namespace main.contents
         {
             if (UDoorMethod == "법규")
             {
-                if (UD1_textBox.Text != null && UD1_textBox.Text.ToString()!="")
+                if (UD1_textBox.Text != null && UD1_textBox.Text.ToString() != "")
                 {
                     DoorUDGlass = Convert.ToDouble(UD1_textBox.Text);
                     UD2_textBox.Text = String.Format("{0:F3}", DoorUDGlass);
@@ -788,13 +789,13 @@ namespace main.contents
         {
             if (dUinst_textBox.Text != null)
             {
-                if(GlassArea_textBox.Text.ToString() == "")
+                if (GlassArea_textBox.Text.ToString() == "")
                 { DoorUDinsGlass = DoorUD + Convert.ToDouble(dUinst_textBox.Text); }
                 else
                 {
                     DoorUDinsGlass = DoorUDGlass + Convert.ToDouble(dUinst_textBox.Text);
                 }
-                  
+
                 UD_textBox.Text = String.Format("{0:F3}", DoorUDinsGlass);
             }
         }
@@ -942,11 +943,11 @@ namespace main.contents
         {
             #region 법규
             String[][] Date = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "법규시기,지역구분", "");
-            double 법규U=0; 
+            double 법규U = 0;
             if (Date.Length > 0)
             {
                 String[][] Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '문' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
-                
+
                 if (Uvalue.Length > 0)
                 {
                     법규U = Convert.ToDouble(Uvalue[0][0]);
@@ -954,34 +955,46 @@ namespace main.contents
             }
             #endregion
 
-            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
-            Program.DB.setValue(DB.type.ProjDB, "ConstructionDoor", "번호,프로젝트유형,명칭,Type,기존출입문,UD적용방법,직접간접,문짝제품,출입문재질,문틀내부,문짝내부유형,문짝색,흡수율,문짝단열재종류," +
-                      "문짝두께,문열관류율,문틀상부측면열관류율,문틀하부열관류율,문면적,문높이,문길이,유리적용유무," +
-                      "설치유형,설치유형2,상부선형열관류율,측면부선형열관류율,하부선형열관류율,상부설치길이,측면설치길이,하부설치길이,열교가산치," +
-                      "문유효열관류율,Door유형,제품명,제조사," +
-                      "법규열관류율",
-                    "'" + DoorNum_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + DoorName + "','" + Type + "','" + OldDoor + "','" + UDoorMethod + "','" + DiIndi + "','" + DoorDB + "','" + Material + "','" + FrameIn + "','" + DoorIn + "','" + DoorColor + "','" + αd.ToString() + "','" + DoorInsul + "','" +
-                    DoorThk.ToString() + "','" + DoorUD.ToString() + "','" + DoorOver.ToString() + "','" + DoorBottom.ToString() + "','" + DoorArea_textBox.Text + "','" + DoorH.ToString() + "','" + DoorL.ToString() + "','" + glass_check.ToString() + "','" +
-                    InstallType + "','" + Install2 + "','" + Psi_InstallTop.ToString() + "','" + Psi_InstallSide.ToString() + "','" + Psi_InstallBottom.ToString() + "','" + d_InstallTop_textBox.Text + "','" + d_InstallSide_textBox.Text + "','" + d_InstallBottom_textBox.Text + "','" + dUinst_textBox.Text + "','" +
-                    DoorUDinsGlass.ToString() + "','" + DBType + "','" + DBName + "','" + DBName2 + "','" +
-                    법규U.ToString()
-                    + "'", "번호");
-
-            //유리 있을 경우 
-            if (glass_checkBox.Checked)
+            if(DoorUD <=0)
             {
-                Program.DB.setValue(DB.type.ProjDB, "ConstructionDoor", "번호," +
-                          "유리가로,유리세로,유리종류,유리면적,유리열관류율,유리반영문열관류율",
-                        "'" + DoorNum_textBox.Text + "','" +
-                        GlassL.ToString() + "','" + GlassH.ToString() + "','" + GlassName + "','" +
-                       GlassArea_textBox.Text + "','" + Ug.ToString() + "','" + DoorUDGlass.ToString()
-                        + "'", "번호");
+                MessageBox.Show("문 제품 관련 정보를 확인하세요.");
+            }else if (dUinst_textBox.Text ==null || Convert.ToDouble(dUinst_textBox.Text.ToString())<=0)
+            {
+                MessageBox.Show("문 설치정보를 입력하세요.");
             }
-            else { }
-            Program.DB.saveProject();
-            this.DialogResult = DialogResult.OK;
-            this.Hide();
-            Program.getMenuForm().DoLoadForm(51, OnLoadListProc);
+            else
+            {
+                string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+                Program.DB.setValue(DB.type.ProjDB, "ConstructionDoor", "번호,프로젝트유형,명칭,Type,기존출입문,UD적용방법,직접간접,문짝제품,출입문재질,문틀내부,문짝내부유형,문짝색,흡수율,문짝단열재종류," +
+                          "문짝두께,문열관류율,문틀상부측면열관류율,문틀하부열관류율,문면적,문높이,문길이,유리적용유무," +
+                          "설치유형,설치유형2,상부선형열관류율,측면부선형열관류율,하부선형열관류율,상부설치길이,측면설치길이,하부설치길이,열교가산치," +
+                          "문유효열관류율,Door유형,제품명,제조사," +
+                          "법규열관류율",
+                        "'" + DoorNum_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + DoorName + "','" + Type + "','" + OldDoor + "','" + UDoorMethod + "','" + DiIndi + "','" + DoorDB + "','" + Material + "','" + FrameIn + "','" + DoorIn + "','" + DoorColor + "','" + αd.ToString() + "','" + DoorInsul + "','" +
+                        DoorThk.ToString() + "','" + DoorUD.ToString() + "','" + DoorOver.ToString() + "','" + DoorBottom.ToString() + "','" + DoorArea_textBox.Text + "','" + DoorH.ToString() + "','" + DoorL.ToString() + "','" + glass_check.ToString() + "','" +
+                        InstallType + "','" + Install2 + "','" + Psi_InstallTop.ToString() + "','" + Psi_InstallSide.ToString() + "','" + Psi_InstallBottom.ToString() + "','" + d_InstallTop_textBox.Text + "','" + d_InstallSide_textBox.Text + "','" + d_InstallBottom_textBox.Text + "','" + dUinst_textBox.Text + "','" +
+                        DoorUDinsGlass.ToString() + "','" + DBType + "','" + DBName + "','" + DBName2 + "','" +
+                        법규U.ToString()
+                        + "'", "번호");
+
+                //유리 있을 경우 
+                if (glass_checkBox.Checked)
+                {
+                    Program.DB.setValue(DB.type.ProjDB, "ConstructionDoor", "번호," +
+                              "유리가로,유리세로,유리종류,유리면적,유리열관류율,유리반영문열관류율",
+                            "'" + DoorNum_textBox.Text + "','" +
+                            GlassL.ToString() + "','" + GlassH.ToString() + "','" + GlassName + "','" +
+                           GlassArea_textBox.Text + "','" + Ug.ToString() + "','" + DoorUDGlass.ToString()
+                            + "'", "번호");
+                }
+                else { }
+                Program.DB.saveProject();
+                this.DialogResult = DialogResult.OK;
+                this.Hide();
+                Program.getMenuForm().DoLoadForm(51, OnLoadListProc);
+
+            }
+            
         }
 
 
@@ -1100,7 +1113,7 @@ namespace main.contents
                         break; ;
                 }
                 OldDoor = Load[0][3];
-                OldDoor_comboBox.SelectedIndex = OldDoor_comboBox.FindStringExact(OldDoor); 
+                OldDoor_comboBox.SelectedIndex = OldDoor_comboBox.FindStringExact(OldDoor);
                 UDoorMethod = Load[0][4];
                 Udoor_comboBox.SelectedItem = UDoorMethod;
                 DiIndi = Load[0][5];
@@ -1147,7 +1160,7 @@ namespace main.contents
                 DoorBottom = Convert.ToDouble(Load[0][16]);
                 bottom_textBox.Text = DoorBottom.ToString();
 
-                OverL_textBox.Text = ((DoorL + DoorH * 2)/1000).ToString();
+                OverL_textBox.Text = ((DoorL + DoorH * 2) / 1000).ToString();
                 UnderL_textBox.Text = (DoorL / 1000).ToString();
 
                 //설치열교정보
@@ -1220,5 +1233,20 @@ namespace main.contents
             DoorNum = ID;
         }
 
+        private void info_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\7.Door";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

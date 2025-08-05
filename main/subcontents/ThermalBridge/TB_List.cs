@@ -14,6 +14,7 @@ using static main.MainContents;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using main.subcontents.ThermalBridge;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
+using main.info;
 
 
 namespace main.contents
@@ -22,7 +23,7 @@ namespace main.contents
     {
         string sid = "";
         string TBType;
-        string[] ID = { "RTB1", "RTB2", "RTB3", "RTB4", "RTB5", "RTB6", "WTB1", "WTB2", "WTB3", "WTB4", "WTB5", "WTB6", "WTB7", "WTB8"};
+        string[] ID = { "RTB1", "RTB2", "RTB3", "RTB4", "RTB5", "RTB6", "WTB1", "WTB2", "WTB3", "WTB4", "WTB5", "WTB6", "WTB7", "WTB8" };
         string[] ID_Name = { "평지붕+외벽[90]", "평지붕+외벽[270]", "평지붕+내벽", "경사지붕", "경사지붕+외벽[수평]", "경사지붕+외벽[경사]", "층간슬라브+외벽", "외벽+내벽", "외벽+외벽[90]", "외벽+외벽[270]", "바닥+외벽[90]", "바닥+외벽[270]", "지면바닥+외벽[90]", "지면바닥+외벽[270]" };
         double Total_length;
         public TB_List()
@@ -120,6 +121,22 @@ namespace main.contents
                     return true;
                 }
                 else return false;
+            }
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\2.subcontents\\9.3D_TB\\1.TB_List";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
             }
         }
     }

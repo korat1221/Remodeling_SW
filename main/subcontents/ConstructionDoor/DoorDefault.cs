@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.info;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace main.subcontents.HeatingSystem
     public partial class DoorDefault : Form
     {
 
-        public string 문짝종류,문짝내부,문틀내부,문틀상부,문틀하부;
+        public string 문짝종류, 문짝내부, 문틀내부, 문틀상부, 문틀하부;
         ArrayList SelectPump_split = new ArrayList();
         public DoorDefault()
         {
@@ -27,7 +28,7 @@ namespace main.subcontents.HeatingSystem
             //heatingSystem = system;
             load_table_DB();
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '외부출입문'");
-            if(Image.Length > 0 )
+            if (Image.Length > 0)
             {
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -54,7 +55,7 @@ namespace main.subcontents.HeatingSystem
             Door_dataGridView.Columns[0].Width = 50;
 
             string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "외부출입문", "번호,제품명,제조사,문짝종류,문짝내부,문틀내부,문틀상부열관류율,문틀하부열관류율", "");
-            if(Value.Length > 0)
+            if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
                 {
@@ -89,6 +90,23 @@ namespace main.subcontents.HeatingSystem
 
             this.DialogResult = DialogResult.OK;
             this.Close();
-        }       
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\2.subcontents\\6.Door\\3.DoorDefault";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

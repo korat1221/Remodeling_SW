@@ -4405,7 +4405,7 @@ namespace main.contents
             CoolingTop_dataGridView.Columns.Add(FanTypecomboBox);
 
             CoolingTop_dataGridView.Columns.Add("A14", "대수.[EA]");
-            CoolingTop_dataGridView.Columns.Add("A15", "전력소비계수.[kW/kW]");
+            CoolingTop_dataGridView.Columns.Add("A15", "전력소비계수.[W/W]");
 
 
             DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();

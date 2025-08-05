@@ -238,7 +238,7 @@ namespace main.contents
         private void info_Click(object sender, EventArgs e)
         {
             
-            string basePath = Program.gPath + "ZEROFIX manual_final\\2.project\\2.3.preprojectcopy";
+            string basePath = Program.gPath + "Manual\\1.contents\\0.main\\04.PreProjectCopy";
 
             // 경로가 존재하는지 확인
             if (Directory.Exists(basePath))

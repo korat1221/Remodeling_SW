@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,7 +26,7 @@ namespace main.subcontents
         String SelectGlass1, SelectGlass2;
         string[][] Select1_Glass;
         string[][] Select2_Glass;
-        string UserDB_SingleDoubleTriple2="", UserDB_ArAir2="", UserDB_LE_CL_V2="";
+        string UserDB_SingleDoubleTriple2 = "", UserDB_ArAir2 = "", UserDB_LE_CL_V2 = "";
 
 
         public Window_DoubleGlassDB()
@@ -399,5 +400,21 @@ namespace main.subcontents
             }
         }
 
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\2.subcontents\\5.Window\\2.DoubleGlassDB";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

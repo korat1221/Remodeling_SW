@@ -1,4 +1,5 @@
-﻿using Microsoft.Web.WebView2.Core;
+﻿using main.info;
+using Microsoft.Web.WebView2.Core;
 
 namespace main.contents
 {
@@ -53,7 +54,7 @@ namespace main.contents
                 pictureBox2.Load(Program.gPath + Image1[0][0]);
                 pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
 
-                if(rec[0][5]!="")
+                if (rec[0][5] != "")
                 {
                     tabControl1.TabPages.Remove(tabPage2);
                     tabControl1.TabPages.Add(tabPage2);
@@ -114,12 +115,12 @@ namespace main.contents
 
                     light_textBox.Text = CWLoad[0][11];
                     Tao_on_textBox.Text = CWLoad[0][11];
-                    Tao_off_textBox.Text= CWLoad[0][11];
+                    Tao_off_textBox.Text = CWLoad[0][11];
 
                     uw = Convert.ToDouble(CWLoad[0][13]);
-                    uw_textBox.Text = uw.ToString("0.000") + " W/m" + Program.UTIL.Subscript(2, true)+"K";
+                    uw_textBox.Text = uw.ToString("0.000") + " W/m" + Program.UTIL.Subscript(2, true) + "K";
                     install = Convert.ToDouble(CWLoad[0][12]);
-                    inst_textBox.Text = install.ToString("0.000")+ " W/m" + Program.UTIL.Subscript(2, true) + "K";
+                    inst_textBox.Text = install.ToString("0.000") + " W/m" + Program.UTIL.Subscript(2, true) + "K";
 
                     Type = CWLoad[0][14];
                     InstallType = CWLoad[0][9];
@@ -162,7 +163,7 @@ namespace main.contents
                 string s = "";
                 string[][] res = Program.DB.querySQL(DB.type.ProjDB, "SELECT 음영계수 FROM Shade_3D WHERE 유형 = '최종음영' AND 번호 = '" + _ID + "' ORDER BY 월*1 ASC");
 
-                if(res.Length > 0)
+                if (res.Length > 0)
                 {
                     webView22.Visible = true;
                 }
@@ -189,8 +190,8 @@ namespace main.contents
 
             //차양정보 불러오기
             String[][] BlindValue = Program.DB.querySQL(DB.type.ProjDB, "select a.제품명,a.종류,a.설치,a.투과수준,a.색깔,a.외부반사율,a.내부반사율,a.투과율,a.흡수율,a.제어방식1,a.제어방식2 FROM ConstructionBlind AS  a INNER JOIN ZoneEnvelope_3D AS b ON a.번호 = b.차양적용 where b.아이디 = '" + rec[0][9] + "'");
-                
-            if( BlindValue.Length > 0 && BlindValue[0][0]!="")
+
+            if (BlindValue.Length > 0 && BlindValue[0][0] != "")
             {
                 tabControl1.TabPages.Remove(Blind_tabPage);
                 tabControl1.TabPages.Add(Blind_tabPage);
@@ -202,11 +203,11 @@ namespace main.contents
                 BlindControl_textBox.Text = BlindValue[0][9];
                 LoadGraph(BlindValue[0][10], BlindValue[0][11]);
 
-                    String[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "아이디 = '" + rec[0][9] + "'");
+                String[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "아이디 = '" + rec[0][9] + "'");
                 if (Blind.Length > 0)
                 {
-                SHGC_on_textBox.Text = Convert.ToDouble(Blind[0][0]).ToString("0.000");
-                Tao_on_textBox.Text = Convert.ToDouble(Blind[0][1]).ToString("0.000");
+                    SHGC_on_textBox.Text = Convert.ToDouble(Blind[0][0]).ToString("0.000");
+                    Tao_on_textBox.Text = Convert.ToDouble(Blind[0][1]).ToString("0.000");
                 }
             }
             else
@@ -235,7 +236,7 @@ namespace main.contents
                     {
                         webView21.Visible = false;
                     }
-                   
+
                 }
                 res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='" + Direction + "' And 기간 = '" + 12.ToString() + "월'");
                 s += Convert.ToDouble(res1[0][0]) * 100;
@@ -257,20 +258,20 @@ namespace main.contents
 
         private void tabPageOrder()
         {
-            if(tabControl1.TabPages.Count ==1)
+            if (tabControl1.TabPages.Count == 1)
             {
                 tabControl1.TabPages.Clear();
                 tabControl1.TabPages.Add(tabPage1);
 
             }
-            else if (tabControl1.TabPages.Count ==2)
+            else if (tabControl1.TabPages.Count == 2)
             {
                 tabControl1.TabPages.Clear();
                 tabControl1.TabPages.Add(tabPage1);
                 tabControl1.TabPages.Add(tabPage2);
 
             }
-            else if(tabControl1.TabPages.Count ==3)
+            else if (tabControl1.TabPages.Count == 3)
             {
                 tabControl1.TabPages.Clear();
                 tabControl1.TabPages.Add(tabPage1);
@@ -279,5 +280,40 @@ namespace main.contents
 
             }
         }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\11.3D_Construction\\8.CW";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+
+        }
+
+        private void info_shade_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\11.3D_Construction\\9.CW_Shade";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+
+        }
+
     }
 }

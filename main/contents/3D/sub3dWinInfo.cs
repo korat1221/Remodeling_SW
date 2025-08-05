@@ -1,4 +1,5 @@
-﻿using main.subcontents.ConstructionRoof;
+﻿using main.info;
+using main.subcontents.ConstructionRoof;
 
 using Microsoft.Web.WebView2.Core;
 using System;
@@ -53,12 +54,12 @@ namespace main.contents
             string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");   //지역, 프로젝트 조건?
 
             String[][] RES = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호", "아이디 = '" + main.MainContents.selectInfo[2] + "'");
-            string 번호=null;
+            string 번호 = null;
             if (RES.Length > 0)
             {
                 번호 = RES[0][0];
             }
-               
+
 
             string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,번호,방위,기울기,구조체번호,면적,창호너비,창호높이", "번호 = '" + 번호 + "'");
 
@@ -158,7 +159,7 @@ namespace main.contents
                 Width_textBox.Text = rec[0][14] == "" ? "0" : String.Format("{0:F2}", Convert.ToDouble(rec[0][14]));
                 height_textBox.Text = rec[0][15] == "" ? "0" : String.Format("{0:F2}", Convert.ToDouble(rec[0][15]));
 
-                if (SubLoad.Length > 0 && SubLoad[0][0]!="")
+                if (SubLoad.Length > 0 && SubLoad[0][0] != "")
                 {
                     tabControl1.TabPages.Remove(tabPage1);
                     tabControl1.TabPages.Add(tabPage1);
@@ -292,7 +293,7 @@ namespace main.contents
                 res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 일사량 From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='" + Direction + "' And 각도='" + Slope + "˚'And 기간 ='" + (12) + "월'");
                 s2 += Convert.ToDouble(res2[0][0]);
                 string unit = "kWh/m" + Program.UTIL.Subscript(2, true) + "·mth";
-                runScript("drawChart4([{type:\"line\",label:\"차양가동율\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100,tension: 0.4},{type:\"bar\",label:\"일사량("+ unit +")\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:300,barPercentage:0.7}])");
+                runScript("drawChart4([{type:\"line\",label:\"차양가동율\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100,tension: 0.4},{type:\"bar\",label:\"일사량(" + unit + ")\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:300,barPercentage:0.7}])");
 
             }
             catch { }
@@ -348,6 +349,38 @@ namespace main.contents
                 tabControl1.TabPages.Add(tabPage2);
                 tabControl1.TabPages.Add(Blind_tabPage);
 
+            }
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\11.3D_Construction\\6.Window";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        private void info_shade_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\11.3D_Construction\\7.Window_Shade";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
             }
         }
     }

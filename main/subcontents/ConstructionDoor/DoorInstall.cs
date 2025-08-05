@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -95,7 +96,7 @@ namespace main.subcontents.ConstructionDoor
             Install_dataGridView.Columns[0].Width = 50;
 
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_DoorInstall", "번호,제품명,구분1,구분2,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
-            if(Value.Length > 0)
+            if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
                 {
@@ -107,7 +108,7 @@ namespace main.subcontents.ConstructionDoor
                     }
                 }
             }
-           
+
             if (InstallType != null && InstallLocation != null)
             {
                 doorInstall = Program.DB.getValue(DB.type.BaseDB_HCneed, "외부출입문설치열교", "번호,제품명,구분1,구분2,상부설치,측면설치,하부설치", "구분1 = '" + InstallType + "'AND 구분2 = '" + InstallLocation + "'");
@@ -116,7 +117,7 @@ namespace main.subcontents.ConstructionDoor
             {
                 doorInstall = Program.DB.getValue(DB.type.BaseDB_HCneed, "외부출입문설치열교", "번호,제품명,구분1,구분2,상부설치,측면설치,하부설치", "구분1 = '" + InstallType + "'");
             }
-            if(doorInstall.Length > 0)
+            if (doorInstall.Length > 0)
             {
                 for (int n = 0; n < doorInstall.Length; n++)
                 {
@@ -127,7 +128,7 @@ namespace main.subcontents.ConstructionDoor
                         Install_dataGridView.Rows[nRow].Cells[k + 1].Value = doorInstall[n][k];
                     }
                 }
-            }            
+            }
             Count_InstallDB = doorInstall.Length;
         }
 
@@ -235,6 +236,23 @@ namespace main.subcontents.ConstructionDoor
             //Select_DoorInstall[0] = row.Cells[1].Value.ToString();
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\2.subcontents\\6.Door\\2.DoorInstall";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 

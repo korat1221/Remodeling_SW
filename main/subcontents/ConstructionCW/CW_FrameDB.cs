@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -53,7 +54,7 @@ namespace main.subcontents.ConstructionCW
                 {
                     GlassList.Add(Glass[n][1]);
                 }
-            }           
+            }
             string[] GlassArray = GlassList.ToArray();
             UserDBGlass_comboBox.Items.Clear();
             UserDBGlass_comboBox.Items.AddRange(GlassArray);
@@ -80,27 +81,27 @@ namespace main.subcontents.ConstructionCW
             Frame_dataGridView.Columns.Add("A8", "열관류율.개폐부프레임.Ufr[W/m2∙K]");
             Frame_dataGridView.Columns.Add("A9", "열관류율.패널엣지선형.Up,mt[W/m∙K]");
             Frame_dataGridView.Columns.Add("A10", "두께.M/T프레임.dA[m]");
-            Frame_dataGridView.Columns.Add("A11", "두께.fr프레임.dB[m]");       
-            
-                string[][] User_CWFrame = Program.DB.getValue(DB.type.ProjDB, "User_CWFrame", "번호,DB유형,제품명,제조사,구분1,구분2,고정부프레임열관류율,개폐부프레임열관류율,패널엣지선형열관류율,M_T프레임두께,fr프레임두께", "구분1 ='" + FrameType + "'");
-                if(User_CWFrame.Length > 0 )
+            Frame_dataGridView.Columns.Add("A11", "두께.fr프레임.dB[m]");
+
+            string[][] User_CWFrame = Program.DB.getValue(DB.type.ProjDB, "User_CWFrame", "번호,DB유형,제품명,제조사,구분1,구분2,고정부프레임열관류율,개폐부프레임열관류율,패널엣지선형열관류율,M_T프레임두께,fr프레임두께", "구분1 ='" + FrameType + "'");
+            if (User_CWFrame.Length > 0)
+            {
+                for (int n = 0; n < User_CWFrame.Length; n++)
                 {
-                    for (int n = 0; n < User_CWFrame.Length; n++)
+                    Frame_dataGridView.Rows.Add();
+                    int nRow = Frame_dataGridView.Rows.Count - 1;
+                    for (int i = 0; i < 6; i++)
                     {
-                        Frame_dataGridView.Rows.Add();
-                        int nRow = Frame_dataGridView.Rows.Count - 1;
-                        for (int i = 0; i < 6; i++)
-                        {
-                            Frame_dataGridView.Rows[nRow].Cells[i + 1].Value = User_CWFrame[n][i];
-                        }
-                        for (int i = 6; i < 11; i++)
-                        {
-                            Frame_dataGridView.Rows[nRow].Cells[i + 1].Value = String.Format("{0:F2}", Convert.ToDouble(User_CWFrame[n][i]));
-                        }                       
+                        Frame_dataGridView.Rows[nRow].Cells[i + 1].Value = User_CWFrame[n][i];
                     }
-                }        
+                    for (int i = 6; i < 11; i++)
+                    {
+                        Frame_dataGridView.Rows[nRow].Cells[i + 1].Value = String.Format("{0:F2}", Convert.ToDouble(User_CWFrame[n][i]));
+                    }
+                }
+            }
             string[][] CWFrame = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월프레임", "번호,DB유형,제품명,제조사,구분1,구분2,고정부프레임열관류율,개폐부프레임열관류율,패널엣지선형열관류율,M_T프레임두께,fr프레임두께", "구분1 ='" + FrameType + "'");
-            if(CWFrame.Length > 0 )
+            if (CWFrame.Length > 0)
             {
                 for (int n = 0; n < CWFrame.Length; n++)
                 {
@@ -109,9 +110,9 @@ namespace main.subcontents.ConstructionCW
                     for (int i = 0; i < 11; i++)
                     {
                         Frame_dataGridView.Rows[nRow].Cells[i + 1].Value = CWFrame[n][i];
-                    }                   
+                    }
                 }
-            }          
+            }
             Count_FrameDB = CWFrame.Length;
         }
 
@@ -159,16 +160,16 @@ namespace main.subcontents.ConstructionCW
         private void UserDBGlass_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             UserDBGlass = UserDBGlass_comboBox.SelectedItem.ToString();
-                string[][] User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,제품명,LE_CL_V,열관류율", "제품명 ='" + UserDBGlass + "'");
-                if(User_WinGlass.Length > 0)
-                {
-                    UserDB_LE_CL_V = User_WinGlass[0][2];
-                    UserDB_Ug = Convert.ToDouble(User_WinGlass[0][3]);
-                    UserDB_Ug_textBox.Text = String.Format("{0:F3}", UserDB_Ug);
-                }
-          
-           string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,제품명,LE_CL_V,열관류율", "제품명 ='" + UserDBGlass + "'");
-            if(WinGlass.Length > 0)
+            string[][] User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,제품명,LE_CL_V,열관류율", "제품명 ='" + UserDBGlass + "'");
+            if (User_WinGlass.Length > 0)
+            {
+                UserDB_LE_CL_V = User_WinGlass[0][2];
+                UserDB_Ug = Convert.ToDouble(User_WinGlass[0][3]);
+                UserDB_Ug_textBox.Text = String.Format("{0:F3}", UserDB_Ug);
+            }
+
+            string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,제품명,LE_CL_V,열관류율", "제품명 ='" + UserDBGlass + "'");
+            if (WinGlass.Length > 0)
             {
                 UserDB_LE_CL_V = WinGlass[0][2];
                 UserDB_Ug = Convert.ToDouble(WinGlass[0][3]);
@@ -180,28 +181,28 @@ namespace main.subcontents.ConstructionCW
         private void UserDBSpacer_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             UserDBSpacer = UserDBSpacer_comboBox.SelectedItem.ToString();
-            
-                string[][] User_CWSpacer = Program.DB.getValue(DB.type.ProjDB, "User_CWSpacer", "번호,제품명,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율,구분1", "제품명 = '" + UserDBSpacer + "'AND 구분3 ='" + FrameType + "'");
-                if(User_CWSpacer.Length > 0)
+
+            string[][] User_CWSpacer = Program.DB.getValue(DB.type.ProjDB, "User_CWSpacer", "번호,제품명,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율,구분1", "제품명 = '" + UserDBSpacer + "'AND 구분3 ='" + FrameType + "'");
+            if (User_CWSpacer.Length > 0)
+            {
+                if (UserDB_LE_CL_V.Contains("LE"))
                 {
-                    if (UserDB_LE_CL_V.Contains("LE"))
-                    {
-                        UserDB_Psimt = Convert.ToDouble(User_CWSpacer[0][4]);
-                        UserDB_PsiOpen = Convert.ToDouble(User_CWSpacer[0][5]);
-                    }
-                    else
-                    {
-                        UserDB_Psimt = Convert.ToDouble(User_CWSpacer[0][2]);
-                        UserDB_PsiOpen = Convert.ToDouble(User_CWSpacer[0][3]);
-                    }
-                    UserDBSpacer_Type = User_CWSpacer[0][6];
-                    UserDB_Psip = Convert.ToDouble(User_CWSpacer[0][2]);
-                    UserDB_PsiOpen_textBox.Text = String.Format("{0:F3}", UserDB_PsiOpen);
-                    UserDB_Psimt_textBox.Text = String.Format("{0:F3}", UserDB_Psimt);
+                    UserDB_Psimt = Convert.ToDouble(User_CWSpacer[0][4]);
+                    UserDB_PsiOpen = Convert.ToDouble(User_CWSpacer[0][5]);
                 }
-        
+                else
+                {
+                    UserDB_Psimt = Convert.ToDouble(User_CWSpacer[0][2]);
+                    UserDB_PsiOpen = Convert.ToDouble(User_CWSpacer[0][3]);
+                }
+                UserDBSpacer_Type = User_CWSpacer[0][6];
+                UserDB_Psip = Convert.ToDouble(User_CWSpacer[0][2]);
+                UserDB_PsiOpen_textBox.Text = String.Format("{0:F3}", UserDB_PsiOpen);
+                UserDB_Psimt_textBox.Text = String.Format("{0:F3}", UserDB_Psimt);
+            }
+
             string[][] CWSpacer = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월간봉", "번호,제품명,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "구분1 = '" + UserDBSpacer + "'AND 구분3 ='" + FrameType + "'");
-            if(CWSpacer.Length > 0)
+            if (CWSpacer.Length > 0)
             {
                 if (UserDB_LE_CL_V.Contains("LE"))
                 {
@@ -231,7 +232,7 @@ namespace main.subcontents.ConstructionCW
                 { SpacerList.Add(UserCWSpacer[n][1]); }
             }
             string[][] CWSpacer = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월간봉", "번호,제품명,구분1", "구분3 ='" + FrameType + "'");
-            if(CWSpacer.Length > 0)
+            if (CWSpacer.Length > 0)
             {
                 for (int n = 0; n < CWSpacer.Length; n++)
                 {
@@ -240,14 +241,14 @@ namespace main.subcontents.ConstructionCW
                 string[] SpacerArray = SpacerList.ToArray();
                 UserDBSpacer_comboBox.Items.Clear();
                 UserDBSpacer_comboBox.Items.AddRange(SpacerArray);
-            }            
+            }
         }
         private void Load_FrameImage()
         {
             if (FrameType != null && UserDB_FrameShape != null)
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월프레임이미지", "이미지", "유형 = '" + UserDB_FrameShape + "'");
-                if(Image.Length > 0)
+                if (Image.Length > 0)
                 {
                     UserDB_Frame_pictureBox.Load(Program.gPath + Image[0][0]);
                     UserDB_Frame_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -352,7 +353,7 @@ namespace main.subcontents.ConstructionCW
             {
                 string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
                 Program.DB.setValue(DB.type.ProjDB, "User_CWFrame", "번호,프로젝트유형,DB유형,제품명,제조사,구분1,구분2,고정부프레임열관류율,개폐부프레임열관류율,패널엣지선형열관류율,M_T프레임두께,fr프레임두께,시험성적서이미지",
-                    "'" + UserNum + "','" + 프로젝트유형[0][0] +"','" + "사용자" + "','" + UserDBName + "','" + UserDB_Manufacture + "','" + FrameType + "','" + UserDBSpacer_Type + "','" + UserDB_Uf.ToString() + "','" + UserDB_Uf.ToString() + "','" + UserDB_Psip.ToString() + "','" + UserDB_FramedA.ToString() + "','" + UserDB_FramedB.ToString() + "','" + UserDB_Image + "'", "번호");
+                    "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + UserDBName + "','" + UserDB_Manufacture + "','" + FrameType + "','" + UserDBSpacer_Type + "','" + UserDB_Uf.ToString() + "','" + UserDB_Uf.ToString() + "','" + UserDB_Psip.ToString() + "','" + UserDB_FramedA.ToString() + "','" + UserDB_FramedB.ToString() + "','" + UserDB_Image + "'", "번호");
                 load_table_FrameDB();
                 UserNum = Program.UTIL.CreateNum("User_CWFrame", "번호", "UCW_0");
                 UserNum_textBox.Text = UserNum;
@@ -407,6 +408,23 @@ namespace main.subcontents.ConstructionCW
             Select_CWFrame[0] = row.Cells[1].Value.ToString();
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\2.subcontents\\8.CW\\1.FrameDB";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 }

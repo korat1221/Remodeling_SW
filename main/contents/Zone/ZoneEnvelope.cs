@@ -1,4 +1,5 @@
 ﻿using main.contentslist;
+using main.info;
 using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
@@ -761,6 +762,22 @@ namespace main.contents
                     Cwirk_Slab = Calc_Cwirk_Construction(Area_Slab, CwirkA);
                     Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
                 }
+            }
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\14.ZoneEnvelope";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
             }
         }
     }

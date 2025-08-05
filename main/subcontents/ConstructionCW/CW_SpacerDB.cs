@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -57,7 +58,7 @@ namespace main.subcontents.ConstructionCW
             Spacer_dataGridView.Columns.Add("A1", "선형열관류율.개폐유리(CL).Ψg,fr.[W/m·K]");
             Spacer_dataGridView.Columns.Add("A1", "선형열관류율.고정유리(LE).Ψg,mt.[W/m·K]");
             Spacer_dataGridView.Columns.Add("A1", "선형열관류율.개폐유리(LE).Ψg,fr.[W/m·K]");
-        
+
 
             string[][] User_CWSpacer = Program.DB.getValue(DB.type.ProjDB, "User_CWSpacer", "번호,DB유형,제품명,제조사,구분1,구분3,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "구분3 ='" + FrameTpe + "'");
             if (User_CWSpacer.Length > 0)
@@ -70,11 +71,11 @@ namespace main.subcontents.ConstructionCW
                     {
                         Spacer_dataGridView.Rows[nRow].Cells[k + 1].Value = User_CWSpacer[n][k];
                     }
-                  
+
                 }
             }
             string[][] CWSpacer = Program.DB.getValue(DB.type.BaseDB_HCneed, "커튼월간봉", "번호,DB유형,제품명,제조사,구분1,구분3,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "구분3 ='" + FrameTpe + "'");
-            if(CWSpacer.Length > 0)
+            if (CWSpacer.Length > 0)
             {
                 for (int n = 0; n < CWSpacer.Length; n++)
                 {
@@ -198,5 +199,21 @@ namespace main.subcontents.ConstructionCW
 
         }
 
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\2.subcontents\\8.CW\\4.SpacerDB";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

@@ -1085,7 +1085,7 @@ namespace main.contents
             HP_dataGridView.Columns.Add("A1", "번호");
             HP_dataGridView.Columns.Add("A2", "명칭");
             HP_dataGridView.Columns.Add("A3", "정격.용량.[kW]");
-            HP_dataGridView.Columns.Add("A4", "정격.COP.[kW]");
+            HP_dataGridView.Columns.Add("A4", "정격.COP.[W/W]");
             HP_dataGridView.Columns.Add("A5", "정격.소비전력.[kW]");
             HP_dataGridView.Columns.Add("A6", "제어방식");
             HP_dataGridView.Columns.Add("A7", "대수.[EA]");
@@ -1830,15 +1830,42 @@ namespace main.contents
         #endregion
 
         #region 세이브
+        private void Save_Image()
+        {
+            try
+            {
+                Bitmap bmp = new Bitmap(ImagePanel.Width, ImagePanel.Height);
+                ImagePanel.DrawToBitmap(bmp, new Rectangle(0, 0, ImagePanel.Width, ImagePanel.Height));
+
+                string pid = "0000-00-00";
+                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
+                if (Value.Length > 0)
+                {
+                    pid = Value[0][0];
+                }
+
+                Directory.CreateDirectory(Program.gPath + "threejs\\public\\print\\img\\" + pid);
+
+                string ImageName = "/print/img/" + pid + "/" + Num + ".png";
+                string imagePath = Program.gPath + ImageName;
+
+                bmp.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("오류 발생: " + ex.Message);
+            }
+        }
         private void Save_button_Click(object sender, EventArgs e)
         {
             if (Name == null)
             {
-                MessageBox.Show("난방시스템 명칭을 입력하세요.");
+                MessageBox.Show("급탕시스템 명칭을 입력하세요.");
             }
             else
             {
                 Save();
+                Save_Image();
                 if (SelectSolar_split.Count > 0)
                 {
                     SaveSolar(); //새로 추가함

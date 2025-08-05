@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -121,7 +122,7 @@ namespace main.subcontents
             {
                 WinInstall = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호설치열교", "번호,DB유형,제품명,구분1,구분2,구분3,구분4,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율", "구분1 = '" + InstallType + "'");
             }
-            if(WinInstall.Length > 0)
+            if (WinInstall.Length > 0)
             {
                 for (int n = 0; n < WinInstall.Length; n++)
                 {
@@ -133,7 +134,7 @@ namespace main.subcontents
                     }
 
                 }
-            }           
+            }
             Count_InstallDB = WinInstall.Length;
         }
 
@@ -235,7 +236,7 @@ namespace main.subcontents
             if (e.RowIndex >= 0)
             {
                 Install_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-                SelectRow = e.RowIndex;               
+                SelectRow = e.RowIndex;
             }
         }
 
@@ -249,6 +250,22 @@ namespace main.subcontents
             Select_WindowInstall[0] = row.Cells[1].Value.ToString();
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\2.subcontents\\5.Window\\4.InstallDB";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 }

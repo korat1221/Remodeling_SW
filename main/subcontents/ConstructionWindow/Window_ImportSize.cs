@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -85,14 +86,14 @@ namespace main.subcontents
             Size_dataGridView.Columns.Add(checkBoxColumn);
 
             Size_dataGridView.Columns.Add("A1", "창호명칭");
-            Size_dataGridView.Columns.Add("A2", "창호전체.면적.[m"+Program.UTIL.Subscript(2, true)+"]");
+            Size_dataGridView.Columns.Add("A2", "창호전체.면적.[m" + Program.UTIL.Subscript(2, true) + "]");
             Size_dataGridView.Columns.Add("A3", "창호전체.너비.[m]");
             Size_dataGridView.Columns.Add("A4", "창호전체.높이.[m]");
-            Size_dataGridView.Columns.Add("A5", "유리면적.고정창.[m"+Program.UTIL.Subscript(2, true)+"]");
-            Size_dataGridView.Columns.Add("A6", "유리면적.개폐창.[m"+Program.UTIL.Subscript(2, true)+"]");
-            Size_dataGridView.Columns.Add("A7", "프레임면적.개폐프레임.[m"+Program.UTIL.Subscript(2, true)+"]");
-            Size_dataGridView.Columns.Add("A8", "프레임면적.고정프레임.[m"+Program.UTIL.Subscript(2, true)+"]");
-            Size_dataGridView.Columns.Add("A9", "프레임면적.중간프레임.[m"+Program.UTIL.Subscript(2, true)+"]");
+            Size_dataGridView.Columns.Add("A5", "유리면적.고정창.[m" + Program.UTIL.Subscript(2, true) + "]");
+            Size_dataGridView.Columns.Add("A6", "유리면적.개폐창.[m" + Program.UTIL.Subscript(2, true) + "]");
+            Size_dataGridView.Columns.Add("A7", "프레임면적.개폐프레임.[m" + Program.UTIL.Subscript(2, true) + "]");
+            Size_dataGridView.Columns.Add("A8", "프레임면적.고정프레임.[m" + Program.UTIL.Subscript(2, true) + "]");
+            Size_dataGridView.Columns.Add("A9", "프레임면적.중간프레임.[m" + Program.UTIL.Subscript(2, true) + "]");
             Size_dataGridView.Columns.Add("A10", "유리 둘레길이.고정창.[m]");
             Size_dataGridView.Columns.Add("A11", "유리 둘레길이.개폐창.[m]");
 
@@ -250,5 +251,21 @@ namespace main.subcontents
             n_ver = Program.UTIL.textBox_doubleComa(n_ver_textBox, false, 0);
         }
 
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\2.subcontents\\5.Window\\6.ImportSize";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

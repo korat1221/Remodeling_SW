@@ -66,6 +66,7 @@ namespace main.contents.Result
             List<object>[] ZahuData = new List<object>[30];
             List<object>[] SourceData = new List<object>[30];
             List<object>[] AnnualData = new List<object>[30];
+            List<object>[] PumpData = new List<object>[30];
             List<object>[] ZoneMthData = new List<object>[100];
             List<object>[] ZahuMthData = new List<object>[100];
             List<object>[] MthData = new List<object>[100];
@@ -83,6 +84,7 @@ namespace main.contents.Result
                 ZahuData[i] = new List<object>();
                 SourceData[i] = new List<object>();
                 AnnualData[i] = new List<object>();
+                PumpData[i] = new List<object>();
             }
             i = -1;
             while (++i < 100)
@@ -223,7 +225,7 @@ namespace main.contents.Result
                     }
                     if (ZoneValue.Length > 1)
                     {
-                        ZoneData[4].Add(new { idx = i, val = ZoneValue[0][1] });
+                        ZoneData[4].Add(new { idx = i, val = ZoneValue[1][0] });
                     }
                 }
                 #endregion
@@ -263,7 +265,7 @@ namespace main.contents.Result
                     }
                     if (ZoneValue.Length > 1)
                     {
-                        ZahuData[4].Add(new { idx = i, val = ZoneValue[0][1] });
+                        ZahuData[4].Add(new { idx = i, val = ZoneValue[1][0] });
                     }
                     foreach (var item in splitzone)
                     {
@@ -456,6 +458,25 @@ namespace main.contents.Result
                     MthData[6].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(sum.ToString(), 0) });
                 }
                 #endregion
+                #region
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select  a.펌프1제어,b.동력  From HeatingSystem_Form as a Inner Join  User_Pump as b on a.펌프1종류 =b.번호 Where a.번호='" + Num + "'");
+                if(Value.Length >0)
+                {
+                    PumpData[0].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][1], 1) });
+                    PumpData[2].Add(new { idx = i, val = Value[0][0] });
+                }
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select  a.펌프2종류,b.동력  From HeatingSystem_Form as a Inner Join  User_Pump as b on a.펌프2종류 =b.번호 Where a.번호='" + Num + "'");
+                if (Value.Length > 0)
+                {
+                    PumpData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][1], 1) });
+                }
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select  a.축열용량,b.동력  From HeatingSystem_Form as a Inner Join  User_Pump as b on a.축열펌프 =b.번호 Where a.번호='" + Num + "'");
+                if (Value.Length > 0)
+                {
+                    PumpData[3].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][0], 1) });
+                    PumpData[4].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][1], 1) });
+                }
+                #endregion
                 data.Add(new { cname = "projectnum", data = FormData[0] });
                 data.Add(new { cname = "heatingnum", data = FormData[1] });
                 data.Add(new { cname = "heatingnum2", data = FormData[2] });
@@ -532,6 +553,12 @@ namespace main.contents.Result
                 data.Add(new { cname = "w_d", data = WMthData[2] });
                 data.Add(new { cname = "w_s", data = WMthData[3] });
                 data.Add(new { cname = "w_g", data = WMthData[4] });
+
+                data.Add(new { cname = "pump1_power", data = PumpData[0] });
+                data.Add(new { cname = "pump2_power", data = PumpData[1] });
+                data.Add(new { cname = "pump_control", data = PumpData[2] });
+                data.Add(new { cname = "volume_s", data = PumpData[3] });
+                data.Add(new { cname = "pumps_power", data = PumpData[4] });
 
                 List<object> nd_chart = new List<object>();
                 List<object> ce_chart = new List<object>();

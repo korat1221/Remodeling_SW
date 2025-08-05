@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.info;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,7 +32,7 @@ namespace main.contentslist
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
-             Program.DB.initTable(DB.type.ProjDB, "ConstructionDoor");
+            Program.DB.initTable(DB.type.ProjDB, "ConstructionDoor");
             Create_Table();
         }
 
@@ -90,9 +91,9 @@ namespace main.contentslist
             dataGridView1.Columns.Add("A1", "번호");
             dataGridView1.Columns.Add("A2", "명칭");
             dataGridView1.Columns.Add("A3", "Type");
-            dataGridView1.Columns.Add("A4", "유효열관류율.[W/m"+Program.UTIL.Subscript(2, true)+"·K]");
+            dataGridView1.Columns.Add("A4", "유효열관류율.[W/m" + Program.UTIL.Subscript(2, true) + "·K]");
             dataGridView1.Columns.Add("A5", "흡수율.[-]");
-            dataGridView1.Columns.Add("A6", "면적.[m"+ Program.UTIL.Subscript(2, true) + "]");
+            dataGridView1.Columns.Add("A6", "면적.[m" + Program.UTIL.Subscript(2, true) + "]");
             dataGridView1.Columns.Add("A7", "개수.[EA]");
             dataGridView1.Columns[0].Width = 40;
         }
@@ -191,6 +192,23 @@ namespace main.contentslist
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             load_List();
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\3.contentslist\\5.Door";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 }

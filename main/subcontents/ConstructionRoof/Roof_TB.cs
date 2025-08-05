@@ -445,7 +445,7 @@ namespace main.subcontents.ConstructionRoof
 
         private void info_Click(object sender, EventArgs e)
         {
-            string basePath = Program.gPath + "ZEROFIX manual_final\\6.roof\\6.3.roof1D";
+            string basePath = Program.gPath + "Manual\\2.subcontents\\3.Roof";
 
             // 경로가 존재하는지 확인
             if (Directory.Exists(basePath))

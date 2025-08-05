@@ -254,7 +254,7 @@ namespace main.subcontents
 
         private void info_Click(object sender, EventArgs e)
         {            
-            string basePath = Program.gPath + "ZEROFIX manual_final\\5.wall\\5.3.materialdb";
+            string basePath = Program.gPath + "Manual\\2.subcontents\\0.Common\\1.MaterialDB";
 
             // 경로가 존재하는지 확인
             if (Directory.Exists(basePath))

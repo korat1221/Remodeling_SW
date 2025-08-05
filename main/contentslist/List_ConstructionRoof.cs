@@ -200,7 +200,7 @@ namespace main.contentslist
 
         private void info_Click(object sender, EventArgs e)
         {            
-            string basePath = Program.gPath + "ZEROFIX manual_final\\6.roof\\6.1.roofgeneral";
+            string basePath = Program.gPath + "Manual\\3.contentslist\\2.Roof";
 
             // 경로가 존재하는지 확인
             if (Directory.Exists(basePath))

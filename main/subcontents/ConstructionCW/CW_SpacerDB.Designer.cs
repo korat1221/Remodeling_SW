@@ -53,6 +53,7 @@
             UserDBType2_comboBox = new CustomComboBox();
             label8 = new Label();
             UserDBType1_comboBox = new CustomComboBox();
+            info = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Spacer_dataGridView).BeginInit();
             SuspendLayout();
@@ -119,7 +120,7 @@
             AddUserDB_button.BackColor = SystemColors.ControlLight;
             AddUserDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AddUserDB_button.FlatStyle = FlatStyle.System;
-            AddUserDB_button.Font = new System.Drawing.Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            AddUserDB_button.Font = new Font("나눔바른고딕", 11.9999981F, FontStyle.Bold);
             AddUserDB_button.Location = new Point(71, 11);
             AddUserDB_button.Margin = new Padding(0);
             AddUserDB_button.Name = "AddUserDB_button";
@@ -168,6 +169,7 @@
             // panel1
             // 
             panel1.BackColor = SystemColors.GradientInactiveCaption;
+            panel1.Controls.Add(info);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(UserDB_Manufacture_textBox);
             panel1.Controls.Add(label15);
@@ -233,7 +235,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label4.Location = new Point(8, 15);
             label4.Name = "label4";
             label4.Size = new Size(60, 15);
@@ -245,7 +247,7 @@
             Deletebutton.BackColor = SystemColors.ControlLight;
             Deletebutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Deletebutton.FlatStyle = FlatStyle.System;
-            Deletebutton.Font = new System.Drawing.Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            Deletebutton.Font = new Font("나눔바른고딕", 11.9999981F, FontStyle.Bold);
             Deletebutton.Location = new Point(98, 11);
             Deletebutton.Margin = new Padding(0);
             Deletebutton.Name = "Deletebutton";
@@ -268,7 +270,7 @@
             Spacer_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -279,7 +281,7 @@
             Spacer_dataGridView.Name = "Spacer_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -288,12 +290,11 @@
             Spacer_dataGridView.RowHeadersVisible = false;
             Spacer_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             Spacer_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            Spacer_dataGridView.RowTemplate.Height = 25;
             Spacer_dataGridView.Size = new Size(982, 171);
             Spacer_dataGridView.TabIndex = 19;
             Spacer_dataGridView.CellContentClick += Spacer_dataGridView_CellContentClick;
@@ -301,7 +302,7 @@
             // UserDBType2_comboBox
             // 
             UserDBType2_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            UserDBType2_comboBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDBType2_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             UserDBType2_comboBox.FormattingEnabled = true;
             UserDBType2_comboBox.Location = new Point(828, 12);
             UserDBType2_comboBox.Name = "UserDBType2_comboBox";
@@ -321,13 +322,28 @@
             // UserDBType1_comboBox
             // 
             UserDBType1_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            UserDBType1_comboBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            UserDBType1_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             UserDBType1_comboBox.FormattingEnabled = true;
             UserDBType1_comboBox.Location = new Point(652, 12);
             UserDBType1_comboBox.Name = "UserDBType1_comboBox";
             UserDBType1_comboBox.Size = new Size(120, 23);
             UserDBType1_comboBox.TabIndex = 39;
             UserDBType1_comboBox.SelectedIndexChanged += UserDBType1_comboBox_SelectedIndexChanged;
+            // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(953, 12);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 159;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
             // 
             // CW_SpacerDB
             // 
@@ -375,5 +391,6 @@
         private TextBox UserNum_textBox;
         private Label label3;
         private TextBox UserDB_Manufacture_textBox;
+        private Button info;
     }
 }

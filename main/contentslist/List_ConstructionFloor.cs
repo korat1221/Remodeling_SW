@@ -1,5 +1,6 @@
 ﻿using main.contents;
 using main.contents.Construction;
+using main.info;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +21,7 @@ namespace main.contentslist
         String FloorNum;
         double CountDB;
         int SelectRow;
-       // DataTable FloorList = new DataTable();
+        // DataTable FloorList = new DataTable();
         DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
 
         public List_ConstructionFloor()
@@ -94,8 +95,8 @@ namespace main.contentslist
             dataGridView1.Columns.Add("A2", "명칭");
             dataGridView1.Columns.Add("A3", "Type");
             dataGridView1.Columns.Add("A4", "기초설치");
-            dataGridView1.Columns.Add("A5", "유효열관류율.[W/m"+Program.UTIL.Subscript(2, true)+"·K]");
-            dataGridView1.Columns.Add("A6", "면적.[m"+ Program.UTIL.Subscript(2, true) + "]");
+            dataGridView1.Columns.Add("A5", "유효열관류율.[W/m" + Program.UTIL.Subscript(2, true) + "·K]");
+            dataGridView1.Columns.Add("A6", "면적.[m" + Program.UTIL.Subscript(2, true) + "]");
             dataGridView1.Columns[0].Width = 40;
         }
 
@@ -200,5 +201,21 @@ namespace main.contentslist
             load_List();
         }
 
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\3.contentslist\\3.Floor";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

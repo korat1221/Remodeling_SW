@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.info;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -95,7 +96,7 @@ namespace main.contentslist
             dataGridView1.Columns.Add("A5", "색깔");
             dataGridView1.Columns.Add("A6", "투과수준");
             dataGridView1.Columns.Add("A7", "제어방식");
-            dataGridView1.Columns.Add("A8", "면적.[m"+ Program.UTIL.Subscript(2, true) + "]");
+            dataGridView1.Columns.Add("A8", "면적.[m" + Program.UTIL.Subscript(2, true) + "]");
             dataGridView1.Columns[0].Width = 40;
         }
 
@@ -151,7 +152,7 @@ namespace main.contentslist
                         dataGridView1.Rows[nRow].Cells[8].Value = String.Format("{0:F2}", A);
                     }
                     mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":10,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-                
+
                 }
             }
             //dataGridView1.DataSource = WallList;
@@ -205,6 +206,23 @@ namespace main.contentslist
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             load_List();
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\3.contentslist\\6.Blind";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 }
