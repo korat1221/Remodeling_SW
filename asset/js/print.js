@@ -68,6 +68,7 @@ window.addEventListener("message", async (event) => {
         let zoneNumValue = o.items.find(item => item.cname === "zonenum");
         let coolingNumValue = o.items.find(item => item.cname === "coolingnum");
         let heatingNumValue = o.items.find(item => item.cname === "heatingnum");
+        let dhwNumValue = o.items.find(item => item.cname === "dhwnum");
         let lightingNumValue = o.items.find(item => item.cname === "lightingnum");
         let lightingH = o.items.find(item => item.cname === "lightingHeightnum");
         let lightingT = o.items.find(item => item.cname === "lightingType");
@@ -91,6 +92,11 @@ window.addEventListener("message", async (event) => {
           let projectNum = projectNumValue.data[idx].val; 
           let heatingNum = heatingNumValue.data[idx].val; 
           al.setAttribute("src", "img/" + projectNum + "/"+ heatingNum + ".png"); 
+        });
+        $(".dhwImage").each((idx,al) => {
+          let projectNum = projectNumValue.data[idx].val; 
+          let dhwNum = dhwNumValue.data[idx].val; 
+          al.setAttribute("src", "img/" + projectNum + "/"+ dhwNum + ".png"); 
         });
          $(".lightingImage").each((idx,al) => {
           let projectNum = projectNumValue.data[idx].val; 
