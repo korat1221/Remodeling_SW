@@ -30,12 +30,17 @@ namespace main.subcontents.AHUSystem
                 load_table_AHU();
                 Title_label.Text = AHUOptions;
             }
-            else
+            else if(AHUOptions == "열회수기")
             {
                 load_table_HRV();
                 Title_label.Text = "열회수기";
             }
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
+            else
+            {
+                load_table_Fan();
+                Title_label.Text = "배기환기(3종)";
+            }
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
             if (Image.Length > 0)
             {
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
@@ -175,6 +180,40 @@ namespace main.subcontents.AHUSystem
             }
         }
 
+        private void load_table_Fan()
+        {
+
+            new StackedHeaderDecorator(HRV_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
+            HRV_dataGridView.Columns.Clear();
+            checkBoxColumn.HeaderText = "선택";
+            checkBoxColumn.Name = "check";
+            HRV_dataGridView.Columns.Add(checkBoxColumn);
+
+            HRV_dataGridView.Columns.Add("A1", "번호");
+            HRV_dataGridView.Columns.Add("A2", "명칭");
+            HRV_dataGridView.Columns.Add("A3", "팬.풍량.[CMH]");
+            HRV_dataGridView.Columns.Add("A4", "팬.정압.[Pa]");
+            HRV_dataGridView.Columns.Add("A5", "팬.모터제어");
+            HRV_dataGridView.Columns.Add("A6", "소비전력.[W]");
+
+
+            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Fan", "번호,명칭,풍량,정압,모터제어,소비전력");
+            if (User_Value.Length > 0)
+            {
+                for (int n = 0; n < User_Value.Length; n++)
+                {
+                    HRV_dataGridView.Rows.Add();
+                    int nRow = HRV_dataGridView.Rows.Count - 1;
+                    HRV_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
+                    HRV_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
+                    HRV_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
+                    HRV_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
+                    HRV_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
+                    HRV_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
+                }
+            }
+        }
 
         private void HRV_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {

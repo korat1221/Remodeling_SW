@@ -36,6 +36,7 @@ namespace main.contents
         private void InitializeComponent()
         {
             GeneralPanel = new Panel();
+            info = new System.Windows.Forms.Button();
             Num_textBox = new System.Windows.Forms.TextBox();
             PreZone_button = new System.Windows.Forms.Button();
             groupBox1 = new System.Windows.Forms.GroupBox();
@@ -161,7 +162,6 @@ namespace main.contents
             label9 = new System.Windows.Forms.Label();
             label13 = new System.Windows.Forms.Label();
             Save_button = new System.Windows.Forms.Button();
-            info = new System.Windows.Forms.Button();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -201,6 +201,21 @@ namespace main.contents
             GeneralPanel.Size = new Size(1000, 80);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(970, 4);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 191;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
             // 
             // Num_textBox
             // 
@@ -298,11 +313,12 @@ namespace main.contents
             // 
             AHU_label2.AutoSize = true;
             AHU_label2.Font = new Font("나눔바른고딕", 9.75F);
-            AHU_label2.Location = new Point(865, 24);
+            AHU_label2.Location = new Point(834, 24);
             AHU_label2.Name = "AHU_label2";
-            AHU_label2.Size = new Size(55, 15);
+            AHU_label2.Size = new Size(87, 15);
             AHU_label2.TabIndex = 185;
-            AHU_label2.Text = "열회수기";
+            AHU_label2.Text = "배기환기(3종)";
+            AHU_label2.TextAlign = ContentAlignment.MiddleRight;
             // 
             // AHU_textBox
             // 
@@ -1571,21 +1587,6 @@ namespace main.contents
             Save_button.Text = "SAVE";
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
-            // 
-            // info
-            // 
-            info.BackColor = SystemColors.ControlLight;
-            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            info.FlatStyle = FlatStyle.System;
-            info.Font = new Font("나눔바른고딕", 9.75F);
-            info.Location = new Point(970, 4);
-            info.Margin = new Padding(0);
-            info.Name = "info";
-            info.Size = new Size(23, 23);
-            info.TabIndex = 191;
-            info.Text = "?";
-            info.UseVisualStyleBackColor = false;
-            info.Click += info_Click;
             // 
             // ZoneGeneral
             // 

@@ -46,13 +46,14 @@ namespace main.contents
         DataGridViewCheckBoxColumn Pump_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn ce_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn DHWHP_checkBoxColumn = new DataGridViewCheckBoxColumn();
-        int Boiler_SelectRow, HP_SelectRow, AirCooler_SelectRow, WaterCooler_SelectRow, Pump_SelectRow, ce_SelectRow, Solar_SelectRow, PV_SelectRow, ABS_SelectRow, DH_SelectRow, FC_SelectRow, WP_SelectRow, AHU_SelectRow, HRV_SelectRow, CoolingTop_SelectRow;
+        int Boiler_SelectRow, HP_SelectRow, AirCooler_SelectRow, WaterCooler_SelectRow, Pump_SelectRow, ce_SelectRow, Solar_SelectRow, PV_SelectRow, ABS_SelectRow, DH_SelectRow, FC_SelectRow, WP_SelectRow, AHU_SelectRow, HRV_SelectRow, CoolingTop_SelectRow, Fan_SelectRow;
         string[][] 프로젝트유형;
         //냉방추가
         DataGridViewCheckBoxColumn AirCooler_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn WaterCooler_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn CoolingTop_checkBoxColumn = new DataGridViewCheckBoxColumn();
-
+        //배기팬추가
+        DataGridViewCheckBoxColumn Fan_checkBoxColumn = new DataGridViewCheckBoxColumn();
 
         public EquipmentList()
         {
@@ -79,6 +80,8 @@ namespace main.contents
             Program.DB.initTable(DB.type.ProjDB, "User_AbsorbCooler");
             Program.DB.initTable(DB.type.ProjDB, "User_CoolingTop");
 
+            //배기팬 추가
+            Program.DB.initTable(DB.type.ProjDB, "User_Fan");
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
             if (Image.Length > 0)
@@ -105,6 +108,9 @@ namespace main.contents
             Create_AirCooler_Table();
             Create_WaterCooler_Table();
             Create_CoolingTop_Table();
+
+            //배기팬추가
+            Create_Fan_Table();
             //단위계산
             unit_comboBox.Items.AddRange(new string[] { "열량", "유량", "수량" });
 
@@ -133,6 +139,8 @@ namespace main.contents
             //냉방추가
             Load_CoolingTop();
             Load_Qmax();
+            //배기팬추가
+            Load_Fan();
         }
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
@@ -2695,12 +2703,12 @@ namespace main.contents
                 Pump_SelectRow = e.RowIndex;
                 if (e.ColumnIndex == 7)
                 {
-                    double eta = Pump_dataGridView.Rows[e.RowIndex].Cells[5].Value != null ? Convert.ToDouble(Pump_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()) : 0; 
+                    double eta = Pump_dataGridView.Rows[e.RowIndex].Cells[5].Value != null ? Convert.ToDouble(Pump_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()) : 0;
                     PumpPower pumppower_form = new PumpPower(Pump_dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString(), eta);
                     DialogResult result = pumppower_form.ShowDialog();
                     if (result == DialogResult.OK)
                     {
-                       double  PumpPower = pumppower_form.Power;
+                        double PumpPower = pumppower_form.Power;
                         Pump_dataGridView.Rows[e.RowIndex].Cells[6].Value = String.Format("{0:F1}", PumpPower);
                     }
                 }
@@ -2725,8 +2733,8 @@ namespace main.contents
             {
                 Program.DB.setValue(DB.type.ProjDB, "User_Pump", "번호,프로젝트유형,명칭,종류,B효율,동력,대수,신규기존",
                 "'" + Pump_dataGridView.Rows[k].Cells[1].Value.ToString() + "','" + 프로젝트유형[0][0] + "','"
-                 + Pump_dataGridView.Rows[k].Cells[2].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[3].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[5].Value.ToString() + "','" 
-                 + Pump_dataGridView.Rows[k].Cells[6].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[8].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[9].Value.ToString() 
+                 + Pump_dataGridView.Rows[k].Cells[2].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[3].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[5].Value.ToString() + "','"
+                 + Pump_dataGridView.Rows[k].Cells[6].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[8].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[9].Value.ToString()
                  + "'", "번호");
             }
             Program.DB.saveProject();
@@ -4165,7 +4173,6 @@ namespace main.contents
             Load_HRV_Num();
 
             DataGridViewComboBoxCell 열회수기유형Combo = new DataGridViewComboBoxCell();
-            열회수기유형Combo.Items.Add("없음");
             열회수기유형Combo.Items.Add("판형");
             열회수기유형Combo.Items.Add("일반회전형");
             열회수기유형Combo.Items.Add("흡수식회전형");
@@ -4856,6 +4863,143 @@ namespace main.contents
                 }
             }
 
+        }
+        #endregion
+
+        //////////////////////////////////////////////////배기팬/////////////////////////////////////////////////////////////////
+        #region 18.배기팬
+        void Create_Fan_Table()
+        {
+            new StackedHeaderDecorator(Fan_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            Fan_dataGridView.Columns.Clear();
+            Fan_checkBoxColumn.HeaderText = "선택";
+            Fan_checkBoxColumn.Name = "check";
+            Fan_dataGridView.Columns.Add(Fan_checkBoxColumn);
+
+            Fan_dataGridView.Columns.Add("A1", "번호");
+            Fan_dataGridView.Columns.Add("A2", "명칭");
+
+            DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
+            설치유형Combo.HeaderText = "설치";
+            설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
+            Fan_dataGridView.Columns.Add(설치유형Combo);
+
+            Fan_dataGridView.Columns.Add("A4", "팬.풍량.[CMH]");
+            Fan_dataGridView.Columns.Add("A5", "팬.정압.[Pa]");
+            Fan_dataGridView.Columns.Add("A6", "팬.모터제어");
+            Fan_dataGridView.Columns.Add("A7", "소비전력.[W]");
+            Fan_dataGridView.Columns[0].Width = 40;
+        }
+        private void UserFan_Add_button_Click(object sender, EventArgs e)
+        {
+            int nRow = Fan_dataGridView.Rows.Add();
+            Load_Fan_Num();
+
+            DataGridViewComboBoxCell 모터제어Combo = new DataGridViewComboBoxCell();
+            모터제어Combo.Items.Add("on/off제어");
+            모터제어Combo.Items.Add("2단제어");
+            모터제어Combo.Items.Add("3단제어");
+            모터제어Combo.Items.Add("인버터제어");
+            Fan_dataGridView.Rows[nRow].Cells[6] = 모터제어Combo;
+        }
+        private void Fan_Remove_button_Click(object sender, EventArgs e)
+        {
+            Fan_dataGridView.Rows.Remove(Fan_dataGridView.Rows[Fan_SelectRow]);
+            Load_Fan_Num();
+        }
+        private void Fan_Copy_button_Click(object sender, EventArgs e)
+        {
+            int nRow = Fan_dataGridView.Rows.Add();
+            Load_Fan_Num();
+
+            DataGridViewComboBoxCell 모터제어Combo = new DataGridViewComboBoxCell();
+            모터제어Combo.Items.Add("on/off제어");
+            모터제어Combo.Items.Add("2단제어");
+            모터제어Combo.Items.Add("3단제어");
+            모터제어Combo.Items.Add("인버터제어");
+            Fan_dataGridView.Rows[nRow].Cells[6] = 모터제어Combo;
+
+            for (int k = 2; k < 8; k++)
+            {
+                if (Fan_dataGridView.Rows[Fan_SelectRow].Cells[k].Value != null)
+                {
+                    Fan_dataGridView.Rows[nRow].Cells[k].Value = Fan_dataGridView.Rows[Fan_SelectRow].Cells[k].Value;
+                }
+            }
+            if (Fan_dataGridView.Rows[Fan_SelectRow].Cells[2].Value != null)
+            {
+                Fan_dataGridView.Rows[nRow].Cells[2].Value = Fan_dataGridView.Rows[Fan_SelectRow].Cells[2].Value.ToString() + "_복사";
+            }
+        }
+        private void Fan_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                Fan_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                Fan_SelectRow = e.RowIndex;
+            }
+        }
+
+        private void Load_Fan_Num()
+        {
+            for (int k = 0; k < Fan_dataGridView.RowCount; k++)
+            {
+                if (k + 1 < 10)
+                { Fan_dataGridView.Rows[k].Cells[1].Value = "FAN0" + (k + 1).ToString(); }
+                else { Fan_dataGridView.Rows[k].Cells[1].Value = "FAN" + (k + 1).ToString(); }
+            }
+        }
+        private void Fan_Save_button_Click(object sender, EventArgs e)
+        {
+            Program.DB.deleteValue(DB.type.ProjDB, "User_Fan", "");
+
+            for (int k = 0; k < Fan_dataGridView.RowCount; k++) //행개수
+            {
+                string[] Value = new string[8];
+                for (int i = 1; i < 8; i++) //열개수
+                {
+                    if (Fan_dataGridView.Rows[k].Cells[i].Value != null)
+                    {
+                        double parsedValue;
+                        if (double.TryParse(Fan_dataGridView.Rows[k].Cells[i].Value.ToString(), out parsedValue))
+                        {
+                            Value[i - 1] = parsedValue.ToString();
+                        }
+                        else
+                        {
+                            Value[i - 1] = Fan_dataGridView.Rows[k].Cells[i].Value.ToString();
+                        }
+                    }
+                    else { Value[i - 1] = ""; }
+                }
+                
+                Program.DB.setValue(DB.type.ProjDB,"User_Fan","번호,프로젝트유형,명칭,설치유형,풍량,정압,모터제어,소비전력", "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"+ Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "'", "번호");
+            }
+            Program.DB.saveProject();
+            MessageBox.Show("저장되었습니다.");
+        }
+        void Load_Fan()
+        {
+            Fan_dataGridView.Rows.Clear();
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Fan", "번호,명칭,설치유형,풍량,정압,모터제어,소비전력", "");
+            if (Value.Length > 0)
+            {
+                for (int n = 0; n < Value.Length; n++)
+                {
+                    int nRow = Fan_dataGridView.Rows.Add();
+                    
+                    DataGridViewComboBoxCell 모터제어Combo = new DataGridViewComboBoxCell();
+                    모터제어Combo.Items.Add("on/off제어");
+                    모터제어Combo.Items.Add("2단제어");
+                    모터제어Combo.Items.Add("3단제어");
+                    모터제어Combo.Items.Add("인버터제어");
+                    Fan_dataGridView.Rows[nRow].Cells[6] = 모터제어Combo;
+
+                    for (int i = 0; i < 7; i++)
+                    { Fan_dataGridView.Rows[nRow].Cells[i + 1].Value = Value[n][i]; }
+
+                }
+            }
         }
         #endregion
 

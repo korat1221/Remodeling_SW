@@ -245,14 +245,43 @@ namespace main.contents
                 AHU_label.Visible = true;
                 AHU_comboBox.Visible = true;
                 AHU_comboBox.Enabled = true;
-                if (AHU_comboBox.SelectedItem == null) { AHU_button.Visible = false; AHU_textBox.Visible = false; AHU_label2.Visible = false; }
-                else if (AHU_comboBox.SelectedItem.ToString() == "배기환기(3종)") { AHU_button.Visible = false; AHU_textBox.Visible = false; AHU_label2.Visible = false; AHUType = AHU_comboBox.SelectedItem.ToString(); }
-                else { AHU_button.Visible = true; AHU_textBox.Visible = true; AHU_label2.Visible = true; AHUType = AHU_comboBox.SelectedItem.ToString(); }
+                
+                if (AHU_comboBox.SelectedItem == null) 
+                { 
+                    AHU_button.Visible = false; AHU_textBox.Visible = false; AHU_label2.Visible = false; 
+                }
+                //else if (AHU_comboBox.SelectedItem.ToString() == "배기환기(3종)") 
+                //{ 
+                //    AHU_button.Visible = false; AHU_textBox.Visible = false; AHU_label2.Visible = false; AHUType = AHU_comboBox.SelectedItem.ToString(); 
+                //}
+                else 
+                {
+                    AHU_button.Visible = true; AHU_textBox.Visible = true; AHU_label2.Visible = true; AHUType = AHU_comboBox.SelectedItem.ToString(); 
+                }
 
-                if (AHUType == "공조기") { AHU_label2.Text = "공조기"; } else { AHU_label2.Text = "열회수기"; }
-                if (AHUType == "열회수기" || AHUType == "공조기") { SA_Volume_Label.Visible = true; RA_Volume_Label.Visible = false; }
-                else if (AHUType == "배기환기(3종)") { SA_Volume_Label.Visible = false; RA_Volume_Label.Visible = true; }
-                else { SA_Volume_Label.Visible = false; RA_Volume_Label.Visible = false; }
+                if (AHUType == "공조기") 
+                {
+                    AHU_label2.Text = "공조기"; 
+                } 
+                else 
+                { 
+                    AHU_label2.Text = "열회수기"; 
+                }
+
+                if (AHUType == "열회수기" || AHUType == "공조기") 
+                {
+                    AHU_label2.Text = AHUType;
+                    SA_Volume_Label.Visible = true; RA_Volume_Label.Visible = false;
+                }
+                else if (AHUType == "배기환기(3종)") 
+                {
+                    AHU_label2.Text = AHUType;
+                    SA_Volume_Label.Visible = false; RA_Volume_Label.Visible = true; 
+                }
+                else 
+                { 
+                    SA_Volume_Label.Visible = false; RA_Volume_Label.Visible = false; 
+                }
             }
             else
             {
@@ -281,7 +310,20 @@ namespace main.contents
                     }
                 }
             }
-            else
+            else if(AHUType =="열회수기")
+            {
+                AHU_HRV AHU_HRV = new AHU_HRV(AHUType, SelectHRV);
+                DialogResult result = AHU_HRV.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    if (AHU_HRV.SelectSystem != null)
+                    {
+                        SelectHRV = AHU_HRV.SelectSystem;
+                        if (SelectHRV != null) { AHU_textBox.Text = SelectHRV; }
+                    }
+                }
+            }
+            else if (AHUType == "배기환기(3종)") //class
             {
                 AHU_HRV AHU_HRV = new AHU_HRV(AHUType, SelectHRV);
                 DialogResult result = AHU_HRV.ShowDialog();
