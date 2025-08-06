@@ -187,22 +187,22 @@ namespace main.contents
             Previous_button = new Button();
             Save_button = new Button();
             ImagePanel = new Panel();
-            panel4 = new Panel();
-            ce3_pictureBox = new PictureBox();
-            ce2_pictureBox = new PictureBox();
-            ce1_pictureBox = new PictureBox();
-            StoType_pictureBox = new PictureBox();
-            StopictureBox = new PictureBox();
-            DistpictureBox = new PictureBox();
-            ZoneS_label = new Label();
-            panel3 = new Panel();
-            Press_pictureBox = new PictureBox();
-            SyspictureBox = new PictureBox();
-            panel1 = new Panel();
+            SubDist2pictureBox = new PictureBox();
+            SubDistpictureBox = new PictureBox();
+            SubsourcepictureBox = new PictureBox();
+            SubsyspictureBox = new PictureBox();
             SourcepictureBox = new PictureBox();
+            ce3_pictureBox = new PictureBox();
+            SyspictureBox = new PictureBox();
+            DistpictureBox = new PictureBox();
+            ce2_pictureBox = new PictureBox();
+            StopictureBox = new PictureBox();
+            pumppictureBox = new PictureBox();
+            ce1_pictureBox = new PictureBox();
             panel2 = new Panel();
             panel5 = new Panel();
             panel6 = new Panel();
+            stopumppictureBox = new PictureBox();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             tabControl1.SuspendLayout();
@@ -227,21 +227,22 @@ namespace main.contents
             Qhce_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ce_dataGridView).BeginInit();
             ImagePanel.SuspendLayout();
-            panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)ce3_pictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ce2_pictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)ce1_pictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)StoType_pictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)StopictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)DistpictureBox).BeginInit();
-            panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)Press_pictureBox).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)SyspictureBox).BeginInit();
-            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)SubDist2pictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)SubDistpictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)SubsourcepictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)SubsyspictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SourcepictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ce3_pictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)SyspictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)DistpictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ce2_pictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)StopictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pumppictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)ce1_pictureBox).BeginInit();
             panel2.SuspendLayout();
             panel5.SuspendLayout();
             panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)stopumppictureBox).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
@@ -2203,138 +2204,165 @@ namespace main.contents
             // ImagePanel
             // 
             ImagePanel.BackColor = Color.White;
-            ImagePanel.Controls.Add(panel4);
-            ImagePanel.Controls.Add(panel3);
-            ImagePanel.Controls.Add(panel1);
+            ImagePanel.Controls.Add(stopumppictureBox);
+            ImagePanel.Controls.Add(SubDist2pictureBox);
+            ImagePanel.Controls.Add(SubDistpictureBox);
+            ImagePanel.Controls.Add(SubsourcepictureBox);
+            ImagePanel.Controls.Add(SubsyspictureBox);
+            ImagePanel.Controls.Add(SourcepictureBox);
+            ImagePanel.Controls.Add(ce3_pictureBox);
+            ImagePanel.Controls.Add(SyspictureBox);
+            ImagePanel.Controls.Add(DistpictureBox);
+            ImagePanel.Controls.Add(ce2_pictureBox);
+            ImagePanel.Controls.Add(StopictureBox);
+            ImagePanel.Controls.Add(pumppictureBox);
+            ImagePanel.Controls.Add(ce1_pictureBox);
             ImagePanel.Location = new Point(12, 10);
             ImagePanel.Name = "ImagePanel";
             ImagePanel.Size = new Size(977, 272);
             ImagePanel.TabIndex = 146;
             // 
-            // panel4
+            // SubDist2pictureBox
             // 
-            panel4.BackgroundImageLayout = ImageLayout.None;
-            panel4.Controls.Add(ce3_pictureBox);
-            panel4.Controls.Add(ce2_pictureBox);
-            panel4.Controls.Add(ce1_pictureBox);
-            panel4.Controls.Add(StoType_pictureBox);
-            panel4.Controls.Add(StopictureBox);
-            panel4.Controls.Add(DistpictureBox);
-            panel4.Controls.Add(ZoneS_label);
-            panel4.Dock = DockStyle.Fill;
-            panel4.Location = new Point(310, 0);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(667, 272);
-            panel4.TabIndex = 4;
-            panel4.Paint += panel4_Paint;
+            SubDist2pictureBox.BackColor = Color.Transparent;
+            SubDist2pictureBox.ErrorImage = null;
+            SubDist2pictureBox.InitialImage = null;
+            SubDist2pictureBox.Location = new Point(372, 119);
+            SubDist2pictureBox.Name = "SubDist2pictureBox";
+            SubDist2pictureBox.Size = new Size(31, 27);
+            SubDist2pictureBox.TabIndex = 164;
+            SubDist2pictureBox.TabStop = false;
+            SubDist2pictureBox.Visible = false;
+            // 
+            // SubDistpictureBox
+            // 
+            SubDistpictureBox.BackColor = Color.Transparent;
+            SubDistpictureBox.ErrorImage = null;
+            SubDistpictureBox.InitialImage = null;
+            SubDistpictureBox.Location = new Point(9, 119);
+            SubDistpictureBox.Name = "SubDistpictureBox";
+            SubDistpictureBox.Size = new Size(100, 100);
+            SubDistpictureBox.TabIndex = 163;
+            SubDistpictureBox.TabStop = false;
+            SubDistpictureBox.Visible = false;
+            // 
+            // SubsourcepictureBox
+            // 
+            SubsourcepictureBox.BackColor = Color.Transparent;
+            SubsourcepictureBox.ErrorImage = null;
+            SubsourcepictureBox.InitialImage = null;
+            SubsourcepictureBox.Location = new Point(235, 119);
+            SubsourcepictureBox.Name = "SubsourcepictureBox";
+            SubsourcepictureBox.Size = new Size(100, 100);
+            SubsourcepictureBox.TabIndex = 162;
+            SubsourcepictureBox.TabStop = false;
+            SubsourcepictureBox.Visible = false;
+            // 
+            // SubsyspictureBox
+            // 
+            SubsyspictureBox.BackColor = Color.Transparent;
+            SubsyspictureBox.ErrorImage = null;
+            SubsyspictureBox.InitialImage = null;
+            SubsyspictureBox.Location = new Point(129, 119);
+            SubsyspictureBox.Name = "SubsyspictureBox";
+            SubsyspictureBox.Size = new Size(100, 100);
+            SubsyspictureBox.TabIndex = 161;
+            SubsyspictureBox.TabStop = false;
+            SubsyspictureBox.Visible = false;
+            // 
+            // SourcepictureBox
+            // 
+            SourcepictureBox.BackColor = Color.Transparent;
+            SourcepictureBox.ErrorImage = null;
+            SourcepictureBox.InitialImage = null;
+            SourcepictureBox.Location = new Point(235, 13);
+            SourcepictureBox.Name = "SourcepictureBox";
+            SourcepictureBox.Size = new Size(99, 100);
+            SourcepictureBox.TabIndex = 2;
+            SourcepictureBox.TabStop = false;
+            SourcepictureBox.Visible = false;
             // 
             // ce3_pictureBox
             // 
-            ce3_pictureBox.Location = new Point(390, 15);
+            ce3_pictureBox.BackColor = Color.Transparent;
+            ce3_pictureBox.ErrorImage = null;
+            ce3_pictureBox.InitialImage = null;
+            ce3_pictureBox.Location = new Point(829, 50);
             ce3_pictureBox.Name = "ce3_pictureBox";
             ce3_pictureBox.Size = new Size(69, 53);
             ce3_pictureBox.TabIndex = 160;
             ce3_pictureBox.TabStop = false;
             ce3_pictureBox.Visible = false;
             // 
+            // SyspictureBox
+            // 
+            SyspictureBox.BackColor = Color.Transparent;
+            SyspictureBox.ErrorImage = null;
+            SyspictureBox.InitialImage = null;
+            SyspictureBox.Location = new Point(129, 13);
+            SyspictureBox.Name = "SyspictureBox";
+            SyspictureBox.Size = new Size(100, 100);
+            SyspictureBox.TabIndex = 1;
+            SyspictureBox.TabStop = false;
+            // 
+            // DistpictureBox
+            // 
+            DistpictureBox.BackColor = Color.Transparent;
+            DistpictureBox.ErrorImage = null;
+            DistpictureBox.InitialImage = null;
+            DistpictureBox.Location = new Point(11, 13);
+            DistpictureBox.Name = "DistpictureBox";
+            DistpictureBox.Size = new Size(100, 100);
+            DistpictureBox.TabIndex = 0;
+            DistpictureBox.TabStop = false;
+            // 
             // ce2_pictureBox
             // 
-            ce2_pictureBox.Location = new Point(289, 15);
+            ce2_pictureBox.BackColor = Color.Transparent;
+            ce2_pictureBox.ErrorImage = null;
+            ce2_pictureBox.InitialImage = null;
+            ce2_pictureBox.Location = new Point(754, 50);
             ce2_pictureBox.Name = "ce2_pictureBox";
             ce2_pictureBox.Size = new Size(69, 53);
             ce2_pictureBox.TabIndex = 159;
             ce2_pictureBox.TabStop = false;
             ce2_pictureBox.Visible = false;
             // 
+            // StopictureBox
+            // 
+            StopictureBox.BackColor = Color.Transparent;
+            StopictureBox.ErrorImage = null;
+            StopictureBox.InitialImage = null;
+            StopictureBox.Location = new Point(372, 13);
+            StopictureBox.Name = "StopictureBox";
+            StopictureBox.Size = new Size(91, 100);
+            StopictureBox.TabIndex = 156;
+            StopictureBox.TabStop = false;
+            StopictureBox.Visible = false;
+            // 
+            // pumppictureBox
+            // 
+            pumppictureBox.BackColor = Color.Transparent;
+            pumppictureBox.ErrorImage = null;
+            pumppictureBox.InitialImage = null;
+            pumppictureBox.Location = new Point(489, 13);
+            pumppictureBox.Name = "pumppictureBox";
+            pumppictureBox.Size = new Size(47, 36);
+            pumppictureBox.TabIndex = 157;
+            pumppictureBox.TabStop = false;
+            pumppictureBox.Visible = false;
+            // 
             // ce1_pictureBox
             // 
-            ce1_pictureBox.Location = new Point(191, 15);
+            ce1_pictureBox.BackColor = Color.Transparent;
+            ce1_pictureBox.ErrorImage = null;
+            ce1_pictureBox.InitialImage = null;
+            ce1_pictureBox.Location = new Point(679, 50);
             ce1_pictureBox.Name = "ce1_pictureBox";
             ce1_pictureBox.Size = new Size(69, 53);
             ce1_pictureBox.TabIndex = 158;
             ce1_pictureBox.TabStop = false;
             ce1_pictureBox.Visible = false;
-            // 
-            // StoType_pictureBox
-            // 
-            StoType_pictureBox.Location = new Point(21, 24);
-            StoType_pictureBox.Name = "StoType_pictureBox";
-            StoType_pictureBox.Size = new Size(46, 35);
-            StoType_pictureBox.TabIndex = 157;
-            StoType_pictureBox.TabStop = false;
-            StoType_pictureBox.Visible = false;
-            // 
-            // StopictureBox
-            // 
-            StopictureBox.Location = new Point(6, 9);
-            StopictureBox.Name = "StopictureBox";
-            StopictureBox.Size = new Size(73, 63);
-            StopictureBox.TabIndex = 156;
-            StopictureBox.TabStop = false;
-            StopictureBox.Visible = false;
-            // 
-            // DistpictureBox
-            // 
-            DistpictureBox.Location = new Point(0, 0);
-            DistpictureBox.Name = "DistpictureBox";
-            DistpictureBox.Size = new Size(100, 100);
-            DistpictureBox.TabIndex = 0;
-            DistpictureBox.TabStop = false;
-            // 
-            // ZoneS_label
-            // 
-            ZoneS_label.AutoSize = true;
-            ZoneS_label.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Italic);
-            ZoneS_label.ForeColor = SystemColors.ControlDarkDark;
-            ZoneS_label.Location = new Point(477, 9);
-            ZoneS_label.Name = "ZoneS_label";
-            ZoneS_label.Size = new Size(0, 15);
-            ZoneS_label.TabIndex = 155;
-            // 
-            // panel3
-            // 
-            panel3.BackgroundImageLayout = ImageLayout.None;
-            panel3.Controls.Add(Press_pictureBox);
-            panel3.Controls.Add(SyspictureBox);
-            panel3.Dock = DockStyle.Left;
-            panel3.Location = new Point(200, 0);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(110, 272);
-            panel3.TabIndex = 3;
-            // 
-            // Press_pictureBox
-            // 
-            Press_pictureBox.Location = new Point(17, 77);
-            Press_pictureBox.Name = "Press_pictureBox";
-            Press_pictureBox.Size = new Size(50, 40);
-            Press_pictureBox.TabIndex = 2;
-            Press_pictureBox.TabStop = false;
-            Press_pictureBox.Visible = false;
-            // 
-            // SyspictureBox
-            // 
-            SyspictureBox.Location = new Point(4, 49);
-            SyspictureBox.Name = "SyspictureBox";
-            SyspictureBox.Size = new Size(100, 100);
-            SyspictureBox.TabIndex = 1;
-            SyspictureBox.TabStop = false;
-            // 
-            // panel1
-            // 
-            panel1.Controls.Add(SourcepictureBox);
-            panel1.Dock = DockStyle.Left;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(200, 272);
-            panel1.TabIndex = 2;
-            // 
-            // SourcepictureBox
-            // 
-            SourcepictureBox.Location = new Point(0, 0);
-            SourcepictureBox.Name = "SourcepictureBox";
-            SourcepictureBox.Size = new Size(100, 100);
-            SourcepictureBox.TabIndex = 2;
-            SourcepictureBox.TabStop = false;
             // 
             // panel2
             // 
@@ -2363,6 +2391,18 @@ namespace main.contents
             panel6.Name = "panel6";
             panel6.Size = new Size(1000, 291);
             panel6.TabIndex = 127;
+            // 
+            // stopumppictureBox
+            // 
+            stopumppictureBox.BackColor = Color.Transparent;
+            stopumppictureBox.ErrorImage = null;
+            stopumppictureBox.InitialImage = null;
+            stopumppictureBox.Location = new Point(372, 183);
+            stopumppictureBox.Name = "stopumppictureBox";
+            stopumppictureBox.Size = new Size(47, 36);
+            stopumppictureBox.TabIndex = 165;
+            stopumppictureBox.TabStop = false;
+            stopumppictureBox.Visible = false;
             // 
             // HeatingSystem
             // 
@@ -2408,22 +2448,22 @@ namespace main.contents
             Qhce_tabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)ce_dataGridView).EndInit();
             ImagePanel.ResumeLayout(false);
-            panel4.ResumeLayout(false);
-            panel4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)ce3_pictureBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ce2_pictureBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)ce1_pictureBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)StoType_pictureBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)StopictureBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)DistpictureBox).EndInit();
-            panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)Press_pictureBox).EndInit();
-            ((System.ComponentModel.ISupportInitialize)SyspictureBox).EndInit();
-            panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)SubDist2pictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)SubDistpictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)SubsourcepictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)SubsyspictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)SourcepictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ce3_pictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)SyspictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)DistpictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ce2_pictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)StopictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pumppictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)ce1_pictureBox).EndInit();
             panel2.ResumeLayout(false);
             panel5.ResumeLayout(false);
             panel6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)stopumppictureBox).EndInit();
             ResumeLayout(false);
         }
 
@@ -2527,19 +2567,8 @@ namespace main.contents
         private DataGridView Solar_dataGridView;
         private DataGridView AS_dataGridView;
         private Panel ImagePanel;
-        private Panel panel4;
-        private PictureBox ce3_pictureBox;
-        private PictureBox ce2_pictureBox;
-        private PictureBox ce1_pictureBox;
-        private PictureBox StoType_pictureBox;
-        private PictureBox StopictureBox;
-        private PictureBox DistpictureBox;
-        private Label ZoneS_label;
-        private Panel panel3;
-        private PictureBox Press_pictureBox;
-        private PictureBox SyspictureBox;
-        private Panel panel1;
         private PictureBox SourcepictureBox;
+        private PictureBox SyspictureBox;
         private DataGridView DH_dataGridView;
         private Panel panel2;
         private Panel panel5;
@@ -2577,5 +2606,16 @@ namespace main.contents
         private TextBox GPump1_textBox;
         private CustomComboBox GPumpMethod_comboBox;
         private Label GPumpMethod_label;
+        private PictureBox ce3_pictureBox;
+        private PictureBox ce2_pictureBox;
+        private PictureBox ce1_pictureBox;
+        private PictureBox pumppictureBox;
+        private PictureBox StopictureBox;
+        private PictureBox DistpictureBox;
+        private PictureBox SubsourcepictureBox;
+        private PictureBox SubsyspictureBox;
+        private PictureBox SubDistpictureBox;
+        private PictureBox SubDist2pictureBox;
+        private PictureBox stopumppictureBox;
     }
 }
