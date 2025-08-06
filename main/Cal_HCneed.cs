@@ -277,7 +277,7 @@ namespace main
                     else
                     {
                         Vmech_SUP_wd = 0;
-                        Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][2]); ; //배기환기는 다 비이용일환기량으로 함 
+                        Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][3]); ; //배기환기는 다 비이용일환기량으로 함 
                         Vmech_SUP_we = 0;
                         Vmech_ETA_we = Convert.ToDouble(ZoneG[0][2]);
                     }

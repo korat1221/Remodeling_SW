@@ -610,7 +610,7 @@ namespace main.contents
             SA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + "m3/h";
 
             Volume_we = Area * VA_we;
-            RA_Volume_Label.Text = String.Format("{0:F1}", Volume_we) + "m3/h";
+            RA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + "m3/h";
 
             if (NetVolume != null && NetVolume != 0)
             { VentilationRate = Volume_wd / NetVolume; }
@@ -946,11 +946,11 @@ namespace main.contents
                     Volume_wd_textBox.Text = Volume_wd.ToString();
                     Program.UTIL.textBox_doubleComa(Volume_wd_textBox, true, 1);
                     SA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + "m3/h";
+                    RA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + "m3/h";
                 }
                 if (Value[0][27] != "")
                 {
                     Volume_we = Convert.ToDouble(Value[0][27]);
-                    RA_Volume_Label.Text = String.Format("{0:F1}", Volume_we) + "m3/h";
                 }
             }
             Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "기존존,증축여부", "존번호 = '" + ZoneNum + "'");
