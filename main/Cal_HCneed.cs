@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 
 namespace main
 {
@@ -72,6 +73,9 @@ namespace main
         public double[] Q_max = new double [2]; public double[,] t_max = new double[2,12];
         double[,,] theta_u = new double[2, 2, 12]; public double[] Utb = new double[3];//외벽, 지붕, 바닥 열교 
         public double Door_q50 = 0, Win_q50 = 0, CW_q50 = 0, Wall_q50 = 0, Roof_q50 = 0;
+
+        //배기환기소요량
+        public double[] Q_fan = new double[12];
 
         public Zone(String zoneNum)
         {
@@ -274,12 +278,38 @@ namespace main
                             eta_χV_mech[1] = Convert.ToDouble(value[0][3]) / 100;
                         }
                     }
+                    else if (ZoneG[0][1] == "배기환기(3종)")
+                    {
+                        SelectHRV = ZoneG[0][4];
+                        Vmech_SUP_wd = 0;
+                        Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][3]); 
+                        Vmech_SUP_we = 0;
+                        Vmech_ETA_we = Convert.ToDouble(ZoneG[0][2]);
+                                                                        
+                        string[][] value = Program.DB.getValue(DB.type.ProjDB, "User_Fan", "풍량,모터제어,소비전력", "번호='" + SelectHRV + "'");
+                        if (value.Length > 0)
+                        {
+                            double volum = Convert.ToDouble(value[0][0].ToString());
+                            double fan_elec = Convert.ToDouble(value[0][2].ToString()) / volum; //W/cmh
+                            double control_factor = 0;
+                            string control = value[0][1];
+                            string[][] value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "팬모터제어계수", "계수", "제어유형='" + control + "'");
+                            control_factor = Convert.ToDouble(value2[0][0].ToString());
+                                
+                            for (int mth = 0; mth < 12; mth++)
+                            {
+                                Q_fan[mth] = th_op_d * dwd_mth[mth] * Math.Min(Vmech_ETA_wd,volum) * fan_elec * Math.Pow(0.65, control_factor)/1000; //kWh/mth 배기팬의 경우 필요시 작동하는 방식으로 개별제어값을 적용함
+                            }
+                        }
+                    }
+
                     else
                     {
                         Vmech_SUP_wd = 0;
-                        Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][3]); ; //배기환기는 다 비이용일환기량으로 함 
+                        Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][3]);
                         Vmech_SUP_we = 0;
                         Vmech_ETA_we = Convert.ToDouble(ZoneG[0][2]);
+
                     }
                 }
                 else
@@ -2776,6 +2806,10 @@ namespace main
 
         }
         
+        public void ZoneFan()
+        {
+
+        }
     }
 
     public class InWall
