@@ -496,6 +496,10 @@ namespace main.contents
             else
             {
                 Sub1System = null;
+                SubDistpictureBox.Visible = false;
+                SubDist2pictureBox.Visible = false;
+                SubsyspictureBox.Visible = false;
+                SubsourcepictureBox.Visible = false;
             }
         }
 
@@ -3544,12 +3548,21 @@ namespace main.contents
                 Complex_comboBox.SelectedItem = Value[0][2];
                 Complex = Value[0][2];
 
-                MainSystem = Value[0][3];
-                MainSystem_comboBox.SelectedItem = Value[0][3];
-                Sub1System = Value[0][4];
-                Sub1System_comboBox.SelectedItem = Value[0][4];
-                Sub2System = Value[0][5];
-                Sub2System_comboBox.SelectedItem = Value[0][5];
+                if(Complex != "복합설비가동")
+                {
+                    MainSystem = Value[0][3];
+                    MainSystem_comboBox.SelectedItem = Value[0][3];
+                }
+                else
+                {
+                    MainSystem = Value[0][3];
+                    MainSystem_comboBox.SelectedItem = Value[0][3];
+                    Sub1System = Value[0][4];
+                    Sub1System_comboBox.SelectedItem = Value[0][4];
+                }
+                    
+                //Sub2System = Value[0][5];
+                //Sub2System_comboBox.SelectedItem = Value[0][5];
             }
 
             Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "보일러종류,보일러대수", "번호 = '" + ID + "'");
