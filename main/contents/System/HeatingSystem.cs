@@ -3963,6 +3963,7 @@ namespace main.contents
             if ((MessageBox.Show(Boiler_dataGridView.Rows[Boiler_SelectRow].Cells[1].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
             {
                 Boiler_dataGridView.Rows.Remove(Boiler_dataGridView.Rows[Boiler_SelectRow]);
+                SelectBoiler_nonsplit = null;
             }
         }
 
@@ -3971,6 +3972,7 @@ namespace main.contents
             if ((MessageBox.Show(HP_dataGridView.Rows[HP_SelectRow].Cells[1].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
             {
                 HP_dataGridView.Rows.Remove(HP_dataGridView.Rows[HP_SelectRow]);
+                SelectHP_nonsplit = null;
             }
         }
 
@@ -3979,6 +3981,7 @@ namespace main.contents
             if ((MessageBox.Show(AS_dataGridView.Rows[AS_SelectRow].Cells[1].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
             {
                 AS_dataGridView.Rows.Remove(AS_dataGridView.Rows[AS_SelectRow]);
+                SelectAS_nonsplit = null;
             }
         }
 
@@ -3987,6 +3990,7 @@ namespace main.contents
             if ((MessageBox.Show(DH_dataGridView.Rows[DH_SelectRow].Cells[1].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
             {
                 DH_dataGridView.Rows.Remove(DH_dataGridView.Rows[DH_SelectRow]);
+                SelectDH_nonsplit = null;
             }
         }
 
@@ -3995,6 +3999,7 @@ namespace main.contents
             if ((MessageBox.Show(Solar_dataGridView.Rows[Solar_SelectRow].Cells[1].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
             {
                 Solar_dataGridView.Rows.Remove(Solar_dataGridView.Rows[Solar_SelectRow]);
+                SelectSolar_nonsplit = null;
             }
         }
 
@@ -4003,6 +4008,7 @@ namespace main.contents
             if ((MessageBox.Show(FC_dataGridView.Rows[FC_SelectRow].Cells[1].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
             {
                 FC_dataGridView.Rows.Remove(FC_dataGridView.Rows[FC_SelectRow]);
+                SelectFC_nonsplit = null;
             }
         }
 
