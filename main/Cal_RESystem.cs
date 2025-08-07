@@ -178,7 +178,7 @@ namespace main
         #endregion
 
         #region PV별 저장
-        public void PVsave()
+        public void PVsave(string ProjNum)
         {
             string[] month = new string[12];
 
@@ -214,13 +214,53 @@ namespace main
             for (int mth = 0; mth <= 11; mth++)
             {
                 string MTH = (mth + 1).ToString() + "월";
-                Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호," +
-                 "월," +
-                 "신재생시스템,신재생시스템유형,생산소비,생산유형,총에너지",
-                 "'" + 프로젝트번호  + "','" + 프로젝트유형 + "','" + RESystemNum + "','" + MTH + "','" +
-                Num + "','태양광시스템','생산','전기','" +
-                Qfpvm_kWh[mth]
-                  + "'", "번호,월,생산소비,생산유형"); ;
+                string[][] v = Program.DB.getValue(ProjNum, "RESystem_Result", "번호", "번호= '" + RESystemNum + "' and " +
+                    "월 ='" + MTH + "' and " +
+                    "생산소비='생산' and " +
+                    "생산유형='전기'");
+                if (v.Length > 0)
+                {
+                    if (프로젝트번호 == ProjNum)
+                    {
+                        Program.DB.executeSQL(ProjNum, "" +
+                       "Update RESystem_Result set " +
+                       "프로젝트번호 = '" + 프로젝트번호 + "'," +
+                       "프로젝트유형 = '" + 프로젝트유형 + "'," +
+                       "번호= '" + RESystemNum + "'," +
+                       "월='" + MTH + "'," +
+                       "신재생시스템 ='" + Num + "'," +
+                       "신재생시스템유형='태양광시스템'," +
+                       "생산소비='생산'," +
+                       "생산유형='전기'," +
+                       "총에너지='" + Qfpvm_kWh[mth] + "'" +
+                       " Where 번호= '" + RESystemNum + "' and " +
+                       "월 ='" + MTH + "' and " +
+                       "생산소비='생산' and " +
+                       "생산유형='전기'");
+                    }
+                }
+                else
+                {
+                    if (프로젝트번호 == ProjNum)
+                    {
+                        Program.DB.executeSQL(ProjNum, "" +
+                        "INSERT INTO RESystem_Result (" +
+                        "프로젝트번호, 프로젝트유형, 번호, 월, 신재생시스템, " +
+                        "신재생시스템유형, 생산소비, 생산유형, 총에너지) " +
+                        "VALUES (" +
+                        "'" + 프로젝트번호 + "', " +
+                        "'" + 프로젝트유형 + "', " +
+                        "'" + RESystemNum + "', " +
+                        "'" + MTH + "', " +
+                        "'" + Num + "', " +
+                        "'태양광시스템', " +
+                        "'생산', " +
+                        "'전기', " +
+                        "'" + Qfpvm_kWh[mth] + "'" +
+                        ")");
+                    }
+                }
+               
             }
 
         }

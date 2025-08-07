@@ -22,6 +22,7 @@ using System.Data.SQLite;
 using System.Drawing.Configuration;
 using static System.Data.Entity.Infrastructure.Design.Executor;
 using main.info;
+using System.Drawing.Drawing2D;
 
 namespace main.contents
 {
@@ -207,10 +208,8 @@ namespace main.contents
                             Program.DB.executeSQL(pid, "DROP TABLE " + table);
                         }
                     }
-                    Program.DB.executeSQL(pid, "DELETE FROM BuildingGeneral");
-                    Program.DB.executeSQL(pid, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "', 프로젝트유형='" + types[ProjectType] + "', 프로젝트유형번호='" + ProjectType + "'");
+                    Program.DB.executeSQL(pid, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "', 프로젝트유형='" + types[ProjectType] + "', 프로젝트유형번호='" + ProjectType + "' Where 프로젝트번호='" + pid0 + "'");
                     Program.DB.executeSQL(pid, "UPDATE BuildingGeneral SET 기존프로젝트 ='" + pid0 + "' WHERE  프로젝트번호 = '" + pid + "'");
-                    Program.DB.saveProject();
                 }
 
 
@@ -253,10 +252,10 @@ namespace main.contents
 
                 int k_new = dataGridView1.Rows.Count - 1;
                 dataGridView1.Rows[k_new].Cells[0].Value = true;
-                string[][] pre = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "기존프로젝트", "프로젝트번호 = '" + pid + "'");
+                string[][] pre = Program.DB.getValue(pid, "BuildingGeneral", "기존프로젝트", "프로젝트번호 = '" + pid + "'");
                 if (pre.Length > 0)
                 {
-                    ProjectOpen();
+                    ProjectOpen(dataGridView1.Rows.Count -1);
                     Program.getMenuForm().DoLoadFormDirect(0);
                 }
                 else
@@ -290,9 +289,7 @@ namespace main.contents
                                 Program.DB.executeSQL(pid, "DROP TABLE " + table);
                             }
                         }
-
-                        Program.DB.executeSQL(pid, "DELETE FROM BuildingGeneral");
-                        Program.DB.executeSQL(pid, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "', 프로젝트유형='" + types[ProjectType] + "', 프로젝트유형번호='" + ProjectType + "'");
+                        Program.DB.executeSQL(pid, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "', 프로젝트유형='" + types[ProjectType] + "', 프로젝트유형번호='" + ProjectType + "' Where 프로젝트번호='"+pid0+"'");
                         Program.DB.saveProject();
                     }
 
@@ -332,7 +329,7 @@ namespace main.contents
                     dataGridView1.Rows[k].Cells[0].Value = false;
                     int k_new = dataGridView1.Rows.Count - 1;
                     dataGridView1.Rows[k_new].Cells[0].Value = true;
-                    ProjectOpen();
+                    ProjectOpen(dataGridView1.Rows.Count - 1);
                     Program.getMenuForm().DoLoadFormDirect(0);
                 }
             }
@@ -477,7 +474,8 @@ namespace main.contents
                             {
                                 dataGridView1.Rows[k].Cells[0].Value = false;
                                 dataGridView1.Rows[k - 1].Cells[0].Value = true;
-                                ProjectOpen();
+                                int a = GetSelectedIndex();
+                                ProjectOpen(a);
                                 File.Delete(Program.gPath + "projects\\" + pid + ".sqlite");
                             }
                             else
@@ -509,9 +507,8 @@ namespace main.contents
 
 
 
-        private void ProjectOpen()
+        private void ProjectOpen(int k)
         {
-            int k = GetSelectedIndex();
             if (k >= 0)
             {
                 ProjectList.CurProjID = dataGridView1.Rows[k].Cells[2].Value.ToString();
@@ -573,7 +570,7 @@ namespace main.contents
             MessageBox.Show("생성되었습니다.");
             int k_new = dataGridView1.Rows.Count - 1;
             dataGridView1.Rows[k_new].Cells[0].Value = true;
-            ProjectOpen();
+            ProjectOpen(k_new);
             Program.getMenuForm().DoLoadFormDirect(0);
         create_stop: int a = 0;
 

@@ -248,9 +248,17 @@ namespace main
             SecureSQLite.CloseDB((int)type.ProjDB);
             SecureSQLite.CloseDB((int)type.CalcDB);
         }
-        public void saveProject()
+        public void saveProject(string path = null)
         {
-            SecureSQLite.SaveDB(projDBPath, (int)type.ProjDB);
+            if (path == null)
+            {
+                SecureSQLite.SaveDB(projDBPath, (int)type.ProjDB);
+            }
+            else
+            {
+                SecureSQLite.SaveDB(path, (int)customDB);
+            }
+
         }
 
         public void initTable (type dbType, string table)
@@ -293,9 +301,11 @@ namespace main
                 executeSQL(type.ProjDB, query);
                 return;
             }
-            if (SecureSQLite.OpenDB("projects\\" + projName + ".sqlite", customDB) == 1)
+            string path = "projects\\" + projName + ".sqlite";
+            if (SecureSQLite.OpenDB(path, customDB) == 1)
             {
                 SecureSQLite.ExecuteSQL(customDB, query);
+                SecureSQLite.SaveDB(path, (int)customDB);
             }
         }
         public string QuerySQL(int dbType, string query)
@@ -466,6 +476,7 @@ namespace main
                 SecureSQLite.ExecuteSQL((int)dbType, sql);
             }
         }
+
 
         public void deleteTable(type dbType, string table)
         {

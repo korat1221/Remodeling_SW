@@ -238,60 +238,68 @@ namespace main
             }
 
         load_ventil:
-            if (Convert.ToBoolean(Zone_Pre[0][0]))
+            if (Zone_Pre == null)
             {
-                if (Zone_Pre[0][1] == "열회수기")
-                {
-                    zone1.Vmech_SUP_we = Convert.ToDouble(Zone_Pre[0][2]);
-                    zone1.Vmech_ETA_we = Convert.ToDouble(Zone_Pre[0][2]);
-                    zone1.Vmech_SUP_wd = Convert.ToDouble(Zone_Pre[0][3]);
-                    zone1.Vmech_ETA_wd = Convert.ToDouble(Zone_Pre[0][3]);
-                    zone1.SelectHRV = Zone_Pre[0][4];
-                    string[][] value = Program.DB.getValue(PreProjNum[0][0], "User_HRV", "온도교환효율_난방,온도교환효율_냉방,습도교환효율_난방,습도교환효율_냉방", "번호='" + zone1.SelectHRV + "'");
-                    if (value.Length > 0)
-                    {
-                        zone1.eta_V_mech[0] = Convert.ToDouble(value[0][0]) / 100;
-                        zone1.eta_V_mech[1] = Convert.ToDouble(value[0][1]) / 100;
-                        zone1.eta_χV_mech[0] = Convert.ToDouble(value[0][2]) / 100;
-                        zone1.eta_χV_mech[1] = Convert.ToDouble(value[0][3]) / 100;
-                    }
 
-                }
-                else if (Zone_Pre[0][1] == "공조기")
+            }
+            else
+            {
+
+                if (Convert.ToBoolean(Zone_Pre[0][0]))
                 {
-                    zone1.Vmech_SUP_we = Convert.ToDouble(Zone_Pre[0][2]);
-                    zone1.Vmech_ETA_we = Convert.ToDouble(Zone_Pre[0][2]);
-                    zone1.Vmech_SUP_wd = Convert.ToDouble(Zone_Pre[0][3]);
-                    zone1.Vmech_ETA_wd = Convert.ToDouble(Zone_Pre[0][3]);
-                    zone1.SelectHRV = Zone_Pre[0][4];
-                    string[][] value = Program.DB.getValue(PreProjNum[0][0], "User_AHU", "온도교환효율_난방,온도교환효율_냉방,습도교환효율_난방,습도교환효율_냉방", "번호='" + zone1.SelectHRV + "'");
-                    if (value.Length > 0)
+                    if (Zone_Pre[0][1] == "열회수기")
                     {
-                        zone1.eta_V_mech[0] = Convert.ToDouble(value[0][0]) / 100;
-                        zone1.eta_V_mech[1] = Convert.ToDouble(value[0][1]) / 100;
-                        zone1.eta_χV_mech[0] = Convert.ToDouble(value[0][2]) / 100;
-                        zone1.eta_χV_mech[1] = Convert.ToDouble(value[0][3]) / 100;
+                        zone1.Vmech_SUP_we = Convert.ToDouble(Zone_Pre[0][2]);
+                        zone1.Vmech_ETA_we = Convert.ToDouble(Zone_Pre[0][2]);
+                        zone1.Vmech_SUP_wd = Convert.ToDouble(Zone_Pre[0][3]);
+                        zone1.Vmech_ETA_wd = Convert.ToDouble(Zone_Pre[0][3]);
+                        zone1.SelectHRV = Zone_Pre[0][4];
+                        string[][] value = Program.DB.getValue(PreProjNum[0][0], "User_HRV", "온도교환효율_난방,온도교환효율_냉방,습도교환효율_난방,습도교환효율_냉방", "번호='" + zone1.SelectHRV + "'");
+                        if (value.Length > 0)
+                        {
+                            zone1.eta_V_mech[0] = Convert.ToDouble(value[0][0]) / 100;
+                            zone1.eta_V_mech[1] = Convert.ToDouble(value[0][1]) / 100;
+                            zone1.eta_χV_mech[0] = Convert.ToDouble(value[0][2]) / 100;
+                            zone1.eta_χV_mech[1] = Convert.ToDouble(value[0][3]) / 100;
+                        }
+
+                    }
+                    else if (Zone_Pre[0][1] == "공조기")
+                    {
+                        zone1.Vmech_SUP_we = Convert.ToDouble(Zone_Pre[0][2]);
+                        zone1.Vmech_ETA_we = Convert.ToDouble(Zone_Pre[0][2]);
+                        zone1.Vmech_SUP_wd = Convert.ToDouble(Zone_Pre[0][3]);
+                        zone1.Vmech_ETA_wd = Convert.ToDouble(Zone_Pre[0][3]);
+                        zone1.SelectHRV = Zone_Pre[0][4];
+                        string[][] value = Program.DB.getValue(PreProjNum[0][0], "User_AHU", "온도교환효율_난방,온도교환효율_냉방,습도교환효율_난방,습도교환효율_냉방", "번호='" + zone1.SelectHRV + "'");
+                        if (value.Length > 0)
+                        {
+                            zone1.eta_V_mech[0] = Convert.ToDouble(value[0][0]) / 100;
+                            zone1.eta_V_mech[1] = Convert.ToDouble(value[0][1]) / 100;
+                            zone1.eta_χV_mech[0] = Convert.ToDouble(value[0][2]) / 100;
+                            zone1.eta_χV_mech[1] = Convert.ToDouble(value[0][3]) / 100;
+                        }
+                    }
+                    else
+                    {
+                        zone1.Vmech_SUP_wd = 0;
+                        zone1.Vmech_ETA_wd = Convert.ToDouble(Zone_Pre[0][2]); ; //배기환기는 다 비이용일환기량으로 함 
+                        zone1.Vmech_SUP_we = 0;
+                        zone1.Vmech_ETA_we = Convert.ToDouble(Zone_Pre[0][2]);
                     }
                 }
                 else
                 {
-                    zone1.Vmech_SUP_wd = 0;
-                    zone1.Vmech_ETA_wd = Convert.ToDouble(Zone_Pre[0][2]); ; //배기환기는 다 비이용일환기량으로 함 
                     zone1.Vmech_SUP_we = 0;
-                    zone1.Vmech_ETA_we = Convert.ToDouble(Zone_Pre[0][2]);
+                    zone1.Vmech_SUP_wd = 0;
+                    zone1.Vmech_ETA_we = 0;
+                    zone1.Vmech_ETA_wd = 0;
                 }
-            }
-            else
-            {
-                zone1.Vmech_SUP_we = 0;
-                zone1.Vmech_SUP_wd = 0;
-                zone1.Vmech_ETA_we = 0;
-                zone1.Vmech_ETA_wd = 0;
-            }
-            zone1.Vmech_SUP_z = 0;
-            zone1.Vmech_ETA_z = 0;
-            zone1.ρacp_a = 0.34;
+                zone1.Vmech_SUP_z = 0;
+                zone1.Vmech_ETA_z = 0;
+                zone1.ρacp_a = 0.34;
 
+            }
         }
         private void Load_Pre_Wall(Zone zone1)
         {
@@ -774,12 +782,7 @@ namespace main
             { Cal_Qfw(PreProjNum[0][0], 검토유형); }
             else { Cal_Qfw(NowProjNum[0][0], 검토유형); }
 
-            if (검토유형 != "태양광")
-            { CALC.RESystemCalc(PreProjNum[0][0]); }
-            else
-            {
-                CALC.RESystemCalc(NowProjNum[0][0]);
-            }
+           
 
             #region 파이널계산
             Final final1;
@@ -847,7 +850,15 @@ namespace main
                 final1.Load_REG_Final(PreProjNum[0][0]);
             }
 
-            final1.Calc_Qtot();
+            final1.Calc_Qtot(PreProjNum[0][0]);
+            if (검토유형 != "태양광")
+            {
+                CALC.RESystemCalc(final1,PreProjNum[0][0]);
+            }
+            else
+            {
+                CALC.RESystemCalc(final1,NowProjNum[0][0]);
+            }
 
             for (int mth = 0; mth < 12; mth++)
             {

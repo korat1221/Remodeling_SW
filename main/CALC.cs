@@ -86,7 +86,10 @@ namespace main
 
             Program.DB.deleteTable(DB.type.ProjDB, "FinalEnergy_Result");
            Program.DB.initTable(DB.type.ProjDB, "FinalEnergy_Result");
-      
+
+            Program.DB.deleteTable(DB.type.ProjDB, "RESystem_Result");
+            Program.DB.initTable(DB.type.ProjDB, "RESystem_Result");
+
             string[][] NowProjNum = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
 
 
@@ -95,9 +98,10 @@ namespace main
             Cal_Qfw(NowProjNum[0][0]);
             Cal_Qfh(NowProjNum[0][0]);
             Cal_Qfc(NowProjNum[0][0]);
-           Final final1 = Cal_Qf1(NowProjNum[0][0]);
-            RESystemCalc(NowProjNum[0][0]);
-            Cal_Qf2(final1);
+            Final final1 = new Final(NowProjNum[0][0]);
+            Cal_Qf(final1, NowProjNum[0][0]);
+            RESystemCalc(final1, NowProjNum[0][0]);
+            Cal_Qf(null, NowProjNum[0][0]);
             // MessageBox.Show("계산되었습니다.");
 
             Program.DB.saveProject();
@@ -234,22 +238,35 @@ namespace main
                 }
             }
         }
-        private static Final Cal_Qf1(string ProjNum)
+        private static Final Cal_Qf(Final final1, string ProjNum)
         {
-            Final final1 = new Final(ProjNum);
-            final1.Load_Heating_Final(ProjNum);
-            final1.Load_Cooling_Final(ProjNum);
-            final1.Load_DHW_Final(ProjNum);
-            final1.Load_AHU_Final(ProjNum);
-            final1.Load_REG_Final(ProjNum);
-            Final_Calc1(final1);
-            Final_Save(final1);
-            return final1;
-        }
-        private static void Cal_Qf2(Final final1)
-        {
-            Final_Calc2(final1);
-            Final_Save(final1);
+            if(final1 == null)
+            {
+                final1 = new Final(ProjNum);
+                final1.Load_Heating_Final(ProjNum);
+                final1.Load_Cooling_Final(ProjNum);
+                final1.Load_DHW_Final(ProjNum);
+                final1.Load_AHU_Final(ProjNum);
+                final1.Load_REG_Final(ProjNum);
+                Final_Calc(final1, ProjNum, true); // true는 두번째 계산, 신재생 분배 포함
+                Final_Save(final1);
+                return final1;
+                final1 = new Final(ProjNum);
+            }
+            else
+            {
+                {
+                    final1.Load_Heating_Final(ProjNum);
+                    final1.Load_Cooling_Final(ProjNum);
+                    final1.Load_DHW_Final(ProjNum);
+                    final1.Load_AHU_Final(ProjNum);
+                    final1.Load_REG_Final(ProjNum);
+                    Final_Calc(final1, ProjNum, false);// false는 첫번째 계산, 신재생 분배 포함
+                    Final_Save(final1);
+                    return final1;
+                    final1 = new Final(ProjNum);
+                }
+            }
         }
         #region 기밀
         public static double[] Cal_q50(double n50)
@@ -1129,7 +1146,7 @@ namespace main
             //냉방존과 공조존을 합치기
             cc1.Cal_Load();
             //에너지소요량 계산
-            cc1.Cal_CS();
+            cc1.Cal_CS(ProjNum);
             //보조설비에너지소요량 계산
             cc1.Cal_AuxSum(ProjNum);
 
@@ -1452,18 +1469,22 @@ namespace main
         #endregion
 
         #region 파이널       
-        public static void Final_Calc1(Final final1) //신재생 제외 에너지소요량 
+        public static void Final_Calc(Final final1, string ProjNum, Boolean check) //신재생 제외 에너지소요량 
         {
 
-            final1.Calc_Qtot();
+            final1.Calc_Qtot(ProjNum);
+            if (check)
+            { final1.reg_분배(ProjNum); }
+            else { }
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
             if (프로젝트유형[0][0] =="1" || 프로젝트유형[0][0] == "4")
             {
-                final1.Calc_Qbase_elec();
-                final1.Calc_Qbase_gas();
+                final1.Calc_Qbase_elec(ProjNum);
+                final1.Calc_Qbase_gas(ProjNum);
             }
             else
             {
+                final1.reg_빼기(ProjNum);
                 string[][] res = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "기존프로젝트");
                 if (res.Length > 0 && res[0][0] != "")
                 {
@@ -1490,16 +1511,6 @@ namespace main
 
             }
             
-        }
-
-        public static void Final_Calc2(Final final1)
-        {
-            for (int mth = 0; mth < 12; mth++)
-            {
-                final1.Qf_elec_tot_mth[mth] = final1.Qf_elec_tot1[mth] + final1.Qbase_elec[mth] - final1.Qreg_elec_tot[mth];
-                final1.Qf_gas_tot_mth[mth] = final1.Qf_gas_tot1[mth] + final1.Qbase_gas[mth];
-            }
-
         }
 
         private static void Final_Save(Final final1)
@@ -1601,10 +1612,12 @@ namespace main
         #endregion
 
         #region 신재생
-        public static bool RESystemCalc(string ProjNum)
+        public static bool RESystemCalc(Final final1, string ProjNum)
         {
             PVCalc(ProjNum);
             WPCalc(ProjNum);
+
+            
             return true;
         }
         public static bool PVCalc(string ProjNum)
@@ -1618,7 +1631,7 @@ namespace main
                 Cal_RESystem PV = new Cal_RESystem(PVNum[i][0]);
                 PV.PVcalReady();
                 PV.PVcal();
-                PV.PVsave();
+                PV.PVsave(ProjNum);
             }
             return true;
         }
@@ -1662,13 +1675,53 @@ namespace main
                 for (int mth = 0; mth <= 11; mth++)
                 {
                     MTH = (mth + 1).ToString() + "월";
-                    Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호," +
-                     "월," +
-                     "신재생시스템,신재생시스템유형,생산소비,생산유형,총에너지",
-                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형 + "','" + RESystemNum + "','" + MTH + "','" +
-                    WPNum[i][0] + "','풍력시스템','생산','전기','" +
-                    WP.Qfwps_mth[mth]
-                      + "'", "번호,월,생산소비,생산유형"); ;
+
+                    // Step 1: 조건에 맞는 데이터 존재 여부 확인
+                    string[][] result = Program.DB.getValue(  ProjNum,"RESystem_Result", "번호", "번호 = '" + RESystemNum + "' AND " + "월 = '" + MTH + "' AND " + "생산소비 = '생산' AND " + "생산유형 = '전기'"   );
+
+                    // Step 2: 조건에 따라 UPDATE 또는 INSERT 수행
+                   
+                    if (프로젝트유형[0][1] == ProjNum)
+                    {
+                        if (result.Length > 0)
+                        {
+
+                            // === UPDATE ===
+                            Program.DB.executeSQL(ProjNum,
+                            "UPDATE RESystem_Result SET " +
+                            "프로젝트번호 = '" + 프로젝트유형[0][1] + "', " +
+                            "프로젝트유형 = '" + 프로젝트유형 + "', " +
+                            "신재생시스템 = '" + WPNum[i][0] + "', " +
+                            "신재생시스템유형 = '풍력시스템', " +
+                            "총에너지 = '" + WP.Qfwps_mth[mth] + "' " +
+                            "WHERE 번호 = '" + RESystemNum + "' AND " +
+                            "월 = '" + MTH + "' AND " +
+                            "생산소비 = '생산' AND " +
+                            "생산유형 = '전기'"
+                            );
+                        }
+                        else
+                        {
+                            // === INSERT ===
+                            Program.DB.executeSQL(ProjNum,
+                                "INSERT INTO RESystem_Result (" +
+                                "프로젝트번호, 프로젝트유형, 번호, 월, " +
+                                "신재생시스템, 신재생시스템유형, 생산소비, 생산유형, 총에너지" +
+                                ") VALUES (" +
+                                "'" + 프로젝트유형[0][1] + "', " +
+                                "'" + 프로젝트유형 + "', " +
+                                "'" + RESystemNum + "', " +
+                                "'" + MTH + "', " +
+                                "'" + WPNum[i][0] + "', " +
+                                "'풍력시스템', " +
+                                "'생산', " +
+                                "'전기', " +
+                                "'" + WP.Qfwps_mth[mth] + "'" +
+                                ")"
+                                );
+                        }
+                    }
+
                 }
             }
 

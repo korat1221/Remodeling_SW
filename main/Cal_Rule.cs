@@ -586,7 +586,7 @@ namespace main
 
             Cal_Qfw_Rule(NowProjNum[0][0], 검토유형);
 
-            CALC.RESystemCalc(NowProjNum[0][0]);
+           // CALC.RESystemCalc(NowProjNum[0][0]);
 
             #region 파이널계산
             Final final1;
@@ -596,7 +596,7 @@ namespace main
             final1.Load_DHW_Final(NowProjNum[0][0]);
             final1.Load_AHU_Final(NowProjNum[0][0]);
             final1.Load_REG_Final(NowProjNum[0][0]);
-            final1.Calc_Qtot();
+            final1.Calc_Qtot(NowProjNum[0][0]);
 
             for (int mth = 0; mth < 12; mth++)
             {
@@ -843,7 +843,7 @@ namespace main
                             {
                                 Cal_CS(Cooling1);
                             }
-                            else { Cooling1.Cal_CS(); }
+                            else { Cooling1.Cal_CS(ProjNum); }
                         }
                     }
                     else if (검토유형 == "흡수식냉온수기" && Cooling1.CG == "흡수식냉동기")
@@ -855,7 +855,7 @@ namespace main
                             {
                                 Cal_CS(Cooling1);
                             }
-                            else { Cooling1.Cal_CS(); }
+                            else { Cooling1.Cal_CS(ProjNum); }
                         }
                     }
                     else if (검토유형 == "냉난방EHP" && (Cooling1.CG == "실외기12kW" || Cooling1.CG == "공냉식냉동기"))
@@ -867,9 +867,9 @@ namespace main
                             {
                                 if (Value[0][0] == "냉난방")
                                 { Cal_CS(Cooling1); }
-                                else { Cooling1.Cal_CS(); }
+                                else { Cooling1.Cal_CS(ProjNum); }
                             }
-                            else { Cooling1.Cal_CS(); }
+                            else { Cooling1.Cal_CS(ProjNum); }
                         }
 
                     }
@@ -884,13 +884,13 @@ namespace main
                                 {
                                     Cal_CS(Cooling1);
                                 }
-                                else { Cooling1.Cal_CS(); }
+                                else { Cooling1.Cal_CS(ProjNum); }
                             }
-                            else { Cooling1.Cal_CS(); }
+                            else { Cooling1.Cal_CS(ProjNum); }
                         }
 
                     }
-                    else { Cooling1.Cal_CS(); }
+                    else { Cooling1.Cal_CS(ProjNum); }
                     Cooling1.Cal_AuxSum(ProjNum);
                 }
             }

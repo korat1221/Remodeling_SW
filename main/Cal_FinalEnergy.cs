@@ -266,17 +266,16 @@ namespace main
                 
             }
         }
-        public void Calc_Qtot()
+        public void Calc_Qtot(string ProjNum)
         {
             for (int mth = 0; mth < 12; mth++)
             {
                 Qf_elec_tot1[mth] = Qhf_elec[mth] + Qcf_elec[mth] + Qwf_elec[mth] + Qlf_elec[mth] + Qvf_elec[mth];
                 Qf_gas_tot1[mth] = Qhf_gas[mth] + Qcf_gas[mth] + Qwf_gas[mth];
             }
-           Calc_RESystem();
         }
 
-        public void Calc_RESystem()
+        public void reg_분배(string ProjNum)
         {
             for(int mth =0; mth<12; mth++)
             {
@@ -292,12 +291,24 @@ namespace main
                         w = Convert.ToDouble(Value[a][1]) * Qwf_elec[mth] / Qf_elec_tot1[mth];
                         l = Convert.ToDouble(Value[a][1]) * Qlf_elec[mth] / Qf_elec_tot1[mth];
                         v = Convert.ToDouble(Value[a][1]) * Qvf_elec[mth] / Qf_elec_tot1[mth];
-                        Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호,월,생산유형," +
-                       "난방,냉방,급탕,조명,공조,총에너지",
-                       "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + Value[a][0] + "','" + (mth+1) + "월','" + "전기" + "','" +
-                       h + "','" + c + "','" + w + "','" + l + "','" +
-                       v + "','" + Value[a][1]
-                       + "'", "번호,월,생산유형");
+                        if (프로젝트유형[0][1] == ProjNum)
+                        {
+                            Program.DB.executeSQL(ProjNum, "UPDATE  RESystem_Result set " +
+                            "프로젝트번호 = '" + 프로젝트유형[0][1] + "'," +
+                            "프로젝트유형 = '" + 프로젝트유형[0][0] + "'," +
+                            "번호= '" + Value[a][0] + "'," +
+                            "월='" + (mth + 1) + "월'," +
+                            "생산유형='전기'," +
+                            "난방 ='" + h + "'," +
+                            "냉방 ='" + c + "'," +
+                            "급탕 ='" + w + "'," +
+                            "조명 ='" + l + "'," +
+                            "공조 ='" + v + "'," +
+                            "총에너지 ='" + Value[a][1] + "'" +
+                            " where 번호= '" + Value[a][0] + "' and " +
+                             "월='" + (mth + 1) + "월' and " +
+                              "생산유형='전기'");
+                        }
                         Qreg_elec_h[mth] += h;
                         Qreg_elec_c[mth] += c;
                         Qreg_elec_w[mth] += w;
@@ -319,12 +330,24 @@ namespace main
                         l = Convert.ToDouble(Value[a][1]) * Qlf_elec[mth] / Qf_elec_tot1[mth];
                         v = Convert.ToDouble(Value[a][1]) * Qvf_elec[mth] / Qf_elec_tot1[mth];
 
-                        Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호,월,소비연료," +
-                       "난방,냉방,급탕,조명,공조,총에너지",
-                       "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + Value[a][0] + "','" + (mth + 1) + "월','"+ Value[a][2] +"','" +
-                       h + "','" + c + "','" + w + "','" + l + "','" +
-                       v + "','" + Value[a][1]
-                       + "'", "번호,월,소비연료");
+                        if (프로젝트유형[0][1] == ProjNum)
+                        {
+                            Program.DB.executeSQL(ProjNum, "UPDATE  RESystem_Result set " +
+                            "프로젝트번호 = '" + 프로젝트유형[0][1] + "'," +
+                            "프로젝트유형 = '" + 프로젝트유형[0][0] + "'," +
+                            "번호= '" + Value[a][0] + "'," +
+                            "월='" + (mth + 1) + "월'," +
+                            "소비연료='" + Value[a][2] + "'," +
+                            "난방 ='" + h + "'," +
+                            "냉방 ='" + c + "'," +
+                            "급탕 ='" + w + "'," +
+                            "조명 ='" + l + "'," +
+                            "공조 ='" + v + "'," +
+                            "총에너지 ='" + Value[a][1] + "'" +
+                            " where 번호= '" + Value[a][0] + "' and " +
+                             "월='" + (mth + 1) + "월' and " +
+                              "소비연료='" + Value[a][2] + "'");
+                        }
 
                         Qreg_gas_h[mth] += h;
                         Qreg_gas_c[mth] += c;
@@ -344,13 +367,24 @@ namespace main
                         w = Convert.ToDouble(Value[a][1]) * Qwf_elec[mth] / Qf_elec_tot1[mth];
                         l = Convert.ToDouble(Value[a][1]) * Qlf_elec[mth] / Qf_elec_tot1[mth];
                         v = Convert.ToDouble(Value[a][1]) * Qvf_elec[mth] / Qf_elec_tot1[mth];
-
-                        Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호,월,소비연료," +
-                       "난방,냉방,급탕,조명,공조,총에너지",
-                       "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + Value[a][0] + "','" + (mth + 1) + "월','전기','" +
-                       h + "','" + c + "','" + w + "','" + l + "','" +
-                       v + "','" + Value[a][1]
-                       + "'", "번호,월,소비연료");
+                        if (프로젝트유형[0][1] == ProjNum)
+                        {
+                            Program.DB.executeSQL(ProjNum, "UPDATE  RESystem_Result set " +
+                            "프로젝트번호 = '" + 프로젝트유형[0][1] + "'," +
+                            "프로젝트유형 = '" + 프로젝트유형[0][0] + "'," +
+                            "번호= '" + Value[a][0] + "'," +
+                            "월='" + (mth + 1) + "월'," +
+                            "소비연료='전기'," +
+                            "난방 ='" + h + "'," +
+                            "냉방 ='" + c + "'," +
+                            "급탕 ='" + w + "'," +
+                            "조명 ='" + l + "'," +
+                            "공조 ='" + v + "'," +
+                            "총에너지 ='" + Value[a][1] + "'" +
+                            " where 번호= '" + Value[a][0] + "' and " +
+                             "월='" + (mth + 1) + "월' and " +
+                              "소비연료='전기'");
+                        }
 
                         Qreg_gas_h[mth] += h;
                         Qreg_gas_c[mth] += c;
@@ -362,7 +396,33 @@ namespace main
             }
            
         }
-          public void Calc_Qbase_elec()
+
+        public void reg_빼기(string ProjNum)
+        {
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                Qhf_elec[mth] = Math.Max(0, Qhf_elec[mth] - Qreg_elec_h[mth]);
+                Qcf_elec[mth] = Math.Max(0, Qcf_elec[mth] - Qreg_elec_c[mth]);
+                Qwf_elec[mth] = Math.Max(0, Qwf_elec[mth] - Qreg_elec_w[mth]);
+                Qlf_elec[mth] = Math.Max(0, Qlf_elec[mth] - Qreg_elec_l[mth]);
+                Qvf_elec[mth] = Math.Max(0, Qvf_elec[mth] - Qreg_elec_v[mth]);
+                Qf_elec_tot_mth[mth] = Qhf_elec[mth] + Qcf_elec[mth] + Qwf_elec[mth] + Qlf_elec[mth] + Qvf_elec[mth] ;
+
+
+            }
+            for (int mth = 0; mth < 12; mth++)
+            {
+                Qhf_gas[mth] = Qhf_gas[mth] + Qreg_gas_h[mth];
+                Qcf_gas[mth] = Qcf_gas[mth] + Qreg_gas_c[mth];
+                Qwf_gas[mth] = Qwf_gas[mth] + Qreg_gas_w[mth];
+                Qlf_gas[mth] = Qlf_gas[mth] + Qreg_gas_l[mth];
+                Qvf_gas[mth] = Qvf_gas[mth] + Qreg_gas_v[mth];
+                Qf_gas_tot_mth[mth] = Qhf_gas[mth] + Qcf_gas[mth] + Qwf_gas[mth] + Qlf_gas[mth] + Qvf_gas[mth] ;
+            }
+        }
+
+        public void Calc_Qbase_elec(string ProjNum)
           {
             
             double beta, alpha;
@@ -413,16 +473,13 @@ namespace main
             }
              for (int mth = 0; mth < 12; mth++)
             {
-                Qhf_elec[mth] = Math.Max(0, Qhf_elec[mth] - Qreg_elec_h[mth]);
-                Qcf_elec[mth] = Math.Max(0, Qcf_elec[mth] - Qreg_elec_c[mth]);
-                Qwf_elec[mth] = Math.Max(0, Qwf_elec[mth] - Qreg_elec_w[mth]);
-                Qlf_elec[mth] = Math.Max(0, Qlf_elec[mth] - Qreg_elec_l[mth]);
-                Qvf_elec[mth] = Math.Max(0, Qvf_elec[mth] - Qreg_elec_v[mth]);
+                reg_빼기(ProjNum);
                 Qf_elec_tot_mth[mth] = Qhf_elec[mth] + Qcf_elec[mth] + Qwf_elec[mth] + Qlf_elec[mth] + Qvf_elec[mth] + Qbase_elec[mth];
             }
         }
 
-        public void Calc_Qbase_gas()
+
+        public void Calc_Qbase_gas(string ProjNum)
         {
             double beta, alpha;
             double[] x = new double[12];
@@ -476,11 +533,7 @@ namespace main
             }
             for (int mth = 0; mth < 12; mth++)
             {
-                Qhf_gas[mth] = Qhf_gas[mth] + Qreg_gas_h[mth];
-                Qcf_gas[mth] = Qcf_gas[mth] + Qreg_gas_c[mth];
-                Qwf_gas[mth] = Qwf_gas[mth] + Qreg_gas_w[mth];
-                Qlf_gas[mth] = Qlf_gas[mth] + Qreg_gas_l[mth];
-                Qvf_gas[mth] = Qvf_gas[mth] + Qreg_gas_v[mth];
+                reg_빼기(ProjNum);
                 Qf_gas_tot_mth[mth] = Qhf_gas[mth] + Qcf_gas[mth] + Qwf_gas[mth] + Qlf_gas[mth] + Qvf_gas[mth] + Qbase_gas[mth];
             }
         }
