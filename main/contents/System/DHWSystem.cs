@@ -684,6 +684,16 @@ namespace main.contents
                     SelectSolar_nonsplit = heating_Solar.SelectSolar;
                     Split_Solar(heating_Solar.SelectSolar);
                 }
+                else
+                {
+                    SelectSolar_nonsplit = null;
+                    SelectSolar_split.Clear();
+                }
+            }
+            else
+            {
+                SelectSolar_nonsplit = null;
+                SelectSolar_split.Clear();
             }
         }
 
@@ -2131,12 +2141,14 @@ namespace main.contents
             else if (Sub1System_comboBox.Text == "태양열시스템") 적용유형 = "보조설비1";
             else if (Sub2System_comboBox.Text == "태양열시스템") 적용유형 = "보조설비2";
             else 적용유형 = null;
+            if(적용유형 != null)
+            {
+                string stnum = solar_num();
 
-            string stnum = solar_num();
-
-            Program.DB.setValue(DB.type.ProjDB, "SolarTherm_Form", "번호,프로젝트유형,태양열번호,설비번호,적용설비,적용유형,모듈개수,방위,기울기",
-                 "'" + stnum + "','" + 프로젝트유형[0][0] + "','" + SelectSolar_nonsplit + "','" + Num_textBox.Text + "','" + 적용설비 + "','" + 적용유형 + "','" + SolarNum_nonsplit +
-                 "','" + SolarDirection_nonsplit + "', '" + SolarDegree_nonsplit + "'", "태양열번호,설비번호");
+                Program.DB.setValue(DB.type.ProjDB, "SolarTherm_Form", "번호,프로젝트유형,태양열번호,설비번호,적용설비,적용유형,모듈개수,방위,기울기",
+                     "'" + stnum + "','" + 프로젝트유형[0][0] + "','" + SelectSolar_nonsplit + "','" + Num_textBox.Text + "','" + 적용설비 + "','" + 적용유형 + "','" + SolarNum_nonsplit +
+                     "','" + SolarDirection_nonsplit + "', '" + SolarDegree_nonsplit + "'", "태양열번호,설비번호");
+            }
         } //새로추가함
 
         public string solar_num()
@@ -2147,9 +2159,16 @@ namespace main.contents
             {
                 for (int i = 0; i < check.Length; i++)
                 {
-                    if (SelectSolar_nonsplit == check[i][1] && Num_textBox.Text == check[i][2])
+                    if (SelectSolar_nonsplit == check[i][1] && Num_textBox.Text == check[i][2]) //태양열번호와 설비번호가 동일하다면
                     {
-                        solarnum = check[i][0];
+                        if (check[i][0] != null && check[i][0] != "")
+                        {
+                            solarnum = check[i][0];
+                        }
+                        else
+                        {
+                            solarnum = Program.UTIL.CreateNum("SolarTherm_Form", "번호", "ST");
+                        }
                     }
                     else
                     {
