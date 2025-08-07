@@ -703,7 +703,7 @@ namespace main
                              "Qsink,Qsource,gamma,a,eta,dQc_b,dQc_sink," +
                              "Qb_day," +
                              "Qb_mth," +
-                             "Qb_a,Q_max, t_max,비냉난방존온도",
+                             "Qb_a,Q_max, t_max,비냉난방존온도,배기팬에너지_kWh",
                               "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + zone1.ZoneNum + "','" + zone1.zoneName + "','" +
                               HC + "','" + WEWD + "','" + MTH + "','" +
                               zone1.Zone_HT_tot[hc, wewd, mth].ToString() + "','" + zone1.Zone_HT_Inwall[hc, wewd, mth].ToString() + "','" + zone1.Zone_HT_Slab[hc, wewd, mth].ToString() + "','" + zone1.Zone_HT_Wall.ToString() + "','" + zone1.Zone_HT_Roof.ToString() + "','" + zone1.Zone_HT_Floor.ToString() + "','" + zone1.Zone_HT_GWall.ToString() + "','" + zone1.Zone_HT_Door.ToString() + "','" + zone1.Zone_HT_Win.ToString() + "','" + zone1.Zone_HT_CW.ToString() + "','" +
@@ -727,7 +727,7 @@ namespace main
                               zone1.Qb_day[hc, wewd, mth].ToString() + "','" +
                               zone1.Qb_mth[hc, wewd, mth].ToString() + "','" +
                               zone1.Qb_a[hc].ToString() + "','" + zone1.Q_max[hc].ToString() + "','" + zone1.t_max[hc, mth].ToString() + "','" +
-                              zone1.Theta_U[hc, wewd, mth].ToString()
+                              zone1.Theta_U[hc, wewd, mth].ToString()+"','"+ zone1.Q_fan[mth].ToString() 
                               + "'", "번호,난방_냉방,비이용일_이용일,월");
                     }
                 }

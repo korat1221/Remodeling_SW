@@ -496,6 +496,10 @@ namespace main.contents
             else
             {
                 Sub1System = null;
+                SubDistpictureBox.Visible = false;
+                SubDist2pictureBox.Visible = false;
+                SubsyspictureBox.Visible = false;
+                SubsourcepictureBox.Visible = false;
             }
         }
 
@@ -3192,8 +3196,8 @@ namespace main.contents
                 if (stoimage.Length > 0)
                 {
                     StopictureBox.Visible = true;
-                    StopictureBox.Location = new Point(570, 80);
-                    StopictureBox.Size = new System.Drawing.Size(127, 170);
+                    StopictureBox.Location = new Point(560, 80);
+                    StopictureBox.Size = new System.Drawing.Size(125, 170);
                     StopictureBox.Load(Program.gPath + stoimage[0][0]);
                     StopictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
@@ -3206,8 +3210,8 @@ namespace main.contents
             {
                 string[][] stoimage = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형='분배설비' And 설비유형='펌프'");
                 stopumppictureBox.Visible = true;
-                stopumppictureBox.Location = new Point(540, 202);
-                stopumppictureBox.Size = new System.Drawing.Size(18, 36);
+                stopumppictureBox.Location = new Point(540, 148);
+                stopumppictureBox.Size = new System.Drawing.Size(22, 38);
                 stopumppictureBox.Load(Program.gPath + stoimage[0][0]);
                 stopumppictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
@@ -3225,8 +3229,8 @@ namespace main.contents
             {
                 string[][] stoimage = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형='분배설비' And 설비유형='펌프'");
                 pumppictureBox.Visible = true;
-                pumppictureBox.Location = new Point(720, 202);
-                pumppictureBox.Size = new System.Drawing.Size(18, 36);
+                pumppictureBox.Location = new Point(685, 148);
+                pumppictureBox.Size = new System.Drawing.Size(22, 38);
                 pumppictureBox.Load(Program.gPath + stoimage[0][0]);
                 pumppictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
@@ -3387,11 +3391,15 @@ namespace main.contents
             else if (Sub2System_comboBox.Text == "태양열시스템") 적용유형 = "보조설비2";
             else 적용유형 = null;
 
-            string stnum = solar_num();
+            if(적용유형 != null)
+            {
+                string stnum = solar_num();
 
-            Program.DB.setValue(DB.type.ProjDB, "SolarTherm_Form", "번호,프로젝트유형,태양열번호,설비번호,적용설비,적용유형,모듈개수,방위,기울기",
-                 "'" + stnum + "','" + 프로젝트유형[0][0] + "','" + SelectSolar_nonsplit + "','" + Num_textBox.Text + "','" + 적용설비 + "','" + 적용유형 + "','" + SolarNum_nonsplit +
-                 "','" + SolarDirection_nonsplit + "', '" + SolarDegree_nonsplit + "'", "태양열번호,설비번호");
+                Program.DB.setValue(DB.type.ProjDB, "SolarTherm_Form", "번호,프로젝트유형,태양열번호,설비번호,적용설비,적용유형,모듈개수,방위,기울기",
+                     "'" + stnum + "','" + 프로젝트유형[0][0] + "','" + SelectSolar_nonsplit + "','" + Num_textBox.Text + "','" + 적용설비 + "','" + 적용유형 + "','" + SolarNum_nonsplit +
+                     "','" + SolarDirection_nonsplit + "', '" + SolarDegree_nonsplit + "'", "태양열번호,설비번호");
+            }
+           
         } //새로추가함
 
         public string solar_num()
@@ -3402,9 +3410,16 @@ namespace main.contents
             {
                 for (int i = 0; i < check.Length; i++)
                 {
-                    if (SelectSolar_nonsplit == check[i][1] && Num_textBox.Text == check[i][2])
+                    if (SelectSolar_nonsplit == check[i][1] && Num_textBox.Text == check[i][2]) //태양열번호와 설비번호가 동일하다면
                     {
-                        solarnum = check[i][0];
+                        if (check[i][0] != null && check[i][0] != "")
+                        {
+                            solarnum = check[i][0];
+                        }
+                        else
+                        {
+                            solarnum = Program.UTIL.CreateNum("SolarTherm_Form", "번호", "ST");
+                        }
                     }
                     else
                     {
@@ -3544,12 +3559,21 @@ namespace main.contents
                 Complex_comboBox.SelectedItem = Value[0][2];
                 Complex = Value[0][2];
 
-                MainSystem = Value[0][3];
-                MainSystem_comboBox.SelectedItem = Value[0][3];
-                Sub1System = Value[0][4];
-                Sub1System_comboBox.SelectedItem = Value[0][4];
-                Sub2System = Value[0][5];
-                Sub2System_comboBox.SelectedItem = Value[0][5];
+                if(Complex != "복합설비가동")
+                {
+                    MainSystem = Value[0][3];
+                    MainSystem_comboBox.SelectedItem = Value[0][3];
+                }
+                else
+                {
+                    MainSystem = Value[0][3];
+                    MainSystem_comboBox.SelectedItem = Value[0][3];
+                    Sub1System = Value[0][4];
+                    Sub1System_comboBox.SelectedItem = Value[0][4];
+                }
+                    
+                //Sub2System = Value[0][5];
+                //Sub2System_comboBox.SelectedItem = Value[0][5];
             }
 
             Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "보일러종류,보일러대수", "번호 = '" + ID + "'");
