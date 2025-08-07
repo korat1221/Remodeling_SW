@@ -3196,8 +3196,8 @@ namespace main.contents
                 if (stoimage.Length > 0)
                 {
                     StopictureBox.Visible = true;
-                    StopictureBox.Location = new Point(570, 80);
-                    StopictureBox.Size = new System.Drawing.Size(127, 170);
+                    StopictureBox.Location = new Point(560, 80);
+                    StopictureBox.Size = new System.Drawing.Size(125, 170);
                     StopictureBox.Load(Program.gPath + stoimage[0][0]);
                     StopictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
@@ -3210,8 +3210,8 @@ namespace main.contents
             {
                 string[][] stoimage = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형='분배설비' And 설비유형='펌프'");
                 stopumppictureBox.Visible = true;
-                stopumppictureBox.Location = new Point(540, 202);
-                stopumppictureBox.Size = new System.Drawing.Size(18, 36);
+                stopumppictureBox.Location = new Point(540, 148);
+                stopumppictureBox.Size = new System.Drawing.Size(22, 38);
                 stopumppictureBox.Load(Program.gPath + stoimage[0][0]);
                 stopumppictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
@@ -3229,8 +3229,8 @@ namespace main.contents
             {
                 string[][] stoimage = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형='분배설비' And 설비유형='펌프'");
                 pumppictureBox.Visible = true;
-                pumppictureBox.Location = new Point(720, 202);
-                pumppictureBox.Size = new System.Drawing.Size(18, 36);
+                pumppictureBox.Location = new Point(685, 148);
+                pumppictureBox.Size = new System.Drawing.Size(22, 38);
                 pumppictureBox.Load(Program.gPath + stoimage[0][0]);
                 pumppictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
