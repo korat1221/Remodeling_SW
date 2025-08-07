@@ -11,6 +11,33 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <!--table
 	{mso-displayed-decimal-separator:"\.";
 	mso-displayed-thousand-separator:"\,";}
+
+	
+.cls-sparkline {
+  position: absolute;
+  border: 1px solid #aaa;
+  height: 18px;
+  background-image: linear-gradient(to right, #656565, lightgray);
+}
+
+.cls-sparkline-blue {
+  position: absolute;
+  border: 1px solid #aaa;
+  height: 18px;
+  background-image: linear-gradient(to right, #0070C0, #D5EDFF);
+}
+.cls-sparkline-red {
+  position: absolute;
+  border: 1px solid #aaa;
+  height: 18px;
+  background-image: linear-gradient(to right, #ed6f26, #ffefef);
+}
+
+.cls-sparkline-text {
+  width: 100%;
+  position: relative;
+}	
+
 .font517733
 	{color:windowtext;
 	font-size:8.0pt;
@@ -1820,7 +1847,7 @@ rt
  <tr height=22 style='height:16.5pt'>
   <td colspan=7 height=22 class=xl14017733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>프로젝트 개요</td>
-  <td colspan=5 rowspan=11 class=xl11217733>이미지</td>
+  <td colspan=5 rowspan=11 class=xl11217733><img class="buildingImage" src="" alt="Image" style="max-width: 100%; max-height: 270px; height: auto;"> </td>
   <td colspan=2 rowspan=8 class=xl11817733><img src ="Mainreportimage/logo.png" width="100%"></td>
  </tr>
  <th style="height:4px"></th>
@@ -1884,7 +1911,7 @@ rt
   <td class=xl9117733>이름</td>
   <td colspan=2 class="xl10617733 reviewername"></td>
   <td class=xl9117733>　</td>
-  <td colspan=2 rowspan=2 class=xl12517733>ZEB 2등급</td>
+  <td colspan=2 rowspan=2 class="xl12517733 zebLevel" style="text-shadow: 1px 1px 2px rgb(54, 54, 54);">None</td>
  </tr>
  <tr height=22 style='mso-height-source:userset;height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
@@ -1915,58 +1942,58 @@ rt
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>tCO2</td>
-  <td class=xl9917733>123</td>
-  <td class=xl9917733 style='border-left:none'>3131</td>
+  <td class="xl9917733 tco22"> </td>
+  <td class="xl9917733 tco2" style='border-left:none'> </td>
   <td class=xl14917733>tCO2/년</td>
-  <td class=xl9917733>123</td>
+  <td class="xl9917733 tco2_saving"> </td>
   <td class=xl14917733>tCO2/년</td>
   <td class=xl8817733>　</td>
   <td class=xl15517733 colspan=2><span
   style='mso-spacerun:yes'> </span>난방에너지소요량</td>
-  <td class=xl15817733 align=right>23</td>
-  <td class=xl10117733 style='border-left:none'>23</td>
+  <td class="xl15817733 heatingpri2" align=right> </td>
+  <td class="xl10117733 heatingpri" style='border-left:none'> </td>
   <td class=xl14817733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
-  <td class=xl10117733>23</td>
+  <td class="xl10117733 heatingpri_saving"> </td>
   <td class=xl14817733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'>　</td>
-  <td class=xl9917733 style='border-top:none'>123</td>
-  <td class=xl9917733 style='border-top:none;border-left:none'>1331</td>
+  <td class="xl9917733 tco2area2" style='border-top:none'> </td>
+  <td class="xl9917733 tco2area" style='border-top:none;border-left:none'> </td>
   <td class=xl14917733>tCO2/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·a</font></td>
-  <td class=xl9917733 style='border-top:none'>231</td>
+  <td class="xl9917733 tco2area_saving" style='border-top:none'> </td>
   <td class=xl14917733>tCO2/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·a</font></td>
   <td class=xl8817733>　</td>
   <td class=xl15517733 colspan=2><span
   style='mso-spacerun:yes'> </span>냉방에너지소요량</td>
-  <td class=xl15817733 align=right style='border-top:none'>23</td>
-  <td class=xl10117733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl15817733 coolingpri2" align=right style='border-top:none'> </td>
+  <td class="xl10117733 coolingpri" style='border-top:none;border-left:none'> </td>
   <td class=xl14817733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
-  <td class=xl10117733 style='border-top:none'>23</td>
+  <td class="xl10117733 coolingpri_saving" style='border-top:none'> </td>
   <td class=xl14817733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>TOE</td>
-  <td class=xl9917733 style='border-top:none'>1233</td>
-  <td class=xl9917733 style='border-top:none;border-left:none'>131</td>
+  <td class="xl9917733 toe2" style='border-top:none'> </td>
+  <td class="xl9917733 toe" style='border-top:none;border-left:none'> </td>
   <td class=xl14917733>TOE/년</td>
-  <td class=xl9917733 style='border-top:none'>231</td>
+  <td class="xl9917733 toe_saving" style='border-top:none'> </td>
   <td class=xl14917733>TOE/년</td>
   <td class=xl8817733>　</td>
   <td class=xl15517733 colspan=2><span
   style='mso-spacerun:yes'> </span>급탕에너지소요량</td>
-  <td class=xl15817733 align=right style='border-top:none'>23</td>
-  <td class=xl10117733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl15817733 hotwaterpri2" align=right style='border-top:none'> </td>
+  <td class="xl10117733 hotwaterpri" style='border-top:none;border-left:none'> </td>
   <td class=xl14817733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
-  <td class=xl10117733 style='border-top:none'>23</td>
+  <td class="xl10117733 hotwaterpri_saving" style='border-top:none'> </td>
   <td class=xl14817733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
  </tr>
@@ -1978,11 +2005,11 @@ rt
   <td class=xl8817733>　</td>
   <td class=xl15517733 colspan=2><span
   style='mso-spacerun:yes'> </span>조명에너지소요량</td>
-  <td class=xl15817733 align=right style='border-top:none'>23</td>
-  <td class=xl10117733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl15817733 lightpri2" align=right style='border-top:none'> </td>
+  <td class="xl10117733 lightpri" style='border-top:none;border-left:none'> </td>
   <td class=xl14817733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
-  <td class=xl10117733 style='border-top:none'>23</td>
+  <td class="xl10117733 lightpri_saving" style='border-top:none'> </td>
   <td class=xl14817733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
  </tr>
@@ -1996,43 +2023,43 @@ rt
   <td class=xl8817733>　</td>
   <td class=xl15517733 colspan=2><span
   style='mso-spacerun:yes'> </span>공조에너지소요량</td>
-  <td class=xl15817733 align=right style='border-top:none'>23</td>
-  <td class=xl10117733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl15817733 ventpri2" align=right style='border-top:none'> </td>
+  <td class="xl10117733 ventpri" style='border-top:none;border-left:none'> </td>
   <td class=xl14817733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
-  <td class=xl10117733 style='border-top:none'>23</td>
+  <td class="xl10117733 ventpri_saving" style='border-top:none'> </td>
   <td class=xl14817733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>난방에너지</td>
-  <td class=xl9917733>23.2</td>
-  <td class=xl9917733 style='border-left:none'>23.2</td>
+  <td class="xl9917733 heatingneeds2"> </td>
+  <td class="xl9917733 heatingneeds"style='border-left:none'> </td>
   <td class=xl14917733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
-  <td class=xl9917733>23.2</td>
-  <td class=xl9917733 style='border-left:none'>23.2</td>
+  <td class="xl9917733 heatingend2"> </td>
+  <td class="xl9917733 heatingend" style='border-left:none'> </td>
   <td class=xl14917733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
   <td class=xl13217733 colspan=2><span style='mso-spacerun:yes'> </span>에너지소요량</td>
-  <td class=xl10017733 style='border-top:none'>23</td>
-  <td class=xl10017733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10017733 sumpri2" style='border-top:none'> </td>
+  <td class="xl10017733 sumpri" style='border-top:none;border-left:none'> </td>
   <td class=xl14817733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
-  <td class=xl10017733 style='border-top:none'>23</td>
+  <td class="xl10017733 sumpri_saving" style='border-top:none'> </td>
   <td class=xl14817733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>냉방에너지</td>
-  <td class=xl9917733 style='border-top:none'>23.3</td>
-  <td class=xl9917733 style='border-top:none;border-left:none'>23.3</td>
+  <td class="xl9917733 coolingneeds2" style='border-top:none'> </td>
+  <td class="xl9917733 coolingneeds" style='border-top:none;border-left:none'> </td>
   <td class=xl14917733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
-  <td class=xl9917733 style='border-top:none'>23.3</td>
-  <td class=xl9917733 style='border-top:none;border-left:none'>23.3</td>
+  <td class="xl9917733 coolingend2" style='border-top:none'> </td>
+  <td class="xl9917733 coolingend" style='border-top:none;border-left:none'> </td>
   <td class=xl14917733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
   <td class=xl15517733>　</td>
@@ -2046,54 +2073,54 @@ rt
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>급탕에너지</td>
-  <td class=xl9917733 style='border-top:none'>12.2</td>
-  <td class=xl9917733 style='border-top:none;border-left:none'>12.2</td>
+  <td class="xl9917733 hotwaterneeds2" style='border-top:none'> </td>
+  <td class="xl9917733 hotwaterneeds" style='border-top:none;border-left:none'> </td>
   <td class=xl14917733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
-  <td class=xl9917733 style='border-top:none'>12.2</td>
-  <td class=xl9917733 style='border-top:none;border-left:none'>12.2</td>
+  <td class="xl9917733 hotwaterend2" style='border-top:none'> </td>
+  <td class="xl9917733 hotwaterend" style='border-top:none;border-left:none'> </td>
   <td class=xl14917733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
   <td class=xl9317733 colspan=2><span
   style='mso-spacerun:yes'> </span>[전기]에너지생산량</td>
-  <td class=xl15717733 align=right>23</td>
-  <td class=xl10017733 style='border-left:none'>23</td>
+  <td class="xl15717733 elecprod2" align=right> </td>
+  <td class="xl10017733 elecprod" style='border-left:none'> </td>
   <td class=xl14817733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
-  <td class=xl10017733>23</td>
+  <td class="xl10017733 elecprod_plus"> </td>
   <td class=xl14817733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>조명에너지</td>
-  <td class=xl9917733 style='border-top:none'>12.2</td>
-  <td class=xl9917733 style='border-top:none;border-left:none'>12.2</td>
+  <td class="xl9917733 lightneeds2" style='border-top:none'> </td>
+  <td class="xl9917733 lightneeds" style='border-top:none;border-left:none'> </td>
   <td class=xl14917733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
-  <td class=xl9917733 style='border-top:none'>12.2</td>
-  <td class=xl9917733 style='border-top:none;border-left:none'>12.2</td>
+  <td class="xl9917733 lightend2" style='border-top:none'> </td>
+  <td class="xl9917733 lightend" style='border-top:none;border-left:none'> </td>
   <td class=xl14917733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
   <td class=xl9317733 colspan=2><span
   style='mso-spacerun:yes'> </span>[열]에너지생산량</td>
-  <td class=xl15717733 align=right style='border-top:none'>23</td>
-  <td class=xl10017733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl15717733 heatprod2" align=right style='border-top:none'> </td>
+  <td class="xl10017733 heatprod" style='border-top:none;border-left:none'> </td>
   <td class=xl14817733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
-  <td class=xl10017733 style='border-top:none'>23</td>
+  <td class="xl10017733 heatprod_plus" style='border-top:none'> </td>
   <td class=xl14817733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>공조에너지</td>
-  <td class=xl9917733 style='border-top:none'>12.2</td>
-  <td class=xl9917733 style='border-top:none;border-left:none'>12.2</td>
+  <td class="xl9917733 ventneeds2" style='border-top:none'> </td>
+  <td class="xl9917733 ventneeds" style='border-top:none;border-left:none'> </td>
   <td class=xl14917733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
-  <td class=xl9917733 style='border-top:none'>12.2</td>
-  <td class=xl9917733 style='border-top:none;border-left:none'>12.2</td>
+  <td class="xl9917733 ventend2" style='border-top:none'> </td>
+  <td class="xl9917733 ventend" style='border-top:none;border-left:none'> </td>
   <td class=xl14917733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
   <td class=xl9317733>　</td>
@@ -2108,19 +2135,19 @@ rt
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>합<span style='mso-spacerun:yes'>         
   </span>계</td>
-  <td class=xl10017733 style='border-top:none'>12.2</td>
-  <td class=xl10017733 style='border-top:none;border-left:none'>12.2</td>
+  <td class="xl10017733 sumneeds2" style='border-top:none'> </td>
+  <td class="xl10017733 sumneeds" style='border-top:none;border-left:none'> </td>
   <td class=xl14917733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
-  <td class=xl10017733 style='border-top:none'>12.2</td>
-  <td class=xl10017733 style='border-top:none;border-left:none'>12.2</td>
+  <td class="xl10017733 sumend2" style='border-top:none'> </td>
+  <td class="xl10017733 sumend" style='border-top:none;border-left:none'> </td>
   <td class=xl14917733>kWh/m<font class="font1217733"><sup>2</sup></font><font
   class="font1117733">·년</font></td>
   <td class=xl9317733 colspan=2><span style='mso-spacerun:yes'> </span>에너지자립률</td>
-  <td class=xl15717733 align=right>23</td>
-  <td class=xl10017733 style='border-left:none'>23</td>
+  <td class="xl15717733 rer2" align=right> </td>
+  <td class="xl10017733 rer" style='border-left:none'> </td>
   <td class=xl10817733>%</td>
-  <td class=xl10017733>23</td>
+  <td class="xl10017733 rer_plus"> </td>
   <td class=xl10817733>%</td>
  </tr>
  <th style="height:4px"></th>
@@ -2164,136 +2191,136 @@ rt
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl13917733 style='height:16.5pt;border-top:none'><span
   style='mso-spacerun:yes'> </span>외벽</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 wall_count2"style='border-top:none'> </td>
+  <td class="xl10617733 wall_area2" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 wall_uvalue2"style='border-top:none'> </td>
   <td class=xl10717733>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 wall_count"style='border-top:none'> </td>
+  <td class="xl10617733 wall_area" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 wall_uvalue" style='border-top:none'> </td>
   <td class=xl15117733 style='border-top:none;border-left:none'>W/m<font
   class="font917733"><sup>2</sup></font><font class="font817733">∙K</font></td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 wall_rulevalue_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>지붕</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>2323</td>
+  <td class="xl10617733 roof_count2" style='border-top:none'> </td>
+  <td class="xl10617733 roof_area2" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>2323</td>
+  <td class="xl10617733 roof_uvalue2" style='border-top:none'> </td>
   <td class=xl10717733>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td class=xl10617733 style='border-top:none'>2323</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>2323</td>
+  <td class="xl10617733 roof_count" style='border-top:none'> </td>
+  <td class="xl10617733 roof_area" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>2323</td>
+  <td class="xl10617733 roof_uvalue" style='border-top:none'> </td>
   <td class=xl15217733 style='border-left:none'>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 roof_rulevalue_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>바닥</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 floor_count2" style='border-top:none'> </td>
+  <td class="xl10617733 floor_area2" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 floor_uvalue2" style='border-top:none'> </td>
   <td class=xl10717733>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 floor_count" style='border-top:none'> </td>
+  <td class="xl10617733 floor_area" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 floor_uvalue" style='border-top:none'> </td>
   <td class=xl15217733 style='border-left:none'>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 floor_rulevalue_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>창호</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 win_count2" style='border-top:none'> </td>
+  <td class="xl10617733 win_area2" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 win_uvalue2" style='border-top:none'> </td>
   <td class=xl10717733>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 win_count" style='border-top:none'> </td>
+  <td class="xl10617733 win_area" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 win_uvalue" style='border-top:none'> </td>
   <td class=xl15217733 style='border-left:none'>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 win_rulevalue_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>커튼월</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 cw_count2" style='border-top:none'> </td>
+  <td class="xl10617733 cw_area2" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 cw_uvalue2" style='border-top:none'> </td>
   <td class=xl10717733>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 cw_count" style='border-top:none'> </td>
+  <td class="xl10617733 cw_area" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 cw_uvalue" style='border-top:none'> </td>
   <td class=xl15217733 style='border-left:none'>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 cw_rulevalue_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>출입문</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>233</td>
+  <td class="xl10617733 door_count2" style='border-top:none'> </td>
+  <td class="xl10617733 door_area2" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>233</td>
+  <td class="xl10617733 door_uvalue2" style='border-top:none'> </td>
   <td class=xl10717733>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td class=xl10617733 style='border-top:none'>233</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>233</td>
+  <td class="xl10617733 door_count" style='border-top:none'> </td>
+  <td class="xl10617733 door_area" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>m<font class="font917733"><sup>2</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>233</td>
+  <td class="xl10617733 door_uvalue" style='border-top:none'> </td>
   <td class=xl15217733 style='border-left:none'>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 door_rulevalue_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>기밀</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'>-</td>
+  <td class="xl10617733 cmh2" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>CMH</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 n502" style='border-top:none'> </td>
   <td class=xl10717733>h<font class="font917733"><sup>-1</sup></font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'>-</td>
+  <td class="xl10617733 cmh"" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>CMH</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 n50" style='border-top:none'> </td>
   <td class=xl15217733 style='border-left:none'>h<font class="font917733"><sup>-1</sup></font></td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 n50_rulevalue_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl13717733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>열교</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'>-</td>
+  <td class=xl10617733 style='border-top:none;border-left:none'>-</td>
   <td class=xl10717733>　</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733  utb2" style='border-top:none'> </td>
   <td class=xl10717733>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'>-</td>
+  <td class=xl10617733 style='border-top:none;border-left:none'>-</td>
   <td class=xl10717733>　</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 utb" style='border-top:none'> </td>
   <td class=xl15317733 style='border-left:none'>W/m<font class="font917733"><sup>2</sup></font><font
   class="font817733">∙K</font></td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 utb_rulevalue_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td rowspan=2 height=44 class=xl10217733 style='height:33.0pt;border-top:
@@ -2319,122 +2346,122 @@ rt
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>난방설비</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 h_count2" style='border-top:none'> </td>
+  <td class="xl10617733 h_power2" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10717733>　</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 h_eta2" style='border-top:none'> </td>
+  <td class="xl10717733 h_unit2">　</td>
+  <td class="xl10617733 h_count" style='border-top:none'> </td>
+  <td class="xl10617733 h_power" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl15117733 style='border-top:none;border-left:none'>　</td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td class="xl10617733 h_eta" style='border-top:none'> </td>
+  <td class="xl15117733 h_unit" style='border-top:none;border-left:none'>　</td>
+  <td colspan=3 class="xl11717733 h_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>냉방설비</td>
-  <td class=xl10617733 style='border-top:none'>2323</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>2323</td>
+  <td class="xl10617733 c_count2" style='border-top:none'> </td>
+  <td class="xl10617733 c_power2" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>2323</td>
+  <td class="xl10617733 c_eta2" style='border-top:none'> </td>
   <td class=xl10717733>W/W</td>
-  <td class=xl10617733 style='border-top:none'>2323</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>2323</td>
+  <td class="xl10617733 c_count" style='border-top:none'> </td>
+  <td class="xl10617733 c_power" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>2323</td>
+  <td class="xl10617733 c_eta" style='border-top:none'> </td>
   <td class=xl15217733 style='border-left:none'>W/W</td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 c_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>급탕설비</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 w_count2" style='border-top:none'> </td>
+  <td class="xl10617733 w_power2" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10717733>　</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 w_eta2" style='border-top:none'> </td>
+  <td class="xl10717733 w_unit2">　</td>
+  <td class="xl10617733 w_count" style='border-top:none'> </td>
+  <td class="xl10617733 w_power" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl15217733 style='border-left:none'>　</td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td class="xl10617733 w_eta" style='border-top:none'> </td>
+  <td class="xl15217733 w_unit" style='border-left:none'>　</td>
+  <td colspan=3 class="xl11717733 w_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>조명설비</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 l_count2"style='border-top:none'> </td>
+  <td class="xl10617733 l_power2" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>W</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 l_eta2" style='border-top:none'> </td>
   <td class=xl10717733>lm/W</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class="xl10617733 l_count" style='border-top:none'> </td>
+  <td class="xl10617733 l_power" style='border-top:none;border-left:none'> </td>
   <td class=xl10717733>W</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class="xl10617733 l_eta" style='border-top:none'> </td>
   <td class=xl15217733 style='border-left:none'>lm/W</td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 l_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>공조설비</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'>-</td>
+  <td class=xl10617733 style='border-top:none;border-left:none'>-</td>
   <td class=xl10717733>CMH</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class=xl10617733 style='border-top:none'>-</td>
   <td class=xl10717733>%</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'>-</td>
+  <td class=xl10617733 style='border-top:none;border-left:none'>-</td>
   <td class=xl10717733>CMH</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class=xl10617733 style='border-top:none'>-</td>
   <td class=xl15217733 style='border-left:none'>%</td>
   <td colspan=3 class=xl11717733>　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>태양광</td>
-  <td class=xl10617733 style='border-top:none'>233</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>233</td>
+  <td class="xl10617733 pv_count2" style='border-top:none'>-</td>
+  <td class="xl10617733 pv_power2" style='border-top:none;border-left:none'>-</td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>233</td>
+  <td class="xl10617733 pv_eta_avg2" style='border-top:none'>-</td>
   <td class=xl10717733>%</td>
-  <td class=xl10617733 style='border-top:none'>233</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>233</td>
+  <td class="xl10617733 pv_count" style='border-top:none'>-</td>
+  <td class="xl10617733 pv_power" style='border-top:none;border-left:none'>-</td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>233</td>
+  <td class="xl10617733 pv_eta_avg" style='border-top:none'>-</td>
   <td class=xl15217733 style='border-left:none'>%</td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class="xl11717733 pv_point">　</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>풍력</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'>-</td>
+  <td class=xl10617733 style='border-top:none;border-left:none'>-</td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class=xl10617733 style='border-top:none'>-</td>
   <td class=xl10717733>%</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'>-</td>
+  <td class=xl10617733 style='border-top:none;border-left:none'>-</td>
   <td class=xl10717733>kW</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
+  <td class=xl10617733 style='border-top:none'>-</td>
   <td class=xl15217733 style='border-left:none'>%</td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class=xl11717733></td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>연료전지</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'>-</td>
+  <td class=xl10617733 style='border-top:none;border-left:none'>-</td>
   <td class=xl15417733 style='border-left:none'>kW</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none;border-left:none'>-</td>
   <td class=xl10717733>%</td>
-  <td class=xl10617733 style='border-top:none'>23</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none'>-</td>
+  <td class=xl10617733 style='border-top:none;border-left:none'>-</td>
   <td class=xl15417733 style='border-left:none'>kW</td>
-  <td class=xl10617733 style='border-top:none;border-left:none'>23</td>
+  <td class=xl10617733 style='border-top:none;border-left:none'>-</td>
   <td class=xl15217733 style='border-left:none'>%</td>
-  <td colspan=3 class=xl11717733>　</td>
+  <td colspan=3 class=xl11717733></td>
  </tr>
  <th style="height:4px"></th>
  <tr height=22 style='height:16.5pt'>
@@ -2471,102 +2498,102 @@ rt
  <tr height=22 style='height:16.5pt'>
   <td colspan="2" height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>난방에너지 (kWh/m<sup>2</sup>·년)</td>
-  <td class=xl9117733>23</td>
-  <td class=xl9117733>12</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>23</td>
-  <td class=xl9117733>23</td>
-  <td class=xl9117733>23</td>
-  <td class=xl9117733>23</td>
-  <td class=xl9117733>23</td>
-  <td class=xl9117733>23</td>
-  <td class=xl9117733>23</td>
-  <td class=xl9117733>23</td>
-  <td class=xl9117733>23</td>
+  <td class="xl9117733 qh_mth"> </td>
+  <td class="xl9117733 qh_mth"> </td>
+  <td class="xl9117733 qh_mth"> </td>
+  <td class="xl9117733 qh_mth"> </td>
+  <td class="xl9117733 qh_mth"> </td>
+  <td class="xl9117733 qh_mth"> </td>
+  <td class="xl9117733 qh_mth"> </td>
+  <td class="xl9117733 qh_mth"> </td>
+  <td class="xl9117733 qh_mth"> </td>
+  <td class="xl9117733 qh_mth"> </td>
+  <td class="xl9117733 qh_mth"> </td>
+  <td class="xl9117733 qh_mth"> </td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td colspan="2" height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>냉방에너지 (kWh/m<sup>2</sup>·년)</td>
-  <td class=xl9117733>23</td>
-  <td class=xl9117733>23</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>2</td>
-  <td class=xl9117733>2</td>
-  <td class=xl9117733>2</td>
-  <td class=xl9117733>2</td>
-  <td class=xl9117733>2</td>
-  <td class=xl9117733>2</td>
-  <td class=xl9117733>2</td>
-  <td class=xl9117733>2</td>
-  <td class=xl9117733>2</td>
+  <td class="xl9117733 qc_mth"> </td>
+  <td class="xl9117733 qc_mth"> </td>
+  <td class="xl9117733 qc_mth"> </td>
+  <td class="xl9117733 qc_mth"> </td>
+  <td class="xl9117733 qc_mth"> </td>
+  <td class="xl9117733 qc_mth"> </td>
+  <td class="xl9117733 qc_mth"> </td>
+  <td class="xl9117733 qc_mth"> </td>
+  <td class="xl9117733 qc_mth"> </td>
+  <td class="xl9117733 qc_mth"> </td>
+  <td class="xl9117733 qc_mth"> </td>
+  <td class="xl9117733 qc_mth"> </td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td colspan="2" height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>급탕에너지 (kWh/m<sup>2</sup>·년)</td>
-  <td class=xl9117733>23</td>
-  <td class=xl9117733>2332</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
+  <td class="xl9117733 qw_mth"> </td>
+  <td class="xl9117733 qw_mth"> </td>
+  <td class="xl9117733 qw_mth"> </td>
+  <td class="xl9117733 qw_mth"> </td>
+  <td class="xl9117733 qw_mth"> </td>
+  <td class="xl9117733 qw_mth"> </td>
+  <td class="xl9117733 qw_mth"> </td>
+  <td class="xl9117733 qw_mth"> </td>
+  <td class="xl9117733 qw_mth"> </td>
+  <td class="xl9117733 qw_mth"> </td>
+  <td class="xl9117733 qw_mth"> </td>
+  <td class="xl9117733 qw_mth"> </td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td colspan="2" height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>조명에너지 (kWh/m<sup>2</sup>·년)</td>
-  <td class=xl9117733>23</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>323</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
+  <td class="xl9117733 ql_mth"> </td>
+  <td class="xl9117733 ql_mth"> </td>
+  <td class="xl9117733 ql_mth"> </td>
+  <td class="xl9117733 ql_mth"> </td>
+  <td class="xl9117733 ql_mth"> </td>
+  <td class="xl9117733 ql_mth"> </td>
+  <td class="xl9117733 ql_mth"> </td>
+  <td class="xl9117733 ql_mth"> </td>
+  <td class="xl9117733 ql_mth"> </td>
+  <td class="xl9117733 ql_mth"> </td>
+  <td class="xl9117733 ql_mth"> </td>
+  <td class="xl9117733 ql_mth"> </td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td colspan="2" height=22 class=xl10917733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>공조에너지 (kWh/m<sup>2</sup>·년)</td>
-  <td class=xl9117733>23</td>
-  <td class=xl9117733>3232</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
-  <td class=xl9117733>32</td>
+  <td class="xl9117733 qv_mth"> </td>
+  <td class="xl9117733 qv_mth"> </td>
+  <td class="xl9117733 qv_mth"> </td>
+  <td class="xl9117733 qv_mth"> </td>
+  <td class="xl9117733 qv_mth"> </td>
+  <td class="xl9117733 qv_mth"> </td>
+  <td class="xl9117733 qv_mth"> </td>
+  <td class="xl9117733 qv_mth"> </td>
+  <td class="xl9117733 qv_mth"> </td>
+  <td class="xl9117733 qv_mth"> </td>
+  <td class="xl9117733 qv_mth"> </td>
+  <td class="xl9117733 qv_mth"> </td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td colspan="2" height=22 class=xl15617733 style='height:16.5pt'><span
   style='mso-spacerun:yes'> </span>총&nbsp&nbsp&nbsp&nbsp에너지(kWh/m<sup>2</sup>·년)</td>
-  <td class=xl14717733>23</td>
-  <td class=xl14717733>32</td>
-  <td class=xl14717733>32</td>
-  <td class=xl14717733>332</td>
-  <td class=xl14717733>332</td>
-  <td class=xl14717733>332</td>
-  <td class=xl14717733>332</td>
-  <td class=xl14717733>332</td>
-  <td class=xl14717733>332</td>
-  <td class=xl14717733>332</td>
-  <td class=xl14717733>332</td>
-  <td class=xl14717733>332</td>
+  <td class="xl14717733 qf_mth"> </td>
+  <td class="xl14717733 qf_mth"> </td>
+  <td class="xl14717733 qf_mth"> </td>
+  <td class="xl14717733 qf_mth"> </td>
+  <td class="xl14717733 qf_mth"> </td>
+  <td class="xl14717733 qf_mth"> </td>
+  <td class="xl14717733 qf_mth"> </td>
+  <td class="xl14717733 qf_mth"> </td>
+  <td class="xl14717733 qf_mth"> </td>
+  <td class="xl14717733 qf_mth"> </td>
+  <td class="xl14717733 qf_mth"> </td>
+  <td class="xl14717733 qf_mth"> </td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td colspan=14 rowspan=12 height=264 class=xl12117733 style='border-bottom:
-  .5pt solid #BFBFBF;height:198.0pt'>　</td>
+  .5pt solid #BFBFBF;height:198.0pt'><iframe class="ifrm-chart1" src="/chart_ctrl3.html" frameBorder="0" style="width:100%;height:210px;border:0;"></iframe></td>
  </tr>
  <tr height=22 style='height:16.5pt'>
  </tr>
