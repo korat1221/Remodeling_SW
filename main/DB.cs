@@ -655,6 +655,10 @@ namespace main
             caches.Clear();
             caches2.Clear();
         }
+        public bool isCaching()
+        {
+            return useCaches;
+        }
 
         public void UpdateDatabase(string dbPath, string table, string column)
         {

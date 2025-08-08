@@ -969,6 +969,7 @@ namespace main
                     dhw1.Calc_Qd(ProjNum);
                     dhw1.Calc_Qh_s(ProjNum);
                     dhw1.LoadCalc_Solar(ProjNum);
+                    dhw1.LoadCalc_FC(ProjNum);
 
                     if (검토유형 != "보일러")
                     { dhw1.LoadCalc_Boiler(ProjNum); }

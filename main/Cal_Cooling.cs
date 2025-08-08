@@ -1515,6 +1515,8 @@ namespace main
                 if (프로젝트유형[0][1] == ProjNum)
                 {
                     string RESystemNum = "";
+                    bool cache = Program.DB.isCaching();
+                    Program.DB.UseCaches(false);
                     string[][] v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "신재생시스템='" + CoolingNum + "'");
                     if (v.Length > 0)
                     {
@@ -1524,7 +1526,6 @@ namespace main
                     {
                         RESystemNum = Program.UTIL.CreateNum("RESystem_Result", "번호", "RE");
                     }
-
                     string[][] Num = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Form", "냉방유닛", "번호='" + CoolingNum + "'");
                     if (Num.Length > 0)
                     {
@@ -1534,13 +1535,13 @@ namespace main
                             string MTH = (mth + 1).ToString() + "월";
 
                             // Step 1: 조건에 맞는 데이터 조회
-                            string[][] result = Program.DB.getValue(프로젝트유형[0][0], "RESystem_Result", "번호", "번호 = '" + RESystemNum + "' AND " + "월 = '" + MTH + "' AND " + "생산소비 = '생산' AND " + "생산유형 = '열'");
+                            string[][] result = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "번호 = '" + RESystemNum + "' AND " + "월 = '" + MTH + "' AND " + "생산소비 = '생산' AND " + "생산유형 = '열'");
 
                             // Step 2: 조건에 따라 UPDATE 또는 INSERT 수행
                             if (result.Length > 0)
                             {
                                 // === UPDATE ===
-                                Program.DB.executeSQL(ProjNum,
+                                Program.DB.executeSQL(DB.type.ProjDB,
                                     "UPDATE RESystem_Result SET " +
                                     "프로젝트번호 = '" + 프로젝트유형[0][1] + "', " +
                                     "프로젝트유형 = '" + 프로젝트유형[0][0] + "', " +
@@ -1557,7 +1558,7 @@ namespace main
                             else
                             {
                                 // === INSERT ===
-                                Program.DB.executeSQL(ProjNum,
+                                Program.DB.executeSQL(DB.type.ProjDB,
                                     "INSERT INTO RESystem_Result (" +
                                     "프로젝트번호, 프로젝트유형, 번호, 월, " +
                                     "냉방설비, 신재생시스템, 신재생시스템유형, 생산소비, 생산유형, 총에너지" +
@@ -1584,13 +1585,13 @@ namespace main
                             string MTH = (mth + 1).ToString() + "월";
 
                             // Step 1: 조건 일치하는 기존 데이터 조회
-                            string[][] result = Program.DB.getValue(프로젝트유형[0][0], "RESystem_Result", "번호", "번호 = '" + RESystemNum + "' AND " + "월 = '" + MTH + "' AND " + "생산소비 = '소비' AND " + "소비연료 = '전기'");
+                            string[][] result = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "번호 = '" + RESystemNum + "' AND " + "월 = '" + MTH + "' AND " + "생산소비 = '소비' AND " + "소비연료 = '전기'");
 
                             // Step 2: 조건에 따라 UPDATE 또는 INSERT
                             if (result.Length > 0)
                             {
                                 // === UPDATE ===
-                                Program.DB.executeSQL(ProjNum,
+                                Program.DB.executeSQL(DB.type.ProjDB,
                                     "UPDATE RESystem_Result SET " +
                                     "프로젝트번호 = '" + 프로젝트유형[0][1] + "', " +
                                     "프로젝트유형 = '" + 프로젝트유형[0][0] + "', " +
@@ -1607,7 +1608,7 @@ namespace main
                             else
                             {
                                 // === INSERT ===
-                                Program.DB.executeSQL(ProjNum,
+                                Program.DB.executeSQL(DB.type.ProjDB,
                                     "INSERT INTO RESystem_Result (" +
                                     "프로젝트번호, 프로젝트유형, 번호, 월, " +
                                     "냉방설비, 신재생시스템, 신재생시스템유형, 생산소비, 소비연료, 총에너지" +
@@ -1628,6 +1629,8 @@ namespace main
 
                         }
                     }
+                    Program.DB.saveProject();
+                    Program.DB.UseCaches(cache);
                 }
                
             }

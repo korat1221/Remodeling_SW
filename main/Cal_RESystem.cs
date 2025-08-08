@@ -200,8 +200,9 @@ namespace main
                    month[a] + "','" + Esol[a] + "','" + Qfpvm_kWh[a] + "','" + fBatt[a] +"'", "번호, 월");
                 }
             }
-
             string RESystemNum = "";
+            bool cache = Program.DB.isCaching();
+            Program.DB.UseCaches(false);
             string[][] value = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "신재생시스템='" + Num + "'");
             if (value.Length > 0)
             {
@@ -209,12 +210,12 @@ namespace main
             }
             else
             {
-                RESystemNum = Program.UTIL.CreateNum("RESystem_Result", "번호", "RE");
+                RESystemNum = Program.UTIL.CreateNum( "RESystem_Result", "번호", "RE");
             }
             for (int mth = 0; mth <= 11; mth++)
             {
                 string MTH = (mth + 1).ToString() + "월";
-                string[][] v = Program.DB.getValue(ProjNum, "RESystem_Result", "번호", "번호= '" + RESystemNum + "' and " +
+                string[][] v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "번호= '" + RESystemNum + "' and " +
                     "월 ='" + MTH + "' and " +
                     "생산소비='생산' and " +
                     "생산유형='전기'");
@@ -222,7 +223,7 @@ namespace main
                 {
                     if (프로젝트번호 == ProjNum)
                     {
-                        Program.DB.executeSQL(ProjNum, "" +
+                        Program.DB.executeSQL(DB.type.ProjDB, "" +
                        "Update RESystem_Result set " +
                        "프로젝트번호 = '" + 프로젝트번호 + "'," +
                        "프로젝트유형 = '" + 프로젝트유형 + "'," +
@@ -243,7 +244,7 @@ namespace main
                 {
                     if (프로젝트번호 == ProjNum)
                     {
-                        Program.DB.executeSQL(ProjNum, "" +
+                        Program.DB.executeSQL(DB.type.ProjDB, "" +
                         "INSERT INTO RESystem_Result (" +
                         "프로젝트번호, 프로젝트유형, 번호, 월, 신재생시스템, " +
                         "신재생시스템유형, 생산소비, 생산유형, 총에너지) " +
@@ -260,8 +261,9 @@ namespace main
                         ")");
                     }
                 }
-               
             }
+            Program.DB.saveProject();
+            Program.DB.UseCaches(cache);
 
         }
         #endregion

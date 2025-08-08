@@ -277,7 +277,9 @@ namespace main
 
         public void reg_분배(string ProjNum)
         {
-            for(int mth =0; mth<12; mth++)
+            bool cache = Program.DB.isCaching();
+            Program.DB.UseCaches(false);
+            for (int mth =0; mth<12; mth++)
             {
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호,총에너지", "생산유형='전기' and 월='" + (mth + 1) + "월'");
                 if(Value.Length > 0)
@@ -293,7 +295,7 @@ namespace main
                         v = Convert.ToDouble(Value[a][1]) * Qvf_elec[mth] / Qf_elec_tot1[mth];
                         if (프로젝트유형[0][1] == ProjNum)
                         {
-                            Program.DB.executeSQL(ProjNum, "UPDATE  RESystem_Result set " +
+                            Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  RESystem_Result set " +
                             "프로젝트번호 = '" + 프로젝트유형[0][1] + "'," +
                             "프로젝트유형 = '" + 프로젝트유형[0][0] + "'," +
                             "번호= '" + Value[a][0] + "'," +
@@ -332,7 +334,7 @@ namespace main
 
                         if (프로젝트유형[0][1] == ProjNum)
                         {
-                            Program.DB.executeSQL(ProjNum, "UPDATE  RESystem_Result set " +
+                            Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  RESystem_Result set " +
                             "프로젝트번호 = '" + 프로젝트유형[0][1] + "'," +
                             "프로젝트유형 = '" + 프로젝트유형[0][0] + "'," +
                             "번호= '" + Value[a][0] + "'," +
@@ -369,7 +371,7 @@ namespace main
                         v = Convert.ToDouble(Value[a][1]) * Qvf_elec[mth] / Qf_elec_tot1[mth];
                         if (프로젝트유형[0][1] == ProjNum)
                         {
-                            Program.DB.executeSQL(ProjNum, "UPDATE  RESystem_Result set " +
+                            Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  RESystem_Result set " +
                             "프로젝트번호 = '" + 프로젝트유형[0][1] + "'," +
                             "프로젝트유형 = '" + 프로젝트유형[0][0] + "'," +
                             "번호= '" + Value[a][0] + "'," +
@@ -394,7 +396,9 @@ namespace main
                     }
                 }
             }
-           
+
+            Program.DB.saveProject();
+            Program.DB.UseCaches(cache);
         }
 
         public void reg_빼기(string ProjNum)
