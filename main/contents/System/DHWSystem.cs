@@ -139,7 +139,7 @@ namespace main.contents
             stopumppictureBox.Parent = DistpictureBox;
             pumppictureBox.Parent = DistpictureBox;
             ce1_pictureBox.Parent = DistpictureBox;
-            
+
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -1797,7 +1797,7 @@ namespace main.contents
             {
                 pumpinfo = pinfo;
             }
-                string[][] Image = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형 = '급탕설비' And 설비유형 = '" + pumpinfo + "'");
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형 = '분배설비'");
             if (Image.Length > 0)
             {
                 DistpictureBox.Location = new Point(0, 0);
@@ -1811,7 +1811,7 @@ namespace main.contents
         private void MainSystemImage(string type, string install)//2.메인설비 그림
         {
             string[][] image1 = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지",
-                "설비유형='" + type + "' And 설치유형='" + install + "' And 항목유형 ='생산설비'");
+               "설비유형='" + type + "' And 설치유형='" + install + "' And 항목유형 ='생산설비'");
             if (image1.Length > 0)
             {
                 SyspictureBox.Visible = true;
@@ -1846,7 +1846,7 @@ namespace main.contents
         void SubDist()
         {
             string[][] image1 = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지",
-              "설비유형='서브' And 항목유형 ='분배설비'");
+             "설비유형='서브' And 항목유형 ='분배설비'");
             if (image1.Length > 0)
             {
                 SubDistpictureBox.Visible = true;
@@ -1914,13 +1914,10 @@ namespace main.contents
         {
             if (StorageUse == "축열탱크 없음")
             {
-                LoadImage(PumpUse);
                 StopictureBox.Visible = false;
             }
-           
             else
             {
-                LoadImage("펌프 있음");
                 string[][] stoimage = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형='저장설비' And 설치유형='" + install + "'");
                 if (stoimage.Length > 0)
                 {
@@ -1956,18 +1953,13 @@ namespace main.contents
         {
             if (PumpUse == "펌프 있음")
             {
-                LoadImage(PumpUse);
                 string[][] stoimage = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형='분배설비' And 설비유형='펌프'");
                 pumppictureBox.Visible = true;
                 pumppictureBox.Location = new Point(685, 148);
                 pumppictureBox.Size = new System.Drawing.Size(22, 38);
                 pumppictureBox.Load(Program.gPath + stoimage[0][0]);
                 pumppictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            }
-            else if(PumpUse !="펌프 있음"&& StorageUse != "축열탱크 있음")
-            {
-                LoadImage(PumpUse);
-                pumppictureBox.Visible = false;
+
             }
             else
             {
@@ -1980,10 +1972,10 @@ namespace main.contents
         private void ce_Image(string _Install) //공급설비 그림 넣기
         {
             string[][] image = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "설비유형= '수전' And 설치유형 = '" + _Install + "'");
-            
+
             ce1_pictureBox.Visible = true;
-            ce1_pictureBox.Location = new Point(795, 78);
-            ce1_pictureBox.Size = new System.Drawing.Size(60, 50);
+            ce1_pictureBox.Location = new Point(700, 38);
+            ce1_pictureBox.Size = new System.Drawing.Size(190, 80);
             ce1_pictureBox.Load(Program.gPath + image[0][0]);
             ce1_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
         }
