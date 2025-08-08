@@ -125,6 +125,7 @@ namespace main.contents
             Icon_pictureBox = new PictureBox();
             label22 = new Label();
             info = new Button();
+            climate_infobutton = new Button();
             Panel10.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -258,6 +259,7 @@ namespace main.contents
             // panel1
             // 
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(climate_infobutton);
             panel1.Controls.Add(BuildingLocation_textBox);
             panel1.Controls.Add(BuildingName_textBox);
             panel1.Controls.Add(ByRawClimate_textBox);
@@ -1246,6 +1248,21 @@ namespace main.contents
             info.UseVisualStyleBackColor = false;
             info.Click += info_Click;
             // 
+            // climate_infobutton
+            // 
+            climate_infobutton.BackColor = SystemColors.ControlLight;
+            climate_infobutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            climate_infobutton.FlatStyle = FlatStyle.System;
+            climate_infobutton.Font = new Font("Microsoft Sans Serif", 9.75F);
+            climate_infobutton.Location = new Point(220, 114);
+            climate_infobutton.Margin = new Padding(0);
+            climate_infobutton.Name = "climate_infobutton";
+            climate_infobutton.Size = new Size(23, 23);
+            climate_infobutton.TabIndex = 174;
+            climate_infobutton.Text = "!";
+            climate_infobutton.UseVisualStyleBackColor = false;
+            climate_infobutton.Click += climate_infobutton_Click;
+            // 
             // General
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1391,5 +1408,6 @@ namespace main.contents
         private Label label22;
         private Panel Panel10;
         private Button info;
+        private Button climate_infobutton;
     }
 }
