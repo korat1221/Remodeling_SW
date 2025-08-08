@@ -606,7 +606,7 @@ namespace main.contents
 
             if (int.TryParse(UnderGround_comboBox.Text, out int underfloornum))
             {
-               UnderGround = UnderGround_comboBox.Text;
+                UnderGround = UnderGround_comboBox.Text;
             }
             else
             {
@@ -903,5 +903,13 @@ namespace main.contents
             }
         }
 
+        private void climate_infobutton_Click(object sender, EventArgs e)
+        {
+            Climate_info form = new Climate_info(Climate);
+            DialogResult result = form.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+            }
+        }
     }
 }
