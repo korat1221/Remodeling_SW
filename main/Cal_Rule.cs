@@ -595,7 +595,6 @@ namespace main
             final1.Load_Cooling_Final(NowProjNum[0][0]);
             final1.Load_DHW_Final(NowProjNum[0][0]);
             final1.Load_AHU_Final(NowProjNum[0][0]);
-            final1.Load_REG_Final(NowProjNum[0][0]);
             final1.Calc_Qtot(NowProjNum[0][0]);
 
             for (int mth = 0; mth < 12; mth++)

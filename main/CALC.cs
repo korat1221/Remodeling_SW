@@ -100,7 +100,7 @@ namespace main
             Cal_Qfc(NowProjNum[0][0]);
             Final final1 = new Final(NowProjNum[0][0]);
             Cal_Qf(final1, NowProjNum[0][0]);
-            RESystemCalc(final1, NowProjNum[0][0]);
+            RESystemCalc(NowProjNum[0][0]);
             Cal_Qf(null, NowProjNum[0][0]);
 
             Program.DB.saveProject();
@@ -237,7 +237,7 @@ namespace main
                 }
             }
         }
-        private static Final Cal_Qf(Final final1, string ProjNum)
+        private static void Cal_Qf(Final final1, string ProjNum)
         {
             if(final1 == null)
             {
@@ -246,12 +246,9 @@ namespace main
                 final1.Load_Cooling_Final(ProjNum);
                 final1.Load_DHW_Final(ProjNum);
                 final1.Load_AHU_Final(ProjNum);
-                final1.Load_REG_Final(ProjNum);
                 Final_Calc(final1, ProjNum, true); // true는 두번째 계산, 신재생 분배 포함
                 Save_RESystem(ProjNum);
                 Final_Save(final1);
-                return final1;
-                final1 = new Final(ProjNum);
             }
             else
             {
@@ -260,10 +257,7 @@ namespace main
                     final1.Load_Cooling_Final(ProjNum);
                     final1.Load_DHW_Final(ProjNum);
                     final1.Load_AHU_Final(ProjNum);
-                    final1.Load_REG_Final(ProjNum);
                     Final_Calc(final1, ProjNum, false);// false는 첫번째 계산, 신재생 분배 미포함
-                    return final1;
-                    final1 = new Final(ProjNum);
                 }
             }
         }
@@ -1613,7 +1607,7 @@ namespace main
         #endregion
 
         #region 신재생
-        public static bool RESystemCalc(Final final1, string ProjNum)
+        public static bool RESystemCalc(string ProjNum)
         {
             PVCalc(ProjNum);
             WPCalc(ProjNum);
@@ -1808,7 +1802,7 @@ namespace main
         public static Dictionary<string, DHW> DHWs = new Dictionary<string, DHW>();
         public static Dictionary<string, Final> Finals = new Dictionary<string, Final>();
         public static Dictionary<string[], RESystem> RESystems = new Dictionary<string[], RESystem>();
-        public static string[] ElementAlt = { "조닝", "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀+열회수기", "난방", "냉방", "급탕", "조명", "공조", "태양광", "기밀" }; //기밀은 요소기술별 합계 계산 시 제외되어야 하므로 마지막 순서여야 함 
+        public static string[] ElementAlt = { "조닝", "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀+열회수기", "난방", "냉방", "급탕", "조명", "공조", "태양광","풍력", "기밀" }; //기밀은 요소기술별 합계 계산 시 제외되어야 하므로 마지막 순서여야 함 
       //  public static string[] RuleAlt = { "기밀", "기밀+열회수기" };
         public static string[] RuleAlt = { "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀", "기밀+열회수기", "조명", "보일러", "냉난방EHP", "냉방EHP", "공냉식냉동기", "수냉식냉동기", "냉난방GHP", "흡수식냉온수기", "태양광" };
         public Zone getZone(string zoneNum)

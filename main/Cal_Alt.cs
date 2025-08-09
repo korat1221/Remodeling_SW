@@ -793,7 +793,6 @@ namespace main
                 final1.Load_Cooling_Final(PreProjNum[0][0]);
                 final1.Load_DHW_Final(PreProjNum[0][0]);
                 final1.Load_AHU_Final(PreProjNum[0][0]);
-                final1.Load_REG_Final(PreProjNum[0][0]);
             }
             else if (검토유형 == "냉방")
             {
@@ -802,7 +801,6 @@ namespace main
                 final1.Load_Cooling_Final(NowProjNum[0][0]);
                 final1.Load_DHW_Final(PreProjNum[0][0]);
                 final1.Load_AHU_Final(PreProjNum[0][0]);
-                final1.Load_REG_Final(PreProjNum[0][0]);
             }
             else if (검토유형 == "기밀+열회수기")
             {
@@ -811,7 +809,6 @@ namespace main
                 final1.Load_Cooling_Final(PreProjNum[0][0]);
                 final1.Load_DHW_Final(PreProjNum[0][0]);
                 final1.Load_AHU_Final(NowProjNum[0][0]);
-                final1.Load_REG_Final(PreProjNum[0][0]);
             }
             else if (검토유형 == "공조")
             {
@@ -820,16 +817,14 @@ namespace main
                 final1.Load_Cooling_Final(PreProjNum[0][0]);
                 final1.Load_DHW_Final(PreProjNum[0][0]);
                 final1.Load_AHU_Final(NowProjNum[0][0]);
-                final1.Load_REG_Final(PreProjNum[0][0]);
             }
-            else if (검토유형 == "태양광")
+            else if (검토유형 == "태양광" || 검토유형=="풍력")
             {
                 final1 = new Final(PreProjNum[0][0]);
                 final1.Load_Heating_Final(PreProjNum[0][0]);
                 final1.Load_Cooling_Final(PreProjNum[0][0]);
                 final1.Load_DHW_Final(PreProjNum[0][0]);
                 final1.Load_AHU_Final(PreProjNum[0][0]);
-                final1.Load_REG_Final(NowProjNum[0][0]);
             }
             else if (검토유형 == "급탕")
             {
@@ -838,7 +833,6 @@ namespace main
                 final1.Load_Cooling_Final(PreProjNum[0][0]);
                 final1.Load_DHW_Final(NowProjNum[0][0]);
                 final1.Load_AHU_Final(PreProjNum[0][0]);
-                final1.Load_REG_Final(PreProjNum[0][0]);
             }
             else
             {
@@ -847,39 +841,40 @@ namespace main
                 final1.Load_Cooling_Final(PreProjNum[0][0]);
                 final1.Load_DHW_Final(PreProjNum[0][0]);
                 final1.Load_AHU_Final(PreProjNum[0][0]);
-                final1.Load_REG_Final(PreProjNum[0][0]);
             }
 
-            final1.Calc_Qtot(PreProjNum[0][0]);
-            if (검토유형 != "태양광")
+            if (검토유형 == "태양광" )
             {
-                CALC.RESystemCalc(final1,PreProjNum[0][0]);
+                CALC.Final_Calc(final1, NowProjNum[0][0], false); //소요량 계산 > 신재생 계산 > 신재생분배 > 파이널 계산
+                CALC.PVCalc(NowProjNum[0][0]);
+                CALC.WPCalc(PreProjNum[0][0]);
+
+                final1 = new Final(NowProjNum[0][0]);
+                final1.Load_Heating_Final(PreProjNum[0][0]);
+                final1.Load_Cooling_Final(PreProjNum[0][0]);
+                final1.Load_DHW_Final(PreProjNum[0][0]);
+                final1.Load_AHU_Final(PreProjNum[0][0]);
+                CALC.Final_Calc(final1, NowProjNum[0][0], true);
+            }
+            else if(검토유형 == "풍력")
+            {
+                CALC.Final_Calc(final1, NowProjNum[0][0], false); //소요량 계산 > 신재생 계산 > 신재생분배 > 파이널 계산
+                CALC.PVCalc(PreProjNum[0][0]);
+                CALC.WPCalc(NowProjNum[0][0]);
+
+                final1 = new Final(NowProjNum[0][0]);
+                final1.Load_Heating_Final(PreProjNum[0][0]);
+                final1.Load_Cooling_Final(PreProjNum[0][0]);
+                final1.Load_DHW_Final(PreProjNum[0][0]);
+                final1.Load_AHU_Final(PreProjNum[0][0]);
+                CALC.Final_Calc(final1, NowProjNum[0][0], true);
+
             }
             else
             {
-                CALC.RESystemCalc(final1,NowProjNum[0][0]);
+                CALC.Final_Calc(final1, PreProjNum[0][0], false);
             }
 
-            for (int mth = 0; mth < 12; mth++)
-            {
-                string[][] Final2 = Program.DB.querySQL(DB.type.ProjDB, "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 = '전기' and 월 = '" + (mth + 1).ToString() + "월'");
-                if (Final2.Length > 0)
-                {
-                    final1.Qbase_elec[mth] = Convert.ToDouble(Final2[0][0]);
-                }
-
-                Final2 = Program.DB.querySQL(DB.type.ProjDB, "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 != '전기' and 월 = '" + (mth + 1).ToString() + "월'");
-                if (Final2.Length > 0)
-                {
-                    final1.Qbase_gas[mth] = Convert.ToDouble(Final2[0][0]);
-                }
-            }
-
-            for (int mth = 0; mth < 12; mth++)
-            {
-                final1.Qf_elec_tot_mth[mth] = final1.Qhf_elec[mth] + final1.Qcf_elec[mth] + final1.Qwf_elec[mth] + final1.Qlf_elec[mth] + final1.Qvf_elec[mth] + final1.Qbase_elec[mth] - final1.Qreg_elec_tot[mth];
-                final1.Qf_gas_tot_mth[mth] = final1.Qhf_gas[mth] + final1.Qcf_gas[mth] + final1.Qwf_gas[mth] + final1.Qbase_gas[mth];
-            }
             Save_Alt(final1, 검토유형);
 
             Program.DB.saveProject();

@@ -13,7 +13,6 @@ namespace main
         public double[] Qwf_gas = new double[12], Qwf_elec = new double[12];
         public double[] Qlf_gas = new double[12], Qlf_elec = new double[12];
         public double[] Qvf_gas = new double[12], Qvf_elec = new double[12];
-        public double[] Qfwps = new double[12]; //풍력
         public double[] Qbase_gas = new double[12], Qbase_elec = new double[12];
         public double[] Qf_gas_tot1 = new double[12], Qf_elec_tot1 = new double[12];
         public double[] Qf_gas_tot_mth = new double[12], Qf_elec_tot_mth = new double[12];
@@ -247,29 +246,6 @@ namespace main
                 }
             }
         }
-        public void Load_REG_Final(string ProjNum)
-        {
-            for (int mth = 0; mth < 12; mth++)
-            {
-                string[][] Value = Program.DB.getValue(ProjNum, "PV_Result", "PV생산량", "월 ='" + (mth + 1).ToString() + "월'");
-                if (Value.Length > 0)
-                {
-                    for (int i = 0; i < Value.Length; i++)
-                    {
-                        Qreg_elec_tot[mth] += Convert.ToDouble(Value[i][0]);
-                    }
-                }
-                Value = Program.DB.getValue(ProjNum, "WindPower_Result", "Qfwps", "월 ='" + (mth + 1).ToString() + "월'");
-                if (Value.Length > 0)
-                {
-                    for (int i = 0; i < Value.Length; i++)
-                    {
-                        Qfwps[mth] += Convert.ToDouble(Value[i][0]);
-                    }
-                }
-                
-            }
-        }
         public void Calc_Qtot(string ProjNum)
         {
             for (int mth = 0; mth < 12; mth++)
@@ -408,7 +384,7 @@ namespace main
             double[] Error_elec = new double[12];
             for (int mth = 0; mth < 12; mth++)
             {
-                Error_elec[mth] = Quse_elec_mth[mth] - Qf_elec_tot1[mth] + Qreg_elec_tot[mth];
+                Error_elec[mth] = Quse_elec_mth[mth] - Qf_elec_tot1[mth];
                 x[mth] = Qhf_elec[mth]; y[mth] = Error_elec[mth];
             }
 
@@ -449,7 +425,6 @@ namespace main
             }
              for (int mth = 0; mth < 12; mth++)
             {
-                reg_빼기(ProjNum);
                 Qf_elec_tot_mth[mth] = Qhf_elec[mth] + Qcf_elec[mth] + Qwf_elec[mth] + Qlf_elec[mth] + Qvf_elec[mth] + Qbase_elec[mth];
             }
         }
@@ -509,7 +484,6 @@ namespace main
             }
             for (int mth = 0; mth < 12; mth++)
             {
-                reg_빼기(ProjNum);
                 Qf_gas_tot_mth[mth] = Qhf_gas[mth] + Qcf_gas[mth] + Qwf_gas[mth] + Qlf_gas[mth] + Qvf_gas[mth] + Qbase_gas[mth];
             }
         }

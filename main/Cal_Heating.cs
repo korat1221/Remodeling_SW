@@ -1327,6 +1327,7 @@ namespace main
                 }
                 Pth_gen_out[mth] = Math.Min(Pfc_th, QCHW_gen_out[mth] / (top * dop[mth]));
                 Eth_gen_out[mth] = Pth_gen_out[mth] * top * dop[mth];
+                Eth_gen_out_w[mth] = double.IsNaN(Eth_gen_out[mth] * Qw_outg[mth] / QCHW_gen_out[mth]) ? 0 : Eth_gen_out[mth] * Qw_outg[mth] / QCHW_gen_out[mth];
                 Eth_gen_out_h[mth] = double.IsNaN(Eth_gen_out[mth] * Qh_outg[mth] / QCHW_gen_out[mth]) ? 0 : Eth_gen_out[mth] * Qh_outg[mth] / QCHW_gen_out[mth];
             }
             for(int mth=0; mth < 12; mth ++)
