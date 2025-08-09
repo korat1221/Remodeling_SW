@@ -1,5 +1,7 @@
 ﻿using main.subcontents.CoolingSystem;
 using main.subcontents.HeatingSystem;
+using System;
+using System.Collections;
 
 namespace main
 {
@@ -200,71 +202,57 @@ namespace main
                    month[a] + "','" + Esol[a] + "','" + Qfpvm_kWh[a] + "','" + fBatt[a] +"'", "번호, 월");
                 }
             }
-            string RESystemNum = "";
-            bool cache = Program.DB.isCaching();
-            Program.DB.UseCaches(false);
-            string[][] value = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "신재생시스템='" + Num + "'");
-            if (value.Length > 0)
-            {
-                RESystemNum = value[0][0];
-            }
-            else
-            {
-                RESystemNum = Program.UTIL.CreateNum( "RESystem_Result", "번호", "RE");
-            }
-            for (int mth = 0; mth <= 11; mth++)
-            {
-                string MTH = (mth + 1).ToString() + "월";
-                string[][] v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "번호= '" + RESystemNum + "' and " +
-                    "월 ='" + MTH + "' and " +
-                    "생산소비='생산' and " +
-                    "생산유형='전기'");
-                if (v.Length > 0)
-                {
-                    if (프로젝트번호 == ProjNum)
-                    {
-                        Program.DB.executeSQL(DB.type.ProjDB, "" +
-                       "Update RESystem_Result set " +
-                       "프로젝트번호 = '" + 프로젝트번호 + "'," +
-                       "프로젝트유형 = '" + 프로젝트유형 + "'," +
-                       "번호= '" + RESystemNum + "'," +
-                       "월='" + MTH + "'," +
-                       "신재생시스템 ='" + Num + "'," +
-                       "신재생시스템유형='태양광시스템'," +
-                       "생산소비='생산'," +
-                       "생산유형='전기'," +
-                       "총에너지='" + Qfpvm_kWh[mth] + "'" +
-                       " Where 번호= '" + RESystemNum + "' and " +
-                       "월 ='" + MTH + "' and " +
-                       "생산소비='생산' and " +
-                       "생산유형='전기'");
-                    }
-                }
-                else
-                {
-                    if (프로젝트번호 == ProjNum)
-                    {
-                        Program.DB.executeSQL(DB.type.ProjDB, "" +
-                        "INSERT INTO RESystem_Result (" +
-                        "프로젝트번호, 프로젝트유형, 번호, 월, 신재생시스템, " +
-                        "신재생시스템유형, 생산소비, 생산유형, 총에너지) " +
-                        "VALUES (" +
-                        "'" + 프로젝트번호 + "', " +
-                        "'" + 프로젝트유형 + "', " +
-                        "'" + RESystemNum + "', " +
-                        "'" + MTH + "', " +
-                        "'" + Num + "', " +
-                        "'태양광시스템', " +
-                        "'생산', " +
-                        "'전기', " +
-                        "'" + Qfpvm_kWh[mth] + "'" +
-                        ")");
-                    }
-                }
-            }
-            Program.DB.saveProject();
-            Program.DB.UseCaches(cache);
 
+            Save_Memory_PV();
+        }
+        public void Save_Memory_PV()
+        {
+            string RESystemNum = null;
+
+            if (CALC.RESystems.Count == 0)
+            {
+                RESystemNum = "RE01";
+            }
+
+
+            ArrayList arr_renum = new ArrayList();
+            int i = 0;
+            foreach (var system in CALC.RESystems.Values)
+            { 
+                if(!arr_renum.Contains(system.RE_Num))
+                {
+                    arr_renum.Add(system.RE_Num);
+                    i++;
+                }
+            }
+
+            RESystemNum = "RE0" + (i + 1);
+            
+            foreach (var system in CALC.RESystems.Values)
+            {
+                if (system != null && system.RESystem_Num() == Num)
+                {
+                    RESystemNum = system.Num();
+                    break; // 찾았으면 더 이상 반복하지 않음
+                }
+            }
+
+            RESystem news = new RESystem(RESystemNum,"생산","전기","");
+            news.RE_Production_Consumption = "생산";
+            news.RE_Production_Type = "전기";
+            news.RE_RESystem_Num = Num;
+            news.RE_RESystem_Type = "태양광시스템";
+            news.RE_TotalE = Qfpvm_kWh;
+
+            string[] sy = new string[4];
+            sy[0] = news.Num();
+            sy[1] = "생산";
+            sy[2] = "전기";
+            sy[3] = "";
+            if (news.Num() != "")
+            {
+                CALC.RESystems[sy] = news;
+            }
         }
         #endregion
 
@@ -649,24 +637,14 @@ namespace main
     {
         public string RE_Num, RE_RESystem_Num, RE_RESystem_Type, RE_Production_Consumption, RE_Production_Type, RE_Consumption_Carrier, RE_Heating_Num, RE_Cooling_Num, RE_DHW_Num;
         public double[] RE_TotalE = new double[12], RE_HeatingE = new double[12], RE_CoolingE = new double[12], RE_DHWE = new double[12], RE_LightingE = new double[12], RE_AHUE = new double[12];
-        public RESystem(string Num, string RESystem_Num, string RESystem_Type, string Production_Consumption, string Production_Type, string Consumption_Carrier, string Heating_Num, string Cooling_Num, string DHW_Num, double[] TotalE, double[] HeatingE, double[] CoolingE, double[] DHWE, double[] LightingE, double[] AHUE)
+        public RESystem(string Num, string Production_Consumption, string Production_Type, string Consumption_Carrier)
         {
             this.RE_Num = Num;
-            this.RE_RESystem_Num = RESystem_Num;
-            this.RE_RESystem_Type = RESystem_Type;
-            this.RE_Production_Type = Production_Type;
             this.RE_Production_Consumption = Production_Consumption;
+            this.RE_Production_Type = Production_Type;
             this.RE_Consumption_Carrier = Consumption_Carrier;
-            this.RE_Heating_Num = Heating_Num;
-            this.RE_DHW_Num = DHW_Num;
-            this.RE_Cooling_Num = Cooling_Num;
-            this.RE_TotalE = TotalE;
-            this.RE_HeatingE = HeatingE;
-            this.RE_CoolingE = CoolingE;
-            this.RE_DHWE = DHWE;
-            this.RE_LightingE = LightingE;
-            this.RE_AHUE = AHUE;
         }
+
         public String Num()
         {
             return RE_Num;

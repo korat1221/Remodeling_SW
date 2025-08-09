@@ -553,117 +553,82 @@ namespace main
 
         private void Save_Solar(string ProjNum, string SolarNum)
         {
-            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
-            if (프로젝트유형[0][1] == ProjNum)
+            string RESystemNum = null;
+
+            if (CALC.RESystems.Count == 0)
             {
-                string RESystemNum = "";
-                bool cache = Program.DB.isCaching();
-                Program.DB.UseCaches(false);
-                string[][] value = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "신재생시스템='" + SolarNum + "'");
-                if (value.Length > 0)
-                {
-                    RESystemNum = value[0][0];
-                }
-                else
-                {
-                    RESystemNum = Program.UTIL.CreateNum("RESystem_Result", "번호", "RE");
-                }
-                for (int mth = 0; mth <= 11; mth++)
-                {
-                    //열 생산
-                    string MTH = (mth + 1).ToString() + "월";
-                    string[][] result = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "번호 = '" + RESystemNum + "' AND " + "월 = '" + MTH + "' AND " + "생산소비 = '생산' AND " + "생산유형 = '열'");
-
-                    if (result.Length > 0)
-                    {
-                        // === UPDATE ===
-                        Program.DB.executeSQL(DB.type.ProjDB,
-                            "UPDATE RESystem_Result SET " +
-                            "프로젝트번호 = '" + 프로젝트유형[0][1] + "', " +
-                            "프로젝트유형 = '" + 프로젝트유형[0][0] + "', " +
-                            "급탕설비 = '" + DHWNum + "', " +
-                            "신재생시스템 = '" + SolarNum + "', " +
-                            "신재생시스템유형 = '태양열시스템', " +
-                            "총에너지 = '" + Qw_sol[mth] + "' " +
-                            "WHERE 번호 = '" + RESystemNum + "' AND " +
-                            "월 = '" + MTH + "' AND " +
-                            "생산소비 = '생산' AND " +
-                            "생산유형 = '열'"
-                        );
-                    }
-                    else
-                    {
-                        // === INSERT ===
-                        Program.DB.executeSQL(DB.type.ProjDB,
-                            "INSERT INTO RESystem_Result (" +
-                            "프로젝트번호, 프로젝트유형, 번호, 월, " +
-                            "급탕설비, 신재생시스템, 신재생시스템유형, 생산소비, 생산유형, 총에너지" +
-                            ") VALUES (" +
-                            "'" + 프로젝트유형[0][1] + "', " +
-                            "'" + 프로젝트유형[0][0] + "', " +
-                            "'" + RESystemNum + "', " +
-                            "'" + MTH + "', " +
-                            "'" + DHWNum + "', " +
-                            "'" + SolarNum + "', " +
-                            "'태양열시스템', " +
-                            "'생산', " +
-                            "'열', " +
-                            "'" + Qw_sol[mth] + "'" +
-                            ")"
-                        );
-                    }
-
-                }
-                for (int mth = 0; mth <= 11; mth++)
-                {
-                    //전기 소비
-                    string MTH = (mth + 1).ToString() + "월";
-
-                    string[][] result = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "번호 = '" + RESystemNum + "' AND " + "월 = '" + MTH + "' AND " + "생산소비 = '소비' AND " + "소비연료 = '전기'");
-
-                    if (result.Length > 0)
-                    {
-                        // === UPDATE ===
-                        Program.DB.executeSQL(DB.type.ProjDB,
-                            "UPDATE RESystem_Result SET " +
-                            "프로젝트번호 = '" + 프로젝트유형[0][1] + "', " +
-                            "프로젝트유형 = '" + 프로젝트유형[0][0] + "', " +
-                            "급탕설비 = '" + DHWNum + "', " +
-                            "신재생시스템 = '" + SolarNum + "', " +
-                            "신재생시스템유형 = '태양열시스템', " +
-                            "총에너지 = '" + (0.025 * Qw_sol[mth]) + "' " +
-                            "WHERE 번호 = '" + RESystemNum + "' AND " +
-                            "월 = '" + MTH + "' AND " +
-                            "생산소비 = '소비' AND " +
-                            "소비연료 = '전기'"
-                        );
-                    }
-                    else
-                    {
-                        // === INSERT ===
-                        Program.DB.executeSQL(DB.type.ProjDB,
-                            "INSERT INTO RESystem_Result (" +
-                            "프로젝트번호, 프로젝트유형, 번호, 월, " +
-                            "급탕설비, 신재생시스템, 신재생시스템유형, 생산소비, 소비연료, 총에너지" +
-                            ") VALUES (" +
-                            "'" + 프로젝트유형[0][1] + "', " +
-                            "'" + 프로젝트유형[0][0] + "', " +
-                            "'" + RESystemNum + "', " +
-                            "'" + MTH + "', " +
-                            "'" + DHWNum + "', " +
-                            "'" + SolarNum + "', " +
-                            "'태양열시스템', " +
-                            "'소비', " +
-                            "'전기', " +
-                            "'" + (0.025 * Qw_sol[mth]) + "'" +
-                            ")"
-                        );
-                    }
-                }
-                Program.DB.saveProject();
-                Program.DB.UseCaches(cache);
+                RESystemNum = "RE01";
             }
-          
+
+
+            ArrayList arr_renum = new ArrayList();
+            int i = 0;
+            foreach (var system in CALC.RESystems.Values)
+            {
+                if (!arr_renum.Contains(system.RE_Num))
+                {
+                    arr_renum.Add(system.RE_Num);
+                    i++;
+                }
+            }
+
+            RESystemNum = "RE0" + (i + 1);
+
+            foreach (var system in CALC.RESystems.Values)
+            {
+                if (system != null && system.RESystem_Num() == SolarNum)
+                {
+                    RESystemNum = system.Num();
+                    break; // 찾았으면 더 이상 반복하지 않음
+                }
+            }
+
+            {
+                //열생산
+                RESystem news = new RESystem(RESystemNum, "생산", "열", "");
+                news.RE_Production_Consumption = "생산";
+                news.RE_Production_Type = "열";
+                news.RE_DHW_Num = DHWNum;
+                news.RE_RESystem_Num = SolarNum;
+                news.RE_RESystem_Type = "태양열시스템";
+                news.RE_TotalE = Qw_sol;
+                news.RE_DHWE = Qw_sol;
+
+                string[] sy = new string[4];
+                sy[0] = news.Num();
+                sy[1] = "생산";
+                sy[2] = "열";
+                sy[3] = "";
+                if (news.Num() != "")
+                {
+                    CALC.RESystems[sy] = news;
+                }
+            }
+            {
+                //전기소비
+                RESystem news = new RESystem(RESystemNum, "소비", "", "전기");
+
+                news.RE_Production_Consumption = "소비";
+                news.RE_Consumption_Carrier = "전기";
+                news.RE_DHW_Num = DHWNum;
+                news.RE_RESystem_Num = SolarNum;
+                news.RE_RESystem_Type = "태양열시스템";
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    news.RE_TotalE[mth] = 0.025 * Qw_sol[mth];
+                }
+
+                string[] sy = new string[4];
+                sy[0] = news.Num();
+                sy[1] = "소비";
+                sy[2] = "";
+                sy[3] = "전기";
+                if (news.Num() != "")
+                {
+                    CALC.RESystems[sy] = news;
+                }
+            }
+
         }
 
         public void LoadCalc_FC(string ProjNum)
@@ -749,160 +714,98 @@ namespace main
         }
         private void Save_FC(string ProjNum,  string FCNum, double[] Eth_gen_out_h, double[] Eth_gen_out_w)
         {
-            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
-            if (프로젝트유형[0][1] == ProjNum)
+            string RESystemNum = null;
+
+            if (CALC.RESystems.Count == 0)
             {
-                bool cache = Program.DB.isCaching();
-                Program.DB.UseCaches(false);
-                string RESystemNum = "";
-                string[][] value = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "급탕설비='" + DHWNum + "' and 신재생시스템='" + FCNum + "'");
-                if (value.Length > 0)
-                {
-                    RESystemNum = value[0][0];
-                }
-                else
-                {
-                    RESystemNum = Program.UTIL.CreateNum("RESystem_Result", "번호", "RE");
-                }
-                for (int mth = 0; mth <= 11; mth++)
-                {
-                    //열 생산
-                    string MTH = (mth + 1).ToString() + "월";
-                    string[][] result = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "번호 = '" + RESystemNum + "' AND " + "월 = '" + MTH + "' AND " + "생산소비 = '생산' AND 생산유형 = '열'");
-                    if (result.Length > 0)
-                    {
-                        Program.DB.executeSQL(DB.type.ProjDB,
-                            "UPDATE RESystem_Result SET " +
-                            "프로젝트번호 = '" + 프로젝트유형[0][1] + "', " +
-                            "프로젝트유형 = '" + 프로젝트유형[0][0] + "', " +
-                            "급탕설비 = '" + DHWNum + "', " +
-                            "신재생시스템 = '" + FCNum + "', " +
-                            "신재생시스템유형 = '연료전지', " +
-                            "총에너지 = '" + Eth_gen_out[mth] + "', " +
-                            "급탕 = '" + Eth_gen_out_w[mth] + "' " +
-                            "WHERE 번호 = '" + RESystemNum + "' AND " +
-                            "월 = '" + MTH + "' AND " +
-                            "생산소비 = '생산' AND " +
-                            "생산유형 = '열'"
-                            );
-                    }
-                    else
-                    {
-                        Program.DB.executeSQL(DB.type.ProjDB,
-                            "INSERT INTO RESystem_Result (" +
-                            "프로젝트번호, 프로젝트유형, 번호, 월, " +
-                            "급탕설비, 신재생시스템, 신재생시스템유형, 생산소비, 생산유형, " +
-                            "총에너지, 급탕" +
-                            ") VALUES (" +
-                            "'" + 프로젝트유형[0][1] + "', " +
-                            "'" + 프로젝트유형[0][0] + "', " +
-                            "'" + RESystemNum + "', " +
-                            "'" + MTH + "', " +
-                            "'" + DHWNum + "', " +
-                            "'" + FCNum + "', " +
-                            "'연료전지', " +
-                            "'생산', " +
-                            "'열', " +
-                            "'" + Eth_gen_out[mth] + "', " +
-                            "'" + Eth_gen_out_w[mth] + "'" +
-                            ")");
-                    }
+                RESystemNum = "RE01";
+            }
 
-                }
-                for (int mth = 0; mth <= 11; mth++)
+
+            ArrayList arr_renum = new ArrayList();
+            int i = 0;
+            foreach (var system in CALC.RESystems.Values)
+            {
+                if (!arr_renum.Contains(system.RE_Num))
                 {
-                    //전기 생산 
-                    string MTH = (mth + 1).ToString() + "월";
-                    string[][] result = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "번호 = '" + RESystemNum + "' AND " + "월 = '" + MTH + "' AND " + "생산소비 = '생산' AND " + "생산유형 = '전기'");
-
-                    if (result.Length > 0)
-                    {
-                        // UPDATE
-                        Program.DB.executeSQL(DB.type.ProjDB,
-                            "UPDATE RESystem_Result SET " +
-                            "프로젝트번호 = '" + 프로젝트유형[0][1] + "', " +
-                            "프로젝트유형 = '" + 프로젝트유형[0][0] + "', " +
-                            "급탕설비 = '" + DHWNum + "', " +
-                            "신재생시스템 = '" + FCNum + "', " +
-                            "신재생시스템유형 = '연료전지', " +
-                            "총에너지 = '" + Eel_gen_out[mth] + "' " +
-                            "WHERE 번호 = '" + RESystemNum + "' AND " +
-                            "월 = '" + MTH + "' AND " +
-                            "생산소비 = '생산' AND " +
-                            "생산유형 = '전기'"
-                        );
-                    }
-                    else
-                    {
-                        // INSERT
-                        Program.DB.executeSQL(DB.type.ProjDB,
-                            "INSERT INTO RESystem_Result (" +
-                            "프로젝트번호, 프로젝트유형, 번호, 월, " +
-                            "급탕설비, 신재생시스템, 신재생시스템유형, 생산소비, 생산유형, " +
-                            "총에너지" +
-                            ") VALUES (" +
-                            "'" + 프로젝트유형[0][1] + "', " +
-                            "'" + 프로젝트유형[0][0] + "', " +
-                            "'" + RESystemNum + "', " +
-                            "'" + MTH + "', " +
-                            "'" + DHWNum + "', " +
-                            "'" + FCNum + "', " +
-                            "'연료전지', " +
-                            "'생산', " +
-                            "'전기', " +
-                            "'" + Eel_gen_out[mth] + "'" +
-                            ")"
-                        );
-                    }
-
+                    arr_renum.Add(system.RE_Num);
+                    i++;
                 }
-                for (int mth = 0; mth <= 11; mth++)
+            }
+
+            RESystemNum = "RE0" + (i + 1);
+
+            foreach (var system in CALC.RESystems.Values)
+            {
+                if (system != null && system.RESystem_Num() == FCNum)
                 {
-                    //가스 소비 
-                    string MTH = (mth + 1).ToString() + "월";
-                    string[][] result = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "번호 = '" + RESystemNum + "' AND " + "월 = '" + MTH + "' AND " + "생산소비 = '소비' AND " + "소비연료 = '가스'");
-
-                    if (result.Length > 0)
-                    {
-                        // === UPDATE ===
-                        Program.DB.executeSQL(DB.type.ProjDB,
-                            "UPDATE RESystem_Result SET " +
-                            "프로젝트번호 = '" + 프로젝트유형[0][1] + "', " +
-                            "프로젝트유형 = '" + 프로젝트유형[0][0] + "', " +
-                            "급탕설비 = '" + DHWNum + "', " +
-                            "신재생시스템 = '" + FCNum + "', " +
-                            "신재생시스템유형 = '연료전지', " +
-                            "총에너지 = '" + Egen_in[mth] + "' " +
-                            "WHERE 번호 = '" + RESystemNum + "' AND " +
-                            "월 = '" + MTH + "' AND " +
-                            "생산소비 = '소비' AND " +
-                            "소비연료 = '가스'"
-                        );
-                    }
-                    else
-                    {
-                        // === INSERT ===
-                        Program.DB.executeSQL(DB.type.ProjDB,
-                            "INSERT INTO RESystem_Result (" +
-                            "프로젝트번호, 프로젝트유형, 번호, 월, " +
-                            "급탕설비, 신재생시스템, 신재생시스템유형, 생산소비, 소비연료, 총에너지" +
-                            ") VALUES (" +
-                            "'" + 프로젝트유형[0][1] + "', " +
-                            "'" + 프로젝트유형[0][0] + "', " +
-                            "'" + RESystemNum + "', " +
-                            "'" + MTH + "', " +
-                            "'" + DHWNum + "', " +
-                            "'" + FCNum + "', " +
-                            "'연료전지', " +
-                            "'소비', " +
-                            "'가스', " +
-                            "'" + Egen_in[mth] + "'" +
-                            ")"
-                        );
-                    }
+                    RESystemNum = system.Num();
+                    break; // 찾았으면 더 이상 반복하지 않음
                 }
-                Program.DB.saveProject();
-                Program.DB.UseCaches(cache); ;
+            }
+
+
+            {
+                //열생산
+                RESystem news = new RESystem(RESystemNum, "생산", "열", "");
+                news.RE_Production_Consumption = "생산";
+                news.RE_Production_Type = "열";
+                news.RE_DHW_Num = DHWNum;
+                news.RE_RESystem_Num = FCNum;
+                news.RE_RESystem_Type = "연료전지";
+                news.RE_TotalE = Eth_gen_out;
+                news.RE_HeatingE = Eth_gen_out_h;
+                news.RE_DHWE = Eth_gen_out_w;
+
+                string[] sy = new string[4];
+                sy[0] = news.Num();
+                sy[1] = "생산";
+                sy[2] = "열";
+                sy[3] = "";
+                if (news.Num() != "")
+                {
+                    CALC.RESystems[sy] = news;
+                }
+            }
+            {
+                //전기생산
+                RESystem news = new RESystem(RESystemNum, "생산", "전기", "");
+                news.RE_Production_Consumption = "생산";
+                news.RE_Production_Type = "전기";
+                news.RE_DHW_Num = DHWNum;
+                news.RE_RESystem_Num = FCNum;
+                news.RE_RESystem_Type = "연료전지";
+                news.RE_TotalE = Eel_gen_out;
+
+                string[] sy = new string[4];
+                sy[0] = news.Num();
+                sy[1] = "생산";
+                sy[2] = "전기";
+                sy[3] = "";
+                if (news.Num() != "")
+                {
+                    CALC.RESystems[sy] = news;
+                }
+            }
+            {
+                RESystem news = new RESystem(RESystemNum, "소비", "", "가스");
+
+                news.RE_Production_Consumption = "소비";
+                news.RE_Consumption_Carrier = "가스";
+                news.RE_DHW_Num = DHWNum;
+                news.RE_RESystem_Num = FCNum;
+                news.RE_RESystem_Type = "연료전지";
+                news.RE_TotalE = Egen_in;
+
+                string[] sy = new string[4];
+                sy[0] = news.Num();
+                sy[1] = "소비";
+                sy[2] = "";
+                sy[3] = "가스";
+                if (news.Num() != "")
+                {
+                    CALC.RESystems[sy] = news;
+                }
             }
         }
         public void LoadCalc_Boiler(string ProjNum)

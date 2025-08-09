@@ -92,7 +92,7 @@ namespace main
 
             string[][] NowProjNum = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
 
-
+            RESystems.Clear();
             Cal_Qb();
             Cal_Qahu(NowProjNum[0][0]);
             Cal_Qfw(NowProjNum[0][0]);
@@ -102,7 +102,6 @@ namespace main
             Cal_Qf(final1, NowProjNum[0][0]);
             RESystemCalc(final1, NowProjNum[0][0]);
             Cal_Qf(null, NowProjNum[0][0]);
-            // MessageBox.Show("계산되었습니다.");
 
             Program.DB.saveProject();
             return true;
@@ -249,6 +248,7 @@ namespace main
                 final1.Load_AHU_Final(ProjNum);
                 final1.Load_REG_Final(ProjNum);
                 Final_Calc(final1, ProjNum, true); // true는 두번째 계산, 신재생 분배 포함
+                Save_RESystem(ProjNum);
                 Final_Save(final1);
                 return final1;
                 final1 = new Final(ProjNum);
@@ -261,8 +261,7 @@ namespace main
                     final1.Load_DHW_Final(ProjNum);
                     final1.Load_AHU_Final(ProjNum);
                     final1.Load_REG_Final(ProjNum);
-                    Final_Calc(final1, ProjNum, false);// false는 첫번째 계산, 신재생 분배 포함
-                    Final_Save(final1);
+                    Final_Calc(final1, ProjNum, false);// false는 첫번째 계산, 신재생 분배 미포함
                     return final1;
                     final1 = new Final(ProjNum);
                 }
@@ -1507,8 +1506,8 @@ namespace main
                 }
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    final1.Qf_elec_tot_mth[mth] = final1.Qf_elec_tot1[mth] + final1.Qbase_elec[mth] ;
-                    final1.Qf_gas_tot_mth[mth] = final1.Qf_gas_tot1[mth] + final1.Qbase_gas[mth];
+                    final1.Qf_elec_tot_mth[mth] = final1.Qf_elec_tot_mth[mth] + final1.Qbase_elec[mth] ;
+                    final1.Qf_gas_tot_mth[mth] = final1.Qf_gas_tot_mth[mth] + final1.Qbase_gas[mth];
                 }
 
             }
@@ -1664,75 +1663,84 @@ namespace main
                                   + "'", "번호,월"); ;
 
                 }
-                bool cache = Program.DB.isCaching();
-                Program.DB.UseCaches(false);
-                string RESystemNum = "";
-                string[][] value = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "신재생시스템='" + WPNum[i][0] + "'");
-                if (value.Length > 0)
-                {
-                    RESystemNum = value[0][0];
-                }
-                else
-                {
-                    RESystemNum = Program.UTIL.CreateNum("RESystem_Result", "번호", "RE");
-                }
-                for (int mth = 0; mth <= 11; mth++)
-                {
-                    MTH = (mth + 1).ToString() + "월";
-
-                    // Step 1: 조건에 맞는 데이터 존재 여부 확인
-                    string[][] result = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "번호", "번호 = '" + RESystemNum + "' AND " + "월 = '" + MTH + "' AND " + "생산소비 = '생산' AND " + "생산유형 = '전기'"   );
-
-                    // Step 2: 조건에 따라 UPDATE 또는 INSERT 수행
-                   
-                    if (프로젝트유형[0][1] == ProjNum)
-                    {
-                        if (result.Length > 0)
-                        {
-
-                            // === UPDATE ===
-                            Program.DB.executeSQL(DB.type.ProjDB,
-                            "UPDATE RESystem_Result SET " +
-                            "프로젝트번호 = '" + 프로젝트유형[0][1] + "', " +
-                            "프로젝트유형 = '" + 프로젝트유형 + "', " +
-                            "신재생시스템 = '" + WPNum[i][0] + "', " +
-                            "신재생시스템유형 = '풍력시스템', " +
-                            "총에너지 = '" + WP.Qfwps_mth[mth] + "' " +
-                            "WHERE 번호 = '" + RESystemNum + "' AND " +
-                            "월 = '" + MTH + "' AND " +
-                            "생산소비 = '생산' AND " +
-                            "생산유형 = '전기'"
-                            );
-                        }
-                        else
-                        {
-                            // === INSERT ===
-                            Program.DB.executeSQL(DB.type.ProjDB,
-                                "INSERT INTO RESystem_Result (" +
-                                "프로젝트번호, 프로젝트유형, 번호, 월, " +
-                                "신재생시스템, 신재생시스템유형, 생산소비, 생산유형, 총에너지" +
-                                ") VALUES (" +
-                                "'" + 프로젝트유형[0][1] + "', " +
-                                "'" + 프로젝트유형 + "', " +
-                                "'" + RESystemNum + "', " +
-                                "'" + MTH + "', " +
-                                "'" + WPNum[i][0] + "', " +
-                                "'풍력시스템', " +
-                                "'생산', " +
-                                "'전기', " +
-                                "'" + WP.Qfwps_mth[mth] + "'" +
-                                ")"
-                                );
-                        }
-                    }
-
-                }
-
-                Program.DB.saveProject();
-                Program.DB.UseCaches(cache);
+                Save_Memory_WP(WPNum[i][0], WP.Qfwps_mth);
             }
 
             return true;
+        }
+        public static void Save_Memory_WP(string WPNum, double[] WP_Q)
+        {
+            string RESystemNum = null;
+
+            if (CALC.RESystems.Count == 0)
+            {
+                RESystemNum = "RE01";
+            }
+
+
+            ArrayList arr_renum = new ArrayList();
+            int i = 0;
+            foreach (var system in CALC.RESystems.Values)
+            {
+                if (!arr_renum.Contains(system.RE_Num))
+                {
+                    arr_renum.Add(system.RE_Num);
+                    i++;
+                }
+            }
+
+            RESystemNum = "RE0" + (i + 1);
+
+            foreach (var system in CALC.RESystems.Values)
+            {
+                if (system != null && system.RESystem_Num() == WPNum)
+                {
+                    RESystemNum = system.Num();
+                    break; // 찾았으면 더 이상 반복하지 않음
+                }
+            }
+
+            RESystem news = new RESystem(RESystemNum, "생산", "전기", "");
+            news.RE_Production_Consumption = "생산";
+            news.RE_Production_Type = "전기";
+            news.RE_RESystem_Num = WPNum;
+            news.RE_RESystem_Type = "풍력시스템";
+            news.RE_TotalE = WP_Q;
+            string[] sy = new string[4];
+            sy[0] = news.Num();
+            sy[1] = "생산";
+            sy[2] = "전기";
+            sy[3] = "";
+            if (news.Num() != "")
+            {
+                CALC.RESystems[sy] = news;
+            }
+        }
+        public static void Save_RESystem(string ProjNum)
+        {
+
+            string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            foreach (var s in RESystems.Values)
+            {
+                double[] tot, h, c, w, l, v = new double[12];
+                tot = s.TotalE();
+                h = s.HeatingE();
+                c = s.CoolingE();
+                w = s.DHWE();
+                l = s.LightingE();
+                v = s.AHUE();
+
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호,신재생시스템,신재생시스템유형,생산소비,생산유형,소비연료,월,난방설비,냉방설비,급탕설비,총에너지,난방,냉방,급탕,조명,공조",
+                "'" + ProjNum + "','" + 프로젝트유형[0][0] + "','" + s.Num() + "','" + s.RESystem_Num() + "','" + s.RESystem_Type() + "','" +
+                s.Production_Consumption() + "','" + s.Production_Type() + "','" + s.Consumption_Carrier() + "','" +
+                (mth + 1) + "월" + "','" + s.Heating_Num() + "','" + s.Cooling_Num() + "','" + s.DHW_Num() + "','" +
+               tot[mth].ToString() + "','" + h[mth].ToString() + "','" + c[mth].ToString() + "','" + w[mth].ToString() + "','" + l[mth].ToString() + "','" + v[mth].ToString()
+                + "'", "번호,신재생시스템,신재생시스템유형,생산소비,생산유형,소비연료,월,난방설비,냉방설비,급탕설비");
+                }
+            }
+               
         }
         #endregion
 
@@ -1770,6 +1778,7 @@ namespace main
                 {
                     for (int i = 0; i < ElementAlt.Length; i++)
                     {
+                        RESystems.Clear();
                         cal.Calc_Element(ElementAlt[i]);
                     }
                 }
@@ -1783,6 +1792,7 @@ namespace main
             Program.DB.initTable(DB.type.ProjDB, "FinalEnergy_Result_Rule");
             for (int i = 0; i < RuleAlt.Length; i++)
             {
+                RESystems.Clear();
                 cal.Calc_Rule(RuleAlt[i]);
             }
             return true;
@@ -1797,7 +1807,7 @@ namespace main
         public static Dictionary<string, AHU> AHUs = new Dictionary<string, AHU>();
         public static Dictionary<string, DHW> DHWs = new Dictionary<string, DHW>();
         public static Dictionary<string, Final> Finals = new Dictionary<string, Final>();
-        public static Dictionary<string, RESystem> RESystems = new Dictionary<string, RESystem>();
+        public static Dictionary<string[], RESystem> RESystems = new Dictionary<string[], RESystem>();
         public static string[] ElementAlt = { "조닝", "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀+열회수기", "난방", "냉방", "급탕", "조명", "공조", "태양광", "기밀" }; //기밀은 요소기술별 합계 계산 시 제외되어야 하므로 마지막 순서여야 함 
       //  public static string[] RuleAlt = { "기밀", "기밀+열회수기" };
         public static string[] RuleAlt = { "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀", "기밀+열회수기", "조명", "보일러", "냉난방EHP", "냉방EHP", "공냉식냉동기", "수냉식냉동기", "냉난방GHP", "흡수식냉온수기", "태양광" };
@@ -1857,11 +1867,11 @@ namespace main
             }
             else return null;
         }
-        public RESystem getRESystem(string Num)
+        public RESystem getRESystem(string[] keys)
         {
-            if (RESystems.ContainsKey(Num))
+            if (RESystems.ContainsKey(keys))
             {
-                return RESystems[Num];
+                return RESystems[keys];
             }
             else return null;
         }
