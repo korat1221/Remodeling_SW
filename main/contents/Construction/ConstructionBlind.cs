@@ -294,23 +294,26 @@ namespace main.contents
 
 
 
-                string[][] res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT AVG(일사량) FROM 기후데이터_전일사량 WHERE 지역명 = '" + Location[0][0] + "' AND 방향 ='남' and 기간 LIKE '%월' GROUP BY 기간 ORDER BY 기간*1 ASC");
-                if (res2.Length > 0)
+              
+                 double[] day = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+                for (int mth = 1; mth <= 12; mth++)
                 {
-                    for (int k = 0; k < res2.Length; k++)
+                    string[][] res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 일사량 FROM 기후데이터_전일사량 WHERE 지역명 = '" + Location[0][0] + "' AND 방향 ='남' And 각도='90˚' and  기간 = '" + mth.ToString() + "월'");
+                    if (res2.Length > 0)
                     {
                         if (res2.Length > 0)
                         {
-                            s2 += Convert.ToDouble(res2[k][0]) + ",";
+                            s2 += (Convert.ToDouble(res2[0][0]) * 24 * day[mth -1] /1000)+ ",";
                         }
                     }
                 }
-                res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT Max(일사량) From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='남' And 각도='90˚'and not 기간='연간값'");
+                   
+                string [][] res3 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT Max(일사량) From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='남' And 각도='90˚'and not 기간='연간값'");
                 double max = 0;
-                if (res2.Length > 0)
+                if (res3.Length > 0)
                 {
-                    int n2 = ((int)Convert.ToDouble(res2[0][0])).ToString().Length;
-                    max = Convert.ToInt64(Convert.ToDouble(res2[0][0]) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1);
+                    int n2 = ((int)Convert.ToDouble(res3[0][0])).ToString().Length;
+                    max = Convert.ToInt64(Convert.ToDouble(res3[0][0]) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1);
 
                 }
                 string unit = "kWh/m" + Program.UTIL.Subscript(2, true) + "·mth";
