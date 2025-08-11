@@ -86,6 +86,9 @@ namespace main.contents
             label2.Text = unit;
             label34.Text = unit;
 
+            label28.Text = "m\u00B2";
+            glassArea_label2.Text = "m\u00B2";
+
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -371,7 +374,8 @@ namespace main.contents
             if (Select[1] == null)
             {
                 //DoorDB doordb = new DoorDB(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-                DoorDB doordb = new DoorDB(DoorNum, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+                string[] select = new string[14];
+                DoorDB doordb = new DoorDB(DoorNum, select, DiIndi);
                 DialogResult result = doordb.ShowDialog();
 
                 if (result == DialogResult.OK)
@@ -407,10 +411,10 @@ namespace main.contents
                         DoorThk = 0;
                     }
                     //문틀상하부
-                    DoorOver = Convert.ToDouble(doordb.Select_Door[5]);
+                    DoorOver = doordb.Select_Door[5]=="" ?  0: Convert.ToDouble(doordb.Select_Door[5]);
                     over_textBox.Text = DoorOver.ToString();
-                    DoorBottom = Convert.ToDouble(doordb.Select_Door[6]);
-                    bottom_textBox.Text = DoorBottom.ToString();
+                    DoorBottom = doordb.Select_Door[6] == "" ? 0 : Convert.ToDouble(doordb.Select_Door[6]);
+                    bottom_textBox.Text =  DoorBottom.ToString();
                     //제품명
                     DoorDB = doordb.Select_Door[2];
                     DoorDB_textBox.Text = DoorDB.ToString();
@@ -432,7 +436,7 @@ namespace main.contents
             }
             else
             {
-                DoorDB doordb = new DoorDB(DoorNum, Select[0], Select[1], Select[2], Select[3], Select[4], Select[5], Select[6], Select[7], Select[8], Select[9], Select[10], Select[11], Select[12], Select[13]);
+                DoorDB doordb = new DoorDB(DoorNum, Select, DiIndi);
                 DialogResult result = doordb.ShowDialog();
 
                 if (result == DialogResult.OK)
@@ -465,9 +469,9 @@ namespace main.contents
                         DoorThk = 0;
                     }
                     //문틀상하부
-                    DoorOver = Convert.ToDouble(doordb.Select_Door[5]);
+                    DoorOver = doordb.Select_Door[5]=="" ?  0 : Convert.ToDouble(doordb.Select_Door[5]);
                     over_textBox.Text = DoorOver.ToString();
-                    DoorBottom = Convert.ToDouble(doordb.Select_Door[6]);
+                    DoorBottom = doordb.Select_Door[6]=="" ? 0 :  Convert.ToDouble(doordb.Select_Door[6]);
                     bottom_textBox.Text = DoorBottom.ToString();
                     //제품명
                     DoorDB = doordb.Select_Door[2];
@@ -775,8 +779,18 @@ namespace main.contents
             {
                 if (UD1_textBox.Text != null && DoorArea_textBox.Text != null && GlassArea_textBox.Text.ToString() != "" && GlassU_textBox.Text.ToString() != "")
                 {
-                    DoorUDGlass = (DoorUD * ((DoorArea / 1000000) - (GlassArea / 1000000)) + Ug * (GlassArea / 1000000) + DoorOver * (2 * DoorH / 1000 + DoorL / 1000) + DoorBottom * DoorL / 1000) / (DoorArea / 1000000);
+                    //유리포함 문 열관류율
+                    //(유리면적x유리열관류율 + 문면적x문열관율) / 문면적
+                    double doorarea=0, glassarea=0, totalarea=0, dooru=0, glassu=0;
+                    totalarea = DoorArea / 1000000;
+                    glassarea = GlassArea / 1000000;
+                    doorarea = totalarea - glassarea;
+                    dooru = DoorUD;
+                    glassu = Ug;
+
+                    DoorUDGlass = (glassarea * glassu + doorarea * dooru) / totalarea;
                     UD2_textBox.Text = String.Format("{0:F3}", DoorUDGlass);
+
                 }
                 else;
             }

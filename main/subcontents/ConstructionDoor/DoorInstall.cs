@@ -181,7 +181,7 @@ namespace main.subcontents.ConstructionDoor
             {
                 string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
                 Program.DB.setValue(DB.type.ProjDB, "User_DoorInstall", "번호,프로젝트유형,DB유형,제품명,구분1,구분2,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율",
-                    "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + UserDBName + "','" + UserDBType1 + "','" + UserDBType2 + "','" + UserDB_Psi_InstallTop.ToString() + "','" + UserDB_Psi_InstallSide.ToString() + "','" + UserDB_Psi_InstallSide.ToString() + "'", "번호");
+                    "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + UserDBName + "','" + UserDBType1 + "','" + UserDBType2 + "','" + UserDB_Psi_InstallTop.ToString() + "','" + UserDB_Psi_InstallSide.ToString() + "','" + UserDB_Psi_InstallButtom.ToString() + "'", "번호");
                 load_table_DB();
                 UserNum = Program.UTIL.CreateNum("User_DoorInstall", "번호", "UDIS_0");
                 UserNum_textBox.Text = UserNum;

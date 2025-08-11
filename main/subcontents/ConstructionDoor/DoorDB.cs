@@ -12,41 +12,48 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace main.subcontents
 {
     public partial class DoorDB : Form
     {
         DataGridViewCheckBoxColumn Door_checkBoxColumn = new DataGridViewCheckBoxColumn();
-        double 열전도율, R, d, U, Width, Height, 열저항, d2; //d2 = 열저항 계산시 두께 
+        double 열전도율, R, d, U_basic, Width, Height, 열저항, d2; //d2 = 열저항 계산시 두께 
+        double psiHeight, psiWidth, U;
         double yi;
         int nRow;
         public String[] Select_Door = new String[14];
         double[] x = { 0, 5, 7, 10, 15, 25, 50, 100, 300 }; //두께
         double[] y = { 0, 0.11, 0.13, 0.15, 0.17, 0.18, 0.18, 0.18, 0.18 }; //벽체 열저항
+        double rsi, rse; 
 
-
-        public DoorDB(String DoorNum, String Select0, String Select1, String Select2, String Select3, String Select4, String Select5, String Select6, String Select7, String Select8, String Select9, String Select10, String Select11, String Select12, String Select13)
+        public DoorDB(String DoorNum, String[] Select, string DiIndi)
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             Create_Table();
-            if (Select0 != null)
+            if (Select[0] != null)
             {
-                Door_dataGridView.Rows[nRow].Cells[1].Value = Select0;
-                Door_dataGridView.Rows[nRow].Cells[2].Value = Select1;
-                Door_dataGridView.Rows[nRow].Cells[4].Value = Select2;
-                Door_dataGridView.Rows[nRow].Cells[5].Value = Select3;
-                Door_dataGridView.Rows[nRow].Cells[6].Value = Select4;
-                Door_dataGridView.Rows[nRow].Cells[7].Value = Select5;
-                Door_dataGridView.Rows[nRow].Cells[8].Value = Select6;
-                Door_dataGridView.Rows[nRow].Cells[9].Value = Select7;
-                Door_dataGridView.Rows[nRow].Cells[10].Value = Select8;
-                Door_dataGridView.Rows[nRow].Cells[11].Value = Select9;
-                Door_dataGridView.Rows[nRow].Cells[13].Value = Select10;
-                Door_dataGridView.Rows[nRow].Cells[14].Value = Select11;
-                Door_dataGridView.Rows[nRow].Cells[15].Value = Select12;
-                Door_dataGridView.Rows[nRow].Cells[16].Value = Select13;
+                             
+                Door_dataGridView.Rows[nRow].Cells[2].Value = Select[1];
+                for (int a = 2; a < 10; a++)
+                {
+                    Door_dataGridView.Rows[nRow].Cells[a + 2].Value = Select[a];
+                }
+                for (int a = 10; a < 14; a++)
+                {
+                    Door_dataGridView.Rows[nRow].Cells[a + 3].Value = Select[a];
+                }
 
+                rsi = 0.13;
+                if(DiIndi =="직접외기")
+                {
+                    rse = 0.04;
+                }
+                else
+                {
+                    rse = 0.13;
+                }
             }
 
             // LoadData(DoorNum);
@@ -254,14 +261,23 @@ namespace main.subcontents
                             R = d / 1000 / 열전도율;
                         }
                     }
-                    if (Door_dataGridView.Rows[e.RowIndex].Cells[14].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
+                    if (Door_dataGridView.Rows[e.RowIndex].Cells[14].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "" && Door_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
                     {
                         Width = Convert.ToDouble(Door_dataGridView.Rows[e.RowIndex].Cells[14].Value) / 1000;
                     }
-                    if (Door_dataGridView.Rows[e.RowIndex].Cells[15].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[15].Value.ToString() != "-")
+                    if (Door_dataGridView.Rows[e.RowIndex].Cells[15].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[15].Value.ToString() != "" && Door_dataGridView.Rows[e.RowIndex].Cells[15].Value.ToString() != "-")
                     {
                         Height = Convert.ToDouble(Door_dataGridView.Rows[e.RowIndex].Cells[15].Value) / 1000;
                     }
+                    if (Door_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "")
+                    {
+                        psiWidth = Convert.ToDouble(Door_dataGridView.Rows[e.RowIndex].Cells[7].Value);
+                    }
+                    if (Door_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "")
+                    {
+                        psiHeight = Convert.ToDouble(Door_dataGridView.Rows[e.RowIndex].Cells[8].Value);
+                    }
+
                     if (Door_dataGridView.Rows[e.RowIndex].Cells[11].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-")
                     {
                         if (Door_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() == "단열재")
@@ -373,7 +389,7 @@ namespace main.subcontents
                 //문짝내부가 단열재인 경우
                 if (Door_dataGridView.Rows[nRow].Cells[11].Value.ToString() != "-")
                 {
-                    U = (1 / (R + 0.17));
+                    U_basic = (1 / (R + rsi+rse));
                 }
                 else
                 {
@@ -385,18 +401,19 @@ namespace main.subcontents
                         //두께에 대한 벽체 열저항 선형보간
 
                         Interpolate(x, y, d2);
-                        U = (1 / (0.17 + yi));
+                        U_basic = (1 / (rsi+rse + yi));
                     }
                     else
                     {
                         Interpolate(x, y, d);
-                        U = (1 / (0.17 + yi));
+                        U_basic = (1 / (rsi+rse + yi));
                     }
                 }
+
+               U =  U_basic +(psiHeight * Height * 1 + psiHeight * Width * 2 + psiWidth * Height) / (Width * Height);
+
                 Door_dataGridView.Rows[nRow].Cells[16].Value = string.Format("{0:F3}", U);
             }
-
-
         }
 
 
@@ -409,11 +426,33 @@ namespace main.subcontents
             {
                 if (Door_dataGridView.Rows[nRow].Cells[i + 2].Value != null)
                 { Select_Door[i] = Door_dataGridView.Rows[nRow].Cells[i + 2].Value.ToString(); }
+                else
+                {
+                    Select_Door[i] = "";
+                }
             }
+
+            if (Door_dataGridView.Rows[nRow].Cells[6].Value == null  || Door_dataGridView.Rows[nRow].Cells[9].Value == null || Door_dataGridView.Rows[nRow].Cells[10].Value == null)
+            {
+                MessageBox.Show("문틀 및 문짝 종류를 모두 입력해주세요.");
+                return;
+            }
+            if (Door_dataGridView.Rows[nRow].Cells[14].Value == null || Door_dataGridView.Rows[nRow].Cells[15].Value == null || Door_dataGridView.Rows[nRow].Cells[16].Value == null)
+            {
+                MessageBox.Show("치수 정보 및 열관류율 정보를 모두 입력해주세요.");
+                return;
+            }
+
             for (int i = 10; i < 14; i++)
             {
+
                 if (Door_dataGridView.Rows[nRow].Cells[i + 3].Value != null)
                 { Select_Door[i] = Door_dataGridView.Rows[nRow].Cells[i + 3].Value.ToString(); }
+                else
+                {
+                    Select_Door[i] = "";
+                }
+               
             }
 
             this.DialogResult = DialogResult.OK;
