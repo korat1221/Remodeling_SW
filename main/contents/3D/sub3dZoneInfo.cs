@@ -413,6 +413,12 @@ namespace main.contents
                 case "외부출입문":
                     Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "번호,명칭", ""); //출입문으로 나중에 바꿔야함 
                     break;
+                case "내벽":
+                    Value = null; 
+                    break;
+                case "층간바닥":
+                    Value = null;
+                    break;
             }
 
             DataGridViewComboBoxCell ConstructionCombo = new DataGridViewComboBoxCell();

@@ -33,6 +33,7 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             panel1 = new Panel();
+            info = new Button();
             dUtbFloor_label = new Label();
             dUtbRoof_label = new Label();
             dUtbWall_label = new Label();
@@ -44,7 +45,6 @@ namespace main.contents
             label4 = new Label();
             Icon_pictureBox = new PictureBox();
             dataGridView1 = new DataGridView();
-            info = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -69,6 +69,21 @@ namespace main.contents
             panel1.Name = "panel1";
             panel1.Size = new Size(971, 730);
             panel1.TabIndex = 0;
+            // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(925, 12);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 129;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
             // 
             // dUtbFloor_label
             // 
@@ -136,7 +151,7 @@ namespace main.contents
             // 
             // TB_comboBox
             // 
-            TB_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            //TB_comboBox.DrawMode = DrawMode.Normal;
             TB_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             TB_comboBox.FormattingEnabled = true;
             TB_comboBox.Location = new Point(663, 12);
@@ -144,7 +159,6 @@ namespace main.contents
             TB_comboBox.Size = new Size(120, 23);
             TB_comboBox.TabIndex = 122;
             TB_comboBox.Visible = false;
-            TB_comboBox.DrawItem += TB_comboBox_DrawItem;
             TB_comboBox.SelectedIndexChanged += TB_comboBox_SelectedIndexChanged;
             // 
             // TB_button
@@ -217,21 +231,6 @@ namespace main.contents
             dataGridView1.Size = new Size(902, 324);
             dataGridView1.TabIndex = 1;
             dataGridView1.CellPainting += dataGridView1_CellPainting;
-            // 
-            // info
-            // 
-            info.BackColor = SystemColors.ControlLight;
-            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            info.FlatStyle = FlatStyle.System;
-            info.Font = new Font("나눔바른고딕", 9.75F);
-            info.Location = new Point(925, 12);
-            info.Margin = new Padding(0);
-            info.Name = "info";
-            info.Size = new Size(23, 23);
-            info.TabIndex = 129;
-            info.Text = "?";
-            info.UseVisualStyleBackColor = false;
-            info.Click += info_Click;
             // 
             // sub3dBridgeInfo
             // 

@@ -183,9 +183,15 @@ namespace main.contents
                                 case "외부출입문":
                                     Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "번호,명칭", "");
                                     break;
+                                case "내벽":
+                                    Value = null;
+                                    break;
+                                case "층간바닥":
+                                    Value = null;
+                                    break;
                             }
 
-                            if (Value.Length > 0)
+                            if (Value != null && Value.Length > 0)
                             {
                                 Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,구조체,구조체번호", "'" + value[a][0] + "','" + Value[0][1] + "','" + Value[0][0] + "'", "번호");
 

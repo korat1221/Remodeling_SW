@@ -89,6 +89,7 @@ namespace main.contents
                     SlabCwirk_comboBox.Items.Add(SQL_index_Slab[i][0]);
                 }
             }
+            label10.Text = "Wh/(m"+Program.UTIL.Subscript(2, true) +"K)";
         }
 
 
@@ -347,7 +348,7 @@ namespace main.contents
                     }
                     else if (ZoneE_Select[n][1] == "외부출입문")
                     {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "문유효열관류율,흡수율", "번호='" + ZoneE_Select[n][5] + "'");
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "문유효열관류율,흡수율", "번호='" + ZoneE_Select[n][6] + "'");
                     }
                     else
                     {

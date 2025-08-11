@@ -1781,21 +1781,24 @@ namespace main.contents
                         SelectHP.Add(item.ToString());
                     }
                     string[][] CoolingValue = Program.DB.getValue(DB.type.BaseDB_Cooling, "AirCon", "냉방표준성능,대기전력", "명칭='" + SelectHP[0].ToString() + "등급<4kW' and 열원='" + air_db.Carrier + "'");
-
-                    string[][] HeatingValue = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프", "정격COP,한랭지COP", "등급='" + SelectHP[0].ToString() + "등급'and 연료='" + air_db.Carrier + "'");
-
-                    AirHP_dataGridView.Rows[nRow].Cells[4].Value = air_db.HC;
-                    AirHP_dataGridView.Rows[nRow].Cells[5].Value = air_db.Carrier;
                     if (CoolingValue.Length > 0)
                     {
                         AirHP_dataGridView.Rows[nRow].Cells[8].Value = CoolingValue[0][0];
                         AirHP_dataGridView.Rows[nRow].Cells[16].Value = CoolingValue[0][1];
                     }
-                    if (HeatingValue.Length > 0)
+                    if (air_db.HC == "냉난방")
                     {
-                        AirHP_dataGridView.Rows[nRow].Cells[11].Value = HeatingValue[0][0];
-                        AirHP_dataGridView.Rows[nRow].Cells[14].Value = HeatingValue[0][1];
+                        string[][] HeatingValue = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프", "정격COP,한랭지COP", "등급='" + SelectHP[0].ToString() + "등급'and 연료='" + air_db.Carrier + "'");
+                        if (HeatingValue.Length > 0)
+                        {
+                            AirHP_dataGridView.Rows[nRow].Cells[11].Value = HeatingValue[0][0];
+                            AirHP_dataGridView.Rows[nRow].Cells[14].Value = HeatingValue[0][1];
+                        }
                     }
+                    AirHP_dataGridView.Rows[nRow].Cells[4].Value = air_db.HC;
+                    AirHP_dataGridView.Rows[nRow].Cells[5].Value = air_db.Carrier;
+                   
+                   
 
 
                 }

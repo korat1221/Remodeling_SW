@@ -33,8 +33,11 @@ namespace main.contents
             Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "상위메뉴아이콘_on2", "상위메뉴명 = '결과 정보'");
 
 
-
-
+            label54.Text  = "m"+Program.UTIL.Subscript(2,true);
+            label63.Text = "m" + Program.UTIL.Subscript(3, true) + "/h";
+            label35.Text = "Wh/m" + Program.UTIL.Subscript(2, true) + "d";
+            label31.Text = "Wh/m" + Program.UTIL.Subscript(2, true) + "d";
+            label24.Text = "m" + Program.UTIL.Subscript(2, true) + "/인";
             //존 환기방식 콤보박스
             //Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, AHU_comboBox, "존일반", "환기방식", "");
             AHU_comboBox.Items.Clear();

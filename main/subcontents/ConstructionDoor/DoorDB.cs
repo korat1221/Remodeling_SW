@@ -387,13 +387,13 @@ namespace main.subcontents
             if (Door_dataGridView.Rows[nRow].Cells[11].Value != null && Door_dataGridView.Rows[nRow].Cells[11].Value.ToString() != "")
             {
                 //문짝내부가 단열재인 경우
-                if (Door_dataGridView.Rows[nRow].Cells[11].Value.ToString() != "-")
+                if (Door_dataGridView.Rows[nRow].Cells[11].Value!= null && Door_dataGridView.Rows[nRow].Cells[11].Value.ToString() != "-")
                 {
                     U_basic = (1 / (R + rsi+rse));
                 }
                 else
                 {
-                    if (Door_dataGridView.Rows[nRow].Cells[9].Value.ToString() == "목재문")
+                    if (Door_dataGridView.Rows[nRow].Cells[9].Value!= null && Door_dataGridView.Rows[nRow].Cells[9].Value.ToString() == "목재문")
                     {
                         //목재문일 경우 두께 -10 
                         d2 = d - 10;
@@ -441,6 +441,14 @@ namespace main.subcontents
             {
                 MessageBox.Show("치수 정보 및 열관류율 정보를 모두 입력해주세요.");
                 return;
+            }
+            if(Door_dataGridView.Rows[nRow].Cells[2].Value!= null && Door_dataGridView.Rows[nRow].Cells[2].Value.ToString()=="기본")
+            {
+                if (Door_dataGridView.Rows[nRow].Cells[13].Value == null )
+                {
+                    MessageBox.Show("문짝 두께를 입력해주세요.");
+                    return;
+                }
             }
 
             for (int i = 10; i < 14; i++)

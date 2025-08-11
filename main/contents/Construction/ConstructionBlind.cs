@@ -53,7 +53,6 @@ namespace main.contents
             }
 
             ControlType_comboBox.Items.Clear();
-            ControlType_comboBox.Items.Add("차양없음");
             ControlType_comboBox.Items.Add("일사제어차양(수동)");
             ControlType_comboBox.Items.Add("일사제어차양(자동)");
             ControlType_comboBox.Items.Add("채광제어차양");

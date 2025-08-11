@@ -62,6 +62,7 @@ namespace main.contents
         }
         private void Load_TBDB()
         {
+            fillFilterCombos();
             dataGridView1.Rows.Clear();
 
             string[][] Value;
@@ -141,6 +142,7 @@ namespace main.contents
                 SelectTBType = TB_comboBox.SelectedItem.ToString();
                 if (SelectTBType != null && SelectTBType != "")
                 {
+                    TB_comboBox.Text = SelectTBType;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
                         Program.DB.setValue(DB.type.ProjDB, "ThermalBridge_3D", "번호,선택열교",
@@ -198,8 +200,11 @@ namespace main.contents
                 {
                     if (!TB_comboBox.Visible)
                     {
+                      //  TB_comboBox.Parent = dataGridView1;           // 또는 dataGridView1
                         TB_comboBox.Location = new Point(cellX, cellY);
                         TB_comboBox.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
+                        TB_comboBox.BringToFront();
+                        TB_comboBox.Visible = true;
                         TB_comboBox.Show();
                     }
                 }
@@ -214,29 +219,9 @@ namespace main.contents
                 }
             }
         }
-        private void TB_comboBox_DrawItem(object sender, DrawItemEventArgs e)
-        {
-            ComboBox combo = sender as ComboBox;
+    
 
-            if (e.Index < 0 || combo == null) return;
 
-            // 배경 그리기
-            e.DrawBackground();
-
-            // 텍스트 브러시 선택
-            Brush brush = (e.State & DrawItemState.Selected) == DrawItemState.Selected
-                ? SystemBrushes.HighlightText
-                : new SolidBrush(combo.ForeColor);
-
-            // 항목 문자열 가져오기
-            string text = combo.GetItemText(combo.Items[e.Index]);
-
-            // 문자열 출력
-            e.Graphics.DrawString(text, e.Font, brush, e.Bounds);
-
-            // 포커스 표시
-            e.DrawFocusRectangle();
-        }
 
         private void fillFilterCombos()
         {
