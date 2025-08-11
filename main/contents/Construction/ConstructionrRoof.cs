@@ -86,6 +86,10 @@ namespace main.contents
             Load_table();
             webView21.Source = new Uri(Program.gPath + "transmit.html?type=roof", true);
             InitializeAsync();
+
+            U_label2.Text = "W/(m\u00B2∙K)";
+            dU_label2.Text = "W/(m\u00B2∙K)";
+            Ueff_label2.Text = "W/(m\u00B2∙K)";
         }
         async void InitializeAsync()
         {
