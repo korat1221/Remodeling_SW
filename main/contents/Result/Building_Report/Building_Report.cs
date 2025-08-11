@@ -2796,8 +2796,8 @@ namespace main.contents.Result.Building_Report
                         }
                         else 등급 = "None";
 
-                        __data[164].Add(new { idx = i, val = 등급 });
-                        data.Add(new { cname = "zebLvel", data = __data[164] }); //등급
+                        __data[180].Add(new { idx = i, val = 등급 });
+                        data.Add(new { cname = "zebLevel", data = __data[180] }); //등급
 
                         List<object> 난방소요량chart = new List<object>();
                         List<object> 냉방소요량chart = new List<object>();
