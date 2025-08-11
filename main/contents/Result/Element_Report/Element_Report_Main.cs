@@ -51,7 +51,20 @@ namespace main.contents
             MainMenu.Add(new { text = "가스HP", id = "{\\\"formID\\\":64,\\\"ID\\\":\\\"Element_GasHP\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             MainMenu.Add(new { text = "보일러_태양열", id = "{\\\"formID\\\":65,\\\"ID\\\":\\\"Element_Boiler\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             MainMenu.Add(new { text = "냉동기", id = "{\\\"formID\\\":66,\\\"ID\\\":\\\"Element_Chiler\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            MainMenu.Add(new { text = "신재생시스템", id = "{\\\"formID\\\":67,\\\"ID\\\":\\\"Element_RESystem\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            string[][] 프로젝트유형 = Program.DB.querySQL(DB.type.ProjListDB, "Select type from projects where current = '1'");
+            if (프로젝트유형.Length > 0)
+            {
+
+                if (프로젝트유형[0][0] == "1" || 프로젝트유형[0][0] == "4")
+                {
+                   
+                }
+                else
+                {
+                    MainMenu.Add(new { text = "신재생시스템", id = "{\\\"formID\\\":67,\\\"ID\\\":\\\"Element_RESystem\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+                }
+            }
+           
 
             Program.UTIL.resetMainTree(6, 1, MainMenu.ToArray(), "60"); // 예시 코드: 메인 메뉴 동적 할당
         }
