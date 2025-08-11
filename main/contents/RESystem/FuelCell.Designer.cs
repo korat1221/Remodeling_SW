@@ -1,5 +1,4 @@
-﻿
-namespace main.contents
+﻿namespace main.contents
 {
     partial class FuelCell
     {
@@ -32,232 +31,256 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            GeneralPanel = new Panel();
-            label9 = new Label();
-            Icon_pictureBox = new PictureBox();
-            label1 = new Label();
-            Num_textBox = new TextBox();
-            Name_textBox = new TextBox();
-            panel2 = new Panel();
-            dellabel = new Label();
-            deletebutton = new Button();
-            W_button = new Button();
-            FCDB_button = new Button();
-            HLabel = new Label();
-            WLabel = new Label();
-            FC_dataGridView = new DataGridView();
-            Week_comboBox = new ComboBox();
-            UseTime_TextBox = new Label();
-            label8 = new Label();
-            End_comboBox = new ComboBox();
-            Start_comboBox = new ComboBox();
-            label7 = new Label();
-            label4 = new Label();
-            label3 = new Label();
-            H_textBox = new TextBox();
-            W_textBox = new TextBox();
-            H_button = new Button();
-            FCTypeComboBox = new ComboBox();
-            label2 = new Label();
-            FCNameText = new TextBox();
-            label6 = new Label();
-            AdditionalPanel = new Panel();
+            PVMainPanel = new Panel();
             panel4 = new Panel();
-            SupplypictureBox = new PictureBox();
-            panel3 = new Panel();
-            GenpictureBox = new PictureBox();
-            panel1 = new Panel();
-            SourcepictureBox = new PictureBox();
+            radioButton4 = new RadioButton();
+            radioButton2 = new RadioButton();
+            radioButton3 = new RadioButton();
+            radioButton1 = new RadioButton();
+            label8 = new Label();
+            label9 = new Label();
+            label11 = new Label();
+            label3 = new Label();
+            Num_textBox = new TextBox();
+            pictureBox1 = new PictureBox();
             Save_button = new Button();
-            GeneralPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
+            label28 = new Label();
+            elec_textBox = new TextBox();
+            label27 = new Label();
+            panel2 = new Panel();
+            label6 = new Label();
+            FC_dataGridView = new DataGridView();
+            tabControl1 = new CustomTabControl();
+            PVCalc_tabPage = new TabPage();
+            label24 = new Label();
+            webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
+            panel1 = new Panel();
+            label2 = new Label();
+            heat_textBox = new TextBox();
+            label4 = new Label();
+            label1 = new Label();
+            gas_textBox = new TextBox();
+            label5 = new Label();
+            PVMainPanel.SuspendLayout();
+            panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)FC_dataGridView).BeginInit();
-            AdditionalPanel.SuspendLayout();
-            panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)SupplypictureBox).BeginInit();
-            panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)GenpictureBox).BeginInit();
+            tabControl1.SuspendLayout();
+            PVCalc_tabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)SourcepictureBox).BeginInit();
             SuspendLayout();
             // 
-            // GeneralPanel
+            // PVMainPanel
             // 
-            GeneralPanel.BackColor = Color.FromArgb(32, 77, 112);
-            GeneralPanel.Controls.Add(label9);
-            GeneralPanel.Controls.Add(Icon_pictureBox);
-            GeneralPanel.Controls.Add(label1);
-            GeneralPanel.Controls.Add(Num_textBox);
-            GeneralPanel.Controls.Add(Name_textBox);
-            GeneralPanel.Location = new Point(1, 1);
-            GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(1000, 80);
-            GeneralPanel.TabIndex = 17;
-            GeneralPanel.Paint += GeneralPanel_Paint;
+            PVMainPanel.BackColor = SystemColors.GradientActiveCaption;
+            PVMainPanel.Controls.Add(panel4);
+            PVMainPanel.Controls.Add(label3);
+            PVMainPanel.Controls.Add(Num_textBox);
+            PVMainPanel.Controls.Add(pictureBox1);
+            PVMainPanel.Location = new Point(0, 4);
+            PVMainPanel.Name = "PVMainPanel";
+            PVMainPanel.Size = new Size(1000, 80);
+            PVMainPanel.TabIndex = 17;
+            // 
+            // panel4
+            // 
+            panel4.Controls.Add(radioButton4);
+            panel4.Controls.Add(radioButton2);
+            panel4.Controls.Add(radioButton3);
+            panel4.Controls.Add(radioButton1);
+            panel4.Controls.Add(label8);
+            panel4.Controls.Add(label9);
+            panel4.Controls.Add(label11);
+            panel4.Dock = DockStyle.Right;
+            panel4.Location = new Point(472, 0);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(528, 80);
+            panel4.TabIndex = 135;
+            // 
+            // radioButton4
+            // 
+            radioButton4.AutoSize = true;
+            radioButton4.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            radioButton4.ForeColor = Color.White;
+            radioButton4.Location = new Point(137, 50);
+            radioButton4.Name = "radioButton4";
+            radioButton4.Size = new Size(91, 19);
+            radioButton4.TabIndex = 2;
+            radioButton4.TabStop = true;
+            radioButton4.Text = "철거 후 신규";
+            radioButton4.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            radioButton2.AutoSize = true;
+            radioButton2.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            radioButton2.ForeColor = Color.White;
+            radioButton2.Location = new Point(70, 30);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(49, 19);
+            radioButton2.TabIndex = 3;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "보수";
+            radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton3
+            // 
+            radioButton3.AutoSize = true;
+            radioButton3.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            radioButton3.ForeColor = Color.White;
+            radioButton3.Location = new Point(70, 50);
+            radioButton3.Name = "radioButton3";
+            radioButton3.Size = new Size(49, 19);
+            radioButton3.TabIndex = 1;
+            radioButton3.TabStop = true;
+            radioButton3.Text = "신규";
+            radioButton3.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            radioButton1.ForeColor = Color.White;
+            radioButton1.Location = new Point(70, 9);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(49, 19);
+            radioButton1.TabIndex = 0;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "기존";
+            radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label8.ForeColor = Color.White;
+            label8.Location = new Point(13, 11);
+            label8.Name = "label8";
+            label8.Size = new Size(34, 15);
+            label8.TabIndex = 130;
+            label8.Text = "기 존";
             // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font(UTIL.Families[0], 9.75F);
+            label9.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label9.ForeColor = Color.White;
-            label9.Location = new Point(106, 14);
+            label9.Location = new Point(13, 52);
             label9.Name = "label9";
-            label9.Size = new Size(47, 19);
-            label9.TabIndex = 139;
-            label9.Text = "번  호";
+            label9.Size = new Size(34, 15);
+            label9.TabIndex = 129;
+            label9.Text = "신 규";
             // 
-            // Icon_pictureBox
+            // label11
             // 
-            Icon_pictureBox.Location = new Point(21, 11);
-            Icon_pictureBox.Name = "Icon_pictureBox";
-            Icon_pictureBox.Size = new Size(50, 50);
-            Icon_pictureBox.TabIndex = 138;
-            Icon_pictureBox.TabStop = false;
+            label11.AutoSize = true;
+            label11.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label11.ForeColor = Color.White;
+            label11.Location = new Point(13, 32);
+            label11.Name = "label11";
+            label11.Size = new Size(34, 15);
+            label11.TabIndex = 128;
+            label11.Text = "보 수";
             // 
-            // label1
+            // label3
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font(UTIL.Families[0], 9.75F);
-            label1.ForeColor = Color.White;
-            label1.Location = new Point(106, 37);
-            label1.Name = "label1";
-            label1.Size = new Size(47, 19);
-            label1.TabIndex = 137;
-            label1.Text = "명  칭";
+            label3.AutoSize = true;
+            label3.Cursor = Cursors.IBeam;
+            label3.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            label3.ForeColor = Color.White;
+            label3.Location = new Point(114, 18);
+            label3.Name = "label3";
+            label3.Size = new Size(37, 15);
+            label3.TabIndex = 134;
+            label3.Text = "번  호";
             // 
             // Num_textBox
             // 
-            Num_textBox.BackColor = Color.FromArgb(32, 77, 112);
+            Num_textBox.BackColor = SystemColors.GradientActiveCaption;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
-            Num_textBox.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            Num_textBox.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
             Num_textBox.ForeColor = Color.White;
-            Num_textBox.Location = new Point(158, 14);
+            Num_textBox.Location = new Point(164, 17);
             Num_textBox.Name = "Num_textBox";
-            Num_textBox.Size = new Size(120, 18);
-            Num_textBox.TabIndex = 136;
+            Num_textBox.Size = new Size(75, 15);
+            Num_textBox.TabIndex = 132;
             Num_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // Name_textBox
+            // pictureBox1
             // 
-            Name_textBox.BackColor = Color.White;
-            Name_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Name_textBox.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
-            Name_textBox.Location = new Point(158, 35);
-            Name_textBox.Name = "Name_textBox";
-            Name_textBox.Size = new Size(120, 25);
-            Name_textBox.TabIndex = 135;
-            Name_textBox.TextAlign = HorizontalAlignment.Center;
+            pictureBox1.Location = new Point(18, 14);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(50, 50);
+            pictureBox1.TabIndex = 90;
+            pictureBox1.TabStop = false;
+            // 
+            // Save_button
+            // 
+            Save_button.BackColor = SystemColors.ButtonHighlight;
+            Save_button.ForeColor = Color.Black;
+            Save_button.Location = new Point(1006, 638);
+            Save_button.Name = "Save_button";
+            Save_button.Size = new Size(88, 25);
+            Save_button.TabIndex = 99;
+            Save_button.Text = "BACK";
+            Save_button.UseVisualStyleBackColor = true;
+            Save_button.Click += Save_button_Click;
+            // 
+            // label28
+            // 
+            label28.AutoSize = true;
+            label28.Font = new Font("나눔바른고딕", 9.75F);
+            label28.ForeColor = SystemColors.ControlDark;
+            label28.Location = new Point(1148, 28);
+            label28.Name = "label28";
+            label28.Size = new Size(53, 15);
+            label28.TabIndex = 109;
+            label28.Text = "kWh/년";
+            // 
+            // elec_textBox
+            // 
+            elec_textBox.BackColor = SystemColors.InactiveBorder;
+            elec_textBox.BorderStyle = BorderStyle.None;
+            elec_textBox.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            elec_textBox.ForeColor = Color.Black;
+            elec_textBox.Location = new Point(1085, 28);
+            elec_textBox.Name = "elec_textBox";
+            elec_textBox.Size = new Size(60, 15);
+            elec_textBox.TabIndex = 127;
+            elec_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label27
+            // 
+            label27.AutoSize = true;
+            label27.Font = new Font("나눔바른고딕", 9.75F);
+            label27.Location = new Point(1006, 28);
+            label27.Name = "label27";
+            label27.Size = new Size(67, 15);
+            label27.TabIndex = 127;
+            label27.Text = "전기생산량";
             // 
             // panel2
             // 
             panel2.BackColor = Color.White;
-            panel2.Controls.Add(dellabel);
-            panel2.Controls.Add(deletebutton);
-            panel2.Controls.Add(W_button);
-            panel2.Controls.Add(FCDB_button);
-            panel2.Controls.Add(HLabel);
-            panel2.Controls.Add(WLabel);
-            panel2.Controls.Add(FC_dataGridView);
-            panel2.Controls.Add(Week_comboBox);
-            panel2.Controls.Add(UseTime_TextBox);
-            panel2.Controls.Add(label8);
-            panel2.Controls.Add(End_comboBox);
-            panel2.Controls.Add(Start_comboBox);
-            panel2.Controls.Add(label7);
-            panel2.Controls.Add(label4);
-            panel2.Controls.Add(label3);
-            panel2.Controls.Add(H_textBox);
-            panel2.Controls.Add(W_textBox);
-            panel2.Controls.Add(H_button);
-            panel2.Controls.Add(FCTypeComboBox);
-            panel2.Controls.Add(label2);
-            panel2.Controls.Add(FCNameText);
             panel2.Controls.Add(label6);
-            panel2.Location = new Point(1, 73);
+            panel2.Controls.Add(FC_dataGridView);
+            panel2.Location = new Point(0, 84);
             panel2.Name = "panel2";
-            panel2.Size = new Size(1000, 296);
-            panel2.TabIndex = 18;
+            panel2.Size = new Size(1000, 280);
+            panel2.TabIndex = 139;
             // 
-            // dellabel
+            // label6
             // 
-            dellabel.AutoSize = true;
-            dellabel.Font = new Font(UTIL.Families[0], 9.75F);
-            dellabel.ForeColor = SystemColors.ActiveCaptionText;
-            dellabel.Location = new Point(904, 172);
-            dellabel.Name = "dellabel";
-            dellabel.Size = new Size(37, 19);
-            dellabel.TabIndex = 158;
-            dellabel.Text = "삭제";
-            // 
-            // deletebutton
-            // 
-            deletebutton.BackColor = SystemColors.ControlLight;
-            deletebutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            deletebutton.FlatAppearance.MouseOverBackColor = Color.LightYellow;
-            deletebutton.FlatStyle = FlatStyle.System;
-            deletebutton.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
-            deletebutton.Location = new Point(941, 170);
-            deletebutton.Margin = new Padding(0);
-            deletebutton.Name = "deletebutton";
-            deletebutton.Size = new Size(23, 23);
-            deletebutton.TabIndex = 157;
-            deletebutton.Text = "-";
-            deletebutton.UseVisualStyleBackColor = false;
-            deletebutton.Click += deletebutton_Click;
-            // 
-            // W_button
-            // 
-            W_button.BackColor = SystemColors.ControlLight;
-            W_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            W_button.FlatAppearance.MouseOverBackColor = Color.LightYellow;
-            W_button.FlatStyle = FlatStyle.System;
-            W_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
-            W_button.Location = new Point(357, 65);
-            W_button.Margin = new Padding(0);
-            W_button.Name = "W_button";
-            W_button.Size = new Size(23, 23);
-            W_button.TabIndex = 142;
-            W_button.Text = "+";
-            W_button.UseVisualStyleBackColor = false;
-            W_button.Click += W_button_Click;
-            // 
-            // FCDB_button
-            // 
-            FCDB_button.BackColor = SystemColors.ControlLight;
-            FCDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            FCDB_button.FlatAppearance.MouseOverBackColor = Color.LightYellow;
-            FCDB_button.FlatStyle = FlatStyle.System;
-            FCDB_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
-            FCDB_button.Location = new Point(158, 37);
-            FCDB_button.Margin = new Padding(0);
-            FCDB_button.Name = "FCDB_button";
-            FCDB_button.Size = new Size(23, 23);
-            FCDB_button.TabIndex = 96;
-            FCDB_button.Text = "+";
-            FCDB_button.UseVisualStyleBackColor = false;
-            FCDB_button.Click += FCDB_button_Click;
-            // 
-            // HLabel
-            // 
-            HLabel.AutoSize = true;
-            HLabel.Font = new Font(UTIL.Families[0], 9.75F);
-            HLabel.Location = new Point(543, 68);
-            HLabel.Name = "HLabel";
-            HLabel.Size = new Size(65, 19);
-            HLabel.TabIndex = 156;
-            HLabel.Text = "난방설비";
-            // 
-            // WLabel
-            // 
-            WLabel.AutoSize = true;
-            WLabel.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            WLabel.Location = new Point(293, 68);
-            WLabel.Name = "WLabel";
-            WLabel.Size = new Size(65, 19);
-            WLabel.TabIndex = 155;
-            WLabel.Text = "급탕설비";
+            label6.AutoSize = true;
+            label6.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label6.Location = new Point(13, 16);
+            label6.Name = "label6";
+            label6.Size = new Size(82, 15);
+            label6.TabIndex = 136;
+            label6.Text = "연료전지 정보";
             // 
             // FC_dataGridView
             // 
@@ -272,19 +295,18 @@ namespace main.contents
             FC_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font =  new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             FC_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             FC_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            FC_dataGridView.Dock = DockStyle.Bottom;
-            FC_dataGridView.Location = new Point(0, 199);
+            FC_dataGridView.Location = new Point(0, 56);
             FC_dataGridView.Name = "FC_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -293,320 +315,252 @@ namespace main.contents
             FC_dataGridView.RowHeadersVisible = false;
             FC_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             FC_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            FC_dataGridView.Size = new Size(1000, 97);
-            FC_dataGridView.TabIndex = 154;
+            FC_dataGridView.Size = new Size(939, 106);
+            FC_dataGridView.TabIndex = 195;
             // 
-            // Week_comboBox
+            // tabControl1
             // 
-            Week_comboBox.BackColor = Color.White;
-            Week_comboBox.FormattingEnabled = true;
-            Week_comboBox.Location = new Point(158, 143);
-            Week_comboBox.Name = "Week_comboBox";
-            Week_comboBox.Size = new Size(121, 23);
-            Week_comboBox.TabIndex = 153;
-            Week_comboBox.SelectedIndexChanged += Week_comboBox_SelectedIndexChanged;
+            tabControl1.Controls.Add(PVCalc_tabPage);
+            tabControl1.DisplayStyleProvider.BorderColor = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.BorderColorHot = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.CloserColor = Color.Empty;
+            tabControl1.DisplayStyleProvider.FocusTrack = true;
+            tabControl1.DisplayStyleProvider.HotTrack = true;
+            tabControl1.DisplayStyleProvider.ImageAlign = ContentAlignment.MiddleLeft;
+            tabControl1.DisplayStyleProvider.Opacity = 1F;
+            tabControl1.DisplayStyleProvider.Overlap = 0;
+            tabControl1.DisplayStyleProvider.Padding = new Point(6, 3);
+            tabControl1.DisplayStyleProvider.ShowTabCloser = false;
+            tabControl1.DisplayStyleProvider.TextColor = SystemColors.ControlText;
+            tabControl1.DisplayStyleProvider.TextColorDisabled = SystemColors.ControlDark;
+            tabControl1.DisplayStyleProvider.TextColorSelected = SystemColors.ControlText;
+            tabControl1.Dock = DockStyle.Fill;
+            tabControl1.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            tabControl1.HotTrack = true;
+            tabControl1.ItemSize = new Size(128, 20);
+            tabControl1.Location = new Point(0, 0);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(1000, 350);
+            tabControl1.SizeMode = TabSizeMode.Fixed;
+            tabControl1.TabIndex = 140;
             // 
-            // UseTime_TextBox
+            // PVCalc_tabPage
             // 
-            UseTime_TextBox.AutoSize = true;
-            UseTime_TextBox.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
-            UseTime_TextBox.ForeColor = SystemColors.WindowFrame;
-            UseTime_TextBox.Location = new Point(609, 119);
-            UseTime_TextBox.Name = "UseTime_TextBox";
-            UseTime_TextBox.Size = new Size(0, 19);
-            UseTime_TextBox.TabIndex = 152;
+            PVCalc_tabPage.BackColor = Color.White;
+            PVCalc_tabPage.Controls.Add(label24);
+            PVCalc_tabPage.Controls.Add(webView21);
+            PVCalc_tabPage.Location = new Point(4, 25);
+            PVCalc_tabPage.Name = "PVCalc_tabPage";
+            PVCalc_tabPage.Padding = new Padding(3);
+            PVCalc_tabPage.Size = new Size(992, 321);
+            PVCalc_tabPage.TabIndex = 1;
+            PVCalc_tabPage.Text = "에너지 생산량 정보";
             // 
-            // label8
+            // label24
             // 
-            label8.AutoSize = true;
-            label8.Font = new Font(UTIL.Families[0], 9.75F);
-            label8.ForeColor = SystemColors.ActiveCaptionText;
-            label8.Location = new Point(543, 117);
-            label8.Name = "label8";
-            label8.Size = new Size(65, 19);
-            label8.TabIndex = 151;
-            label8.Text = "사용시간";
+            label24.AutoSize = true;
+            label24.Font = new Font("나눔바른고딕", 9.75F);
+            label24.ForeColor = SystemColors.ControlDark;
+            label24.Location = new Point(935, 3);
+            label24.Name = "label24";
+            label24.Size = new Size(0, 15);
+            label24.TabIndex = 163;
             // 
-            // End_comboBox
+            // webView21
             // 
-            End_comboBox.BackColor = Color.White;
-            End_comboBox.FormattingEnabled = true;
-            End_comboBox.Location = new Point(357, 115);
-            End_comboBox.Name = "End_comboBox";
-            End_comboBox.Size = new Size(121, 23);
-            End_comboBox.TabIndex = 150;
-            End_comboBox.SelectedIndexChanged += End_comboBox_SelectedIndexChanged;
+            webView21.AllowExternalDrop = true;
+            webView21.CreationProperties = null;
+            webView21.DefaultBackgroundColor = Color.White;
+            webView21.Dock = DockStyle.Bottom;
+            webView21.Location = new Point(3, 21);
+            webView21.Name = "webView21";
+            webView21.Size = new Size(986, 297);
+            webView21.TabIndex = 154;
+            webView21.ZoomFactor = 1D;
             // 
-            // Start_comboBox
+            // panel1
             // 
-            Start_comboBox.BackColor = Color.White;
-            Start_comboBox.FormattingEnabled = true;
-            Start_comboBox.Location = new Point(158, 115);
-            Start_comboBox.Name = "Start_comboBox";
-            Start_comboBox.Size = new Size(121, 23);
-            Start_comboBox.TabIndex = 149;
-            Start_comboBox.SelectedIndexChanged += Start_comboBox_SelectedIndexChanged;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label7.Location = new Point(293, 117);
-            label7.Name = "label7";
-            label7.Size = new Size(65, 19);
-            label7.TabIndex = 148;
-            label7.Text = "종료시간";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(93, 145);
-            label4.Name = "label4";
-            label4.Size = new Size(65, 19);
-            label4.TabIndex = 147;
-            label4.Text = "주이용일";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(93, 117);
-            label3.Name = "label3";
-            label3.Size = new Size(65, 19);
-            label3.TabIndex = 146;
-            label3.Text = "시작시간";
-            // 
-            // H_textBox
-            // 
-            H_textBox.BackColor = Color.White;
-            H_textBox.BorderStyle = BorderStyle.None;
-            H_textBox.ForeColor = SystemColors.WindowFrame;
-            H_textBox.Location = new Point(633, 69);
-            H_textBox.Name = "H_textBox";
-            H_textBox.ReadOnly = true;
-            H_textBox.Size = new Size(136, 16);
-            H_textBox.TabIndex = 145;
-            H_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // W_textBox
-            // 
-            W_textBox.BackColor = Color.White;
-            W_textBox.BorderStyle = BorderStyle.None;
-            W_textBox.ForeColor = SystemColors.WindowFrame;
-            W_textBox.Location = new Point(380, 69);
-            W_textBox.Name = "W_textBox";
-            W_textBox.ReadOnly = true;
-            W_textBox.Size = new Size(98, 16);
-            W_textBox.TabIndex = 144;
-            W_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // H_button
-            // 
-            H_button.BackColor = SystemColors.ControlLight;
-            H_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            H_button.FlatAppearance.MouseOverBackColor = Color.LightYellow;
-            H_button.FlatStyle = FlatStyle.System;
-            H_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
-            H_button.Location = new Point(609, 65);
-            H_button.Margin = new Padding(0);
-            H_button.Name = "H_button";
-            H_button.Size = new Size(23, 23);
-            H_button.TabIndex = 143;
-            H_button.Text = "+";
-            H_button.UseVisualStyleBackColor = false;
-            H_button.Click += H_button_Click;
-            // 
-            // FCTypeComboBox
-            // 
-            FCTypeComboBox.BackColor = Color.White;
-            FCTypeComboBox.FormattingEnabled = true;
-            FCTypeComboBox.Location = new Point(158, 65);
-            FCTypeComboBox.Name = "FCTypeComboBox";
-            FCTypeComboBox.Size = new Size(121, 23);
-            FCTypeComboBox.TabIndex = 141;
-            FCTypeComboBox.SelectedIndexChanged += FCTypeComboBox_SelectedIndexChanged;
+            panel1.BackColor = Color.White;
+            panel1.Controls.Add(tabControl1);
+            panel1.Location = new Point(0, 313);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(1000, 350);
+            panel1.TabIndex = 141;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(93, 68);
+            label2.Font = new Font("나눔바른고딕", 9.75F);
+            label2.ForeColor = SystemColors.ControlDark;
+            label2.Location = new Point(1148, 56);
             label2.Name = "label2";
-            label2.Size = new Size(65, 19);
-            label2.TabIndex = 140;
-            label2.Text = "생산유형";
+            label2.Size = new Size(53, 15);
+            label2.TabIndex = 144;
+            label2.Text = "kWh/년";
             // 
-            // FCNameText
+            // heat_textBox
             // 
-            FCNameText.BackColor = Color.White;
-            FCNameText.BorderStyle = BorderStyle.None;
-            FCNameText.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
-            FCNameText.ForeColor = SystemColors.WindowFrame;
-            FCNameText.Location = new Point(190, 39);
-            FCNameText.Name = "FCNameText";
-            FCNameText.ReadOnly = true;
-            FCNameText.Size = new Size(94, 18);
-            FCNameText.TabIndex = 139;
-            FCNameText.TextAlign = HorizontalAlignment.Center;
+            heat_textBox.BackColor = SystemColors.InactiveBorder;
+            heat_textBox.BorderStyle = BorderStyle.None;
+            heat_textBox.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            heat_textBox.ForeColor = Color.Black;
+            heat_textBox.Location = new Point(1085, 56);
+            heat_textBox.Name = "heat_textBox";
+            heat_textBox.Size = new Size(60, 15);
+            heat_textBox.TabIndex = 143;
+            heat_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label6
+            // label4
             // 
-            label6.AutoSize = true;
-            label6.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.Location = new Point(93, 41);
-            label6.Name = "label6";
-            label6.Size = new Size(65, 19);
-            label6.TabIndex = 101;
-            label6.Text = "연료전지";
+            label4.AutoSize = true;
+            label4.Font = new Font("나눔바른고딕", 9.75F);
+            label4.Location = new Point(1006, 56);
+            label4.Name = "label4";
+            label4.Size = new Size(55, 15);
+            label4.TabIndex = 142;
+            label4.Text = "열생산량";
             // 
-            // AdditionalPanel
+            // label1
             // 
-            AdditionalPanel.BackColor = SystemColors.InactiveBorder;
-            AdditionalPanel.BorderStyle = BorderStyle.Fixed3D;
-            AdditionalPanel.Controls.Add(panel4);
-            AdditionalPanel.Controls.Add(panel3);
-            AdditionalPanel.Controls.Add(panel1);
-            AdditionalPanel.Location = new Point(1, 370);
-            AdditionalPanel.Name = "AdditionalPanel";
-            AdditionalPanel.Size = new Size(1000, 312);
-            AdditionalPanel.TabIndex = 18;
+            label1.AutoSize = true;
+            label1.Font = new Font("나눔바른고딕", 9.75F);
+            label1.ForeColor = SystemColors.ControlDark;
+            label1.Location = new Point(1148, 84);
+            label1.Name = "label1";
+            label1.Size = new Size(53, 15);
+            label1.TabIndex = 147;
+            label1.Text = "kWh/년";
             // 
-            // panel4
+            // gas_textBox
             // 
-            panel4.BackgroundImageLayout = ImageLayout.None;
-            panel4.Controls.Add(SupplypictureBox);
-            panel4.Location = new Point(511, 68);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(459, 240);
-            panel4.TabIndex = 7;
+            gas_textBox.BackColor = SystemColors.InactiveBorder;
+            gas_textBox.BorderStyle = BorderStyle.None;
+            gas_textBox.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            gas_textBox.ForeColor = Color.Black;
+            gas_textBox.Location = new Point(1085, 84);
+            gas_textBox.Name = "gas_textBox";
+            gas_textBox.Size = new Size(60, 15);
+            gas_textBox.TabIndex = 146;
+            gas_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // SupplypictureBox
+            // label5
             // 
-            SupplypictureBox.Location = new Point(1, 2);
-            SupplypictureBox.Name = "SupplypictureBox";
-            SupplypictureBox.Size = new Size(100, 100);
-            SupplypictureBox.TabIndex = 1;
-            SupplypictureBox.TabStop = false;
-            // 
-            // panel3
-            // 
-            panel3.BackgroundImageLayout = ImageLayout.None;
-            panel3.Controls.Add(GenpictureBox);
-            panel3.Dock = DockStyle.Left;
-            panel3.Location = new Point(292, 0);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(678, 308);
-            panel3.TabIndex = 6;
-            // 
-            // GenpictureBox
-            // 
-            GenpictureBox.Location = new Point(0, -2);
-            GenpictureBox.Name = "GenpictureBox";
-            GenpictureBox.Size = new Size(100, 100);
-            GenpictureBox.TabIndex = 0;
-            GenpictureBox.TabStop = false;
-            // 
-            // panel1
-            // 
-            panel1.Controls.Add(SourcepictureBox);
-            panel1.Dock = DockStyle.Left;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(292, 308);
-            panel1.TabIndex = 5;
-            // 
-            // SourcepictureBox
-            // 
-            SourcepictureBox.Location = new Point(0, 0);
-            SourcepictureBox.Name = "SourcepictureBox";
-            SourcepictureBox.Size = new Size(100, 100);
-            SourcepictureBox.TabIndex = 2;
-            SourcepictureBox.TabStop = false;
-            // 
-            // Save_button
-            // 
-            Save_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
-            Save_button.Location = new Point(1007, 659);
-            Save_button.Name = "Save_button";
-            Save_button.Size = new Size(78, 23);
-            Save_button.TabIndex = 96;
-            Save_button.Text = "SAVE";
-            Save_button.UseVisualStyleBackColor = true;
-            Save_button.Click += Save_button_Click;
+            label5.AutoSize = true;
+            label5.Font = new Font("나눔바른고딕", 9.75F);
+            label5.Location = new Point(1006, 84);
+            label5.Name = "label5";
+            label5.Size = new Size(67, 15);
+            label5.TabIndex = 145;
+            label5.Text = "연료소비량";
             // 
             // FuelCell
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(239, 239, 239);
-            ClientSize = new Size(1200, 730);
+            ClientSize = new Size(1200, 896);
+            Controls.Add(label1);
+            Controls.Add(gas_textBox);
+            Controls.Add(label5);
+            Controls.Add(label2);
+            Controls.Add(heat_textBox);
+            Controls.Add(label4);
+            Controls.Add(label28);
+            Controls.Add(elec_textBox);
+            Controls.Add(label27);
             Controls.Add(Save_button);
+            Controls.Add(PVMainPanel);
+            Controls.Add(panel1);
             Controls.Add(panel2);
-            Controls.Add(GeneralPanel);
-            Controls.Add(AdditionalPanel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "FuelCell";
             Text = "Form3";
-            GeneralPanel.ResumeLayout(false);
-            GeneralPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).EndInit();
+            PVMainPanel.ResumeLayout(false);
+            PVMainPanel.PerformLayout();
+            panel4.ResumeLayout(false);
+            panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)FC_dataGridView).EndInit();
-            AdditionalPanel.ResumeLayout(false);
-            panel4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)SupplypictureBox).EndInit();
-            panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)GenpictureBox).EndInit();
+            tabControl1.ResumeLayout(false);
+            PVCalc_tabPage.ResumeLayout(false);
+            PVCalc_tabPage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)webView21).EndInit();
             panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)SourcepictureBox).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private Panel GeneralPanel;
-        private Panel panel2;
-        private Panel AdditionalPanel;
+        private Panel PVMainPanel;
+        private PictureBox pictureBox1;
+        private Label 계통유형;
         private Label label6;
-        private Button FCDB_button;
+        private Label Battery_label;
+        private Label label7;
+        private TextBox Battery_textBox;
+        private TextBox Inverter_textBox;
+        private TextBox PVModule_textBox;
+        private Button InverterDB1_button;
+        private Button Save_button;
+        private Label label28;
+        private TextBox elec_textBox;
+        private Label label27;
+        private Panel panel2;
+        private DataGridView PV_dataGridView;
+        private Label label8;
+        private CustomComboBox Oldsystem_comboBox;
+        private Label label9;
+        private Label label11;
+        private RadioButton radioButton2;
+        private RadioButton radioButton4;
+        private RadioButton radioButton3;
+        private RadioButton radioButton1;
         private Label label1;
         private TextBox Num_textBox;
         private TextBox Name_textBox;
-        private PictureBox Icon_pictureBox;
-        private TextBox FCNameText;
-        private TextBox H_textBox;
-        private TextBox W_textBox;
-        private Button H_button;
-        private Button W_button;
-        private ComboBox FCTypeComboBox;
-        private Label label2;
-        private Label label4;
+        private CustomComboBox PVsystem_combobox;
         private Label label3;
-        private ComboBox Week_comboBox;
-        private Label UseTime_TextBox;
-        private Label label8;
-        private ComboBox End_comboBox;
-        private ComboBox Start_comboBox;
-        private Label label7;
-        private DataGridView FC_dataGridView;
-        private Button Save_button;
-        private Panel panel3;
-        private PictureBox GenpictureBox;
-        private Panel panel1;
-        private PictureBox SourcepictureBox;
-        private PictureBox SupplypictureBox;
         private Panel panel4;
-        private Label WLabel;
-        private Label HLabel;
-        private Label label9;
-        private Button deletebutton;
-        private Label dellabel;
+        private Button PVModuleDB_button;
+        private Button BatteryDB_button;
+        private Button InverterDB_button;
+        private CustomComboBox OldPVSystem_ComboBox;
+        private CustomComboBox PVType_ComboBox;
+        private CustomTabControl tabControl1;
+        private TabPage PVinstall_tabPage;
+        private TextBox DoorH2_textBox;
+        private Label label18;
+        private TabPage PVCalc_tabPage;
+        private Label label24;
+        private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
+        private TextBox PVMoudle_textBox;
+        private Panel panel1;
+        private Panel panel3;
+        private PictureBox PVpictureBox;
+        private PictureBox PVTypepictureBox;
+        private Label pvname;
+        private Label pvtotal;
+        private Label pvpower;
+        private Label pvsize;
+        private Panel panel5;
+        private Label InverterEff_textbox;
+        private Label BatteryEff_textbox;
+        private Label batterypower;
+        private PictureBox STTypepictureBox;
+        private DataGridView FC_dataGridView;
+        private Label label2;
+        private TextBox heat_textBox;
+        private Label label4;
+        private TextBox gas_textBox;
+        private Label label5;
     }
 }

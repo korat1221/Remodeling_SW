@@ -115,6 +115,9 @@
     <Compile Update="contents\Result\Element_Report\Element_Boiler.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="contents\RESystem\FuelCell.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="contents\RESystem\SolarTherm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -2297,6 +2297,10 @@ namespace main.contents
                 {
                     SaveSolar(); //새로 추가함
                 }
+                if (SelectFC_split.Count > 0)
+                {
+                    SaveFC(); //새로 추가함
+                }
             }
 
         }
@@ -2402,6 +2406,49 @@ namespace main.contents
         }
 
         //새로추가함
+        public void SaveFC()
+        {
+            //SelectFC_nonsplit, FCNum_nonsplit, FCElecInstall_nonsplit, FCElecHeat_nonsplit
+            string 적용유형;
+            string 적용설비 = "급탕";
+            if (MainSystem_comboBox.Text == "연료전지") 적용유형 = "주요설비";
+            else if (Sub1System_comboBox.Text == "연료전지") 적용유형 = "보조설비1";
+            else if (Sub2System_comboBox.Text == "연료전지") 적용유형 = "보조설비2";
+            else 적용유형 = null;
+            if (적용유형 != null)
+            {
+                string fcenum = FC_num();
+
+                Program.DB.setValue(DB.type.ProjDB, "FC_Form", "번호,프로젝트유형,연료전지번호,설비번호,적용설비,적용유형,연료전지대수,연료전지설치유형,연료전지생산유형",
+                     "'" + fcenum + "','" + 프로젝트유형[0][0] + "','" + SelectFC_nonsplit + "','" + Num_textBox.Text + "','" + 적용설비 + "','" + 적용유형 + "','" + FCNum_nonsplit +
+                     "','" + FCElecInstall_nonsplit + "', '" + FCElecHeat_nonsplit + "'", "번호,연료전지번호,설비번호");
+            }
+
+            Program.DB.saveProject();
+        } //새로추가함
+
+        public string FC_num()
+        {
+            string[][] check = Program.DB.getValue(DB.type.ProjDB, "FC_Form", "번호,연료전지번호,설비번호", "연료전지번호 = '"+ SelectFC_nonsplit + "' and  설비번호= '"+ Num_textBox.Text+ "'");
+            string fcenum = null;
+            if (check.Length > 0)
+            {
+                if (check[0][0] != null && check[0][0] != "")
+                {
+                    fcenum = check[0][0];
+                }
+                else
+                {
+                    fcenum = Program.UTIL.CreateNum("FC_Form", "번호", "FCE");
+                }
+            }
+            else
+            {
+                fcenum = Program.UTIL.CreateNum("FC_Form", "번호", "FCE");
+            }
+            return fcenum;
+        } //새로추가함
+
         public void SaveSolar()
         {
             string 적용유형;
@@ -2416,36 +2463,32 @@ namespace main.contents
 
                 Program.DB.setValue(DB.type.ProjDB, "SolarTherm_Form", "번호,프로젝트유형,태양열번호,설비번호,적용설비,적용유형,모듈개수,방위,기울기",
                      "'" + stnum + "','" + 프로젝트유형[0][0] + "','" + SelectSolar_nonsplit + "','" + Num_textBox.Text + "','" + 적용설비 + "','" + 적용유형 + "','" + SolarNum_nonsplit +
-                     "','" + SolarDirection_nonsplit + "', '" + SolarDegree_nonsplit + "'", "태양열번호,설비번호");
+                     "','" + SolarDirection_nonsplit + "', '" + SolarDegree_nonsplit + "'", "번호,태양열번호,설비번호");
             }
+
+            Program.DB.saveProject();
         } //새로추가함
 
         public string solar_num()
         {
-            string[][] check = Program.DB.getValue(DB.type.ProjDB, "SolarTherm_Form", "번호,태양열번호,설비번호", "");
-            string solarnum = null;
+            string[][] check = Program.DB.getValue(DB.type.ProjDB, "SolarTherm_Form", "번호,태양열번호,설비번호", "태양열번호 = '" + SelectSolar_nonsplit + "' and  설비번호= '" + Num_textBox.Text + "'");
+            string stnum = null;
             if (check.Length > 0)
             {
-                for (int i = 0; i < check.Length; i++)
+                if (check[0][0] != null && check[0][0] != "")
                 {
-                    if (SelectSolar_nonsplit == check[i][1] && Num_textBox.Text == check[i][2]) //태양열번호와 설비번호가 동일하다면
-                    {
-                        if (check[i][0] != null && check[i][0] != "")
-                        {
-                            solarnum = check[i][0];
-                        }
-                        else
-                        {
-                            solarnum = Program.UTIL.CreateNum("SolarTherm_Form", "번호", "ST");
-                        }
-                    }
-                    else
-                    {
-                        solarnum = Program.UTIL.CreateNum("SolarTherm_Form", "번호", "ST");
-                    }
+                    stnum = check[0][0];
+                }
+                else
+                {
+                    stnum = Program.UTIL.CreateNum("SolarTherm_Form", "번호", "ST");
                 }
             }
-            return solarnum;
+            else
+            {
+                stnum = Program.UTIL.CreateNum("SolarTherm_Form", "번호", "ST");
+            }
+            return stnum;
         } //새로추가함
 
         #endregion

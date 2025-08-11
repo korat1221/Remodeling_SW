@@ -17,11 +17,11 @@ namespace main.contentslist
         static String currentID = "";
         static String inEditing = "Add";
 
-        String Num;
+        String 프로젝트유형;
         double CountDB;
-        int SelectRow;
-        // DataTable ListTable = new DataTable();
+
         DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
+
 
         public List_FuelCell()
         {
@@ -29,34 +29,26 @@ namespace main.contentslist
 
             Icon_pictureBox.Load(Program.gPath + "images/2ndicon/6_2FuelCell.png");
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+
+            string[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+            if (value.Length > 0)
+            {
+                프로젝트유형 = value[0][0].ToString();
+            }
             Create_Table();
         }
+
 
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
             Panel p = (Panel)sender;
             ControlPaint.DrawBorder(e.Graphics, p.DisplayRectangle, System.Drawing.SystemColors.Control, ButtonBorderStyle.Solid);
-            
         }
 
         public static bool OnLoadProc(Form form)
         {
             FuelCell f = (FuelCell)form;
-
-            if (inEditing == "Edit")
-            {
-                f.LoadData(currentID);
-
-            }
-            else if (inEditing == "Copy")
-            {
-                f.LoadData(currentID);
-            }
-            else
-            {
-                f.ResetForm(currentID);
-            }
-
+            f.LoadData(currentID);
             return true;
         }
 
@@ -67,7 +59,6 @@ namespace main.contentslist
             Program.getMenuForm().DoLoadForm(22, OnLoadProc);
         }
 
-
         public void Create_Table()
         {
             new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
@@ -75,13 +66,15 @@ namespace main.contentslist
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
             dataGridView1.Columns.Add(checkBoxColumn);
-
             dataGridView1.Columns.Add("A1", "번호");
-            dataGridView1.Columns.Add("A2", "명칭");
-            dataGridView1.Columns.Add("A3", "열.용량[kW]");
-            dataGridView1.Columns.Add("A4", "열.효율[%]");
-            dataGridView1.Columns.Add("A5", "전기.용량[kW]");
-            dataGridView1.Columns.Add("A6", "전기.효율[%]");
+            dataGridView1.Columns.Add("A2", "연료전지번호");
+            dataGridView1.Columns.Add("A3", "설비번호"); //적용 설비번호
+            dataGridView1.Columns.Add("A4", "적용설비"); //난방,급탕
+            dataGridView1.Columns.Add("A5", "전기출력.[kW]");
+            dataGridView1.Columns.Add("A6", "전기효율.[%]");
+            dataGridView1.Columns.Add("A7", "연간전기생산량.[kWh/년]");
+            dataGridView1.Columns.Add("A8", "연간열생산량.[kWh/년]");
+
             dataGridView1.Columns[0].Width = 40;
         }
 
@@ -106,39 +99,53 @@ namespace main.contentslist
         }
         public void load_table()
         {
-            
             dataGridView1.Rows.Clear();
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "FuelCell_Form", "번호,명칭,연료전지,설치대수", "");
+            string[][] db = Program.DB.getValue(DB.type.ProjDB, "FC_Form", "번호,연료전지번호,설비번호,적용설비,연료전지대수", "프로젝트유형 = '" + 프로젝트유형 + "'");
 
-            if (Value.Length > 0)
+            if (db.Length > 0)
             {
-                for (int n = 0; n < Value.Length; n++) //연료전지별
+                for (int i = 0; i < db.Length; i++)
                 {
                     dataGridView1.Rows.Add();
-                    dataGridView1.Rows[n].Cells[1].Value = Value[n][0];
-                    dataGridView1.Rows[n].Cells[2].Value = Value[n][1];
-                    string[] token_name = Value[n][2].Split('+'); 
-                    string[] token_number = Value[n][3].Split('+');
-                    double elepower = 0, eleeff=0, heatpower = 0, heateff = 0, in_number = 0;
-                    for(int i=0; i < token_name.Length; i++)
+                    dataGridView1.Rows[i].Cells[1].Value = db[i][0];
+                    dataGridView1.Rows[i].Cells[2].Value = db[i][1];
+                    dataGridView1.Rows[i].Cells[3].Value = db[i][2];
+                    dataGridView1.Rows[i].Cells[4].Value = db[i][3];
+                    //적용설비를 바탕으로 작성함
+                    string[][] FuelCell = Program.DB.getValue(DB.type.ProjDB, "User_FC", "전기출력,전기효율", "번호 = '" + db[i][1] + "'");
+
+                    dataGridView1.Rows[i].Cells[5].Value = string.Format("{0:N2}", Convert.ToDouble(db[i][4]) * Convert.ToDouble(FuelCell[0][0]));
+                    dataGridView1.Rows[i].Cells[6].Value = string.Format("{0:N0}", Convert.ToDouble(FuelCell[0][1]));
+                    //연간 생산량 작성
+
+                    if (db[i][3] == "난방")
                     {
-                        string[][] Genvalue = Program.DB.getValue(DB.type.ProjDB, "User_FC", "전기출력,전기효율,열출력,열효율", "번호 = '" + token_name[i] + "'");
-                        elepower += Convert.ToDouble(Genvalue[0][0]) * Convert.ToDouble(token_number[i]);
-                        eleeff += Convert.ToDouble(Genvalue[0][1]) * Convert.ToDouble(token_number[i]) * Convert.ToDouble(Genvalue[0][0]);
-                        heatpower += Convert.ToDouble(Genvalue[0][2]) * Convert.ToDouble(token_number[i]);
-                        heateff += Convert.ToDouble(Genvalue[0][3]) * Convert.ToDouble(token_number[i] ) * Convert.ToDouble(Genvalue[0][2]);
-                        in_number += Convert.ToDouble(token_number[i]);
+                        double ql = 0, qh = 0;
+                        string[][] v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "난방설비 = '" + db[i][2] + "' and 신재생시스템= '" + db[i][1] + "' and 신재생시스템유형='연료전지' and 생산소비 ='생산' and 생산유형='전기'");
+                        if (v.Length > 0)
+                        { ql += Convert.ToDouble(v[0][0]); }
+                        v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "난방설비 = '" + db[i][2] + "' and 신재생시스템= '" + db[i][1] + "' and 신재생시스템유형='연료전지' and 생산소비 ='생산' and 생산유형='열'");
+                        if (v.Length > 0)
+                        { qh += Convert.ToDouble(v[0][0]); }
+                        dataGridView1.Rows[i].Cells[7].Value = ql.ToString("#,##0");
+                        dataGridView1.Rows[i].Cells[8].Value = qh.ToString("#,##0");
                     }
-                    eleeff = eleeff / elepower;
-                    heateff = heateff / heatpower;
-                    
-                    dataGridView1.Rows[n].Cells[3].Value = string.Format("{0:F1}",heatpower);
-                    dataGridView1.Rows[n].Cells[4].Value = string.Format("{0:F1}",heateff);
-                    dataGridView1.Rows[n].Cells[5].Value = string.Format("{0:F1}",elepower);
-                    dataGridView1.Rows[n].Cells[6].Value = string.Format("{0:F1}",eleeff);
+                    else if (db[i][3] == "급탕")
+                    {
+                        double ql = 0, qh = 0;
+                        string[][] v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "급탕설비 = '" + db[i][2] + "' and 신재생시스템= '" + db[i][1] + "' and 신재생시스템유형='연료전지' and 생산소비 ='생산' and 생산유형='전기'");
+                        if (v.Length > 0)
+                        { ql += Convert.ToDouble(v[0][0]); }
+                         v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "급탕설비 = '" + db[i][2] + "' and 신재생시스템= '" + db[i][1] + "' and 신재생시스템유형='연료전지' and 생산소비 ='생산' and 생산유형='열'");
+                        if (v.Length > 0)
+                        { qh += Convert.ToDouble(v[0][0]); }
+                        dataGridView1.Rows[i].Cells[7].Value = ql.ToString("#,##0");
+                        dataGridView1.Rows[i].Cells[8].Value = qh.ToString("#,##0");
+                    }
                 }
             }
         }
+
         public void load_List()
         {
             load_table();
@@ -148,8 +155,10 @@ namespace main.contentslist
             List<object> wpsubMenu = new List<object>();
             List<object> stsubMenu = new List<object>();
 
-           
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "번호,명칭", "");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "FC_Form", "번호,연료전지번호", "");
+            if (Value.Length > 0)
+            {
+                Value = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "번호,명칭", "");
                 if (Value.Length > 0)
                 {
                     for (int n = 0; n < Value.Length; n++)
@@ -157,7 +166,7 @@ namespace main.contentslist
                         pvsubMenu.Add(new { text = Value[n][0] + "." + Value[n][1], id = "{\\\"formID\\\":21,\\\"ID\\\":\\\"" + Value[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당  
                     }
                 }
-                Value = Program.DB.getValue(DB.type.ProjDB, "FuelCell_Form", "번호,명칭", "");
+                Value = Program.DB.getValue(DB.type.ProjDB, "FC_Form", "번호,연료전지번호", "");
                 if (Value.Length > 0)
                 {
                     for (int n = 0; n < Value.Length; n++)
@@ -174,6 +183,7 @@ namespace main.contentslist
                     }
                 }
                 Value = Program.DB.getValue(DB.type.ProjDB, "SolarTherm_Form", "번호,태양열번호", "");
+
                 if (Value.Length > 0)
                 {
                     for (int n = 0; n < Value.Length; n++)
@@ -185,66 +195,56 @@ namespace main.contentslist
                 subMenu.Add(new { text = "연료전지", id = "{\\\"formID\\\":54,\\\"ID\\\":\\\"SOLAR_2\\\"}", children = fuelcellsubMenu.ToArray() });  // 예시 코드: 메인 메뉴 동적 할당
                 subMenu.Add(new { text = "풍력시스템", id = "{\\\"formID\\\":55,\\\"ID\\\":\\\"SOLAR_3\\\"}", children = wpsubMenu.ToArray() });  // 예시 코드: 메인 메뉴 동적 할당
                 subMenu.Add(new { text = "태양열시스템", id = "{\\\"formID\\\":69,\\\"ID\\\":\\\"SOLAR_4\\\"}", children = stsubMenu.ToArray() });  // 예시 코드: 메인 메뉴 동적 할당
-                subMenu.Add(new { text = "공급의무비율", id = "{\\\"formID\\\":24,\\\"ID\\\":\\\"SOLAR_5\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-                subMenu.Add(new { text = "에너지자립률", id = "{\\\"formID\\\":25,\\\"ID\\\":\\\"SOLAR_6\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+               // subMenu.Add(new { text = "공급의무비율", id = "{\\\"formID\\\":24,\\\"ID\\\":\\\"SOLAR_5\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+                //subMenu.Add(new { text = "에너지자립률", id = "{\\\"formID\\\":25,\\\"ID\\\":\\\"SOLAR_6\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
 
                 Program.UTIL.resetMainTree(5, 3, subMenu.ToArray(), "54"); // 예시 코드: 메인 메뉴 동적 할당
-
-        }
-
-        private void Add_button_Click(object sender, EventArgs e)
-        {
-            Num = Program.UTIL.CreateNum("FuelCell_Form", "번호", "FC");
-
-            Program.getMenuForm().ResetForm(22);
-
-            Load_form(Num, "Add");
-        }
-
-        private void Remove_button_Click(object sender, EventArgs e)
-        {
-            int k = dataGridView1.CurrentCell.RowIndex;
-            if ((MessageBox.Show(dataGridView1.Rows[k].Cells[2].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
-            {
-                if (k > -1)
-                {
-                    String Delete_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
-                    Program.DB.deleteValue(DB.type.ProjDB, "FuelCell_Form", "번호 ='" + Delete_Num + "'");
-                    load_table();
-
-                }
             }
         }
+
 
         private void dataGridView1_DoubleClick(object sender, EventArgs e)
         {
-            int k = dataGridView1.CurrentCell.RowIndex;
-            if (k > -1)
+            if (dataGridView1.Rows.Count > 0)
             {
-                Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit");
-            }
+                if (dataGridView1.CurrentCell != null)
+                {
+                    int k = dataGridView1.CurrentCell.RowIndex;
 
+                    if (k >= 0)
+                    {
+                        var cellValue = dataGridView1.Rows[k].Cells[1].Value;
+                        if (cellValue != null)
+                        {
+                            Load_form(dataGridView1.Rows[k].Cells[1].Value.ToString(), "Edit");
+                        }
+                        else
+                        {
+                            MessageBox.Show("선택한 셀에 값이 없습니다.");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("잘못된 행 인덱스 입니다.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("선택한 셀에 값이 없습니다.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("태양열시스템이 설치되지 않았습니다.");
+            }
         }
 
-        private void Copy_button_Click(object sender, EventArgs e)
-        {
-            Num = Program.UTIL.CreateNum("FuelCell_Form", "번호", "FC");
-            int k = dataGridView1.CurrentCell.RowIndex;
-            if (k > -1)
-            {
-                String Copy_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
-
-                Program.DB.CopyValue(DB.type.ProjDB, "FuelCell_Form", "번호 ='" + Copy_Num + "'", Num);
-                Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  FuelCell_Form" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + Num + "'");
-                Load_form(Num, "Copy");
-
-            }
-        }
-
-        public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
+        public void LoadData(String ID)   // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             load_List();
         }
 
+
     }
+
 }
