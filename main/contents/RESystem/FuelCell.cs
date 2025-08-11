@@ -18,8 +18,8 @@ namespace main.contents
         bool scriptable = false;
         //일반정보
         string Num;
-        string 지역, 프로젝트유형;
-
+        string 지역, 프로젝트번호;
+        ArrayList SelectZone_split = new ArrayList();
 
         #region 폼
 
@@ -109,15 +109,141 @@ namespace main.contents
             //LoadGraph(ene,sol);
             Load_Textbox();
         }
+        private void Split_Zone_heating(String nonSplit)
+        {
+            String 내용;
+            if (nonSplit != null)
+            {
+                if (nonSplit.Contains("+"))
+                {
+                    string[] token = nonSplit.Split('+');
+                    SelectZone_split.Clear();
+                    foreach (var item in token)
+                    {
+                        SelectZone_split.Add(item.ToString());
+                    }
+                    내용 = SelectZone_split[0].ToString() + " 외 " + (SelectZone_split.Count - 1).ToString() + "개";
+                }
+                else
+                {
+                    SelectZone_split.Clear();
+                    SelectZone_split.Add(nonSplit);
+                    내용 = SelectZone_split[0].ToString();
+                }
+                Zone_textBox.Text = 내용;
+
+                if (SelectZone_split.Count > 0 && SelectZone_split[0] != "")
+                {
+                    double Qba = 0, Qmax = 0, Area = 0;
+                    for (int a = 0; a < SelectZone_split.Count; a++)
+                    {
+                        string[][] 요구량 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a, Q_max", "번호 ='" + SelectZone_split[a].ToString() + "' AND 난방_냉방 = '난방'");
+                        if (요구량.Length > 0)
+                        {
+                            Qba += Convert.ToDouble(요구량[0][0]);
+                            Qmax += Convert.ToDouble(요구량[0][1]) / 1000;
+                        }
+                        string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호 ='" + SelectZone_split[a].ToString() + "'");
+                        if (Value.Length > 0)
+                        {
+                            Area += Convert.ToDouble(Value[0][0]);
+                        }
+                    }
+                    Zone_Qba_textBox.Text = string.Empty;
+                    Zone_Qba_textBox.Text = Qba.ToString();
+                    Program.UTIL.textBox_doubleComa(Zone_Qba_textBox, true, 0);
+                    Zone_Qmax_textBox.Text = string.Empty;
+                    Zone_Qmax_textBox.Text = Qmax.ToString();
+                    Program.UTIL.textBox_doubleComa(Zone_Qmax_textBox, true, 2);
+                }
+
+            }
+            else { 내용 = ""; }
+        }
+
+        private void Split_Zone_DHW(String nonSplit)
+        {
+            String 내용;
+            if (nonSplit != null)
+            {
+                if (nonSplit.Contains("+"))
+                {
+                    string[] token = nonSplit.Split('+');
+                    SelectZone_split.Clear();
+                    foreach (var item in token)
+                    {
+                        SelectZone_split.Add(item.ToString());
+                    }
+                    내용 = SelectZone_split[0].ToString() + " 외 " + (SelectZone_split.Count - 1).ToString() + "개";
+                }
+                else
+                {
+                    SelectZone_split.Clear();
+                    SelectZone_split.Add(nonSplit);
+                    내용 = SelectZone_split[0].ToString();
+                }
+                Zone_textBox.Text = 내용;
+
+                if (SelectZone_split.Count > 0 && SelectZone_split[0] != "")
+                {
+                    double Qba = 0, Qmax = 0, Area = 0;
+                    for (int a = 0; a < SelectZone_split.Count; a++)
+                    {
+                        string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적,일일급탕요구량,용도프로필", "존번호 ='" + SelectZone_split[a].ToString() + "'");
+                        if (Value.Length > 0)
+                        {
+                            double Qwb_day = 0, dop_a = 0; double[] theta_e = new double[12]; double[] dmth = new double[12] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+                            if (Value[0][1] != "")
+                            {
+                                Qwb_day = Convert.ToDouble(Value[0][1]);
+                            }
+                            for (int mth = 0; mth < 12; mth++)
+                            {
+                                string[][] 급탕부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "theta_e, dwd_mth", "번호 ='" + SelectZone_split[a].ToString() + "' AND 난방_냉방 = '난방' and 비이용일_이용일='이용일' and 월='" + (mth + 1) + "월'");
+                                theta_e[mth] = Convert.ToDouble(급탕부하[0][0]);
+                                dop_a += Convert.ToDouble(급탕부하[0][1]);
+                            }
+                            double[] Qwb_mth = new double[12];
+                            for (int mth = 0; mth < 12; mth++)
+                            {
+                                Qwb_mth[mth] = Qwb_day * dop_a * dmth[mth] / 365 * (-0.02 * theta_e[mth] + 1.25);
+                                Qba += Qwb_mth[mth];
+                            }
+                            string[][] Usage = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "급탕시간당비율", "용도명 = '" + Value[0][2] + "'");
+                            if (Usage.Length > 0)
+                            { Qmax += (Qwb_day * Convert.ToDouble(Usage[0][0])); }
+
+                            Area += Convert.ToDouble(Value[0][0]);
+                        }
+                    }
+                    Zone_Qba_textBox.Text = string.Empty;
+                    Zone_Qba_textBox.Text = Qba.ToString();
+                    Program.UTIL.textBox_doubleComa(Zone_Qba_textBox, true, 0);
+                    Zone_Qmax_textBox.Text = string.Empty;
+                    Zone_Qmax_textBox.Text = Qmax.ToString();
+                    Program.UTIL.textBox_doubleComa(Zone_Qmax_textBox, true, 2);
+                }
+
+            }
+            else { 내용 = ""; }
+
+        }
         void Load_Textbox()
         {
             double[] elec = new double[12], heat = new double[12];
             String[][] db = Program.DB.getValue(DB.type.ProjDB, "FC_Form", "연료전지번호,설비번호,적용설비","번호='"+Num+"'");
             if(db.Length >0)
             {
+                SystemNum_textBox.Text = db[0][1];
                 if (db[0][2] =="난방")
                 {
-                    string[][] v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "난방설비 = '" + db[0][1] + "' and 신재생시스템= '" + db[0][0] + "' and 신재생시스템유형='연료전지' and 생산소비 ='생산' and 생산유형='전기'");
+                    string[][] v = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "존", "번호 = '" + db[0][1] + "'");
+                    if(v.Length > 0)
+                    {
+                        Split_Zone_heating(v[0][0]);
+                    }
+                    
+                    v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "난방설비 = '" + db[0][1] + "' and 신재생시스템= '" + db[0][0] + "' and 신재생시스템유형='연료전지' and 생산소비 ='생산' and 생산유형='전기'");
                     if (v.Length > 0 && v[0][0] != "")
                     { elec_textBox.Text = Convert.ToDouble(v[0][0]).ToString("#,##0") ; }
                    
@@ -147,7 +273,13 @@ namespace main.contents
                 }
                 else if (db[0][2] == "급탕")
                 {
-                    string[][] v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "급탕설비 = '" + db[0][1] + "' and 신재생시스템= '" + db[0][0] + "' and 신재생시스템유형='연료전지' and 생산소비 ='생산' and 생산유형='전기'");
+                    string[][] v = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "존", "번호 = '" + db[0][1] + "'");
+                    if (v.Length > 0)
+                    {
+                        Split_Zone_DHW(v[0][0]);
+                    }
+
+                    v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "급탕설비 = '" + db[0][1] + "' and 신재생시스템= '" + db[0][0] + "' and 신재생시스템유형='연료전지' and 생산소비 ='생산' and 생산유형='전기'");
                     if (v.Length > 0 && v[0][0] != "")
                     { elec_textBox.Text = Convert.ToDouble(v[0][0]).ToString("#,##0"); }
 
@@ -184,7 +316,7 @@ namespace main.contents
         private void Reset()
         {
             Num = null; Name = null;
-            지역 = null; 프로젝트유형 = null;
+            지역 = null; 프로젝트번호 = null;
 
 
             FC_dataGridView.Columns.Clear();
@@ -211,6 +343,10 @@ namespace main.contents
             {
                 webView21.CoreWebView2.ExecuteScriptAsync(script);
             }
+        }
+        private void LoadImage()
+        {
+            string[][] 프로젝트번호 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
         }
         private void LoadGraph(double[] elec, double[] heat)
         {

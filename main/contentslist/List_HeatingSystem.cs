@@ -246,6 +246,8 @@ namespace main.contentslist
                     Program.DB.deleteValue(DB.type.ProjDB, "HeatingSystem_Form", "번호 ='" + Delete_Num + "'");
                     Program.DB.deleteValue(DB.type.ProjDB, "Heating_ce_Form", "난방시스템 ='" + Delete_Num + "'");
                     Program.DB.deleteValue(DB.type.ProjDB, "HeatingSystem_Result", "난방시스템 ='" + Delete_Num + "'");
+                    Program.DB.deleteValue(DB.type.ProjDB, "FC_Form", "설비번호 ='" + Delete_Num + "'");
+                    Program.DB.deleteValue(DB.type.ProjDB, "SolarTherm_Form", "설비번호 ='" + Delete_Num + "'");
                     load_List();
 
                 }

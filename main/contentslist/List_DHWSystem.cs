@@ -220,6 +220,9 @@ namespace main.contentslist
                 {
                     String Delete_Num = dataGridView1.Rows[k].Cells[1].Value.ToString();
                     Program.DB.deleteValue(DB.type.ProjDB, "DHWSystem_Form", "번호 ='" + Delete_Num + "'");
+                    Program.DB.deleteValue(DB.type.ProjDB, "DHWSystem_Result", "번호 ='" + Delete_Num + "'");
+                    Program.DB.deleteValue(DB.type.ProjDB, "FC_Form", "설비번호 ='" + Delete_Num + "'");
+                    Program.DB.deleteValue(DB.type.ProjDB, "SolarTherm_Form", "설비번호 ='" + Delete_Num + "'");
                     load_List();
 
                 }

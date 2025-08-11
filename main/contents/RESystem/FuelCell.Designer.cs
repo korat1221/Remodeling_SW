@@ -28,10 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             PVMainPanel = new Panel();
+            Zone_textBox = new TextBox();
+            label7 = new Label();
+            Zone_Qmax_textBox = new TextBox();
+            Zone_Qba_textBox = new TextBox();
+            label21 = new Label();
+            label22 = new Label();
+            label10 = new Label();
+            SystemNum_textBox = new TextBox();
             panel4 = new Panel();
             radioButton4 = new RadioButton();
             radioButton2 = new RadioButton();
@@ -75,6 +83,14 @@
             // PVMainPanel
             // 
             PVMainPanel.BackColor = SystemColors.GradientActiveCaption;
+            PVMainPanel.Controls.Add(Zone_textBox);
+            PVMainPanel.Controls.Add(label7);
+            PVMainPanel.Controls.Add(Zone_Qmax_textBox);
+            PVMainPanel.Controls.Add(Zone_Qba_textBox);
+            PVMainPanel.Controls.Add(label21);
+            PVMainPanel.Controls.Add(label22);
+            PVMainPanel.Controls.Add(label10);
+            PVMainPanel.Controls.Add(SystemNum_textBox);
             PVMainPanel.Controls.Add(panel4);
             PVMainPanel.Controls.Add(label3);
             PVMainPanel.Controls.Add(Num_textBox);
@@ -83,6 +99,100 @@
             PVMainPanel.Name = "PVMainPanel";
             PVMainPanel.Size = new Size(1000, 80);
             PVMainPanel.TabIndex = 17;
+            // 
+            // Zone_textBox
+            // 
+            Zone_textBox.BackColor = SystemColors.GradientActiveCaption;
+            Zone_textBox.BorderStyle = BorderStyle.None;
+            Zone_textBox.Enabled = false;
+            Zone_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            Zone_textBox.ForeColor = SystemColors.ControlDark;
+            Zone_textBox.Location = new Point(258, 52);
+            Zone_textBox.Name = "Zone_textBox";
+            Zone_textBox.Size = new Size(120, 15);
+            Zone_textBox.TabIndex = 165;
+            Zone_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("나눔바른고딕", 10F);
+            label7.Location = new Point(295, 16);
+            label7.Name = "label7";
+            label7.Size = new Size(46, 16);
+            label7.TabIndex = 164;
+            label7.Text = "공급 존";
+            // 
+            // Zone_Qmax_textBox
+            // 
+            Zone_Qmax_textBox.BackColor = SystemColors.GradientActiveCaption;
+            Zone_Qmax_textBox.BorderStyle = BorderStyle.None;
+            Zone_Qmax_textBox.Enabled = false;
+            Zone_Qmax_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            Zone_Qmax_textBox.ForeColor = SystemColors.ControlDark;
+            Zone_Qmax_textBox.Location = new Point(552, 52);
+            Zone_Qmax_textBox.Name = "Zone_Qmax_textBox";
+            Zone_Qmax_textBox.Size = new Size(120, 15);
+            Zone_Qmax_textBox.TabIndex = 163;
+            Zone_Qmax_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // Zone_Qba_textBox
+            // 
+            Zone_Qba_textBox.BackColor = SystemColors.GradientActiveCaption;
+            Zone_Qba_textBox.BorderStyle = BorderStyle.None;
+            Zone_Qba_textBox.Enabled = false;
+            Zone_Qba_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            Zone_Qba_textBox.ForeColor = SystemColors.ControlDark;
+            Zone_Qba_textBox.Location = new Point(405, 52);
+            Zone_Qba_textBox.Name = "Zone_Qba_textBox";
+            Zone_Qba_textBox.Size = new Size(120, 15);
+            Zone_Qba_textBox.TabIndex = 162;
+            Zone_Qba_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Font = new Font("나눔바른고딕", 10F);
+            label21.Location = new Point(567, 16);
+            label21.Name = "label21";
+            label21.Size = new Size(90, 16);
+            label21.TabIndex = 160;
+            label21.Text = "최대부하 [kW]";
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Font = new Font("나눔바른고딕", 10F);
+            label22.Location = new Point(384, 16);
+            label22.Name = "label22";
+            label22.Size = new Size(163, 16);
+            label22.TabIndex = 159;
+            label22.Text = "연간 에너지요구량 [kWh/a]";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Cursor = Cursors.IBeam;
+            label10.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            label10.ForeColor = Color.White;
+            label10.Location = new Point(114, 53);
+            label10.Name = "label10";
+            label10.Size = new Size(55, 15);
+            label10.TabIndex = 137;
+            label10.Text = "설비번호";
+            // 
+            // SystemNum_textBox
+            // 
+            SystemNum_textBox.BackColor = SystemColors.GradientActiveCaption;
+            SystemNum_textBox.BorderStyle = BorderStyle.None;
+            SystemNum_textBox.Enabled = false;
+            SystemNum_textBox.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            SystemNum_textBox.ForeColor = Color.White;
+            SystemNum_textBox.Location = new Point(168, 52);
+            SystemNum_textBox.Name = "SystemNum_textBox";
+            SystemNum_textBox.Size = new Size(75, 15);
+            SystemNum_textBox.TabIndex = 136;
+            SystemNum_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // panel4
             // 
@@ -94,9 +204,9 @@
             panel4.Controls.Add(label9);
             panel4.Controls.Add(label11);
             panel4.Dock = DockStyle.Right;
-            panel4.Location = new Point(472, 0);
+            panel4.Location = new Point(683, 0);
             panel4.Name = "panel4";
-            panel4.Size = new Size(528, 80);
+            panel4.Size = new Size(317, 80);
             panel4.TabIndex = 135;
             // 
             // radioButton4
@@ -203,7 +313,7 @@
             Num_textBox.Enabled = false;
             Num_textBox.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
             Num_textBox.ForeColor = Color.White;
-            Num_textBox.Location = new Point(164, 17);
+            Num_textBox.Location = new Point(168, 17);
             Num_textBox.Name = "Num_textBox";
             Num_textBox.Size = new Size(75, 15);
             Num_textBox.TabIndex = 132;
@@ -293,33 +403,33 @@
             FC_dataGridView.BorderStyle = BorderStyle.None;
             FC_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             FC_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            FC_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            FC_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             FC_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             FC_dataGridView.Location = new Point(0, 56);
             FC_dataGridView.Name = "FC_dataGridView";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            FC_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            FC_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             FC_dataGridView.RowHeadersVisible = false;
             FC_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle3.ForeColor = Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            FC_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle6.ForeColor = Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
+            FC_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
             FC_dataGridView.Size = new Size(939, 106);
             FC_dataGridView.TabIndex = 195;
             // 
@@ -562,5 +672,12 @@
         private Label label4;
         private TextBox gas_textBox;
         private Label label5;
+        private Label label10;
+        private TextBox SystemNum_textBox;
+        private TextBox Zone_Qmax_textBox;
+        private TextBox Zone_Qba_textBox;
+        private Label label21;
+        private Label label22;
+        private TextBox Zone_textBox;
     }
 }
