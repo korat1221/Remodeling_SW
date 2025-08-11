@@ -573,6 +573,7 @@ namespace main.contents
             // 
             // Glass_tabPage
             // 
+            Glass_tabPage.BackColor = Color.White;
             Glass_tabPage.Controls.Add(SpacerName_textBox2);
             Glass_tabPage.Controls.Add(GlassName_textBox2);
             Glass_tabPage.Controls.Add(Ug_textBox);
@@ -596,7 +597,6 @@ namespace main.contents
             Glass_tabPage.Size = new Size(992, 210);
             Glass_tabPage.TabIndex = 0;
             Glass_tabPage.Text = "유리 및 간봉";
-            Glass_tabPage.UseVisualStyleBackColor = true;
             // 
             // SpacerName_textBox2
             // 
