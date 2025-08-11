@@ -34,6 +34,7 @@ namespace main.contents.Construction
         bool scriptable = false;
         string Frost;
 
+
         public ConstructionFloor()
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
@@ -68,7 +69,7 @@ namespace main.contents.Construction
             //표면열전달저항기준 콤보박스 
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, ISO_KS_comboBox, "바닥", "실내외표면열전달저항");
             //단열수준콤보박스
-            Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, Uvalue_comboBox, "바닥", "단열수준", "3");
+           // Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, Uvalue_comboBox, "바닥", "단열수준", "2");
             Load_table();
             webView21.Source = new Uri(Program.gPath + "transmit.html?type=floor", true);
 
@@ -78,6 +79,10 @@ namespace main.contents.Construction
             Frost_comboBox.Items.Add("결로방지 단열");
             Frost_comboBox.Items.Add("단열없음");
             Frost_comboBox.SelectedIndex = 0;
+
+            U_label2.Text = "W/(m\u00B2∙K)";
+            dU_label2.Text = "W/(m\u00B2∙K)";
+            Ueff_label2.Text = "W/(m\u00B2∙K)";
 
         }
         async void InitializeAsync()
@@ -464,7 +469,14 @@ namespace main.contents.Construction
 
         private void Load_FloorType_image(String Type, String Base)
         {
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "바닥유형이미지", "이미지", "바닥유형 = '" + Type + "' AND 기초설치 = '" + Base + "'");
+            string _base;
+            if (Base == "바닥(직접외기)" || Base == "바닥(간접외기)")
+            {
+                _base = "바닥(외기)";
+            }
+            else _base = Base;
+            
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "바닥유형이미지", "이미지", "바닥유형 = '" + Type + "' AND 기초설치 = '" + _base + "'");
             if (Image.Length > 0)
             {
                 FloorType_pictureBox.Visible = true;
