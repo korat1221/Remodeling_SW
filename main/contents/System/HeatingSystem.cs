@@ -3044,7 +3044,11 @@ namespace main.contents
         private void Save_ce()
         {
             Program.DB.deleteValue(DB.type.ProjDB, "Heating_ce_Form", "난방시스템 = '" + Num + "'");
-
+            if(ce_dataGridView.Rows.Count ==0)
+            {
+                MessageBox.Show("공급설비를 입력하세요.");
+                return;
+            }
             for (int n = 0; n < ce_dataGridView.Rows.Count; n++)
             {
                 String 존번호, 공급설비;
