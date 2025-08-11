@@ -63,6 +63,11 @@ namespace main.subcontents
             Glass_dataGridView.Columns.Add("A11", "반사율.외부.ρv.[-]");
             Glass_dataGridView.Columns.Add("A12", "반사율.내부.ρ'v.[-]");
 
+            Glass_dataGridView.Columns[0].Width = 30;
+            Glass_dataGridView.Columns[2].Width = 80;
+            Glass_dataGridView.Columns[3].Width = 200;
+           
+
             string[][] User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율", "");
             if (User_WinGlass.Length > 0)
             {
