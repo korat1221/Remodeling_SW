@@ -751,6 +751,12 @@ namespace main
 
                     f.LoadData("");
                 }
+                else if (i == 22)
+                {
+                    FuelCell f = (FuelCell)forms[i];
+
+                    f.LoadData("");
+                }
                 else if (i == 26)
                 {
                     Element_Report_Main f = (Element_Report_Main)forms[i];

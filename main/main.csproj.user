@@ -88,9 +88,6 @@
     <Compile Update="contents\RESystem\EIndependenceRate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="contents\RESystem\FuelCell.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="contents\RESystem\PV.cs">
       <SubType>Form</SubType>
     </Compile>
