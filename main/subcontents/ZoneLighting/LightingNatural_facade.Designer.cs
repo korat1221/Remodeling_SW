@@ -54,6 +54,7 @@ namespace main.subcontents.ZoneLighting
             label16 = new Label();
             NaturalLight_comboBox = new ComboBox();
             Save_button = new Button();
+            infoFacadedb = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Middle_pictureBox).BeginInit();
             SuspendLayout();
@@ -61,6 +62,7 @@ namespace main.subcontents.ZoneLighting
             // panel1
             // 
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(infoFacadedb);
             panel1.Controls.Add(Tao_textBox);
             panel1.Controls.Add(glaassinfo_label);
             panel1.Controls.Add(Dim_label);
@@ -102,20 +104,20 @@ namespace main.subcontents.ZoneLighting
             // glaassinfo_label
             // 
             glaassinfo_label.AutoSize = true;
-            glaassinfo_label.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            glaassinfo_label.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             glaassinfo_label.Location = new Point(37, 86);
             glaassinfo_label.Name = "glaassinfo_label";
-            glaassinfo_label.Size = new Size(59, 15);
+            glaassinfo_label.Size = new Size(58, 15);
             glaassinfo_label.TabIndex = 211;
             glaassinfo_label.Text = "유리 정보";
             // 
             // Dim_label
             // 
             Dim_label.AutoSize = true;
-            Dim_label.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            Dim_label.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             Dim_label.Location = new Point(306, 86);
             Dim_label.Name = "Dim_label";
-            Dim_label.Size = new Size(59, 15);
+            Dim_label.Size = new Size(58, 15);
             Dim_label.TabIndex = 210;
             Dim_label.Text = "치수 정보";
             // 
@@ -142,10 +144,10 @@ namespace main.subcontents.ZoneLighting
             // label28
             // 
             label28.AutoSize = true;
-            label28.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label28.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label28.Location = new Point(37, 17);
             label28.Name = "label28";
-            label28.Size = new Size(99, 15);
+            label28.Size = new Size(97, 15);
             label28.TabIndex = 207;
             label28.Text = "파사드 세부 유형";
             // 
@@ -235,7 +237,7 @@ namespace main.subcontents.ZoneLighting
             // 
             // glass1_comboBox
             // 
-            glass1_comboBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            glass1_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             glass1_comboBox.FormattingEnabled = true;
             glass1_comboBox.Location = new Point(139, 109);
             glass1_comboBox.Name = "glass1_comboBox";
@@ -283,7 +285,7 @@ namespace main.subcontents.ZoneLighting
             // 
             // NaturalLight_comboBox
             // 
-            NaturalLight_comboBox.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point);
+            NaturalLight_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             NaturalLight_comboBox.FormattingEnabled = true;
             NaturalLight_comboBox.Location = new Point(407, 47);
             NaturalLight_comboBox.Name = "NaturalLight_comboBox";
@@ -302,6 +304,21 @@ namespace main.subcontents.ZoneLighting
             Save_button.Text = "SAVE";
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click_1;
+            // 
+            // infoFacadedb
+            // 
+            infoFacadedb.BackColor = SystemColors.ControlLight;
+            infoFacadedb.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoFacadedb.FlatStyle = FlatStyle.System;
+            infoFacadedb.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoFacadedb.Location = new Point(546, 9);
+            infoFacadedb.Margin = new Padding(0);
+            infoFacadedb.Name = "infoFacadedb";
+            infoFacadedb.Size = new Size(23, 23);
+            infoFacadedb.TabIndex = 165;
+            infoFacadedb.Text = "?";
+            infoFacadedb.UseVisualStyleBackColor = false;
+            infoFacadedb.Click += infoFacadedb_Click;
             // 
             // LightingNatural_facade
             // 
@@ -343,5 +360,6 @@ namespace main.subcontents.ZoneLighting
         private ComboBox NaturalLight_comboBox;
         private TextBox Tao_textBox;
         private Button Save_button;
+        private Button infoFacadedb;
     }
 }

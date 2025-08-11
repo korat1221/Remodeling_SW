@@ -1,4 +1,5 @@
 ﻿using main.contentslist;
+using main.info;
 using main.subcontents;
 using main.subcontents.ConstructionCW;
 using main.subcontents.EquipmentList;
@@ -145,7 +146,7 @@ namespace main.contents
                 }
             }
             label20.Text = "면적 [m" + Program.UTIL.Subscript(2, true) + "]";
-            
+
             DistpictureBox.Parent = ImagePanel;
             SyspictureBox.Parent = DistpictureBox;
             SourcepictureBox.Parent = DistpictureBox;
@@ -445,7 +446,7 @@ namespace main.contents
         }
         private void MainSystem_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-           
+
             if (MainSystem_comboBox.SelectedItem != null)
             {
                 if (MainSystem != null && MainSystem != "보일러" && MainSystem != MainSystem_comboBox.SelectedItem.ToString())
@@ -2104,7 +2105,7 @@ namespace main.contents
                     StoragePump_textBox.Visible = true;
                     StoragePump_button.Visible = true;
                     Create_StoragePump_Table();
-                   
+
                 }
                 else
                 {
@@ -2312,7 +2313,7 @@ namespace main.contents
                 PumpUse = null;
             }
             Dispump();
-           
+
         }
 
         private void PumpMethod_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -2645,7 +2646,7 @@ namespace main.contents
                     }
 
                     double Max = AHU_Qmax_textBox.Text == null || AHU_Qmax_textBox.Text.ToString() == "" ? 0 : Convert.ToDouble(AHU_Qmax_textBox.Text.ToString());
-                    Max =Zone_Qmax_textBox.Text == null || Zone_Qmax_textBox.Text.ToString() == "" ? Max + 0 : Max + Convert.ToDouble(Zone_Qmax_textBox.Text.ToString());
+                    Max = Zone_Qmax_textBox.Text == null || Zone_Qmax_textBox.Text.ToString() == "" ? Max + 0 : Max + Convert.ToDouble(Zone_Qmax_textBox.Text.ToString());
 
                     double dtheta = 10;
                     string[][] v = Program.DB.getValue(DB.type.BaseDB_Heating, "공급환순온도", "공급온도,환수온도", "공급환수온도='" + SLRL + "'");
@@ -2669,8 +2670,8 @@ namespace main.contents
             if (Pump_dataGridView.Rows.Count == 0) { return; }
             for (int k = 0; k < Pump_dataGridView.Rows.Count; k++)
             {
-                
-                if(PumpMethod =="1차펌프")
+
+                if (PumpMethod == "1차펌프")
                 {
                     if (k == 0)
                     {
@@ -3124,7 +3125,7 @@ namespace main.contents
             if (image1.Length > 0)
             {
                 SubDistpictureBox.Visible = true;
-                SubDistpictureBox.Location = new Point(0,0);
+                SubDistpictureBox.Location = new Point(0, 0);
                 SubDistpictureBox.Size = new System.Drawing.Size(235, 290);
                 SubDistpictureBox.Load(Program.gPath + image1[0][0]);
                 SubDistpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -3133,8 +3134,8 @@ namespace main.contents
             {
                 SubDistpictureBox.Visible = false;
             }
-                string[][] image2 = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지",
-                 "설비유형='서브2' And 항목유형 ='분배설비'");
+            string[][] image2 = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지",
+             "설비유형='서브2' And 항목유형 ='분배설비'");
             if (image2.Length > 0)
             {
                 SubDist2pictureBox.Visible = true;
@@ -3220,7 +3221,7 @@ namespace main.contents
             {
                 stopumppictureBox.Visible = false;
             }
-         
+
         }
 
         void Dispump() //분배설비 펌프
@@ -3263,7 +3264,7 @@ namespace main.contents
                     ce1_pictureBox.Size = new System.Drawing.Size(190, 80);
                     ce1_pictureBox.Load(Program.gPath + image[0][0]);
                     ce1_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                 }
+                }
                 else if (_type == ce2Type)
                 {
                     ce2_pictureBox.Visible = true;
@@ -3287,7 +3288,7 @@ namespace main.contents
             }
 
         }
-       
+
 
         #endregion
 
@@ -3366,7 +3367,7 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,지하수히트펌프번호,지하수히트펌프공급방식,지하수히트펌프제어방식,지하수히트펌프대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectHP_nonsplit[2] + "','" + HPSupply_nonsplit[2] + "','" + HPControl_nonsplit[2] + "','" + HPNum_nonsplit[2] + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,흡수식온수기번호,흡수식온수기대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectAS_nonsplit + "','" + ASNum_nonsplit + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,지역난방번호", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectDH_nonsplit + "'", "번호");
-          
+
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,공급설비1종류,공급설비2종류", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + ce1Type + "','" + ce2Type + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,축열유무,축열펌프유무,축열펌프,축열용량", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + StorageUse + "','" + StoragePumpUse + "','" + StoragePump + "','" + Vs.ToString() + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,배관관경,배관보온두께,보온열전도율,배관보온재,노출배관길이", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PipeD.ToString() + "','" + PipeInsD.ToString() + "','" + PipeIns_Ramda.ToString() + "','" + PipeIns + "','" + PipeL.ToString() + "'", "번호");
@@ -3438,7 +3439,7 @@ namespace main.contents
             else if (Sub2System_comboBox.Text == "태양열시스템") 적용유형 = "보조설비2";
             else 적용유형 = null;
 
-            if(적용유형 != null)
+            if (적용유형 != null)
             {
                 string stnum = solar_num();
 
@@ -3601,7 +3602,7 @@ namespace main.contents
                 Complex_comboBox.SelectedItem = Value[0][2];
                 Complex = Value[0][2];
 
-                if(Complex != "복합설비가동")
+                if (Complex != "복합설비가동")
                 {
                     MainSystem = Value[0][3];
                     MainSystem_comboBox.SelectedItem = Value[0][3];
@@ -3613,7 +3614,7 @@ namespace main.contents
                     Sub1System = Value[0][4];
                     Sub1System_comboBox.SelectedItem = Value[0][4];
                 }
-                    
+
                 //Sub2System = Value[0][5];
                 //Sub2System_comboBox.SelectedItem = Value[0][5];
             }
@@ -3707,7 +3708,7 @@ namespace main.contents
             Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수,펌프1유량,펌프2유량,펌프1양정,펌프2양정", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
-                
+
                 PumpUse_comboBox.SelectedItem = Value[0][0];
                 PumpUse = Value[0][0];
                 if (PumpUse == "펌프 있음")
@@ -3717,7 +3718,7 @@ namespace main.contents
                     arr = Split_(Value[0][1]);
                     PumpMethod_comboBox.SelectedItem = arr[0].ToString();
                     PumpMethod = arr[0].ToString();
-                    if(arr.Count>1)
+                    if (arr.Count > 1)
                     {
                         GPumpMethod_comboBox.SelectedItem = arr[1].ToString();
                         GPumpMethod = arr[1].ToString();
@@ -3845,11 +3846,11 @@ namespace main.contents
                         string[][] Pump_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "명칭", "번호 = '" + GPump1.ToString() + "'");
                         GPump1_textBox.Text = Pump_Value[0][0];
                         Pump_dataGridView.Rows.Add();
-                        Load_Pump_Table(Pump_dataGridView.Rows.Count -1, GPump1);
+                        Load_Pump_Table(Pump_dataGridView.Rows.Count - 1, GPump1);
                         Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[7].Value = GPump1Head;
                         Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, Pump_dataGridView.Rows.Count - 1, 7, 1);
                         Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[9].Value = GPump1Valve;
-                        Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[10].Value =GPump1Control;
+                        Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[10].Value = GPump1Control;
                         Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[11].Value = GPump1Num;
                         Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, Pump_dataGridView.Rows.Count - 1, 11, 0);
                     }
@@ -4004,7 +4005,7 @@ namespace main.contents
                 {
                     ArrayList split = new ArrayList();
 
-                    split.Clear(); 
+                    split.Clear();
                     split.Add(nonSplit);
                     return split;
                 }
@@ -4114,5 +4115,20 @@ namespace main.contents
             FC_SelectRow = e.RowIndex;
         }
 
+        private void infoHeating_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\19.Heating";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

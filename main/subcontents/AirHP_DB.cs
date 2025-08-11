@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.info;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -35,14 +36,14 @@ namespace main.subcontents.HeatingSystem
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
-            
-            
+
+
             HC_comboBox.Items.Clear();
-            HC_comboBox.Items.AddRange(new string[] { "냉방" });
-            HC_comboBox.SelectedIndex = 0;
+            HC_comboBox.Items.AddRange(new string[] { "냉방", "냉난방" });
+            HC_comboBox.SelectedIndex = 1;
             Carrier_comboBox.Items.Clear();
             Carrier_comboBox.Items.AddRange(new string[] { "전기", "가스" });
- 
+
             Carrier_comboBox.SelectedIndex = 0;
 
 
@@ -55,7 +56,7 @@ namespace main.subcontents.HeatingSystem
 
         private void HC_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(HC_comboBox.SelectedItem != null)
+            if (HC_comboBox.SelectedItem != null)
             {
                 HC = HC_comboBox.SelectedItem.ToString();
 
@@ -68,7 +69,7 @@ namespace main.subcontents.HeatingSystem
                     }
                     load_table_DB(DefaultUse, Carrier, HC);
                 }
-             
+
             }
         }
         private void visible_Carrier_ComboBox(String DefaultValue)
@@ -117,7 +118,7 @@ namespace main.subcontents.HeatingSystem
                 HP_dataGridView.Columns.Add("A1", "등급");
                 HP_dataGridView.Columns.Add("A2", "명칭");
                 HP_dataGridView.Columns.Add("A3", "냉방.EER");
-                
+
                 if (HC == "냉난방")
                 {
                     HP_dataGridView.Columns.Add("A4", "난방.COP");
@@ -146,7 +147,7 @@ namespace main.subcontents.HeatingSystem
         }
         void load_table_DB(String DefaultUse, String Carrier, String HC)
         {
-           
+
             HP_dataGridView.Rows.Clear();
             if (DefaultUse == "기본DB 적용")
             {
@@ -343,5 +344,20 @@ namespace main.subcontents.HeatingSystem
             }
         }
 
+        private void infoHPdb_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\2.subcontents\\12.EquipmentList\\02 HP";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

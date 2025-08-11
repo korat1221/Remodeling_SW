@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.info;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace main.subcontents.HeatingSystem
         ArrayList SelectRow = new ArrayList(); ArrayList SelectHP_split = new ArrayList();
         String DefaultUse;
         public string SelectHP;
-        public string Carrier, HeatSource , HC;
+        public string Carrier, HeatSource, HC;
 
         public GroundHP_DB(String DefaultUse, String SelectHP_nonsplit, String HeatSource, String HC)
         {
@@ -64,7 +65,7 @@ namespace main.subcontents.HeatingSystem
             }
             else
             {
-               if(HC =="냉방")
+                if (HC == "냉방")
                 {
                     HP_dataGridView.Columns.Add("A1", "번호");
                     HP_dataGridView.Columns.Add("A2", "명칭");
@@ -94,7 +95,7 @@ namespace main.subcontents.HeatingSystem
                     HP_dataGridView.Columns.Add("A11", "(5℃).소비전력.[kW]");
                     load_table_DB("장비일람표 적용");
                 }
-               
+
 
             }
         }

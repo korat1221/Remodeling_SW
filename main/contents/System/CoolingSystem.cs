@@ -1,4 +1,5 @@
 ﻿using main.contentslist;
+using main.info;
 using main.subcontents;
 using main.subcontents.CoolingSystem;
 using main.subcontents.EquipmentList;
@@ -239,10 +240,10 @@ namespace main.contents
         }
         private void CoolingCeDelete(string type)
         {
-            if(type == "Zone")
+            if (type == "Zone")
             {
                 //ce1Type_ComboBox 항목 삭제
-                if(ce1Type_comboBox.Text != "공조기")
+                if (ce1Type_comboBox.Text != "공조기")
                 {
                     ce1Type_comboBox.Text = null;
                     ce1Label.Visible = false;
@@ -256,7 +257,7 @@ namespace main.contents
                 }
                 //공급설비삭제
                 Program.DB.deleteValue(DB.type.ProjDB, "Cooling_ce_Form", "냉방시스템 = '" + Num + "' AND 공급설비종류 != 'VAV유닛' AND 공급설비종류 != 'CAV유닛' AND 공급설비종류 != '파워팬유닛'");
-                
+
                 //그리드뷰삭제
                 for (int i = ce_dataGridView.Rows.Count - 1; i >= 0; i--)
                 {
@@ -273,7 +274,7 @@ namespace main.contents
                     }
                 }
             }
-            else if(type == "Ahu")
+            else if (type == "Ahu")
             {
                 //ce1Type_ComboBox 항목 삭제
                 if (ce1Type_comboBox.Text == "공조기")
@@ -1632,7 +1633,7 @@ namespace main.contents
             SelectCGC_nonsplit = null;
             SelectCGE_nonsplit = null;
             SelectCGN_nonsplit = null;
-            SelectCGComp_nonsplit = null; 
+            SelectCGComp_nonsplit = null;
 
             for (int k = 0; k < WaterCooler_dataGridView.Rows.Count; k++)
             {
@@ -3953,7 +3954,7 @@ namespace main.contents
                     ce1Label.Visible = true;
                     Load_ce(ce1Type);
                     Load_ce1Zone(ce1Type);
-                   
+
                 }
 
                 //공급설비 2번째 작성하기
@@ -3966,7 +3967,7 @@ namespace main.contents
                     ce2Label.Visible = true;
                     Load_ce(ce2Type);
                     Load_ce2Zone(ce2Type);
-                   
+
                 }
             }
         }
@@ -4229,6 +4230,22 @@ namespace main.contents
                         break;
                     }
                 }
+            }
+        }
+
+        private void infoCooling_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\20.Cooling";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
             }
         }
     }

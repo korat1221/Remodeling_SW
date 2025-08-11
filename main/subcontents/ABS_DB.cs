@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.info;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,7 +57,7 @@ namespace main.subcontents.HeatingSystem
             AS_dataGridView.Columns.Add(checkBoxColumn);
 
             AS_dataGridView.Columns.Add("A1", "번호");
-            AS_dataGridView.Columns[0].Width =100;
+            AS_dataGridView.Columns[0].Width = 100;
             if (DefaultUse != "기본DB 적용")
             {
                 if (HC == "냉난방")
@@ -89,7 +90,7 @@ namespace main.subcontents.HeatingSystem
             }
 
             if (DefaultUse == "기본DB 적용")
-            { 
+            {
                 AS_dataGridView.Columns.Add("A14", "제품명");
                 AS_dataGridView.Columns.Add("A15", "통합성능.IPLV");
                 AS_dataGridView.Columns.Add("A16", "비고");
@@ -110,7 +111,7 @@ namespace main.subcontents.HeatingSystem
             }
             else
             {
-                
+
                 if (HC == "난방")
                 {
                     string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "번호,연료,난방용량,난방성능,온수입구온도,온수출구온도,대기전력,통합성능", "난방냉방 ='냉난방'");
@@ -217,6 +218,22 @@ namespace main.subcontents.HeatingSystem
                         AS_dataGridView.Rows[n].Cells[0].Value = true;
                     }
                 }
+            }
+        }
+
+        private void infoASdb_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\2.subcontents\\12.EquipmentList\\05 AS";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
             }
         }
     }

@@ -90,6 +90,7 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle56 = new DataGridViewCellStyle();
             PV_dataGridView = new DataGridView();
             GeneralPanel = new Panel();
+            info = new Button();
             Qwmax_textBox = new TextBox();
             Qcmax_textBox = new TextBox();
             Qhmax_textBox = new TextBox();
@@ -109,6 +110,7 @@ namespace main.contents
             unitselect_comboBox = new ComboBox();
             tabControl1 = new CustomTabControl();
             HP_tabPage = new TabPage();
+            infohp = new Button();
             label3 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
             AirHP_dataGridView = new DataGridView();
@@ -118,6 +120,7 @@ namespace main.contents
             AirHP_Remove_button = new Button();
             UserAirHP_Add_button = new Button();
             Boiler_tabPage = new TabPage();
+            infoboiler = new Button();
             label18 = new System.Windows.Forms.Label();
             label20 = new System.Windows.Forms.Label();
             DefaultBoiler_Add_button = new Button();
@@ -127,6 +130,7 @@ namespace main.contents
             Boiler_Remove_button = new Button();
             UserBoiler_Add_button = new Button();
             DH_tabPage = new TabPage();
+            infoDH = new Button();
             DH_dataGridView = new DataGridView();
             label10 = new System.Windows.Forms.Label();
             label11 = new System.Windows.Forms.Label();
@@ -136,12 +140,14 @@ namespace main.contents
             DH_Remove_button = new Button();
             UserDH_Add_button = new Button();
             AS_tabPage = new TabPage();
+            infoAS = new Button();
             ABS_dataGridView = new DataGridView();
             ABS_Save_button = new Button();
             ABS_Copy_button = new Button();
             ABS_Remove_button = new Button();
             UserABS_Add_button = new Button();
             AirCooler_tabPage = new TabPage();
+            infoAC = new Button();
             label14 = new System.Windows.Forms.Label();
             label15 = new System.Windows.Forms.Label();
             AirCooler_dataGridView = new DataGridView();
@@ -151,6 +157,7 @@ namespace main.contents
             AirCooler_Remove_button = new Button();
             UserAirCooler_Add_button = new Button();
             WaterCooler_tabPage = new TabPage();
+            infoWaterCooler = new Button();
             label16 = new System.Windows.Forms.Label();
             label17 = new System.Windows.Forms.Label();
             WaterCooler_dataGridView = new DataGridView();
@@ -170,6 +177,7 @@ namespace main.contents
             ce_Remove_button = new Button();
             ce_Add_button = new Button();
             tabPage6 = new TabPage();
+            infoWP = new Button();
             label25 = new System.Windows.Forms.Label();
             DefaultWP_ADD_button = new Button();
             label24 = new System.Windows.Forms.Label();
@@ -180,6 +188,7 @@ namespace main.contents
             UserWP_Add_button = new Button();
             button15 = new Button();
             tabPage5 = new TabPage();
+            infoFC = new Button();
             label12 = new System.Windows.Forms.Label();
             label13 = new System.Windows.Forms.Label();
             FC_dataGridView = new DataGridView();
@@ -189,18 +198,21 @@ namespace main.contents
             FC_Remove_button = new Button();
             UserFC_Add_button = new Button();
             tabPage4 = new TabPage();
+            infoGWHP = new Button();
             GWHP_Save_button = new Button();
             GWHP_dataGridView = new DataGridView();
             UserGWHP_Add_button = new Button();
             GWHP_Remove_button = new Button();
             GWHP_Copy_button = new Button();
             tabPage3 = new TabPage();
+            infoGHP = new Button();
             GroundHP_Save_button = new Button();
             GroundHP_dataGridView = new DataGridView();
             GroundHP_Copy_button = new Button();
             GroundHP_Remove_button = new Button();
             UserGroundHP_Add_button = new Button();
             tabPage2 = new TabPage();
+            infoSolar = new Button();
             Solar_Save_button = new Button();
             label6 = new System.Windows.Forms.Label();
             label7 = new System.Windows.Forms.Label();
@@ -210,6 +222,7 @@ namespace main.contents
             Solar_dataGridView = new DataGridView();
             Solar_Copy_button = new Button();
             tabPage1 = new TabPage();
+            infoPV = new Button();
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             PV_Save_button = new Button();
@@ -219,6 +232,7 @@ namespace main.contents
             UserPV_Add_button = new Button();
             customTabControl1 = new CustomTabControl();
             DHWHP_tabPage = new TabPage();
+            infoDHWHP = new Button();
             DHWHP_dataGridView = new DataGridView();
             DHWHP_Save_button = new Button();
             DHWHP_Copy_button = new Button();
@@ -233,6 +247,7 @@ namespace main.contents
             tabPage9 = new TabPage();
             label21 = new System.Windows.Forms.Label();
             tabPage8 = new TabPage();
+            infoPump = new Button();
             customTabControl2 = new CustomTabControl();
             tabPage11 = new TabPage();
             HRV_dataGridView = new DataGridView();
@@ -241,6 +256,7 @@ namespace main.contents
             HRV_Remove_button = new Button();
             UserHRV_Add_button = new Button();
             tabPage12 = new TabPage();
+            infoCoolingTop = new Button();
             CoolingTop_Save_button = new Button();
             CoolingTop_dataGridView = new DataGridView();
             CoolerTop_Add_button = new Button();
@@ -255,6 +271,7 @@ namespace main.contents
             panel1 = new Panel();
             panel2 = new Panel();
             panel3 = new Panel();
+            infoce = new Button();
             ((System.ComponentModel.ISupportInitialize)PV_dataGridView).BeginInit();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -349,6 +366,7 @@ namespace main.contents
             // GeneralPanel
             // 
             GeneralPanel.BackColor = SystemColors.GradientActiveCaption;
+            GeneralPanel.Controls.Add(info);
             GeneralPanel.Controls.Add(Qwmax_textBox);
             GeneralPanel.Controls.Add(Qcmax_textBox);
             GeneralPanel.Controls.Add(Qhmax_textBox);
@@ -371,6 +389,21 @@ namespace main.contents
             GeneralPanel.Size = new Size(1261, 80);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("Microsoft Sans Serif", 9.75F);
+            info.Location = new Point(1226, 6);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 148;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
             // 
             // Qwmax_textBox
             // 
@@ -597,6 +630,7 @@ namespace main.contents
             // HP_tabPage
             // 
             HP_tabPage.BackColor = Color.White;
+            HP_tabPage.Controls.Add(infohp);
             HP_tabPage.Controls.Add(label3);
             HP_tabPage.Controls.Add(label5);
             HP_tabPage.Controls.Add(AirHP_dataGridView);
@@ -611,6 +645,21 @@ namespace main.contents
             HP_tabPage.Size = new Size(1253, 226);
             HP_tabPage.TabIndex = 2;
             HP_tabPage.Text = "히트펌프";
+            // 
+            // infohp
+            // 
+            infohp.BackColor = SystemColors.ControlLight;
+            infohp.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infohp.FlatStyle = FlatStyle.System;
+            infohp.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infohp.Location = new Point(8, 10);
+            infohp.Margin = new Padding(0);
+            infohp.Name = "infohp";
+            infohp.Size = new Size(23, 23);
+            infohp.TabIndex = 149;
+            infohp.Text = "?";
+            infohp.UseVisualStyleBackColor = false;
+            infohp.Click += infohp_Click;
             // 
             // label3
             // 
@@ -750,6 +799,7 @@ namespace main.contents
             // Boiler_tabPage
             // 
             Boiler_tabPage.BackColor = Color.White;
+            Boiler_tabPage.Controls.Add(infoboiler);
             Boiler_tabPage.Controls.Add(label18);
             Boiler_tabPage.Controls.Add(label20);
             Boiler_tabPage.Controls.Add(DefaultBoiler_Add_button);
@@ -764,6 +814,21 @@ namespace main.contents
             Boiler_tabPage.Size = new Size(1253, 226);
             Boiler_tabPage.TabIndex = 6;
             Boiler_tabPage.Text = "보일러";
+            // 
+            // infoboiler
+            // 
+            infoboiler.BackColor = SystemColors.ControlLight;
+            infoboiler.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoboiler.FlatStyle = FlatStyle.System;
+            infoboiler.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoboiler.Location = new Point(8, 5);
+            infoboiler.Margin = new Padding(0);
+            infoboiler.Name = "infoboiler";
+            infoboiler.Size = new Size(23, 23);
+            infoboiler.TabIndex = 150;
+            infoboiler.Text = "?";
+            infoboiler.UseVisualStyleBackColor = false;
+            infoboiler.Click += infoboiler_Click;
             // 
             // label18
             // 
@@ -903,6 +968,7 @@ namespace main.contents
             // DH_tabPage
             // 
             DH_tabPage.BackColor = Color.White;
+            DH_tabPage.Controls.Add(infoDH);
             DH_tabPage.Controls.Add(DH_dataGridView);
             DH_tabPage.Controls.Add(label10);
             DH_tabPage.Controls.Add(label11);
@@ -917,6 +983,21 @@ namespace main.contents
             DH_tabPage.Size = new Size(1253, 226);
             DH_tabPage.TabIndex = 4;
             DH_tabPage.Text = "지역난방";
+            // 
+            // infoDH
+            // 
+            infoDH.BackColor = SystemColors.ControlLight;
+            infoDH.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoDH.FlatStyle = FlatStyle.System;
+            infoDH.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoDH.Location = new Point(8, 12);
+            infoDH.Margin = new Padding(0);
+            infoDH.Name = "infoDH";
+            infoDH.Size = new Size(23, 23);
+            infoDH.TabIndex = 151;
+            infoDH.Text = "?";
+            infoDH.UseVisualStyleBackColor = false;
+            infoDH.Click += infoDH_Click;
             // 
             // DH_dataGridView
             // 
@@ -1055,6 +1136,7 @@ namespace main.contents
             // AS_tabPage
             // 
             AS_tabPage.BackColor = Color.White;
+            AS_tabPage.Controls.Add(infoAS);
             AS_tabPage.Controls.Add(ABS_dataGridView);
             AS_tabPage.Controls.Add(ABS_Save_button);
             AS_tabPage.Controls.Add(ABS_Copy_button);
@@ -1066,6 +1148,21 @@ namespace main.contents
             AS_tabPage.Size = new Size(1253, 226);
             AS_tabPage.TabIndex = 3;
             AS_tabPage.Text = "흡수식냉온수기";
+            // 
+            // infoAS
+            // 
+            infoAS.BackColor = SystemColors.ControlLight;
+            infoAS.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoAS.FlatStyle = FlatStyle.System;
+            infoAS.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoAS.Location = new Point(8, 7);
+            infoAS.Margin = new Padding(0);
+            infoAS.Name = "infoAS";
+            infoAS.Size = new Size(23, 23);
+            infoAS.TabIndex = 152;
+            infoAS.Text = "?";
+            infoAS.UseVisualStyleBackColor = false;
+            infoAS.Click += infoAS_Click;
             // 
             // ABS_dataGridView
             // 
@@ -1170,6 +1267,7 @@ namespace main.contents
             // AirCooler_tabPage
             // 
             AirCooler_tabPage.BackColor = Color.White;
+            AirCooler_tabPage.Controls.Add(infoAC);
             AirCooler_tabPage.Controls.Add(label14);
             AirCooler_tabPage.Controls.Add(label15);
             AirCooler_tabPage.Controls.Add(AirCooler_dataGridView);
@@ -1184,6 +1282,21 @@ namespace main.contents
             AirCooler_tabPage.Size = new Size(1253, 226);
             AirCooler_tabPage.TabIndex = 5;
             AirCooler_tabPage.Text = "공냉식냉동기";
+            // 
+            // infoAC
+            // 
+            infoAC.BackColor = SystemColors.ControlLight;
+            infoAC.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoAC.FlatStyle = FlatStyle.System;
+            infoAC.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoAC.Location = new Point(8, 7);
+            infoAC.Margin = new Padding(0);
+            infoAC.Name = "infoAC";
+            infoAC.Size = new Size(23, 23);
+            infoAC.TabIndex = 153;
+            infoAC.Text = "?";
+            infoAC.UseVisualStyleBackColor = false;
+            infoAC.Click += infoAC_Click;
             // 
             // label14
             // 
@@ -1322,6 +1435,7 @@ namespace main.contents
             // WaterCooler_tabPage
             // 
             WaterCooler_tabPage.BackColor = Color.White;
+            WaterCooler_tabPage.Controls.Add(infoWaterCooler);
             WaterCooler_tabPage.Controls.Add(label16);
             WaterCooler_tabPage.Controls.Add(label17);
             WaterCooler_tabPage.Controls.Add(WaterCooler_dataGridView);
@@ -1336,6 +1450,21 @@ namespace main.contents
             WaterCooler_tabPage.Size = new Size(1253, 226);
             WaterCooler_tabPage.TabIndex = 7;
             WaterCooler_tabPage.Text = "수냉식냉동기";
+            // 
+            // infoWaterCooler
+            // 
+            infoWaterCooler.BackColor = SystemColors.ControlLight;
+            infoWaterCooler.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoWaterCooler.FlatStyle = FlatStyle.System;
+            infoWaterCooler.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoWaterCooler.Location = new Point(8, 12);
+            infoWaterCooler.Margin = new Padding(0);
+            infoWaterCooler.Name = "infoWaterCooler";
+            infoWaterCooler.Size = new Size(23, 23);
+            infoWaterCooler.TabIndex = 149;
+            infoWaterCooler.Text = "?";
+            infoWaterCooler.UseVisualStyleBackColor = false;
+            infoWaterCooler.Click += infoWaterCooler_Click;
             // 
             // label16
             // 
@@ -1673,6 +1802,7 @@ namespace main.contents
             // tabPage6
             // 
             tabPage6.BackColor = Color.White;
+            tabPage6.Controls.Add(infoWP);
             tabPage6.Controls.Add(label25);
             tabPage6.Controls.Add(DefaultWP_ADD_button);
             tabPage6.Controls.Add(label24);
@@ -1688,6 +1818,21 @@ namespace main.contents
             tabPage6.Size = new Size(1253, 226);
             tabPage6.TabIndex = 7;
             tabPage6.Text = "소형풍력";
+            // 
+            // infoWP
+            // 
+            infoWP.BackColor = SystemColors.ControlLight;
+            infoWP.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoWP.FlatStyle = FlatStyle.System;
+            infoWP.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoWP.Location = new Point(8, 12);
+            infoWP.Margin = new Padding(0);
+            infoWP.Name = "infoWP";
+            infoWP.Size = new Size(23, 23);
+            infoWP.TabIndex = 156;
+            infoWP.Text = "?";
+            infoWP.UseVisualStyleBackColor = false;
+            infoWP.Click += infoWP_Click;
             // 
             // label25
             // 
@@ -1838,6 +1983,7 @@ namespace main.contents
             // tabPage5
             // 
             tabPage5.BackColor = Color.White;
+            tabPage5.Controls.Add(infoFC);
             tabPage5.Controls.Add(label12);
             tabPage5.Controls.Add(label13);
             tabPage5.Controls.Add(FC_dataGridView);
@@ -1852,6 +1998,21 @@ namespace main.contents
             tabPage5.Size = new Size(1253, 226);
             tabPage5.TabIndex = 5;
             tabPage5.Text = "연료전지";
+            // 
+            // infoFC
+            // 
+            infoFC.BackColor = SystemColors.ControlLight;
+            infoFC.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoFC.FlatStyle = FlatStyle.System;
+            infoFC.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoFC.Location = new Point(8, 7);
+            infoFC.Margin = new Padding(0);
+            infoFC.Name = "infoFC";
+            infoFC.Size = new Size(23, 23);
+            infoFC.TabIndex = 155;
+            infoFC.Text = "?";
+            infoFC.UseVisualStyleBackColor = false;
+            infoFC.Click += infoFC_Click;
             // 
             // label12
             // 
@@ -1990,6 +2151,7 @@ namespace main.contents
             // tabPage4
             // 
             tabPage4.BackColor = Color.White;
+            tabPage4.Controls.Add(infoGWHP);
             tabPage4.Controls.Add(GWHP_Save_button);
             tabPage4.Controls.Add(GWHP_dataGridView);
             tabPage4.Controls.Add(UserGWHP_Add_button);
@@ -2001,6 +2163,21 @@ namespace main.contents
             tabPage4.Size = new Size(1253, 226);
             tabPage4.TabIndex = 4;
             tabPage4.Text = "지하수히트펌프";
+            // 
+            // infoGWHP
+            // 
+            infoGWHP.BackColor = SystemColors.ControlLight;
+            infoGWHP.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoGWHP.FlatStyle = FlatStyle.System;
+            infoGWHP.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoGWHP.Location = new Point(8, 13);
+            infoGWHP.Margin = new Padding(0);
+            infoGWHP.Name = "infoGWHP";
+            infoGWHP.Size = new Size(23, 23);
+            infoGWHP.TabIndex = 154;
+            infoGWHP.Text = "?";
+            infoGWHP.UseVisualStyleBackColor = false;
+            infoGWHP.Click += infoGWHP_Click;
             // 
             // GWHP_Save_button
             // 
@@ -2105,6 +2282,7 @@ namespace main.contents
             // tabPage3
             // 
             tabPage3.BackColor = Color.White;
+            tabPage3.Controls.Add(infoGHP);
             tabPage3.Controls.Add(GroundHP_Save_button);
             tabPage3.Controls.Add(GroundHP_dataGridView);
             tabPage3.Controls.Add(GroundHP_Copy_button);
@@ -2116,6 +2294,21 @@ namespace main.contents
             tabPage3.Size = new Size(1253, 226);
             tabPage3.TabIndex = 3;
             tabPage3.Text = "지열히트펌프";
+            // 
+            // infoGHP
+            // 
+            infoGHP.BackColor = SystemColors.ControlLight;
+            infoGHP.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoGHP.FlatStyle = FlatStyle.System;
+            infoGHP.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoGHP.Location = new Point(8, 11);
+            infoGHP.Margin = new Padding(0);
+            infoGHP.Name = "infoGHP";
+            infoGHP.Size = new Size(23, 23);
+            infoGHP.TabIndex = 153;
+            infoGHP.Text = "?";
+            infoGHP.UseVisualStyleBackColor = false;
+            infoGHP.Click += infoGHP_Click;
             // 
             // GroundHP_Save_button
             // 
@@ -2220,6 +2413,7 @@ namespace main.contents
             // tabPage2
             // 
             tabPage2.BackColor = Color.White;
+            tabPage2.Controls.Add(infoSolar);
             tabPage2.Controls.Add(Solar_Save_button);
             tabPage2.Controls.Add(label6);
             tabPage2.Controls.Add(label7);
@@ -2234,6 +2428,21 @@ namespace main.contents
             tabPage2.Size = new Size(1253, 226);
             tabPage2.TabIndex = 6;
             tabPage2.Text = "태양열시스템";
+            // 
+            // infoSolar
+            // 
+            infoSolar.BackColor = SystemColors.ControlLight;
+            infoSolar.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoSolar.FlatStyle = FlatStyle.System;
+            infoSolar.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoSolar.Location = new Point(8, 7);
+            infoSolar.Margin = new Padding(0);
+            infoSolar.Name = "infoSolar";
+            infoSolar.Size = new Size(23, 23);
+            infoSolar.TabIndex = 151;
+            infoSolar.Text = "?";
+            infoSolar.UseVisualStyleBackColor = false;
+            infoSolar.Click += infoSolar_Click;
             // 
             // Solar_Save_button
             // 
@@ -2372,6 +2581,7 @@ namespace main.contents
             // tabPage1
             // 
             tabPage1.BackColor = Color.White;
+            tabPage1.Controls.Add(infoPV);
             tabPage1.Controls.Add(label1);
             tabPage1.Controls.Add(label2);
             tabPage1.Controls.Add(PV_dataGridView);
@@ -2386,6 +2596,21 @@ namespace main.contents
             tabPage1.Size = new Size(1253, 226);
             tabPage1.TabIndex = 2;
             tabPage1.Text = "태양광시스템";
+            // 
+            // infoPV
+            // 
+            infoPV.BackColor = SystemColors.ControlLight;
+            infoPV.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoPV.FlatStyle = FlatStyle.System;
+            infoPV.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoPV.Location = new Point(8, 6);
+            infoPV.Margin = new Padding(0);
+            infoPV.Name = "infoPV";
+            infoPV.Size = new Size(23, 23);
+            infoPV.TabIndex = 150;
+            infoPV.Text = "?";
+            infoPV.UseVisualStyleBackColor = false;
+            infoPV.Click += infoPV_Click;
             // 
             // label1
             // 
@@ -2514,6 +2739,7 @@ namespace main.contents
             // DHWHP_tabPage
             // 
             DHWHP_tabPage.BackColor = Color.White;
+            DHWHP_tabPage.Controls.Add(infoDHWHP);
             DHWHP_tabPage.Controls.Add(DHWHP_dataGridView);
             DHWHP_tabPage.Controls.Add(DHWHP_Save_button);
             DHWHP_tabPage.Controls.Add(DHWHP_Copy_button);
@@ -2525,6 +2751,21 @@ namespace main.contents
             DHWHP_tabPage.Size = new Size(1253, 226);
             DHWHP_tabPage.TabIndex = 8;
             DHWHP_tabPage.Text = "급탕히트펌프";
+            // 
+            // infoDHWHP
+            // 
+            infoDHWHP.BackColor = SystemColors.ControlLight;
+            infoDHWHP.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoDHWHP.FlatStyle = FlatStyle.System;
+            infoDHWHP.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoDHWHP.Location = new Point(8, 10);
+            infoDHWHP.Margin = new Padding(0);
+            infoDHWHP.Name = "infoDHWHP";
+            infoDHWHP.Size = new Size(23, 23);
+            infoDHWHP.TabIndex = 152;
+            infoDHWHP.Text = "?";
+            infoDHWHP.UseVisualStyleBackColor = false;
+            infoDHWHP.Click += infoDHWHP_Click;
             // 
             // DHWHP_dataGridView
             // 
@@ -2744,6 +2985,7 @@ namespace main.contents
             // tabPage9
             // 
             tabPage9.BackColor = Color.White;
+            tabPage9.Controls.Add(infoce);
             tabPage9.Controls.Add(label21);
             tabPage9.Controls.Add(ce_Save_button);
             tabPage9.Controls.Add(ce_dataGridView);
@@ -2770,6 +3012,7 @@ namespace main.contents
             // tabPage8
             // 
             tabPage8.BackColor = Color.White;
+            tabPage8.Controls.Add(infoPump);
             tabPage8.Controls.Add(Pump_Save_button);
             tabPage8.Controls.Add(Pump_dataGridView);
             tabPage8.Controls.Add(Pump_Copy_button);
@@ -2781,6 +3024,21 @@ namespace main.contents
             tabPage8.Size = new Size(1253, 226);
             tabPage8.TabIndex = 6;
             tabPage8.Text = "펌프";
+            // 
+            // infoPump
+            // 
+            infoPump.BackColor = SystemColors.ControlLight;
+            infoPump.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoPump.FlatStyle = FlatStyle.System;
+            infoPump.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoPump.Location = new Point(8, 13);
+            infoPump.Margin = new Padding(0);
+            infoPump.Name = "infoPump";
+            infoPump.Size = new Size(23, 23);
+            infoPump.TabIndex = 158;
+            infoPump.Text = "?";
+            infoPump.UseVisualStyleBackColor = false;
+            infoPump.Click += infoPump_Click;
             // 
             // customTabControl2
             // 
@@ -2931,6 +3189,7 @@ namespace main.contents
             // tabPage12
             // 
             tabPage12.BackColor = Color.White;
+            tabPage12.Controls.Add(infoCoolingTop);
             tabPage12.Controls.Add(CoolingTop_Save_button);
             tabPage12.Controls.Add(CoolingTop_dataGridView);
             tabPage12.Controls.Add(CoolerTop_Add_button);
@@ -2942,6 +3201,21 @@ namespace main.contents
             tabPage12.Size = new Size(1253, 226);
             tabPage12.TabIndex = 8;
             tabPage12.Text = "냉각탑";
+            // 
+            // infoCoolingTop
+            // 
+            infoCoolingTop.BackColor = SystemColors.ControlLight;
+            infoCoolingTop.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoCoolingTop.FlatStyle = FlatStyle.System;
+            infoCoolingTop.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoCoolingTop.Location = new Point(8, 13);
+            infoCoolingTop.Margin = new Padding(0);
+            infoCoolingTop.Name = "infoCoolingTop";
+            infoCoolingTop.Size = new Size(23, 23);
+            infoCoolingTop.TabIndex = 157;
+            infoCoolingTop.Text = "?";
+            infoCoolingTop.UseVisualStyleBackColor = false;
+            infoCoolingTop.Click += infoCoolingTop_Click;
             // 
             // CoolingTop_Save_button
             // 
@@ -3169,6 +3443,21 @@ namespace main.contents
             panel3.Name = "panel3";
             panel3.Size = new Size(1261, 255);
             panel3.TabIndex = 150;
+            // 
+            // infoce
+            // 
+            infoce.BackColor = SystemColors.ControlLight;
+            infoce.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoce.FlatStyle = FlatStyle.System;
+            infoce.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoce.Location = new Point(8, 14);
+            infoce.Margin = new Padding(0);
+            infoce.Name = "infoce";
+            infoce.Size = new Size(23, 23);
+            infoce.TabIndex = 159;
+            infoce.Text = "?";
+            infoce.UseVisualStyleBackColor = false;
+            infoce.Click += infoce_Click;
             // 
             // EquipmentList
             // 
@@ -3414,5 +3703,22 @@ namespace main.contents
         private Button Fan_Remove_button;
         private Button UserFan_Add_button;
         private Button Fan_Save_button;
+        private Button info;
+        private Button infoWaterCooler;
+        private Button infohp;
+        private Button infoboiler;
+        private Button infoDH;
+        private Button infoAS;
+        private Button infoAC;
+        private Button infoPV;
+        private Button infoSolar;
+        private Button infoDHWHP;
+        private Button infoGHP;
+        private Button infoGWHP;
+        private Button infoFC;
+        private Button infoWP;
+        private Button infoCoolingTop;
+        private Button infoPump;
+        private Button infoce;
     }
 }

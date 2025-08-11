@@ -41,6 +41,7 @@ namespace main.subcontents
             panel1 = new Panel();
             UserNum_textBox = new TextBox();
             Save_button = new Button();
+            infoFCdb = new Button();
             ((System.ComponentModel.ISupportInitialize)FC_dataGridView).BeginInit();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -91,6 +92,7 @@ namespace main.subcontents
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.AliceBlue;
+            GeneralPanel.Controls.Add(infoFCdb);
             GeneralPanel.Controls.Add(label2);
             GeneralPanel.Controls.Add(Icon_pictureBox);
             GeneralPanel.Controls.Add(panel1);
@@ -149,6 +151,21 @@ namespace main.subcontents
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
             // 
+            // infoFCdb
+            // 
+            infoFCdb.BackColor = SystemColors.ControlLight;
+            infoFCdb.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoFCdb.FlatStyle = FlatStyle.System;
+            infoFCdb.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoFCdb.Location = new Point(900, 11);
+            infoFCdb.Margin = new Padding(0);
+            infoFCdb.Name = "infoFCdb";
+            infoFCdb.Size = new Size(23, 23);
+            infoFCdb.TabIndex = 161;
+            infoFCdb.Text = "?";
+            infoFCdb.UseVisualStyleBackColor = false;
+            infoFCdb.Click += infoFCdb_Click;
+            // 
             // FC
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -182,5 +199,6 @@ namespace main.subcontents
         private DataGridView FC_dataGridView;
         private Label label2;
         private PictureBox Icon_pictureBox;
+        private Button infoFCdb;
     }
 }

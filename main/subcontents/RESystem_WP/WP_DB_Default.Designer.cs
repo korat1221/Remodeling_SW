@@ -51,6 +51,7 @@ namespace main.subcontents.RESystem_WP
             panel1 = new Panel();
             Save_button = new Button();
             WP_dataGridView = new DataGridView();
+            infoWPdb = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
@@ -65,6 +66,7 @@ namespace main.subcontents.RESystem_WP
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.AliceBlue;
+            GeneralPanel.Controls.Add(infoWPdb);
             GeneralPanel.Controls.Add(pictureBox8);
             GeneralPanel.Controls.Add(pictureBox7);
             GeneralPanel.Controls.Add(label3);
@@ -296,6 +298,21 @@ namespace main.subcontents.RESystem_WP
             WP_dataGridView.TabIndex = 21;
             WP_dataGridView.CellContentClick += WP_dataGridView_CellContentClick;
             // 
+            // infoWPdb
+            // 
+            infoWPdb.BackColor = SystemColors.ControlLight;
+            infoWPdb.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoWPdb.FlatStyle = FlatStyle.System;
+            infoWPdb.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoWPdb.Location = new Point(1281, 4);
+            infoWPdb.Margin = new Padding(0);
+            infoWPdb.Name = "infoWPdb";
+            infoWPdb.Size = new Size(23, 23);
+            infoWPdb.TabIndex = 164;
+            infoWPdb.Text = "?";
+            infoWPdb.UseVisualStyleBackColor = false;
+            infoWPdb.Click += infoWPdb_Click;
+            // 
             // WP_DB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -341,5 +358,6 @@ namespace main.subcontents.RESystem_WP
         private PictureBox pictureBox7;
         private DataGridView WP_dataGridView;
         private Panel panel1;
+        private Button infoWPdb;
     }
 }

@@ -58,6 +58,7 @@ namespace main.subcontents.ZoneLighting
             RenewType_comboBox = new ComboBox();
             label8 = new Label();
             Renew_dataGridView = new DataGridView();
+            infoRenewdb = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Renew_dataGridView).BeginInit();
             SuspendLayout();
@@ -77,6 +78,7 @@ namespace main.subcontents.ZoneLighting
             // panel1
             // 
             panel1.BackColor = SystemColors.GradientInactiveCaption;
+            panel1.Controls.Add(infoRenewdb);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(label5);
             panel1.Controls.Add(UserDB_A_textBox);
@@ -366,6 +368,21 @@ namespace main.subcontents.ZoneLighting
             Renew_dataGridView.TabIndex = 111;
             Renew_dataGridView.CellContentClick += Renew_dataGridView_CellContentClick;
             // 
+            // infoRenewdb
+            // 
+            infoRenewdb.BackColor = SystemColors.ControlLight;
+            infoRenewdb.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoRenewdb.FlatStyle = FlatStyle.System;
+            infoRenewdb.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoRenewdb.Location = new Point(870, 5);
+            infoRenewdb.Margin = new Padding(0);
+            infoRenewdb.Name = "infoRenewdb";
+            infoRenewdb.Size = new Size(23, 23);
+            infoRenewdb.TabIndex = 164;
+            infoRenewdb.Text = "?";
+            infoRenewdb.UseVisualStyleBackColor = false;
+            infoRenewdb.Click += infoRenewdb_Click;
+            // 
             // LightingRenewDB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -409,5 +426,6 @@ namespace main.subcontents.ZoneLighting
         private Label label1;
         private Label label5;
         private TextBox UserDB_A_textBox;
+        private Button infoRenewdb;
     }
 }

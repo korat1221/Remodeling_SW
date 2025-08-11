@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.info;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,11 +28,11 @@ namespace main.contentslist
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '급탕시스템'");
-            if(Image.Length > 0 )
+            if (Image.Length > 0)
             {
                 Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                 Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            }            
+            }
             Program.DB.initTable(DB.type.ProjDB, "DHWSystem_Form");
             Create_Table();
         }
@@ -130,9 +131,9 @@ namespace main.contentslist
                     int nRow = dataGridView1.Rows.Count - 1;
                     if (List[n][2] == "보일러")
                     {
-                        num = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "보일러대수", "번호='"+ List[n][0] + "'");
+                        num = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "보일러대수", "번호='" + List[n][0] + "'");
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "용량,전부하효율", "번호 ='" + List[n][3] + "'");
-                        if (num.Length > 0&& SystemValue.Length > 0)
+                        if (num.Length > 0 && SystemValue.Length > 0)
                         {
                             dataGridView1.Rows[nRow].Cells[4].Value = (Convert.ToDouble(num[0][0]) * Convert.ToDouble(SystemValue[0][0])).ToString("0.0");
                             dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " %";
@@ -179,7 +180,7 @@ namespace main.contentslist
                 dataGridView1.Rows.Clear();
             }
             CountDB = List.Length;
-            Program.UTIL.resetMainTree(5,0, mainMenu.ToArray(), "49"); // 예시 코드: 메인 메뉴 동적 할당
+            Program.UTIL.resetMainTree(5, 0, mainMenu.ToArray(), "49"); // 예시 코드: 메인 메뉴 동적 할당
         }
 
         //선택한 열 색 표시
@@ -259,6 +260,22 @@ namespace main.contentslist
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             load_List();
+        }
+
+        private void infoListDHW_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\3.contentslist\\11.DHW";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,19 +15,19 @@ namespace main.subcontents.RESystem_WP
 {
     public partial class WP_DB : Form
     {
-        
+
         double Count_WPDB;
         public string SelectWP;
         int SelectRow;
         public String[] Select_WP = new string[15];
-       
+
         string DefaultUse;
 
         public WP_DB(string defaultUse)
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
 
-            
+
             //pictureBox1.Load(Program.gPath + @"\images\" + @"\WindPower\" + @"image (6)" + @".png");
             pictureBox5.Load(Program.gPath + @"\images\" + @"\WindPower\" + @"image (8)" + @".png");
             pictureBox2.Load(Program.gPath + @"\images\" + @"\WindPower\" + @"image (7)" + @".png");
@@ -57,7 +58,7 @@ namespace main.subcontents.RESystem_WP
             WP_dataGridView.Columns.Add("A5", "타입");
             WP_dataGridView.Columns.Add("A6", "세부타입");
             WP_dataGridView.Columns.Add("A7", "정격출력.[Kw]");
-            WP_dataGridView.Columns.Add("A8", "회전면적.[m"+Program.UTIL.Subscript(2, true)+"]");
+            WP_dataGridView.Columns.Add("A8", "회전면적.[m" + Program.UTIL.Subscript(2, true) + "]");
             WP_dataGridView.Columns.Add("A9", "허브높이.[m]");
             WP_dataGridView.Columns.Add("A10", "시동풍속.[m/s]");
             WP_dataGridView.Columns.Add("A11", "최적풍속.[m/s]");
@@ -143,6 +144,22 @@ namespace main.subcontents.RESystem_WP
 
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void infoWPdb_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\2.subcontents\\12.EquipmentList\\14 WP";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 }

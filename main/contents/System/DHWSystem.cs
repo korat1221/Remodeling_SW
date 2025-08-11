@@ -26,6 +26,7 @@ using static System.ComponentModel.Design.ObjectSelectorEditor;
 using main.subcontents.HeatingSystem;
 using main.subcontents;
 using main.subcontents.EquipmentList;
+using main.info;
 
 
 namespace main.contents
@@ -2429,7 +2430,7 @@ namespace main.contents
 
         public string FC_num()
         {
-            string[][] check = Program.DB.getValue(DB.type.ProjDB, "FC_Form", "번호,연료전지번호,설비번호", "연료전지번호 = '"+ SelectFC_nonsplit + "' and  설비번호= '"+ Num_textBox.Text+ "'");
+            string[][] check = Program.DB.getValue(DB.type.ProjDB, "FC_Form", "번호,연료전지번호,설비번호", "연료전지번호 = '" + SelectFC_nonsplit + "' and  설비번호= '" + Num_textBox.Text + "'");
             string fcenum = null;
             if (check.Length > 0)
             {
@@ -2743,5 +2744,20 @@ namespace main.contents
         #endregion
 
 
+        private void infoDHW_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\18.DHW";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

@@ -39,6 +39,7 @@ namespace main.subcontents
             label4 = new Label();
             WaterCooler_dataGridView = new DataGridView();
             Save_button = new Button();
+            infoWaterCoolerdb = new Button();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)WaterCooler_dataGridView).BeginInit();
@@ -55,6 +56,7 @@ namespace main.subcontents
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.AliceBlue;
+            GeneralPanel.Controls.Add(infoWaterCoolerdb);
             GeneralPanel.Controls.Add(WC_textBox);
             GeneralPanel.Controls.Add(AirCooler_text);
             GeneralPanel.Controls.Add(label4);
@@ -87,10 +89,10 @@ namespace main.subcontents
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label4.Location = new Point(68, 32);
             label4.Name = "label4";
-            label4.Size = new Size(83, 15);
+            label4.Size = new Size(82, 15);
             label4.TabIndex = 103;
             label4.Text = "수냉식 냉동기";
             // 
@@ -107,7 +109,7 @@ namespace main.subcontents
             WaterCooler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -118,7 +120,7 @@ namespace main.subcontents
             WaterCooler_dataGridView.Name = "WaterCooler_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -127,12 +129,11 @@ namespace main.subcontents
             WaterCooler_dataGridView.RowHeadersVisible = false;
             WaterCooler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             WaterCooler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            WaterCooler_dataGridView.RowTemplate.Height = 25;
             WaterCooler_dataGridView.Size = new Size(593, 364);
             WaterCooler_dataGridView.TabIndex = 25;
             // 
@@ -147,6 +148,21 @@ namespace main.subcontents
             Save_button.Text = "SAVE";
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
+            // 
+            // infoWaterCoolerdb
+            // 
+            infoWaterCoolerdb.BackColor = SystemColors.ControlLight;
+            infoWaterCoolerdb.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoWaterCoolerdb.FlatStyle = FlatStyle.System;
+            infoWaterCoolerdb.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoWaterCoolerdb.Location = new Point(573, 0);
+            infoWaterCoolerdb.Margin = new Padding(0);
+            infoWaterCoolerdb.Name = "infoWaterCoolerdb";
+            infoWaterCoolerdb.Size = new Size(23, 23);
+            infoWaterCoolerdb.TabIndex = 165;
+            infoWaterCoolerdb.Text = "?";
+            infoWaterCoolerdb.UseVisualStyleBackColor = false;
+            infoWaterCoolerdb.Click += infoWaterCoolerdb_Click;
             // 
             // WaterCooler_DB
             // 
@@ -175,5 +191,6 @@ namespace main.subcontents
         private Label label4;
         private DataGridView WaterCooler_dataGridView;
         private Button Save_button;
+        private Button infoWaterCoolerdb;
     }
 }

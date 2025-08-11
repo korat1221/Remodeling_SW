@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,11 +22,11 @@ namespace main.subcontents
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             this.DefaultUse = DefaultUse;
-            
+
             AC_textBox.Text += "▣ DIN V 18599-7: 2018 표23에 제시된 표준값 \r\n";
             AC_textBox.Text += "▣ 공냉식냉동기의 EER은 송풍기 소비전력을 포함한 냉방성능임 \r\n";
             AC_textBox.Text += "▣ 따라서 송풍기 소비전력은 '0'으로 반영됨";
-          
+
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
             if (Image.Length > 0)
             {
@@ -143,6 +144,23 @@ namespace main.subcontents
                 AirCooler_dataGridView.Rows[n].Cells[0].Value = false;
             }
 
+        }
+
+        private void infoACdb_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\2.subcontents\\12.EquipmentList\\06 AC";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 }

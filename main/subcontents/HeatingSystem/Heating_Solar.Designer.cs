@@ -37,6 +37,7 @@ namespace main.subcontents.HeatingSystem
             Icon_pictureBox = new PictureBox();
             Save_button = new Button();
             Solar_dataGridView = new DataGridView();
+            infoSolardb = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Solar_dataGridView).BeginInit();
@@ -45,6 +46,7 @@ namespace main.subcontents.HeatingSystem
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.AliceBlue;
+            GeneralPanel.Controls.Add(infoSolardb);
             GeneralPanel.Controls.Add(label4);
             GeneralPanel.Controls.Add(Icon_pictureBox);
             GeneralPanel.Location = new Point(0, -2);
@@ -123,6 +125,21 @@ namespace main.subcontents.HeatingSystem
             Solar_dataGridView.Size = new Size(800, 358);
             Solar_dataGridView.TabIndex = 19;
             // 
+            // infoSolardb
+            // 
+            infoSolardb.BackColor = SystemColors.ControlLight;
+            infoSolardb.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoSolardb.FlatStyle = FlatStyle.System;
+            infoSolardb.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoSolardb.Location = new Point(765, 11);
+            infoSolardb.Margin = new Padding(0);
+            infoSolardb.Name = "infoSolardb";
+            infoSolardb.Size = new Size(23, 23);
+            infoSolardb.TabIndex = 163;
+            infoSolardb.Text = "?";
+            infoSolardb.UseVisualStyleBackColor = false;
+            infoSolardb.Click += infoSolardb_Click;
+            // 
             // Heating_Solar
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -151,5 +168,6 @@ namespace main.subcontents.HeatingSystem
         private TextBox d_ins_textBox;
         private Label label4;
         private PictureBox Icon_pictureBox;
+        private Button infoSolardb;
     }
 }

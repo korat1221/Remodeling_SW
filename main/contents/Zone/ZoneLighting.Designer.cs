@@ -153,6 +153,7 @@ namespace main.contents
             label18 = new Label();
             label19 = new Label();
             label20 = new Label();
+            infoLighting = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel2.SuspendLayout();
@@ -175,6 +176,7 @@ namespace main.contents
             // GeneralPanel
             // 
             GeneralPanel.BackColor = SystemColors.GradientActiveCaption;
+            GeneralPanel.Controls.Add(infoLighting);
             GeneralPanel.Controls.Add(Num_textBox);
             GeneralPanel.Controls.Add(ZoneName_textBox);
             GeneralPanel.Controls.Add(Icon_pictureBox);
@@ -1688,6 +1690,21 @@ namespace main.contents
             label20.TabIndex = 222;
             label20.Text = "m";
             // 
+            // infoLighting
+            // 
+            infoLighting.BackColor = SystemColors.ControlLight;
+            infoLighting.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoLighting.FlatStyle = FlatStyle.System;
+            infoLighting.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoLighting.Location = new Point(964, 4);
+            infoLighting.Margin = new Padding(0);
+            infoLighting.Name = "infoLighting";
+            infoLighting.Size = new Size(23, 23);
+            infoLighting.TabIndex = 193;
+            infoLighting.Text = "?";
+            infoLighting.UseVisualStyleBackColor = false;
+            infoLighting.Click += infoLighting_Click;
+            // 
             // ZoneLighting
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1880,5 +1897,6 @@ namespace main.contents
         private Label subtype;
         private PictureBox Main_pictureBox3;
         private PictureBox Main_pictureBox2;
+        private Button infoLighting;
     }
 }

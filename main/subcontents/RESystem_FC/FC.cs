@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -45,8 +46,8 @@ namespace main.subcontents
         {
             tableMake(DefaultUse);
             if (DefaultUse == "기본DB 적용")
-            {   
-                string[][] value = Program.DB.getValue(DB.type.BaseDB_RESystem, "연료전지DB", "번호,DB유형,제품명,제조사,전기출력,전기효율,열출력,열효율","");
+            {
+                string[][] value = Program.DB.getValue(DB.type.BaseDB_RESystem, "연료전지DB", "번호,DB유형,제품명,제조사,전기출력,전기효율,열출력,열효율", "");
                 if (value.Length > 0)
                 {
                     for (int i = 0; i < value.Length; i++)
@@ -66,7 +67,7 @@ namespace main.subcontents
             }
             else if (DefaultUse == "장비일람표 적용")
             {
-                string[][] value = Program.DB.getValue(DB.type.ProjDB, "User_FC", "번호,명칭,연료,전기출력,전기효율,열출력,열효율","");
+                string[][] value = Program.DB.getValue(DB.type.ProjDB, "User_FC", "번호,명칭,연료,전기출력,전기효율,열출력,열효율", "");
                 if (value.Length > 0)
                 {
                     for (int i = 0; i < value.Length; i++)
@@ -116,7 +117,7 @@ namespace main.subcontents
         }
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
-           
+
             if (row % 2 == 1)
             {
                 cell.Style.BackColor = SystemColors.InactiveBorder;
@@ -157,7 +158,7 @@ namespace main.subcontents
             {
                 return;
             }
-            for(int k = 0; k<SelectRow.Count;k++)
+            for (int k = 0; k < SelectRow.Count; k++)
             {
                 if (k == SelectRow.Count - 1)
                 {
@@ -168,7 +169,7 @@ namespace main.subcontents
                     this.SelectFCnonsplit += FC_dataGridView.Rows[SelectRow[k]].Cells[1].Value.ToString() + "+";
                 }
             }
-            
+
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
@@ -200,6 +201,22 @@ namespace main.subcontents
             for (int n = 0; n < FC_dataGridView.Rows.Count; n++)
             {
                 FC_dataGridView.Rows[n].Cells[0].Value = false;
+            }
+        }
+
+        private void infoFCdb_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\2.subcontents\\12.EquipmentList\\13 FC";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.info;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -193,6 +194,22 @@ namespace main.contentslist
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             load_List();
+        }
+
+        private void infoListCooling_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\3.contentslist\\13.Cooling";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using main.contentslist;
+using main.info;
 using main.subcontents.ZoneLighting;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace main.contents
         //존 정보(가져오는 값)
         double Em, KA, FA;
         double Wr, Lr, A, hR, hm, hLi, hTa, K, admax, ad, bdsimple, bd, AD, unAD, LightInstallHeight; //hm: 조명과 작업면사이의 거리, hR: 천장과 작업면사이의 거리
-        string facade_di, Main_WinCW=null, facade_shade, facade_dimming, Usage;
+        string facade_di, Main_WinCW = null, facade_shade, facade_dimming, Usage;
         double Zone_f_Aca, Zone_f_a, Zone_f_b, Zone_f_AD, f_τD65_SNA, K1, K2, K3, γSh_lsh, γSh_hA, γSh_vA, f_τD65_SA;// AVG_Height, AVG_Width;
         String Main_glass, MainType_ID;
         public string roof_di, roof_glass, roof_shade, roof_dimming;
@@ -42,7 +43,7 @@ namespace main.contents
         //계산값
         double Pj, Pn;
         double Fo, Fo1, Fo2, Fo3, Fc;
-        double N=1; //조명 설치 개수
+        double N = 1; //조명 설치 개수
         //차양선택값
         string ShadeType;
         //자연채광 선택값
@@ -174,7 +175,7 @@ namespace main.contents
             Calc_Pj();
             Calc_Fo();
             Calc_Fc();
-            Pci_Value(); 
+            Pci_Value();
             Calc_AD();
         }
 
@@ -366,11 +367,11 @@ namespace main.contents
         {
             try
             {
-                if(double.TryParse(lightHeight_textBox.Text, out double result))
+                if (double.TryParse(lightHeight_textBox.Text, out double result))
                 {
                     LightInstallHeight = result;
                 }
-                               
+
                 hm = LightInstallHeight - hTa; //조명과 작업면 사이의 거리
                 K = Lr * Wr / (hm * (Lr + Wr));
                 double[] data = { 0.6, 0.8, 1, 1.25, 1.5, 2, 2.5, 3, 4, 5 };
@@ -576,7 +577,7 @@ namespace main.contents
                 Shade4_label.Visible = true;
                 Shade5_label.Visible = true;
                 Shade7_label.Visible = true;
-               
+
                 Window1_textBox.Visible = true;
                 label7.Visible = true;
                 WindowA_textBox.Visible = true;
@@ -600,7 +601,7 @@ namespace main.contents
                 Shade4_label.Visible = false;
                 Shade5_label.Visible = false;
                 Shade7_label.Visible = false;
-                
+
 
                 Window1_textBox.Visible = false;
                 label7.Visible = false;
@@ -657,7 +658,7 @@ namespace main.contents
                 areaunit1.Visible = true;
                 areaunit2.Visible = true;
             }
-            else 
+            else
             {
                 ad = 0;
                 bd = 0;
@@ -756,22 +757,22 @@ namespace main.contents
                 subtype.Text = "해당없음";
                 image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_자연채광대분류이미지", "이미지", "자연채광대분류 = '" + "해당없음" + "'");
             }
-            else if(Type =="파사드" && (facade == null || facade ==""))
+            else if (Type == "파사드" && (facade == null || facade == ""))
             {
                 image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_자연채광대분류이미지", "이미지", "자연채광대분류 = '" + Type + "'");
             }
-            else if(Type=="파사드" && facade != null && facade != "")
+            else if (Type == "파사드" && facade != null && facade != "")
             {
-                if(facade =="일반 파사드")
+                if (facade == "일반 파사드")
                 {
                     image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_자연채광대분류이미지", "이미지", "자연채광대분류 = '" + Type + "'");
                 }
                 else
                 {
                     image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_자연채광대분류이미지", "이미지", "자연채광대분류 = '" + facade + "'");
-                }  
+                }
             }
-            else if(Type == "천창")
+            else if (Type == "천창")
             {
                 image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_자연채광대분류이미지", "이미지", "자연채광대분류 = '" + Type + "'");
             }
@@ -784,7 +785,7 @@ namespace main.contents
             }
         }
 
-       
+
         //자연채광 체크박스 활성화 비활성화
         public void NaturalCheck()
         {
@@ -880,7 +881,7 @@ namespace main.contents
                 Main_pictureBox3.Visible = true;
                 Main_pictureBox3.Load(Program.gPath + Image[0][0]);
                 Main_pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
-                Main_pictureBox3.Location = new Point(14, 20);               
+                Main_pictureBox3.Location = new Point(14, 20);
             }
         }
 
@@ -944,7 +945,7 @@ namespace main.contents
         //상세 선택에 따른 변화 (체크박스에 걸기)
         private void Load_AD2_image() //주광면적 이미지 작성
         {
-            if(facade !="" && facade != null)
+            if (facade != "" && facade != null)
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_주광면적이미지", "이미지", "주광면적 = '" + facade + "'");
                 type_pictureBox.Load(Program.gPath + Image[0][0]);
@@ -956,7 +957,7 @@ namespace main.contents
                 type_pictureBox.Load(Program.gPath + Image[0][0]);
                 type_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
-            
+
 
             //if (facadeButton.Checked == true || roofButton.Checked == true && NaturalType == "파사드" && facade == "일반 파사드")
             //{
@@ -999,22 +1000,22 @@ namespace main.contents
         }
 
         private void side_active()
-        {       
-                A_label.Visible = true;
-                A_textBox.Visible = true;
-                AD_label.Visible = true;
-                AD_textBox.Visible = true;
-                aad_label.Visible = true;
-                aad_textBox.Visible = true;
-                bbd_label.Visible = true;
-                bbd_textBox.Visible = true;
-                NA_label.Visible = true;
-                NA_textBox.Visible = true;
-                label10.Visible = true;
-                label11.Visible = true;
-                label12.Visible = true;
-                label13.Visible = true;
-                label14.Visible = true;
+        {
+            A_label.Visible = true;
+            A_textBox.Visible = true;
+            AD_label.Visible = true;
+            AD_textBox.Visible = true;
+            aad_label.Visible = true;
+            aad_textBox.Visible = true;
+            bbd_label.Visible = true;
+            bbd_textBox.Visible = true;
+            NA_label.Visible = true;
+            NA_textBox.Visible = true;
+            label10.Visible = true;
+            label11.Visible = true;
+            label12.Visible = true;
+            label13.Visible = true;
+            label14.Visible = true;
         }
 
         public static bool OnLoadListProc(Form form)
@@ -1042,7 +1043,7 @@ namespace main.contents
             {
                 MessageBox.Show("천창 상세 길이 정보를 입력하세요.");
             }
-            
+
             else if ((this.facade == "아트리움") && (facadeW == 0 || facadeL == 0 || facadeH == 0))
             {
                 MessageBox.Show(" 아트리움 상세 길이 정보를 입력하세요.");
@@ -1077,7 +1078,7 @@ namespace main.contents
                 Pci.ToString() + "','" + Fo.ToString() + "','" + Fc.ToString() + "','" +
                 LightNumber + "','" + LightType + "','" + LightType2 + "','" + LightConverter + "','" + lm_W + "','" + LightFL.ToString() + "','" + N.ToString() + "','" +
                 Renew_checkBox.Checked.ToString() + "','" +
-                bd +"','"+ ad+"','"+AD+"','"+unAD+"'", "번호");
+                bd + "','" + ad + "','" + AD + "','" + unAD + "'", "번호");
 
             if (LightNumber.Contains("LP"))
             {
@@ -1117,7 +1118,7 @@ namespace main.contents
                 }
                 else { }
             }
-            else 
+            else
             {
                 Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,자연채광유형,서브유형",
                    "'" + Num_textBox.Text + "','해당없음','해당없음'", "번호");
@@ -1136,7 +1137,7 @@ namespace main.contents
                 Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,표준길이1,표준길이2",
                    "'" + ZoneNum + "','" + RenewL1 + "','" + RenewL2 + "'", "번호");
             }
-            
+
             Program.DB.saveProject();
             MessageBox.Show(ZoneNum + "[" + ZoneName + "] 정보를 저장하였습니다.");
             this.DialogResult = DialogResult.OK;
@@ -1401,7 +1402,7 @@ namespace main.contents
                         Ltype_pictureBox.Location = new Point(250, 13);
                         Ltype_pictureBox.Load(Program.gPath + Img[0][0]);
                         Ltype_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                       
+
                     }
                 }
             }
@@ -1458,7 +1459,7 @@ namespace main.contents
                 String[][] General_3D = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "층,층고", "존번호 = '" + ZoneNum + "'");
 
                 Layer = General_3D[0][0] + "F";
-               
+
 
                 //Zonelight profile 가져오기 
                 string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "조도,이용영역계수,조명이용시부재율,작업면높이", "용도명 = '" + Usage + "'");
@@ -1645,13 +1646,13 @@ namespace main.contents
                 {
                     NaturalType = "파사드";
                     facadeButton.Checked = true;
-                    
+
                 }
                 else
                 {
                     roofButton.Checked = true;
                     NaturalType = "천창";
-                    
+
                 }
             }
 
@@ -2153,6 +2154,22 @@ namespace main.contents
         private void Slope_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             RenewSlope = Slope_comboBox.Text;
+        }
+
+        private void infoLighting_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\15.ZoneLight";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 

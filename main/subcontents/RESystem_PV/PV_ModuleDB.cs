@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -73,7 +74,7 @@ namespace main.subcontents.RESystem_PV
 
         private void PV_table()
         {
-            
+
             if (DefaultUse == "기본DB 적용")
             {
                 new StackedHeaderDecorator(PVModule_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
@@ -94,7 +95,7 @@ namespace main.subcontents.RESystem_PV
                 PVModule_dataGridView.Columns.Add("A6", "출력.[W]");
                 PVModule_dataGridView.Columns.Add("A7", "크기.길이[m]");
                 PVModule_dataGridView.Columns.Add("A8", "크기.높이[m]");
-                PVModule_dataGridView.Columns.Add("A9", "Kpk.[kW/m"+ Program.UTIL.Subscript(2, true) + "]");
+                PVModule_dataGridView.Columns.Add("A9", "Kpk.[kW/m" + Program.UTIL.Subscript(2, true) + "]");
 
                 PVModule_dataGridView.Columns[0].Width = 40;
 
@@ -104,9 +105,9 @@ namespace main.subcontents.RESystem_PV
                 PVModule_dataGridView.Columns[7].Visible = false;
                 PVModule_dataGridView.Columns[8].Visible = false;
             }
-            else if(DefaultUse == "장비일람표 DB")
+            else if (DefaultUse == "장비일람표 DB")
             {
-                
+
                 new StackedHeaderDecorator(PVModule_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
                 DataGridViewCheckBoxColumn checkBoxColumn = new DataGridViewCheckBoxColumn();
                 PVModule_dataGridView.Columns.Clear();
@@ -151,7 +152,7 @@ namespace main.subcontents.RESystem_PV
                     }
                 }
             }
-            else if(DefaultUse == "장비일람표 DB")
+            else if (DefaultUse == "장비일람표 DB")
             {
                 string[][] UserModule = Program.DB.getValue(DB.type.ProjDB, "User_PV", "번호,DB유형,명칭,CELLTYPE,정격출력,길이,높이,Kpk", "");
                 if (UserModule.Length > 0)
@@ -198,7 +199,7 @@ namespace main.subcontents.RESystem_PV
                                 value[k - 1] = PVModule_dataGridView.Rows[i].Cells[k].Value.ToString();
                             }
                         }
-                       
+
                     }
 
                     if (SelectCheckBox())
@@ -212,7 +213,7 @@ namespace main.subcontents.RESystem_PV
             {
                 SelectPV = PVModule_dataGridView.Rows[SelectRow].Cells[1].Value.ToString();
             }
-               
+
 
 
         }
@@ -248,7 +249,7 @@ namespace main.subcontents.RESystem_PV
 
         private void PVModule_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if(DefaultUse == "기본DB 적용")
+            if (DefaultUse == "기본DB 적용")
             {
                 if (e.ColumnIndex == 7 || e.ColumnIndex == 8)
                 {
@@ -266,7 +267,23 @@ namespace main.subcontents.RESystem_PV
 
                 }
             }
-            
+
+        }
+
+        private void infoPVdb_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\2.subcontents\\12.EquipmentList\\08 PV";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 }

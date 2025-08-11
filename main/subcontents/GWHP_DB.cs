@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.info;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -206,6 +207,5 @@ namespace main.subcontents.HeatingSystem
                 }
             }
         }
-
     }
 }

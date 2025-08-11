@@ -40,6 +40,7 @@
             Carrier_comboBox = new CustomComboBox();
             Save_button = new Button();
             HP_dataGridView = new DataGridView();
+            infoHPdb = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)HP_dataGridView).BeginInit();
@@ -48,6 +49,7 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.AliceBlue;
+            GeneralPanel.Controls.Add(infoHPdb);
             GeneralPanel.Controls.Add(label1);
             GeneralPanel.Controls.Add(HC_comboBox);
             GeneralPanel.Controls.Add(label4);
@@ -172,6 +174,21 @@
             HP_dataGridView.Size = new Size(916, 364);
             HP_dataGridView.TabIndex = 19;
             // 
+            // infoHPdb
+            // 
+            infoHPdb.BackColor = SystemColors.ControlLight;
+            infoHPdb.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoHPdb.FlatStyle = FlatStyle.System;
+            infoHPdb.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoHPdb.Location = new Point(884, 11);
+            infoHPdb.Margin = new Padding(0);
+            infoHPdb.Name = "infoHPdb";
+            infoHPdb.Size = new Size(23, 23);
+            infoHPdb.TabIndex = 159;
+            infoHPdb.Text = "?";
+            infoHPdb.UseVisualStyleBackColor = false;
+            infoHPdb.Click += infoHPdb_Click;
+            // 
             // AirHP_DB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -204,5 +221,6 @@
         private CustomComboBox Carrier_comboBox;
         private Label label1;
         private CustomComboBox HC_comboBox;
+        private Button infoHPdb;
     }
 }

@@ -29,9 +29,9 @@ namespace main.subcontents
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             label4 = new Label();
             Icon_pictureBox = new PictureBox();
             AirCooler_dataGridView = new DataGridView();
@@ -39,6 +39,7 @@ namespace main.subcontents
             GeneralPanel = new Panel();
             AC_textBox = new TextBox();
             AirCooler_text = new Label();
+            infoACdb = new Button();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)AirCooler_dataGridView).BeginInit();
             GeneralPanel.SuspendLayout();
@@ -47,10 +48,10 @@ namespace main.subcontents
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label4.Location = new Point(68, 32);
             label4.Name = "label4";
-            label4.Size = new Size(83, 15);
+            label4.Size = new Size(82, 15);
             label4.TabIndex = 103;
             label4.Text = "공냉식 냉동기";
             // 
@@ -73,34 +74,33 @@ namespace main.subcontents
             AirCooler_dataGridView.BorderStyle = BorderStyle.None;
             AirCooler_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             AirCooler_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            AirCooler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle7.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle7.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            AirCooler_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             AirCooler_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             AirCooler_dataGridView.Location = new Point(0, 79);
             AirCooler_dataGridView.Name = "AirCooler_dataGridView";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            AirCooler_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = SystemColors.Control;
+            dataGridViewCellStyle8.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
+            AirCooler_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             AirCooler_dataGridView.RowHeadersVisible = false;
             AirCooler_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            AirCooler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            AirCooler_dataGridView.RowTemplate.Height = 25;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle9.ForeColor = Color.Black;
+            dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle9.SelectionForeColor = Color.Black;
+            AirCooler_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle9;
             AirCooler_dataGridView.Size = new Size(593, 364);
             AirCooler_dataGridView.TabIndex = 22;
             // 
@@ -119,6 +119,7 @@ namespace main.subcontents
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.AliceBlue;
+            GeneralPanel.Controls.Add(infoACdb);
             GeneralPanel.Controls.Add(AC_textBox);
             GeneralPanel.Controls.Add(AirCooler_text);
             GeneralPanel.Controls.Add(label4);
@@ -148,6 +149,21 @@ namespace main.subcontents
             AirCooler_text.TabIndex = 104;
             AirCooler_text.Text = "주의:";
             // 
+            // infoACdb
+            // 
+            infoACdb.BackColor = SystemColors.ControlLight;
+            infoACdb.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoACdb.FlatStyle = FlatStyle.System;
+            infoACdb.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoACdb.Location = new Point(573, 4);
+            infoACdb.Margin = new Padding(0);
+            infoACdb.Name = "infoACdb";
+            infoACdb.Size = new Size(23, 23);
+            infoACdb.TabIndex = 149;
+            infoACdb.Text = "?";
+            infoACdb.UseVisualStyleBackColor = false;
+            infoACdb.Click += infoACdb_Click;
+            // 
             // AirCooler_DB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -175,5 +191,6 @@ namespace main.subcontents
         private Panel GeneralPanel;
         private Label AirCooler_text;
         private TextBox AC_textBox;
+        private Button infoACdb;
     }
 }

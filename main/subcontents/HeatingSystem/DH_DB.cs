@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.info;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace main.subcontents.HeatingSystem
         String DefaultUse;
         public string SelectDH;
         //HeatingSystem heatingSystem;
-        string H_DHW; 
+        string H_DHW;
         // public DH_DB(HeatingSystem system)
         public DH_DB(String DefaultUse, String SelectDH_nonsplit, string H_DHW)
         {
@@ -95,7 +96,7 @@ namespace main.subcontents.HeatingSystem
                 string[][] User_Value = null;
                 if (H_DHW == "난방")
                 {
-                    User_Value = Program.DB.getValue(DB.type.ProjDB, "User_DH", "번호,명칭,용도,용량,공급온도1차,환수온도1차,공급온도2차,환수온도2차", "용도 ='난방용'");                  
+                    User_Value = Program.DB.getValue(DB.type.ProjDB, "User_DH", "번호,명칭,용도,용량,공급온도1차,환수온도1차,공급온도2차,환수온도2차", "용도 ='난방용'");
                 }
                 else
                 {
@@ -121,72 +122,72 @@ namespace main.subcontents.HeatingSystem
             }
 
         }
-         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
             {
-                if (row % 2 == 1)
+                cell.Style.BackColor = SystemColors.InactiveBorder;
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = SystemColors.InactiveBorder;
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else
+            {
+                cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+        }
+
+        private void SelectCheckBox()
+        {
+            foreach (DataGridViewRow row in DH_dataGridView.Rows)
+            {
+                if (Convert.ToBoolean(row.Cells["check"].Value))
                 {
-                    cell.Style.BackColor = SystemColors.InactiveBorder;
-                    cell.Style.ForeColor = Color.Black;
-                    cell.Style.SelectionBackColor = SystemColors.InactiveBorder;
-                    cell.Style.SelectionForeColor = Color.Black;
-                    return true;
+                    row.DefaultCellStyle.SelectionBackColor = SystemColors.GradientInactiveCaption;
+                    SelectRow.Add(row.Index);
+                }
+            }
+        }
+
+        private void Save_button_Click(object sender, EventArgs e)
+        {
+            SelectRow.Clear();
+            SelectCheckBox();
+            for (int k = 0; k < SelectRow.Count; k++)
+            {
+                if (k == SelectRow.Count - 1)
+                {
+                    SelectDH += DH_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString();
                 }
                 else
                 {
-                    cell.Style.BackColor = Color.FromArgb(255, 255, 255);
-                    cell.Style.ForeColor = Color.Black;
-                    cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
-                    cell.Style.SelectionForeColor = Color.Black;
-                    return true;
-                }
-            }   
-
-            private void SelectCheckBox()
-            {
-                foreach (DataGridViewRow row in DH_dataGridView.Rows)
-                {
-                    if (Convert.ToBoolean(row.Cells["check"].Value))
-                    {
-                        row.DefaultCellStyle.SelectionBackColor = SystemColors.GradientInactiveCaption;
-                        SelectRow.Add(row.Index);
-                    }
+                    SelectDH += DH_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString() + "+";
                 }
             }
 
-            private void Save_button_Click(object sender, EventArgs e)
-            {
-                SelectRow.Clear();
-                SelectCheckBox();
-                for (int k = 0; k < SelectRow.Count; k++)
-                {
-                    if (k == SelectRow.Count - 1)
-                    {
-                        SelectDH += DH_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString();
-                    }
-                    else
-                    {
-                        SelectDH += DH_dataGridView.Rows[Convert.ToInt16(SelectRow[k])].Cells[1].Value.ToString() + "+";
-                    }
-                }
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+        private void reset()
+        {
+            SelectRow.Clear();
+            SelectDH_split.Clear();
+            SelectDH = null;
 
-                this.DialogResult = DialogResult.OK;
-                this.Close();
+            for (int n = 0; n < DH_dataGridView.Rows.Count; n++)
+            {
+                DH_dataGridView.Rows[n].Cells[0].Value = false;
             }
-            private void reset()
-            {
-                SelectRow.Clear();
-                SelectDH_split.Clear();
-                SelectDH = null;
 
-                for (int n = 0; n < DH_dataGridView.Rows.Count; n++)
-                {
-                    DH_dataGridView.Rows[n].Cells[0].Value = false;
-                }
-
-            }
-            private void Load_SaveValue(String SelectDH_nonsplit)
-            {
-                reset();
+        }
+        private void Load_SaveValue(String SelectDH_nonsplit)
+        {
+            reset();
             string[] token = SelectDH_nonsplit.Split('+');
             SelectDH_split.Clear();
             foreach (var item in token)
@@ -204,6 +205,21 @@ namespace main.subcontents.HeatingSystem
                 }
             }
         }
-        
+
+        private void infoDHdb_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\2.subcontents\\12.EquipmentList\\04 DH";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using main.contents;
+using main.info;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -117,7 +118,7 @@ namespace main.contentslist
             List<object> mainMenu = new List<object>(); // 예시 코드: 메인 메뉴 동적 할당
             string[][] List = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭,주요설비,보일러종류,외기히트펌프번호,흡수식온수기번호,지역난방번호,태양열번호,지열히트펌프번호,지하수히트펌프번호", "");
             string[][] count_ = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,명칭,주요설비,보일러대수,외기히트펌프대수,흡수식온수기대수,지역난방번호,모듈개수,지열히트펌프대수,지하수히트펌프대수", "");
-            if (List.Length > 0&& count_.Length>0)
+            if (List.Length > 0 && count_.Length > 0)
             {
                 String Blank = "";
                 dataGridView1.Rows.Clear();
@@ -127,17 +128,17 @@ namespace main.contentslist
                     dataGridView1.Rows.Add();
                     int nRow = dataGridView1.Rows.Count - 1;
                     //"보일러", "외기 히트펌프", "지열 히트펌프", "지하수 히트펌프", "태양열 융합 히트펌프", "흡수식온수기", "지역난방", "태양열시스템" 
-                    if (List[n][2] == "보일러") 
-                    { 
+                    if (List[n][2] == "보일러")
+                    {
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "용량,전부하효율", "번호 ='" + List[n][3] + "'");
                         if (SystemValue.Length > 0)
                         {
                             dataGridView1.Rows[nRow].Cells[4].Value = (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][3])).ToString("0.0");
-                            dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " %" ;
+                            dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " %";
                         }
                     }
-                    else if (List[n][2] =="외기 히트펌프")
-                    { 
+                    else if (List[n][2] == "외기 히트펌프")
+                    {
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "난방정격용량,난방정격COP", "번호 ='" + List[n][4] + "'");
                         if (SystemValue.Length > 0)
                         {
@@ -145,7 +146,7 @@ namespace main.contentslist
                             dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " [W/W]";
                         }
                     }
-                    else if(List[n][2] == "흡수식온수기")
+                    else if (List[n][2] == "흡수식온수기")
                     {
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "난방용량,난방성능", "번호 ='" + List[n][5] + "'");
                         if (SystemValue.Length > 0)
@@ -165,7 +166,7 @@ namespace main.contentslist
                     }
                     else if (List[n][2] == "태양열시스템")
                     {
-                        
+
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "모듈면적,효율", "번호 ='" + List[n][7] + "'");
                         if (SystemValue.Length > 0)
                         {
@@ -284,6 +285,22 @@ namespace main.contentslist
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             load_List();
+        }
+
+        private void infoListHeating_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\3.contentslist\\12.Heating";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 }

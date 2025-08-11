@@ -179,6 +179,7 @@ namespace main.contents
             CT_1 = new Label();
             panel7 = new Panel();
             panel5 = new Panel();
+            infoCooling = new Button();
             panel2.SuspendLayout();
             tabControl1.SuspendLayout();
             Generator_tabpage.SuspendLayout();
@@ -1572,6 +1573,7 @@ namespace main.contents
             // GeneralPanel
             // 
             GeneralPanel.BackColor = SystemColors.GradientActiveCaption;
+            GeneralPanel.Controls.Add(infoCooling);
             GeneralPanel.Controls.Add(label7);
             GeneralPanel.Controls.Add(radioButton3);
             GeneralPanel.Controls.Add(label10);
@@ -1993,6 +1995,21 @@ namespace main.contents
             panel5.Size = new Size(1000, 291);
             panel5.TabIndex = 161;
             // 
+            // infoCooling
+            // 
+            infoCooling.BackColor = SystemColors.ControlLight;
+            infoCooling.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoCooling.FlatStyle = FlatStyle.System;
+            infoCooling.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoCooling.Location = new Point(970, 5);
+            infoCooling.Margin = new Padding(0);
+            infoCooling.Name = "infoCooling";
+            infoCooling.Size = new Size(23, 23);
+            infoCooling.TabIndex = 195;
+            infoCooling.Text = "?";
+            infoCooling.UseVisualStyleBackColor = false;
+            infoCooling.Click += infoCooling_Click;
+            // 
             // CoolingSystem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -2197,5 +2214,6 @@ namespace main.contents
         private Panel panel7;
         private Panel panel5;
         private Label label7;
+        private Button infoCooling;
     }
 }

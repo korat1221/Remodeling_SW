@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -86,14 +87,14 @@ namespace main.subcontents.CoolingSystem
                 cell.Style.BackColor = Color.FromArgb(255, 248, 206);
                 return true;
             }
-            
+
             else if (row % 2 == 1)
             {
                 cell.Style.BackColor = SystemColors.InactiveBorder;
                 cell.Style.ForeColor = Color.Black;
                 cell.Style.SelectionBackColor = SystemColors.InactiveBorder;
                 cell.Style.SelectionForeColor = Color.Black;
-               
+
                 return true;
             }
             else
@@ -102,7 +103,7 @@ namespace main.subcontents.CoolingSystem
                 cell.Style.ForeColor = Color.Black;
                 cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
                 cell.Style.SelectionForeColor = Color.Black;
-                
+
                 return true;
             }
         }
@@ -193,5 +194,6 @@ namespace main.subcontents.CoolingSystem
                 }
             }
         }
+
     }
 }

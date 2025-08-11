@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -27,7 +28,7 @@ namespace main.subcontents.ZoneLighting
         public LightingDB()
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
-            
+
             load_table_LightDB();
             //램프유형 콤보박스
             LampType_comboBox.Items.Clear();
@@ -186,17 +187,17 @@ namespace main.subcontents.ZoneLighting
                 MessageBox.Show("모든 값을 입력해주세요.");
             }
         }
-        
+
         public void Calc_eff_FL()
         {
             if (UserDB_lm_textBox.Text != "" && UserDB_W_textBox.Text != "")
             {
-                UserDB_eff = Math.Round(UserDB_lm / UserDB_W, 2); 
+                UserDB_eff = Math.Round(UserDB_lm / UserDB_W, 2);
                 UserDB_eff_textBox.Text = Convert.ToString(UserDB_eff);
 
                 if (Converter_comboBox.SelectedItem == "있음")
                 {
-                    UserDB_FL = Math.Round((64 / (UserDB_lm / UserDB_W)) / (1 / 0.89),2 );
+                    UserDB_FL = Math.Round((64 / (UserDB_lm / UserDB_W)) / (1 / 0.89), 2);
                     UserDB_FL_textBox.Text = Convert.ToString(UserDB_FL);
                 }
                 else
@@ -289,5 +290,20 @@ namespace main.subcontents.ZoneLighting
 
         }
 
+        private void infoLightingdb_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\2.subcontents\\10.ZoneLight\\01 Lighting";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

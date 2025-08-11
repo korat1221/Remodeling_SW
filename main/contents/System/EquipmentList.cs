@@ -26,6 +26,7 @@ using main.subcontents.CoolingSystem;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using main.subcontents.RESystem_WP;
 using Newtonsoft.Json.Linq;
+using main.info;
 
 namespace main.contents
 {
@@ -1781,24 +1782,21 @@ namespace main.contents
                         SelectHP.Add(item.ToString());
                     }
                     string[][] CoolingValue = Program.DB.getValue(DB.type.BaseDB_Cooling, "AirCon", "냉방표준성능,대기전력", "명칭='" + SelectHP[0].ToString() + "등급<4kW' and 열원='" + air_db.Carrier + "'");
+
+                    string[][] HeatingValue = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프", "정격COP,한랭지COP", "등급='" + SelectHP[0].ToString() + "등급'and 연료='" + air_db.Carrier + "'");
+
+                    AirHP_dataGridView.Rows[nRow].Cells[4].Value = air_db.HC;
+                    AirHP_dataGridView.Rows[nRow].Cells[5].Value = air_db.Carrier;
                     if (CoolingValue.Length > 0)
                     {
                         AirHP_dataGridView.Rows[nRow].Cells[8].Value = CoolingValue[0][0];
                         AirHP_dataGridView.Rows[nRow].Cells[16].Value = CoolingValue[0][1];
                     }
-                    if (air_db.HC == "냉난방")
+                    if (HeatingValue.Length > 0)
                     {
-                        string[][] HeatingValue = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프", "정격COP,한랭지COP", "등급='" + SelectHP[0].ToString() + "등급'and 연료='" + air_db.Carrier + "'");
-                        if (HeatingValue.Length > 0)
-                        {
-                            AirHP_dataGridView.Rows[nRow].Cells[11].Value = HeatingValue[0][0];
-                            AirHP_dataGridView.Rows[nRow].Cells[14].Value = HeatingValue[0][1];
-                        }
+                        AirHP_dataGridView.Rows[nRow].Cells[11].Value = HeatingValue[0][0];
+                        AirHP_dataGridView.Rows[nRow].Cells[14].Value = HeatingValue[0][1];
                     }
-                    AirHP_dataGridView.Rows[nRow].Cells[4].Value = air_db.HC;
-                    AirHP_dataGridView.Rows[nRow].Cells[5].Value = air_db.Carrier;
-                   
-                   
 
 
                 }
@@ -4975,8 +4973,8 @@ namespace main.contents
                     }
                     else { Value[i - 1] = ""; }
                 }
-                
-                Program.DB.setValue(DB.type.ProjDB,"User_Fan","번호,프로젝트유형,명칭,설치유형,풍량,정압,모터제어,소비전력", "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"+ Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "'", "번호");
+
+                Program.DB.setValue(DB.type.ProjDB, "User_Fan", "번호,프로젝트유형,명칭,설치유형,풍량,정압,모터제어,소비전력", "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','" + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "'", "번호");
             }
             Program.DB.saveProject();
             MessageBox.Show("저장되었습니다.");
@@ -4990,7 +4988,7 @@ namespace main.contents
                 for (int n = 0; n < Value.Length; n++)
                 {
                     int nRow = Fan_dataGridView.Rows.Add();
-                    
+
                     DataGridViewComboBoxCell 모터제어Combo = new DataGridViewComboBoxCell();
                     모터제어Combo.Items.Add("on/off제어");
                     모터제어Combo.Items.Add("2단제어");
@@ -5088,6 +5086,280 @@ namespace main.contents
                 MessageBox.Show("에너지요구량 해석 시뮬레이션을 진행하시고 확인하세요.");
             }
 
+        }
+
+        private void info_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\22.EquipmentList\\01 general";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        private void infohp_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\22.EquipmentList\\02 HP";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        private void infoboiler_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\22.EquipmentList\\03 Boiler";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        private void infoDH_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\22.EquipmentList\\04 DH";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        private void infoAS_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\22.EquipmentList\\05 AS";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        private void infoAC_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\22.EquipmentList\\06 AC";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        private void infoWaterCooler_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\22.EquipmentList\\07 WaterCooler";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        private void infoPV_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\22.EquipmentList\\08 PV";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        private void infoSolar_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\1.contents\\22.EquipmentList\\09 Solar";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        private void infoDHWHP_Click(object sender, EventArgs e)
+        {
+
+            string basePath = Program.gPath + "Manual\\1.contents\\22.EquipmentList\\10 DHWHP";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        private void infoGHP_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\22.EquipmentList\\11 GHP";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        private void infoGWHP_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\22.EquipmentList\\12 GWHP";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        private void infoFC_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\22.EquipmentList\\13 FC";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        private void infoWP_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\22.EquipmentList\\14 WP";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        private void infoCoolingTop_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\22.EquipmentList\\17 CoolingTop";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        private void infoPump_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\22.EquipmentList\\18 Pump";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        private void infoce_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\22.EquipmentList\\19 ce";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 }

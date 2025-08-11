@@ -1,4 +1,5 @@
 ﻿using main.contentslist;
+using main.info;
 using main.subcontents.RESystem_PV;
 using Microsoft.Web.WebView2.Core;
 using System;
@@ -15,12 +16,12 @@ namespace main.contents
         //일반정보
         string Num, Name;
         string 지역, 프로젝트유형, Ins, beforePV;
-        
+
 
         //PVModuleDB
         string PVModuleNumber, PVModuleName;
         double PVarea, PVtotalarea, PVpower, Kpk, Ppk, PVwidth, PVheight; //단위면적당 출력(kW), 총출력
-        
+
 
         //PVInverterDB 
         string Inverter;
@@ -42,12 +43,12 @@ namespace main.contents
             InitializeAsync();
             webView21.Source = new Uri(Program.gPath + "threejs\\public\\chart_ctrl2.html", true);
             string[][] val = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
-            if(val.Length >0)
+            if (val.Length > 0)
             {
                 지역 = val[0][0].ToString();
             }
-            
-            
+
+
 
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '태양광시스템'");
             if (Image.Length > 0)
@@ -60,7 +61,7 @@ namespace main.contents
             {
                 프로젝트유형 = value[0][0].ToString();
             }
-            
+
             Num = Num_textBox.Text;
 
             PVType_ComboBox.Items.Clear();
@@ -249,7 +250,7 @@ namespace main.contents
             }
             Inverter_textBox.Text = Inverter;
             InverterEff_textbox.Visible = true;
-            InverterEff_textbox.Location = new Point(382,207); //382,180
+            InverterEff_textbox.Location = new Point(382, 207); //382,180
             InverterEff_textbox.Text = string.Format("{0:F0}%", InverterEff);
             //InverterEff_textbox.Parent = PVpictureBox;
         }
@@ -283,7 +284,7 @@ namespace main.contents
         {
             if (e.ColumnIndex == 1 && PV_dataGridView.Rows[e.RowIndex].Cells[1].Value != null)
             {
-                if(Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 1,1))
+                if (Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 1, 1))
                 {
                     double val = 0;
                     val = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[1].Value);
@@ -350,9 +351,9 @@ namespace main.contents
             {
                 Program.UTIL.dataGridView_doubleComa(PV_dataGridView, e.RowIndex, e.ColumnIndex, 1);
             }
-            if ( e.ColumnIndex == 8)
+            if (e.ColumnIndex == 8)
             {
-               double k =  Program.UTIL.dataGridView_doubleComa(PV_dataGridView, e.RowIndex, e.ColumnIndex, 2);
+                double k = Program.UTIL.dataGridView_doubleComa(PV_dataGridView, e.RowIndex, e.ColumnIndex, 2);
                 if (k <= 0)
                 {
                     MessageBox.Show("어레이길이는 0보다 커야합니다.");
@@ -396,7 +397,7 @@ namespace main.contents
                 MessageBox.Show("방위 또는 향을 선택해 주세요.");
                 return false;
             }
-           
+
 
             RadioButton[] rB = { radioButton1, radioButton2, radioButton3, radioButton4 };
 
@@ -533,7 +534,7 @@ namespace main.contents
                 InverterEff_textbox.Visible = true;
                 InverterEff_textbox.Location = new Point(382, 207);
                 InverterEff_textbox.Text = string.Format("{0:F0}%", InverterEff);
-               // InverterEff_textbox.Parent = PVpictureBox;
+                // InverterEff_textbox.Parent = PVpictureBox;
 
                 for (int i = 1; i < 9; i++)
                 {
@@ -663,11 +664,27 @@ namespace main.contents
                 max2 = Convert.ToInt64((Solm2_kWh.Max()) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1) / 2;
                 int n1 = ((int)PVm2_kWh.Max()).ToString().Length;
                 max1 = Convert.ToInt64((PVm2_kWh.Max()) / Math.Pow(10, n1 - 1)) * Math.Pow(10, n1 - 1) + Math.Pow(10, n1 - 1) / 2;
-                string unit = "kWh/m"+ Program.UTIL.Subscript(2, true)+"·mth";
+                string unit = "kWh/m" + Program.UTIL.Subscript(2, true) + "·mth";
                 runScript("drawChart_pv([{type:\"line\",label:\"일사량(" + unit + ")\",data:[" + s2 + "],tension: 0.4,borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:" + max2 + "},{type:\"bar\",label:\"생산량(kWh/m2·mth)\",data:[" + s + "],borderColor:\"#ffffee0\",backgroundColor:\"#FFF6A3\",min:0,max:" + max2 + ",dash:false,barPercentage:0.4}])");
             }
             catch { }
         }
-        #endregion   
+        #endregion
+
+        private void infoPV_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\21.PV";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

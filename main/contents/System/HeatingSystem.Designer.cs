@@ -187,6 +187,7 @@ namespace main.contents
             Previous_button = new Button();
             Save_button = new Button();
             ImagePanel = new Panel();
+            stopumppictureBox = new PictureBox();
             SubDist2pictureBox = new PictureBox();
             SubDistpictureBox = new PictureBox();
             SubsourcepictureBox = new PictureBox();
@@ -202,7 +203,7 @@ namespace main.contents
             panel2 = new Panel();
             panel5 = new Panel();
             panel6 = new Panel();
-            stopumppictureBox = new PictureBox();
+            infoHeating = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             tabControl1.SuspendLayout();
@@ -227,6 +228,7 @@ namespace main.contents
             Qhce_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ce_dataGridView).BeginInit();
             ImagePanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)stopumppictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SubDist2pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SubDistpictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SubsourcepictureBox).BeginInit();
@@ -242,12 +244,12 @@ namespace main.contents
             panel2.SuspendLayout();
             panel5.SuspendLayout();
             panel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)stopumppictureBox).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
             // 
             GeneralPanel.BackColor = SystemColors.GradientActiveCaption;
+            GeneralPanel.Controls.Add(infoHeating);
             GeneralPanel.Controls.Add(label20);
             GeneralPanel.Controls.Add(AHU_Qmax_textBox);
             GeneralPanel.Controls.Add(AHU_Qba_textBox);
@@ -2222,6 +2224,18 @@ namespace main.contents
             ImagePanel.Size = new Size(977, 272);
             ImagePanel.TabIndex = 146;
             // 
+            // stopumppictureBox
+            // 
+            stopumppictureBox.BackColor = Color.Transparent;
+            stopumppictureBox.ErrorImage = null;
+            stopumppictureBox.InitialImage = null;
+            stopumppictureBox.Location = new Point(372, 183);
+            stopumppictureBox.Name = "stopumppictureBox";
+            stopumppictureBox.Size = new Size(47, 36);
+            stopumppictureBox.TabIndex = 165;
+            stopumppictureBox.TabStop = false;
+            stopumppictureBox.Visible = false;
+            // 
             // SubDist2pictureBox
             // 
             SubDist2pictureBox.BackColor = Color.Transparent;
@@ -2392,17 +2406,20 @@ namespace main.contents
             panel6.Size = new Size(1000, 291);
             panel6.TabIndex = 127;
             // 
-            // stopumppictureBox
+            // infoHeating
             // 
-            stopumppictureBox.BackColor = Color.Transparent;
-            stopumppictureBox.ErrorImage = null;
-            stopumppictureBox.InitialImage = null;
-            stopumppictureBox.Location = new Point(372, 183);
-            stopumppictureBox.Name = "stopumppictureBox";
-            stopumppictureBox.Size = new Size(47, 36);
-            stopumppictureBox.TabIndex = 165;
-            stopumppictureBox.TabStop = false;
-            stopumppictureBox.Visible = false;
+            infoHeating.BackColor = SystemColors.ControlLight;
+            infoHeating.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoHeating.FlatStyle = FlatStyle.System;
+            infoHeating.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoHeating.Location = new Point(970, 3);
+            infoHeating.Margin = new Padding(0);
+            infoHeating.Name = "infoHeating";
+            infoHeating.Size = new Size(23, 23);
+            infoHeating.TabIndex = 194;
+            infoHeating.Text = "?";
+            infoHeating.UseVisualStyleBackColor = false;
+            infoHeating.Click += infoHeating_Click;
             // 
             // HeatingSystem
             // 
@@ -2448,6 +2465,7 @@ namespace main.contents
             Qhce_tabPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)ce_dataGridView).EndInit();
             ImagePanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)stopumppictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)SubDist2pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)SubDistpictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)SubsourcepictureBox).EndInit();
@@ -2463,7 +2481,6 @@ namespace main.contents
             panel2.ResumeLayout(false);
             panel5.ResumeLayout(false);
             panel6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)stopumppictureBox).EndInit();
             ResumeLayout(false);
         }
 
@@ -2617,5 +2634,6 @@ namespace main.contents
         private PictureBox SubDistpictureBox;
         private PictureBox SubDist2pictureBox;
         private PictureBox stopumppictureBox;
+        private Button infoHeating;
     }
 }

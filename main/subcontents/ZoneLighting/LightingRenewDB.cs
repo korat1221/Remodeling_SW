@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,7 +19,7 @@ namespace main.subcontents.ZoneLighting
         int SelectRow;
         public string Select_Renew, Select_dbType;
         double Count_RenewDB;
-        
+
 
         string UserNum, UserDB_Name, UserDB_Manufacture, UserDB_RenewType, 프로젝트유형;
         double UserDB_Length1, UserDB_Length2, UserDB_eff, UserDB_A;
@@ -160,7 +161,7 @@ namespace main.subcontents.ZoneLighting
             calc_A();
         }
 
-       private void calc_A()
+        private void calc_A()
         {
             UserDB_A = UserDB_Length1 * UserDB_Length2;
             UserDB_A_textBox.Text = string.Format("{0:N2}", UserDB_A);
@@ -171,7 +172,7 @@ namespace main.subcontents.ZoneLighting
             UserDB_eff = Convert.ToDouble(UserDB_eff_textBox.Text);
         }
 
-      
+
 
         //SetValue 
         private void AddUserDB_button_Click(object sender, EventArgs e)
@@ -276,16 +277,25 @@ namespace main.subcontents.ZoneLighting
                     Select_dbType = row.Cells[2].Value.ToString();
                 }
             }
-           
+
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
-        
 
+        private void infoRenewdb_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\2.subcontents\\10.ZoneLight\\04 Renew";
 
-
-
-
-
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
+        }
     }
 }

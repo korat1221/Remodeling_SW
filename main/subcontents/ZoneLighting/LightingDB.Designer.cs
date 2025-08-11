@@ -29,11 +29,13 @@ namespace main.subcontents.ZoneLighting
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             Save_button = new Button();
             panel1 = new Panel();
+            UserDB_FL_textBox = new TextBox();
+            UserDB_eff_textBox = new TextBox();
             label6 = new Label();
             UserDB_W_textBox = new TextBox();
             UserDB_Manufacture_textBox = new TextBox();
@@ -58,8 +60,7 @@ namespace main.subcontents.ZoneLighting
             LampType_comboBox = new ComboBox();
             label8 = new Label();
             Light_dataGridView = new DataGridView();
-            UserDB_eff_textBox = new TextBox();
-            UserDB_FL_textBox = new TextBox();
+            infoLightingdb = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Light_dataGridView).BeginInit();
             SuspendLayout();
@@ -79,6 +80,7 @@ namespace main.subcontents.ZoneLighting
             // panel1
             // 
             panel1.BackColor = SystemColors.GradientInactiveCaption;
+            panel1.Controls.Add(infoLightingdb);
             panel1.Controls.Add(UserDB_FL_textBox);
             panel1.Controls.Add(UserDB_eff_textBox);
             panel1.Controls.Add(label6);
@@ -108,6 +110,28 @@ namespace main.subcontents.ZoneLighting
             panel1.Name = "panel1";
             panel1.Size = new Size(1094, 123);
             panel1.TabIndex = 26;
+            // 
+            // UserDB_FL_textBox
+            // 
+            UserDB_FL_textBox.BackColor = SystemColors.GradientInactiveCaption;
+            UserDB_FL_textBox.BorderStyle = BorderStyle.None;
+            UserDB_FL_textBox.Location = new Point(758, 77);
+            UserDB_FL_textBox.Name = "UserDB_FL_textBox";
+            UserDB_FL_textBox.Size = new Size(120, 16);
+            UserDB_FL_textBox.TabIndex = 121;
+            UserDB_FL_textBox.TextAlign = HorizontalAlignment.Center;
+            UserDB_FL_textBox.TextChanged += UserDB_FL_textBox_TextChanged;
+            // 
+            // UserDB_eff_textBox
+            // 
+            UserDB_eff_textBox.BackColor = SystemColors.GradientInactiveCaption;
+            UserDB_eff_textBox.BorderStyle = BorderStyle.None;
+            UserDB_eff_textBox.Location = new Point(758, 47);
+            UserDB_eff_textBox.Name = "UserDB_eff_textBox";
+            UserDB_eff_textBox.Size = new Size(120, 16);
+            UserDB_eff_textBox.TabIndex = 120;
+            UserDB_eff_textBox.TextAlign = HorizontalAlignment.Center;
+            UserDB_eff_textBox.TextChanged += UserDB_eff_textBox_TextChanged;
             // 
             // label6
             // 
@@ -162,7 +186,7 @@ namespace main.subcontents.ZoneLighting
             // 
             // Converter_comboBox
             // 
-            Converter_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            Converter_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             Converter_comboBox.FormattingEnabled = true;
             Converter_comboBox.Location = new Point(234, 74);
             Converter_comboBox.Name = "Converter_comboBox";
@@ -245,7 +269,7 @@ namespace main.subcontents.ZoneLighting
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            label12.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label12.Location = new Point(11, 10);
             label12.Name = "label12";
             label12.Size = new Size(60, 15);
@@ -257,7 +281,7 @@ namespace main.subcontents.ZoneLighting
             Deletebutton.BackColor = SystemColors.ControlLight;
             Deletebutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Deletebutton.FlatStyle = FlatStyle.System;
-            Deletebutton.Font = new Font(UTIL.Families[0], 12F);
+            Deletebutton.Font = new Font("나눔바른고딕", 12F);
             Deletebutton.Location = new Point(106, 6);
             Deletebutton.Margin = new Padding(0);
             Deletebutton.Name = "Deletebutton";
@@ -272,7 +296,7 @@ namespace main.subcontents.ZoneLighting
             AddUserDB_button.BackColor = SystemColors.ControlLight;
             AddUserDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             AddUserDB_button.FlatStyle = FlatStyle.System;
-            AddUserDB_button.Font = new Font(UTIL.Families[0], 12F);
+            AddUserDB_button.Font = new Font("나눔바른고딕", 12F);
             AddUserDB_button.Location = new Point(79, 6);
             AddUserDB_button.Margin = new Padding(0);
             AddUserDB_button.Name = "AddUserDB_button";
@@ -311,7 +335,7 @@ namespace main.subcontents.ZoneLighting
             // 
             // LampType_comboBox
             // 
-            LampType_comboBox.Font = new Font(UTIL.Families[0], 9.75F);
+            LampType_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             LampType_comboBox.FormattingEnabled = true;
             LampType_comboBox.Location = new Point(234, 45);
             LampType_comboBox.Name = "LampType_comboBox";
@@ -339,58 +363,51 @@ namespace main.subcontents.ZoneLighting
             Light_dataGridView.BorderStyle = BorderStyle.None;
             Light_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             Light_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font = new Font(UTIL.Families[0], 9.75F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            Light_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            Light_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Light_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Light_dataGridView.Location = new Point(0, 132);
             Light_dataGridView.Name = "Light_dataGridView";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font(UTIL.Families[0], 9.75F);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            Light_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            Light_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             Light_dataGridView.RowHeadersVisible = false;
             Light_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new Font(UTIL.Families[0], 9.75F);
-            dataGridViewCellStyle6.ForeColor = Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
-            Light_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            Light_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
             Light_dataGridView.Size = new Size(1094, 354);
             Light_dataGridView.TabIndex = 111;
             Light_dataGridView.CellContentClick += Light_dataGridView_CellContentClick;
             // 
-            // UserDB_eff_textBox
+            // infoLightingdb
             // 
-            UserDB_eff_textBox.BackColor = SystemColors.GradientInactiveCaption;
-            UserDB_eff_textBox.BorderStyle = BorderStyle.None;
-            UserDB_eff_textBox.Location = new Point(758, 47);
-            UserDB_eff_textBox.Name = "UserDB_eff_textBox";
-            UserDB_eff_textBox.Size = new Size(120, 16);
-            UserDB_eff_textBox.TabIndex = 120;
-            UserDB_eff_textBox.TextAlign = HorizontalAlignment.Center;
-            UserDB_eff_textBox.TextChanged += UserDB_eff_textBox_TextChanged;
-            // 
-            // UserDB_FL_textBox
-            // 
-            UserDB_FL_textBox.BackColor = SystemColors.GradientInactiveCaption;
-            UserDB_FL_textBox.BorderStyle = BorderStyle.None;
-            UserDB_FL_textBox.Location = new Point(758, 77);
-            UserDB_FL_textBox.Name = "UserDB_FL_textBox";
-            UserDB_FL_textBox.Size = new Size(120, 16);
-            UserDB_FL_textBox.TabIndex = 121;
-            UserDB_FL_textBox.TextAlign = HorizontalAlignment.Center;
-            UserDB_FL_textBox.TextChanged += UserDB_FL_textBox_TextChanged;
+            infoLightingdb.BackColor = SystemColors.ControlLight;
+            infoLightingdb.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoLightingdb.FlatStyle = FlatStyle.System;
+            infoLightingdb.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoLightingdb.Location = new Point(1063, 6);
+            infoLightingdb.Margin = new Padding(0);
+            infoLightingdb.Name = "infoLightingdb";
+            infoLightingdb.Size = new Size(23, 23);
+            infoLightingdb.TabIndex = 164;
+            infoLightingdb.Text = "?";
+            infoLightingdb.UseVisualStyleBackColor = false;
+            infoLightingdb.Click += infoLightingdb_Click;
             // 
             // LightingDB
             // 
@@ -437,5 +454,6 @@ namespace main.subcontents.ZoneLighting
         private ComboBox Converter_comboBox;
         private TextBox UserDB_FL_textBox;
         private TextBox UserDB_eff_textBox;
+        private Button infoLightingdb;
     }
 }

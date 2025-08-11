@@ -58,6 +58,7 @@
             Save_button = new Button();
             PVModule_dataGridView = new DataGridView();
             panel1 = new Panel();
+            infoPVdb = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -72,20 +73,20 @@
             // PVtext_label
             // 
             PVtext_label.AutoSize = true;
-            PVtext_label.Font = new Font(UTIL.Families[0], 9.75F);
+            PVtext_label.Font = new Font("나눔바른고딕", 9.75F);
             PVtext_label.Location = new Point(156, 9);
             PVtext_label.Name = "PVtext_label";
-            PVtext_label.Size = new Size(121, 15);
+            PVtext_label.Size = new Size(126, 15);
             PVtext_label.TabIndex = 0;
             PVtext_label.Text = "EN 15316-4-3 기준";
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            label6.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label6.Location = new Point(158, 71);
             label6.Name = "label6";
-            label6.Size = new Size(61, 15);
+            label6.Size = new Size(59, 15);
             label6.TabIndex = 1;
             label6.Text = "Cell Type\r\n";
             label6.TextAlign = ContentAlignment.MiddleCenter;
@@ -94,7 +95,7 @@
             // 
             label7.AutoSize = true;
             label7.BackColor = Color.Transparent;
-            label7.Font = new Font(UTIL.Families[0], 9.75F);
+            label7.Font = new Font("나눔바른고딕", 9.75F);
             label7.Location = new Point(273, 130);
             label7.Name = "label7";
             label7.Size = new Size(43, 15);
@@ -106,7 +107,7 @@
             // 
             label8.AutoSize = true;
             label8.BackColor = Color.Transparent;
-            label8.Font = new Font(UTIL.Families[0], 9.75F);
+            label8.Font = new Font("나눔바른고딕", 9.75F);
             label8.Location = new Point(406, 130);
             label8.Name = "label8";
             label8.Size = new Size(43, 15);
@@ -118,10 +119,10 @@
             // 
             label12.AutoSize = true;
             label12.BackColor = Color.Transparent;
-            label12.Font = new Font(UTIL.Families[0], 9.75F);
+            label12.Font = new Font("나눔바른고딕", 9.75F);
             label12.Location = new Point(530, 130);
             label12.Name = "label12";
-            label12.Size = new Size(65, 15);
+            label12.Size = new Size(69, 15);
             label12.TabIndex = 4;
             label12.Text = "a-Si박막형";
             label12.TextAlign = ContentAlignment.MiddleCenter;
@@ -156,6 +157,7 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.AliceBlue;
+            GeneralPanel.Controls.Add(infoPVdb);
             GeneralPanel.Controls.Add(pictureBox4);
             GeneralPanel.Controls.Add(label9);
             GeneralPanel.Controls.Add(label5);
@@ -194,10 +196,10 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            label9.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
             label9.Location = new Point(664, 34);
             label9.Name = "label9";
-            label9.Size = new Size(254, 15);
+            label9.Size = new Size(258, 15);
             label9.TabIndex = 39;
             label9.Text = "자료:EG-TIPS 에너지온실가스종합정보플랫폼";
             label9.TextAlign = ContentAlignment.MiddleCenter;
@@ -206,10 +208,10 @@
             // 
             label5.AutoSize = true;
             label5.BackColor = Color.Transparent;
-            label5.Font = new Font(UTIL.Families[0], 9.75F);
+            label5.Font = new Font("나눔바른고딕", 9.75F);
             label5.Location = new Point(779, 148);
             label5.Name = "label5";
-            label5.Size = new Size(108, 15);
+            label5.Size = new Size(107, 15);
             label5.TabIndex = 38;
             label5.Text = "(변환효율 ~15%)";
             label5.TextAlign = ContentAlignment.MiddleCenter;
@@ -218,10 +220,10 @@
             // 
             label4.AutoSize = true;
             label4.BackColor = Color.Transparent;
-            label4.Font = new Font(UTIL.Families[0], 9.75F);
+            label4.Font = new Font("나눔바른고딕", 9.75F);
             label4.Location = new Point(642, 148);
             label4.Name = "label4";
-            label4.Size = new Size(108, 15);
+            label4.Size = new Size(107, 15);
             label4.TabIndex = 37;
             label4.Text = "(변환효율 ~16%)";
             label4.TextAlign = ContentAlignment.MiddleCenter;
@@ -230,10 +232,10 @@
             // 
             label3.AutoSize = true;
             label3.BackColor = Color.Transparent;
-            label3.Font = new Font(UTIL.Families[0], 9.75F);
+            label3.Font = new Font("나눔바른고딕", 9.75F);
             label3.Location = new Point(520, 148);
             label3.Name = "label3";
-            label3.Size = new Size(100, 15);
+            label3.Size = new Size(99, 15);
             label3.TabIndex = 36;
             label3.Text = "(변환효율 ~9%)";
             label3.TextAlign = ContentAlignment.MiddleCenter;
@@ -242,10 +244,10 @@
             // 
             label1.AutoSize = true;
             label1.BackColor = Color.Transparent;
-            label1.Font = new Font(UTIL.Families[0], 9.75F);
+            label1.Font = new Font("나눔바른고딕", 9.75F);
             label1.Location = new Point(379, 148);
             label1.Name = "label1";
-            label1.Size = new Size(108, 15);
+            label1.Size = new Size(107, 15);
             label1.TabIndex = 35;
             label1.Text = "(변환효율 ~18%)";
             label1.TextAlign = ContentAlignment.MiddleCenter;
@@ -254,10 +256,10 @@
             // 
             label2.AutoSize = true;
             label2.BackColor = Color.Transparent;
-            label2.Font = new Font(UTIL.Families[0], 9.75F);
+            label2.Font = new Font("나눔바른고딕", 9.75F);
             label2.Location = new Point(242, 148);
             label2.Name = "label2";
-            label2.Size = new Size(108, 15);
+            label2.Size = new Size(107, 15);
             label2.TabIndex = 34;
             label2.Text = "(변환효율 ~20%)";
             label2.TextAlign = ContentAlignment.MiddleCenter;
@@ -265,10 +267,10 @@
             // label16
             // 
             label16.AutoSize = true;
-            label16.Font = new Font(UTIL.Families[0], 9.75F);
+            label16.Font = new Font("나눔바른고딕", 9.75F);
             label16.Location = new Point(156, 28);
             label16.Name = "label16";
-            label16.Size = new Size(355, 15);
+            label16.Size = new Size(354, 15);
             label16.TabIndex = 33;
             label16.Text = "Kpk: 모듈 표면온도 25℃에서의 단위면적당 최대출력 [kW/m2]";
             // 
@@ -276,10 +278,10 @@
             // 
             label14.AutoSize = true;
             label14.BackColor = Color.Transparent;
-            label14.Font = new Font(UTIL.Families[0], 9.75F);
+            label14.Font = new Font("나눔바른고딕", 9.75F);
             label14.Location = new Point(793, 130);
             label14.Name = "label14";
-            label14.Size = new Size(74, 15);
+            label14.Size = new Size(73, 15);
             label14.TabIndex = 32;
             label14.Text = "CdTe박막형";
             label14.TextAlign = ContentAlignment.MiddleCenter;
@@ -288,10 +290,10 @@
             // 
             label10.AutoSize = true;
             label10.BackColor = Color.Transparent;
-            label10.Font = new Font(UTIL.Families[0], 9.75F);
+            label10.Font = new Font("나눔바른고딕", 9.75F);
             label10.Location = new Point(659, 130);
             label10.Name = "label10";
-            label10.Size = new Size(72, 15);
+            label10.Size = new Size(71, 15);
             label10.TabIndex = 31;
             label10.Text = "CIGS박막형";
             label10.TextAlign = ContentAlignment.MiddleCenter;
@@ -319,7 +321,7 @@
             button2.BackColor = SystemColors.ControlLight;
             button2.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             button2.FlatStyle = FlatStyle.System;
-            button2.Font = new Font(UTIL.Families[0], 9.75F);
+            button2.Font = new Font("나눔바른고딕", 9.75F);
             button2.Location = new Point(870, 15);
             button2.Margin = new Padding(0);
             button2.Name = "button2";
@@ -333,7 +335,7 @@
             button1.BackColor = SystemColors.ControlLight;
             button1.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             button1.FlatStyle = FlatStyle.System;
-            button1.Font = new Font(UTIL.Families[0], 9.75F);
+            button1.Font = new Font("나눔바른고딕", 9.75F);
             button1.Location = new Point(897, 15);
             button1.Margin = new Padding(0);
             button1.Name = "button1";
@@ -379,7 +381,7 @@
             PVModule_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -391,7 +393,7 @@
             PVModule_dataGridView.Name = "PVModule_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -400,7 +402,7 @@
             PVModule_dataGridView.RowHeadersVisible = false;
             PVModule_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font(UTIL.Families[0], 9.75F);
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
@@ -418,6 +420,21 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(934, 52);
             panel1.TabIndex = 27;
+            // 
+            // infoPVdb
+            // 
+            infoPVdb.BackColor = SystemColors.ControlLight;
+            infoPVdb.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoPVdb.FlatStyle = FlatStyle.System;
+            infoPVdb.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoPVdb.Location = new Point(905, 4);
+            infoPVdb.Margin = new Padding(0);
+            infoPVdb.Name = "infoPVdb";
+            infoPVdb.Size = new Size(23, 23);
+            infoPVdb.TabIndex = 162;
+            infoPVdb.Text = "?";
+            infoPVdb.UseVisualStyleBackColor = false;
+            infoPVdb.Click += infoPVdb_Click;
             // 
             // PV_ModuleDB
             // 
@@ -472,5 +489,6 @@
         private Label label1;
         private PictureBox pictureBox4;
         private Button Save_button;
+        private Button infoPVdb;
     }
 }
