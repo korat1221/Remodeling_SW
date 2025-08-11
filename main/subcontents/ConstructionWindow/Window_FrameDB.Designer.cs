@@ -32,9 +32,9 @@ namespace main.subcontents
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             Frame_dataGridView = new DataGridView();
             Save_button = new Button();
             toolTip1 = new ToolTip(components);
@@ -54,6 +54,7 @@ namespace main.subcontents
             label36 = new Label();
             label27 = new Label();
             panel2 = new Panel();
+            info = new Button();
             label1 = new Label();
             label7 = new Label();
             label9 = new Label();
@@ -100,7 +101,6 @@ namespace main.subcontents
             UserDB_FrameShape_textBox = new TextBox();
             splitter1 = new Splitter();
             panel1 = new Panel();
-            info = new Button();
             ((System.ComponentModel.ISupportInitialize)Frame_dataGridView).BeginInit();
             panel3.SuspendLayout();
             panel2.SuspendLayout();
@@ -120,34 +120,34 @@ namespace main.subcontents
             Frame_dataGridView.BorderStyle = BorderStyle.None;
             Frame_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             Frame_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            Frame_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            Frame_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Frame_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             Frame_dataGridView.Location = new Point(-1, 319);
             Frame_dataGridView.Name = "Frame_dataGridView";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = SystemColors.Control;
-            dataGridViewCellStyle5.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            Frame_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            Frame_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             Frame_dataGridView.RowHeadersVisible = false;
             Frame_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle6.ForeColor = Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
-            Frame_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
-            Frame_dataGridView.Size = new Size(1119, 224);
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            Frame_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            Frame_dataGridView.Size = new Size(1119, 279);
             Frame_dataGridView.TabIndex = 19;
             Frame_dataGridView.CellContentClick += Frame_dataGridView_CellContentClick;
             // 
@@ -155,7 +155,7 @@ namespace main.subcontents
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(972, 528);
+            Save_button.Location = new Point(972, 604);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 20;
@@ -342,6 +342,21 @@ namespace main.subcontents
             panel2.Name = "panel2";
             panel2.Size = new Size(1121, 66);
             panel2.TabIndex = 175;
+            // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(1085, 9);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 176;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
             // 
             // label1
             // 
@@ -828,26 +843,11 @@ namespace main.subcontents
             panel1.Size = new Size(1121, 219);
             panel1.TabIndex = 27;
             // 
-            // info
-            // 
-            info.BackColor = SystemColors.ControlLight;
-            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            info.FlatStyle = FlatStyle.System;
-            info.Font = new Font("나눔바른고딕", 9.75F);
-            info.Location = new Point(1085, 9);
-            info.Margin = new Padding(0);
-            info.Name = "info";
-            info.Size = new Size(23, 23);
-            info.TabIndex = 176;
-            info.Text = "?";
-            info.UseVisualStyleBackColor = false;
-            info.Click += info_Click;
-            // 
             // Window_FrameDB
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1118, 561);
+            ClientSize = new Size(1118, 641);
             Controls.Add(panel2);
             Controls.Add(panel3);
             Controls.Add(panel1);
