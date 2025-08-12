@@ -1,8 +1,9 @@
 ﻿using Microsoft.Web.WebView2.Core;
+using System;
 using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Net.Sockets;
-
+using System.Linq;
 namespace main.contents.Result
 {
     public partial class Algorithm_AHU : Form
@@ -435,11 +436,10 @@ namespace main.contents.Result
                     chart_w.Add(System.Text.Json.JsonSerializer.Serialize(w_chart.ToArray()));
 
                     double max = 0;
-                    var sortedmax = AHU_heat.Distinct().OrderByDescending(x => x).ToArray();
-                    if (sortedmax.Length >= 2)
-                    {
-                        max = sortedmax[1] * 1.05;
-                    }
+
+                    double[] maxValue = new double[] { secondmax(AHU_heat), secondmax(AHU_cool), secondmax(AHU_hum), secondmax(aux_total)};
+
+                    max = maxValue.Max() * 1.05;
 
                     int n = ((int)max).ToString().Length;
                     max = Convert.ToDouble(String.Format("{0:F0}", max / Math.Pow(10, n - 1))) * Math.Pow(10, n - 1) + Math.Pow(10, n - 1);
@@ -462,6 +462,19 @@ namespace main.contents.Result
             }
         }
 
+        private double secondmax(double[] value)
+        {
+            var top2 = value
+                       .Where(x => !double.IsNaN(x))
+                       .Distinct()
+                       .OrderByDescending(x => x)
+                       .Take(2)
+                       .ToArray();
+
+            double secondMaxDistinct = top2.Length == 2 ? top2[1] : double.NaN; // 없으면 NaN
+
+            return secondMaxDistinct;
+        }
 
         double Cal_Qb(List<string> SelectZone, int g, string HC)
         {

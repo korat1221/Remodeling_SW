@@ -75,6 +75,7 @@ namespace main.contents.Result
             List<string> chart_ce = new List<string>();
             List<string> chart_d = new List<string>();
             List<string> chart_s = new List<string>();
+            List<string> chart_g = new List<string>();
             List<string> chart_f = new List<string>();
             int i = -1;
             while (++i < 30)
@@ -234,7 +235,8 @@ namespace main.contents.Result
                 if (Value.Length > 0)
                 {
                     ArrayList splitAHU = new ArrayList();
-                    splitAHU = Split_(Value[0][1]);
+                    if (Value[0][1] != "")
+                    { splitAHU = Split_(Value[0][1]); }
                     ZahuData[0].Add(new { idx = i, val = splitAHU.Count });
                     string[][] ZoneValue = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(Qhb_ahu) From heatingSystem_Result Where 번호='" + Num + "'");
                     if (ZoneValue.Length > 0)
@@ -424,7 +426,15 @@ namespace main.contents.Result
                     }
                     WMthData[0].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(w.ToString(), 1) });
                 }
-                #endregion 
+                #endregion
+
+                List<object> nd_chart = new List<object>();
+                List<object> ce_chart = new List<object>();
+                List<object> d_chart = new List<object>();
+                List<object> s_chart = new List<object>();
+                List<object> f_chart = new List<object>();
+                List<object> g_chart = new List<object>();
+
                 #region 에너지소요량 월별 
                 for (int mth = 0; mth < 12; mth++)
                 {
@@ -441,6 +451,14 @@ namespace main.contents.Result
                         MthData[5].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(g_mth[mth].ToString(), 0) });
                         double sum = Convert.ToDouble(Value[0][6]) + Convert.ToDouble(Value[0][7]);
                         MthData[6].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(sum.ToString(), 0) });
+
+                        
+                        nd_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(sum.ToString(), 0)));
+                        ce_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(ce_mth[mth].ToString(), 0)));
+                        d_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(d_mth[mth].ToString(), 0)));
+                        s_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(s_mth[mth].ToString(), 0)));
+                        f_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(f_mth[mth].ToString(), 0)));
+                        g_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(g_mth[mth].ToString(), 0)));
                     }
                 }
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select  Sum(Qh_f), Sum(Qh_outg), sum(Qh_ce), sum(Qh_d), sum(Qh_s),sum(Qh_gen), sum(Qhb_z), sum(Qhb_ahu)  From HeatingSystem_Result Where 번호='" + Num + "'");
@@ -560,27 +578,12 @@ namespace main.contents.Result
                 data.Add(new { cname = "volume_s", data = PumpData[3] });
                 data.Add(new { cname = "pumps_power", data = PumpData[4] });
 
-                List<object> nd_chart = new List<object>();
-                List<object> ce_chart = new List<object>();
-                List<object> d_chart = new List<object>();
-                List<object> s_chart = new List<object>();
-                List<object> f_chart = new List<object>();
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qhb_mth_sum, Qh_ce, Qh_d, Qh_s, Qh_f From HeatingSystem_Result Where 번호='" + Num + "' and 월='" + (mth + 1) + "월'");
-                    if (Value.Length > 0)
-                    {
-                        nd_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(Value[0][0], 0)));
-                        ce_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(Value[0][1], 0)));
-                        d_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(Value[0][2], 0)));
-                        s_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(Value[0][3], 0)));
-                        f_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(Value[0][4], 0)));
-                    }
-                }
+               
                 chart_nd.Add(System.Text.Json.JsonSerializer.Serialize(nd_chart.ToArray()));
                 chart_ce.Add(System.Text.Json.JsonSerializer.Serialize(ce_chart.ToArray()));
                 chart_d.Add(System.Text.Json.JsonSerializer.Serialize(d_chart.ToArray()));
                 chart_s.Add(System.Text.Json.JsonSerializer.Serialize(s_chart.ToArray()));
+                chart_g.Add(System.Text.Json.JsonSerializer.Serialize(g_chart.ToArray()));
                 chart_f.Add(System.Text.Json.JsonSerializer.Serialize(f_chart.ToArray()));
                 double max = 0;
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select Max(Qh_outg), Max(Qh_f) From HeatingSystem_Result Where 번호='" + Num + "' and 월='1월'");
@@ -596,6 +599,7 @@ namespace main.contents.Result
                 "{type:\"bar\",barPercentage:0.4,label:\"공급열손실 [kWh]\",data:" + chart_ce[i] + ",borderColor:\"#70AD47\",backgroundColor:\"#70AD47\",dash:false}," +
                 "{type:\"bar\",barPercentage:0.4,label:\"분배열손실 [kWh]\",data:" + chart_d[i] + ",borderColor:\"#FFD966\",backgroundColor:\"#FFD966\",dash:false}," +
                 "{type:\"bar\",barPercentage:0.4,label:\"저장열손실 [kWh]\",data:" + chart_s[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"생산열손실 [kWh]\",data:" + chart_g[i] + ",borderColor:\"#FFD966\",backgroundColor:\"#FFD966\",dash:false}," +
                 "{type:\"line\",yAxisID: 'y',label:\"에너지소요량 [kWh]\",data:" + chart_f[i] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false, tension: 0.4}," +
                 "],max:" + max.ToString() + ",step:100,legend:true,stacked:true}";
 

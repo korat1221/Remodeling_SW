@@ -131,11 +131,11 @@ namespace main.contents.Result
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "용량,전부하효율", "번호 ='" + systemnum + "'");
                         count = count_[0][3] != "" ? Convert.ToDouble(count_[0][3]) : 0;
                     }
-                    else if (MainSystem == "히트펌프")
+                    else if (MainSystem == "외기 히트펌프")
                     {
                         systemnum = List[0][4];
                         etaunit = "W/W";
-                        SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "난방정격용량,난방정격COP", "번호 ='" + systemnum + "'");
+                        SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DHWHP", "급탕정격용량,급탕정격COP", "번호 ='" + systemnum + "'");
                         count = count_[0][4] != "" ? Convert.ToDouble(count_[0][4]) : 0;
                     }
                     else if (MainSystem == "지역난방")
@@ -456,7 +456,7 @@ namespace main.contents.Result
                 chart_g.Add(System.Text.Json.JsonSerializer.Serialize(g_chart.ToArray()));
                 chart_f.Add(System.Text.Json.JsonSerializer.Serialize(f_chart.ToArray()));
                 double max = 0;
-                Value = Program.DB.querySQL(DB.type.ProjDB, "Select Max(Qw_outg), Max(Qw_f) From DHWSystem_Result Where 번호='" + Num + "' and 월='1월'");
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select Max(Qwb_mth_sum), (Qw_outg), Max(Qw_f) From DHWSystem_Result Where 번호='" + Num + "' and 월='1월'");
                 if (Value.Length > 0)
                 {
                     max = Convert.ToDouble(Value[0][0]) > Convert.ToDouble(Value[0][1]) ? Convert.ToDouble(Value[0][0]) : Convert.ToDouble(Value[0][1]);   
@@ -465,8 +465,8 @@ namespace main.contents.Result
                 max = Convert.ToDouble(String.Format("{0:F0}", max / Math.Pow(10, n - 1))) * Math.Pow(10, n - 1) + Math.Pow(10, n - 1);
                 if (charts != "") charts += ",";
                 charts += "{data:[" +
-                "{type:\"bar\",barPercentage:0.4,label:\"에너지요구량 [kWh]\",data:" + chart_nd[i] + ",borderColor:\"#7030A0\",backgroundColor:\"#7030A0\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"분배열손실 [kWh]\",data:" + chart_d[i] + ",borderColor:\"#FFD966\",backgroundColor:\"#FFD966\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"에너지요구량 [kWh]\",data:" + chart_nd[i] + ",borderColor:\"#FFE0B2\",backgroundColor:\"#FFE0B2\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"분배열손실 [kWh]\",data:" + chart_d[i] + ",borderColor:\"#F06500\",backgroundColor:\"#F06500\",dash:false}," +
                 "{type:\"bar\",barPercentage:0.4,label:\"저장열손실 [kWh]\",data:" + chart_s[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
                 "{type:\"bar\",barPercentage:0.4,label:\"생산열손실 [kWh]\",data:" + chart_g[i] + ",borderColor:\"#FFCCFF\",backgroundColor:\"#FFCCFF\",dash:false}," +
                 "{type:\"line\",yAxisID: 'y',label:\"에너지소요량 [kWh]\",data:" + chart_f[i] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false, tension: 0.4}," +
