@@ -164,7 +164,7 @@
             // 
             coolRadiLabel.AutoSize = true;
             coolRadiLabel.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
-            coolRadiLabel.Location = new Point(734, 17);
+            coolRadiLabel.Location = new Point(744, 17);
             coolRadiLabel.Name = "coolRadiLabel";
             coolRadiLabel.Size = new Size(103, 15);
             coolRadiLabel.TabIndex = 4;

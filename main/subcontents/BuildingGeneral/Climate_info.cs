@@ -83,7 +83,7 @@ namespace main.subcontents.BuildingGeneral
                 heatTempLabel.Text = "난방실외온도: " + Program.UTIL.doubleComa(Value[0][3].ToString(), 1) + "˚";
                 coolTempLabel.Text = "냉방실외온도: " + Program.UTIL.doubleComa(Value[0][4].ToString(), 1) + "˚";
                 coolHumiLabel.Text = "냉방절대습도: " + Program.UTIL.doubleComa(습도.ToString(), 1) + "g/kg'";
-                coolRadiLabel.Text = "냉방전일사량: " + Program.UTIL.doubleComa(Value[0][6].ToString(), 0) + "Wh/m2";
+                coolRadiLabel.Text = "냉방전일사량: " + Program.UTIL.doubleComa(Value[0][6].ToString(), 0) + "Wh/m"+Program.UTIL.Subscript(2,true);
             }
         }
 
