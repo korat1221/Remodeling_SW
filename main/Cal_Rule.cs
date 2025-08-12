@@ -288,7 +288,7 @@ namespace main
         }
         private void Load_Rule_Ventil(Zone zone1)
         {
-            //ssk SD-250 참조하여 적용  온도_난방 :95%, 온도_냉방 = 76%, 유효전열 =87%, 유효전열 =57%
+            //EPI 기준 1점  온도_난방 :88%, 온도_냉방 = 72%, 유효전열_난방 =74%, 유효전열_냉방 =57%
             string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "환기유무,환기방식,비이용일환기량,이용일환기량,선택열회수기", "존번호='" + zone1.ZoneNum + "'");
             if (Convert.ToBoolean(ZoneG[0][0]))
             {
@@ -325,6 +325,7 @@ namespace main
                         zone1.eta_χV_mech[0] = Convert.ToDouble(value[0][2]) / 100;
                         zone1.eta_χV_mech[1] = Convert.ToDouble(value[0][3]) / 100;
                     }
+
                 }
                 else
                 {
@@ -341,11 +342,12 @@ namespace main
                 zone1.Vmech_ETA_we = Convert.ToDouble(ZoneG[0][2]);
                 zone1.Vmech_SUP_wd = Convert.ToDouble(ZoneG[0][3]);
                 zone1.Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][3]);
-                zone1.eta_V_mech[0] = 0.95;
-                zone1.eta_V_mech[1] = 0.76;
-                zone1.eta_χV_mech[0] = 0.104;
-                zone1.eta_χV_mech[1] = 0.714;
+                zone1.eta_V_mech[0] = 0.88; //온도효율 난방
+                zone1.eta_V_mech[1] = 0.72; //온도효율 냉방
+                zone1.eta_χV_mech[0] = 0.40; //습기효율 난방
+                zone1.eta_χV_mech[1] = 0.43; //습기효율 냉방
                 zone1.SelectHRV = "열회수기_법규";
+                //EPI 기준 1점  온도_난방 :88%, 온도_냉방 = 72%, 유효전열_난방 =74%, 유효전열_냉방 =57%
             }
         }
         private void Load_Rule_Light(ZoneLight zonelight1)
