@@ -151,7 +151,7 @@ namespace main.contents
             // 
             // TB_comboBox
             // 
-            //TB_comboBox.DrawMode = DrawMode.Normal;
+            TB_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             TB_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             TB_comboBox.FormattingEnabled = true;
             TB_comboBox.Location = new Point(663, 12);
@@ -159,7 +159,8 @@ namespace main.contents
             TB_comboBox.Size = new Size(120, 23);
             TB_comboBox.TabIndex = 122;
             TB_comboBox.Visible = false;
-            TB_comboBox.SelectedIndexChanged += TB_comboBox_SelectedIndexChanged;
+           // TB_comboBox.SelectedIndexChanged += TB_comboBox_SelectedIndexChanged;
+            TB_comboBox.DropDownClosed += TB_comboBox_DropDownClosed;
             // 
             // TB_button
             // 

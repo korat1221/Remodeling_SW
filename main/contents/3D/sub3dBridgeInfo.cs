@@ -137,23 +137,23 @@ namespace main.contents
         }
         private void TB_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (TB_comboBox.SelectedItem != null)
-            {
-                SelectTBType = TB_comboBox.SelectedItem.ToString();
-                if (SelectTBType != null && SelectTBType != "")
-                {
-                    TB_comboBox.Text = SelectTBType;
-                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                    {
-                        Program.DB.setValue(DB.type.ProjDB, "ThermalBridge_3D", "번호,선택열교",
-                         "'" + dataGridView1.Rows[i].Cells[1].Value + "','" + dataGridView1.Rows[i].Cells[3].Value + "'",
-                         "번호");
-                    }
-                    Program.DB.saveProject();
-                    Load_TBDB();
-                    Check_checkBox.Checked = true;
-                }
-            }
+            //if (TB_comboBox.SelectedItem != null)
+            //{
+            //    SelectTBType = TB_comboBox.SelectedItem.ToString();
+            //    if (SelectTBType != null && SelectTBType != "")
+            //    {
+
+            //        for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            //        {
+            //            Program.DB.setValue(DB.type.ProjDB, "ThermalBridge_3D", "번호,선택열교",
+            //             "'" + dataGridView1.Rows[i].Cells[1].Value + "','" + dataGridView1.Rows[i].Cells[3].Value + "'",
+            //             "번호");
+            //        }
+            //        Program.DB.saveProject();
+            //        Load_TBDB();
+            //        Check_checkBox.Checked = true;
+            //    }
+            //}
         }
         private void Checked_Value()
         {
@@ -200,11 +200,11 @@ namespace main.contents
                 {
                     if (!TB_comboBox.Visible)
                     {
-                      //  TB_comboBox.Parent = dataGridView1;           // 또는 dataGridView1
+                        //  TB_comboBox.Parent = dataGridView1;           // 또는 dataGridView1
                         TB_comboBox.Location = new Point(cellX, cellY);
                         TB_comboBox.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
-                        TB_comboBox.BringToFront();
-                        TB_comboBox.Visible = true;
+                        //TB_comboBox.BringToFront();
+                        //TB_comboBox.Visible = true;
                         TB_comboBox.Show();
                     }
                 }
@@ -219,7 +219,7 @@ namespace main.contents
                 }
             }
         }
-    
+
 
 
 
@@ -324,6 +324,28 @@ namespace main.contents
             else
             {
                 MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        private void TB_comboBox_DropDownClosed(object sender, EventArgs e)
+        {
+            if (TB_comboBox.SelectedItem != null)
+            {
+                SelectTBType = TB_comboBox.SelectedItem.ToString();
+                if (SelectTBType != null && SelectTBType != "")
+                {
+
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        Program.DB.setValue(DB.type.ProjDB, "ThermalBridge_3D", "번호,선택열교",
+                         "'" + dataGridView1.Rows[i].Cells[1].Value + "','" + dataGridView1.Rows[i].Cells[3].Value + "'",
+                         "번호");
+                    }
+                    Program.DB.saveProject();
+                    Load_TBDB();
+                    Check_checkBox.Checked = true;
+                }
+                TB_comboBox.Text = SelectTBType;
             }
         }
     }
