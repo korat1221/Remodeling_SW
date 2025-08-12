@@ -1,4 +1,5 @@
 ﻿using main.contentslist;
+using main.info;
 using main.subcontents.AHUSystem;
 using main.subcontents.ConstructionCW;
 using Newtonsoft.Json.Linq;
@@ -118,7 +119,7 @@ namespace main.contents
             PrehPrecpictureBox.Parent = MainpictureBox;
             hcoilpictureBox.Parent = MainpictureBox;
             ccoilpictureBox.Parent = MainpictureBox;
-            HumidifierpictureBox.Parent = MainpictureBox; 
+            HumidifierpictureBox.Parent = MainpictureBox;
             VAVpictureBox.Parent = MainpictureBox;
             //maxhumid_label.Parent = ImagePanel;
             //minhumid_label.Parent = ImagePanel;
@@ -190,7 +191,7 @@ namespace main.contents
                 TABOptions_label.Visible = true;
                 TABOptions_comboBox.Visible = true;
             }
-          //  Load_Zone();
+            //  Load_Zone();
         }
 
         private void AHUoptions_button_Click(object sender, EventArgs e)
@@ -242,7 +243,7 @@ namespace main.contents
                     AnnualHeatingNeed_textBox.Text = AnnualHeatingNeed.ToString();
                     Program.UTIL.textBox_doubleComa(AnnualHeatingNeed_textBox, true, 0);
 
-                    HeatingLoad += Convert.ToDouble(난방[0][1])/1000;
+                    HeatingLoad += Convert.ToDouble(난방[0][1]) / 1000;
                     HeatingLoad_textBox.Text = HeatingLoad.ToString();
                     Program.UTIL.textBox_doubleComa(HeatingLoad_textBox, true, 2);
                 }
@@ -250,14 +251,14 @@ namespace main.contents
                 if (냉방.Length > 0)
                 {
                     AnnualCoolingNeed += Convert.ToDouble(냉방[0][0]);
-                    AnnualCoolingNeed_textBox.Text = AnnualCoolingNeed. ToString();
+                    AnnualCoolingNeed_textBox.Text = AnnualCoolingNeed.ToString();
                     Program.UTIL.textBox_doubleComa(AnnualCoolingNeed_textBox, true, 0);
 
-                    CoolingLoad += Convert.ToDouble(냉방[0][1])/1000;
+                    CoolingLoad += Convert.ToDouble(냉방[0][1]) / 1000;
                     CoolingLoad_textBox.Text = CoolingLoad.ToString();
                     Program.UTIL.textBox_doubleComa(CoolingLoad_textBox, true, 2);
                 }
-            }            
+            }
         }
         #endregion
 
@@ -398,7 +399,7 @@ namespace main.contents
                         maxhumid_label.Text = "최대습도: " + maxhumid + " g/kg'";
                         minhumid_label.Text = "최소습도: " + minhumid + " g/kg'";
                     }
-                    
+
                 }
             }
             else
@@ -710,14 +711,14 @@ namespace main.contents
             {
                 for (int mth = 1; mth < 13; mth++)
                 {
-                    string[][]  기후 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_온도습도", "최소온도", "지역명 ='" + Location[0][0] + "'And 기간 = '" + mth + "월'");
+                    string[][] 기후 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_온도습도", "최소온도", "지역명 ='" + Location[0][0] + "'And 기간 = '" + mth + "월'");
                     theta_e_min[mth - 1] = Convert.ToDouble(기후[0][0].ToString());
                 }
             }
 
             if (AHUOptions == "열회수기")
             {
-                string[][] 풍량 = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "팬풍량,열회수유형", "번호 = '"+Num+"'");
+                string[][] 풍량 = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "팬풍량,열회수유형", "번호 = '" + Num + "'");
                 Volume = Convert.ToDouble(풍량[0][0].ToString());
                 string[][] 결빙방지 = Program.DB.getValue(DB.type.BaseDB_AHU, "결빙방지온도", "결빙방지온도", "건물유형 ='비주거건물' And 열회수기유형 = '" + 풍량[0][1].ToString() + "'");
                 {
@@ -728,7 +729,7 @@ namespace main.contents
             {
                 string[][] 풍량 = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "급기풍량,열회수유형", "번호 = '" + Num + "'");
                 Volume = Convert.ToDouble(풍량[0][0].ToString());
-                string[][] 결빙방지 = Program.DB.getValue(DB.type.BaseDB_AHU, "결빙방지온도", "결빙방지온도", "건물유형 ='비주거건물' And 열회수기유형 = '" + 풍량[0][1].ToString() +"'");
+                string[][] 결빙방지 = Program.DB.getValue(DB.type.BaseDB_AHU, "결빙방지온도", "결빙방지온도", "건물유형 ='비주거건물' And 열회수기유형 = '" + 풍량[0][1].ToString() + "'");
                 {
                     theta_defrost = Convert.ToDouble(결빙방지[0][0].ToString());
                 }
@@ -831,7 +832,7 @@ namespace main.contents
                 MainpictureBox.Size = new Size(790, 365);
                 MainpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             }
-            else if( AHUOptions == "공조기" )
+            else if (AHUOptions == "공조기")
             {
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "열회수유형", "번호 ='" + Num_textBox.Text + "'");
                 if (Value.Length > 0)
@@ -862,7 +863,7 @@ namespace main.contents
 
         private void LoadLocationImage() // 2. 설치위치 그림넣기
         {
-            if(AHULocation==""|| AHULocation == null)
+            if (AHULocation == "" || AHULocation == null)
             {
                 AHULocation_comboBox.SelectedItem = "단열외피 내부";
             }
@@ -889,9 +890,9 @@ namespace main.contents
                 PrehPrecpictureBox.Location = new Point(220, 190);
                 PrehPrecpictureBox.Size = new Size(40, 80);
                 PrehPrecpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-          
+
             }
-            else if(PrehPrecOptions == "쿨튜브")
+            else if (PrehPrecOptions == "쿨튜브")
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '예열예냉' And 설비유형='" + PrehPrecOptions + "'");
                 PrehPrecpictureBox.Visible = true;
@@ -911,18 +912,18 @@ namespace main.contents
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "냉각코일출력,난방코일출력", "번호 ='" + Num_textBox.Text + "'");
             if (Value.Length > 0)
             {
-                if (double.TryParse(Value[0][0].ToString(), out double coolresult)&&coolresult>0) //냉방코일 그림
+                if (double.TryParse(Value[0][0].ToString(), out double coolresult) && coolresult > 0) //냉방코일 그림
                 {
-                    if(HRVType == "판형")
+                    if (HRVType == "판형")
                     {
                         string[][] image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '냉방코일' And 설비유형='" + HRVType + "'");
                         ccoilpictureBox.Visible = true;
                         ccoilpictureBox.Load(Program.gPath + image[0][0]);
-                        ccoilpictureBox.Location = new Point(395,100);
+                        ccoilpictureBox.Location = new Point(395, 100);
                         ccoilpictureBox.Size = new Size(40, 80);
                         ccoilpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     }
-                    else if(HRVType == "회전형")
+                    else if (HRVType == "회전형")
                     {
                         string[][] image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '냉방코일' And 설비유형='" + HRVType + "'");
                         ccoilpictureBox.Visible = true;
@@ -959,8 +960,8 @@ namespace main.contents
         private void LoadHumidifierImage() // 5.가습기 그림넣기
         {
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "가습기용량", "번호 ='" + Num_textBox.Text + "'");
-            
-            if (double.TryParse(Value[0][0].ToString(), out double heatresult) && heatresult > 0) 
+
+            if (double.TryParse(Value[0][0].ToString(), out double heatresult) && heatresult > 0)
             {
                 if (HRVType == "판형")
                 {
@@ -988,7 +989,7 @@ namespace main.contents
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "공조방식", "번호 ='" + Num_textBox.Text + "'");
             if (Value[0][0] == "변풍량")
             {
-                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = 'VAV' And 설비유형 = '" + Value[0][0].ToString() +"'");
+                string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = 'VAV' And 설비유형 = '" + Value[0][0].ToString() + "'");
                 if (HRVType == "판형")
                 {
                     VAVpictureBox.Visible = true;
@@ -1028,7 +1029,7 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,유형", "'" + Num_textBox.Text + "','" + AHUOptions + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,설치위치,풍량제어,누기시험방법,누기등급1,누기등급2,공조기단열두께,TAB실시유무", "'" + Num_textBox.Text + "','" + AHULocation + "','" + AHUVolumeControl + "','" + AHULeakageTestMethod + "','" + AHULeakageLevel1 + "','" + AHULeakageLevel2 + "','" + AHUInsulationThickness.ToString() + "','" + TABOptions + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,덕트누기수준,OA덕트길이,EA덕트길이,SA덕트길이,RA덕트길이,덕트단열두께,덕트관경,덕트단열재,덕트단열재열전도율", "'" + Num_textBox.Text + "','" + DuctLeakageLevel + "','" + OALength.ToString() + "','" + EALength.ToString() + "','" + SALength.ToString() + "','" + RALength.ToString() + "','" + DuctInsulationThickness.ToString() + "','" + DuctDiameter.ToString() + "','" + PipeIns + "','" + PipeIns_Ramda.ToString() + "'", "번호");
-            if(PrehPrecOptions != "프리히터")
+            if (PrehPrecOptions != "프리히터")
             {
                 PrehControlOptions = "";
                 PrehPower = 0;
@@ -1140,7 +1141,7 @@ namespace main.contents
         #endregion
 
         #region 로드
-        
+
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             reset();
@@ -1175,7 +1176,7 @@ namespace main.contents
             Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "설치위치, 풍량제어, 누기시험방법, 누기등급1, 공조기단열두께, TAB실시유무", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
-               
+
                 Change_DuctLabel(AHULocation);
 
                 AHUVolumeControl_comboBox.SelectedItem = Value[0][1];
@@ -1233,7 +1234,7 @@ namespace main.contents
 
                 PipeIns = Value[0][6];
                 PipeIns_textBox.Text = PipeIns.ToString();
-                
+
                 PipeIns_Ramda = Convert.ToDouble(Value[0][7]);
                 PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
                 Program.UTIL.textBox_doubleComa(PipeIns_Ramda_textBox, true, 3);
@@ -1249,7 +1250,7 @@ namespace main.contents
             if (Value.Length > 0)
             {
                 PrehControlOptions_comboBox.SelectedItem = Value[0][0];
-               
+
                 PrehPower_textBox.Text = Value[0][1];
                 PrehPower = Convert.ToDouble(Value[0][1]);
             }
@@ -1309,17 +1310,17 @@ namespace main.contents
         #endregion
         void humincheck()
         {
-            if(AHUOptions == "열회수기")
+            if (AHUOptions == "열회수기")
             {
                 maxhumid = 14.75;// 26도70% EN16798-5식 이용 (단위g/kg')
                 minhumid = 1.44;// 20도10% EN16798-5식 이용 (단위g/kg')
             }
-            else if(AHUOptions == "공조기")
+            else if (AHUOptions == "공조기")
             {
-                string[][] check = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "가습기습도수준", "번호 = '"+Num+"'");
-                               
+                string[][] check = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "가습기습도수준", "번호 = '" + Num + "'");
+
                 string type = check[0][0].ToString();
-                if(type =="" || type == null)
+                if (type == "" || type == null)
                 {
                     MessageBox.Show("먼저 장비일람표 공조기에 습도수준을 입력하세요.");
                 }
@@ -1346,7 +1347,7 @@ namespace main.contents
 
                     }
                 }
-                    
+
             }
         }
         void none_AHU_HRV_check()
@@ -1356,13 +1357,13 @@ namespace main.contents
             {
                 int j = 0;
                 string[][] zonecheck = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,선택열회수기", "");
-                for (int i = 0; i<check.Length;i++)
+                for (int i = 0; i < check.Length; i++)
                 {
-                    for(int k =0; k < zonecheck.Length; k++)
+                    for (int k = 0; k < zonecheck.Length; k++)
                     {
                         if (check[i][0] == zonecheck[k][1])
                         {
-                            j ++;
+                            j++;
                         }
                     }
                     if (j == 0)
@@ -1370,6 +1371,22 @@ namespace main.contents
                         Program.DB.deleteValue(DB.type.ProjDB, "AHUSystem_Form", "번호 = '" + check[i][0] + "'");
                     }
                 }
+            }
+        }
+
+        private void infoAHU_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\1.contents\\23.AHU";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
             }
         }
     }

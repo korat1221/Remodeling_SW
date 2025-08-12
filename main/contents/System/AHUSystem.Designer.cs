@@ -96,6 +96,9 @@ namespace main.contents
             label22 = new Label();
             label7 = new Label();
             PrehInfo_groupBox = new GroupBox();
+            label27 = new Label();
+            prepower_label = new Label();
+            label12 = new Label();
             label46 = new Label();
             PrehControlOptions_comboBox = new CustomComboBox();
             PrehPower_textBox = new TextBox();
@@ -140,9 +143,7 @@ namespace main.contents
             tabControl1 = new CustomTabControl();
             panel1 = new Panel();
             panel7 = new Panel();
-            label12 = new Label();
-            prepower_label = new Label();
-            label27 = new Label();
+            infoAHU = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             ImagePanel.SuspendLayout();
@@ -168,6 +169,7 @@ namespace main.contents
             // GeneralPanel
             // 
             GeneralPanel.BackColor = SystemColors.GradientActiveCaption;
+            GeneralPanel.Controls.Add(infoAHU);
             GeneralPanel.Controls.Add(label19);
             GeneralPanel.Controls.Add(label23);
             GeneralPanel.Controls.Add(Icon_pictureBox);
@@ -926,6 +928,36 @@ namespace main.contents
             PrehInfo_groupBox.TabStop = false;
             PrehInfo_groupBox.Visible = false;
             // 
+            // label27
+            // 
+            label27.AutoSize = true;
+            label27.Font = new Font("나눔바른고딕", 9.75F);
+            label27.ForeColor = SystemColors.ControlText;
+            label27.Location = new Point(224, 101);
+            label27.Name = "label27";
+            label27.Size = new Size(20, 15);
+            label27.TabIndex = 222;
+            label27.Text = "W";
+            // 
+            // prepower_label
+            // 
+            prepower_label.AutoSize = true;
+            prepower_label.Font = new Font("나눔바른고딕", 9.75F);
+            prepower_label.Location = new Point(141, 103);
+            prepower_label.Name = "prepower_label";
+            prepower_label.Size = new Size(0, 15);
+            prepower_label.TabIndex = 221;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("나눔바른고딕", 9.75F);
+            label12.Location = new Point(27, 105);
+            label12.Name = "label12";
+            label12.Size = new Size(79, 15);
+            label12.TabIndex = 220;
+            label12.Text = "권장설치용량";
+            // 
             // label46
             // 
             label46.AutoSize = true;
@@ -1488,35 +1520,20 @@ namespace main.contents
             panel7.Size = new Size(1000, 250);
             panel7.TabIndex = 187;
             // 
-            // label12
+            // infoAHU
             // 
-            label12.AutoSize = true;
-            label12.Font = new Font("나눔바른고딕", 9.75F);
-            label12.Location = new Point(27, 105);
-            label12.Name = "label12";
-            label12.Size = new Size(79, 15);
-            label12.TabIndex = 220;
-            label12.Text = "권장설치용량";
-            // 
-            // prepower_label
-            // 
-            prepower_label.AutoSize = true;
-            prepower_label.Font = new Font("나눔바른고딕", 9.75F);
-            prepower_label.Location = new Point(141, 103);
-            prepower_label.Name = "prepower_label";
-            prepower_label.Size = new Size(0, 15);
-            prepower_label.TabIndex = 221;
-            // 
-            // label27
-            // 
-            label27.AutoSize = true;
-            label27.Font = new Font("나눔바른고딕", 9.75F);
-            label27.ForeColor = SystemColors.ControlText;
-            label27.Location = new Point(224, 101);
-            label27.Name = "label27";
-            label27.Size = new Size(20, 15);
-            label27.TabIndex = 222;
-            label27.Text = "W";
+            infoAHU.BackColor = SystemColors.ControlLight;
+            infoAHU.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoAHU.FlatStyle = FlatStyle.System;
+            infoAHU.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoAHU.Location = new Point(970, 4);
+            infoAHU.Margin = new Padding(0);
+            infoAHU.Name = "infoAHU";
+            infoAHU.Size = new Size(23, 23);
+            infoAHU.TabIndex = 198;
+            infoAHU.Text = "?";
+            infoAHU.UseVisualStyleBackColor = false;
+            infoAHU.Click += infoAHU_Click;
             // 
             // AHUSystem
             // 
@@ -1679,5 +1696,6 @@ namespace main.contents
         private Label label27;
         private Label prepower_label;
         private Label label12;
+        private Button infoAHU;
     }
 }

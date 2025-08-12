@@ -29,15 +29,16 @@ namespace main.contentslist
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
             label4 = new Label();
             Remove_button = new Button();
             Add_button = new Button();
             dataGridView1 = new DataGridView();
             Icon_pictureBox = new PictureBox();
+            infoListAHU = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -46,6 +47,7 @@ namespace main.contentslist
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(infoListAHU);
             GeneralPanel.Controls.Add(label4);
             GeneralPanel.Controls.Add(Remove_button);
             GeneralPanel.Controls.Add(Add_button);
@@ -60,10 +62,10 @@ namespace main.contentslist
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label4.Location = new Point(91, 24);
             label4.Name = "label4";
-            label4.Size = new Size(95, 30);
+            label4.Size = new Size(94, 30);
             label4.TabIndex = 97;
             label4.Text = "공조시스템\r\n열회수 환기장치";
             label4.TextAlign = ContentAlignment.MiddleLeft;
@@ -73,7 +75,7 @@ namespace main.contentslist
             Remove_button.BackColor = SystemColors.ControlLight;
             Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Remove_button.FlatStyle = FlatStyle.System;
-            Remove_button.Font = new System.Drawing.Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            Remove_button.Font = new Font("나눔바른고딕", 11.9999981F, FontStyle.Bold);
             Remove_button.Location = new Point(902, 52);
             Remove_button.Margin = new Padding(0);
             Remove_button.Name = "Remove_button";
@@ -88,7 +90,7 @@ namespace main.contentslist
             Add_button.BackColor = SystemColors.ControlLight;
             Add_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Add_button.FlatStyle = FlatStyle.System;
-            Add_button.Font = new System.Drawing.Font(UTIL.Families[0], 11.9999981F, FontStyle.Bold, GraphicsUnit.Point);
+            Add_button.Font = new Font("나눔바른고딕", 11.9999981F, FontStyle.Bold);
             Add_button.Location = new Point(869, 52);
             Add_button.Margin = new Padding(0);
             Add_button.Name = "Add_button";
@@ -109,34 +111,33 @@ namespace main.contentslist
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(12, 83);
             dataGridView1.Name = "dataGridView1";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            dataGridViewCellStyle3.ForeColor = Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            dataGridView1.RowTemplate.Height = 25;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle6.ForeColor = Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
+            dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle6;
             dataGridView1.Size = new Size(954, 575);
             dataGridView1.TabIndex = 19;
             dataGridView1.CellContentClick += dataGridView_CellContentClick;
@@ -149,6 +150,21 @@ namespace main.contentslist
             Icon_pictureBox.Size = new Size(50, 50);
             Icon_pictureBox.TabIndex = 0;
             Icon_pictureBox.TabStop = false;
+            // 
+            // infoListAHU
+            // 
+            infoListAHU.BackColor = SystemColors.ControlLight;
+            infoListAHU.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoListAHU.FlatStyle = FlatStyle.System;
+            infoListAHU.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoListAHU.Location = new Point(902, 14);
+            infoListAHU.Margin = new Padding(0);
+            infoListAHU.Name = "infoListAHU";
+            infoListAHU.Size = new Size(23, 23);
+            infoListAHU.TabIndex = 200;
+            infoListAHU.Text = "?";
+            infoListAHU.UseVisualStyleBackColor = false;
+            infoListAHU.Click += infoListAHU_Click;
             // 
             // List_AHUSystem
             // 
@@ -176,5 +192,6 @@ namespace main.contentslist
         private Button Remove_button;
         private Button Add_button;
         private Label label4;
+        private Button infoListAHU;
     }
 }

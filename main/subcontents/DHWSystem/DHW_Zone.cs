@@ -1,4 +1,5 @@
-﻿using System;
+﻿using main.info;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,11 +28,11 @@ namespace main.subcontents.DHWSystem
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             load_table_DB();
             SystemNum = Num;
-            if(SelectZone_nonsplit != null)
-            { 
+            if (SelectZone_nonsplit != null)
+            {
                 Load_SaveValue(SelectZone_nonsplit);
             }
-           
+
         }
 
         void load_table_DB()
@@ -49,7 +50,7 @@ namespace main.subcontents.DHWSystem
             Zone_dataGridView.Columns.Add("A3", "존명칭");
             Zone_dataGridView.Columns.Add("A4", "용도프로필");
             Zone_dataGridView.Columns.Add("A5", "일일급탕요구량.[kWh/d]");
-            Zone_dataGridView.Columns.Add("A6", "면적.[m"+Program.UTIL.Subscript(2, true)+"]");
+            Zone_dataGridView.Columns.Add("A6", "면적.[m" + Program.UTIL.Subscript(2, true) + "]");
 
             string[][] Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름,용도프로필,순바닥면적,일일급탕요구량", "일일급탕요구량 <>'0'");
             if (Value.Length > 0)
@@ -108,7 +109,7 @@ namespace main.subcontents.DHWSystem
         }
 
         private void Save_button_Click(object sender, EventArgs e)
-        {            
+        {
             SelectCheckBox();
             for (int k = 0; k < SelectRow.Count; k++)
             {
@@ -124,7 +125,7 @@ namespace main.subcontents.DHWSystem
 
             this.DialogResult = DialogResult.OK;
             this.Close();
-          }
+        }
         private void reset()
         {
             SelectRow.Clear();
@@ -157,6 +158,22 @@ namespace main.subcontents.DHWSystem
                 }
             }
 
+        }
+
+        private void infodhwzone_Click(object sender, EventArgs e)
+        {
+            string basePath = Program.gPath + "Manual\\2.subcontents\\11.DHW\\01 DHWzone";
+
+            // 경로가 존재하는지 확인
+            if (Directory.Exists(basePath))
+            {
+                SlideViewer slideViewer = new SlideViewer(basePath);
+                slideViewer.Show();
+            }
+            else
+            {
+                MessageBox.Show("The folder path does not exist.");
+            }
         }
     }
 

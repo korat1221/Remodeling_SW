@@ -35,12 +35,15 @@ namespace main.subcontents.DHWSystem
             GeneralPanel = new Panel();
             Save_button = new Button();
             Zone_dataGridView = new DataGridView();
+            infodhwzone = new Button();
+            GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Zone_dataGridView).BeginInit();
             SuspendLayout();
             // 
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.AliceBlue;
+            GeneralPanel.Controls.Add(infodhwzone);
             GeneralPanel.Location = new Point(0, -2);
             GeneralPanel.Name = "GeneralPanel";
             GeneralPanel.Size = new Size(800, 47);
@@ -71,7 +74,7 @@ namespace main.subcontents.DHWSystem
             Zone_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -82,7 +85,7 @@ namespace main.subcontents.DHWSystem
             Zone_dataGridView.Name = "Zone_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -91,14 +94,28 @@ namespace main.subcontents.DHWSystem
             Zone_dataGridView.RowHeadersVisible = false;
             Zone_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             Zone_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            Zone_dataGridView.RowTemplate.Height = 25;
             Zone_dataGridView.Size = new Size(800, 397);
             Zone_dataGridView.TabIndex = 19;
+            // 
+            // infodhwzone
+            // 
+            infodhwzone.BackColor = SystemColors.ControlLight;
+            infodhwzone.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infodhwzone.FlatStyle = FlatStyle.System;
+            infodhwzone.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infodhwzone.Location = new Point(765, 11);
+            infodhwzone.Margin = new Padding(0);
+            infodhwzone.Name = "infodhwzone";
+            infodhwzone.Size = new Size(23, 23);
+            infodhwzone.TabIndex = 165;
+            infodhwzone.Text = "?";
+            infodhwzone.UseVisualStyleBackColor = false;
+            infodhwzone.Click += infodhwzone_Click;
             // 
             // DHW_Zone
             // 
@@ -112,6 +129,7 @@ namespace main.subcontents.DHWSystem
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "DHW_Zone";
             Text = "DHWZone";
+            GeneralPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Zone_dataGridView).EndInit();
             ResumeLayout(false);
         }
@@ -123,5 +141,6 @@ namespace main.subcontents.DHWSystem
         private DataGridView Zone_dataGridView;
         private TextBox textBox2;
         private TextBox d_ins_textBox;
+        private Button infodhwzone;
     }
 }
