@@ -39,8 +39,8 @@ namespace main.subcontents.HeatingSystem
 
 
             HC_comboBox.Items.Clear();
-            HC_comboBox.Items.AddRange(new string[] { "냉방", "냉난방" });
-            HC_comboBox.SelectedIndex = 1;
+            HC_comboBox.Items.AddRange(new string[] { "냉방" });
+            HC_comboBox.SelectedIndex = 0;
             Carrier_comboBox.Items.Clear();
             Carrier_comboBox.Items.AddRange(new string[] { "전기", "가스" });
 

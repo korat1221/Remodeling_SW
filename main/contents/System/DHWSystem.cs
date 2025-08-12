@@ -2307,6 +2307,7 @@ namespace main.contents
         }
         private void Save()
         {
+            remove_gen();
             BoilerNum_nonsplit = "";
             SolarNum_nonsplit = ""; SolarDirection_nonsplit = ""; SolarDegree_nonsplit = "";
             HPNum_nonsplit = ""; HPControl_nonsplit = "";
@@ -2339,6 +2340,51 @@ namespace main.contents
             return true;
         }
 
+        private void remove_gen()
+        {//보일러", "외기 히트펌프", "  "지역난방", "태양열시스템", "연료전지
+
+            if (Complex == "단일설비가동")
+            {
+                Sub1System = null;
+            }
+            if (MainSystem != "보일러" && Sub1System != "보일러")
+            {
+                SelectBoiler_nonsplit = null; BoilerNum_nonsplit = null;
+                Boiler_dataGridView.Rows.Clear();
+            }
+            if (MainSystem != "외기 히트펌프" && Sub1System != "외기 히트펌프")
+            {
+                SelectHP_nonsplit = null;
+                HPNum_nonsplit= null;
+                HPControl_nonsplit = null;
+                HP_dataGridView.Rows.Clear();
+            }
+
+            if (MainSystem != "지역난방" && Sub1System != "지역난방")
+            {
+                SelectDH_nonsplit = null;
+                DH_dataGridView.Rows.Clear();
+            }
+
+            if (MainSystem != "태양열시스템" && Sub1System != "태양열시스템")
+            {
+                SelectSolar_nonsplit = null;
+                SolarNum_nonsplit = null;
+                SolarDirection_nonsplit = null;
+                SolarDegree_nonsplit = null;
+                Solar_dataGridView.Rows.Clear();
+            }
+
+            if (MainSystem != "연료전지" && Sub1System != "연료전지")
+            {
+                SelectFC_nonsplit = null;
+                FCNum_nonsplit = null;
+                FCElecInstall_nonsplit = null;
+                FCElecHeat_nonsplit = null;
+                FC_dataGridView.Rows.Clear();
+            }
+
+        }
         private void reset()
         {
             Num = null; Name = null; SelectZone_nonsplit = null;

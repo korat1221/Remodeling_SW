@@ -3348,6 +3348,7 @@ namespace main.contents
         }
         private void Save()
         {
+            remove_gen();
             BoilerNum_nonsplit = "";
             SolarNum_nonsplit = ""; SolarDirection_nonsplit = ""; SolarDegree_nonsplit = "";
             ASNum_nonsplit = "";
@@ -3477,6 +3478,78 @@ namespace main.contents
             return stnum;
         } //새로추가함
 
+        private void remove_gen()
+        {//보일러", "외기 히트펌프", "지열 히트펌프", "지하수 히트펌프", "태양열 융합 히트펌프", "흡수식온수기", "지역난방", "태양열시스템", "연료전지
+
+            if(Complex =="단일설비가동")
+            {
+                Sub1System = null;
+            }
+            if (MainSystem !="보일러"&& Sub1System!="보일러")
+            {
+                SelectBoiler_nonsplit = null;  BoilerNum_nonsplit = null;
+                Boiler_dataGridView.Rows.Clear();
+            }
+            if((MainSystem != "외기 히트펌프" && Sub1System != "외기 히트펌프") && (MainSystem != "태양열 융합 히트펌프" && Sub1System != "태양열 융합 히트펌프"))
+            {
+                SelectHP_nonsplit[0] = null;
+                HPNum_nonsplit[0] = null;
+                HPSupply_nonsplit[0] = null ;
+                HPControl_nonsplit[0] = null;
+               
+            }
+            if(MainSystem != "지열 히트펌프" && Sub1System != "지열 히트펌프")
+            {
+                SelectHP_nonsplit[1] = null;
+                HPNum_nonsplit[1] = null;
+                HPSupply_nonsplit[1] = null;
+                HPControl_nonsplit[1] = null;
+            }
+           
+            if (MainSystem != "지하수 히트펌프" && Sub1System != "지하수 히트펌프")
+            {
+                SelectHP_nonsplit[2] = null;
+                HPNum_nonsplit[2] = null;
+                HPSupply_nonsplit[2] = null;
+                HPControl_nonsplit[2] = null;
+            }
+
+            if (MainSystem != "흡수식온수기" && Sub1System != "흡수식온수기")
+            {
+                SelectAS_nonsplit = null;
+                ASNum_nonsplit = null;
+                AS_dataGridView.Rows.Clear();
+            }
+
+            if (MainSystem != "지역난방" && Sub1System != "지역난방")
+            {
+                SelectDH_nonsplit = null;
+                DH_dataGridView.Rows.Clear();
+            }
+            
+            if (MainSystem != "태양열시스템" && Sub1System != "태양열시스템")
+            {
+                SelectSolar_nonsplit = null;
+                SolarNum_nonsplit = null;
+                SolarDirection_nonsplit = null;
+                SolarDegree_nonsplit = null; 
+                Solar_dataGridView.Rows.Clear();
+            }
+            
+            if (MainSystem != "연료전지" && Sub1System != "연료전지")
+            {
+                SelectFC_nonsplit = null;
+                FCNum_nonsplit = null;
+                FCElecInstall_nonsplit = null;
+                FCElecHeat_nonsplit = null;
+                FC_dataGridView.Rows.Clear();
+            }
+
+            if (SelectHP_nonsplit[0] == null && SelectHP_nonsplit[1] == null && SelectHP_nonsplit[2] == null)
+            {
+                HP_dataGridView.Rows.Clear();
+            }
+        }
         public static bool OnLoadListProc(Form form)
         {
             List_HeatingSystem f = (List_HeatingSystem)form;
@@ -4029,6 +4102,7 @@ namespace main.contents
 
         #endregion
 
+    
         private void Boiler_Remove_button_Click(object sender, EventArgs e)
         {
             if ((MessageBox.Show(Boiler_dataGridView.Rows[Boiler_SelectRow].Cells[1].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
