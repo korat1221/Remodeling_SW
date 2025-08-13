@@ -113,7 +113,7 @@ namespace main.contents
             //배기팬추가
             Create_Fan_Table();
             //단위계산
-            unit_comboBox.Items.AddRange(new string[] { "열량", "유량", "수량" });
+            unit_comboBox.Items.AddRange(new string[] { "열량", "유량", "풍량","" });
 
             LoadData();
         }
@@ -5015,24 +5015,42 @@ namespace main.contents
             if (unit_comboBox.SelectedIndex == 0)
             {
                 unitselect_comboBox.Visible = true;
+                unitselect_comboBox.Text = null;
+                unitselect_comboBox.Items.Clear();
                 unitselect_comboBox.Items.AddRange(new string[] { "kcal", "USRT", "RT", "CRT(냉각톤)" });
+                input_textBox.Text = null;
+                input_textBox.Visible = false;
             }
             else if (unit_comboBox.SelectedIndex == 1)
             {
                 unitselect_comboBox.Visible = true;
-                unitselect_comboBox.Text = "LPM";
-                input_textBox.Visible = true;
-
+                unitselect_comboBox.Text = null;
+                unitselect_comboBox.Items.Clear();
+                unitselect_comboBox.Items.AddRange(new string[] { "LPM", "liter/min", "liter/h"});
+                input_textBox.Text = null;
+                input_textBox.Visible = false;
+            }
+            else if(unit_comboBox.SelectedIndex == 2)
+            {
+                unitselect_comboBox.Visible = true;
+                unitselect_comboBox.Text = null;
+                unitselect_comboBox.Items.Clear();
+                unitselect_comboBox.Items.AddRange(new string[] { "CMM"});
+                input_textBox.Text = null;
+                input_textBox.Visible = false;
             }
             else
             {
-                unitselect_comboBox.Visible = true;
-                unitselect_comboBox.Text = " CMM";
-                input_textBox.Visible = true;
+                unitselect_comboBox.Visible = false;
+                unitselect_comboBox.Text = null;
+                unitselect_comboBox.Items.Clear();
+                input_textBox.Text = null;
+                input_textBox.Visible = false;
             }
         }
         private void unitselect_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            input_textBox.Text = null;
             input_textBox.Visible = true;
         }
 
@@ -5048,28 +5066,34 @@ namespace main.contents
             }
             else
             {
-                MessageBox.Show("input값에 숫자를 입력하세요.");
                 return;
             }
+           
             switch (value)
             {
                 case "kcal":
-                    output_text.Text = Convert.ToString(string.Format("{0:F2} kW", v / 860));
+                    output_text.Text = Program.UTIL.doubleComa( (v/860).ToString(),2) + "kW";
                     break;
                 case "USRT":
-                    output_text.Text = Convert.ToString(string.Format("{0:F2} kW", v * 3024 / 860));
+                    output_text.Text = Program.UTIL.doubleComa((v * 3024 / 860).ToString(), 2) + "kW"; 
                     break;
                 case "RT":
-                    output_text.Text = Convert.ToString(string.Format("{0:F2} kW", v * 3320 / 860));
+                    output_text.Text = Program.UTIL.doubleComa((v * 3320 / 860).ToString(), 2) + "kW"; 
                     break;
                 case "CRT(냉각톤)":
-                    output_text.Text = Convert.ToString(string.Format("{0:F2} kW", v * 3900 / 860));
+                    output_text.Text = Program.UTIL.doubleComa((v * 3900 / 860).ToString(), 2) + "kW";
                     break;
                 case "LPM":
-                    output_text.Text = Convert.ToString(string.Format("{0:F2} CMH", v * 60 / 1000));
+                    output_text.Text = Program.UTIL.doubleComa((v * 60 / 1000).ToString(), 2) + "m" + Program.UTIL.Subscript(3, true) + "/h"; 
+                    break;
+                case "liter/min":
+                    output_text.Text = Program.UTIL.doubleComa((v * 60 / 1000).ToString(), 2) + "m" + Program.UTIL.Subscript(3, true) + "/h";
+                    break;
+                case "liter/h":
+                    output_text.Text = Program.UTIL.doubleComa((v / 1000).ToString(), 2) + "m" + Program.UTIL.Subscript(3, true) + "/h";
                     break;
                 case "CMM":
-                    output_text.Text = Convert.ToString(string.Format("{0:F2} CMH", v * 60));
+                    output_text.Text = Program.UTIL.doubleComa((v * 60).ToString(), 2) + "m" + Program.UTIL.Subscript(3, true) + "/h";
                     break;
                 default:
                     break;
