@@ -42,12 +42,10 @@ namespace main
         {
             try
             {
-                // �ֽ� Windows�� SetProcessDpiAwarenessContext ���
-                SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_UNAWARE);  // ?? 100% ������ ���� ����
+                SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_UNAWARE);
             }
             catch
             {
-                // �ȵǸ� ����
             }
 
 #if !DEBUG
@@ -71,28 +69,39 @@ namespace main
 #endif
 
             Directory.SetCurrentDirectory(gPath);
-//            Directory.SetCurrentDirectory(gPath + "threejs\\");
+            //            Directory.SetCurrentDirectory(gPath + "threejs\\");
             {
-                // PM2 서버 재시작
+                // PM2 서버 상태 확인 후 시작 또는 재시작
+                var checkStatusInfo = new ProcessStartInfo
+                {
+                    FileName = "node",
+                    Arguments = "node_modules\\pm2\\bin\\pm2 list --format json",
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    WindowStyle = ProcessWindowStyle.Hidden,
+                    RedirectStandardOutput = true
+                };
+
+                var checkProcess = Process.Start(checkStatusInfo);
+                string output = checkProcess.StandardOutput.ReadToEnd();
+                checkProcess.WaitForExit();
+
+                bool isRunning = output.Contains("\"name\":\"app\"") && output.Contains("\"status\":\"online\"");
+
                 var startInfo = new ProcessStartInfo
                 {
                     FileName = "node",
-                    Arguments = "node_modules\\pm2\\bin\\pm2 restart app.js",
+                    Arguments = isRunning ? "node_modules\\pm2\\bin\\pm2 restart app.js" : "node_modules\\pm2\\bin\\pm2 start app.js",
                     UseShellExecute = false,
                     CreateNoWindow = true,
                     WindowStyle = ProcessWindowStyle.Hidden
                 };
-                
+
                 Process.Start(startInfo);
-
-                //                ProcessStartInfo startInfo = new ProcessStartInfo();
-                //              startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                //            startInfo.FileName = "start.bat";
-                //          Process.Start(startInfo);
             }
-//            Directory.SetCurrentDirectory(gPath);
+            //            Directory.SetCurrentDirectory(gPath);
 
-          //  CALC.init();
+            //  CALC.init();
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
@@ -102,7 +111,7 @@ namespace main
         public static void killServer()
         {
             Directory.SetCurrentDirectory(gPath);
-            
+
             // PM2 서버 중지
             var startInfo = new ProcessStartInfo
             {
@@ -112,16 +121,16 @@ namespace main
                 CreateNoWindow = true,
                 WindowStyle = ProcessWindowStyle.Hidden
             };
-            
-            Process.Start(startInfo);
-//            Process[] processes = Process.GetProcessesByName("node");
-  //          Process currentProcess = Process.GetCurrentProcess();
 
-    //        foreach (Process proc in processes)
-     //       {
-       //         if (proc.Id != currentProcess.Id)
-         //           proc.Kill();
-           // }
+            Process.Start(startInfo);
+            //            Process[] processes = Process.GetProcessesByName("node");
+            //          Process currentProcess = Process.GetCurrentProcess();
+
+            //        foreach (Process proc in processes)
+            //       {
+            //         if (proc.Id != currentProcess.Id)
+            //           proc.Kill();
+            // }
         }
 
         public static string get_virtual_store_path()
