@@ -42,12 +42,12 @@ namespace main
         {
             try
             {
-                // ÃÖ½Å Windows¸é SetProcessDpiAwarenessContext »ç¿ë
-                SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_UNAWARE);  // ?? 100% ¹«Á¶°Ç °­Á¦ ¼³Á¤
+                // ï¿½Ö½ï¿½ Windowsï¿½ï¿½ SetProcessDpiAwarenessContext ï¿½ï¿½ï¿½
+                SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_UNAWARE);  // ?? 100% ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             }
             catch
             {
-                // ¾ÈµÇ¸é ¹«½Ã
+                // ï¿½ÈµÇ¸ï¿½ ï¿½ï¿½ï¿½ï¿½
             }
 
 #if !DEBUG
@@ -73,34 +73,17 @@ namespace main
             Directory.SetCurrentDirectory(gPath);
 //            Directory.SetCurrentDirectory(gPath + "threejs\\");
             {
-                // create the command-line process
-                var cmdProcess = new Process
+                // PM2 ì„œë²„ ìž¬ì‹œìž‘
+                var startInfo = new ProcessStartInfo
                 {
-                    StartInfo =
-                    {
-                        FileName = "cmd.exe",
-                        UseShellExecute = false,
-                        CreateNoWindow = true, // this is probably optional
-                        ErrorDialog = false, // this is probably optional
-                        RedirectStandardOutput = true,
-                        RedirectStandardInput = true,
-                        WindowStyle = ProcessWindowStyle.Hidden
-            }
+                    FileName = "node",
+                    Arguments = "node_modules\\pm2\\bin\\pm2 restart app.js",
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    WindowStyle = ProcessWindowStyle.Hidden
                 };
-
-                // register for the output (for reading the output)
-                cmdProcess.OutputDataReceived += (object sender, DataReceivedEventArgs e) =>
-                {
-                    string output = e.Data;
-                    // inspect the output text here ...
-                };
-
-                // start the cmd process
-                cmdProcess.Start();
-                cmdProcess.BeginOutputReadLine();
-
-                // execute your command
-                cmdProcess.StandardInput.WriteLine("node node_modules\\pm2\\bin\\pm2 start app.js");
+                
+                Process.Start(startInfo);
 
                 //                ProcessStartInfo startInfo = new ProcessStartInfo();
                 //              startInfo.WindowStyle = ProcessWindowStyle.Hidden;
@@ -118,34 +101,19 @@ namespace main
         }
         public static void killServer()
         {
-
             Directory.SetCurrentDirectory(gPath);
-            var cmdProcess = new Process
+            
+            // PM2 ì„œë²„ ì¤‘ì§€
+            var startInfo = new ProcessStartInfo
             {
-                StartInfo =
-                {
-                    FileName = "cmd.exe",
-                    UseShellExecute = false,
-                    CreateNoWindow = true, // this is probably optional
-                    ErrorDialog = false, // this is probably optional
-                    RedirectStandardOutput = true,
-                    RedirectStandardInput = true
-                }
+                FileName = "node",
+                Arguments = "node_modules\\pm2\\bin\\pm2 stop app.js",
+                UseShellExecute = false,
+                CreateNoWindow = true,
+                WindowStyle = ProcessWindowStyle.Hidden
             };
-
-            // register for the output (for reading the output)
-            cmdProcess.OutputDataReceived += (object sender, DataReceivedEventArgs e) =>
-            {
-                string output = e.Data;
-                // inspect the output text here ...
-            };
-
-            // start the cmd process
-            cmdProcess.Start();
-            cmdProcess.BeginOutputReadLine();
-
-            // execute your command
-            cmdProcess.StandardInput.WriteLine("node node_modules\\pm2\\bin\\pm2 stop app.js");
+            
+            Process.Start(startInfo);
 //            Process[] processes = Process.GetProcessesByName("node");
   //          Process currentProcess = Process.GetCurrentProcess();
 
