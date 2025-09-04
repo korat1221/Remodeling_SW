@@ -204,7 +204,7 @@ namespace main.contents
         }
 
         private void info_Click(object sender, EventArgs e)
-        {            
+        {
             string basePath = Program.gPath + "Manual\\1.contents\\0.main\\05.OpenProject";
 
             // 경로가 존재하는지 확인
@@ -219,5 +219,9 @@ namespace main.contents
             }
         }
 
+        private void File_button_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

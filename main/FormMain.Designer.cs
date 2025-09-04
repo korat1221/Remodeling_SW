@@ -36,6 +36,8 @@
             toolStripSeparator2 = new ToolStripSeparator();
             ProjectOpen = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
+            SaveButton = new ToolStripButton();
+            toolStripSeparator6 = new ToolStripSeparator();
             EnergyNeed_Sim = new ToolStripButton();
             toolStripSeparator3 = new ToolStripSeparator();
             AHUNeed_Sim = new ToolStripButton();
@@ -96,10 +98,10 @@
             toolStrip1.BackColor = Color.Transparent;
             toolStrip1.Dock = DockStyle.None;
             toolStrip1.ImageScalingSize = new Size(35, 35);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { New, toolStripSeparator2, ProjectOpen, toolStripSeparator1, EnergyNeed_Sim, toolStripSeparator3, AHUNeed_Sim, toolStripSeparator5, FinalEnergy_Sim, toolStripSeparator4, Element_Sim });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { New, toolStripSeparator2, ProjectOpen, toolStripSeparator1, SaveButton, toolStripSeparator6, EnergyNeed_Sim, toolStripSeparator3, AHUNeed_Sim, toolStripSeparator5, FinalEnergy_Sim, toolStripSeparator4, Element_Sim });
             toolStrip1.Location = new Point(3, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(396, 62);
+            toolStrip1.Size = new Size(492, 62);
             toolStrip1.TabIndex = 0;
             // 
             // New
@@ -135,6 +137,22 @@
             toolStripSeparator1.Name = "toolStripSeparator1";
             toolStripSeparator1.Size = new Size(6, 62);
             // 
+            // SaveButton
+            // 
+            SaveButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            SaveButton.Image = (Image)resources.GetObject("SaveButton.Image");
+            SaveButton.ImageTransparentColor = Color.Magenta;
+            SaveButton.Name = "SaveButton";
+            SaveButton.Padding = new Padding(0, 0, 20, 20);
+            SaveButton.Size = new Size(59, 59);
+            SaveButton.Text = "toolStripButton2";
+            SaveButton.Click += SaveButton_Click;
+            // 
+            // toolStripSeparator6
+            // 
+            toolStripSeparator6.Name = "toolStripSeparator6";
+            toolStripSeparator6.Size = new Size(6, 62);
+            // 
             // EnergyNeed_Sim
             // 
             EnergyNeed_Sim.DisplayStyle = ToolStripItemDisplayStyle.Image;
@@ -159,7 +177,7 @@
             AHUNeed_Sim.Name = "AHUNeed_Sim";
             AHUNeed_Sim.Padding = new Padding(0, 0, 20, 20);
             AHUNeed_Sim.Size = new Size(59, 59);
-            AHUNeed_Sim.Text = "toolStripButton1";
+            AHUNeed_Sim.Text = "AHU Energy needs";
             AHUNeed_Sim.Click += AHUNeed_Sim_Click;
             // 
             // toolStripSeparator5
@@ -234,5 +252,7 @@
         private ToolStripButton toolStripButton1;
         private ToolStripButton AHUNeed_Sim;
         private ToolStripSeparator toolStripSeparator5;
+        private ToolStripButton SaveButton;
+        private ToolStripSeparator toolStripSeparator6;
     }
 }
