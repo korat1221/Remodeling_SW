@@ -74,48 +74,89 @@ window.addEventListener("message", async (event) => {
         let lightingT = o.items.find(item => item.cname === "lightingType");
         let ahu = o.items.find(item => item.cname === "ahu_num");
 
-        $(".buildingImage").each((idx,al) => {
+        $(".buildingImage").each((idx,al) => {          
+          if (projectNumValue.data[idx]) {
           let projectNum = projectNumValue.data[idx].val; 
           al.setAttribute("src", "img/" + projectNum + "/Building.png");
+          }
         });
         $(".zoneImage").each((idx,al) => {
+          if (projectNumValue.data[idx]) {
           let projectNum = projectNumValue.data[idx].val; 
           let zoneNum = zoneNumValue.data[idx].val; 
-          al.setAttribute("src", "img/" + projectNum + "/"+ zoneNum + ".png"); 
+          if(zoneNum  !== null)
+          {
+            al.setAttribute("src", "img/" + projectNum + "/"+ zoneNum + ".png"); 
+          }
+          }
         });
         $(".coolingImage").each((idx,al) => {
+          if (projectNumValue.data[idx]) {
           let projectNum = projectNumValue.data[idx].val; 
           let coolingNum = coolingNumValue.data[idx].val; 
-          al.setAttribute("src", "img/" + projectNum + "/"+ coolingNum + ".png"); 
+          if(coolingNum !== null)
+          {
+            al.setAttribute("src", "img/" + projectNum + "/"+ coolingNum + ".png"); 
+          }
+          }
         });
         $(".heatingImage").each((idx,al) => {
+          if (projectNumValue.data[idx]) {
           let projectNum = projectNumValue.data[idx].val; 
           let heatingNum = heatingNumValue.data[idx].val; 
-          al.setAttribute("src", "img/" + projectNum + "/"+ heatingNum + ".png"); 
+          
+          if(heatingNum !== null)
+             {
+              al.setAttribute("src", "img/" + projectNum + "/"+ heatingNum + ".png"); 
+             }
+          }
         });
         $(".dhwImage").each((idx,al) => {
+          if (projectNumValue.data[idx]) {
           let projectNum = projectNumValue.data[idx].val; 
           let dhwNum = dhwNumValue.data[idx].val; 
-          al.setAttribute("src", "img/" + projectNum + "/"+ dhwNum + ".png"); 
+          if(dhwNum !== null)
+             {
+              al.setAttribute("src", "img/" + projectNum + "/"+ dhwNum + ".png"); 
+             }
+          }
         });
-         $(".lightingImage").each((idx,al) => {
-          let projectNum = projectNumValue.data[idx].val; 
-          let lightingNum = lightingNumValue.data[idx].val; 
-          al.setAttribute("src", "img/" + projectNum + "/"+ lightingNum + ".png"); 
+          $(".lightingImage").each((idx, al) => {
+            if (projectNumValue.data[idx]) {
+              let projectNum = projectNumValue.data[idx].val; 
+              let lightingNum = lightingNumValue.data[idx].val; 
+             if(lightingNum !== null)
+             {
+              al.setAttribute("src", "img/" + projectNum + "/"+ lightingNum + ".png"); 
+             }
+            }
         });
           $(".lightingHeightImage").each((idx,al) => {
-          let lightingHeight = lightingH.data[idx].val; 
-          al.setAttribute("src", "image/light/" + lightingHeight + ".png"); 
+            if (lightingH.data[idx]) {
+              let lightingHeight = lightingH.data[idx].val; 
+              if (lightingHeight !== null) {
+              al.setAttribute("src", "image/light/" + lightingHeight + ".png"); 
+              }
+            }
         });
           $(".lightingType").each((idx,al) => {
-          let lightingType = lightingT.data[idx].val;
-          al.setAttribute("src", "image/light/" + lightingType + ".png"); 
+            if (lightingT.data[idx]) {
+              let lightingType = lightingT.data[idx].val;
+              if (lightingType !== null) {
+                al.setAttribute("src", "image/light/" + lightingType + ".png");
+              }
+            }
         });
           $(".ahuImage").each((idx,al) => {
+            if (projectNumValue.data[idx]) {
           let projectNum = projectNumValue.data[idx].val; 
           let ahuNum = ahu.data[idx].val; 
+          if(ahuNum!== null)
+          {
           al.setAttribute("src", "img/" + projectNum + "/"+ ahuNum + ".png"); 
-        });
+          }
+         }
+        });  
         
       }
  
@@ -123,9 +164,11 @@ window.addEventListener("message", async (event) => {
         const ifrms = document.querySelectorAll('.ifrm-chart1');
 
         i = -1;
-        while(++i < ifrms.length) {
-          o.chart[i].chart = true;
-          ifrms[i].contentWindow.postMessage(o.chart[i], "*");
+          while (++i < ifrms.length) {
+              if (o.chart[i]) {
+                  o.chart[i].chart = true;
+                  ifrms[i].contentWindow.postMessage(o.chart[i], "*");
+              }
         }
       }, 1000);
     }, 100);
