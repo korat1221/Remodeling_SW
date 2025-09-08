@@ -24,7 +24,7 @@ using System.Security.Policy;
 
 namespace main.contents
 {
-    public partial class ConstructionWall : Form
+    public partial class ConstructionWall : Form, IConfirmable
     {
         String WallNum, WallName, Type, check_Type, OldWall, CWName, UMethod, DiIndi, StructureType, check_StructureType, TBType, TBName, Color_Envelope, ISO_KS, LinearPoint;
         double A, B, C, PsiKai, PerArea;
@@ -1184,28 +1184,47 @@ namespace main.contents
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-            if (WallName == null)
+            ValidateAndSave(true); // 수동 저장
+        }
+
+        public bool ValidateAndSave(bool isManualSave = false)
+        {
+            try
             {
-                MessageBox.Show("외벽 명칭을 입력하세요.");
-            }
-            else if (Type == null)
-            {
-                MessageBox.Show("외벽 리모델링 유형을 선택하세요.");
-            }
-            else if (Type != "기존외벽" && Type != "커튼월덧댐")
-            {
-                if (TBName == null)
+                if (WallName == null)
                 {
-                    MessageBox.Show("열교를 입력하세요.");
+                    MessageBox.Show("외벽 명칭을 입력하세요.");
+                    return false;
+                }
+                else if (Type == null)
+                {
+                    MessageBox.Show("외벽 리모델링 유형을 선택하세요.");
+                    return false;
+                }
+                else if (Type != "기존외벽" && Type != "커튼월덧댐")
+                {
+                    if (TBName == null)
+                    {
+                        MessageBox.Show("열교를 입력하세요.");
+                        return false;
+                    }
+                    else
+                    {
+                        Save(isManualSave);
+                        return true;
+                    }
                 }
                 else
                 {
-                    Save();
+                    Save(isManualSave);
+                    return true;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                Save();
+                // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
+                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+                return false;
             }
         }
         public static bool OnLoadListProc(Form form)
@@ -1215,7 +1234,7 @@ namespace main.contents
             return true;
         }
 
-        private void Save()
+        private void Save(bool isManualSave = false)
         {
             if (TBName_textBox.Text == "열교없음")
             {
@@ -1278,9 +1297,14 @@ namespace main.contents
                 법규U.ToString()
                  + "'", "번호");
             Program.DB.saveProject();
-            this.DialogResult = DialogResult.OK;
-            this.Hide();
-            Program.getMenuForm().DoLoadForm(34, OnLoadListProc);
+            
+            // 수동 저장일 때만 화면 전환
+            if (isManualSave)
+            {
+                this.DialogResult = DialogResult.OK;
+                this.Hide();
+                Program.getMenuForm().DoLoadForm(34, OnLoadListProc);
+            }
         }
 
         private void reset()

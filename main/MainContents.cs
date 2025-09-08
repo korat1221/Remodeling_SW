@@ -17,6 +17,12 @@ namespace main
 {
     public delegate bool OnOpenProc(Form form);
 
+    // 페이지 전환 시 데이터 확인을 위한 인터페이스
+    public interface IConfirmable
+    {
+        bool ValidateAndSave(bool isManualSave = false);
+    }
+
     public partial class MainContents : Form
     {
         public enum FormID
@@ -128,12 +134,16 @@ namespace main
         static public String[]? selectInfo;
         static public FormID currentForm = FormID.General;
         static public string selID_old = "";
+        static public FormID previousForm = FormID.None;
+        static public string previousFormID = "";
+        static public MainContents Instance = null;
         int tick_old = 0;
         bool ticked = false;
 
         public MainContents()
         {
             InitializeComponent();
+            Instance = this;
 
             webView21.Source = new Uri(Program.gPath + "menu.html");
             webView21.Location.Offset(0, 0);
@@ -175,6 +185,58 @@ namespace main
         }
         public static bool OnLoadProc(Form form)
         {
+            // 같은 폼 내에서 다른 항목으로 이동하는 경우에만 확인
+            if (previousFormID != null && previousFormID != "" && 
+                formParam.ID != null && formParam.ID != "")
+            {
+                // 현재 formParam을 이용해서 비교용 문자열 생성
+                string currentFormIDString = $"{{\"formID\":{formParam.formID},\"ID\":\"{formParam.ID}\"}}";
+                
+                // 이전 항목과 현재 항목이 다른 경우에만 확인
+                if (previousFormID != currentFormIDString)
+                {
+                    // previousFormID에서 formID 추출하여 같은 폼인지 확인
+                    string previousFormIDValue = "";
+                    try
+                    {
+                        int formIDStart = previousFormID.IndexOf("\"formID\":") + 9;
+                        int formIDEnd = previousFormID.IndexOf(",", formIDStart);
+                        if (formIDStart > 8 && formIDEnd > formIDStart)
+                        {
+                            previousFormIDValue = previousFormID.Substring(formIDStart, formIDEnd - formIDStart).Trim();
+                        }
+                    }
+                    catch
+                    {
+                        previousFormIDValue = "";
+                    }
+                    
+                    // 같은 폼 내에서만 확인 (다른 폼으로 이동하는 경우는 DoLoadForm에서 처리)
+                    if (previousFormIDValue == formParam.formID.ToString())
+                    {
+                        // 이전 폼에 대해 데이터 확인
+                        if (Instance != null)
+                        {
+                    // 이전 폼이 IConfirmable을 구현하는지 확인
+                    if (int.TryParse(previousFormIDValue, out int prevFormID) && 
+                        prevFormID < Instance.forms.Length)
+                    {
+                        Form previousFormInstance = Instance.forms[prevFormID];
+                        
+                        if (previousFormInstance is IConfirmable confirmableForm)
+                        {
+                            // 이전 폼의 데이터가 있는지 확인하고, 있으면 사용자에게 확인 요청
+                            if (!confirmableForm.ValidateAndSave())
+                            {
+                                return false; // 항목 전환 취소
+                            }
+                        }
+                    }
+                        }
+                    }
+                }
+            }
+
             if (formParam.formID == 0)
             {
                 General f = (General)form;
@@ -951,6 +1013,22 @@ namespace main
 
         public void DoLoadForm(int idx, OnOpenProc proc = null)
         {
+            // 현재 폼이 있고, 새로운 폼으로 전환하는 경우에만 확인
+            if (currentForm != FormID.None && currentForm != (FormID)idx)
+            {
+                Form currentFormInstance = forms[(int)currentForm];
+                
+                // IConfirmable 인터페이스를 구현한 폼인지 확인
+                if (currentFormInstance is IConfirmable confirmableForm)
+                {
+                    // 데이터가 있는지 확인하고, 있으면 사용자에게 확인 요청
+                    if (!confirmableForm.ValidateAndSave())
+                    {
+                        return; // 페이지 전환 취소
+                    }
+                }
+            }
+
             currentForm = FormID.None;
             int i = -1;
             while (++i < forms.Length)
@@ -963,6 +1041,37 @@ namespace main
             if (proc != null) proc(forms[idx]);
 
             forms[idx].Show();
+            
+            // Show 작업 이후에 이전 페이지 정보 저장 (새 페이지가 로딩된 후)
+            previousForm = currentForm;
+            
+            // selID에서 실제 ID 값 추출
+            string actualID = "";
+            if (selID != null && selID.Contains("\"ID\":"))
+            {
+                try
+                {
+                    // JSON에서 ID 값 추출
+                    int idStart = selID.IndexOf("\"ID\":\"") + 6;
+                    int idEnd = selID.IndexOf("\"", idStart);
+                    if (idStart > 5 && idEnd > idStart)
+                    {
+                        actualID = selID.Substring(idStart, idEnd - idStart);
+                    }
+                }
+                catch
+                {
+                    actualID = selID ?? "";
+                }
+            }
+            else
+            {
+                actualID = selID ?? "";
+            }
+            
+            // 현재 폼의 formID를 사용하여 저장 (formParam이 null일 수 있음)
+            int currentFormID = (int)currentForm;
+            previousFormID = $"{{\"formID\":{currentFormID},\"ID\":\"{actualID}\"}}";
         }
 
         public void DoResizeMain(Size sz)
