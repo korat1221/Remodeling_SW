@@ -130,8 +130,6 @@ namespace main.contents
             label25 = new Label();
             Install_textBox = new TextBox();
             WindowType_pictureBox = new PictureBox();
-            Save_button = new Button();
-            Previous_button = new Button();
             g2_textBox = new TextBox();
             label13 = new Label();
             Uw3_textBox = new TextBox();
@@ -1394,30 +1392,6 @@ namespace main.contents
             WindowType_pictureBox.TabIndex = 36;
             WindowType_pictureBox.TabStop = false;
             // 
-            // Save_button
-            // 
-            Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1096, 600);
-            Save_button.Name = "Save_button";
-            Save_button.Size = new Size(88, 25);
-            Save_button.TabIndex = 90;
-            Save_button.Text = "SAVE";
-            Save_button.UseVisualStyleBackColor = true;
-            Save_button.Click += Save_button_Click;
-            // 
-            // Previous_button
-            // 
-            Previous_button.BackColor = SystemColors.ButtonHighlight;
-            Previous_button.ForeColor = Color.Black;
-            Previous_button.Location = new Point(1002, 600);
-            Previous_button.Name = "Previous_button";
-            Previous_button.Size = new Size(88, 25);
-            Previous_button.TabIndex = 91;
-            Previous_button.Text = "<<PREVIOUS";
-            Previous_button.UseVisualStyleBackColor = true;
-            Previous_button.Click += Previous_button_Click;
-            // 
             // g2_textBox
             // 
             g2_textBox.BackColor = SystemColors.InactiveBorder;
@@ -1517,8 +1491,6 @@ namespace main.contents
             Controls.Add(Uw3_textBox);
             Controls.Add(Uw3_unit_label);
             Controls.Add(Uw3_label);
-            Controls.Add(Previous_button);
-            Controls.Add(Save_button);
             Controls.Add(WindowType_pictureBox);
             Controls.Add(panel2);
             Controls.Add(GeneralPanel);
@@ -1599,14 +1571,12 @@ namespace main.contents
         private Label label12;
         private Label label9;
         private PictureBox WindowType_pictureBox;
-        private Button Save_button;
         private TextBox WinNum_textBox;
         private PictureBox Icon_pictureBox;
         private Label Uw2_unit_label;
         private TextBox Uw2_textBox;
         private Label Uw2_label;
         private TextBox AdditionalWindow_textBox;
-        private Button Previous_button;
         private TabPage Install_tabPage;
         private Label label44;
         private Label label45;

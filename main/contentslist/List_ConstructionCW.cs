@@ -192,6 +192,7 @@ namespace main.contentslist
 
                 Program.DB.CopyValue(DB.type.ProjDB, "ConstructionCW", "번호 ='" + Copy_Num + "'", CWNum);
                 Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  ConstructionCW" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + CWNum + "'");
+                Program.DB.saveProject();
                 Load_form(CWNum, "Copy");
 
             }

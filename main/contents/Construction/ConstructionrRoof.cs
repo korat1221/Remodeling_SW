@@ -22,7 +22,7 @@ using main.info;
 
 namespace main.contents
 {
-    public partial class ConstructionRoof : Form
+    public partial class ConstructionRoof : Form, IConfirmable
     {
         String RoofNum, RoofName, Type, check_Type, OldRoof, UMethod, DiIndi, StructureType, check_StructureType, TBType, TBName, Color_Envelope, ISO_KS, LinearPoint;
         double A, B, C, PsiKai, PerArea;
@@ -1065,50 +1065,72 @@ namespace main.contents
             Ueff2_textBox.Text = string.Format("{0:F3}", Ueff);
         }
 
-        private void Previous_button_Click(object sender, EventArgs e)
+        public bool ValidateAndSave(bool isManualSave = false)
         {
-            if ((MessageBox.Show("이전 화면으로 이동하시겠습니까?", "이전 화면 이동", MessageBoxButtons.YesNo) == DialogResult.Yes))
+            try
             {
-                this.DialogResult = DialogResult.OK;
-                this.Hide();
-                Program.getMenuForm().DoLoadForm(35, OnLoadListProc);
-            }
-        }
-
-        private void Save_button_Click(object sender, EventArgs e)
-        {
-            if (RoofName == null)
-            {
-                MessageBox.Show("지붕 명칭을 입력하세요.");
-            }
-            else if (Type == null)
-            {
-                MessageBox.Show("지붕 리모델링 유형을 선택하세요.");
-            }
-            else if (Type != "기존지붕")
-            {
-                if (TBName == null)
+                 if (Type != "기존지붕")
                 {
-                    MessageBox.Show("열교를 입력하세요.");
+                    if (TBName == null)
+                    {
+                        DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                        if (res == DialogResult.Yes)
+                        {
+                            MessageBox.Show("열교를 입력하세요.");
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                    else if (Name_textBox.Text == null || Name_textBox.Text.ToString()=="")
+                    {
+                        DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                        if (res == DialogResult.Yes)
+                        {
+                            MessageBox.Show("명칭을 입력하세요.");
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        Save(isManualSave);
+                        return true;
+                    }
+                }
+                else if (Name_textBox.Text == null || Name_textBox.Text.ToString()=="")
+                {
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show("명칭을 입력하세요.");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
                 }
                 else
                 {
-                    Save();
+                    Save(isManualSave);
+                    return true;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                Save();
+                // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
+                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+                return false;
             }
         }
-        public static bool OnLoadListProc(Form form)
-        {
-            List_ConstructionRoof f = (List_ConstructionRoof)form;
-            f.load_List();
-            return true;
-        }
 
-        private void Save()
+        private void Save(bool isManualSave = false)
         {
             if (TBName_textBox.Text == "열교없음")
             {
@@ -1163,9 +1185,7 @@ namespace main.contents
                 법규U.ToString()
                  + "'", "번호");
             Program.DB.saveProject();
-            this.DialogResult = DialogResult.OK;
-            this.Hide();
-            Program.getMenuForm().DoLoadForm(35, OnLoadListProc);
+           
         }
 
         private void reset()

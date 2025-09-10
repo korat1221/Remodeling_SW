@@ -55,6 +55,7 @@ namespace main.contents.Building
             label3 = new Label();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             Gas_tabPage = new TabPage();
+            label11 = new Label();
             label4 = new Label();
             Gas_EndDay_comboBox = new CustomComboBox();
             label5 = new Label();
@@ -64,8 +65,8 @@ namespace main.contents.Building
             Gas_Remove_button = new Button();
             Gas_Add_button = new Button();
             Gas_m3_dataGridView = new DataGridView();
-            Save_button = new Button();
             Elec_tabPage = new TabPage();
+            label10 = new Label();
             webView22 = new Microsoft.Web.WebView2.WinForms.WebView2();
             label2 = new Label();
             Elec_EndDay_comboBox = new CustomComboBox();
@@ -77,6 +78,7 @@ namespace main.contents.Building
             Elec_dataGridView = new DataGridView();
             tabControl = new CustomTabControl();
             DH_tabPage = new TabPage();
+            label12 = new Label();
             label7 = new Label();
             DH_EndDay_comboBox = new CustomComboBox();
             label8 = new Label();
@@ -88,9 +90,6 @@ namespace main.contents.Building
             DH_Mcal_dataGridView = new DataGridView();
             webView23 = new Microsoft.Web.WebView2.WinForms.WebView2();
             panel1 = new Panel();
-            label10 = new Label();
-            label11 = new Label();
-            label12 = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)webView21).BeginInit();
@@ -186,6 +185,16 @@ namespace main.contents.Building
             Gas_tabPage.Size = new Size(992, 563);
             Gas_tabPage.TabIndex = 6;
             Gas_tabPage.Text = "가스";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Font = new Font("나눔바른고딕", 9.75F);
+            label11.Location = new Point(476, 36);
+            label11.Name = "label11";
+            label11.Size = new Size(383, 15);
+            label11.TabIndex = 132;
+            label11.Text = "* 사용기간이 1일에서 말일까지 인 경우, 전 달 사용량으로 입력하세요. ";
             // 
             // label4
             // 
@@ -367,18 +376,6 @@ namespace main.contents.Building
             Gas_m3_dataGridView.CellContentClick += Gas_m3_dataGridView_CellContentClick;
             Gas_m3_dataGridView.CellValueChanged += Gas_m3_dataGridView_CellValueChanged;
             // 
-            // Save_button
-            // 
-            Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1015, 650);
-            Save_button.Name = "Save_button";
-            Save_button.Size = new Size(88, 25);
-            Save_button.TabIndex = 117;
-            Save_button.Text = "SAVE";
-            Save_button.UseVisualStyleBackColor = true;
-            Save_button.Click += Save_button_Click;
-            // 
             // Elec_tabPage
             // 
             Elec_tabPage.BackColor = Color.White;
@@ -398,6 +395,16 @@ namespace main.contents.Building
             Elec_tabPage.Size = new Size(992, 563);
             Elec_tabPage.TabIndex = 2;
             Elec_tabPage.Text = "전기";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("나눔바른고딕", 9.75F);
+            label10.Location = new Point(483, 39);
+            label10.Name = "label10";
+            label10.Size = new Size(383, 15);
+            label10.TabIndex = 128;
+            label10.Text = "* 사용기간이 1일에서 말일까지 인 경우, 전 달 사용량으로 입력하세요. ";
             // 
             // webView22
             // 
@@ -591,6 +598,16 @@ namespace main.contents.Building
             DH_tabPage.TabIndex = 7;
             DH_tabPage.Text = "지역난방";
             DH_tabPage.UseVisualStyleBackColor = true;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("나눔바른고딕", 9.75F);
+            label12.Location = new Point(471, 36);
+            label12.Name = "label12";
+            label12.Size = new Size(383, 15);
+            label12.TabIndex = 150;
+            label12.Text = "* 사용기간이 1일에서 말일까지 인 경우, 전 달 사용량으로 입력하세요. ";
             // 
             // label7
             // 
@@ -794,36 +811,6 @@ namespace main.contents.Building
             panel1.Size = new Size(1000, 592);
             panel1.TabIndex = 147;
             // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("나눔바른고딕", 9.75F);
-            label10.Location = new Point(483, 39);
-            label10.Name = "label10";
-            label10.Size = new Size(383, 15);
-            label10.TabIndex = 128;
-            label10.Text = "* 사용기간이 1일에서 말일까지 인 경우, 전 달 사용량으로 입력하세요. ";
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Font = new Font("나눔바른고딕", 9.75F);
-            label11.Location = new Point(476, 36);
-            label11.Name = "label11";
-            label11.Size = new Size(383, 15);
-            label11.TabIndex = 132;
-            label11.Text = "* 사용기간이 1일에서 말일까지 인 경우, 전 달 사용량으로 입력하세요. ";
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Font = new Font("나눔바른고딕", 9.75F);
-            label12.Location = new Point(471, 36);
-            label12.Name = "label12";
-            label12.Size = new Size(383, 15);
-            label12.TabIndex = 150;
-            label12.Text = "* 사용기간이 1일에서 말일까지 인 경우, 전 달 사용량으로 입력하세요. ";
-            // 
             // EnergyUse
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -831,7 +818,6 @@ namespace main.contents.Building
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
@@ -873,7 +859,6 @@ namespace main.contents.Building
         private Button Gas_Remove_button;
         private Button Gas_Add_button;
         private DataGridView Gas_m3_dataGridView;
-        private Button Save_button;
         private DataGridView Gas_kWh_dataGridView;
         private CustomComboBox Elec_EndDay_comboBox;
         private Label label1;

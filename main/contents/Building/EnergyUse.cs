@@ -20,7 +20,7 @@ using main.info;
 
 namespace main.contents.Building
 {
-    public partial class EnergyUse : Form
+    public partial class EnergyUse : Form, IConfirmable
     {
         DataGridViewCheckBoxColumn Gas_m3_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn Gas_kWh_checkBoxColumn = new DataGridViewCheckBoxColumn();
@@ -487,8 +487,46 @@ namespace main.contents.Building
         #endregion
 
 
+        public bool ValidateAndSave(bool isManualSave = false)
+        {
+            try
+            {
+                if(Elec_dataGridView.Rows.Count>0)
+                {
+                    if (Elec_StartDay_comboBox.Text == null || Elec_StartDay_comboBox.Text.ToString() == "" || Elec_EndDay_comboBox.Text == null || Elec_EndDay_comboBox.Text.ToString() == "")
+                    {
+                        DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                        if (res == DialogResult.Yes)
+                        {
+                            MessageBox.Show("고지서 기준 사용기간을 입력하세요.");
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        Save(isManualSave);
+                        return true;
+                    }
+                }                
+                else
+                {
+                    Save(isManualSave);
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
+                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+                return false;
+            }
+        }
 
-        private void Save_button_Click(object sender, EventArgs e)
+        private void Save(bool isManualSave = false)
         {
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             for (int n = 0; n < Elec_dataGridView.Rows.Count; n++)

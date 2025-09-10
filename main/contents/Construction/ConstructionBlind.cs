@@ -17,7 +17,7 @@ using System.Windows.Forms;
 
 namespace main.contents
 {
-    public partial class ConstructionBlind : Form
+    public partial class ConstructionBlind : Form, IConfirmable
     {
         bool scriptable = false;
         //번호,프로젝트유형,DB유형,제품명,종류,설치,투과수준,색깔,외부반사율,내부반사율,투과율,흡수율
@@ -326,32 +326,48 @@ namespace main.contents
 
 
         }
-        public static bool OnLoadListProc(Form form)
+        public bool ValidateAndSave(bool isManualSave = false)
         {
-            List_ConstructionBlind f = (List_ConstructionBlind)form;
-
-            f.load_List();
-
-            return true;
+            try
+            {
+                if (Name_textBox.Text == null || Name_textBox.Text.ToString()=="")
+                {
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show("명칭을 입력하세요.");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    Save(isManualSave);
+                    return true;
+                }               
+            }
+            catch (Exception ex)
+            {
+                // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
+                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+                return false;
+            }
         }
 
-        private void Save_button_Click(object sender, EventArgs e)
+        private void Save(bool isManualSave = false)
         {
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
-            if (Name_textBox.Text == null) { MessageBox.Show("제품명을 입력하세요."); }
-            else
-            {
-                Program.DB.setValue(DB.type.ProjDB, "ConstructionBlind", "번호,프로젝트유형,명칭,제품번호,제품명,종류,설치,투과수준,색깔,외부반사율,내부반사율,투과율,흡수율,제어방식1,제어방식2",
-                              "'" + Num + "','" +
-                              프로젝트유형[0][0] + "','" +
-                              Name_textBox.Text.ToString() + "','" + BlindDBNum + "','" + BlindName + "','" + BlindType + "','" + BlindInstall + "','" + BlindTrans + "','" + BlindColor + "','" +
-                              BlindEx.ToString() + "','" + BlindIn.ToString() + "','" + BlindSHGC.ToString() + "','" + BlindAlpha.ToString() + "','" +
-                              ControlType + "','" + ControlType2 + "'", "번호");
-            }
+            Program.DB.setValue(DB.type.ProjDB, "ConstructionBlind", "번호,프로젝트유형,명칭,제품번호,제품명,종류,설치,투과수준,색깔,외부반사율,내부반사율,투과율,흡수율,제어방식1,제어방식2",
+                            "'" + Num + "','" +
+                            프로젝트유형[0][0] + "','" +
+                            Name_textBox.Text.ToString() + "','" + BlindDBNum + "','" + BlindName + "','" + BlindType + "','" + BlindInstall + "','" + BlindTrans + "','" + BlindColor + "','" +
+                            BlindEx.ToString() + "','" + BlindIn.ToString() + "','" + BlindSHGC.ToString() + "','" + BlindAlpha.ToString() + "','" +
+                            ControlType + "','" + ControlType2 + "'", "번호");
             Program.DB.saveProject();
-            this.DialogResult = DialogResult.OK;
-            this.Hide();
-            Program.getMenuForm().DoLoadForm(50, OnLoadListProc);
+
         }
 
         private void reset()

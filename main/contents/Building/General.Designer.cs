@@ -41,8 +41,8 @@ namespace main.contents
             label3 = new Label();
             label5 = new Label();
             label4 = new Label();
-            Save_button = new Button();
             panel1 = new Panel();
+            climate_infobutton = new Button();
             BuildingLocation_textBox = new TextBox();
             BuildingName_textBox = new TextBox();
             ByRawClimate_textBox = new TextBox();
@@ -125,7 +125,6 @@ namespace main.contents
             Icon_pictureBox = new PictureBox();
             label22 = new Label();
             info = new Button();
-            climate_infobutton = new Button();
             Panel10.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -244,18 +243,6 @@ namespace main.contents
             label4.TabIndex = 94;
             label4.Text = "프로젝트";
             // 
-            // Save_button
-            // 
-            Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1013, 619);
-            Save_button.Name = "Save_button";
-            Save_button.Size = new Size(88, 25);
-            Save_button.TabIndex = 92;
-            Save_button.Text = "SAVE";
-            Save_button.UseVisualStyleBackColor = true;
-            Save_button.Click += Save_button_Click;
-            // 
             // panel1
             // 
             panel1.BackColor = Color.White;
@@ -276,6 +263,21 @@ namespace main.contents
             panel1.Size = new Size(503, 158);
             panel1.TabIndex = 98;
             panel1.Paint += panel1_Paint;
+            // 
+            // climate_infobutton
+            // 
+            climate_infobutton.BackColor = SystemColors.ControlLight;
+            climate_infobutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            climate_infobutton.FlatStyle = FlatStyle.System;
+            climate_infobutton.Font = new Font("Microsoft Sans Serif", 9.75F);
+            climate_infobutton.Location = new Point(220, 114);
+            climate_infobutton.Margin = new Padding(0);
+            climate_infobutton.Name = "climate_infobutton";
+            climate_infobutton.Size = new Size(23, 23);
+            climate_infobutton.TabIndex = 174;
+            climate_infobutton.Text = "!";
+            climate_infobutton.UseVisualStyleBackColor = false;
+            climate_infobutton.Click += climate_infobutton_Click;
             // 
             // BuildingLocation_textBox
             // 
@@ -1248,21 +1250,6 @@ namespace main.contents
             info.UseVisualStyleBackColor = false;
             info.Click += info_Click;
             // 
-            // climate_infobutton
-            // 
-            climate_infobutton.BackColor = SystemColors.ControlLight;
-            climate_infobutton.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            climate_infobutton.FlatStyle = FlatStyle.System;
-            climate_infobutton.Font = new Font("Microsoft Sans Serif", 9.75F);
-            climate_infobutton.Location = new Point(220, 114);
-            climate_infobutton.Margin = new Padding(0);
-            climate_infobutton.Name = "climate_infobutton";
-            climate_infobutton.Size = new Size(23, 23);
-            climate_infobutton.TabIndex = 174;
-            climate_infobutton.Text = "!";
-            climate_infobutton.UseVisualStyleBackColor = false;
-            climate_infobutton.Click += climate_infobutton_Click;
-            // 
             // General
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1271,7 +1258,6 @@ namespace main.contents
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
             Controls.Add(info);
-            Controls.Add(Save_button);
             Controls.Add(panel7);
             Controls.Add(panel2);
             Controls.Add(panel1);
@@ -1310,7 +1296,6 @@ namespace main.contents
 
         #endregion
         private Button Previous_button;
-        private Button Save_button;
         private Label label4;
         private Label label14;
         private Label label13;

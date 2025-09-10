@@ -30,7 +30,7 @@ using main.info;
 
 namespace main.contents
 {
-    public partial class EquipmentList : Form
+    public partial class EquipmentList : Form, IConfirmable
     {
         DataGridViewCheckBoxColumn Boiler_checkBoxColumn = new DataGridViewCheckBoxColumn();
         DataGridViewCheckBoxColumn AHU_checkBoxColumn = new DataGridViewCheckBoxColumn();
@@ -434,7 +434,7 @@ namespace main.contents
             }
         }
 
-        private void Boiler_Save_button_Click(object sender, EventArgs e)
+        private void Boiler_Save(bool isManualSave = false)
         {
             Program.DB.deleteValue(DB.type.ProjDB, "User_Boiler", "");
 
@@ -464,7 +464,6 @@ namespace main.contents
                  + "'", "번호");
             }
             Program.DB.saveProject();
-            MessageBox.Show("저장되었습니다.");
         }
 
         private void Load_Boiler()
@@ -742,7 +741,7 @@ namespace main.contents
                 else { ABS_dataGridView.Rows[k].Cells[1].Value = "UAS" + (k + 1).ToString(); }
             }
         }
-        private void ABS_Save_button_Click(object sender, EventArgs e)
+        private void ABS_Save(bool isManualSave = false)
         {
             Program.DB.deleteValue(DB.type.ProjDB, "User_ABS", "");
 
@@ -772,7 +771,6 @@ namespace main.contents
                  + Value[17] + "'", "번호");
             }
             Program.DB.saveProject();
-            MessageBox.Show("저장되었습니다.");
         }
         private void Load_ABS()
         {
@@ -967,7 +965,7 @@ namespace main.contents
             }
         }
 
-        private void DH_Save_button_Click(object sender, EventArgs e)
+        private void DH_Save(bool isManualSave = false)
         {
             Program.DB.deleteValue(DB.type.ProjDB, "User_DH", "");
 
@@ -998,7 +996,6 @@ namespace main.contents
                  + "'", "번호");
             }
             Program.DB.saveProject();
-            MessageBox.Show("저장되었습니다.");
         }
 
         private void Load_DH()
@@ -1204,7 +1201,7 @@ namespace main.contents
             }
         }
 
-        private void PV_Save_button_Click(object sender, EventArgs e)
+        private void PV_Save(bool isManualSave = false)
         {
             Program.DB.deleteValue(DB.type.ProjDB, "User_PV", "");
 
@@ -1242,7 +1239,6 @@ namespace main.contents
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "'", "번호");
             }
             Program.DB.saveProject();
-            MessageBox.Show("저장되었습니다.");
         }
 
         private void Load_PV()
@@ -1400,7 +1396,7 @@ namespace main.contents
             }
         }
 
-        private void FC_Save_button_Click(object sender, EventArgs e)
+        private void FC_Save(bool isManualSave = false)
         {
             Program.DB.deleteValue(DB.type.ProjDB, "User_FC", "");
 
@@ -1428,7 +1424,6 @@ namespace main.contents
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "'", "번호");
             }
             Program.DB.saveProject();
-            MessageBox.Show("저장되었습니다.");
         }
 
         private void Load_FC()
@@ -1632,7 +1627,7 @@ namespace main.contents
             }
         }
 
-        private void WP_Save_button_Click(object sender, EventArgs e)
+        private void WP_Save(bool isManualSave = false)
         {
             Program.DB.deleteValue(DB.type.ProjDB, "User_WP", "");
 
@@ -1660,7 +1655,6 @@ namespace main.contents
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "'", "번호");
             }
             Program.DB.saveProject();
-            MessageBox.Show("저장되었습니다.");
         }
 
         private void Load_WP()
@@ -1969,7 +1963,7 @@ namespace main.contents
             }
         }
 
-        private void AirHP_Save_button_Click(object sender, EventArgs e)
+        private void AirHP_Save(bool isManualSave = false)
         {
             Program.DB.deleteValue(DB.type.ProjDB, "User_AirHP", "");
             for (int k = 0; k < AirHP_dataGridView.RowCount; k++)
@@ -1997,8 +1991,6 @@ namespace main.contents
                   Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "','" + Value[16] + "','" + Value[17] + "'", "번호");
             }
             Program.DB.saveProject();
-
-            MessageBox.Show("저장되었습니다.");
         }
 
 
@@ -2257,7 +2249,7 @@ namespace main.contents
                 else { GWHP_dataGridView.Rows[k].Cells[1].Value = "UWHP" + (k + 1).ToString(); }
             }
         }
-        private void GWHP_Save_button_Click(object sender, EventArgs e)
+        private void GWHP_Save(bool isManualSave = false)
         {
 
             Program.DB.deleteValue(DB.type.ProjDB, "User_GroundWHP", "");
@@ -2288,8 +2280,6 @@ namespace main.contents
                  + "','" + Value[21] + "'", "번호");
             }
             Program.DB.saveProject();
-
-            MessageBox.Show("저장되었습니다.");
         }
         private void Load_GWHP()
         {
@@ -2527,7 +2517,7 @@ namespace main.contents
                 else { GroundHP_dataGridView.Rows[k].Cells[1].Value = "UGHP" + (k + 1).ToString(); }
             }
         }
-        private void GroundHP_Save_button_Click(object sender, EventArgs e)
+        private void GroundHP_Save(bool isManualSave = false)
         {
 
             Program.DB.deleteValue(DB.type.ProjDB, "User_GroundHP", "");
@@ -2558,7 +2548,6 @@ namespace main.contents
                  + "','" + Value[21] + "'", "번호");
             }
             Program.DB.saveProject();
-            MessageBox.Show("저장되었습니다.");
         }
         private void Load_GroundHP()
         {
@@ -2732,7 +2721,7 @@ namespace main.contents
             }
         }
 
-        private void Pump_Save_button_Click(object sender, EventArgs e)
+        private void Pump_Save(bool isManualSave = false)
         {
             Program.DB.deleteValue(DB.type.ProjDB, "User_Pump", "");
 
@@ -2745,7 +2734,6 @@ namespace main.contents
                  + "'", "번호");
             }
             Program.DB.saveProject();
-            MessageBox.Show("저장되었습니다.");
         }
 
         private void Load_Pump()
@@ -3016,7 +3004,7 @@ namespace main.contents
             }
         }
 
-        private void ce_Save_button_Click(object sender, EventArgs e)
+        private void ce_Save(bool isManualSave = false)
         {
             Program.DB.deleteValue(DB.type.ProjDB, "User_ce", "");
 
@@ -3046,7 +3034,6 @@ namespace main.contents
                  + "'", "번호");
             }
             Program.DB.saveProject();
-            MessageBox.Show("저장되었습니다.");
         }
         private void Load_ce()
         {
@@ -3265,7 +3252,7 @@ namespace main.contents
 
         }
 
-        private void AirCooler_Save_button_Click(object sender, EventArgs e)
+        private void AirCooler_Save(bool isManualSave = false)
         {
             Program.DB.deleteValue(DB.type.ProjDB, "User_AirCooler", "");
 
@@ -3312,7 +3299,6 @@ namespace main.contents
                  + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "'", "번호");
             }
             Program.DB.saveProject();
-            MessageBox.Show("저장되었습니다.");
         }
         private void Load_AirCooler()
         {
@@ -3490,7 +3476,7 @@ namespace main.contents
             }
         }
 
-        private void WaterCooler_Save_button_Click(object sender, EventArgs e)
+        private void WaterCooler_Save(bool isManualSave = false)
         {
             Program.DB.deleteValue(DB.type.ProjDB, "User_WaterCooler", "");
 
@@ -3520,7 +3506,6 @@ namespace main.contents
                  + Value[11] + "','" + Value[12] + "','" + Value[13] + "'", "번호");
             }
             Program.DB.saveProject();
-            MessageBox.Show("저장되었습니다.");
         }
 
 
@@ -3685,7 +3670,7 @@ namespace main.contents
             }
         }
 
-        private void Solar_Save_button_Click(object sender, EventArgs e)
+        private void Solar_Save(bool isManualSave = false)
         {
             Program.DB.deleteValue(DB.type.ProjDB, "User_Solar", "");
 
@@ -3715,7 +3700,6 @@ namespace main.contents
                  + "'", "번호");
             }
             Program.DB.saveProject();
-            MessageBox.Show("저장되었습니다.");
         }
 
         private void Load_Solar()
@@ -4018,7 +4002,7 @@ namespace main.contents
             double eta = (외기절대습도 - 교환후습도) / (외기절대습도 - 실내절대습도) * 100;
             return eta;
         }
-        private void AHU_Save_button_Click(global::System.Object sender, global::System.EventArgs e)
+        private void AHU_Save(bool isManualSave = false)
         {
             Program.DB.deleteValue(DB.type.ProjDB, "User_AHU", "");
 
@@ -4076,7 +4060,6 @@ namespace main.contents
                 + "'", "번호");
             }
             Program.DB.saveProject();
-            MessageBox.Show("저장되었습니다.");
 
         }
         private void Load_AHU()
@@ -4242,7 +4225,7 @@ namespace main.contents
             }
         }
 
-        private void HRV_Save_button_Click(global::System.Object sender, global::System.EventArgs e)
+        private void HRV_Save(bool isManualSave = false)
         {
             Program.DB.deleteValue(DB.type.ProjDB, "User_HRV", "");
 
@@ -4285,7 +4268,6 @@ namespace main.contents
                 + "'", "번호");
             }
             Program.DB.saveProject();
-            MessageBox.Show("저장되었습니다.");
         }
 
         private void HRV_dataGridView_CellContentClick(global::System.Object sender, global::System.Windows.Forms.DataGridViewCellEventArgs e)
@@ -4532,7 +4514,7 @@ namespace main.contents
                 else { CoolingTop_dataGridView.Rows[k].Cells[1].Value = "UCT" + (k + 1).ToString(); }
             }
         }
-        private void CoolingTop_Save_button_Click_1(object sender, EventArgs e)
+        private void CoolingTop_Save(bool isManualSave = false)
         {
             Program.DB.deleteValue(DB.type.ProjDB, "User_CoolingTop", "");
 
@@ -4564,7 +4546,6 @@ namespace main.contents
                  + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "'", "번호");
             }
             Program.DB.saveProject();
-            MessageBox.Show("저장되었습니다.");
         }
         private void CoolingTop_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -4808,7 +4789,7 @@ namespace main.contents
             }
         }
 
-        private void DHWHP_Save_button_Click(object sender, EventArgs e)
+        private void DWHP_Save(bool isManualSave = false)
         {
             Program.DB.deleteValue(DB.type.ProjDB, "User_DHWHP", "");
             for (int k = 0; k < DHWHP_dataGridView.RowCount; k++)
@@ -4836,8 +4817,6 @@ namespace main.contents
                   Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "'", "번호");
             }
             Program.DB.saveProject();
-
-            MessageBox.Show("저장되었습니다.");
         }
 
 
@@ -4956,7 +4935,7 @@ namespace main.contents
                 else { Fan_dataGridView.Rows[k].Cells[1].Value = "FAN" + (k + 1).ToString(); }
             }
         }
-        private void Fan_Save_button_Click(object sender, EventArgs e)
+        private void Fan_Save(bool isManualSave = false)
         {
             Program.DB.deleteValue(DB.type.ProjDB, "User_Fan", "");
 
@@ -4983,7 +4962,6 @@ namespace main.contents
                 Program.DB.setValue(DB.type.ProjDB, "User_Fan", "번호,프로젝트유형,명칭,설치유형,풍량,정압,모터제어,소비전력", "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','" + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "'", "번호");
             }
             Program.DB.saveProject();
-            MessageBox.Show("저장되었습니다.");
         }
         void Load_Fan()
         {
@@ -5389,6 +5367,40 @@ namespace main.contents
             else
             {
                 MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        public bool ValidateAndSave(bool isManualSave = false)
+        {
+            try
+            {
+                Boiler_Save(isManualSave);
+                ABS_Save(isManualSave);
+                DH_Save(isManualSave);
+                PV_Save(isManualSave);
+                FC_Save(isManualSave);
+                WP_Save(isManualSave);
+                AirHP_Save(isManualSave);
+                GWHP_Save(isManualSave);
+                GroundHP_Save(isManualSave);
+                Pump_Save(isManualSave);
+                AirCooler_Save(isManualSave);
+                WaterCooler_Save(isManualSave);
+                Solar_Save(isManualSave);
+                AHU_Save(isManualSave);
+                HRV_Save(isManualSave);
+                CoolingTop_Save(isManualSave);
+                DWHP_Save(isManualSave);
+                Fan_Save(isManualSave);
+                ce_Save(isManualSave);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
+                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+                return false;
             }
         }
     }

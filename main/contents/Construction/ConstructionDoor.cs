@@ -20,7 +20,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace main.contents
 {
-    public partial class ConstructionDoor : Form
+    public partial class ConstructionDoor : Form, IConfirmable
     {
 
         double DoorArea, DoorL, DoorH, GlassL, GlassH, GlassArea;//치수정보
@@ -894,66 +894,160 @@ namespace main.contents
         }
 
 
-        private void Previous_button_Click(object sender, EventArgs e)
+        public bool ValidateAndSave(bool isManualSave = false)
         {
-            if ((MessageBox.Show("이전 화면으로 이동하시겠습니까?", "이전 화면 이동", MessageBoxButtons.YesNo) == DialogResult.Yes))
+            try
             {
-                this.DialogResult = DialogResult.OK;
-                this.Hide();
-                Program.getMenuForm().DoLoadForm(51, OnLoadListProc);
-            }
-        }
-
-        private void Save_button_Click(object sender, EventArgs e)
-        {
-            if (DoorName == null)
-            {
-                MessageBox.Show("외부출입문 명칭을 입력하세요.");
-            }
-            else if (Type == null)
-            {
-                MessageBox.Show("출입문 리모델링 유형을 선택하세요.");
-            }
-            else if (Install2 == null)
-            {
-                MessageBox.Show("설치열교를 선택하세요.");
-            }
-            else if (UDoorMethod == "계산")
-            {
-                if (glass_checkBox.Checked)
+                if (DoorUD <= 0)
                 {
-                    if (GlassL == null || GlassH == null)
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
                     {
-                        MessageBox.Show("유리 치수를 입력하세요.");
+                        MessageBox.Show("문 제품 관련 정보를 확인하세요.");
+                        return false;
                     }
-                    else if (GlassName == null)
+                    else if (Name_textBox.Text == null || Name_textBox.Text.ToString()=="")
                     {
-                        MessageBox.Show("유리 종류를 선택하세요.");
+                        res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                        if (res == DialogResult.Yes)
+                        {
+                            MessageBox.Show("명칭을 입력하세요.");
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
                     }
                     else
                     {
-                        Save();
+                        return true;
                     }
                 }
-                else { Save(); };
+                else if (dUinst_textBox.Text == null || Convert.ToDouble(dUinst_textBox.Text.ToString()) <= 0)
+                {
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show("문 설치정보를 입력하세요.");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }             
+                else if (Install2 == null)
+                {
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show("설치열교를 선택하세요.");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else if (UDoorMethod == "계산")
+                {
+                    if (glass_checkBox.Checked)
+                    {
+                        if (GlassL == null || GlassH == null)
+                        {
+                            DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                            if (res == DialogResult.Yes)
+                            {
+                                MessageBox.Show("유리 치수를 입력하세요.");
+                                return false;
+                            }
+                            else
+                            {
+                                return true;
+                            }
+                        }
+                        else if (GlassName == null)
+                        {
+                            DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                            if (res == DialogResult.Yes)
+                            {
+                                MessageBox.Show("유리 종류를 선택하세요.");
+                                return false;
+                            }
+                            else
+                            {
+                                return true;
+                            }
+                        }
+                        else if (Name_textBox.Text == null || Name_textBox.Text.ToString()=="")
+                        {
+                            DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                            if (res == DialogResult.Yes)
+                            {
+                                MessageBox.Show("명칭을 입력하세요.");
+                                return false;
+                            }
+                            else
+                            {
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            Save(isManualSave);
+                            return true;
+                        }
+                    }
+                    else if (Name_textBox.Text == null || Name_textBox.Text.ToString()=="")
+                    {
+                        DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                        if (res == DialogResult.Yes)
+                        {
+                            MessageBox.Show("명칭을 입력하세요.");
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        Save(isManualSave);
+                        return true;
+                    };
+                }
+                else if (Name_textBox.Text == null || Name_textBox.Text.ToString() == "")
+                {
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show("명칭을 입력하세요.");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    Save(isManualSave);
+                    return true;
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                Save();
+                // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
+                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+                return false;
             }
         }
 
-        public static bool OnLoadListProc(Form form)
-        {
-            List_ConstructionDoor f = (List_ConstructionDoor)form;
-
-            f.load_List();
-
-            return true;
-        }
-
-
-        private void Save()
+       
+        private void Save(bool isManualSave = false)
         {
             #region 법규
             String[][] Date = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "법규시기,지역구분", "");
@@ -969,15 +1063,7 @@ namespace main.contents
             }
             #endregion
 
-            if(DoorUD <=0)
-            {
-                MessageBox.Show("문 제품 관련 정보를 확인하세요.");
-            }else if (dUinst_textBox.Text ==null || Convert.ToDouble(dUinst_textBox.Text.ToString())<=0)
-            {
-                MessageBox.Show("문 설치정보를 입력하세요.");
-            }
-            else
-            {
+          
                 string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
                 Program.DB.setValue(DB.type.ProjDB, "ConstructionDoor", "번호,프로젝트유형,명칭,Type,기존출입문,UD적용방법,직접간접,문짝제품,출입문재질,문틀내부,문짝내부유형,문짝색,흡수율,문짝단열재종류," +
                           "문짝두께,문열관류율,문틀상부측면열관류율,문틀하부열관류율,문면적,문높이,문길이,유리적용유무," +
@@ -1003,11 +1089,6 @@ namespace main.contents
                 }
                 else { }
                 Program.DB.saveProject();
-                this.DialogResult = DialogResult.OK;
-                this.Hide();
-                Program.getMenuForm().DoLoadForm(51, OnLoadListProc);
-
-            }
             
         }
 

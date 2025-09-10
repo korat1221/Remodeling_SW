@@ -30,6 +30,7 @@ namespace main.contents
         private void InitializeComponent()
         {
             GeneralPanel = new Panel();
+            info = new Button();
             label2 = new Label();
             label4 = new Label();
             OldBlind_textBox = new TextBox();
@@ -70,9 +71,6 @@ namespace main.contents
             label11 = new Label();
             BlindDB_button = new Button();
             BlindName_textBox = new TextBox();
-            Previous_button = new Button();
-            Save_button = new Button();
-            info = new Button();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -102,6 +100,21 @@ namespace main.contents
             GeneralPanel.Size = new Size(1000, 80);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(970, 9);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 118;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
             // 
             // label2
             // 
@@ -586,44 +599,6 @@ namespace main.contents
             BlindName_textBox.TabIndex = 94;
             BlindName_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // Previous_button
-            // 
-            Previous_button.BackColor = SystemColors.ButtonHighlight;
-            Previous_button.ForeColor = Color.Black;
-            Previous_button.Location = new Point(1006, 648);
-            Previous_button.Name = "Previous_button";
-            Previous_button.Size = new Size(88, 25);
-            Previous_button.TabIndex = 95;
-            Previous_button.Text = "<<PREVIOUS";
-            Previous_button.UseVisualStyleBackColor = true;
-            // 
-            // Save_button
-            // 
-            Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1100, 648);
-            Save_button.Name = "Save_button";
-            Save_button.Size = new Size(88, 25);
-            Save_button.TabIndex = 94;
-            Save_button.Text = "SAVE";
-            Save_button.UseVisualStyleBackColor = true;
-            Save_button.Click += Save_button_Click;
-            // 
-            // info
-            // 
-            info.BackColor = SystemColors.ControlLight;
-            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            info.FlatStyle = FlatStyle.System;
-            info.Font = new Font("나눔바른고딕", 9.75F);
-            info.Location = new Point(970, 9);
-            info.Margin = new Padding(0);
-            info.Name = "info";
-            info.Size = new Size(23, 23);
-            info.TabIndex = 118;
-            info.Text = "?";
-            info.UseVisualStyleBackColor = false;
-            info.Click += info_Click;
-            // 
             // ConstructionBlind
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -631,8 +606,6 @@ namespace main.contents
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(Previous_button);
-            Controls.Add(Save_button);
             Controls.Add(panel2);
             Controls.Add(GeneralPanel);
             FormBorderStyle = FormBorderStyle.None;
@@ -685,8 +658,6 @@ namespace main.contents
         private TextBox BlindIn_textBox;
         private Label label19;
         private PictureBox pictureBox4;
-        private Button Previous_button;
-        private Button Save_button;
         private TextBox Type_textBox;
         private Label label9;
         private GroupBox groupBox1;

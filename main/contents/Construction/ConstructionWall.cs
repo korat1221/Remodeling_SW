@@ -1172,45 +1172,64 @@ namespace main.contents
             Ueff2_textBox.Text = string.Format("{0:F3}", Ueff);
         }
 
-        private void Previous_button_Click(object sender, EventArgs e)
-        {
-            if ((MessageBox.Show("이전 화면으로 이동하시겠습니까?", "이전 화면 이동", MessageBoxButtons.YesNo) == DialogResult.Yes))
-            {
-                this.DialogResult = DialogResult.OK;
-                this.Hide();
-                Program.getMenuForm().DoLoadForm(34, OnLoadListProc);
-            }
-        }
-
-        private void Save_button_Click(object sender, EventArgs e)
-        {
-            ValidateAndSave(true); // 수동 저장
-        }
+       
 
         public bool ValidateAndSave(bool isManualSave = false)
         {
             try
             {
-                if (WallName == null)
-                {
-                    MessageBox.Show("외벽 명칭을 입력하세요.");
-                    return false;
-                }
-                else if (Type == null)
-                {
-                    MessageBox.Show("외벽 리모델링 유형을 선택하세요.");
-                    return false;
-                }
-                else if (Type != "기존외벽" && Type != "커튼월덧댐")
+                if (Type != "기존외벽" && Type != "커튼월덧댐")
                 {
                     if (TBName == null)
                     {
-                        MessageBox.Show("열교를 입력하세요.");
-                        return false;
+                        DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                        if (res == DialogResult.Yes)
+                        {
+                            MessageBox.Show("열교를 입력하세요.");
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                    else if (Name_textBox.Text == null || Name_textBox.Text.ToString()=="")
+                    {
+                        DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                        if (res == DialogResult.Yes)
+                        {
+                            MessageBox.Show("명칭을 입력하세요.");
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
                     }
                     else
                     {
                         Save(isManualSave);
+                        return true;
+                    }
+                }
+                else if (Name_textBox.Text == null || Name_textBox.Text.ToString() == "")
+                {
+                    DialogResult res = DialogResult.None;
+                    try {
+                        res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show("명칭을 입력하세요.");
+                        return false;
+                    }
+                    else
+                    {
                         return true;
                     }
                 }
@@ -1226,12 +1245,6 @@ namespace main.contents
                 System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
                 return false;
             }
-        }
-        public static bool OnLoadListProc(Form form)
-        {
-            List_ConstructionWall f = (List_ConstructionWall)form;
-            f.load_List();
-            return true;
         }
 
         private void Save(bool isManualSave = false)
@@ -1297,14 +1310,6 @@ namespace main.contents
                 법규U.ToString()
                  + "'", "번호");
             Program.DB.saveProject();
-            
-            // 수동 저장일 때만 화면 전환
-            if (isManualSave)
-            {
-                this.DialogResult = DialogResult.OK;
-                this.Hide();
-                Program.getMenuForm().DoLoadForm(34, OnLoadListProc);
-            }
         }
 
         private void reset()

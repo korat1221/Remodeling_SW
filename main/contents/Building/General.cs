@@ -3,7 +3,7 @@ using main.subcontents.BuildingGeneral;
 
 namespace main.contents
 {
-    public partial class General : Form
+    public partial class General : Form, IConfirmable
     {
         String ProjectName, ProjectType, ProjectNum;
         String BuildingCategory, BuildingUse, BuildingName, BuildingLocation, Climate, BylawClimate;
@@ -547,36 +547,39 @@ namespace main.contents
             }
         }
 
-        private void Save_button_Click(object sender, EventArgs e)
+        public bool ValidateAndSave(bool isManualSave = false)
         {
-            if (BuildingName == null)
+            try
             {
-                MessageBox.Show("건물명을 입력하세요.");
+                if (BuildingName == null || BuildingLocation == null || GrossArea == 0 || BuildingArea == 0 || ReviewerName == null)
+                {
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show("모든 입력값을 입력하세요.");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    Save(isManualSave);
+                    return true;
+                }
             }
-            else if (BuildingLocation == null)
+            catch (Exception ex)
             {
-                MessageBox.Show("주소를 입력하세요.");
+                // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
+                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+                return false;
             }
-            else if (GrossArea == 0)
-            {
-                MessageBox.Show("연면적을 입력하세요.");
-            }
-            else if (BuildingArea == 0)
-            {
-                MessageBox.Show("건축면적을 입력하세요.");
-            }
-            else if (ReviewerName == null)
-            {
-                MessageBox.Show("작성자 이름을 입력하세요.");
-            }
-            else if (ReviewerName == null)
-            {
-                MessageBox.Show("작성자 이름을 입력하세요.");
-            }
-            else { Save(); }
         }
 
-        private void Save()
+
+        private void Save(bool isManualSave = false)
         {
             string ProjectTypeNum = null;
             switch (ProjectType)
@@ -601,7 +604,15 @@ namespace main.contents
             }
             else
             {
-                MessageBox.Show("지상층수를 입력해주세요");
+                try
+                {
+                    MessageBox.Show("지상층수를 입력해주세요");
+                }
+                catch (Exception ex)
+                {
+                    // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
+                    System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+                }
             }
 
             if (int.TryParse(UnderGround_comboBox.Text, out int underfloornum))
@@ -610,7 +621,15 @@ namespace main.contents
             }
             else
             {
-                MessageBox.Show("지하층수를 입력해주세요");
+                try
+                {
+                    MessageBox.Show("지하층수를 입력해주세요");
+                }
+                catch (Exception ex)
+                {
+                    // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
+                    System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+                }
             }
 
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
@@ -643,8 +662,6 @@ namespace main.contents
                 Pipe_Infil + "'", "프로젝트번호");
 
             Program.DB.saveProject();
-
-            MessageBox.Show("저장되었습니다.");
         }
 
         private void reset()
@@ -911,5 +928,6 @@ namespace main.contents
             {
             }
         }
+
     }
 }

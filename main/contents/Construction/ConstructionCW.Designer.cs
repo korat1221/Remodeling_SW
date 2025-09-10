@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             GeneralPanel = new Panel();
+            info = new Button();
             label64 = new Label();
             AdditionalCW_textBox = new TextBox();
             OldCW_comboBox = new CustomComboBox();
@@ -45,8 +46,6 @@
             CWNum_textBox = new TextBox();
             ImportSize_button = new Button();
             Size_textBox = new TextBox();
-            Previous_button = new Button();
-            Save_button = new Button();
             SpacerName_textBox = new TextBox();
             Spacer_button = new Button();
             FixGlassName_textBox = new TextBox();
@@ -233,7 +232,6 @@
             DiIndi_comboBox = new CustomComboBox();
             label7 = new Label();
             CWType_pictureBox = new PictureBox();
-            info = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             groupBox1.SuspendLayout();
@@ -270,6 +268,21 @@
             GeneralPanel.Size = new Size(1000, 80);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(970, 9);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 117;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
             // 
             // label64
             // 
@@ -457,30 +470,6 @@
             Size_textBox.Size = new Size(120, 15);
             Size_textBox.TabIndex = 103;
             Size_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // Previous_button
-            // 
-            Previous_button.BackColor = SystemColors.ButtonHighlight;
-            Previous_button.ForeColor = Color.Black;
-            Previous_button.Location = new Point(1006, 675);
-            Previous_button.Name = "Previous_button";
-            Previous_button.Size = new Size(88, 25);
-            Previous_button.TabIndex = 93;
-            Previous_button.Text = "<<PREVIOUS";
-            Previous_button.UseVisualStyleBackColor = true;
-            Previous_button.Click += Previous_button_Click;
-            // 
-            // Save_button
-            // 
-            Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1100, 675);
-            Save_button.Name = "Save_button";
-            Save_button.Size = new Size(88, 25);
-            Save_button.TabIndex = 92;
-            Save_button.Text = "SAVE";
-            Save_button.UseVisualStyleBackColor = true;
-            Save_button.Click += Save_button_Click;
             // 
             // SpacerName_textBox
             // 
@@ -2826,21 +2815,6 @@
             CWType_pictureBox.TabIndex = 97;
             CWType_pictureBox.TabStop = false;
             // 
-            // info
-            // 
-            info.BackColor = SystemColors.ControlLight;
-            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            info.FlatStyle = FlatStyle.System;
-            info.Font = new Font("나눔바른고딕", 9.75F);
-            info.Location = new Point(970, 9);
-            info.Margin = new Padding(0);
-            info.Name = "info";
-            info.Size = new Size(23, 23);
-            info.TabIndex = 117;
-            info.Text = "?";
-            info.UseVisualStyleBackColor = false;
-            info.Click += info_Click;
-            // 
             // ConstructionCW
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -2850,8 +2824,6 @@
             ClientSize = new Size(1200, 730);
             Controls.Add(panel2);
             Controls.Add(CWType_pictureBox);
-            Controls.Add(Previous_button);
-            Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "ConstructionCW";
@@ -2892,8 +2864,6 @@
         private Label label6;
         private Label label3;
         private Label label5;
-        private Button Previous_button;
-        private Button Save_button;
         private TextBox Size_textBox;
         private TextBox SpacerName_textBox;
         private Button Spacer_button;
