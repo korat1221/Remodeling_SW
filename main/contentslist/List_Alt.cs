@@ -217,6 +217,7 @@ namespace main.contentslist
 
                 Program.DB.CopyValue(DB.type.ProjDB, "Optimal_Form", "번호 ='" + Copy_Num + "'", Num);
                 Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  Optimal_Form" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + Num + "'");
+                Program.DB.saveProject();
                 Load_form(Num, "Copy");
                 Program.DB.saveProject();
 

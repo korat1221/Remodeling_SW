@@ -1014,10 +1014,10 @@ namespace main
         public void DoLoadForm(int idx, OnOpenProc proc = null)
         {
             // 현재 폼이 있고, 새로운 폼으로 전환하는 경우에만 확인
-            if (currentForm != FormID.None && currentForm != (FormID)idx)
+            if (previousForm != FormID.None && currentForm != FormID.None && currentForm != (FormID)idx)
             {
                 Form currentFormInstance = forms[(int)currentForm];
-                
+
                 // IConfirmable 인터페이스를 구현한 폼인지 확인
                 if (currentFormInstance is IConfirmable confirmableForm)
                 {

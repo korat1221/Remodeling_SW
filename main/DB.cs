@@ -529,6 +529,7 @@ namespace main
             {
                 SecureSQLite.ExecuteSQL((int)dbType, "delete from " + table);
             }
+            SecureSQLite.SaveDB(projDBPath, (int)type.ProjDB);
         }
 
         public string[][] getValue(type dbType, string table, string columns, string conditions = "")
