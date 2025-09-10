@@ -638,9 +638,11 @@ namespace main
                 return false;
             }
         }
-        private void timer1_Tick(object sender, EventArgs e)
+        private void timer1_3DModel_Tick(object sender, EventArgs e)
         {
             timer1.Enabled = false;
+            timer1.Tick -= timer1_3DModel_Tick; // 이벤트 핸들러 제거
+            
             if (!ticked)
             {
                 ticked = true;
@@ -666,21 +668,39 @@ namespace main
         void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)
         {
             int tick = Environment.TickCount;
-
             selID = args.TryGetWebMessageAsString();
 
-            if (selID == "{\"formID\":99999991}") // 3D 파일 열기
+            // 타이머를 사용한 지연 실행 (기존 timer1 재사용)
+            timer1.Interval = 1; // 1ms 지연
+            timer1.Tick -= Timer1_JSMessage_Tick; // 기존 이벤트 핸들러 제거
+            timer1.Tick += Timer1_JSMessage_Tick; // 새 이벤트 핸들러 추가
+            timer1.Enabled = true;
+        }
+
+        private void Timer1_JSMessage_Tick(object sender, EventArgs e)
+        {
+            timer1.Enabled = false; // 타이머 중지
+            timer1.Tick -= Timer1_JSMessage_Tick; // 이벤트 핸들러 제거
+            
+            // 비동기 처리 실행
+            _ = ProcessJSMessageAsync(selID, Environment.TickCount);
+        }
+
+        private async Task ProcessJSMessageAsync(string message, int tick)
+        {
+            if (message == "{\"formID\":99999991}") // 3D 파일 열기
             {
                 DoLoadForm(8, OnLoadProc);
 
                 ticked = false;
                 timer1.Interval = 200;
-                timer1.Tick += new EventHandler(timer1_Tick);
+                timer1.Tick -= timer1_3DModel_Tick; // 기존 이벤트 핸들러 제거
+                timer1.Tick += new EventHandler(timer1_3DModel_Tick);
                 timer1.Enabled = true;
             }
-            else if (selID != selID_old)
+            else if (message != selID_old)
             {
-                if (selID.Contains("43"))
+                if (message.Contains("43"))
                 {
                     
                     if (formParam.formID == 53 || formParam.formID == 54 || formParam.formID == 55 || formParam.formID == 69 || formParam.formID == 24 || formParam.formID == 25)
@@ -691,7 +711,7 @@ namespace main
                         return;
                     }
                 }
-                if (Deserialize(selID))
+                if (Deserialize(message))
                 {
                     if (formParam.formID == 8)
                     {
@@ -703,14 +723,14 @@ namespace main
                         DoLoadForm(formParam.formID, OnLoadProc);
                     }
 
-                    if (selID == "{\"formID\":37,\"ID\":\"Result_0\"}")
+                    if (message == "{\"formID\":37,\"ID\":\"Result_0\"}")
                     {
-                        selID = "37";
+                        message = "37";
                     }
                 }
                 else
                 {
-                    String json = "{\"formID\":" + selID + ",\"ID\":\"0\"}";
+                    String json = "{\"formID\":" + message + ",\"ID\":\"0\"}";
 
                     if (Deserialize(json))
                     {
@@ -727,7 +747,7 @@ namespace main
                     }
                     else
                     {
-                        selectInfo = selID.Split("::");
+                        selectInfo = message.Split("::");
                         if (selectInfo.Length < 3 || selectInfo[0] == "---") {
                             return;
                         }
@@ -738,54 +758,54 @@ namespace main
                         }
                         else if (selectInfo[0] == "selectbdg")
                         {
-                            Program.UTIL.select3DObject(selID);
+                            Program.UTIL.select3DObject(message);
                         }
                         else
                         {
                             Program.UTIL.select3DObject("---::---::" + selectInfo[2]);
                         }
 
-                        if (selID.IndexOf("::CW") >= 0)
+                        if (message.IndexOf("::CW") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"3\"}");
                         }
-                        else if (selID.IndexOf("::WL::") >= 0)
+                        else if (message.IndexOf("::WL::") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"4\"}");
                         }
-                        else if (selID.IndexOf("::RF::") >= 0)
+                        else if (message.IndexOf("::RF::") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"5\"}");
                         }
-                        else if (selID.IndexOf("::FL::") >= 0)
+                        else if (message.IndexOf("::FL::") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"6\"}");
                         }
-                        else if (selID.IndexOf("::WIN::") >= 0)
+                        else if (message.IndexOf("::WIN::") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"7\"}");
                         }
-                        else if (selID.IndexOf("::DR::") >= 0)   
+                        else if (message.IndexOf("::DR::") >= 0)   
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"8\"}");
                         }
-                        else if (selID.IndexOf("::IW::") >= 0)
+                        else if (message.IndexOf("::IW::") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"9\"}");
                         }
-                        else if (selID.IndexOf("::SL::") >= 0)
+                        else if (message.IndexOf("::SL::") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"10\"}");
                         }
-                        else if (selID.IndexOf("selectspc::") >= 0)
+                        else if (message.IndexOf("selectspc::") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"2\"}");
                         }
-                        else if (selID.IndexOf("selectbdg::") >= 0)
+                        else if (message.IndexOf("selectbdg::") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"11\"}");
                         }                        
-                        else if (selID.IndexOf("RTB") >= 0 || selID.IndexOf("WTB") >= 0)
+                        else if (message.IndexOf("RTB") >= 0 || message.IndexOf("WTB") >= 0)
                         {
                             formParam = System.Text.Json.JsonSerializer.Deserialize<FormParam>("{\"formID\":8,\"ID\":\"12\"}");
                         }
@@ -798,8 +818,10 @@ namespace main
                     }
                 }
             }
+            
+            // 변수 업데이트
             tick_old = tick;
-            selID_old = selID;
+            selID_old = message;
         }
         void OnNaviCompleted(object sender, CoreWebView2NavigationCompletedEventArgs args)
         {
