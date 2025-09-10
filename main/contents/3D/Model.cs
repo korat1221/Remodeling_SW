@@ -193,7 +193,7 @@ namespace main.contents
 
                             if (Value != null && Value.Length > 0)
                             {
-                                Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,구조체,구조체번호", "'" + value[a][0] + "','" + Value[0][1] + "','" + Value[0][0] + "'", "번호");
+                               // Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,구조체,구조체번호", "'" + value[a][0] + "','" + Value[0][1] + "','" + Value[0][0] + "'", "번호");
 
                             }
 

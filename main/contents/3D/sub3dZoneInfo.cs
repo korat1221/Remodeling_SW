@@ -34,6 +34,7 @@ namespace main.contents
             comboBox2.SetLoaded();
             comboBox3.SetLoaded();
             comboBox4.SetLoaded();
+            comboBox5.SetLoaded();
 
         }
         public sub3dZoneInfo()
@@ -85,6 +86,7 @@ namespace main.contents
             comboBox2.SetLoaded();
             comboBox3.SetLoaded();
             comboBox4.SetLoaded();
+            comboBox5.SetLoaded();
         }
         private void create_datagridview2()
         {
@@ -235,11 +237,13 @@ namespace main.contents
             comboBox2.Items.Clear();
             comboBox3.Items.Clear();
             comboBox4.Items.Clear();
+            comboBox5.Items.Clear();
 
             comboBox1.Add("All");
             comboBox2.Add("All");
             comboBox3.Add("All");
             comboBox4.Add("All");
+            comboBox5.Add("All");
 
             while (++i < rec.Length)
             {
@@ -248,6 +252,21 @@ namespace main.contents
                 comboBox3.Add(rec[i][2]);
                 comboBox4.Add(rec[i][3]);
             }
+            string[] 외피유형 = { "외벽", "지붕", "최하층바닥", "외부출입문", "창호", "커튼월창" };
+           for(int a =0; a< 외피유형.Length; a++)
+            {
+                rec = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct 구조체 from ZoneEnvelope_3D Where 외피유형='" + 외피유형[a] +"'");
+                if (rec.Length > 0)
+                {
+                    for (int aa = 0; aa < rec.Length; aa++)
+                    {
+                        comboBox5.Add(rec[aa][0]);
+                    }
+                }
+
+            }
+            
+            
         }
         private void redrawList()
         {
@@ -269,11 +288,11 @@ namespace main.contents
             }
             {
                 int i = -1, idx;
-                string[][] rec = Program.DB.querySQL(DB.type.ProjDB, "Select 번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,천창유무,차양적용 from ZoneEnvelope_3D Order by 존");
+                string[][] rec = Program.DB.querySQL(DB.type.ProjDB, "Select 번호,층,존,외피유형,커튼월부위,면적,인접존,방위,기울기,천창유무,차양적용,구조체 from ZoneEnvelope_3D Order by 존");
 
                 while (++i < rec.Length)
                 {
-                    if (comboBox1.IsChecked(rec[i][1]) && comboBox2.IsChecked(rec[i][2]) && comboBox3.IsChecked(rec[i][3]) && comboBox4.IsChecked(rec[i][7]))
+                    if (comboBox1.IsChecked(rec[i][1]) && comboBox2.IsChecked(rec[i][2]) && comboBox3.IsChecked(rec[i][3]) && comboBox4.IsChecked(rec[i][7]) && comboBox5.IsChecked(rec[i][11]))
                     {
                         idx = dataGridView1.Rows.Add(null, rec[i][0], rec[i][1], rec[i][2], null, null, rec[i][6], _fixed(rec[i][5]), rec[i][7], _fixed(rec[i][8]), null);
 
@@ -281,7 +300,7 @@ namespace main.contents
                         TypeLabe2.Value = rec[i][3];
                         dataGridView1.Rows[idx].Cells[4] = TypeLabe2;
                         TypeLabe2.ReadOnly = true;
-                        Load_ConstructionList(idx, rec[i][3]);
+                        Load_ConstructionList(idx, rec[i][3], rec[i][11]);
 
                         if (isCWallType(rec[i][4]))
                         {
@@ -389,29 +408,29 @@ namespace main.contents
             }
             return false;
         }
-        private void Load_ConstructionList(int n, String Type)
+        private void Load_ConstructionList(int n, String Type, string 명칭)
         {
             string[][] Value = null;
 
             switch (Type)
             {
                 case "커튼월창":
-                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭", "");
+                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭", "명칭='" + 명칭 + "'");
                     break;
                 case "외벽":
-                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭", "");
+                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭", "명칭='" + 명칭 + "'");
                     break;
                 case "지붕":
-                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "번호,명칭", "");
+                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "번호,명칭", "명칭='" + 명칭 + "'");
                     break;
                 case "최하층바닥":
-                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "번호,명칭", "");
+                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "번호,명칭", "명칭='" + 명칭 + "'");
                     break;
                 case "창호":
-                    Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭", "");
+                    Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭", "명칭='" + 명칭 + "'");
                     break;
                 case "외부출입문":
-                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "번호,명칭", ""); //출입문으로 나중에 바꿔야함 
+                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "번호,명칭", "명칭='" + 명칭 + "'");; //출입문으로 나중에 바꿔야함 
                     break;
                 case "내벽":
                     Value = null; 
@@ -598,64 +617,64 @@ namespace main.contents
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
 
-                if (e.ColumnIndex == 4)
-                {
-                    DataGridViewCell cell = row.Cells[e.ColumnIndex] as DataGridViewComboBoxCell;
-                    DataGridViewComboBoxCell cell2 = row.Cells[5] as DataGridViewComboBoxCell;
+                //if (e.ColumnIndex == 4)
+                //{
+                //    DataGridViewCell cell = row.Cells[e.ColumnIndex] as DataGridViewComboBoxCell;
+                //    DataGridViewComboBoxCell cell2 = row.Cells[5] as DataGridViewComboBoxCell;
 
-                    Load_ConstructionList(e.RowIndex, dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
+                //    Load_ConstructionList(e.RowIndex, dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
 
-                    if (cell.Value.ToString() != "커튼월창")
-                    {
-                        DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
-                        TypeLabel.Value = "";
-                        row.Cells[5] = TypeLabel;
-                        TypeLabel.ReadOnly = true;
-                    }
-                    else
-                    {
-                        DataGridViewComboBoxCell CWTypeCombo = new DataGridViewComboBoxCell();
-                        CWTypeCombo.Items.Add("유리부분");
-                        CWTypeCombo.Items.Add("패널부분");
-                        CWTypeCombo.Items.Add("출입문부분");
+                //    if (cell.Value.ToString() != "커튼월창")
+                //    {
+                //        DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
+                //        TypeLabel.Value = "";
+                //        row.Cells[5] = TypeLabel;
+                //        TypeLabel.ReadOnly = true;
+                //    }
+                //    else
+                //    {
+                //        DataGridViewComboBoxCell CWTypeCombo = new DataGridViewComboBoxCell();
+                //        CWTypeCombo.Items.Add("유리부분");
+                //        CWTypeCombo.Items.Add("패널부분");
+                //        CWTypeCombo.Items.Add("출입문부분");
 
-                        CWTypeCombo.Value = "유리부분";
+                //        CWTypeCombo.Value = "유리부분";
 
-                        row.Cells[5] = CWTypeCombo;
-                        CWTypeCombo.ReadOnly = false;
-                    }
-                }
-                if (e.ColumnIndex == 4) //커튼월창이거나 창호 일경우 천창유무 콤보박스 
-                {
-                    DataGridViewCell cell = row.Cells[e.ColumnIndex] as DataGridViewComboBoxCell;
-                    DataGridViewComboBoxCell cell2 = row.Cells[10] as DataGridViewComboBoxCell;
+                //        row.Cells[5] = CWTypeCombo;
+                //        CWTypeCombo.ReadOnly = false;
+                //    }
+                //}
+                //if (e.ColumnIndex == 4) //커튼월창이거나 창호 일경우 천창유무 콤보박스 
+                //{
+                //    DataGridViewCell cell = row.Cells[e.ColumnIndex] as DataGridViewComboBoxCell;
+                //    DataGridViewComboBoxCell cell2 = row.Cells[10] as DataGridViewComboBoxCell;
 
-                    if (cell.Value.ToString() != "커튼월창" && cell.Value.ToString() != "창호" && cell.Value.ToString() != "외부출입문")
-                    {
-                        DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
-                        TypeLabel.Value = "";
-                        row.Cells[11] = TypeLabel;
-                        row.Cells[12] = TypeLabel;
-                        TypeLabel.ReadOnly = true;
-                    }
-                    else
-                    {
-                        DataGridViewComboBoxCell RoofWinCombo = new DataGridViewComboBoxCell();
-                        RoofWinCombo.Items.Add("천창있음");
-                        RoofWinCombo.Items.Add("");
+                //    if (cell.Value.ToString() != "커튼월창" && cell.Value.ToString() != "창호" && cell.Value.ToString() != "외부출입문")
+                //    {
+                //        DataGridViewTextBoxCell TypeLabel = new DataGridViewTextBoxCell();
+                //        TypeLabel.Value = "";
+                //        row.Cells[11] = TypeLabel;
+                //        row.Cells[12] = TypeLabel;
+                //        TypeLabel.ReadOnly = true;
+                //    }
+                //    else
+                //    {
+                //        DataGridViewComboBoxCell RoofWinCombo = new DataGridViewComboBoxCell();
+                //        RoofWinCombo.Items.Add("천창있음");
+                //        RoofWinCombo.Items.Add("");
 
-                        row.Cells[11] = RoofWinCombo;
-                        RoofWinCombo.ReadOnly = false;
+                //        row.Cells[11] = RoofWinCombo;
+                //        RoofWinCombo.ReadOnly = false;
 
-                        DataGridViewComboBoxCell BlindCombo = new DataGridViewComboBoxCell();
-                        string[][] BlindValue = Program.DB.getValue(DB.type.ProjDB, "ConstructionBlind", "번호");
-                        for (int i = 0; i < BlindValue.Length; i++) { BlindCombo.Items.Add(BlindValue[i][0].ToString()); }
+                //        DataGridViewComboBoxCell BlindCombo = new DataGridViewComboBoxCell();
+                //        string[][] BlindValue = Program.DB.getValue(DB.type.ProjDB, "ConstructionBlind", "번호");
+                //        for (int i = 0; i < BlindValue.Length; i++) { BlindCombo.Items.Add(BlindValue[i][0].ToString()); }
 
-                        row.Cells[12] = BlindCombo;
-                        BlindCombo.ReadOnly = false;
+                //        row.Cells[12] = BlindCombo;
+                //        BlindCombo.ReadOnly = false;
 
-                    }
-                }
+                //    }
+                //}
 
             }
         }
@@ -735,12 +754,13 @@ namespace main.contents
                 }
                 else if (e.ColumnIndex == 10)
                 {
-                    if (!button1.Visible)
+                    if (!comboBox5.Visible)
                     {
-                        button1.Location = new Point(cellX, cellY - 1);
-                        button1.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
-                        button1.Show();
+                        comboBox5.Location = new Point(cellX, cellY);
+                        comboBox5.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
+                        comboBox5.Show();
                     }
+
                 }
             }
         }
@@ -751,12 +771,12 @@ namespace main.contents
             comboBox2.Hide();
             comboBox3.Hide();
             comboBox4.Hide();
-            button1.Hide();
+            comboBox5.Hide();
         }
 
         private void comboBox_DropDownClosed(object sender, EventArgs e)
         {
-            if (comboBox1.ValueChanged || comboBox2.ValueChanged || comboBox3.ValueChanged || comboBox4.ValueChanged)
+            if (comboBox1.ValueChanged || comboBox2.ValueChanged || comboBox3.ValueChanged || comboBox4.ValueChanged || comboBox5.ValueChanged)
             {
                 Save_Envelope();
                 redrawList();

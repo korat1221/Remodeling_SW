@@ -48,6 +48,7 @@
             comboBox2 = new CheckedComboBox();
             comboBox1 = new CheckedComboBox();
             dataGridView1 = new DataGridView();
+            comboBox5 = new CheckedComboBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
@@ -166,6 +167,7 @@
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(comboBox5);
             tabPage2.Controls.Add(info2);
             tabPage2.Controls.Add(Save2_button);
             tabPage2.Controls.Add(comboBox4);
@@ -228,13 +230,12 @@
             // 
             // button1
             // 
-            button1.Location = new Point(523, 105);
+            button1.Location = new Point(726, 6);
             button1.Name = "button1";
-            button1.Size = new Size(75, 23);
+            button1.Size = new Size(88, 25);
             button1.TabIndex = 101;
             button1.Text = "일괄적용";
             button1.UseVisualStyleBackColor = true;
-            button1.Visible = false;
             button1.Click += button1_Click;
             // 
             // comboBox3
@@ -335,6 +336,23 @@
             dataGridView1.DataError += onDataError;
             dataGridView1.SortCompare += dataGridView1_SortCompare;
             // 
+            // comboBox5
+            // 
+            comboBox5.CheckOnClick = true;
+            comboBox5.DrawMode = DrawMode.OwnerDrawVariable;
+            comboBox5.DropDownHeight = 1;
+            comboBox5.Font = new Font("나눔바른고딕", 9.75F);
+            comboBox5.FormattingEnabled = true;
+            comboBox5.IntegralHeight = false;
+            comboBox5.Location = new Point(512, 105);
+            comboBox5.Margin = new Padding(3, 0, 3, 0);
+            comboBox5.Name = "comboBox5";
+            comboBox5.Size = new Size(121, 23);
+            comboBox5.TabIndex = 115;
+            comboBox5.ValueSeparator = ", ";
+            comboBox5.Visible = false;
+            comboBox5.DropDownClosed += comboBox_DropDownClosed;
+            // 
             // sub3dZoneInfo
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -372,5 +390,6 @@
         private Button button3;
         private Button Save1_button;
         private Button info1;
+        public CheckedComboBox comboBox5;
     }
 }
