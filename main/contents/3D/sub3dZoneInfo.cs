@@ -805,6 +805,7 @@ namespace main.contents
 
         private void comboBox_DropDownClosed(object sender, EventArgs e)
         {
+            //필터 변경 시 저장 
             if (comboBox1.ValueChanged || comboBox2.ValueChanged || comboBox3.ValueChanged || comboBox4.ValueChanged || comboBox5.ValueChanged)
             {
                 Save_Envelope();

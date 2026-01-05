@@ -143,6 +143,7 @@ namespace main.contents
         }
         public bool ValidateAndSave(bool isManualSave = false)
         {
+            //화면 전환 시 저장 > 안 됨 
             try
             {
                 foreach (Form form in splitContainer1.Panel2.Controls)
