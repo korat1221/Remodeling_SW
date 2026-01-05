@@ -491,18 +491,60 @@ namespace main.contents.Building
         {
             try
             {
-                if(Elec_dataGridView.Rows.Count>0)
+                if (Elec_dataGridView.Rows.Count > 0)
                 {
                     if (Elec_StartDay_comboBox.Text == null || Elec_StartDay_comboBox.Text.ToString() == "" || Elec_EndDay_comboBox.Text == null || Elec_EndDay_comboBox.Text.ToString() == "")
                     {
                         DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
                         if (res == DialogResult.Yes)
                         {
-                            MessageBox.Show("고지서 기준 사용기간을 입력하세요.");
+                            MessageBox.Show("전기 고지서 기준 사용기간을 입력하세요.");
                             return false;
                         }
                         else
                         {
+                            return true;
+                        }
+                    }
+                    else if (Gas_kWh_dataGridView.Rows.Count > 0)
+                    {
+                        if (Gas_StartDay_comboBox.Text == null || Gas_StartDay_comboBox.Text.ToString() == "" || Gas_EndDay_comboBox.Text == null || Gas_EndDay_comboBox.Text.ToString() == "")
+                        {
+                            DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                            if (res == DialogResult.Yes)
+                            {
+                                MessageBox.Show("가스 고지서 기준 사용기간을 입력하세요.");
+                                return false;
+                            }
+                            else
+                            {
+                                return true;
+                            }
+                        }
+                        else if (DH_kWh_dataGridView.Rows.Count > 0)
+                        {
+                            if (DH_StartDay_comboBox.Text == null || DH_StartDay_comboBox.Text.ToString() == "" || DH_EndDay_comboBox.Text == null || DH_EndDay_comboBox.Text.ToString() == "")
+                            {
+                                DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                                if (res == DialogResult.Yes)
+                                {
+                                    MessageBox.Show("지역난방 고지서 기준 사용기간을 입력하세요.");
+                                    return false;
+                                }
+                                else
+                                {
+                                    return true;
+                                }
+                            }
+                            else
+                            {
+                                Save(isManualSave);
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            Save(isManualSave);
                             return true;
                         }
                     }
@@ -511,10 +553,9 @@ namespace main.contents.Building
                         Save(isManualSave);
                         return true;
                     }
-                }                
+                }
                 else
                 {
-                    Save(isManualSave);
                     return true;
                 }
             }

@@ -29,7 +29,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace main.contents
 {
-    public partial class HeatingSystem : Form
+    public partial class HeatingSystem : Form, IConfirmable
     {
         String Num, Name; String SelectZone_nonsplit; String SelectAHU_nonsplit;
         String SystemLoacation, SLRL, Complex, MainSystem, Sub1System, Sub2System;
@@ -3044,7 +3044,7 @@ namespace main.contents
         private void Save_ce()
         {
             Program.DB.deleteValue(DB.type.ProjDB, "Heating_ce_Form", "난방시스템 = '" + Num + "'");
-            if(ce_dataGridView.Rows.Count ==0)
+            if (ce_dataGridView.Rows.Count == 0)
             {
                 MessageBox.Show("공급설비를 입력하세요.");
                 return;
@@ -3324,29 +3324,46 @@ namespace main.contents
                 MessageBox.Show("오류 발생: " + ex.Message);
             }
         }
-        private void Save_button_Click(object sender, EventArgs e)
+        public bool ValidateAndSave(bool isManualSave = false)
         {
-            if (Name == null)
+            try
             {
-                MessageBox.Show("난방시스템 명칭을 입력하세요.");
+                if (Name == null)
+                {
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show("난방시스템 명칭을 입력하세요.");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    Save_Image();
+                    Save(isManualSave);
+                    if (SelectSolar_split.Count > 0)
+                    {
+                        SaveSolar(isManualSave); //새로 추가함
+                    }
+                    if (SelectFC_split.Count > 0)
+                    {
+                        SaveFC(isManualSave); //새로 추가함
+                    }
+                    return true;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Save();
-                Save_Image();
-
-                if (SelectSolar_split.Count > 0)
-                {
-                    SaveSolar(); //새로 추가함
-                }
-                if (SelectFC_split.Count > 0)
-                {
-                    SaveFC(); //새로 추가함
-                }
+                // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
+                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+                return false;
             }
-
         }
-        private void Save()
+        private void Save(bool isManualSave = false)
         {
             remove_gen();
             BoilerNum_nonsplit = "";
@@ -3387,12 +3404,9 @@ namespace main.contents
                 Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수,펌프1유량,펌프2유량,펌프1양정,펌프2양정", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PumpUse + "','" + PumpMethod + "','" + Pump1 + "','" + Pump2 + "','" + Pump1Valve + "','" + Pump2Valve + "','" + Pump1Control + "','" + Pump2Control + "','" + Pump1Num.ToString() + "','" + Pump2Num.ToString() + "','" + Pump1Volume.ToString() + "','" + Pump2Volume.ToString() + "','" + Pump1Head.ToString() + "','" + Pump2Head.ToString() + "'", "번호");
             }
             Program.DB.saveProject();
-            this.DialogResult = DialogResult.OK;
-            this.Hide();
-            Program.getMenuForm().DoLoadForm(39, OnLoadListProc);
         }
 
-        public void SaveFC()
+        public void SaveFC(bool isManualSave = false)
         {
             //SelectFC_nonsplit, FCNum_nonsplit, FCElecInstall_nonsplit, FCElecHeat_nonsplit
             string 적용유형;
@@ -3435,7 +3449,7 @@ namespace main.contents
             return fcenum;
         } //새로추가함
 
-        public void SaveSolar()
+        public void SaveSolar(bool isManualSave = false)
         {
             string 적용유형;
             string 적용설비 = "난방";
@@ -3481,31 +3495,31 @@ namespace main.contents
         private void remove_gen()
         {//보일러", "외기 히트펌프", "지열 히트펌프", "지하수 히트펌프", "태양열 융합 히트펌프", "흡수식온수기", "지역난방", "태양열시스템", "연료전지
 
-            if(Complex =="단일설비가동")
+            if (Complex == "단일설비가동")
             {
                 Sub1System = null;
             }
-            if (MainSystem !="보일러"&& Sub1System!="보일러")
+            if (MainSystem != "보일러" && Sub1System != "보일러")
             {
-                SelectBoiler_nonsplit = null;  BoilerNum_nonsplit = null;
+                SelectBoiler_nonsplit = null; BoilerNum_nonsplit = null;
                 Boiler_dataGridView.Rows.Clear();
             }
-            if((MainSystem != "외기 히트펌프" && Sub1System != "외기 히트펌프") && (MainSystem != "태양열 융합 히트펌프" && Sub1System != "태양열 융합 히트펌프"))
+            if ((MainSystem != "외기 히트펌프" && Sub1System != "외기 히트펌프") && (MainSystem != "태양열 융합 히트펌프" && Sub1System != "태양열 융합 히트펌프"))
             {
                 SelectHP_nonsplit[0] = null;
                 HPNum_nonsplit[0] = null;
-                HPSupply_nonsplit[0] = null ;
+                HPSupply_nonsplit[0] = null;
                 HPControl_nonsplit[0] = null;
-               
+
             }
-            if(MainSystem != "지열 히트펌프" && Sub1System != "지열 히트펌프")
+            if (MainSystem != "지열 히트펌프" && Sub1System != "지열 히트펌프")
             {
                 SelectHP_nonsplit[1] = null;
                 HPNum_nonsplit[1] = null;
                 HPSupply_nonsplit[1] = null;
                 HPControl_nonsplit[1] = null;
             }
-           
+
             if (MainSystem != "지하수 히트펌프" && Sub1System != "지하수 히트펌프")
             {
                 SelectHP_nonsplit[2] = null;
@@ -3526,16 +3540,16 @@ namespace main.contents
                 SelectDH_nonsplit = null;
                 DH_dataGridView.Rows.Clear();
             }
-            
+
             if (MainSystem != "태양열시스템" && Sub1System != "태양열시스템")
             {
                 SelectSolar_nonsplit = null;
                 SolarNum_nonsplit = null;
                 SolarDirection_nonsplit = null;
-                SolarDegree_nonsplit = null; 
+                SolarDegree_nonsplit = null;
                 Solar_dataGridView.Rows.Clear();
             }
-            
+
             if (MainSystem != "연료전지" && Sub1System != "연료전지")
             {
                 SelectFC_nonsplit = null;
@@ -4102,7 +4116,7 @@ namespace main.contents
 
         #endregion
 
-    
+
         private void Boiler_Remove_button_Click(object sender, EventArgs e)
         {
             if ((MessageBox.Show(Boiler_dataGridView.Rows[Boiler_SelectRow].Cells[1].Value.ToString() + "을 삭제 하시겠습니까?", "삭제 확인", MessageBoxButtons.YesNo) == DialogResult.Yes))
@@ -4208,5 +4222,6 @@ namespace main.contents
                 MessageBox.Show("The folder path does not exist.");
             }
         }
+
     }
 }

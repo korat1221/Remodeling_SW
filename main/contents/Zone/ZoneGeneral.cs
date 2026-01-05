@@ -7,7 +7,7 @@ using System.Data;
 
 namespace main.contents
 {
-    public partial class ZoneGeneral : Form
+    public partial class ZoneGeneral : Form, IConfirmable
     {
         String ZoneNum; String SelectPreZone_nonsplit; ArrayList SelectPreZone_split = new ArrayList();
         String RoomControl = "일반", Ground, HCType, AHUType;
@@ -622,46 +622,7 @@ namespace main.contents
             Program.UTIL.textBox_doubleComa(VentilationRate_textBox, true, 1);
         }
 
-        private void Save_button_Click(object sender, EventArgs e)
-        {
-            if (ZoneName == null)
-            {
-                MessageBox.Show("존 이름을 입력하세요.");
-            }
-            else if (Ventilation_checkBox.Checked)
-            {
-                if (AHUType == null)
-                {
-                    MessageBox.Show("환기방식을 선택하세요.");
-                }
-                else
-                {
-                    save();
-                }
-            }
-            else if (Usage == null)
-            {
-                MessageBox.Show("용도프로필을 선택하세요.");
-            }
-            else if (CeilingHeight == 0)
-            {
-                MessageBox.Show("천장고를 입력하세요.");
-            }
-            else if (PersonNum_textBox.Text == null)
-            {
-                MessageBox.Show("재실자수를 입력하세요.");
-            }
-            else
-            {
-                save();
-            }
-        }
-        public static bool OnLoadListProc(Form form)
-        {
-            List_Zone f = (List_Zone)form;
-            f.load_List(Layer);
-            return true;
-        }
+       
         private void Save_Image()
         {
             try
@@ -698,8 +659,116 @@ namespace main.contents
                 MessageBox.Show("오류 발생: " + ex.Message);
             }
         }
+        public bool ValidateAndSave(bool isManualSave = false)
+        {
+            try
+            {
+                if (ZoneName == null)
+                {
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show("존 이름을 입력하세요.");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else if (Ventilation_checkBox.Checked && AHUType == null)
+                {
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show("환기방식을 선택하세요.");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else if (Usage == null)
+                {
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show("용도프로필을 선택하세요.");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else if (CeilingHeight == 0) 
+                {
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show("천장고를 입력하세요.");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else if (StartTime_comboBox.SelectedItem == null || EndTime_comboBox.SelectedItem == null)
+                {
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show("사용시간 및 종료시간을 선택하세요.");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else if (WeekUseDay_comboBox == null)
+                {
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show("사용시간 및 종료시간을 선택하세요.");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else if (PersonNum_textBox.Text == null)
+                {
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show("재실자수를 입력하세요.");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    Save(isManualSave);
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
+                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+                return false;
+            }
+        }
 
-        private void save()
+        private void Save(bool isManualSave = false)
         {
             Save_Image();
             //존일반정보 폼에 해당하는 정보만 저장 
@@ -716,11 +785,7 @@ namespace main.contents
             + NetVolume.ToString() + "','" + VentilationRate.ToString() + "','" + Volume_wd.ToString() + "','" + Volume_we.ToString() + "','"
             + NetArea.ToString() + "','" + SelectHRV + "','" + SelectPreZone_nonsplit + "','" + 증축여부 + "'", "존번호");
 
-            Program.DB.saveProject();
-            MessageBox.Show(ZoneNum + "[" + ZoneName + "] 정보를 저장하였습니다.");
-            this.DialogResult = DialogResult.OK;
-            this.Hide();
-            Program.getMenuForm().DoLoadForm(33, OnLoadListProc);
+            Program.DB.saveProject();            
         }
         private void reset()
         {

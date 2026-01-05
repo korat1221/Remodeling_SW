@@ -108,12 +108,7 @@ namespace main
         }
         public static void Cal_Qb()
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BUildingGeneral", "n50");
-            if (Value.Length > 0 && Value[0][0] != "")
-            { 
-                double[] q50_ = Cal_q50(Convert.ToDouble(Value[0][0])); 
-                Save_q50(q50_);
-            }
+            Save_q50(Cal_q50(Load_n50()));
             Save_dUtb_2D(Cal_dUtb_2D());
 
             Zone_Arrange();
@@ -262,6 +257,17 @@ namespace main
             }
         }
         #region 기밀
+
+        public static double Load_n50()
+        {
+            double n50 = 0;
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BUildingGeneral", "n50");
+            if (Value.Length > 0 && Value[0][0] != "")
+            {
+                n50 = Convert.ToDouble(Value[0][0]);
+            }
+            return n50;
+        }
         public static double[] Cal_q50(double n50)
         {
             double Area_tot = 0; //직접외기 외피면적
@@ -576,7 +582,7 @@ namespace main
             while (++i < zones.Length)
             {
                 ZoneLight zonelight1 = new ZoneLight(zones_순번[i]);
-                zonelight.Add(zonelight1);
+                zonelight.Add(zonelight1); //
                 ZoneLights[zones_순번[i]] = zonelight1;
                 Zone zone1 = new Zone(zones_순번[i]);
                 zone.Add(zone1);
@@ -607,7 +613,7 @@ namespace main
         }
         public static void Zone_Calc(Zone zone1, ZoneLight zonelight1)
         {
-            zonelight1.Calc_time(zone1.ZoneNum);
+            zonelight1.Calc_time();
             zonelight1.Calc_Facade_general();
             zonelight1.Calc_Facade_shade();
             zonelight1.Calc_Facade_FDS();
@@ -633,6 +639,7 @@ namespace main
             zone1.ZoneQ_DHU();
             zone1.ZoneQI_L();
             zone1.ZoneQI();
+            zone1.Zone_Theta_U();
             zone1.Zone_Theta_U();
             zone1.Zoneeta();
             zone1.ZoneQb();

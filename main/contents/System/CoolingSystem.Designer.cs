@@ -138,12 +138,12 @@ namespace main.contents
             CT_cwin = new Label();
             CT_cwout = new Label();
             SourcepictureBox = new PictureBox();
-            Save_button = new Button();
             CoolingSystemNameText = new TextBox();
             label1 = new Label();
             label2 = new Label();
             label5 = new Label();
             GeneralPanel = new Panel();
+            infoCooling = new Button();
             label7 = new Label();
             radioButton3 = new RadioButton();
             label10 = new Label();
@@ -179,7 +179,6 @@ namespace main.contents
             CT_1 = new Label();
             panel7 = new Panel();
             panel5 = new Panel();
-            infoCooling = new Button();
             panel2.SuspendLayout();
             tabControl1.SuspendLayout();
             Generator_tabpage.SuspendLayout();
@@ -1518,17 +1517,6 @@ namespace main.contents
             SourcepictureBox.TabIndex = 2;
             SourcepictureBox.TabStop = false;
             // 
-            // Save_button
-            // 
-            Save_button.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
-            Save_button.Location = new Point(1021, 652);
-            Save_button.Name = "Save_button";
-            Save_button.Size = new Size(78, 23);
-            Save_button.TabIndex = 20;
-            Save_button.Text = "SAVE";
-            Save_button.UseVisualStyleBackColor = true;
-            Save_button.Click += Save_button_Click;
-            // 
             // CoolingSystemNameText
             // 
             CoolingSystemNameText.BackColor = SystemColors.Window;
@@ -1604,6 +1592,21 @@ namespace main.contents
             GeneralPanel.Size = new Size(1000, 80);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // infoCooling
+            // 
+            infoCooling.BackColor = SystemColors.ControlLight;
+            infoCooling.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoCooling.FlatStyle = FlatStyle.System;
+            infoCooling.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoCooling.Location = new Point(970, 5);
+            infoCooling.Margin = new Padding(0);
+            infoCooling.Name = "infoCooling";
+            infoCooling.Size = new Size(23, 23);
+            infoCooling.TabIndex = 195;
+            infoCooling.Text = "?";
+            infoCooling.UseVisualStyleBackColor = false;
+            infoCooling.Click += infoCooling_Click;
             // 
             // label7
             // 
@@ -1995,21 +1998,6 @@ namespace main.contents
             panel5.Size = new Size(1000, 291);
             panel5.TabIndex = 161;
             // 
-            // infoCooling
-            // 
-            infoCooling.BackColor = SystemColors.ControlLight;
-            infoCooling.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            infoCooling.FlatStyle = FlatStyle.System;
-            infoCooling.Font = new Font("Microsoft Sans Serif", 9.75F);
-            infoCooling.Location = new Point(970, 5);
-            infoCooling.Margin = new Padding(0);
-            infoCooling.Name = "infoCooling";
-            infoCooling.Size = new Size(23, 23);
-            infoCooling.TabIndex = 195;
-            infoCooling.Text = "?";
-            infoCooling.UseVisualStyleBackColor = false;
-            infoCooling.Click += infoCooling_Click;
-            // 
             // CoolingSystem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -2028,7 +2016,6 @@ namespace main.contents
             Controls.Add(label31);
             Controls.Add(PowerTotal_textBox);
             Controls.Add(label30);
-            Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
             Controls.Add(panel7);
             Controls.Add(panel5);
@@ -2091,7 +2078,6 @@ namespace main.contents
         #endregion
         private Panel panel2;
         private Panel ImagePanel;
-        private Button Save_button;
         private CustomTabControl tabControl1;
         private TabPage Generator_tabpage;
         private TabPage tabPage2;

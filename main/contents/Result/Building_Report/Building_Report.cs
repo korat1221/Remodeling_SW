@@ -964,8 +964,8 @@ namespace main.contents.Result.Building_Report
                 double[] 난방1 = new double[12], 냉방1 = new double[12], 급탕1 = new double[12], 조명1 = new double[12], 공조1 = new double[12], 신재생1 = new double[12], 전기1 = new double[12], 열1 = new double[12], 총소요1 = new double[12];
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    string[][] RES1 = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "생산유형='전기'and 월 ='" + (mth + 1).ToString() + "월'");
-                    string[][] RES2 = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "not 생산유형='전기'and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] RES1 = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "생산유형='전기'and 생산소비='생산' and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] RES2 = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "not 생산유형='전기' and 생산소비='생산' and 월 ='" + (mth + 1).ToString() + "월'");
                     string[][] Fi1 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
                     string[][] Fi2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "(연료='가스' OR 연료='기름')  and 월 ='" + (mth + 1).ToString() + "월'");
                     string[][] Fi3 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "연료='지역난방' and 월 ='" + (mth + 1).ToString() + "월'");

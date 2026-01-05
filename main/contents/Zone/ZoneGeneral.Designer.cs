@@ -161,7 +161,6 @@ namespace main.contents
             label4 = new System.Windows.Forms.Label();
             label9 = new System.Windows.Forms.Label();
             label13 = new System.Windows.Forms.Label();
-            Save_button = new System.Windows.Forms.Button();
             GeneralPanel.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
@@ -1576,18 +1575,6 @@ namespace main.contents
             label13.Size = new Size(100, 23);
             label13.TabIndex = 0;
             // 
-            // Save_button
-            // 
-            Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1018, 665);
-            Save_button.Name = "Save_button";
-            Save_button.Size = new Size(130, 25);
-            Save_button.TabIndex = 88;
-            Save_button.Text = "SAVE";
-            Save_button.UseVisualStyleBackColor = true;
-            Save_button.Click += Save_button_Click;
-            // 
             // ZoneGeneral
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1596,7 +1583,6 @@ namespace main.contents
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 690);
             Controls.Add(panel2);
-            Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "ZoneGeneral";
@@ -1696,7 +1682,6 @@ namespace main.contents
         private System.Windows.Forms.TextBox textBox22;
         private System.Windows.Forms.TextBox ZoneName_textBox;
         private System.Windows.Forms.TextBox OccupancyDensity_index_textBox;
-        private System.Windows.Forms.Button Save_button;
         private System.Windows.Forms.Label label55;
         private System.Windows.Forms.Label label54;
         private System.Windows.Forms.TextBox NetVolume_textBox;

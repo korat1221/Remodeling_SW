@@ -54,6 +54,7 @@
             DataGridViewCellStyle dataGridViewCellStyle23 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle24 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            infoDHW = new Button();
             label20 = new Label();
             Zone_Qmax_textBox = new TextBox();
             Zone_Qba_textBox = new TextBox();
@@ -148,8 +149,6 @@
             Pump1_textBox = new TextBox();
             Pump1_button = new Button();
             Pump1_label = new Label();
-            Previous_button = new Button();
-            Save_button = new Button();
             ImagePanel = new Panel();
             stopumppictureBox = new PictureBox();
             SubDist2pictureBox = new PictureBox();
@@ -166,7 +165,6 @@
             ce1_pictureBox = new PictureBox();
             panel2 = new Panel();
             panel5 = new Panel();
-            infoDHW = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             tabControl1.SuspendLayout();
@@ -232,6 +230,21 @@
             GeneralPanel.Size = new Size(1000, 80);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // infoDHW
+            // 
+            infoDHW.BackColor = SystemColors.ControlLight;
+            infoDHW.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoDHW.FlatStyle = FlatStyle.System;
+            infoDHW.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoDHW.Location = new Point(970, 5);
+            infoDHW.Margin = new Padding(0);
+            infoDHW.Name = "infoDHW";
+            infoDHW.Size = new Size(23, 23);
+            infoDHW.TabIndex = 197;
+            infoDHW.Text = "?";
+            infoDHW.UseVisualStyleBackColor = false;
+            infoDHW.Click += infoDHW_Click;
             // 
             // label20
             // 
@@ -1651,29 +1664,6 @@
             Pump1_label.TabIndex = 165;
             Pump1_label.Text = "1차펌프";
             // 
-            // Previous_button
-            // 
-            Previous_button.BackColor = SystemColors.ButtonHighlight;
-            Previous_button.ForeColor = Color.Black;
-            Previous_button.Location = new Point(1005, 650);
-            Previous_button.Name = "Previous_button";
-            Previous_button.Size = new Size(88, 25);
-            Previous_button.TabIndex = 145;
-            Previous_button.Text = "<<PREVIOUS";
-            Previous_button.UseVisualStyleBackColor = true;
-            // 
-            // Save_button
-            // 
-            Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1099, 650);
-            Save_button.Name = "Save_button";
-            Save_button.Size = new Size(88, 25);
-            Save_button.TabIndex = 144;
-            Save_button.Text = "SAVE";
-            Save_button.UseVisualStyleBackColor = true;
-            Save_button.Click += Save_button_Click;
-            // 
             // ImagePanel
             // 
             ImagePanel.BackColor = Color.White;
@@ -1867,21 +1857,6 @@
             panel5.Size = new Size(1000, 291);
             panel5.TabIndex = 148;
             // 
-            // infoDHW
-            // 
-            infoDHW.BackColor = SystemColors.ControlLight;
-            infoDHW.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            infoDHW.FlatStyle = FlatStyle.System;
-            infoDHW.Font = new Font("Microsoft Sans Serif", 9.75F);
-            infoDHW.Location = new Point(970, 5);
-            infoDHW.Margin = new Padding(0);
-            infoDHW.Name = "infoDHW";
-            infoDHW.Size = new Size(23, 23);
-            infoDHW.TabIndex = 197;
-            infoDHW.Text = "?";
-            infoDHW.UseVisualStyleBackColor = false;
-            infoDHW.Click += infoDHW_Click;
-            // 
             // DHWSystem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1889,8 +1864,6 @@
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(Previous_button);
-            Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
             Controls.Add(panel2);
             Controls.Add(panel5);
@@ -2006,8 +1979,6 @@
         private TextBox StoragePump_textBox;
         private Button StoragePump_button;
         private Label StoragePump_label;
-        private Button Previous_button;
-        private Button Save_button;
         private TextBox OldSystem_textBox;
         private RadioButton radioButton4;
         private RadioButton radioButton3;

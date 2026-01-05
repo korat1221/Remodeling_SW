@@ -41,7 +41,7 @@ using main.info;
 
 namespace main.contents
 {
-    public partial class Model : Form
+    public partial class Model : Form, IConfirmable
     {
         bool scriptable = false;
         public enum FormID
@@ -135,7 +135,32 @@ namespace main.contents
                 }
             }
         }
+        public bool ValidateAndSave(bool isManualSave = false)
+        {
+            //화면 전환 시 저장 > 안 됨 
+            try
+            {
+                foreach (Form form in splitContainer1.Panel2.Controls)
+                {
+                    if (form.Name == "sub3dZoneInfo")
+                    {
+                        sub3dZoneInfo f = (sub3dZoneInfo)form;
 
+                        f.Save_Envelope();
+
+                        return true;
+                    }
+                }
+                return false;
+
+            }
+            catch (Exception ex)
+            {
+                // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
+                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+                return false;
+            }
+        }
         void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)
         {
             Program.UTIL.selectWall(args.TryGetWebMessageAsString());
@@ -150,49 +175,7 @@ namespace main.contents
 
                     f.resetSID();
 
-                    string[][] value = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,외피유형", "");
-                    if (value.Length > 0)
-                    {
-                        string[][] Value = null;
-                        for (int a = 0; a < value.Length; a++)
-                        {
-
-                            switch (value[a][1])
-                            {
-                                case "커튼월창":
-                                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭", "");
-                                    break;
-                                case "외벽":
-                                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭", "");
-                                    break;
-                                case "지붕":
-                                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "번호,명칭", "");
-                                    break;
-                                case "최하층바닥":
-                                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "번호,명칭", "");
-                                    break;
-                                case "창호":
-                                    Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭", "");
-                                    break;
-                                case "외부출입문":
-                                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "번호,명칭", "");
-                                    break;
-                                case "내벽":
-                                    Value = null;
-                                    break;
-                                case "층간바닥":
-                                    Value = null;
-                                    break;
-                            }
-
-                            if (Value != null && Value.Length > 0)
-                            {
-                               // Program.DB.setValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,구조체,구조체번호", "'" + value[a][0] + "','" + Value[0][1] + "','" + Value[0][0] + "'", "번호");
-
-                            }
-
-                        }
-                    }
+                  
                     return;
                 }
             }

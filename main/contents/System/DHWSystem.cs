@@ -31,7 +31,7 @@ using main.info;
 
 namespace main.contents
 {
-    public partial class DHWSystem : Form
+    public partial class DHWSystem : Form, IConfirmable
     {
         String Num, Name; String SelectZone_nonsplit;
         String SystemLoacation, SLRL, Complex, MainSystem, Sub1System, Sub2System;
@@ -2284,28 +2284,47 @@ namespace main.contents
                 MessageBox.Show("오류 발생: " + ex.Message);
             }
         }
-        private void Save_button_Click(object sender, EventArgs e)
-        {
-            if (Name == null)
-            {
-                MessageBox.Show("급탕시스템 명칭을 입력하세요.");
-            }
-            else
-            {
-                Save();
-                Save_Image();
-                if (SelectSolar_split.Count > 0)
-                {
-                    SaveSolar(); //새로 추가함
-                }
-                if (SelectFC_split.Count > 0)
-                {
-                    SaveFC(); //새로 추가함
-                }
-            }
 
+        public bool ValidateAndSave(bool isManualSave = false)
+        {
+            try
+            {
+                if (Name == null)
+                {
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show("급탕시스템 명칭을 입력하세요.");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    Save(isManualSave);
+                    Save_Image();
+                    if (SelectSolar_split.Count > 0)
+                    {
+                        SaveSolar(isManualSave);
+                    }
+                    if (SelectFC_split.Count > 0)
+                    {
+                        SaveFC(isManualSave);
+                    }
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
+                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+                return false;
+            }
         }
-        private void Save()
+        private void Save(bool isManualSave = false)
         {
             remove_gen();
             BoilerNum_nonsplit = "";
@@ -2328,17 +2347,8 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Form", "번호,프로젝트유형,히트펌프번호,히트펌프제어방식,히트펌프대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectHP_nonsplit + "','" + HPControl_nonsplit + "','" + HPNum_nonsplit + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Form", "번호,프로젝트유형,연료전지번호,연료전지대수,연료전지설치유형,연료전지생산유형", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectFC_nonsplit + "','" + FCNum_nonsplit + "','" + FCElecInstall_nonsplit + "','" + FCElecHeat_nonsplit + "'", "번호");
             Program.DB.saveProject();
-            this.DialogResult = DialogResult.OK;
-            this.Hide();
-            Program.getMenuForm().DoLoadForm(49, OnLoadListProc);
         }
 
-        public static bool OnLoadListProc(Form form)
-        {
-            List_DHWSystem f = (List_DHWSystem)form;
-            f.load_List();
-            return true;
-        }
 
         private void remove_gen()
         {//보일러", "외기 히트펌프", "  "지역난방", "태양열시스템", "연료전지
@@ -2453,7 +2463,7 @@ namespace main.contents
         }
 
         //새로추가함
-        public void SaveFC()
+        public void SaveFC(bool isManualSave = false)
         {
             //SelectFC_nonsplit, FCNum_nonsplit, FCElecInstall_nonsplit, FCElecHeat_nonsplit
             string 적용유형;
@@ -2496,7 +2506,7 @@ namespace main.contents
             return fcenum;
         } //새로추가함
 
-        public void SaveSolar()
+        public void SaveSolar(bool isManualSave = false)
         {
             string 적용유형;
             string 적용설비 = "급탕";

@@ -30,6 +30,7 @@ namespace main.contents
         private void InitializeComponent()
         {
             GeneralPanel = new Panel();
+            infoLighting = new Button();
             Num_textBox = new TextBox();
             ZoneName_textBox = new TextBox();
             Icon_pictureBox = new PictureBox();
@@ -147,13 +148,11 @@ namespace main.contents
             label13 = new Label();
             label14 = new Label();
             label10 = new Label();
-            Save_button = new Button();
             panel5 = new Panel();
             panel6 = new Panel();
             label18 = new Label();
             label19 = new Label();
             label20 = new Label();
-            infoLighting = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel2.SuspendLayout();
@@ -187,6 +186,21 @@ namespace main.contents
             GeneralPanel.Size = new Size(1000, 80);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // infoLighting
+            // 
+            infoLighting.BackColor = SystemColors.ControlLight;
+            infoLighting.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoLighting.FlatStyle = FlatStyle.System;
+            infoLighting.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoLighting.Location = new Point(964, 4);
+            infoLighting.Margin = new Padding(0);
+            infoLighting.Name = "infoLighting";
+            infoLighting.Size = new Size(23, 23);
+            infoLighting.TabIndex = 193;
+            infoLighting.Text = "?";
+            infoLighting.UseVisualStyleBackColor = false;
+            infoLighting.Click += infoLighting_Click;
             // 
             // Num_textBox
             // 
@@ -1626,18 +1640,6 @@ namespace main.contents
             label10.TabIndex = 214;
             label10.Visible = false;
             // 
-            // Save_button
-            // 
-            Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1022, 647);
-            Save_button.Name = "Save_button";
-            Save_button.Size = new Size(130, 25);
-            Save_button.TabIndex = 215;
-            Save_button.Text = "SAVE";
-            Save_button.UseVisualStyleBackColor = true;
-            Save_button.Click += Save_button_Click;
-            // 
             // panel5
             // 
             panel5.BackColor = Color.White;
@@ -1690,21 +1692,6 @@ namespace main.contents
             label20.TabIndex = 222;
             label20.Text = "m";
             // 
-            // infoLighting
-            // 
-            infoLighting.BackColor = SystemColors.ControlLight;
-            infoLighting.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            infoLighting.FlatStyle = FlatStyle.System;
-            infoLighting.Font = new Font("Microsoft Sans Serif", 9.75F);
-            infoLighting.Location = new Point(964, 4);
-            infoLighting.Margin = new Padding(0);
-            infoLighting.Name = "infoLighting";
-            infoLighting.Size = new Size(23, 23);
-            infoLighting.TabIndex = 193;
-            infoLighting.Text = "?";
-            infoLighting.UseVisualStyleBackColor = false;
-            infoLighting.Click += infoLighting_Click;
-            // 
             // ZoneLighting
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1716,7 +1703,6 @@ namespace main.contents
             Controls.Add(label19);
             Controls.Add(label18);
             Controls.Add(panel6);
-            Controls.Add(Save_button);
             Controls.Add(label10);
             Controls.Add(label14);
             Controls.Add(label13);
@@ -1851,7 +1837,6 @@ namespace main.contents
         private Label label13;
         private Label label14;
         private Label label10;
-        private Button Save_button;
         private TextBox ZoneName_textBox;
         private Label Window_Tao_label;
         private TextBox Window_Tao_textBox;
