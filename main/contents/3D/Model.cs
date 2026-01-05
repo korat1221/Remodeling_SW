@@ -23,7 +23,6 @@ using main.subcontents.ConstructionWindow;
 using main.contents;
 using System.Diagnostics;
 using Microsoft.Win32;
-using Excel = Microsoft.Office.Interop.Excel;
 //
 using System.Runtime.InteropServices;
 using static System.Net.WebRequestMethods;
@@ -45,11 +44,6 @@ namespace main.contents
     public partial class Model : Form
     {
         bool scriptable = false;
-        static Excel.Application excelApp = null;
-        static Excel.Workbook workBook = null;
-        static Excel.Worksheet workSheet_Zone = null;
-        static Excel.Worksheet workSheet_Envelope = null;
-        static Excel.Worksheet workSheet_TB = null;
         public enum FormID
         {
             ZoneInfo = 0,
