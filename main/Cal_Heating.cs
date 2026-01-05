@@ -1326,9 +1326,18 @@ namespace main
                     dop = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
                 }
                 Pth_gen_out[mth] = Math.Min(Pfc_th, QCHW_gen_out[mth] / (top * dop[mth]));
-                Eth_gen_out[mth] = Pth_gen_out[mth] * top * dop[mth];
-                Eth_gen_out_w[mth] = double.IsNaN(Eth_gen_out[mth] * Qw_outg[mth] / QCHW_gen_out[mth]) ? 0 : Eth_gen_out[mth] * Qw_outg[mth] / QCHW_gen_out[mth];
-                Eth_gen_out_h[mth] = double.IsNaN(Eth_gen_out[mth] * Qh_outg[mth] / QCHW_gen_out[mth]) ? 0 : Eth_gen_out[mth] * Qh_outg[mth] / QCHW_gen_out[mth];
+                if (FCElecHeat == "전기와 열")
+                {
+                    Eth_gen_out[mth] = Pth_gen_out[mth] * top * dop[mth];
+                    Eth_gen_out_w[mth] = double.IsNaN(Eth_gen_out[mth] * Qw_outg[mth] / QCHW_gen_out[mth]) ? 0 : Eth_gen_out[mth] * Qw_outg[mth] / QCHW_gen_out[mth];
+                    Eth_gen_out_h[mth] = double.IsNaN(Eth_gen_out[mth] * Qh_outg[mth] / QCHW_gen_out[mth]) ? 0 : Eth_gen_out[mth] * Qh_outg[mth] / QCHW_gen_out[mth];
+                }
+                else
+                {
+                    Eth_gen_out[mth] = 0;
+                    Eth_gen_out_w[mth] = 0;
+                    Eth_gen_out_h[mth] = 0;
+                }
             }
             for(int mth=0; mth < 12; mth ++)
             {
