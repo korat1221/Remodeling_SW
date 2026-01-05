@@ -57,6 +57,7 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle26 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle27 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            infoHeating = new Button();
             label20 = new Label();
             AHU_Qmax_textBox = new TextBox();
             AHU_Qba_textBox = new TextBox();
@@ -184,8 +185,6 @@ namespace main.contents
             label4 = new Label();
             ce1Type_comboBox = new CustomComboBox();
             ce2Zone_textBox = new TextBox();
-            Previous_button = new Button();
-            Save_button = new Button();
             ImagePanel = new Panel();
             stopumppictureBox = new PictureBox();
             SubDist2pictureBox = new PictureBox();
@@ -203,7 +202,6 @@ namespace main.contents
             panel2 = new Panel();
             panel5 = new Panel();
             panel6 = new Panel();
-            infoHeating = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             tabControl1.SuspendLayout();
@@ -281,6 +279,21 @@ namespace main.contents
             GeneralPanel.Size = new Size(1000, 80);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // infoHeating
+            // 
+            infoHeating.BackColor = SystemColors.ControlLight;
+            infoHeating.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoHeating.FlatStyle = FlatStyle.System;
+            infoHeating.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoHeating.Location = new Point(970, 3);
+            infoHeating.Margin = new Padding(0);
+            infoHeating.Name = "infoHeating";
+            infoHeating.Size = new Size(23, 23);
+            infoHeating.TabIndex = 194;
+            infoHeating.Text = "?";
+            infoHeating.UseVisualStyleBackColor = false;
+            infoHeating.Click += infoHeating_Click;
             // 
             // label20
             // 
@@ -2180,29 +2193,6 @@ namespace main.contents
             ce2Zone_textBox.TabIndex = 192;
             ce2Zone_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // Previous_button
-            // 
-            Previous_button.BackColor = SystemColors.ButtonHighlight;
-            Previous_button.ForeColor = Color.Black;
-            Previous_button.Location = new Point(1005, 650);
-            Previous_button.Name = "Previous_button";
-            Previous_button.Size = new Size(88, 25);
-            Previous_button.TabIndex = 145;
-            Previous_button.Text = "<<PREVIOUS";
-            Previous_button.UseVisualStyleBackColor = true;
-            // 
-            // Save_button
-            // 
-            Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1099, 650);
-            Save_button.Name = "Save_button";
-            Save_button.Size = new Size(88, 25);
-            Save_button.TabIndex = 144;
-            Save_button.Text = "SAVE";
-            Save_button.UseVisualStyleBackColor = true;
-            Save_button.Click += Save_button_Click;
-            // 
             // ImagePanel
             // 
             ImagePanel.BackColor = Color.White;
@@ -2406,21 +2396,6 @@ namespace main.contents
             panel6.Size = new Size(1000, 291);
             panel6.TabIndex = 127;
             // 
-            // infoHeating
-            // 
-            infoHeating.BackColor = SystemColors.ControlLight;
-            infoHeating.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            infoHeating.FlatStyle = FlatStyle.System;
-            infoHeating.Font = new Font("Microsoft Sans Serif", 9.75F);
-            infoHeating.Location = new Point(970, 3);
-            infoHeating.Margin = new Padding(0);
-            infoHeating.Name = "infoHeating";
-            infoHeating.Size = new Size(23, 23);
-            infoHeating.TabIndex = 194;
-            infoHeating.Text = "?";
-            infoHeating.UseVisualStyleBackColor = false;
-            infoHeating.Click += infoHeating_Click;
-            // 
             // HeatingSystem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -2428,8 +2403,6 @@ namespace main.contents
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(Previous_button);
-            Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
             Controls.Add(panel5);
             Controls.Add(panel6);
@@ -2562,8 +2535,6 @@ namespace main.contents
         private TextBox StoragePump_textBox;
         private Button StoragePump_button;
         private Label StoragePump_label;
-        private Button Previous_button;
-        private Button Save_button;
         private Label label15;
         private TextBox OldSystem_textBox;
         private Label label13;

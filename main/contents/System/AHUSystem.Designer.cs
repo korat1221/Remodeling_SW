@@ -33,6 +33,7 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            infoAHU = new Button();
             label19 = new Label();
             label23 = new Label();
             Icon_pictureBox = new PictureBox();
@@ -58,8 +59,6 @@ namespace main.contents
             label13 = new Label();
             label14 = new Label();
             Num_textBox = new TextBox();
-            Previous_button = new Button();
-            Save_button = new Button();
             ImagePanel = new Panel();
             minhumid_label = new Label();
             maxhumid_label = new Label();
@@ -143,7 +142,6 @@ namespace main.contents
             tabControl1 = new CustomTabControl();
             panel1 = new Panel();
             panel7 = new Panel();
-            infoAHU = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             ImagePanel.SuspendLayout();
@@ -200,6 +198,21 @@ namespace main.contents
             GeneralPanel.Size = new Size(1000, 80);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
+            // 
+            // infoAHU
+            // 
+            infoAHU.BackColor = SystemColors.ControlLight;
+            infoAHU.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoAHU.FlatStyle = FlatStyle.System;
+            infoAHU.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoAHU.Location = new Point(970, 4);
+            infoAHU.Margin = new Padding(0);
+            infoAHU.Name = "infoAHU";
+            infoAHU.Size = new Size(23, 23);
+            infoAHU.TabIndex = 198;
+            infoAHU.Text = "?";
+            infoAHU.UseVisualStyleBackColor = false;
+            infoAHU.Click += infoAHU_Click;
             // 
             // label19
             // 
@@ -478,29 +491,6 @@ namespace main.contents
             Num_textBox.Size = new Size(56, 15);
             Num_textBox.TabIndex = 114;
             Num_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // Previous_button
-            // 
-            Previous_button.BackColor = SystemColors.ButtonHighlight;
-            Previous_button.ForeColor = Color.Black;
-            Previous_button.Location = new Point(1006, 666);
-            Previous_button.Name = "Previous_button";
-            Previous_button.Size = new Size(88, 25);
-            Previous_button.TabIndex = 145;
-            Previous_button.Text = "<<PREVIOUS";
-            Previous_button.UseVisualStyleBackColor = true;
-            // 
-            // Save_button
-            // 
-            Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(1100, 666);
-            Save_button.Name = "Save_button";
-            Save_button.Size = new Size(88, 25);
-            Save_button.TabIndex = 144;
-            Save_button.Text = "SAVE";
-            Save_button.UseVisualStyleBackColor = true;
-            Save_button.Click += Save_button_Click;
             // 
             // ImagePanel
             // 
@@ -1520,21 +1510,6 @@ namespace main.contents
             panel7.Size = new Size(1000, 250);
             panel7.TabIndex = 187;
             // 
-            // infoAHU
-            // 
-            infoAHU.BackColor = SystemColors.ControlLight;
-            infoAHU.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            infoAHU.FlatStyle = FlatStyle.System;
-            infoAHU.Font = new Font("Microsoft Sans Serif", 9.75F);
-            infoAHU.Location = new Point(970, 4);
-            infoAHU.Margin = new Padding(0);
-            infoAHU.Name = "infoAHU";
-            infoAHU.Size = new Size(23, 23);
-            infoAHU.TabIndex = 198;
-            infoAHU.Text = "?";
-            infoAHU.UseVisualStyleBackColor = false;
-            infoAHU.Click += infoAHU_Click;
-            // 
             // AHUSystem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1543,8 +1518,6 @@ namespace main.contents
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
             Controls.Add(ImagePanel);
-            Controls.Add(Previous_button);
-            Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
             Controls.Add(panel7);
             FormBorderStyle = FormBorderStyle.None;
@@ -1587,8 +1560,6 @@ namespace main.contents
         private TextBox Num_textBox;
         private PictureBox Icon_pictureBox;
         private TextBox Sub2UserList_textBox;
-        private Button Previous_button;
-        private Button Save_button;
         private Panel ImagePanel;
         private Panel panel4;
         private Label ZoneS_label;

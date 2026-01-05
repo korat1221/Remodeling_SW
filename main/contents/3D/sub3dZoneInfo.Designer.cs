@@ -28,27 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             tabControl1 = new CustomTabControl();
             tabPage1 = new TabPage();
             info1 = new Button();
-            Save1_button = new Button();
             dataGridView2 = new DataGridView();
             tabPage2 = new TabPage();
+            comboBox5 = new CheckedComboBox();
             info2 = new Button();
-            Save2_button = new Button();
             comboBox4 = new CheckedComboBox();
             button1 = new Button();
             comboBox3 = new CheckedComboBox();
             comboBox2 = new CheckedComboBox();
             comboBox1 = new CheckedComboBox();
             dataGridView1 = new DataGridView();
-            comboBox5 = new CheckedComboBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
@@ -86,7 +84,6 @@
             // tabPage1
             // 
             tabPage1.Controls.Add(info1);
-            tabPage1.Controls.Add(Save1_button);
             tabPage1.Controls.Add(dataGridView2);
             tabPage1.Location = new Point(4, 25);
             tabPage1.Name = "tabPage1";
@@ -111,18 +108,6 @@
             info1.UseVisualStyleBackColor = false;
             info1.Click += info1_Click;
             // 
-            // Save1_button
-            // 
-            Save1_button.BackColor = SystemColors.ButtonHighlight;
-            Save1_button.ForeColor = Color.Black;
-            Save1_button.Location = new Point(812, 6);
-            Save1_button.Name = "Save1_button";
-            Save1_button.Size = new Size(88, 25);
-            Save1_button.TabIndex = 115;
-            Save1_button.Text = "SAVE";
-            Save1_button.UseVisualStyleBackColor = true;
-            Save1_button.Click += Save1_button_Click;
-            // 
             // dataGridView2
             // 
             dataGridView2.AllowUserToAddRows = false;
@@ -133,33 +118,33 @@
             dataGridView2.BorderStyle = BorderStyle.None;
             dataGridView2.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridView2.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle7.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle7.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
-            dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView2.Location = new Point(6, 6);
             dataGridView2.Name = "dataGridView2";
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = SystemColors.Control;
-            dataGridViewCellStyle8.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle8.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
-            dataGridView2.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dataGridView2.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dataGridView2.RowHeadersVisible = false;
             dataGridView2.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle9.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle9.ForeColor = Color.Black;
-            dataGridViewCellStyle9.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle9.SelectionForeColor = Color.Black;
-            dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle3;
             dataGridView2.RowTemplate.Height = 24;
             dataGridView2.Size = new Size(296, 410);
             dataGridView2.TabIndex = 0;
@@ -169,7 +154,6 @@
             // 
             tabPage2.Controls.Add(comboBox5);
             tabPage2.Controls.Add(info2);
-            tabPage2.Controls.Add(Save2_button);
             tabPage2.Controls.Add(comboBox4);
             tabPage2.Controls.Add(button1);
             tabPage2.Controls.Add(comboBox3);
@@ -183,6 +167,23 @@
             tabPage2.TabIndex = 1;
             tabPage2.Text = "존 외피 정보";
             tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // comboBox5
+            // 
+            comboBox5.CheckOnClick = true;
+            comboBox5.DrawMode = DrawMode.OwnerDrawVariable;
+            comboBox5.DropDownHeight = 1;
+            comboBox5.Font = new Font("나눔바른고딕", 9.75F);
+            comboBox5.FormattingEnabled = true;
+            comboBox5.IntegralHeight = false;
+            comboBox5.Location = new Point(512, 105);
+            comboBox5.Margin = new Padding(3, 0, 3, 0);
+            comboBox5.Name = "comboBox5";
+            comboBox5.Size = new Size(121, 23);
+            comboBox5.TabIndex = 115;
+            comboBox5.ValueSeparator = ", ";
+            comboBox5.Visible = false;
+            comboBox5.DropDownClosed += comboBox_DropDownClosed;
             // 
             // info2
             // 
@@ -198,18 +199,6 @@
             info2.Text = "?";
             info2.UseVisualStyleBackColor = false;
             info2.Click += info2_Click;
-            // 
-            // Save2_button
-            // 
-            Save2_button.BackColor = SystemColors.ButtonHighlight;
-            Save2_button.ForeColor = Color.Black;
-            Save2_button.Location = new Point(815, 6);
-            Save2_button.Name = "Save2_button";
-            Save2_button.Size = new Size(88, 25);
-            Save2_button.TabIndex = 104;
-            Save2_button.Text = "SAVE";
-            Save2_button.UseVisualStyleBackColor = true;
-            Save2_button.Click += Save2_button_Click;
             // 
             // comboBox4
             // 
@@ -230,7 +219,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(726, 6);
+            button1.Location = new Point(823, 8);
             button1.Name = "button1";
             button1.Size = new Size(88, 25);
             button1.TabIndex = 101;
@@ -299,33 +288,33 @@
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle10.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle10.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle10.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle10.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(3, 37);
             dataGridView1.Name = "dataGridView1";
-            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = SystemColors.Control;
-            dataGridViewCellStyle11.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle11.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
-            dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.Font = new Font("나눔바른고딕", 9.75F);
-            dataGridViewCellStyle12.ForeColor = Color.Black;
-            dataGridViewCellStyle12.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle12.SelectionForeColor = Color.Black;
-            dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle6.ForeColor = Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
+            dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle6;
             dataGridView1.RowTemplate.Height = 24;
             dataGridView1.Size = new Size(960, 376);
             dataGridView1.TabIndex = 97;
@@ -335,23 +324,6 @@
             dataGridView1.CurrentCellDirtyStateChanged += dataGridView1_CurrentCellDirtyStateChanged;
             dataGridView1.DataError += onDataError;
             dataGridView1.SortCompare += dataGridView1_SortCompare;
-            // 
-            // comboBox5
-            // 
-            comboBox5.CheckOnClick = true;
-            comboBox5.DrawMode = DrawMode.OwnerDrawVariable;
-            comboBox5.DropDownHeight = 1;
-            comboBox5.Font = new Font("나눔바른고딕", 9.75F);
-            comboBox5.FormattingEnabled = true;
-            comboBox5.IntegralHeight = false;
-            comboBox5.Location = new Point(512, 105);
-            comboBox5.Margin = new Padding(3, 0, 3, 0);
-            comboBox5.Name = "comboBox5";
-            comboBox5.Size = new Size(121, 23);
-            comboBox5.TabIndex = 115;
-            comboBox5.ValueSeparator = ", ";
-            comboBox5.Visible = false;
-            comboBox5.DropDownClosed += comboBox_DropDownClosed;
             // 
             // sub3dZoneInfo
             // 
@@ -384,11 +356,9 @@
         private CheckedComboBox comboBox2;
         private Button button1;
         public CheckedComboBox comboBox4;
-        private Button Save2_button;
         private Button info2;
         private Button button2;
         private Button button3;
-        private Button Save1_button;
         private Button info1;
         public CheckedComboBox comboBox5;
     }

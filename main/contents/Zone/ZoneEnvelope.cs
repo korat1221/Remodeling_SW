@@ -23,7 +23,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 namespace main.contents
 {
-    public partial class ZoneEnvelope : Form
+    public partial class ZoneEnvelope : Form, IConfirmable
     {
         String ZoneNum, ZoneName, Layer;
         static String currentID = "";
@@ -506,43 +506,38 @@ namespace main.contents
             }
         }
 
+        public bool ValidateAndSave(bool isManualSave = false)
+        {
+            try
+            {
+                if (CeilingCwirk_comboBox.SelectedItem == null || WallCwirk_comboBox.SelectedItem == null || InWallCwirk_comboBox.SelectedItem == null || SlabCwirk_comboBox.SelectedItem == null)
+                {
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show("모든 축열값을 선택하세요.");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    Save(isManualSave);
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
+                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+                return false;
+            }
+        }
 
-        private void Save_button_Click(object sender, EventArgs e)
-        {
-            if (CeilingCwirk_comboBox.SelectedItem == null)
-            {
-                MessageBox.Show("천장 축열 특성을 선택해주세요.");
-            }
-            else if (WallCwirk_comboBox.SelectedItem == null)
-            {
-                MessageBox.Show("외벽 축열 특성을 선택해주세요.");
-            }
-            else if (InWallCwirk_comboBox.SelectedItem == null)
-            {
-                MessageBox.Show("내벽 축열 특성을 선택해주세요.");
-            }
-            else if (SlabCwirk_comboBox.SelectedItem == null)
-            {
-                MessageBox.Show("바닥 축열 특성을 선택해주세요.");
-            }
-            else
-            {
-                Save();
-            }
-        }
-        public static bool OnLoadListProc(Form form)
-        {
-            //    List_Zone f = (List_Zone)form;
-            //    f.load_List(Layer);
-            return true;
-        }
-        public static bool OnLoadProc(Form form)
-        {
-            //    ZoneGeneral f = (ZoneGeneral)form;
-            //    f.LoadData(currentID);
-            return true;
-        }
-        private void Save()
+        private void Save(bool isManualSave = false)
         {
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,프로젝트유형," +
@@ -559,10 +554,6 @@ namespace main.contents
             + ZoneType + "'", "존번호");
 
             Program.DB.saveProject();
-            MessageBox.Show(ZoneNum + "[" + ZoneName + "] 정보를 저장하였습니다.");
-            //this.DialogResult = DialogResult.OK;
-            //this.Hide();
-            //Program.getMenuForm().DoLoadForm(33, OnLoadListProc);
         }
         private void reset()
         {

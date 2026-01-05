@@ -11,7 +11,7 @@ using System.Diagnostics.Contracts;
 
 namespace main.contents
 {
-    public partial class AHUSystem : Form
+    public partial class AHUSystem : Form, IConfirmable
     {
         string Type;
         String Num; string Name; String AHUOptions;
@@ -1016,14 +1016,23 @@ namespace main.contents
         #endregion
 
         #region 세이브
-        private void Save_button_Click(object sender, EventArgs e)
+        public bool ValidateAndSave(bool isManualSave = false)
         {
-            Save();
-            Save_Image();
-            none_AHU_HRV_check();
-
+            try
+            {
+                Save_Image();
+                Save(isManualSave);
+                none_AHU_HRV_check();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
+                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+                return false;
+            }
         }
-        private void Save()
+        private void Save(bool isManualSave = false)
         {
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,프로젝트유형,명칭", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + Name + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,유형", "'" + Num_textBox.Text + "','" + AHUOptions + "'", "번호");
@@ -1046,9 +1055,6 @@ namespace main.contents
             }
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,토양유형,지중깊이,쿨튜브관경,쿨튜브두께,쿨튜브길이,쿨튜브재질", "'" + Num_textBox.Text + "','" + GroundOptions + "','" + GroundDepth.ToString() + "','" + CooltubeDiameter.ToString() + "','" + CooltubeThickness.ToString() + "','" + CooltubeLength.ToString() + "','" + CooltubeMaterial + "'", "번호");
             Program.DB.saveProject();
-            this.DialogResult = DialogResult.OK;
-            this.Hide();
-            Program.getMenuForm().DoLoadForm(57, OnLoadListProc);
         }
         private void Save_Image()
         {
@@ -1389,5 +1395,6 @@ namespace main.contents
                 MessageBox.Show("The folder path does not exist.");
             }
         }
+
     }
 }

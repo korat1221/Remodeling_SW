@@ -252,15 +252,44 @@ namespace main.contents
                 comboBox3.Add(rec[i][2]);
                 comboBox4.Add(rec[i][3]);
             }
-            string[] 외피유형 = { "외벽", "지붕", "최하층바닥", "외부출입문", "창호", "커튼월창" };
+            
+           string[] 외피유형 = { "외벽", "지붕", "최하층바닥", "외부출입문", "창호", "커튼월창" };
            for(int a =0; a< 외피유형.Length; a++)
             {
-                rec = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct 구조체 from ZoneEnvelope_3D Where 외피유형='" + 외피유형[a] +"'");
-                if (rec.Length > 0)
+                string[][] Value = null;
+
+                switch (외피유형[a])
                 {
-                    for (int aa = 0; aa < rec.Length; aa++)
+                    case "커튼월창":
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭");
+                        break;
+                    case "외벽":
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭");
+                        break;
+                    case "지붕":
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "번호,명칭");
+                        break;
+                    case "최하층바닥":
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "번호,명칭");
+                        break;
+                    case "창호":
+                        Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭");
+                        break;
+                    case "외부출입문":
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "번호,명칭");
+                        break;
+                    case "내벽":
+                        Value = null;
+                        break;
+                    case "층간바닥":
+                        Value = null;
+                        break;
+                }
+                if (Value.Length > 0)
+                {
+                    for (int aa = 0; aa < Value.Length; aa++)
                     {
-                        comboBox5.Add(rec[aa][0]);
+                        comboBox5.Add(Value[aa][1]);
                     }
                 }
 
@@ -300,7 +329,7 @@ namespace main.contents
                         TypeLabe2.Value = rec[i][3];
                         dataGridView1.Rows[idx].Cells[4] = TypeLabe2;
                         TypeLabe2.ReadOnly = true;
-                        Load_ConstructionList(idx, rec[i][3], rec[i][11]);
+                        Load_ConstructionList(idx, rec[i][3]);
 
                         if (isCWallType(rec[i][4]))
                         {
@@ -408,32 +437,32 @@ namespace main.contents
             }
             return false;
         }
-        private void Load_ConstructionList(int n, String Type, string 명칭)
+        private void Load_ConstructionList(int n, String Type)
         {
             string[][] Value = null;
 
             switch (Type)
             {
                 case "커튼월창":
-                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭", "명칭='" + 명칭 + "'");
+                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "번호,명칭");
                     break;
                 case "외벽":
-                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭", "명칭='" + 명칭 + "'");
+                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "번호,명칭");
                     break;
                 case "지붕":
-                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "번호,명칭", "명칭='" + 명칭 + "'");
+                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "번호,명칭");
                     break;
                 case "최하층바닥":
-                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "번호,명칭", "명칭='" + 명칭 + "'");
+                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "번호,명칭");
                     break;
                 case "창호":
-                    Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭", "명칭='" + 명칭 + "'");
+                    Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭");
                     break;
                 case "외부출입문":
-                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "번호,명칭", "명칭='" + 명칭 + "'");; //출입문으로 나중에 바꿔야함 
+                    Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "번호,명칭");
                     break;
                 case "내벽":
-                    Value = null; 
+                    Value = null;
                     break;
                 case "층간바닥":
                     Value = null;
@@ -796,7 +825,7 @@ namespace main.contents
                     {
                         if (dataGridView1.Rows[i].Cells[10].Value == null || dataGridView1.Rows[i].Cells[10].Value.ToString() == "")
                         {
-                            MessageBox.Show(dataGridView1.Rows[i].Cells[1].Value.ToString() + "의 구조체를 선택하세요.");
+                           // MessageBox.Show(dataGridView1.Rows[i].Cells[1].Value.ToString() + "의 구조체를 선택하세요.");
                             return false;
                         }
                         else { }
@@ -977,31 +1006,7 @@ namespace main.contents
             modal.ShowDialog();
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Cardinal modal = new Cardinal();
-
-            modal.StartPosition = FormStartPosition.CenterParent;
-
-            DialogResult res = modal.ShowDialog();
-
-            if (res.Equals(DialogResult.OK))
-            {
-                redrawList();
-
-                Program.UTIL.modelScript("setRotation(" + modal.rotation + ")");
-            }
-        }
-
-      
-
-        private void Save1_button_Click(object sender, EventArgs e)
-        {
-            if (Save_Zone())
-            {
-                MessageBox.Show("저장되었습니다.");
-            }
-        }
+       
         private void info1_Click(object sender, EventArgs e)
         {
             string basePath = Program.gPath + "Manual\\1.contents\\10.3D\\2.ZoneInfo";
@@ -1015,13 +1020,6 @@ namespace main.contents
             else
             {
                 MessageBox.Show("The folder path does not exist.");
-            }
-        }
-        private void Save2_button_Click(object sender, EventArgs e)
-        {
-            if (Save_Envelope()) // 성공적으로 저장됐을 때만
-            {
-                MessageBox.Show("저장되었습니다.");
             }
         }
 

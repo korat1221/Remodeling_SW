@@ -30,7 +30,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace main.contents
 {
-    public partial class CoolingSystem : Form
+    public partial class CoolingSystem : Form, IConfirmable
     {
 
         //만들어지느것
@@ -3529,30 +3529,60 @@ namespace main.contents
                 MessageBox.Show("오류 발생: " + ex.Message);
             }
         }
-        private void Save_button_Click(object sender, EventArgs e)
+       
+        public bool ValidateAndSave(bool isManualSave = false)
         {
-            if (Name_f == null || Name_f.Length == 0)
+            try
             {
-                MessageBox.Show("냉방시스템 명칭을 입력하세요");
+                if (Name_f == null || Name_f.Length == 0)
+                {
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show("냉방시스템 명칭을 입력하세요");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                    
+                }
+                else if (CSource == null || CSource.Length == 0) 
+                {
+                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                    if (res == DialogResult.Yes)
+                    {
+                        MessageBox.Show(" 냉방 열원을 선택해 주세요.");
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    Save_Image();
+                    Save(isManualSave);
+                    return true;
+                }
             }
-            else if (CSource == null || CSource.Length == 0) MessageBox.Show(" 냉방 열원을 선택해 주세요.");
-            else
+            catch (Exception ex)
             {
-                Save_Image();
-                Save();
+                // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
+                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+                return false;
             }
-
         }
-        private void Save()
+
+        private void Save(bool isManualSave = false)
         {
             Save_Pump();
             Save_ce();
             if (Save_CG() == true)
             {
                 Program.DB.saveProject();
-                this.DialogResult = DialogResult.OK;
-                this.Hide();
-                Program.getMenuForm().DoLoadForm(38, OnLoadListProc);
             }
             else
             {
