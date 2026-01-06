@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
@@ -203,6 +206,108 @@ namespace main.contents
             return -1;
         }
 
+        private string GenerateUniqueProjectName(string baseName)
+        {
+            string projectsPath = Program.gPath + "projects\\";
+
+            // 프로젝트 번호 형식이 "YYYY-MM-NNN"인 경우 마지막 숫자 부분을 증가
+            if (System.Text.RegularExpressions.Regex.IsMatch(baseName, @"^\d{4}-\d{2}-\d{3}$"))
+            {
+                string prefix = baseName.Substring(0, 8); // "YYYY-MM-"
+                string numberPart = baseName.Substring(8); // "NNN"
+
+                if (int.TryParse(numberPart, out int number))
+                {
+                    string candidateName = baseName;
+                    while (File.Exists(Path.Combine(projectsPath, candidateName + ".sqlite")) ||
+                           IsProjectNameExistsInDB(candidateName))
+                    {
+                        number++;
+                        candidateName = prefix + number.ToString("D3"); // 3자리로 포맷팅
+                    }
+                    return candidateName;
+                }
+            }
+
+            // 기존 방식으로 fallback (형식이 맞지 않는 경우)
+            string fallbackName = baseName;
+            int counter = 1;
+
+            while (File.Exists(Path.Combine(projectsPath, fallbackName + ".sqlite")) ||
+                   IsProjectNameExistsInDB(fallbackName))
+            {
+                fallbackName = baseName + "-" + counter;
+                counter++;
+            }
+
+            return fallbackName;
+        }
+
+        private bool IsProjectNameExistsInDB(string projectName)
+        {
+            try
+            {
+                string[][] result = Program.DB.querySQL(DB.type.ProjListDB,
+                    "SELECT COUNT(*) FROM projects WHERE pnum = '" + projectName.Replace("'", "''") + "'");
+                if (result.Length > 0 && result[0].Length > 0)
+                {
+                    return int.Parse(result[0][0]) > 0;
+                }
+            }
+            catch { }
+            return false;
+        }
+
+        private string GenerateUniqueProjectTitle(string baseTitle)
+        {
+            // 데이터베이스에서 기존 타이틀 확인
+            string[][] existingTitles = Program.DB.querySQL(DB.type.ProjListDB, "SELECT title FROM projects");
+            string candidateTitle = baseTitle;
+            int counter = 1;
+
+            while (existingTitles.Any(row => row[0] == candidateTitle))
+            {
+                candidateTitle = baseTitle + " (" + counter + ")";
+                counter++;
+            }
+
+            return candidateTitle;
+        }
+
+        private void AddProjectToDatabase(Dictionary<string, string> projectInfo)
+        {
+            try
+            {
+                // 새 ID 생성 (최대 ID + 1)
+                string[][] maxIdResult = Program.DB.querySQL(DB.type.ProjListDB, "SELECT MAX(ID) FROM projects");
+                int newID = 1; // 기본값
+                if (maxIdResult.Length > 0 && maxIdResult[0].Length > 0 && !string.IsNullOrEmpty(maxIdResult[0][0]))
+                {
+                    if (int.TryParse(maxIdResult[0][0], out int maxId))
+                    {
+                        newID = maxId + 1;
+                    }
+                }
+                string newIDStr = newID.ToString();
+
+                // 새 프로젝트 레코드 추가 (ID는 숫자로 생성, current=0)
+                string insertQuery = string.Format(
+                    "INSERT INTO projects (ID, pnum, title, type, date, current) VALUES ({0}, '{1}', '{2}', '{3}', '{4}', 0)",
+                    newIDStr,
+                    projectInfo["pnum"].Replace("'", "''"), // SQL 인젝션 방지
+                    projectInfo["title"].Replace("'", "''"), // SQL 인젝션 방지
+                    projectInfo["type"],
+                    projectInfo["date"]
+                );
+
+                Program.DB.executeSQL(DB.type.ProjListDB, insertQuery);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("DB 추가 중 오류: " + ex.Message);
+            }
+        }
+
         private void info_Click(object sender, EventArgs e)
         {
             string basePath = Program.gPath + "Manual\\1.contents\\0.main\\05.OpenProject";
@@ -221,7 +326,131 @@ namespace main.contents
 
         private void File_button_Click(object sender, EventArgs e)
         {
+            try
+            {
+                // ZFX 파일 선택
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                {
+                    openFileDialog.Filter = "ZFX 파일 (*.zfx)|*.zfx";
+                    openFileDialog.Title = "ZFX 파일 열기";
+                    openFileDialog.Multiselect = false;
 
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        string zfxPath = openFileDialog.FileName;
+
+                        // 임시 폴더에 압축 해제
+                        string tempFolder = Path.Combine(Path.GetTempPath(), "zfx_extract_" + Guid.NewGuid().ToString());
+                        Directory.CreateDirectory(tempFolder);
+
+                        try
+                        {
+                            // ZFX 파일 압축 해제
+                            ZipFile.ExtractToDirectory(zfxPath, tempFolder);
+
+                            // 압축 해제된 파일들 확인
+                            string[] sqliteFiles = Directory.GetFiles(tempFolder, "*.sqlite");
+                            string[] jsonFiles = Directory.GetFiles(tempFolder, "*.json");
+                            string[] treeFiles = Directory.GetFiles(tempFolder, "*.tree");
+
+                            if (sqliteFiles.Length == 0 || jsonFiles.Length == 0)
+                            {
+                                MessageBox.Show("유효하지 않은 ZFX 파일입니다. 필수 파일이 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+
+                            // info.json 파일에서 프로젝트 정보 읽기
+                            string infoJsonPath = Path.Combine(tempFolder, "project_info.json");
+                            string originalProjectName = Path.GetFileNameWithoutExtension(sqliteFiles[0]);
+
+                            // 기본값 설정
+                            var projectInfo = new Dictionary<string, string>
+                            {
+                                ["ID"] = Guid.NewGuid().ToString(),
+                                ["pnum"] = originalProjectName,
+                                ["title"] = originalProjectName,
+                                ["type"] = "3", // 리모델링
+                                ["date"] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                            };
+
+                            if (File.Exists(infoJsonPath))
+                            {
+                                try
+                                {
+                                    string jsonContent = File.ReadAllText(infoJsonPath);
+                                    var loadedInfo = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonContent);
+                                    if (loadedInfo != null)
+                                    {
+                                        // info.json에서 읽어온 값들로 덮어쓰기
+                                        foreach (var kvp in loadedInfo)
+                                        {
+                                            projectInfo[kvp.Key] = kvp.Value;
+                                        }
+                                    }
+                                }
+                                catch { }
+                            }
+
+                            // 고유한 프로젝트 이름과 제목 생성 (중복 처리)
+                            string uniqueProjectName = GenerateUniqueProjectName(projectInfo["pnum"]);
+                            string uniqueProjectTitle = GenerateUniqueProjectTitle(projectInfo["title"]);
+
+                            // 고유한 이름으로 업데이트
+                            projectInfo["pnum"] = uniqueProjectName;
+                            projectInfo["title"] = uniqueProjectTitle;
+
+                            // 파일들을 projects 폴더로 복사
+                            string projectsPath = Program.gPath + "projects\\";
+
+                            foreach (string sqliteFile in sqliteFiles)
+                            {
+                                string destFile = Path.Combine(projectsPath, uniqueProjectName + ".sqlite");
+                                File.Copy(sqliteFile, destFile, true);
+                            }
+
+                            foreach (string jsonFile in jsonFiles)
+                            {
+                                string fileName = Path.GetFileName(jsonFile);
+                                if (fileName != "project_info.json") // info.json은 제외
+                                {
+                                    string destFile = Path.Combine(projectsPath, uniqueProjectName + ".json");
+                                    File.Copy(jsonFile, destFile, true);
+                                }
+                            }
+
+                            foreach (string treeFile in treeFiles)
+                            {
+                                string destFile = Path.Combine(projectsPath, uniqueProjectName + ".tree");
+                                File.Copy(treeFile, destFile, true);
+                            }
+
+                            // 데이터베이스에 새 프로젝트 레코드 추가
+                            AddProjectToDatabase(projectInfo);
+
+                            // DB 변경사항 저장
+                            Program.DB.savePListDB();
+
+                            MessageBox.Show($"프로젝트 '{uniqueProjectTitle}'이(가) 성공적으로 불러와졌습니다.", "완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            // 리스트 새로고침
+                            drawList();
+                        }
+                        finally
+                        {
+                            // 임시 폴더 정리
+                            try
+                            {
+                                Directory.Delete(tempFolder, true);
+                            }
+                            catch { }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"파일 열기 중 오류가 발생했습니다:\n{ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

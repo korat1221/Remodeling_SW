@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -133,7 +136,113 @@ namespace main
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            string tempInfoPath = null;
+            try
+            {
+                // 현재 프로젝트 ID 확인
+                if (string.IsNullOrEmpty(ProjectList.CurProjID))
+                {
+                    MessageBox.Show("현재 선택된 프로젝트가 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
+                // 프로젝트 파일들이 있는 폴더 경로
+                string projectsPath = Program.gPath + "projects\\";
+
+                // 현재 프로젝트 정보 가져오기 (OpenProject.cs 컨벤션에 맞춰서)
+                string[][] currentProject = Program.DB.querySQL(DB.type.ProjListDB, "SELECT ID, pnum, title, type, date FROM projects WHERE current = 1");
+                if (currentProject.Length == 0)
+                {
+                    MessageBox.Show("현재 프로젝트 정보를 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // 프로젝트 정보를 JSON으로 생성
+                var projectInfo = new
+                {
+                    ID = currentProject[0][0],
+                    pnum = currentProject[0][1],
+                    title = currentProject[0][2],
+                    type = currentProject[0][3],
+                    date = currentProject[0][4]
+                };
+                string jsonContent = JsonSerializer.Serialize(projectInfo, new JsonSerializerOptions { WriteIndented = true });
+
+                // 임시 info.json 파일 생성
+                tempInfoPath = Path.Combine(Path.GetTempPath(), "project_info.json");
+                File.WriteAllText(tempInfoPath, jsonContent);
+
+                // 압축할 파일들 찾기
+                string[] extensions = { ".sqlite", ".json", ".tree" };
+                List<string> filesToZip = new List<string>();
+
+                // 생성한 info.json 파일도 포함
+                filesToZip.Add(tempInfoPath);
+
+                foreach (string ext in extensions)
+                {
+                    string filePath = Path.Combine(projectsPath, ProjectList.CurProjID + ext);
+                    if (File.Exists(filePath))
+                    {
+                        filesToZip.Add(filePath);
+                    }
+                }
+
+                if (filesToZip.Count == 0)
+                {
+                    MessageBox.Show("압축할 프로젝트 파일들을 찾을 수 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // 저장할 ZFX 파일 경로 선택
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+                {
+                    saveFileDialog.Filter = "ZFX 파일 (*.zfx)|*.zfx";
+                    saveFileDialog.Title = "프로젝트 파일 압축 저장";
+                    saveFileDialog.FileName = ProjectList.CurProjID + "_backup.zfx";
+
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        string zipPath = saveFileDialog.FileName;
+
+                        // ZIP 파일 생성
+                        using (ZipArchive zip = ZipFile.Open(zipPath, ZipArchiveMode.Create))
+                        {
+                            foreach (string file in filesToZip)
+                            {
+                                string entryName = Path.GetFileName(file);
+                                zip.CreateEntryFromFile(file, entryName);
+                            }
+                        }
+
+                        MessageBox.Show($"프로젝트 파일들이 성공적으로 압축되었습니다.\n저장 위치: {zipPath}", "완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+
+                // 임시 파일 정리
+                try
+                {
+                    if (File.Exists(tempInfoPath))
+                    {
+                        File.Delete(tempInfoPath);
+                    }
+                }
+                catch { }
+            }
+            catch (Exception ex)
+            {
+                // 예외 발생 시에도 임시 파일 정리
+                try
+                {
+                    if (File.Exists(tempInfoPath))
+                    {
+                        File.Delete(tempInfoPath);
+                    }
+                }
+                catch { }
+
+                MessageBox.Show($"파일 압축 중 오류가 발생했습니다:\n{ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
