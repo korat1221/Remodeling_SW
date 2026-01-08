@@ -77,7 +77,7 @@ window.addEventListener("message", async (event) => {
         $(".buildingImage").each((idx,al) => {          
           if (projectNumValue.data[idx]) {
           let projectNum = projectNumValue.data[idx].val; 
-          al.setAttribute("src", "img/" + projectNum + "/Building.png");
+          al.setAttribute("src", "../projects/" + projectNum + "/Building.png");
           }
         });
         $(".zoneImage").each((idx,al) => {
@@ -86,7 +86,7 @@ window.addEventListener("message", async (event) => {
           let zoneNum = zoneNumValue.data[idx].val; 
           if(zoneNum  !== null)
           {
-            al.setAttribute("src", "img/" + projectNum + "/"+ zoneNum + ".png"); 
+            al.setAttribute("src", "../projects/" + projectNum + "/"+ zoneNum + ".png"); 
           }
           }
         });
@@ -96,7 +96,7 @@ window.addEventListener("message", async (event) => {
           let coolingNum = coolingNumValue.data[idx].val; 
           if(coolingNum !== null)
           {
-            al.setAttribute("src", "img/" + projectNum + "/"+ coolingNum + ".png"); 
+            al.setAttribute("src", "../projects/" + projectNum + "/"+ coolingNum + ".png"); 
           }
           }
         });
@@ -107,7 +107,7 @@ window.addEventListener("message", async (event) => {
           
           if(heatingNum !== null)
              {
-              al.setAttribute("src", "img/" + projectNum + "/"+ heatingNum + ".png"); 
+              al.setAttribute("src", "../projects/" + projectNum + "/"+ heatingNum + ".png"); 
              }
           }
         });
@@ -117,7 +117,7 @@ window.addEventListener("message", async (event) => {
           let dhwNum = dhwNumValue.data[idx].val; 
           if(dhwNum !== null)
              {
-              al.setAttribute("src", "img/" + projectNum + "/"+ dhwNum + ".png"); 
+              al.setAttribute("src", "../projects/" + projectNum + "/"+ dhwNum + ".png"); 
              }
           }
         });
@@ -127,7 +127,7 @@ window.addEventListener("message", async (event) => {
               let lightingNum = lightingNumValue.data[idx].val; 
              if(lightingNum !== null)
              {
-              al.setAttribute("src", "img/" + projectNum + "/"+ lightingNum + ".png"); 
+              al.setAttribute("src", "../projects/" + projectNum + "/"+ lightingNum + ".png"); 
              }
             }
         });
@@ -153,7 +153,7 @@ window.addEventListener("message", async (event) => {
           let ahuNum = ahu.data[idx].val; 
           if(ahuNum!== null)
           {
-          al.setAttribute("src", "img/" + projectNum + "/"+ ahuNum + ".png"); 
+          al.setAttribute("src", "../projects/" + projectNum + "/"+ ahuNum + ".png"); 
           }
          }
         });  
