@@ -258,22 +258,6 @@ namespace main.contents
             return false;
         }
 
-        private string GenerateUniqueProjectTitle(string baseTitle)
-        {
-            // 데이터베이스에서 기존 타이틀 확인
-            string[][] existingTitles = Program.DB.querySQL(DB.type.ProjListDB, "SELECT title FROM projects");
-            string candidateTitle = baseTitle;
-            int counter = 1;
-
-            while (existingTitles.Any(row => row[0] == candidateTitle))
-            {
-                candidateTitle = baseTitle + " (" + counter + ")";
-                counter++;
-            }
-
-            return candidateTitle;
-        }
-
         private void AddProjectToDatabase(Dictionary<string, string> projectInfo)
         {
             try
@@ -301,6 +285,14 @@ namespace main.contents
                 );
 
                 Program.DB.executeSQL(DB.type.ProjListDB, insertQuery);
+
+                // 프로젝트별 DB의 BuildingGeneral 테이블에 프로젝트 번호 업데이트
+                string updateQuery = string.Format("UPDATE BuildingGeneral SET 프로젝트번호 = '{0}'", projectInfo["pnum"].Replace("'", "''"));
+                Program.DB.executeSQL(projectInfo["pnum"], updateQuery);
+
+                // 업데이트된 DB 내용 파일에 저장
+                string projectDbPath = Program.gPath + "projects\\" + projectInfo["pnum"] + ".sqlite";
+                Program.DB.saveProject(projectDbPath);
             }
             catch (Exception ex)
             {
@@ -391,13 +383,12 @@ namespace main.contents
                                 catch { }
                             }
 
-                            // 고유한 프로젝트 이름과 제목 생성 (중복 처리)
+                            // 고유한 프로젝트 이름 생성 (중복 처리)
                             string uniqueProjectName = GenerateUniqueProjectName(projectInfo["pnum"]);
-                            string uniqueProjectTitle = GenerateUniqueProjectTitle(projectInfo["title"]);
 
                             // 고유한 이름으로 업데이트
                             projectInfo["pnum"] = uniqueProjectName;
-                            projectInfo["title"] = uniqueProjectTitle;
+                            // title은 원본 값 그대로 사용
 
                             // 파일들을 projects 폴더로 복사
                             string projectsPath = Program.gPath + "projects\\";
@@ -424,13 +415,29 @@ namespace main.contents
                                 File.Copy(treeFile, destFile, true);
                             }
 
+                            // 프로젝트 폴더가 존재하면 같이 복사 (폴더 이름은 uniqueProjectName으로 변경)
+                            string[] tempDirectories = Directory.GetDirectories(tempFolder);
+                            foreach (string tempDir in tempDirectories)
+                            {
+                                string dirName = Path.GetFileName(tempDir);
+                                // sqlite/json/tree 파일과 같은 이름의 폴더를 프로젝트 폴더로 간주
+                                if (File.Exists(Path.Combine(tempFolder, dirName + ".sqlite")) ||
+                                    File.Exists(Path.Combine(tempFolder, dirName + ".json")) ||
+                                    File.Exists(Path.Combine(tempFolder, dirName + ".tree")))
+                                {
+                                    string destProjectFolder = Path.Combine(projectsPath, uniqueProjectName);
+                                    DirectoryCopy(tempDir, destProjectFolder, true);
+                                    break; // 첫 번째로 찾은 폴더만 복사
+                                }
+                            }
+
                             // 데이터베이스에 새 프로젝트 레코드 추가
                             AddProjectToDatabase(projectInfo);
 
                             // DB 변경사항 저장
                             Program.DB.savePListDB();
 
-                            MessageBox.Show($"프로젝트 '{uniqueProjectTitle}'이(가) 성공적으로 불러와졌습니다.", "완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show($"프로젝트 '{projectInfo["title"]}'이(가) 성공적으로 불러와졌습니다.", "완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                             // 리스트 새로고침
                             drawList();
@@ -450,6 +457,33 @@ namespace main.contents
             catch (Exception ex)
             {
                 MessageBox.Show($"파일 열기 중 오류가 발생했습니다:\n{ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void DirectoryCopy(string sourceDir, string destDir, bool copySubDirs)
+        {
+            DirectoryInfo dir = new DirectoryInfo(sourceDir);
+            if (!dir.Exists)
+            {
+                throw new DirectoryNotFoundException($"Source directory does not exist or could not be found: {sourceDir}");
+            }
+
+            DirectoryInfo[] dirs = dir.GetDirectories();
+            Directory.CreateDirectory(destDir);
+
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                string tempPath = Path.Combine(destDir, file.Name);
+                file.CopyTo(tempPath, true);
+            }
+
+            if (copySubDirs)
+            {
+                foreach (DirectoryInfo subdir in dirs)
+                {
+                    string tempPath = Path.Combine(destDir, subdir.Name);
+                    DirectoryCopy(subdir.FullName, tempPath, copySubDirs);
+                }
             }
         }
     }

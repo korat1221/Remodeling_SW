@@ -175,9 +175,11 @@ namespace main
                 // 압축할 파일들 찾기
                 string[] extensions = { ".sqlite", ".json", ".tree" };
                 List<string> filesToZip = new List<string>();
+                List<string> fileEntries = new List<string>();
 
                 // 생성한 info.json 파일도 포함
                 filesToZip.Add(tempInfoPath);
+                fileEntries.Add("project_info.json");
 
                 foreach (string ext in extensions)
                 {
@@ -185,6 +187,21 @@ namespace main
                     if (File.Exists(filePath))
                     {
                         filesToZip.Add(filePath);
+                        fileEntries.Add(Path.GetFileName(filePath));
+                    }
+                }
+
+                // 프로젝트 폴더도 포함 (폴더 구조 유지)
+                string projectFolder = Path.Combine(projectsPath, ProjectList.CurProjID);
+                if (Directory.Exists(projectFolder))
+                {
+                    string[] projectFiles = Directory.GetFiles(projectFolder, "*.*", SearchOption.AllDirectories);
+                    foreach (string file in projectFiles)
+                    {
+                        filesToZip.Add(file);
+                        // projects 폴더를 기준으로 한 상대 경로 생성
+                        string relativePath = Path.GetRelativePath(projectsPath, file);
+                        fileEntries.Add(relativePath);
                     }
                 }
 
@@ -208,9 +225,10 @@ namespace main
                         // ZIP 파일 생성
                         using (ZipArchive zip = ZipFile.Open(zipPath, ZipArchiveMode.Create))
                         {
-                            foreach (string file in filesToZip)
+                            for (int i = 0; i < filesToZip.Count; i++)
                             {
-                                string entryName = Path.GetFileName(file);
+                                string file = filesToZip[i];
+                                string entryName = fileEntries[i];
                                 zip.CreateEntryFromFile(file, entryName);
                             }
                         }
