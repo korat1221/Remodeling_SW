@@ -3515,9 +3515,9 @@ namespace main.contents
                 {
                     pid = Value[0][0];
                 }
-                Directory.CreateDirectory(Program.gPath + "threejs\\public\\print\\img\\" + pid);
+                Directory.CreateDirectory(Program.gPath + "\\projects\\" + pid);
                 // 저장할 파일 경로 설정
-                string ImageName = "/print/img/" + pid + "/" + Num + ".png";
+                string ImageName = "/projects/" + pid + "/" + Num + ".png";
                 string imagePath = Program.gPath + ImageName; // 최종 경로
 
 

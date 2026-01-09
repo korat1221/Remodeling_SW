@@ -2272,9 +2272,9 @@ namespace main.contents
                     pid = Value[0][0];
                 }
 
-                Directory.CreateDirectory(Program.gPath + "threejs\\public\\print\\img\\" + pid);
+                Directory.CreateDirectory(Program.gPath + "\\projects\\" + pid);
 
-                string ImageName = "/print/img/" + pid + "/" + Num + ".png";
+                string ImageName = "/projects/" + pid + "/" + Num + ".png";
                 string imagePath = Program.gPath + ImageName;
 
                 bmp.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);

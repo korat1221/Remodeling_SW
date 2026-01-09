@@ -236,9 +236,9 @@ namespace main.contents
                 {
                     pid = Value[0][0];
                 }
-                Directory.CreateDirectory(Program.gPath + "\\print\\img\\" + pid);
+                Directory.CreateDirectory(Program.gPath + "\\projects\\" + pid);
                 // 저장할 파일 경로 설정
-                string ImageName = "/print/img/" + pid + "/Building.png";
+                string ImageName = "/projects/" + pid + "/Building.png";
                 string imagePath = Program.gPath + ImageName; // 최종 경로
 
                 // 비트맵을 파일로 저장
