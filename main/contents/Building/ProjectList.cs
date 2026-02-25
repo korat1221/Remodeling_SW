@@ -239,7 +239,7 @@ namespace main.contents
                         throw new FileNotFoundException($"Source file not found: {sourceFile}");
                     }
 
-                    CopyDirectory(Program.gPath + "\\print\\img\\" + pid0, Program.gPath + "\\print\\img\\" + pid, true);
+                    CopyDirectory(Program.gPath + "\\projects\\" + pid0, Program.gPath + "\\projects\\" + pid, true);
                 }
 
                 drawList(ProjectType.ToString());
@@ -320,7 +320,7 @@ namespace main.contents
                             throw new FileNotFoundException($"Source file not found: {sourceFile}");
                         }
 
-                        CopyDirectory(Program.gPath + "\\print\\img\\" + pid0, Program.gPath + "\\print\\img\\" + pid, true);
+                        CopyDirectory(Program.gPath + "\\projects\\" + pid0, Program.gPath + "\\projects\\" + pid, true);
                     }
 
                     drawList(ProjectType.ToString());

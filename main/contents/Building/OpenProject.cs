@@ -437,7 +437,7 @@ namespace main.contents
                             // DB 변경사항 저장
                             Program.DB.savePListDB();
 
-                            MessageBox.Show($"프로젝트 '{projectInfo["title"]}'이(가) 성공적으로 불러와졌습니다.", "완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show($"프로젝트 '{projectInfo["title"]}'을(를) 성공적으로 불러왔습니다.", "완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                             // 리스트 새로고침
                             drawList();
