@@ -88,6 +88,9 @@ namespace main.contents
         }
         public void DoLoadForm(int idx)
         {
+
+            ValidateAndSave();
+
             int i = -1;
             while (++i < forms.Length)
             {

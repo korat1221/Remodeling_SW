@@ -243,6 +243,7 @@ namespace main.contents
             comboBox2.Add("All");
             comboBox3.Add("All");
             comboBox4.Add("All");
+            comboBox5.Add("");
             comboBox5.Add("All");
 
             while (++i < rec.Length)
