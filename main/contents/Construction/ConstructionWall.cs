@@ -826,29 +826,32 @@ namespace main.contents
                                 case "단열재":
                                     Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "FAEB78";
                                     break; ;
-                                case "콘크리트":
+                                case "시멘트모르타르/콘크리트":
                                     Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "b4b4b4";
                                     break; ;
-                                case "미장":
-                                    Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "828282";
-                                    break; ;
-                                case "조적":
+                                case "벽돌/타일":
                                     Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "D2691E";
                                     break; ;
-                                case "패널":
+                                case "석재":
+                                    Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "A98B59";
+                                    break; ;
+                                case "보드":
                                     Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "497649";
                                     break; ;
                                 case "목재":
                                     Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "A06641";
                                     break; ;
-                                case "금속재":
+                                case "바닥재":
+                                    Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "828282";
+                                    break; ;
+                                case "방습재료":
+                                    Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "a0a0a0";
+                                    break; ;
+                                case "벽지":
+                                    Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "497649";
+                                    break; ;
+                                case "금속계":
                                     Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "C8D7FF";
-                                    break; ;
-                                case "타일":
-                                    Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "FDF5DC";
-                                    break; ;
-                                case "지중":
-                                    Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "A98B59";
                                     break; ;
                             }
                         }
@@ -1648,29 +1651,32 @@ namespace main.contents
                                     case "단열재":
                                         Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "FAEB78";
                                         break; ;
-                                    case "콘크리트":
+                                    case "시멘트모르타르/콘크리트":
                                         Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "b4b4b4";
                                         break; ;
-                                    case "미장":
-                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "828282";
-                                        break; ;
-                                    case "조적":
+                                    case "벽돌/타일":
                                         Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "D2691E";
                                         break; ;
-                                    case "패널":
+                                    case "석재":
+                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "A98B59";
+                                        break; ;
+                                    case "보드":
                                         Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "497649";
                                         break; ;
                                     case "목재":
                                         Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "A06641";
                                         break; ;
-                                    case "금속재":
+                                    case "바닥재":
+                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "828282";
+                                        break; ;
+                                    case "방습재료":
+                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "a0a0a0";
+                                        break; ;
+                                    case "벽지":
+                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "497649";
+                                        break; ;
+                                    case "금속계":
                                         Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "C8D7FF";
-                                        break; ;
-                                    case "타일":
-                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "FDF5DC";
-                                        break; ;
-                                    case "지중":
-                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "A98B59";
                                         break; ;
                                 }
                             }

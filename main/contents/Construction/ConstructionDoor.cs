@@ -924,7 +924,7 @@ namespace main.contents
                         return true;
                     }
                 }
-                else if (dUinst_textBox.Text == null || Convert.ToDouble(dUinst_textBox.Text.ToString()) <= 0)
+                else if (dUinst_textBox.Text == null )
                 {
                     DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
                     if (res == DialogResult.Yes)

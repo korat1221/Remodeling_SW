@@ -716,12 +716,12 @@ namespace main.contents
 
         private void PanelDB_button_Click(object sender, EventArgs e)
         {
-            CW_PanelDB cw_panelDB_form = new CW_PanelDB();
+            MaterialDB cw_panelDB_form = new MaterialDB();
             DialogResult result = cw_panelDB_form.ShowDialog();
             if (result == DialogResult.OK)
             {
-                PanelName = cw_panelDB_form.Select_CWPanel[1];
-                Conductivity_p = Convert.ToDouble(cw_panelDB_form.Select_CWPanel[4]);
+                PanelName = cw_panelDB_form.Select[1];
+                Conductivity_p = Convert.ToDouble(cw_panelDB_form.Select[4]);
                 Panel_textBox.Text = PanelName;
             }
             Calc_Up();
