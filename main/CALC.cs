@@ -1646,25 +1646,25 @@ namespace main
             while (++i < WPNum.Length)
             {
                 Cal_RESystem WP = new Cal_RESystem(WPNum[i][0]);
-                WP.WF_LoadData();
-                WP.WF_Calc_V2();
-                WP.WF_Calc_Pwind();
-                WP.WF_Calc_Cp();
-                WP.WF_Calc_Pwps();
-                WP.WF_Calc_Qfwps();
+                WP.WP_LoadData();
+                WP.WP_Calc_V1();
+                WP.WP_Calc_V2();
+                WP.WP_Calc_t_wkn();
+                WP.WP_Calc_Qfwps();
 
                 for (int mth = 0; mth <= 11; mth++)
                 {
-                        MTH = (mth + 1).ToString() + "월";
-                        Program.DB.setValue(DB.type.ProjDB, "WindPower_Result", "프로젝트번호,프로젝트유형,번호," +
-                                 "월," +
-                                 "h, Pwind, Pwps, Qfwps",
-                                 "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + WPNum[i][0] + "','" + MTH + "','" +
-                                 WP.h_mth[mth] + "','" + WP.Pwindwk_mth[mth] + "','" + WP.Pwps_mth[mth] + "','" + WP.Qfwps_mth[mth]
-                                  + "'", "번호,월"); ;
+                    MTH = (mth + 1).ToString() + "월";
+                    Program.DB.setValue(DB.type.ProjDB, "WindPower_Result", "프로젝트번호,프로젝트유형,번호," +
+                             "월," +
+                             "Qfwps",
+                             "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + WPNum[i][0] + "','" + MTH  + "','" + WP.Qfwps[mth]
+                              + "'", "번호,월"); ;
+
 
                 }
-                Save_Memory_WP(WPNum[i][0], WP.Qfwps_mth);
+                Program.DB.saveProject();
+                Save_Memory_WP(WPNum[i][0], WP.Qfwps);
             }
 
             return true;
