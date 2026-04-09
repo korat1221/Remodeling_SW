@@ -81,7 +81,7 @@ namespace main
             {"User_PVInverter", "CREATE TABLE IF NOT EXISTS User_PVInverter (ID INTEGER PRIMARY KEY AUTOINCREMENT, 번호 VARCHAR (32), 프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),제품명 VARCHAR (32),제조사 VARCHAR (32),효율 VARCHAR (32))"},
             {"User_PVBattery", "CREATE TABLE IF NOT EXISTS User_PVBattery (ID INTEGER PRIMARY KEY AUTOINCREMENT, 번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),제품명 VARCHAR (32),제조사 VARCHAR (32),정격전력 VARCHAR (32),배터리타입 VARCHAR (32))"},
             {"User_FC", "CREATE TABLE IF NOT EXISTS User_FC (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),명칭 VARCHAR (32),연료 VARCHAR (32),전기출력 VARCHAR (32),전기효율 VARCHAR (32),열출력 VARCHAR (32),열효율 VARCHAR (32),대수 VARCHAR (32),설치 VARCHAR (32))"},
-            {"User_WP", "CREATE TABLE IF NOT EXISTS User_WP (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),제품명 VARCHAR (32),제조사 VARCHAR (32),타입 VARCHAR (32),세부타입 VARCHAR (32),정격출력 VARCHAR (32),회전면적 VARCHAR (32),허브높이 VARCHAR (32),시동풍속 VARCHAR (32),최적풍속 VARCHAR (32),종단풍속 VARCHAR (32),시동풍속전력계수 VARCHAR (32),최적풍속전력계수 VARCHAR (32),종단풍속전력계수 VARCHAR (32),신규기존 VARCHAR (32))"},
+            {"User_WP", "CREATE TABLE IF NOT EXISTS User_WP (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),제품유형 VARCHAR (32),R VARCHAR (32),D VARCHAR (32),H VARCHAR (32),회전면적 VARCHAR (32),허브높이 VARCHAR (32),시동풍속 VARCHAR (32),종단풍속 VARCHAR (32),정격출력 VARCHAR (32),정격출력풍속 VARCHAR (32),적용유형 VARCHAR (32),풍속구간별출력 VARCHAR (32),신규기존 VARCHAR (32))"},
             {"User_WPInverter", "CREATE TABLE IF NOT EXISTS User_WPInverter (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32), 프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),제품명 VARCHAR (32),제조사 VARCHAR (32),EURO효율 VARCHAR (32))"},
             {"User_Boiler", "CREATE TABLE IF NOT EXISTS User_Boiler (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),명칭 VARCHAR (32),난방급탕 VARCHAR (32),연료 VARCHAR (32),Type VARCHAR (32),용량 VARCHAR (32),전부하효율 VARCHAR (32),부분부하효율 VARCHAR (32),소비전력 VARCHAR (32),대기전력 VARCHAR (32),대수 VARCHAR (32),신규기존 VARCHAR (32))"},
             {"User_AirHP", "CREATE TABLE IF NOT EXISTS User_AirHP (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),명칭 VARCHAR (32),난방냉방 VARCHAR (32),연료 VARCHAR (32),공급유형 VARCHAR (32),냉방정격용량 VARCHAR (32),냉방정격COP VARCHAR (32),냉방정격소비전력 VARCHAR (32),난방정격용량 VARCHAR (32),난방정격COP VARCHAR (32),난방정격소비전력 VARCHAR (32),한랭지용량 VARCHAR (32),한랭지COP VARCHAR (32),한랭지소비전력 VARCHAR (32),대기전력 VARCHAR (32),대수 VARCHAR (32),설치 VARCHAR (32))"},
@@ -221,7 +221,7 @@ namespace main
         }
         public bool openPListDB(string? gPath)
         {
-            SecureSQLite.SetInfo(gPath, false);  
+            SecureSQLite.SetInfo(gPath, false);  // 암호화
 
             return !!(SecureSQLite.OpenDB("projects.sqlite", (int)type.ProjListDB) == 1);
         }
