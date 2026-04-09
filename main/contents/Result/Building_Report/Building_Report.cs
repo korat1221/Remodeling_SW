@@ -870,6 +870,32 @@ namespace main.contents.Result.Building_Report
                 data.Add(new { cname = "pv_eta_rule", data = __Edata[95] });
                 data.Add(new { cname = "pv_point", data = __Edata[96] });
                 #endregion
+                #region 연료전지정보
+                double FC_power = 0;
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.연료전지번호,a.연료전지대수,b.열출력,b.전기출력 From HeatingSystem_Form as a inner Join User_FC as b on a.연료전지번호=b.번호 Where Not a.연료전지번호=''");
+                if(Value.Length >0)
+                {
+                    for (int a = 0; a < Value.Length; a++)
+                    {
+                        FC_power += (Convert.ToDouble(Value[a][2])+ Convert.ToDouble(Value[a][3])) * Convert.ToDouble(Value[a][1]);
+                    }
+                    __Edata[200].Add(new { idx = i, val = FC_power.ToString("0.0") }); //용량
+                }
+                data.Add(new { cname = "fc_power", data = __Edata[200] });
+                #endregion
+                #region 풍력정보
+                double WP_power = 0;
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.번호,a.설치대수,b.정격출력 From WindPower_Form as a inner Join User_WP as b on a.풍력=b.번호");
+                if (Value.Length > 0)
+                {
+                    for (int a = 0; a < Value.Length; a++)
+                    {
+                        WP_power += Convert.ToDouble(Value[a][1])  * Convert.ToDouble(Value[a][2])/1000;
+                    }
+                    __Edata[201].Add(new { idx = i, val = WP_power.ToString("0.0") }); //용량
+                }
+                data.Add(new { cname = "wp_power", data = __Edata[201] });
+                #endregion
 
                 #region 소요량
                 double[] 난방 = new double[12], 냉방 = new double[12], 급탕 = new double[12], 조명 = new double[12], 공조 = new double[12], 기저 = new double[12], 신재생 = new double[12], 총전기 = new double[12], 총가스 = new double[12], 총소요량 = new double[12];
