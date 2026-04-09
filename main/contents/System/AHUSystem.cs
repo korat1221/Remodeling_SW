@@ -1,5 +1,6 @@
 ﻿using main.contentslist;
 using main.info;
+using main.subcontents;
 using main.subcontents.AHUSystem;
 using main.subcontents.ConstructionCW;
 using Newtonsoft.Json.Linq;
@@ -633,13 +634,13 @@ namespace main.contents
 
         private void PipeIns_button_Click(object sender, EventArgs e)
         {
-            CW_PanelDB InsDB_form = new CW_PanelDB();
+            MaterialDB InsDB_form = new MaterialDB();
             DialogResult result = InsDB_form.ShowDialog();
             if (result == DialogResult.OK)
             {
-                PipeIns = InsDB_form.Select_CWPanel[1];
+                PipeIns = InsDB_form.Select[1];
                 PipeIns_textBox.Text = PipeIns;
-                PipeIns_Ramda = Convert.ToDouble(InsDB_form.Select_CWPanel[4]);
+                PipeIns_Ramda = Convert.ToDouble(InsDB_form.Select[4]);
                 PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
             }
             else

@@ -2222,7 +2222,7 @@ namespace main.contents
             {
                 dtheta = Convert.ToDouble(v[0][0]) - Convert.ToDouble(v[0][1]);
             }
-            double Volume = Qmax_sum / 1000 * 3.6 / (4.18 * dtheta) * 1000 / 60; // Liter/min 
+            double Volume = Qmax_sum  * 3600 / (4.18 * dtheta) / 60; // Liter/min 
 
 
             PipeD = 21.7;
@@ -2259,14 +2259,14 @@ namespace main.contents
         }
         private void PipeIns_button_Click(object sender, EventArgs e)
         {
-            CW_PanelDB InsDB_form = new CW_PanelDB();
+            MaterialDB InsDB_form = new MaterialDB();
             DialogResult result = InsDB_form.ShowDialog();
             if (result == DialogResult.OK)
             {
-                PipeIns = InsDB_form.Select_CWPanel[1];
+                PipeIns = InsDB_form.Select[1];
                 PipeIns_textBox.Text = PipeIns;
 
-                PipeIns_Ramda = Convert.ToDouble(InsDB_form.Select_CWPanel[4]);
+                PipeIns_Ramda = Convert.ToDouble(InsDB_form.Select[4]);
                 PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
                 Program.UTIL.textBox_doubleComa(PipeIns_Ramda_textBox, true, 3);
             }
@@ -2285,6 +2285,9 @@ namespace main.contents
                 PumpUse = PumpUse_comboBox.SelectedItem.ToString();
                 if (PumpUse == "펌프 있음")
                 {
+                    PumpHead_label.Visible = false;
+                    PumpHead_button.Visible = false;
+                    PumpHead_textBox.Visible = false;
                     PumpMethod_label.Visible = true;
                     PumpMethod_comboBox.Visible = true;
                     if ((MainSystem == "지열 히트펌프" || MainSystem == "지하수 히트펌프") || (Sub1System == "지열 히트펌프" || Sub1System == "지하수 히트펌프") || (Sub2System == "지열 히트펌프" || Sub2System == "지하수 히트펌프"))
@@ -2296,6 +2299,29 @@ namespace main.contents
                 }
                 else
                 {
+                    if(MainSystem =="보일러")
+                    {
+                        PumpHead_label.Visible = true;
+                        PumpHead_button.Visible = true;
+                        PumpHead_textBox.Visible = true;
+                        double Max = AHU_Qmax_textBox.Text == null || AHU_Qmax_textBox.Text.ToString() == "" ? 0 : Convert.ToDouble(AHU_Qmax_textBox.Text.ToString());
+                        Max = Zone_Qmax_textBox.Text == null || Zone_Qmax_textBox.Text.ToString() == "" ? Max + 0 : Max + Convert.ToDouble(Zone_Qmax_textBox.Text.ToString());
+
+                        double dtheta = 10;
+                        string[][] v = Program.DB.getValue(DB.type.BaseDB_Heating, "공급환순온도", "공급온도,환수온도", "공급환수온도='" + SLRL + "'");
+                        if (v.Length > 0)
+                        {
+                            dtheta = Convert.ToDouble(v[0][0]) - Convert.ToDouble(v[0][1]);
+                        }
+                        Pump1Volume = Max * 3600 / (dtheta * 4.18); //kg/h
+                    }
+                    else
+                    {
+                        PumpHead_label.Visible = false;
+                        PumpHead_button.Visible = false;
+                        PumpHead_textBox.Visible = false;
+
+                    }
                     PumpMethod_label.Visible = false;
                     PumpMethod_comboBox.Visible = false;
                     PumpMethod_comboBox.SelectedItem = null;
@@ -2316,6 +2342,16 @@ namespace main.contents
 
         }
 
+        private void PumpHead_button_Click(object sender, EventArgs e)
+        {
+            PumpCal pumppower_form = new PumpCal();
+            DialogResult result = pumppower_form.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Pump1Head = pumppower_form.PumpHead;
+                PumpHead_textBox.Text = Pump1Head.ToString("0.00");
+            }
+        }
         private void PumpMethod_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (PumpMethod_comboBox.SelectedItem != null)
@@ -2554,27 +2590,6 @@ namespace main.contents
             }
         }
 
-        private void GPump2_button_Click(object sender, EventArgs e)
-        {
-            if (Pump_dataGridView.Rows.Count >= 2)
-            {
-                Pump_dataGridView.Rows.Add();
-            }
-            Heating_Pump heating_pump = new Heating_Pump(GPump2);
-            DialogResult result = heating_pump.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                GPump2 = heating_pump.SelectPump;
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "명칭", "번호 = '" + GPump2.ToString() + "'");
-                if (Value.Length > 0)
-                { GPump2_textBox.Text = Value[0][0]; }
-                if (Pump_dataGridView.Rows.Count == 3)
-                { Load_Pump_Table(2, Pump2); }
-                else if (Pump_dataGridView.Rows.Count == 4)
-                { Load_Pump_Table(3, Pump2); }
-            }
-        }
-
         private void Create_Pump_Table()
         {
             Pump_dataGridView.Columns.Clear();
@@ -2588,79 +2603,47 @@ namespace main.contents
             Pump_dataGridView.Columns.Add("A6", "유량.[CMH]");
             Pump_dataGridView.Columns.Add("A7", "양정.[m]");
             Pump_dataGridView.Columns.Add("A8", "");
-            Pump_dataGridView.Columns.Add("A9", "정유량 밸브");
+            Pump_dataGridView.Columns.Add("A9", "유량밸런스");
             Pump_dataGridView.Columns.Add("A10", "펌프 제어");
             Pump_dataGridView.Columns.Add("A11", "대수.[EA]");
             Pump_dataGridView.Columns[0].Width = 50;
             Pump_dataGridView.Columns[1].Width = 50;
             Pump_dataGridView.Columns[8].Width = 30;
+            Pump_dataGridView.Columns[4].Visible = false;
+            Pump_dataGridView.Columns[6].Visible = false;
+            Pump_dataGridView.Columns[7].Visible = false;
+            Pump_dataGridView.Columns[8].Visible = false;
+            Pump_dataGridView.Visible = true;
 
         }
-
-
-        private void Pump_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                if (e.ColumnIndex == 8)
-                {
-                    double eta = Pump_dataGridView.Rows[e.RowIndex].Cells[5].Value != null ? Convert.ToDouble(Pump_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()) : 0;
-                    PumpCal pumppower_form = new PumpCal(Pump_dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString());
-                    DialogResult result = pumppower_form.ShowDialog();
-                    if (result == DialogResult.OK)
-                    {
-                        double PumpHead = pumppower_form.PumpHead;
-                        Pump_dataGridView.Rows[e.RowIndex].Cells[7].Value = String.Format("{0:F1}", PumpHead);
-                    }
-                }
-            }
-        }
-
+        
         private void Load_Pump_Table(int nRow, String PumpNum)
         {
-            DataGridViewButtonCell PumpHead_ButtonCell = new DataGridViewButtonCell();
-            Pump_dataGridView.Rows[nRow].Cells[8] = PumpHead_ButtonCell;
-            PumpHead_ButtonCell.Value = "+";
 
-            DataGridViewComboBoxCell 정유량밸브comboBox = new DataGridViewComboBoxCell();
-            정유량밸브comboBox.Items.Add("있음");
-            정유량밸브comboBox.Items.Add("없음");
-            Pump_dataGridView.Rows[nRow].Cells[9] = 정유량밸브comboBox;
+            DataGridViewComboBoxCell 유량밸런스comboBox = new DataGridViewComboBoxCell();
+            유량밸런스comboBox.Items.Add("유량밸런스있음");
+            유량밸런스comboBox.Items.Add("유량밸런스없음");
+            Pump_dataGridView.Rows[nRow].Cells[9] = 유량밸런스comboBox;
 
             DataGridViewComboBoxCell 제어comboBox = new DataGridViewComboBoxCell();
-            제어comboBox.Items.Add("대수제어");
-            제어comboBox.Items.Add("인버터제어");
-            제어comboBox.Items.Add("제어없음");
+            제어comboBox.Items.Add("정속펌프(제어없음)");
+            제어comboBox.Items.Add("변속펌프(일정차압제어)");
+            제어comboBox.Items.Add("변속펌프(유량보상차압제어)");
             Pump_dataGridView.Rows[nRow].Cells[10] = 제어comboBox;
 
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,B효율,동력", "번호 = '" + PumpNum.ToString() + "'");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,동력", "번호 = '" + PumpNum.ToString() + "'");
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
                 {
 
                     Pump_dataGridView.Rows[nRow].Cells[0].Value = nRow + 1;
-                    for (int a = 0; a < Value[0].Length; a++)
-                    {
-                        Pump_dataGridView.Rows[nRow].Cells[a + 1].Value = Value[0][a];
-                    }
+                    Pump_dataGridView.Rows[nRow].Cells[1].Value = Value[0][0];
+                    Pump_dataGridView.Rows[nRow].Cells[2].Value = Value[0][1];
+                    Pump_dataGridView.Rows[nRow].Cells[3].Value = Value[0][2];
+                    Pump_dataGridView.Rows[nRow].Cells[5].Value = Value[0][3];
 
-                    double Max = AHU_Qmax_textBox.Text == null || AHU_Qmax_textBox.Text.ToString() == "" ? 0 : Convert.ToDouble(AHU_Qmax_textBox.Text.ToString());
-                    Max = Zone_Qmax_textBox.Text == null || Zone_Qmax_textBox.Text.ToString() == "" ? Max + 0 : Max + Convert.ToDouble(Zone_Qmax_textBox.Text.ToString());
-
-                    double dtheta = 10;
-                    string[][] v = Program.DB.getValue(DB.type.BaseDB_Heating, "공급환순온도", "공급온도,환수온도", "공급환수온도='" + SLRL + "'");
-                    if (v.Length > 0)
-                    {
-                        dtheta = Convert.ToDouble(v[0][0]) - Convert.ToDouble(v[0][1]);
-                    }
-                    double Volume = Max * 3.6 / (dtheta * 4.18);
-                    Pump_dataGridView.Rows[nRow].Cells[6].Value = Volume.ToString();
-
-                    Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 4, 1);
                     Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 5, 1);
-                    Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 6, 1);
-                    Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 7, 1);
                 }
             }
         }
@@ -2675,11 +2658,6 @@ namespace main.contents
                 {
                     if (k == 0)
                     {
-                        if (Pump_dataGridView.Rows[0].Cells[6].Value != null)
-                        { Pump1Volume = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 6, 0); }
-                        if (Pump_dataGridView.Rows[0].Cells[7].Value != null)
-                        { Pump1Head = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 7, 0); }
-                        else { MessageBox.Show("펌프 양정을 선택하세요."); }
                         if (Pump_dataGridView.Rows[0].Cells[9].Value != null)
                         { Pump1Valve = Pump_dataGridView.Rows[0].Cells[9].Value.ToString(); }
                         else { MessageBox.Show("펌프 밸브를 선택하세요."); }
@@ -2692,11 +2670,6 @@ namespace main.contents
                     }
                     if (k == 1)
                     {
-                        if (Pump_dataGridView.Rows[1].Cells[6].Value != null)
-                        { GPump1Volume = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 1, 6, 0); }
-                        if (Pump_dataGridView.Rows[1].Cells[7].Value != null)
-                        { GPump1Head = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 1, 7, 0); }
-                        else { MessageBox.Show("펌프 양정을 선택하세요."); }
                         if (Pump_dataGridView.Rows[1].Cells[9].Value != null)
                         { GPump1Valve = Pump_dataGridView.Rows[1].Cells[9].Value.ToString(); }
                         else { MessageBox.Show("펌프 밸브를 선택하세요."); }
@@ -2709,11 +2682,6 @@ namespace main.contents
                     }
                     if (k == 2)
                     {
-                        if (Pump_dataGridView.Rows[2].Cells[6].Value != null)
-                        { GPump2Volume = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 2, 6, 0); }
-                        if (Pump_dataGridView.Rows[2].Cells[7].Value != null)
-                        { GPump2Head = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 2, 7, 0); }
-                        else { MessageBox.Show("펌프 양정을 선택하세요."); }
                         if (Pump_dataGridView.Rows[2].Cells[9].Value != null)
                         { GPump2Valve = Pump_dataGridView.Rows[1].Cells[9].Value.ToString(); }
                         else { MessageBox.Show("펌프 밸브를 선택하세요."); }
@@ -2729,11 +2697,6 @@ namespace main.contents
                 {
                     if (k == 0)
                     {
-                        if (Pump_dataGridView.Rows[0].Cells[6].Value != null)
-                        { Pump1Volume = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 6, 0); }
-                        if (Pump_dataGridView.Rows[0].Cells[7].Value != null)
-                        { Pump1Head = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 7, 0); }
-                        else { MessageBox.Show("펌프 양정을 선택하세요."); }
                         if (Pump_dataGridView.Rows[0].Cells[9].Value != null)
                         { Pump1Valve = Pump_dataGridView.Rows[0].Cells[9].Value.ToString(); }
                         else { MessageBox.Show("펌프 밸브를 선택하세요."); }
@@ -2746,11 +2709,6 @@ namespace main.contents
                     }
                     if (k == 1)
                     {
-                        if (Pump_dataGridView.Rows[1].Cells[6].Value != null)
-                        { Pump2Volume = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 1, 6, 0); }
-                        if (Pump_dataGridView.Rows[1].Cells[7].Value != null)
-                        { Pump2Head = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 1, 7, 0); }
-                        else { MessageBox.Show("펌프 양정을 선택하세요."); }
                         if (Pump_dataGridView.Rows[1].Cells[9].Value != null)
                         { Pump2Valve = Pump_dataGridView.Rows[1].Cells[9].Value.ToString(); }
                         else { MessageBox.Show("펌프 밸브를 선택하세요."); }
@@ -2763,11 +2721,6 @@ namespace main.contents
                     }
                     if (k == 2)
                     {
-                        if (Pump_dataGridView.Rows[2].Cells[6].Value != null)
-                        { GPump1Volume = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 2, 6, 0); }
-                        if (Pump_dataGridView.Rows[2].Cells[7].Value != null)
-                        { GPump1Head = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 2, 7, 0); }
-                        else { MessageBox.Show("펌프 양정을 선택하세요."); }
                         if (Pump_dataGridView.Rows[2].Cells[9].Value != null)
                         { GPump1Valve = Pump_dataGridView.Rows[1].Cells[9].Value.ToString(); }
                         else { MessageBox.Show("펌프 밸브를 선택하세요."); }
@@ -2780,11 +2733,6 @@ namespace main.contents
                     }
                     if (k == 3)
                     {
-                        if (Pump_dataGridView.Rows[3].Cells[6].Value != null)
-                        { GPump2Volume = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 3, 6, 0); }
-                        if (Pump_dataGridView.Rows[3].Cells[7].Value != null)
-                        { GPump2Head = Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 3, 7, 0); }
-                        else { MessageBox.Show("펌프 양정을 선택하세요."); }
                         if (Pump_dataGridView.Rows[3].Cells[9].Value != null)
                         { GPump2Valve = Pump_dataGridView.Rows[1].Cells[9].Value.ToString(); }
                         else { MessageBox.Show("펌프 밸브를 선택하세요."); }
@@ -3419,9 +3367,13 @@ namespace main.contents
             {
                 string fcenum = FC_num();
 
-                Program.DB.setValue(DB.type.ProjDB, "FC_Form", "번호,프로젝트유형,연료전지번호,설비번호,적용설비,적용유형,연료전지대수,연료전지설치유형,연료전지생산유형",
-                     "'" + fcenum + "','" + 프로젝트유형[0][0] + "','" + SelectFC_nonsplit + "','" + Num_textBox.Text + "','" + 적용설비 + "','" + 적용유형 + "','" + FCNum_nonsplit +
-                     "','" + FCElecInstall_nonsplit + "', '" + FCElecHeat_nonsplit + "'", "번호,연료전지번호,설비번호");
+                if(FCNum_nonsplit!= null && FCNum_nonsplit != "")
+                {
+                    Program.DB.setValue(DB.type.ProjDB, "FC_Form", "번호,프로젝트유형,연료전지번호,설비번호,적용설비,적용유형,연료전지대수,연료전지설치유형,연료전지생산유형",
+                    "'" + fcenum + "','" + 프로젝트유형[0][0] + "','" + SelectFC_nonsplit + "','" + Num_textBox.Text + "','" + 적용설비 + "','" + 적용유형 + "','" + FCNum_nonsplit +
+                    "','" + FCElecInstall_nonsplit + "', '" + FCElecHeat_nonsplit + "'", "번호,연료전지번호,설비번호");
+                }    
+               
             }
 
             Program.DB.saveProject();
@@ -3583,6 +3535,8 @@ namespace main.contents
             HPSupply_nonsplit[0] = null; HPSupply_nonsplit[1] = null; HPSupply_nonsplit[2] = null;
             HPControl_nonsplit[0] = null; HPControl_nonsplit[1] = null; HPControl_nonsplit[2] = null;
             PumpUse = null; PumpMethod = null; Pump1 = null; Pump2 = null; Pump1Valve = null; Pump2Valve = null; Pump1Control = null; Pump2Control = null; Pump1Num = 0; Pump2Num = 0;
+            GPump1 = null; GPump2 = null; GPump1Valve = null; GPump2Valve = null; GPump1Control = null; GPump2Control = null; GPump1Num = 0; GPump2Num = 0;
+            Pump1Head = 0; Pump2Head = 0; Pump1Volume = 0; Pump2Volume = 0; GPump1Head = 0; GPump2Head = 0; GPump1Volume = 0; GPump2Volume = 0;
             ce1Type = null; ce2Type = null;
             StorageUse = null; StoragePumpUse = null; StoragePump = null; Vs = 0;
             ZoneArea = 0;
@@ -3625,6 +3579,7 @@ namespace main.contents
             PumpMethod_comboBox.SelectedItem = null;
             Pump1_textBox.Text = null;
             Pump2_textBox.Text = null;
+            PumpHead_textBox.Text = null;
             Pump_dataGridView.Columns.Clear();
             Pump_dataGridView.Rows.Clear();
 
@@ -3908,7 +3863,6 @@ namespace main.contents
                             Pump_dataGridView.Rows.Add();
                         }
                         Load_Pump_Table(0, Pump1);
-                        Pump_dataGridView.Rows[0].Cells[7].Value = Pump1Head;
                         Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 0, 7, 1);
                         Pump_dataGridView.Rows[0].Cells[9].Value = Pump1Valve;
                         Pump_dataGridView.Rows[0].Cells[10].Value = Pump1Control;
@@ -3924,7 +3878,6 @@ namespace main.contents
                             Pump_dataGridView.Rows.Add();
                         }
                         Load_Pump_Table(1, Pump2);
-                        Pump_dataGridView.Rows[1].Cells[7].Value = Pump2Head;
                         Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, 1, 7, 1);
                         Pump_dataGridView.Rows[1].Cells[9].Value = Pump2Valve;
                         Pump_dataGridView.Rows[1].Cells[10].Value = Pump2Control;
@@ -3938,7 +3891,6 @@ namespace main.contents
                         GPump1_textBox.Text = Pump_Value[0][0];
                         Pump_dataGridView.Rows.Add();
                         Load_Pump_Table(Pump_dataGridView.Rows.Count - 1, GPump1);
-                        Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[7].Value = GPump1Head;
                         Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, Pump_dataGridView.Rows.Count - 1, 7, 1);
                         Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[9].Value = GPump1Valve;
                         Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[10].Value = GPump1Control;
@@ -3951,7 +3903,6 @@ namespace main.contents
                         GPump2_textBox.Text = Pump_Value[0][0];
                         Pump_dataGridView.Rows.Add();
                         Load_Pump_Table(Pump_dataGridView.Rows.Count - 1, GPump2);
-                        Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[7].Value = GPump2Head;
                         Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, Pump_dataGridView.Rows.Count - 1, 7, 1);
                         Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[9].Value = GPump2Valve;
                         Pump_dataGridView.Rows[Pump_dataGridView.Rows.Count - 1].Cells[10].Value = GPump2Control;
@@ -3959,7 +3910,35 @@ namespace main.contents
                         Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, Pump_dataGridView.Rows.Count - 1, 11, 0);
                     }
                 }
-                else { Pump_dataGridView.Visible = false; }
+                else
+                {
+                    if (MainSystem == "보일러")
+                    {
+                        PumpHead_label.Visible = true;
+                        PumpHead_button.Visible = true;
+                        PumpHead_textBox.Visible = true;
+                        Pump1Volume = Convert.ToDouble(Value[0][10]);
+                        Pump1Head = Convert.ToDouble(Value[0][12]);
+                        PumpHead_textBox.Text = Pump1Head.ToString("0.00");
+                    }
+                    else
+                    {
+                        PumpHead_label.Visible = false;
+                        PumpHead_button.Visible = false;
+                        PumpHead_textBox.Visible = false;
+
+                    }
+                    PumpMethod_label.Visible = false;
+                    PumpMethod_comboBox.Visible = false;
+                    PumpMethod_comboBox.SelectedItem = null;
+
+                    GPumpMethod_label.Visible = false;
+                    GPumpMethod_comboBox.Visible = false;
+                    GPumpMethod_comboBox.SelectedItem = null;
+
+                    Pump_dataGridView.Columns.Clear();
+                    ChangeVisble_Pump(null);
+                }
             }
 
             Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "공급설비1종류,공급설비2종류", "번호 = '" + ID + "'");
@@ -4059,8 +4038,8 @@ namespace main.contents
                 PipeInsD_textBox.Text = PipeInsD.ToString();
                 Program.UTIL.textBox_doubleComa(PipeInsD_textBox, true, 1);
 
-                PipeInsD = Convert.ToDouble(Value[0][2]);
-                PipeIns_Ramda_textBox.Text = PipeInsD.ToString();
+                PipeIns_Ramda = Convert.ToDouble(Value[0][2]);
+                PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
                 Program.UTIL.textBox_doubleComa(PipeIns_Ramda_textBox, true, 3);
 
                 PipeIns = Value[0][3];

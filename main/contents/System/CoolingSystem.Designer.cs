@@ -989,7 +989,6 @@ namespace main.contents
             Pump_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle24;
             Pump_dataGridView.Size = new Size(986, 197);
             Pump_dataGridView.TabIndex = 196;
-            Pump_dataGridView.CellContentClick += Pump_dataGridView_CellContentClick;
             // 
             // Pump2_textBox
             // 

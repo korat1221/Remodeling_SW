@@ -1300,7 +1300,7 @@ namespace main.contents
             FC_dataGridView.Rows[nRow].Cells[2].Value = "도면";
 
             DataGridViewComboBoxCell 연료 = new DataGridViewComboBoxCell();
-            연료.Items.AddRange(new string[] { "가스", "수소" });
+            연료.Items.AddRange(new string[] { "가스" });
             FC_dataGridView.Rows[nRow].Cells[4] = 연료;
         }
 
@@ -1350,17 +1350,6 @@ namespace main.contents
         {
             int nRow = FC_dataGridView.Rows.Add();
             Load_FC_Num();
-
-            DataGridViewComboBoxCell 연로전지종류Combo = new DataGridViewComboBoxCell();
-            연로전지종류Combo.Items.Add("PEMFC");
-            연로전지종류Combo.Items.Add("DMFC");
-            연로전지종류Combo.Items.Add("SOFC");
-            FC_dataGridView.Rows[nRow].Cells[5] = 연로전지종류Combo;
-
-            DataGridViewComboBoxCell 축열탱크Combo = new DataGridViewComboBoxCell();
-            축열탱크Combo.Items.Add("외장형");
-            축열탱크Combo.Items.Add("내장형");
-            FC_dataGridView.Rows[nRow].Cells[9] = 축열탱크Combo;
 
             for (int k = 2; k < 11; k++)
             {
@@ -1462,25 +1451,25 @@ namespace main.contents
 
             WP_dataGridView.Columns.Add("A1", "번호");
             WP_dataGridView.Columns.Add("A2", "DB유형");
-            WP_dataGridView.Columns.Add("A3", "제품명");
-            WP_dataGridView.Columns.Add("A4", "제조사");
-            WP_dataGridView.Columns.Add("A5", "타입");
-            WP_dataGridView.Columns.Add("A6", "세부타입");
-            WP_dataGridView.Columns.Add("A7", "정격출력.[kW]");
-            WP_dataGridView.Columns.Add("A8", "허브면적.[m" + Program.UTIL.Subscript(2, true) + "]");
-            WP_dataGridView.Columns.Add("A9", "허브높이.[m]");
-            WP_dataGridView.Columns.Add("A10", "풍속.시동.[m/s]");
-            WP_dataGridView.Columns.Add("A11", "풍속.최적.[m/s]");
-            WP_dataGridView.Columns.Add("A12", "풍속.종단.[m/s]");
-            WP_dataGridView.Columns.Add("A13", "전력계수.시동풍속.Cp,min");
-            WP_dataGridView.Columns.Add("A14", "전력계수.최적풍속.Cp,op");
-            WP_dataGridView.Columns.Add("A15", "전력계수.종단풍속.Cp,max");
+            WP_dataGridView.Columns.Add("A3", "일반정보.타입");
+            WP_dataGridView.Columns.Add("A4", "일반정보.R.[m]");
+            WP_dataGridView.Columns.Add("A5", "일반정보.D.[m]");
+            WP_dataGridView.Columns.Add("A6", "일반정보.H.[m]");
+            WP_dataGridView.Columns.Add("A7", "일반정보.회전면적.[m²]");
+            WP_dataGridView.Columns.Add("A8", "일반정보.허브높이.[m]");
+            WP_dataGridView.Columns.Add("A9", "성능정보.시동풍속.[m/s]");
+            WP_dataGridView.Columns.Add("A10", "성능정보.종단풍속.[m/s]");
+            WP_dataGridView.Columns.Add("A11", "성능정보.정격출력.출력.[W]");
+            WP_dataGridView.Columns.Add("A12", "성능정보.정격출력.풍속.[m/s]");
+            WP_dataGridView.Columns.Add("A13", "성능정보.풍속구간별 출력.적용유형");
+            WP_dataGridView.Columns.Add("A14", "성능정보.풍속구간별 출력.[W]");
+            WP_dataGridView.Columns.Add("A15", "성능정보.풍속구간별 출력.");
             DataGridViewComboBoxColumn 설치유형Combo = new DataGridViewComboBoxColumn();
             설치유형Combo.HeaderText = "설치";
             설치유형Combo.Items.AddRange("기존", "신규", "철거후신규");
             WP_dataGridView.Columns.Add(설치유형Combo);
             WP_dataGridView.Columns[0].Width = 40;
-            WP_dataGridView.Columns[6].Width = 80;
+            WP_dataGridView.Columns[15].Width = 30;
             WP_dataGridView.Columns[16].Width = 60;
         }
 
@@ -1498,54 +1487,23 @@ namespace main.contents
             else return false;
         }
 
-
-
-        private void DefaultWP_ADD_button_Click(object sender, EventArgs e)
-        {
-            ArrayList SelectWP = new ArrayList();
-            int nRow = WP_dataGridView.Rows.Add();
-            Load_WP_Num();
-            WP_dataGridView.Rows[nRow].Cells[2].Value = "기본";
-
-            //subcontents.WP_DB wp_DB = new subcontents.WP_DB("기본DB 적용");
-            subcontents.RESystem_WP.WP_DB wp_DB = new subcontents.RESystem_WP.WP_DB("기본DB 적용");
-            DialogResult result = wp_DB.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                if (wp_DB.Select_WP[0] != null)
-                {
-                    string[][] Value = Program.DB.getValue(DB.type.BaseDB_RESystem, "풍력DB", "제품명,제조사,타입,세부타입,정격출력,회전면적,허브높이,시동풍속,최적풍속,종단풍속,시동풍속전력계수,최적풍속전력계수,종단풍속전력계수", "번호 = '" + wp_DB.Select_WP[0].ToString() + "'");
-                    if (Value.Length > 0)
-                    {
-                        WP_dataGridView.Rows[nRow].Cells[3].Value = Value[0][0];
-                        WP_dataGridView.Rows[nRow].Cells[4].Value = Value[0][1];
-                        WP_dataGridView.Rows[nRow].Cells[5].Value = Value[0][2];
-                        WP_dataGridView.Rows[nRow].Cells[6].Value = Value[0][3];
-                        WP_dataGridView.Rows[nRow].Cells[7].Value = Value[0][4];
-                        WP_dataGridView.Rows[nRow].Cells[8].Value = Value[0][5];
-                        WP_dataGridView.Rows[nRow].Cells[9].Value = Value[0][6];
-                        WP_dataGridView.Rows[nRow].Cells[10].Value = Value[0][7];
-                        WP_dataGridView.Rows[nRow].Cells[11].Value = Value[0][8];
-                        WP_dataGridView.Rows[nRow].Cells[12].Value = Value[0][9];
-                        WP_dataGridView.Rows[nRow].Cells[13].Value = Value[0][10];
-                        WP_dataGridView.Rows[nRow].Cells[14].Value = Value[0][11];
-                        WP_dataGridView.Rows[nRow].Cells[15].Value = Value[0][12];
-                    }
-                }
-            }
-        }
-
-
-
         private void UserWP_Add_button_Click(object sender, EventArgs e)
         {
             int nRow = WP_dataGridView.Rows.Add();
             Load_WP_Num();
             WP_dataGridView.Rows[nRow].Cells[2].Value = "도면";
             DataGridViewComboBoxCell 타입Combo = new DataGridViewComboBoxCell();
-            타입Combo.Items.Add("수직형");
             타입Combo.Items.Add("수평형");
-            WP_dataGridView.Rows[nRow].Cells[5] = 타입Combo;
+            타입Combo.Items.Add("H-다리우스");
+            타입Combo.Items.Add("다리우스");
+            WP_dataGridView.Rows[nRow].Cells[3] = 타입Combo;
+            DataGridViewComboBoxCell 적용유형Combo = new DataGridViewComboBoxCell();
+            적용유형Combo.Items.Add("표준값");
+            적용유형Combo.Items.Add("제품값");
+            WP_dataGridView.Rows[nRow].Cells[13] = 적용유형Combo;
+            DataGridViewButtonCell WP_ButtonCell = new DataGridViewButtonCell();
+            WP_dataGridView.Rows[nRow].Cells[15] = WP_ButtonCell;
+            WP_ButtonCell.Value = "+";
 
         }
 
@@ -1553,29 +1511,90 @@ namespace main.contents
         {
             if (e.RowIndex >= 0)
             {
-                if (e.ColumnIndex == 5)
+                if (e.ColumnIndex == 3)
                 {
-                    if (WP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString() == "수평형")
+                    if (WP_dataGridView.Rows[e.RowIndex].Cells[3].Value != null)
                     {
-                        DataGridViewTextBoxCell 수평형 = new DataGridViewTextBoxCell();
-                        WP_dataGridView.Rows[e.RowIndex].Cells[6] = 수평형;
-                        WP_dataGridView.Rows[e.RowIndex].Cells[6].Value = "수평형";
-                    }
-
-                    if (WP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString() == "수직형")
-                    {
-                        DataGridViewComboBoxCell 세부타입Combo = new DataGridViewComboBoxCell();
-                        세부타입Combo.Items.Add("사보니우스");
-                        세부타입Combo.Items.Add("다리우스");
-                        세부타입Combo.Items.Add("H-blade");
-                        세부타입Combo.Items.Add("복합형");
-                        WP_dataGridView.Rows[e.RowIndex].Cells[6] = 세부타입Combo;
+                        if (WP_dataGridView.Rows[e.RowIndex].Cells[3].Value.ToString() == "수평형")
+                        {
+                            WP_dataGridView.Rows[e.RowIndex].Cells[4].Value = "";
+                            WP_dataGridView.Rows[e.RowIndex].Cells[5].Value = "-";
+                            WP_dataGridView.Rows[e.RowIndex].Cells[6].Value = "-";
+                        }
+                        else if (WP_dataGridView.Rows[e.RowIndex].Cells[3].Value.ToString() == "H-다리우스" || WP_dataGridView.Rows[e.RowIndex].Cells[3].Value.ToString() == "다리우스")
+                        {
+                            WP_dataGridView.Rows[e.RowIndex].Cells[4].Value = "-";
+                            WP_dataGridView.Rows[e.RowIndex].Cells[5].Value = "";
+                            WP_dataGridView.Rows[e.RowIndex].Cells[6].Value = "";
+                        }
                     }
                 }
-
+                else if (e.ColumnIndex == 4)
+                {
+                    if (WP_dataGridView.Rows[e.RowIndex].Cells[4].Value != null && double.TryParse(WP_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString(), out double R))
+                    {
+                        WP_dataGridView.Rows[e.RowIndex].Cells[7].Value = (Math.PI * Math.Pow(R, 2)).ToString("0.00");
+                    }
+                }
+                else if (e.ColumnIndex == 5)
+                {
+                    if (WP_dataGridView.Rows[e.RowIndex].Cells[5].Value != null && double.TryParse(WP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString(), out double D))
+                    {
+                        if (WP_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && double.TryParse(WP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString(), out double H))
+                        {
+                            if (WP_dataGridView.Rows[e.RowIndex].Cells[3].Value.ToString() == "H-다리우스")
+                            {
+                                WP_dataGridView.Rows[e.RowIndex].Cells[7].Value = (D * H).ToString("0.00");
+                            }
+                            else if (WP_dataGridView.Rows[e.RowIndex].Cells[3].Value.ToString() == "다리우스")
+                            {
+                                WP_dataGridView.Rows[e.RowIndex].Cells[7].Value = (0.65 * D * H).ToString("0.00");
+                            }
+                        }
+                    }
+                }
+                else if (e.ColumnIndex == 6)
+                {
+                    if (WP_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && double.TryParse(WP_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString(), out double H))
+                    {
+                        if (WP_dataGridView.Rows[e.RowIndex].Cells[5].Value != null && double.TryParse(WP_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString(), out double D))
+                        {
+                            if (WP_dataGridView.Rows[e.RowIndex].Cells[3].Value.ToString() == "H-다리우스")
+                            {
+                                WP_dataGridView.Rows[e.RowIndex].Cells[7].Value = (D * H).ToString("0.00");
+                            }
+                            else if (WP_dataGridView.Rows[e.RowIndex].Cells[3].Value.ToString() == "다리우스")
+                            {
+                                WP_dataGridView.Rows[e.RowIndex].Cells[7].Value = (0.65 * D * H).ToString("0.00");
+                            }
+                        }
+                    }
+                }
+                else if (e.ColumnIndex == 7 || e.ColumnIndex == 10 || e.ColumnIndex == 13)
+                {
+                    if (WP_dataGridView.Rows[e.RowIndex].Cells[13].Value != null)
+                    {
+                        if (WP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() == "표준값")
+                        {
+                            if (WP_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && double.TryParse(WP_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString(), out double A))
+                            {
+                                if (WP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && double.TryParse(WP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString(), out double v))
+                                {
+                                    double power = 0.5 * A * 1.225 * 0.2 * Math.Pow(v, 3);
+                                    WP_dataGridView.Rows[e.RowIndex].Cells[14].Value = power.ToString("0.00");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            WP_dataGridView.Rows[e.RowIndex].Cells[14].Value = "-";
+                        }
+                    }
+                }
             }
         }
 
+       
 
         private void WP_Remove_button_Click(object sender, EventArgs e)
         {
@@ -1589,9 +1608,17 @@ namespace main.contents
             Load_WP_Num();
 
             DataGridViewComboBoxCell 타입Combo = new DataGridViewComboBoxCell();
-            타입Combo.Items.Add("수직형");
             타입Combo.Items.Add("수평형");
-            WP_dataGridView.Rows[nRow].Cells[5] = 타입Combo;
+            타입Combo.Items.Add("H-다리우스");
+            타입Combo.Items.Add("다리우스");
+            WP_dataGridView.Rows[nRow].Cells[3] = 타입Combo;
+            DataGridViewComboBoxCell 적용유형Combo = new DataGridViewComboBoxCell();
+            적용유형Combo.Items.Add("표준값");
+            적용유형Combo.Items.Add("제품값");
+            WP_dataGridView.Rows[nRow].Cells[13] = 적용유형Combo;
+            DataGridViewButtonCell WP_ButtonCell = new DataGridViewButtonCell();
+            WP_dataGridView.Rows[nRow].Cells[15] = WP_ButtonCell;
+            WP_ButtonCell.Value = "+";
 
             for (int k = 2; k < 17; k++)
             {
@@ -1607,13 +1634,45 @@ namespace main.contents
             }
 
         }
-
         private void WP_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
                 WP_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 WP_SelectRow = e.RowIndex;
+                if(e.ColumnIndex==15)
+                {
+                    if (WP_dataGridView.Rows[e.RowIndex].Cells[13].Value != null)
+                    {
+                        if (WP_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() == "제품값")
+                        {
+                            if (WP_dataGridView.Rows[e.RowIndex].Cells[9].Value != null && double.TryParse(WP_dataGridView.Rows[e.RowIndex].Cells[9].Value.ToString(), out double v_start))
+                            {
+                                if (WP_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && double.TryParse(WP_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString(), out double v_end))
+                                {
+                                    WPPower form = new WPPower(WP_dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString(), v_start, v_end);
+                                    DialogResult result = form.ShowDialog();
+                                    if (result == DialogResult.OK)
+                                    {
+                                        string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_WP", "풍속구간별출력", "번호='"+ WP_dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString() + "'");
+                                        if(User_Value.Length >0)
+                                        {
+                                            if (User_Value[0][0] !=null && User_Value[0][0]!="")
+                                            {
+                                                WP_dataGridView.Rows[e.RowIndex].Cells[14].Value = "입력완료";
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("적용유형이 '제품값'일 때만 풍속구간별 출력을 입력합니다.");
+                        }
+                    }
+                        
+                }
             }
         }
 
@@ -1629,7 +1688,7 @@ namespace main.contents
 
         private void WP_Save(bool isManualSave = false)
         {
-            Program.DB.deleteValue(DB.type.ProjDB, "User_WP", "");
+            //Program.DB.deleteValue(DB.type.ProjDB, "User_WP", "");
 
             for (int k = 0; k < WP_dataGridView.RowCount; k++)
             {
@@ -1650,9 +1709,15 @@ namespace main.contents
                     }
                     else { Value[i - 1] = ""; }
                 }
-                Program.DB.setValue(DB.type.ProjDB, "User_WP", "번호,프로젝트유형,DB유형,제품명,제조사,타입,세부타입,정격출력,회전면적,허브높이,시동풍속,최적풍속,종단풍속,시동풍속전력계수,최적풍속전력계수,종단풍속전력계수,신규기존",
+                Program.DB.setValue(DB.type.ProjDB, "User_WP", "번호,프로젝트유형,DB유형,제품유형,R,D,H,회전면적,허브높이,시동풍속,종단풍속,정격출력,정격출력풍속,적용유형,신규기존",
                 "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
-                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "'", "번호");
+                 + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" + Value[12]  + "','" + Value[15] + "'", "번호");
+
+                if(Value[12]=="표준값")
+                {
+                    Program.DB.setValue(DB.type.ProjDB, "User_WP", "번호,풍속구간별출력",
+               "'" + Value[0] + "','" +  Value[13] + "'", "번호");
+                }
             }
             Program.DB.saveProject();
         }
@@ -1660,28 +1725,42 @@ namespace main.contents
         private void Load_WP()
         {
             WP_dataGridView.Rows.Clear();
-            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_WP", "번호, DB유형, 제품명, 제조사, 타입, 세부타입, 정격출력, 회전면적, 허브높이, 시동풍속, 최적풍속, 종단풍속, 시동풍속전력계수, 최적풍속전력계수, 종단풍속전력계수,신규기존", "");
+            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_WP", "번호,프로젝트유형,DB유형,제품유형,R,D,H,회전면적,허브높이,시동풍속,종단풍속,정격출력,정격출력풍속,적용유형,풍속구간별출력,신규기존", "");
             if (User_Value.Length > 0)
             {
                 for (int n = 0; n < User_Value.Length; n++)
                 {
                     WP_dataGridView.Rows.Add();
                     int nRow = WP_dataGridView.Rows.Count - 1;
+                    DataGridViewButtonCell WP_ButtonCell = new DataGridViewButtonCell();
+                    WP_dataGridView.Rows[nRow].Cells[15] = WP_ButtonCell;
+                    WP_ButtonCell.Value = "+";
                     WP_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
-                    WP_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
-                    WP_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
-                    WP_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
-                    WP_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][4];
-                    WP_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][5];
-                    WP_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][6];
-                    WP_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][7];
-                    WP_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][8];
-                    WP_dataGridView.Rows[nRow].Cells[10].Value = User_Value[n][9];
-                    WP_dataGridView.Rows[nRow].Cells[11].Value = User_Value[n][10];
-                    WP_dataGridView.Rows[nRow].Cells[12].Value = User_Value[n][11];
-                    WP_dataGridView.Rows[nRow].Cells[13].Value = User_Value[n][12];
-                    WP_dataGridView.Rows[nRow].Cells[14].Value = User_Value[n][13];
-                    WP_dataGridView.Rows[nRow].Cells[15].Value = User_Value[n][14];
+                    WP_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][2];
+                    WP_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][3];
+                    WP_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][4];
+                    WP_dataGridView.Rows[nRow].Cells[5].Value = User_Value[n][5];
+                    WP_dataGridView.Rows[nRow].Cells[6].Value = User_Value[n][6];
+                    WP_dataGridView.Rows[nRow].Cells[7].Value = User_Value[n][7];
+                    WP_dataGridView.Rows[nRow].Cells[8].Value = User_Value[n][8];
+                    WP_dataGridView.Rows[nRow].Cells[9].Value = User_Value[n][9];
+                    WP_dataGridView.Rows[nRow].Cells[10].Value = User_Value[n][10];
+                    WP_dataGridView.Rows[nRow].Cells[11].Value = User_Value[n][11];
+                    WP_dataGridView.Rows[nRow].Cells[12].Value = User_Value[n][12];
+                    WP_dataGridView.Rows[nRow].Cells[13].Value = User_Value[n][13];
+                    if (User_Value[n][13] == "표준값")
+                    { WP_dataGridView.Rows[nRow].Cells[14].Value = User_Value[n][14]; }
+                    else if (User_Value[n][13] == "제품값")
+                    {
+                        if(User_Value[n][14]!=null && User_Value[n][14] !="")
+                        {
+                            WP_dataGridView.Rows[nRow].Cells[14].Value = "입력완료";
+                        }
+                        else
+                        {
+                            WP_dataGridView.Rows[nRow].Cells[14].Value = "-";
+                        }
+                    }
                     WP_dataGridView.Rows[nRow].Cells[16].Value = User_Value[n][15];
                 }
             }
@@ -2594,6 +2673,7 @@ namespace main.contents
             Pump_dataGridView.Columns[8].Width = 100;
             Pump_dataGridView.Columns[9].Width = 100;
             Pump_dataGridView.Columns[4].Visible = false;
+            Pump_dataGridView.Columns[5].Visible = false;
         }
 
         private void Pump_Add_button_Click(object sender, EventArgs e)
@@ -2699,8 +2779,7 @@ namespace main.contents
                 Pump_SelectRow = e.RowIndex;
                 if (e.ColumnIndex == 7)
                 {
-                    double eta = Pump_dataGridView.Rows[e.RowIndex].Cells[5].Value != null ? Convert.ToDouble(Pump_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString()) : 0;
-                    PumpPower pumppower_form = new PumpPower(Pump_dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString(), eta);
+                    PumpPower pumppower_form = new PumpPower(Pump_dataGridView.Rows[e.RowIndex].Cells[1].Value.ToString());
                     DialogResult result = pumppower_form.ShowDialog();
                     if (result == DialogResult.OK)
                     {
@@ -2727,9 +2806,9 @@ namespace main.contents
 
             for (int k = 0; k < Pump_dataGridView.RowCount; k++)
             {
-                Program.DB.setValue(DB.type.ProjDB, "User_Pump", "번호,프로젝트유형,명칭,종류,B효율,동력,대수,신규기존",
+                Program.DB.setValue(DB.type.ProjDB, "User_Pump", "번호,프로젝트유형,명칭,종류,동력,대수,신규기존",
                 "'" + Pump_dataGridView.Rows[k].Cells[1].Value.ToString() + "','" + 프로젝트유형[0][0] + "','"
-                 + Pump_dataGridView.Rows[k].Cells[2].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[3].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[5].Value.ToString() + "','"
+                 + Pump_dataGridView.Rows[k].Cells[2].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[3].Value.ToString() + "','"
                  + Pump_dataGridView.Rows[k].Cells[6].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[8].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[9].Value.ToString()
                  + "'", "번호");
             }
@@ -2744,14 +2823,10 @@ namespace main.contents
             {
                 for (int n = 0; n < Value.Length; n++)
                 {
-                    string B효율 = "", 동력 = "";
+                    string  동력 = "";
                     Pump_dataGridView.Rows.Add();
                     int nRow = Pump_dataGridView.Rows.Count - 1;
 
-                    if (Value[n][3] != null && Value[n][3] != "")
-                    {
-                        B효율 = string.Format("{0:F1}", Convert.ToDouble(Value[n][3]));
-                    }
                     if (Value[n][4] != null && Value[n][4] != "")
                     {
                         동력 = string.Format("{0:F0}", Convert.ToDouble(Value[n][4]));
@@ -2761,7 +2836,6 @@ namespace main.contents
                     Pump_dataGridView.Rows[nRow].Cells[2].Value = Value[n][1];
                     Pump_dataGridView.Rows[nRow].Cells[3].Value = Value[n][2];
                     Pump_dataGridView.Rows[nRow].Cells[4].Value = 100;
-                    Pump_dataGridView.Rows[nRow].Cells[5].Value = B효율;
                     Pump_dataGridView.Rows[nRow].Cells[6].Value = 동력;
                     Pump_dataGridView.Rows[nRow].Cells[8].Value = Value[n][5];
                     Pump_dataGridView.Rows[nRow].Cells[9].Value = Value[n][6];

@@ -2527,7 +2527,7 @@ namespace main.contents
             Pump_dataGridView.Columns.Add("A7", "유량.[CMH]");
             Pump_dataGridView.Columns.Add("A8", "양정.[m]");
             Pump_dataGridView.Columns.Add("A9", "");
-            Pump_dataGridView.Columns.Add("A10", "정유량 밸브");
+            Pump_dataGridView.Columns.Add("A10", "유량밸런스");
             Pump_dataGridView.Columns.Add("A11", "펌프 제어");
             Pump_dataGridView.Columns.Add("A12", "설치대수.[EA]"); //save
 
@@ -2537,6 +2537,11 @@ namespace main.contents
             Pump_dataGridView.Columns[3].Width = 60;
             Pump_dataGridView.Columns[4].Width = 130;
             Pump_dataGridView.Columns[9].Width = 30;
+            Pump_dataGridView.Columns[5].Visible = false;
+            Pump_dataGridView.Columns[7].Visible = false;
+            Pump_dataGridView.Columns[8].Visible = false;
+            Pump_dataGridView.Columns[9].Visible = false;
+            Pump_dataGridView.Visible = true;
         }
 
         //1차 또는 1차+2차펌프
@@ -2764,19 +2769,15 @@ namespace main.contents
             Pump_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", 유량);
 
 
-            DataGridViewButtonCell PumpVolume_ButtonCell = new DataGridViewButtonCell();
-            Pump_dataGridView.Rows[nRow].Cells[9] = PumpVolume_ButtonCell;
-            PumpVolume_ButtonCell.Value = "+";
-
-            DataGridViewComboBoxCell 정유량밸브comboBox = new DataGridViewComboBoxCell();
-            정유량밸브comboBox.Items.Add("있음");
-            정유량밸브comboBox.Items.Add("없음");
-            Pump_dataGridView.Rows[nRow].Cells[10] = 정유량밸브comboBox;
+            DataGridViewComboBoxCell 유량밸런스comboBox = new DataGridViewComboBoxCell();
+            유량밸런스comboBox.Items.Add("유량밸런스있음");
+            유량밸런스comboBox.Items.Add("유량밸런스없음");
+            Pump_dataGridView.Rows[nRow].Cells[10] = 유량밸런스comboBox;
 
             DataGridViewComboBoxCell 제어comboBox = new DataGridViewComboBoxCell();
-            제어comboBox.Items.Add("대수제어");
-            제어comboBox.Items.Add("인버터제어");
-            제어comboBox.Items.Add("제어없음");
+            제어comboBox.Items.Add("정속펌프(제어없음)");
+            제어comboBox.Items.Add("변속펌프(일정차압제어)");
+            제어comboBox.Items.Add("변속펌프(유량보상차압제어)");
             Pump_dataGridView.Rows[nRow].Cells[11] = 제어comboBox;
 
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,B효율,동력", "번호 = '" + P + "'");
@@ -2789,7 +2790,6 @@ namespace main.contents
                     {
                         Pump_dataGridView.Rows[nRow].Cells[a + 2].Value = Value[0][a];
                     }
-                    Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 5, 1);
                     Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, nRow, 6, 1);
 
                     Pump_dataGridView.Rows[nRow].Cells[12].Value = PN;
@@ -2826,8 +2826,6 @@ namespace main.contents
                         Pump1[2] = Pump_dataGridView.Rows[k].Cells[12].Value.ToString();//설치대수
                         Pump1[3] = Pump_dataGridView.Rows[k].Cells[10].Value.ToString();//정유량밸브
                         Pump1[4] = Pump_dataGridView.Rows[k].Cells[11].Value.ToString();//펌프제어
-                        Pump1[5] = Pump_dataGridView.Rows[k].Cells[7].Value.ToString();//유량
-                        Pump1[6] = Pump_dataGridView.Rows[k].Cells[8].Value.ToString();//양정
 
                         for (int j = 0; j < 7; j++)
                         {
@@ -2858,8 +2856,6 @@ namespace main.contents
                         Pump2[2] = Pump_dataGridView.Rows[k].Cells[12].Value.ToString();
                         Pump2[3] = Pump_dataGridView.Rows[k].Cells[10].Value.ToString();
                         Pump2[4] = Pump_dataGridView.Rows[k].Cells[11].Value.ToString();
-                        Pump2[5] = Pump_dataGridView.Rows[k].Cells[7].Value.ToString();//유량
-                        Pump2[6] = Pump_dataGridView.Rows[k].Cells[8].Value.ToString();//양정
 
                         for (int j = 0; j < 7; j++)
                         {
@@ -2888,8 +2884,6 @@ namespace main.contents
                         CPump1[2] = Pump_dataGridView.Rows[k].Cells[12].Value.ToString();
                         CPump1[3] = Pump_dataGridView.Rows[k].Cells[10].Value.ToString();
                         CPump1[4] = Pump_dataGridView.Rows[k].Cells[11].Value.ToString();
-                        CPump1[5] = Pump_dataGridView.Rows[k].Cells[7].Value.ToString();//유량
-                        CPump1[6] = Pump_dataGridView.Rows[k].Cells[8].Value.ToString();//양정
 
                         for (int j = 0; j < 7; j++)
                         {
@@ -2919,8 +2913,6 @@ namespace main.contents
                         CPump2[2] = Pump_dataGridView.Rows[k].Cells[12].Value.ToString();
                         CPump2[3] = Pump_dataGridView.Rows[k].Cells[10].Value.ToString();
                         CPump2[4] = Pump_dataGridView.Rows[k].Cells[11].Value.ToString();
-                        CPump2[5] = Pump_dataGridView.Rows[k].Cells[7].Value.ToString();//유량
-                        CPump2[6] = Pump_dataGridView.Rows[k].Cells[8].Value.ToString();//양정
 
                         for (int j = 0; j < 7; j++)
                         {
@@ -2939,24 +2931,6 @@ namespace main.contents
                     default:
                         break;
 
-                }
-            }
-        }
-
-        private void Pump_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            Pump_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-            int Pump_SelectRow = e.RowIndex;
-            if (e.ColumnIndex == 9)
-            {
-                double Lmax; double PumpHead;
-                PumpCal pumpcal_form = new PumpCal(Pump_dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString());
-                DialogResult result = pumpcal_form.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    Lmax = pumpcal_form.Lmax;
-                    PumpHead = pumpcal_form.PumpHead;
-                    Pump_dataGridView.Rows[e.RowIndex].Cells[8].Value = String.Format("{0:F1}", PumpHead);
                 }
             }
         }
