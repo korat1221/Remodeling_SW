@@ -28,23 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            label7 = new Label();
+            annual_textBox = new TextBox();
+            label5 = new Label();
             Num_textBox = new TextBox();
             label14 = new Label();
             label1 = new Label();
             Name_textBox = new TextBox();
             pictureBox1 = new PictureBox();
             panel2 = new Panel();
-            Condition_ComboBox = new CustomComboBox();
-            WPInverter_button = new Button();
-            label9 = new Label();
-            EURO_textBox = new TextBox();
-            label7 = new Label();
-            Inverter_textBox = new TextBox();
+            Range_button = new Button();
             label4 = new Label();
+            Condition_ComboBox = new CustomComboBox();
             label8 = new Label();
             h2_textBox = new TextBox();
             label3 = new Label();
@@ -56,7 +55,6 @@
             HerbHeight_textBox = new TextBox();
             RotateArea_textBox = new TextBox();
             Type_textBox = new TextBox();
-            Typesub_textBox = new TextBox();
             FCDB_button = new Button();
             label6 = new Label();
             AdditionalPanel = new Panel();
@@ -65,7 +63,6 @@
             WPtype_pictureBox = new PictureBox();
             Previous_button = new Button();
             label18 = new Label();
-            label5 = new Label();
             label10 = new Label();
             label11 = new Label();
             label12 = new Label();
@@ -82,6 +79,9 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(label7);
+            GeneralPanel.Controls.Add(annual_textBox);
+            GeneralPanel.Controls.Add(label5);
             GeneralPanel.Controls.Add(Num_textBox);
             GeneralPanel.Controls.Add(label14);
             GeneralPanel.Controls.Add(label1);
@@ -93,12 +93,47 @@
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
             // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("나눔바른고딕", 9.75F);
+            label7.ForeColor = SystemColors.ControlText;
+            label7.Location = new Point(660, 55);
+            label7.Name = "label7";
+            label7.Size = new Size(48, 15);
+            label7.TabIndex = 161;
+            label7.Text = "kWh/a";
+            // 
+            // annual_textBox
+            // 
+            annual_textBox.BackColor = Color.White;
+            annual_textBox.BorderStyle = BorderStyle.None;
+            annual_textBox.Enabled = false;
+            annual_textBox.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            annual_textBox.ForeColor = Color.White;
+            annual_textBox.Location = new Point(534, 55);
+            annual_textBox.Name = "annual_textBox";
+            annual_textBox.Size = new Size(120, 15);
+            annual_textBox.TabIndex = 143;
+            annual_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("나눔바른고딕", 9.75F);
+            label5.ForeColor = SystemColors.ControlText;
+            label5.Location = new Point(435, 55);
+            label5.Name = "label5";
+            label5.Size = new Size(70, 15);
+            label5.TabIndex = 142;
+            label5.Text = "연간 생산량";
+            // 
             // Num_textBox
             // 
             Num_textBox.BackColor = Color.White;
             Num_textBox.BorderStyle = BorderStyle.None;
             Num_textBox.Enabled = false;
-            Num_textBox.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point, 129);
+            Num_textBox.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 129);
             Num_textBox.ForeColor = Color.White;
             Num_textBox.Location = new Point(173, 26);
             Num_textBox.Name = "Num_textBox";
@@ -109,21 +144,21 @@
             // label14
             // 
             label14.AutoSize = true;
-            label14.Font = new Font(UTIL.Families[0], 9.75F);
+            label14.Font = new Font("나눔바른고딕", 9.75F);
             label14.ForeColor = SystemColors.ControlText;
             label14.Location = new Point(108, 25);
             label14.Name = "label14";
-            label14.Size = new Size(35, 15);
+            label14.Size = new Size(34, 15);
             label14.TabIndex = 140;
             label14.Text = "번 호";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font(UTIL.Families[0], 9.75F);
+            label1.Font = new Font("나눔바른고딕", 9.75F);
             label1.Location = new Point(108, 54);
             label1.Name = "label1";
-            label1.Size = new Size(35, 15);
+            label1.Size = new Size(34, 15);
             label1.TabIndex = 137;
             label1.Text = "명 칭";
             // 
@@ -147,13 +182,9 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
-            panel2.Controls.Add(Condition_ComboBox);
-            panel2.Controls.Add(WPInverter_button);
-            panel2.Controls.Add(label9);
-            panel2.Controls.Add(EURO_textBox);
-            panel2.Controls.Add(label7);
-            panel2.Controls.Add(Inverter_textBox);
+            panel2.Controls.Add(Range_button);
             panel2.Controls.Add(label4);
+            panel2.Controls.Add(Condition_ComboBox);
             panel2.Controls.Add(label8);
             panel2.Controls.Add(h2_textBox);
             panel2.Controls.Add(label3);
@@ -168,90 +199,47 @@
             panel2.TabIndex = 18;
             panel2.Paint += panel2_Paint;
             // 
-            // Condition_ComboBox
+            // Range_button
             // 
-            Condition_ComboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            Condition_ComboBox.Font = new Font(UTIL.Families[0], 9.75F);
-            Condition_ComboBox.FormattingEnabled = true;
-            Condition_ComboBox.Location = new Point(173, 44);
-            Condition_ComboBox.Name = "Condition_ComboBox";
-            Condition_ComboBox.Size = new Size(120, 23);
-            Condition_ComboBox.TabIndex = 168;
-            // 
-            // WPInverter_button
-            // 
-            WPInverter_button.BackColor = SystemColors.ControlLight;
-            WPInverter_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            WPInverter_button.FlatStyle = FlatStyle.System;
-            WPInverter_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
-            WPInverter_button.Location = new Point(173, 78);
-            WPInverter_button.Margin = new Padding(0);
-            WPInverter_button.Name = "WPInverter_button";
-            WPInverter_button.Size = new Size(23, 23);
-            WPInverter_button.TabIndex = 167;
-            WPInverter_button.Text = "+";
-            WPInverter_button.UseVisualStyleBackColor = false;
-            WPInverter_button.Click += WPInverter_button_Click;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Font = new Font(UTIL.Families[0], 9.75F);
-            label9.ForeColor = SystemColors.ControlDark;
-            label9.Location = new Point(660, 85);
-            label9.Name = "label9";
-            label9.Size = new Size(21, 15);
-            label9.TabIndex = 166;
-            label9.Text = "%";
-            // 
-            // EURO_textBox
-            // 
-            EURO_textBox.BackColor = Color.White;
-            EURO_textBox.BorderStyle = BorderStyle.None;
-            EURO_textBox.Location = new Point(534, 85);
-            EURO_textBox.Name = "EURO_textBox";
-            EURO_textBox.ReadOnly = true;
-            EURO_textBox.Size = new Size(120, 16);
-            EURO_textBox.TabIndex = 165;
-            EURO_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font(UTIL.Families[0], 9.75F);
-            label7.Location = new Point(444, 82);
-            label7.Name = "label7";
-            label7.Size = new Size(31, 15);
-            label7.TabIndex = 164;
-            label7.Text = "효율";
-            // 
-            // Inverter_textBox
-            // 
-            Inverter_textBox.BackColor = Color.White;
-            Inverter_textBox.BorderStyle = BorderStyle.None;
-            Inverter_textBox.Location = new Point(199, 81);
-            Inverter_textBox.Name = "Inverter_textBox";
-            Inverter_textBox.ReadOnly = true;
-            Inverter_textBox.Size = new Size(120, 16);
-            Inverter_textBox.TabIndex = 162;
-            Inverter_textBox.TextAlign = HorizontalAlignment.Center;
+            Range_button.BackColor = SystemColors.ControlLight;
+            Range_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            Range_button.FlatStyle = FlatStyle.System;
+            Range_button.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            Range_button.Location = new Point(322, 18);
+            Range_button.Margin = new Padding(0);
+            Range_button.Name = "Range_button";
+            Range_button.Size = new Size(23, 23);
+            Range_button.TabIndex = 170;
+            Range_button.Text = "!";
+            Range_button.UseVisualStyleBackColor = false;
+            Range_button.Click += Range_button_Click;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font = new Font(UTIL.Families[0], 9.75F);
-            label4.Location = new Point(99, 82);
+            label4.Font = new Font("나눔바른고딕", 9.75F);
+            label4.Location = new Point(435, 52);
             label4.Name = "label4";
-            label4.Size = new Size(71, 15);
-            label4.TabIndex = 161;
-            label4.Text = "인버터 제품";
+            label4.Size = new Size(208, 15);
+            label4.TabIndex = 169;
+            label4.Text = "* 지면으로부터 풍력 발전기 설치 높이";
+            // 
+            // Condition_ComboBox
+            // 
+            Condition_ComboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            Condition_ComboBox.Font = new Font("나눔바른고딕", 9.75F);
+            Condition_ComboBox.FormattingEnabled = true;
+            Condition_ComboBox.Location = new Point(173, 80);
+            Condition_ComboBox.Name = "Condition_ComboBox";
+            Condition_ComboBox.Size = new Size(481, 23);
+            Condition_ComboBox.TabIndex = 168;
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Font = new Font(UTIL.Families[0], 9.75F);
+            label8.Font = new Font("나눔바른고딕", 9.75F);
             label8.ForeColor = SystemColors.ControlDark;
-            label8.Location = new Point(660, 48);
+            label8.Location = new Point(660, 22);
             label8.Name = "label8";
             label8.Size = new Size(19, 15);
             label8.TabIndex = 160;
@@ -260,7 +248,7 @@
             // h2_textBox
             // 
             h2_textBox.BorderStyle = BorderStyle.FixedSingle;
-            h2_textBox.Location = new Point(534, 44);
+            h2_textBox.Location = new Point(534, 18);
             h2_textBox.Name = "h2_textBox";
             h2_textBox.Size = new Size(120, 23);
             h2_textBox.TabIndex = 159;
@@ -269,8 +257,8 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font(UTIL.Families[0], 9.75F);
-            label3.Location = new Point(435, 49);
+            label3.Font = new Font("나눔바른고딕", 9.75F);
+            label3.Location = new Point(435, 22);
             label3.Name = "label3";
             label3.Size = new Size(55, 15);
             label3.TabIndex = 158;
@@ -279,12 +267,12 @@
             // 주변환경
             // 
             주변환경.AutoSize = true;
-            주변환경.Font = new Font(UTIL.Families[0], 9.75F);
-            주변환경.Location = new Point(99, 48);
+            주변환경.Font = new Font("나눔바른고딕", 9.75F);
+            주변환경.Location = new Point(99, 84);
             주변환경.Name = "주변환경";
             주변환경.Size = new Size(55, 15);
             주변환경.TabIndex = 156;
-            주변환경.Text = "주변환경";
+            주변환경.Text = "지형구분";
             // 
             // WP_dataGridView
             // 
@@ -297,34 +285,34 @@
             WP_dataGridView.BorderStyle = BorderStyle.None;
             WP_dataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             WP_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.SelectionForeColor = Color.Black;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            WP_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = SystemColors.GradientActiveCaption;
+            dataGridViewCellStyle4.SelectionForeColor = Color.Black;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            WP_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             WP_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             WP_dataGridView.Dock = DockStyle.Bottom;
             WP_dataGridView.Location = new Point(0, 127);
             WP_dataGridView.Name = "WP_dataGridView";
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font(UTIL.Families[0], 9.75F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            WP_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = SystemColors.Control;
+            dataGridViewCellStyle5.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Control;
+            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
+            WP_dataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             WP_dataGridView.RowHeadersVisible = false;
             WP_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font = new Font(UTIL.Families[0], 9.75F);
-            dataGridViewCellStyle3.ForeColor = Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
-            WP_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new Font("나눔바른고딕", 9.75F);
+            dataGridViewCellStyle6.ForeColor = Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle6.SelectionForeColor = Color.Black;
+            WP_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle6;
             WP_dataGridView.Size = new Size(977, 149);
             WP_dataGridView.TabIndex = 155;
             // 
@@ -333,8 +321,8 @@
             WPDB_button.BackColor = SystemColors.ControlLight;
             WPDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             WPDB_button.FlatStyle = FlatStyle.System;
-            WPDB_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
-            WPDB_button.Location = new Point(173, 9);
+            WPDB_button.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            WPDB_button.Location = new Point(173, 18);
             WPDB_button.Margin = new Padding(0);
             WPDB_button.Name = "WPDB_button";
             WPDB_button.Size = new Size(23, 23);
@@ -347,7 +335,7 @@
             // 
             WPNameText.BackColor = Color.White;
             WPNameText.BorderStyle = BorderStyle.None;
-            WPNameText.Location = new Point(199, 13);
+            WPNameText.Location = new Point(199, 21);
             WPNameText.Name = "WPNameText";
             WPNameText.ReadOnly = true;
             WPNameText.Size = new Size(120, 16);
@@ -357,8 +345,8 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font(UTIL.Families[0], 9.75F);
-            label2.Location = new Point(99, 12);
+            label2.Font = new Font("나눔바른고딕", 9.75F);
+            label2.Location = new Point(99, 22);
             label2.Name = "label2";
             label2.Size = new Size(55, 15);
             label2.TabIndex = 138;
@@ -397,23 +385,12 @@
             Type_textBox.TabIndex = 167;
             Type_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // Typesub_textBox
-            // 
-            Typesub_textBox.BackColor = SystemColors.InactiveBorder;
-            Typesub_textBox.BorderStyle = BorderStyle.None;
-            Typesub_textBox.Location = new Point(1064, 312);
-            Typesub_textBox.Name = "Typesub_textBox";
-            Typesub_textBox.ReadOnly = true;
-            Typesub_textBox.Size = new Size(120, 16);
-            Typesub_textBox.TabIndex = 141;
-            Typesub_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
             // FCDB_button
             // 
             FCDB_button.BackColor = SystemColors.ControlLight;
             FCDB_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             FCDB_button.FlatStyle = FlatStyle.System;
-            FCDB_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            FCDB_button.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             FCDB_button.Location = new Point(327, 15);
             FCDB_button.Margin = new Padding(0);
             FCDB_button.Name = "FCDB_button";
@@ -425,7 +402,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font(UTIL.Families[0], 9.75F);
+            label6.Font = new Font("나눔바른고딕", 9.75F);
             label6.Location = new Point(17, 15);
             label6.Name = "label6";
             label6.Size = new Size(31, 15);
@@ -453,11 +430,10 @@
             webView21.Size = new Size(977, 206);
             webView21.TabIndex = 155;
             webView21.ZoomFactor = 1D;
-         //   webView21.NavigationCompleted += OnNaviCompleted;
             // 
             // Save_button
             // 
-            Save_button.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Bold);
+            Save_button.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             Save_button.Location = new Point(1064, 629);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(78, 23);
@@ -489,7 +465,7 @@
             // label18
             // 
             label18.AutoSize = true;
-            label18.Font = new Font(UTIL.Families[0], 9.75F);
+            label18.Font = new Font("나눔바른고딕", 9.75F);
             label18.ForeColor = SystemColors.ControlDark;
             label18.Location = new Point(1013, 287);
             label18.Name = "label18";
@@ -497,21 +473,10 @@
             label18.TabIndex = 171;
             label18.Text = "유형";
             // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Font = new Font(UTIL.Families[0], 9.75F);
-            label5.ForeColor = SystemColors.ControlDark;
-            label5.Location = new Point(1003, 313);
-            label5.Name = "label5";
-            label5.Size = new Size(55, 15);
-            label5.TabIndex = 172;
-            label5.Text = "세부유형";
-            // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Font = new Font(UTIL.Families[0], 9.75F);
+            label10.Font = new Font("나눔바른고딕", 9.75F);
             label10.ForeColor = SystemColors.ControlDark;
             label10.Location = new Point(1115, 20);
             label10.Name = "label10";
@@ -522,7 +487,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Font = new Font(UTIL.Families[0], 9.75F);
+            label11.Font = new Font("나눔바른고딕", 9.75F);
             label11.ForeColor = SystemColors.ControlDark;
             label11.Location = new Point(1133, 164);
             label11.Name = "label11";
@@ -533,18 +498,17 @@
             // label12
             // 
             label12.AutoSize = true;
-            label12.Font = new Font(UTIL.Families[0], 9.75F);
+            label12.Font = new Font("나눔바른고딕", 9.75F);
             label12.ForeColor = SystemColors.ControlDark;
             label12.Location = new Point(1151, 38);
             label12.Name = "label12";
-            label12.Size = new Size(19, 15);
+            label12.Size = new Size(0, 15);
             label12.TabIndex = 175;
-            label12.Text = "m" + Program.UTIL.Subscript(2, true);
             // 
             // label13
             // 
             label13.AutoSize = true;
-            label13.Font = new Font(UTIL.Families[0], 9.75F);
+            label13.Font = new Font("나눔바른고딕", 9.75F);
             label13.ForeColor = SystemColors.ControlDark;
             label13.Location = new Point(1175, 183);
             label13.Name = "label13";
@@ -563,7 +527,6 @@
             Controls.Add(label12);
             Controls.Add(label11);
             Controls.Add(label10);
-            Controls.Add(label5);
             Controls.Add(label18);
             Controls.Add(HerbHeight_textBox);
             Controls.Add(Previous_button);
@@ -572,7 +535,6 @@
             Controls.Add(Save_button);
             Controls.Add(Type_textBox);
             Controls.Add(AdditionalPanel);
-            Controls.Add(Typesub_textBox);
             Controls.Add(panel2);
             Controls.Add(GeneralPanel);
             FormBorderStyle = FormBorderStyle.None;
@@ -610,27 +572,24 @@
         private TextBox h2_textBox;
         private Label label3;
         private Label label8;
-        private Label label9;
-        private TextBox EURO_textBox;
-        private Label label7;
-        private TextBox Inverter_textBox;
-        private Label label4;
         private Microsoft.Web.WebView2.WinForms.WebView2 webView21;
         private PictureBox WPtype_pictureBox;
-        private TextBox Typesub_textBox;
         private TextBox Type_textBox;
-        private Button WPInverter_button;
         private CustomComboBox Condition_ComboBox;
         private Button Previous_button;
         private TextBox RotateArea_textBox;
         private TextBox HerbHeight_textBox;
         private Label label18;
-        private Label label5;
         private Label label10;
         private Label label11;
         private Label label12;
         private Label label13;
         private Label label14;
         private TextBox Num_textBox;
+        private Label label4;
+        private TextBox annual_textBox;
+        private Label label5;
+        private Label label7;
+        private Button Range_button;
     }
 }

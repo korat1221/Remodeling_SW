@@ -470,7 +470,7 @@
             PVCalc_tabPage.Padding = new Padding(3);
             PVCalc_tabPage.Size = new Size(992, 321);
             PVCalc_tabPage.TabIndex = 1;
-            PVCalc_tabPage.Text = "에너지 생산량 정보";
+            PVCalc_tabPage.Text = "에너지 정보";
             // 
             // label24
             // 
@@ -573,7 +573,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(239, 239, 239);
+            BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 896);
             Controls.Add(label1);
             Controls.Add(gas_textBox);

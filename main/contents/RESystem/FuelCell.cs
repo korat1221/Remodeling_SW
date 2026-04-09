@@ -230,7 +230,7 @@ namespace main.contents
         }
         void Load_Textbox()
         {
-            double[] elec = new double[12], heat = new double[12];
+            double[] elec = new double[12], heat = new double[12], gas = new double[12];
             String[][] db = Program.DB.getValue(DB.type.ProjDB, "FC_Form", "연료전지번호,설비번호,적용설비","번호='"+Num+"'");
             if(db.Length >0)
             {
@@ -266,6 +266,11 @@ namespace main.contents
                         if (v.Length > 0)
                         {
                            heat[mth] = Convert.ToDouble(v[0][0]);
+                        }
+                        v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "총에너지", "난방설비 = '" + db[0][1] + "' and 신재생시스템= '" + db[0][0] + "' and 신재생시스템유형='연료전지' and 생산소비 ='소비' and 소비연료='가스' and 월 ='" + (mth + 1) + "월'");
+                        if (v.Length > 0)
+                        {
+                            gas[mth] = Convert.ToDouble(v[0][0]);
                         }
                     }
                     
@@ -303,11 +308,16 @@ namespace main.contents
                         {
                             heat[mth] = Convert.ToDouble(v[0][0]);
                         }
+                        v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "총에너지", "급탕설비 = '" + db[0][1] + "' and 신재생시스템= '" + db[0][0] + "' and 신재생시스템유형='연료전지' and 생산소비 ='소비' and 소비연료='가스' and 월 ='" + (mth + 1) + "월'");
+                        if (v.Length > 0)
+                        {
+                            gas[mth] = Convert.ToDouble(v[0][0]);
+                        }
                     }
 
                 }
 
-                LoadGraph(elec, heat);
+                LoadGraph(elec, heat,gas);
 
             }
            
@@ -348,35 +358,42 @@ namespace main.contents
         {
             string[][] 프로젝트번호 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
         }
-        private void LoadGraph(double[] elec, double[] heat)
+        private void LoadGraph(double[] elec, double[] heat, double[] gas)
         {
             try
             {
-                string s3 = null; string s32 = null;
-                double max1 = 0, max2 = 0;
-                for (int mth = 0; mth < 11; mth++)
+                string s3 = null; string s32 = null; string s33 = null;
+                double max1 = 0, max2 = 0, max3 = 0;
+                for (int mth = 0; mth <= 11; mth++)
                 {
-                    s3 += elec[mth].ToString("#,##0") + ",";
-                    s32 += heat[mth].ToString("#,##0") + ",";
+                    s3 += elec[mth].ToString("0.0") + ",";
+                    s32 += heat[mth].ToString("0.0") + ",";
+                    s33 += gas[mth].ToString("0.0") + ",";
                 }
 
                 string s2 = "[" + s3 + "]";
                 string s22 = "[" + s32 + "]";
+                string s23 = "[" + s33 + "]";
 
                 int n2 = ((int)elec.Max()).ToString().Length;
                 max1 = Convert.ToInt64((elec.Max()) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1) / 2;
                 int n1 = ((int)heat.Max()).ToString().Length;
                 max2 = Convert.ToInt64((heat.Max()) / Math.Pow(10, n1 - 1)) * Math.Pow(10, n1 - 1) + Math.Pow(10, n1 - 1) / 2;
+                int n3 = ((int)gas.Max()).ToString().Length;
+                max3 = Convert.ToInt64((gas.Max()) / Math.Pow(10, n1 - 1)) * Math.Pow(10, n1 - 1) + Math.Pow(10, n1 - 1) / 2;
 
-                double max = Math.Max(max1, max2);
+                double max = Math.Max(Math.Max(max1, max2), max3);
                 string unit = "kWh/mth";
                 string s = "";
 
                 string randomOrangeColor = GetRandomOrangeColor();
-                s += "{label:\"" + "전기생산량" + "\",type:\"line\",data:" + s2 + ",yAxisTitle:\"에너지사용량[kWh]\",pointStyle:\"circle\",pointRadius:\"2.5\",borderWidth:\"0.5\",borderColor:\"" + randomOrangeColor + "\",backgroundColor:\"" + randomOrangeColor + "\",dash:true,tension: 0.4},";
+                s += "{label:\"" + "전기생산량" + "\",type:\"line\",data:" + s2 + ",yAxisTitle:\"에너지[kWh]\",pointStyle:\"circle\",pointRadius:\"2.5\",borderWidth:\"0.5\",borderColor:\"" + randomOrangeColor + "\",backgroundColor:\"" + randomOrangeColor + "\",dash:true,tension: 0.4},";
               
-                randomOrangeColor = GetRandomOrangeColor();
-                s += "{label:\"" + "열생산량" + "\",type:\"line\",data:" + s22 + ",yAxisTitle:\"에너지사용량[kWh]\",pointStyle:\"circle\",pointRadius:\"2.5\",borderWidth:\"0.5\",borderColor:\"" + randomOrangeColor + "\",backgroundColor:\"" + randomOrangeColor + "\",dash:true,tension: 0.4},";
+                string randomBlueColor = GetRandomBlueColor();
+                s += "{label:\"" + "열생산량" + "\",type:\"line\",data:" + s22 + ",yAxisTitle:\"에너지[kWh]\",pointStyle:\"circle\",pointRadius:\"2.5\",borderWidth:\"0.5\",borderColor:\"" + randomBlueColor + "\",backgroundColor:\"" + randomBlueColor + "\",dash:true,tension: 0.4},";
+
+                string randomGrayColor = GetRandomGrayColor();
+                s += "{label:\"" + "연료소비량" + "\",type:\"line\",data:" + s23 + ",yAxisTitle:\"에너지[kWh]\",pointStyle:\"circle\",pointRadius:\"2.5\",borderWidth:\"0.5\",borderColor:\"" + randomGrayColor + "\",backgroundColor:\"" + randomGrayColor + "\",dash:true,tension: 0.4},";
 
 
                 runScript("drawChart_energyuse([" + s + "]," + max.ToString() + ")");
@@ -390,6 +407,20 @@ namespace main.contents
             int g = random.Next(80, 130);  // 초록: 중간
             int b = random.Next(0, 50);    // 파랑: 낮음
             return $"rgba({r}, {g}, {b}, 1)";
+        }
+        public string GetRandomBlueColor()
+        {
+            int r = random.Next(0, 70);     // 빨강: 낮음
+            int g = random.Next(80, 160);   // 초록: 중간
+            int b = random.Next(180, 256);  // 파랑: 높음
+
+            return $"rgba({r}, {g}, {b}, 1)";
+        }
+        public string GetRandomGrayColor()
+        {
+            int gray = random.Next(80, 200); // 너무 어둡거나 너무 밝지 않게
+
+            return $"rgba({gray}, {gray}, {gray}, 1)";
         }
         #endregion
     }
