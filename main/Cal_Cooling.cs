@@ -2055,7 +2055,7 @@ namespace main
         
         public double[] PumpCalc(CoolPump _pump, string type, string ProjNum) //냉수, 열원
         {
-            double Vz = 0, DeltaPz, Phydr, fe1, CP11, CP21, fHydr;
+            double  CP11, CP21, fHydr;
             double[] ed = new double[12], Beta = new double[12], Wd_hydr = new double[12], W_d = new double[12];
             
             string[][] pumpvalue = Program.DB.getValue(ProjNum, "User_Pump", "B효율,동력,종류", "번호= '" + _pump._pumpNum + "'");
@@ -2063,22 +2063,6 @@ namespace main
             _pump.동력 = Convert.ToDouble(pumpvalue[0][1]);
             _pump.종류 = pumpvalue[0][2];
                         
-            //if (type == "냉수")
-            //{
-            //    Vz = 3.6 * Power_f / (Math.Abs(CWout - CWin) * 4.18);
-            //}
-            //else if (type == "냉각수순환펌프")
-            //{
-            //    Vz = 3.6 * CTPower_f / (Math.Abs(CSWin - CSWout) * 4.18);
-            //}
-            //else if (type == "지열순환펌프" || type == "지하수순환펌프")
-            //{
-            //    Vz = 3.6 * Power_f / (5 * 4.18); //5도차로 운전함
-            //}
-            
-            DeltaPz = _pump.양정 * 1000 * 9.81; //kPa단위임
-            Phydr = DeltaPz * _pump.유량 / 3600;
-            fe1 = _pump.동력 / Phydr;
 
             string[][] pumpfactor = Program.DB.getValue(DB.type.BaseDB_Cooling, "펌프제어", "CP1,CP2,fHydr", "펌프제어 = '" + _pump._control + "' And 정유량밸브 = '" + _pump._valve + "'");
             CP11 = Convert.ToDouble(pumpfactor[0][0]);
@@ -2093,8 +2077,8 @@ namespace main
                 else 
                 {
                     Beta[i] = QC_out[i] / (tC_op_z[i] * Power_f);
-                    ed[i] = fe1 * (CP11 + CP21 / Beta[i]);
-                    Wd_hydr[i] = Phydr / 1000 * tC_op[i] * Beta[i] * fHydr;
+                    ed[i] =1 * (CP11 + CP21 / Beta[i]);
+                    Wd_hydr[i] = _pump.동력 / 1000 * tC_op[i] * Beta[i] * fHydr;
                     W_d[i] = Wd_hydr[i] * ed[i] * _pump._number; //설치대수까지 포함
                 }
             }

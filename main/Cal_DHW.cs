@@ -25,6 +25,7 @@ namespace main
         public ArrayList SelectZone_split = new ArrayList(); public ArrayList SelectBoiler_split = new ArrayList(); public ArrayList BoilerNum_split = new ArrayList(); public ArrayList SelectDH_split = new ArrayList();
         public double[] Qwb_mth_sum = new double[12]; public double[] theta_ih_avg = new double[12]; public double[] theta_e = new double[12]; public double[] theta_u = new double[12];
         public double Qw_a_sum, th_op_day_avg, theta_i_h_set_avg; public double[] dop_mth_avg = new double[12];
+        public double Qmax;
         double SL, RL;
         public double[] dmth = new double[12] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         public double[] Qw_d = new double[12], Qw_s = new double[12], Qw_gen = new double[12], Qw_outg = new double[12], Qw_f = new double[12];
@@ -118,9 +119,14 @@ namespace main
                     if (Now_Check == true)
                     {
                         zone = Program.CALC.getZone(SelectZone_split[n].ToString());
-                        string[][] kk = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "일일급탕요구량", "존번호 = '" + zone.ZoneNum + "'");
+                        string[][] kk = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적,일일급탕요구량,용도프로필", "존번호 = '" + zone.ZoneNum + "'");
                         if (kk.Length > 0)
-                        { Qwb_day += Convert.ToDouble(kk[0][0]); }
+                        { 
+                            Qwb_day += Convert.ToDouble(kk[0][1]);
+                            string[][] Usage = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "급탕시간당비율", "용도명 = '" + kk[0][2] + "'");
+                            if (Usage.Length > 0)
+                            { Qmax += (Qwb_day * Convert.ToDouble(Usage[0][0])); }
+                        }
                     }
                     else
                     {
@@ -135,9 +141,14 @@ namespace main
                                     if (split[m].ToString() == SelectZone_split[n].ToString())
                                     {
                                         zone = Program.CALC.getZone(PostZone[j][0]);
-                                        string[][] kk = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "일일급탕요구량", "존번호 = '" + zone.ZoneNum + "'");
+                                        string[][] kk = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적,일일급탕요구량,용도프로필", "존번호 = '" + zone.ZoneNum + "'");
                                         if (kk.Length > 0)
-                                        { Qwb_day += Convert.ToDouble(kk[0][0]); }
+                                        { 
+                                            Qwb_day += Convert.ToDouble(kk[0][1]);
+                                            string[][] Usage = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "급탕시간당비율", "용도명 = '" + kk[0][2] + "'");
+                                            if (Usage.Length > 0)
+                                            { Qmax += (Qwb_day * Convert.ToDouble(Usage[0][0])); }
+                                        }
                                     }
                                 }
                             }
@@ -310,10 +321,6 @@ namespace main
                 Pump2Control = Value[0][7];
                 Pump1Count = Convert.ToInt16(Value[0][8]);
                 Pump2Count = Convert.ToInt16(Value[0][9]);
-                Pump1Volume = Value[0][10] == "" || Value[0][10] == null ? 0 : Convert.ToDouble(Value[0][10]);
-                Pump2Volume = Value[0][11] == "" || Value[0][11] == null ? 0 : Convert.ToDouble(Value[0][11]);
-                Pump1Head = Value[0][12] == "" || Value[0][12] == null ? 0 : Convert.ToDouble(Value[0][12]);
-                Pump2Head = Value[0][13] == "" || Value[0][13] == null ? 0 : Convert.ToDouble(Value[0][13]);
             }
         }
        
@@ -380,51 +387,37 @@ namespace main
                 }
 
             //펌프
-            string[][] Value2 = Program.DB.getValue(ProjNum, "User_Pump", "B효율,동력", "번호 = '" + Pump1 + "'");
+            string[][] Value2 = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + Pump1 + "'");
             Pump.Clear();
             if (Value2.Length > 0)
             {
                 for (int n = 0; n < Value2.Length; n++)
                 {
-                    String Num_pump; double A_pump; double B_pump; double V_pump; double Power_pump; double H_pump; double count_pump;
-                    double Cp1, Cp2, Ppump, fhydr = 1, dP, f_dpm;
-                    double[] Vz = new double[12], P_hydr = new double[12], fe = new double[12], e_hydr = new double[12], Wh_hydr = new double[12];
+                    String Num_pump;  double Power_pump;  double count_pump;
+                    double Cp1, Cp2, Ppump, fhydr = 1;
+                    double[] Vz = new double[12], e_hydr = new double[12], Wh_hydr = new double[12];
                     double theta;
                     Num_pump = Pump1;
-                    B_pump = Convert.ToDouble(Value2[0][0]);
-                    V_pump = Pump1Volume;
-                    Power_pump = Convert.ToDouble(Value2[0][1]);
-                    H_pump = Pump1Head;
+                    Power_pump = Convert.ToDouble(Value2[0][0]);
                     count_pump = Pump1Count;
-                    DHW_Pump pump1 = new DHW_Pump(Num_pump,B_pump, V_pump, Power_pump, H_pump, Pump1Count, Pump1Valve, Pump1Control); ;
+                    DHW_Pump pump1 = new DHW_Pump(Num_pump,Power_pump, Pump1Count, Pump1Valve, Pump1Control); ;
                     Pump.Add(pump1);
-                    string[][] Value_Control = Program.DB.getValue(DB.type.BaseDB_Heating, "펌프제어", "Cp1,Cp2", "펌프제어 = '" + Pump1Control + "'");
+                    string[][] Value_Control = Program.DB.getValue(DB.type.BaseDB_Heating, "펌프제어_급탕", "Cp1,Cp2", "펌프제어 = '" + Pump1Control + "'");
                     Cp1 = Convert.ToDouble(Value_Control[0][0]);
                     Cp2 = Convert.ToDouble(Value_Control[0][1]);
-                    if (Pump1Valve == "있음")
+                    if (Pump1Valve == "유량밸런스있음")
                     {
                         fhydr = 1;
                     }
                     else
                     {
-                        fhydr = 1.25;
+                        fhydr = 1.15;
                     }
-                    if (Pump1 == null || Pump1 == "")
-                    {
-                        f_dpm = 1;
-                    }
-                    else
-                    {
-                        f_dpm = 0.45;
-                    }
-                    dP = H_pump * 1000 * 9.81;
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        Vz[mth] = Psi_pipe * PipeL * (57.5 - theta_i_h_set_avg) / (1.15 * 5 * 1000);
-                        P_hydr[mth] = dP * Vz[mth] / 3600;
-                        fe[mth] = (Power_pump / P_hydr[mth]) ;
-                        e_hydr[mth] = fe[mth] * (Cp1 + Cp2) * 0.25 / 0.25;
-                        Wh_hydr[mth] = P_hydr[mth] / 1000 * dop_mth_avg[mth] * th_op_day_avg;
+                        e_hydr[mth] = 1 * (Cp1 + Cp2) * 0.25 / 0.25;
+                        double beta_wd = double.IsNaN(1/ Qmax) ? 0 : Qwb_mth_sum[mth] / (Qmax * dop_mth_avg[mth] * th_op_day_avg);
+                        Wh_hydr[mth] = Power_pump / 1000 * beta_wd * dop_mth_avg[mth] * th_op_day_avg * fhydr;
                         Ww_d[mth] = Wh_hydr[mth] * e_hydr[mth];
                     }
                 }
@@ -1012,13 +1005,10 @@ namespace main
     public class DHW_Pump
     {
         String Num_pump; double B_pump; double V_pump; double Power_pump; double H_pump; double count_pump; String Valve_pump; String Control_pump;
-        public DHW_Pump(String Num, double B, double V, double Power, double H, double count, String Valve, String Control)
+        public DHW_Pump(String Num, double Power, double count, String Valve, String Control)
         {
             this.Num_pump = Num;
-            this.B_pump = B;
-            this.V_pump = V;
             this.Power_pump = Power;
-            this.H_pump = H;
             this.count_pump = count;
             this.Valve_pump = Valve;
             this.Control_pump = Control;
@@ -1027,23 +1017,11 @@ namespace main
         {
             return this.Num_pump;
         }
-        public double B()
-        {
-            return this.B_pump;
-        }
-        public double V()
-        {
-            return this.V_pump;
-        }
         public double Power()
         {
             return this.Power_pump;
         }
 
-        public double H()
-        {
-            return this.H_pump;
-        }
         public double Count()
         {
             return this.count_pump;

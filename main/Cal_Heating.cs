@@ -621,6 +621,11 @@ namespace main
                     }
                     ///
                 }
+                else
+                {
+                    Pump1Volume = Convert.ToDouble(Value[0][10]);
+                    Pump1Head = Convert.ToDouble(Value[0][12]); 
+                }
             }
         }
 
@@ -1139,58 +1144,60 @@ namespace main
             }
             //펌프
             {
-                
+
                 Pump.Clear();
-                string[][] Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + Pump1 + "'");
-                if (Value.Length > 0)
-                { Cal_Pump(Pump1, Pump1Valve, Pump1Control, Pump1Count, Pump1Volume, Pump1Head, Convert.ToDouble(Value[0][0])); }
-                Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + Pump2 + "'");
-                if (Value.Length > 0)
-                { Cal_Pump(Pump2, Pump2Valve, Pump2Control, Pump2Count, Pump2Volume, Pump2Head, Convert.ToDouble(Value[0][0])); }
-                Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + GPump1 + "'");
-                if (Value.Length > 0)
-                { Cal_Pump(GPump1, GPump1Valve, GPump1Control, GPump1Count, GPump1Volume, GPump1Head, Convert.ToDouble(Value[0][0])); }
-                Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + GPump2 + "'");
-                if (Value.Length > 0)
-                { Cal_Pump(GPump2, GPump2Valve, GPump2Control, GPump2Count, GPump2Volume, GPump2Head, Convert.ToDouble(Value[0][0])); }
+
+                if (PumpUse != "펌프 있음")
+                {
+                    double dPrad = 0;
+                    if (ce1Type == "방열기" || ce2Type == "방열기") { dPrad = 2; }
+                    double dP = 0.13 * Pump1Head + 4.5 + 1 + 10 + dPrad;
+                    double eta = Math.Max(20, -1.403 * Math.Pow(Math.Log(Pump1Volume / 60 * 1000), 2) + 26.35 * Math.Log(Pump1Volume / 60 * 1000) - 61.3) /100;
+                    double Phydr = dP * Pump1Volume / 3600;
+                    double power = Phydr / eta;
+                    Cal_Pump("내장형 펌프", "유량밸런스없음", "정속펌프(제어없음)", 1, power);
+                }
+                else
+                {
+                    string[][] Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + Pump1 + "'");
+                    if (Value.Length > 0)
+                    { Cal_Pump(Pump1, Pump1Valve, Pump1Control, Pump1Count, Convert.ToDouble(Value[0][0])); }
+                    Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + Pump2 + "'");
+                    if (Value.Length > 0)
+                    { Cal_Pump(Pump2, Pump2Valve, Pump2Control, Pump2Count, Convert.ToDouble(Value[0][0])); }
+                    Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + GPump1 + "'");
+                    if (Value.Length > 0)
+                    { Cal_Pump(GPump1, GPump1Valve, GPump1Control, GPump1Count, Convert.ToDouble(Value[0][0])); }
+                    Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + GPump2 + "'");
+                    if (Value.Length > 0)
+                    { Cal_Pump(GPump2, GPump2Valve, GPump2Control, GPump2Count, Convert.ToDouble(Value[0][0])); }
+                }
             }
         }
-        private void Cal_Pump( string Pump, string PumpValve, string PumpControl, int PumpCount, double PumpVolume, double PumpHead, double PumpPower)
+        private void Cal_Pump( string Pump, string PumpValve, string PumpControl, int PumpCount, double PumpPower)
         {
             String Num_pump; 
-            double Cp1, Cp2, Ppump, fhydr = 1, dPz, f_dpm;
-            double[] Vz = new double[12], P_hydr = new double[12], fe = new double[12], e_hydr = new double[12], Wh_hydr = new double[12];
+            double Cp1, Cp2, Ppump, fhydr = 1;
+            double[] Vz = new double[12], P_hydr = new double[12], e_hydr = new double[12], Wh_hydr = new double[12];
             double theta;
             Num_pump = Pump;
-            Pump pump1 = new Pump(Num_pump, PumpVolume, PumpPower, PumpHead, PumpCount, PumpValve, PumpControl); ;
+            Pump pump1 = new Pump(Num_pump, PumpPower, PumpCount, PumpValve, PumpControl); ;
             this.Pump.Add(pump1);
             string[][] Value_Control = Program.DB.getValue(DB.type.BaseDB_Heating, "펌프제어", "Cp1,Cp2", "펌프제어 = '" + PumpControl + "'");
             Cp1 = Convert.ToDouble(Value_Control[0][0]);
             Cp2 = Convert.ToDouble(Value_Control[0][1]);
-            if (PumpValve == "있음")
+            if (PumpValve == "유량밸런스있음")
             {
                 fhydr = 1;
             }
             else
             {
-                fhydr = 1.25;
+                fhydr = 1.15;
             }
-            if (Pump == null || Pump == "")
-            {
-                f_dpm = 1;
-            }
-            else
-            {
-                f_dpm = 0.45;
-            }
-            dPz = PumpHead * 1000 * 9.81;
             for (int mth = 0; mth < 12; mth++)
             {
-                Vz[mth] = Qh_max_sum / 1000 * 3.6 / (dtheta_d[mth] * 4.18);
-                P_hydr[mth] = dPz * Vz[mth] / 3600;
-                fe[mth] = (PumpPower * PumpCount / P_hydr[mth]);
-                e_hydr[mth] = fe[mth] * (Cp1 + Cp2 / beta_h_d[mth]) * 0.25 / 0.25;
-                Wh_hydr[mth] = P_hydr[mth] / 1000 * beta_h_d[mth] * th_avg[mth] * f_dpm * 1;
+                e_hydr[mth] = 1 * (Cp1 + Cp2 / beta_h_d[mth]) * 0.25 / 0.25;
+                Wh_hydr[mth] = PumpPower / 1000 * beta_h_d[mth] * th_avg[mth] * fhydr * 1;
                 Wh_d[mth] = Wh_hydr[mth] * e_hydr[mth];
                 Wh_d[mth] = Wh_d[mth] * PumpCount;
             }
@@ -1283,8 +1290,8 @@ namespace main
                     double eta_th = Convert.ToDouble(Value[0][6])/100;
                     double eta_tot = eta_el + eta_th;
 
-                    double Pfc_th = power_th * FC_nea;
-                    double Pfc_el = power_el * FC_nea;
+                    double Pfc_th = power_th ;
+                    double Pfc_el = power_el ;
                     Calc_FC(ProjNum, SelectFC_split[n].ToString(), Pfc_th, Pfc_el, eta_th, eta_el, eta_tot, FCElecInstall_split[n].ToString(), FCElecHeat_split[n].ToString(), FC_nea);
                 }
             }
@@ -1328,7 +1335,7 @@ namespace main
                 Pth_gen_out[mth] = Math.Min(Pfc_th, QCHW_gen_out[mth] / (top * dop[mth]));
                 if (FCElecHeat == "전기와 열")
                 {
-                    Eth_gen_out[mth] = Pth_gen_out[mth] * top * dop[mth];
+                    Eth_gen_out[mth] = Pth_gen_out[mth] * top * dop[mth]* FC_nea;
                     Eth_gen_out_w[mth] = double.IsNaN(Eth_gen_out[mth] * Qw_outg[mth] / QCHW_gen_out[mth]) ? 0 : Eth_gen_out[mth] * Qw_outg[mth] / QCHW_gen_out[mth];
                     Eth_gen_out_h[mth] = double.IsNaN(Eth_gen_out[mth] * Qh_outg[mth] / QCHW_gen_out[mth]) ? 0 : Eth_gen_out[mth] * Qh_outg[mth] / QCHW_gen_out[mth];
                 }
@@ -1341,15 +1348,15 @@ namespace main
             }
             for(int mth=0; mth < 12; mth ++)
             {
-                Pel_gen_out[mth] = Pel_out_sb + (Pfc_el - Pel_out_sb) * ((Pth_gen_out[mth] - Pth_sb) / (Pfc_th / FC_nea - Pth_sb));
-                Eel_gen_out[mth] = double.IsNaN(Pel_gen_out[mth] * top * dop[mth]) ? 0 : Pel_gen_out[mth] * top * dop[mth];
+                Pel_gen_out[mth] = Pel_out_sb + (Pfc_el - Pel_out_sb) * ((Pth_gen_out[mth] - Pth_sb) / (Pfc_th - Pth_sb));
+                Eel_gen_out[mth] = double.IsNaN(Pel_gen_out[mth] * top * dop[mth]) ? 0 : Pel_gen_out[mth] * top * dop[mth] *FC_nea;
                 Pgen_ls_sb = Pls_sb + Ppilot;
-                Pgen_in_chp = Pfc_th / FC_nea / eta_th;
+                Pgen_in_chp = Pfc_th / eta_th;
                 Pgen_ls_chp = (1 - eta_th - eta_el) * Pgen_in_chp;
-                pgen_ls[mth] = Pgen_ls_sb + (Pgen_ls_chp - Pgen_ls_sb) * ((Pth_gen_out[mth] - Pth_sb) / (Pfc_th / FC_nea - Pth_sb));
+                pgen_ls[mth] = Pgen_ls_sb + (Pgen_ls_chp - Pgen_ls_sb) * ((Pth_gen_out[mth] - Pth_sb) / (Pfc_th - Pth_sb));
                 Qgen_ls[mth] = pgen_ls[mth] * top * dop[mth];
                 Pgen_in[mth] = Pth_gen_out[mth] + Pel_gen_out[mth] + pgen_ls[mth];
-                Egen_in[mth] = double.IsNaN(Pgen_in[mth] * top * dop[mth]) ? 0 : Pgen_in[mth] * top * dop[mth];
+                Egen_in[mth] = double.IsNaN(Pgen_in[mth] * top * dop[mth]) ? 0 : Pgen_in[mth] * top * dop[mth] * FC_nea;
 
                 if(FCElecHeat =="전기와 열")
                 {
@@ -2802,12 +2809,10 @@ namespace main
     public class Pump
     {
         String Num_pump;  double V_pump; double Power_pump; double H_pump; double count_pump; String Valve_pump; String Control_pump;
-        public Pump(String Num, double V, double Power, double H, double count, String Valve, String Control)
+        public Pump(String Num, double Power, double count, String Valve, String Control)
         {
             this.Num_pump = Num;
-            this.V_pump = V;
             this.Power_pump = Power;
-            this.H_pump = H;
             this.count_pump = count;
             this.Valve_pump = Valve;
             this.Control_pump = Control;
@@ -2816,19 +2821,11 @@ namespace main
         {
             return this.Num_pump;
         }
-        public double V()
-        {
-            return this.V_pump;
-        }
         public double Power()
         {
             return this.Power_pump;
         }
 
-        public double H()
-        {
-            return this.H_pump;
-        }
         public double Count()
         {
             return this.count_pump;
