@@ -77,28 +77,28 @@ namespace main
             using var licenseManager = new LicenseManager();
             var licenseResult = licenseManager.Initialize();
             
-            if (!licenseResult.IsValid)
-            {
-                MessageBox.Show(
-                    licenseResult.Message,
-                    "라이선스 오류",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error
-                );
-                return; // 프로그램 종료
-            }
+            //if (!licenseResult.IsValid)
+            //{
+            //    MessageBox.Show(
+            //        licenseResult.Message,
+            //        "라이선스 오류",
+            //        MessageBoxButtons.OK,
+            //        MessageBoxIcon.Error
+            //    );
+            //    return; // 프로그램 종료
+            //}
 
-            // 라이선스 만료 경고 (7일 이하 남았을 때)
-            int remainingDays = licenseManager.GetRemainingDays();
-            if (remainingDays <= 7)
-            {
-                MessageBox.Show(
-                    $"라이선스가 {remainingDays}일 후 만료됩니다.\n갱신을 고려해주세요.",
-                    "라이선스 만료 임박",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
-            }
+            //// 라이선스 만료 경고 (7일 이하 남았을 때)
+            //int remainingDays = licenseManager.GetRemainingDays();
+            //if (remainingDays <= 7)
+            //{
+            //    MessageBox.Show(
+            //        $"라이선스가 {remainingDays}일 후 만료됩니다.\n갱신을 고려해주세요.",
+            //        "라이선스 만료 임박",
+            //        MessageBoxButtons.OK,
+            //        MessageBoxIcon.Warning
+            //    );
+            //}
             // ─────────────────────────────────────────────────────────
 
             //            Directory.SetCurrentDirectory(gPath + "threejs\\");
