@@ -233,7 +233,7 @@ namespace main
                             }
                         }
 
-                        MessageBox.Show($"프로젝트 파일들이 성공적으로 압축되었습니다.\n저장 위치: {zipPath}", "완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show($"프로젝트 파일이 성공적으로 저장되었습니다.\n저장 위치: {zipPath}", "완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
 
