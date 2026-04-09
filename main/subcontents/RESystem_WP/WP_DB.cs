@@ -41,30 +41,26 @@ namespace main.subcontents
         {
             tableMake();
             
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_WP", "번호,DB유형,제품명,제조사,타입,세부타입,정격출력,회전면적,허브높이,시동풍속,최적풍속,종단풍속,시동풍속전력계수,최적풍속전력계수,종단풍속전력계수,신규기존", "");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_WP", "번호,DB유형,제품유형,R,D,H,회전면적,허브높이,시동풍속,종단풍속,정격출력,정격출력풍속,신규기존", "");
                 
               for (int i = 0; i < Value.Length; i++)
               {
-                        WP_dataGridView.Rows.Add();
-                        int n = WP_dataGridView.Rows.Count - 1;
-               
-                        WP_dataGridView.Rows[n].Cells[1].Value = Value[n][0];
-                        WP_dataGridView.Rows[n].Cells[2].Value = Value[n][1];
-                        WP_dataGridView.Rows[n].Cells[3].Value = Value[n][2];
-                        WP_dataGridView.Rows[n].Cells[4].Value = Value[n][3];
-                        WP_dataGridView.Rows[n].Cells[5].Value = Value[n][4];
-                        WP_dataGridView.Rows[n].Cells[6].Value = Value[n][5];
-                        WP_dataGridView.Rows[n].Cells[7].Value = Value[n][6];
-                        WP_dataGridView.Rows[n].Cells[8].Value = Value[n][7];
-                        WP_dataGridView.Rows[n].Cells[9].Value = Value[n][8];
-                        WP_dataGridView.Rows[n].Cells[10].Value = Value[n][9];
-                        WP_dataGridView.Rows[n].Cells[11].Value = Value[n][10];
-                        WP_dataGridView.Rows[n].Cells[12].Value = Value[n][11];
-                        WP_dataGridView.Rows[n].Cells[13].Value = Value[n][12];
-                        WP_dataGridView.Rows[n].Cells[14].Value = Value[n][13];
-                        WP_dataGridView.Rows[n].Cells[15].Value = Value[n][14];
-                        WP_dataGridView.Rows[n].Cells[16].Value = Value[n][15];
-              }
+                WP_dataGridView.Rows.Add();
+                int n = WP_dataGridView.Rows.Count - 1;
+                WP_dataGridView.Rows[n].Cells[1].Value = Value[n][0];
+                WP_dataGridView.Rows[n].Cells[2].Value = Value[n][1];
+                WP_dataGridView.Rows[n].Cells[3].Value = Value[n][2];
+                WP_dataGridView.Rows[n].Cells[4].Value = Value[n][3];
+                WP_dataGridView.Rows[n].Cells[5].Value = Value[n][4];
+                WP_dataGridView.Rows[n].Cells[6].Value = Value[n][5];
+                WP_dataGridView.Rows[n].Cells[7].Value = Value[n][6];
+                WP_dataGridView.Rows[n].Cells[8].Value = Value[n][7];
+                WP_dataGridView.Rows[n].Cells[9].Value = Value[n][8];
+                WP_dataGridView.Rows[n].Cells[10].Value = Value[n][9];
+                WP_dataGridView.Rows[n].Cells[11].Value = Value[n][10];
+                WP_dataGridView.Rows[n].Cells[12].Value = Value[n][11];
+                WP_dataGridView.Rows[n].Cells[13].Value = Value[n][12];
+            }
         }
         private void tableMake()
         {
@@ -76,21 +72,18 @@ namespace main.subcontents
             WP_dataGridView.Columns.Add(checkBoxColumn);
             WP_dataGridView.Columns.Add("A1", "번호");
             WP_dataGridView.Columns.Add("A2", "DB유형");
-            WP_dataGridView.Columns.Add("A3", "제품명");
-            WP_dataGridView.Columns.Add("A4", "제조사");
-            WP_dataGridView.Columns.Add("A5", "타입");
-            WP_dataGridView.Columns.Add("A6", "세부타입");
-            WP_dataGridView.Columns.Add("A7", "정격출력.[Kw]");
-            WP_dataGridView.Columns.Add("A8", "회전면적.[m"+Program.UTIL.Subscript(2, true)+"]");
-            WP_dataGridView.Columns.Add("A9", "허브높이.[m]");
-            WP_dataGridView.Columns.Add("A10", "시동풍속.[m/s]");
-            WP_dataGridView.Columns.Add("A11", "최적풍속.[m/s]");
-            WP_dataGridView.Columns.Add("A12", "종단풍속.[m/s]");
-            WP_dataGridView.Columns.Add("A13", "전력계수.시동풍속.[-]");
-            WP_dataGridView.Columns.Add("A14", "전력계수.최적풍속.[-]");
-            WP_dataGridView.Columns.Add("A15", "전력계수.종단풍속.[-]");
-            WP_dataGridView.Columns.Add("A16", "설치");
-            
+            WP_dataGridView.Columns.Add("A3", "일반정보.타입");
+            WP_dataGridView.Columns.Add("A4", "일반정보.R.[m]");
+            WP_dataGridView.Columns.Add("A5", "일반정보.D.[m]");
+            WP_dataGridView.Columns.Add("A6", "일반정보.H.[m]");
+            WP_dataGridView.Columns.Add("A7", "일반정보.회전면적.[m²]");
+            WP_dataGridView.Columns.Add("A8", "일반정보.허브높이.[m]");
+            WP_dataGridView.Columns.Add("A9", "성능정보.시동풍속.[m/s]");
+            WP_dataGridView.Columns.Add("A10", "성능정보.종단풍속.[m/s]");
+            WP_dataGridView.Columns.Add("A11", "성능정보.정격출력.출력.[W]");
+            WP_dataGridView.Columns.Add("A12", "성능정보.정격출력.풍속.[m/s]");
+            WP_dataGridView.Columns.Add("A13", "설치");
+
         }
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
         {

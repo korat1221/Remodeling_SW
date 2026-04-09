@@ -31,14 +31,15 @@ namespace main.subcontents
 
             //재료유형 리스트 생성 
             MaterialType_comboBox.Items.Add("단열재");
-            MaterialType_comboBox.Items.Add("콘크리트");
-            MaterialType_comboBox.Items.Add("조적");
-            MaterialType_comboBox.Items.Add("패널");
-            MaterialType_comboBox.Items.Add("미장");
+            MaterialType_comboBox.Items.Add("시멘트모르타르/콘크리트");
+            MaterialType_comboBox.Items.Add("벽돌/타일");
+            MaterialType_comboBox.Items.Add("석재");
+            MaterialType_comboBox.Items.Add("보드");
             MaterialType_comboBox.Items.Add("목재");
-            MaterialType_comboBox.Items.Add("금속재");
-            MaterialType_comboBox.Items.Add("타일");
-            MaterialType_comboBox.Items.Add("지중");
+            MaterialType_comboBox.Items.Add("바닥재");
+            MaterialType_comboBox.Items.Add("방습재료");
+            MaterialType_comboBox.Items.Add("벽지");
+            MaterialType_comboBox.Items.Add("금속계");
             MaterialType_comboBox.Items.Add("공기층");
             MaterialType_comboBox.SelectedIndex = 0;
         }
@@ -72,11 +73,16 @@ namespace main.subcontents
             dataGridView.Columns[0].Width = 40;
             dataGridView.Columns[1].Width = 60;
             dataGridView.Columns[2].Width = 70;
-            dataGridView.Columns[3].Width = 150;
+            dataGridView.Columns[3].Width = 200;
+            dataGridView.Columns[11].Width = 200;
+            dataGridView.Columns[4].Visible = false;
+            dataGridView.Columns[5].Visible = false;
+            dataGridView.Columns[9].Visible = false;
+            dataGridView.Columns[10].Visible = false;
 
 
-            
-                string[][] User_DB = Program.DB.getValue(DB.type.ProjDB, "User_Material", "번호,DB유형,재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '" + MaterialType + "'");
+
+            string[][] User_DB = Program.DB.getValue(DB.type.ProjDB, "User_Material", "번호,DB유형,재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '" + MaterialType + "'");
                 if (User_DB.Length > 0)
                 {
                     for (int n = 0; n < User_DB.Length; n++)
@@ -88,7 +94,7 @@ namespace main.subcontents
                         }
                     }
                 }
-                string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "재료명,종류2,종류1,열전도율,밀도,비열,투습저항계수dry,투습저항계수wet,비고", "구분 = '" + MaterialType + "'");
+                string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "재료명,열전도율,밀도,비열,비고", "구분 = '" + MaterialType + "'");
                 String dbnum;
                 if (Value.Length > 0)
                 {
@@ -104,15 +110,14 @@ namespace main.subcontents
                             dbnum = "M_0" + (n + 1).ToString();
                         }
 
-                        dataGridView.Rows[nRow].Cells[1].Value = dbnum;
-                        dataGridView.Rows[nRow].Cells[2].Value = "기본";
-
-
-                        for (int a = 0; a < 9; a++)
-                        {
-                            dataGridView.Rows[nRow].Cells[a + 3].Value = Value[n][a];
-                        }
-                    }
+                    dataGridView.Rows[nRow].Cells[1].Value = dbnum;
+                    dataGridView.Rows[nRow].Cells[2].Value = "기본";
+                    dataGridView.Rows[nRow].Cells[3].Value = Value[n][0];
+                    dataGridView.Rows[nRow].Cells[6].Value = Value[n][1];
+                    dataGridView.Rows[nRow].Cells[7].Value = Value[n][2];
+                    dataGridView.Rows[nRow].Cells[8].Value = Value[n][3];
+                    dataGridView.Rows[nRow].Cells[11].Value = Value[n][4];
+                }
                 }
         }
         private bool dataGridView_RowHandle(DataGridViewCell cell, int column, int row)

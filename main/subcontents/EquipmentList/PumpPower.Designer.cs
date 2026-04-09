@@ -46,6 +46,8 @@ namespace main.subcontents.EquipmentList
             pictureBox1 = new PictureBox();
             Save_button = new Button();
             GeneralPanel = new Panel();
+            label22 = new Label();
+            eta_textBox = new TextBox();
             panel2 = new Panel();
             label18 = new Label();
             label16 = new Label();
@@ -241,6 +243,8 @@ namespace main.subcontents.EquipmentList
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(label22);
+            GeneralPanel.Controls.Add(eta_textBox);
             GeneralPanel.Controls.Add(panel2);
             GeneralPanel.Controls.Add(label11);
             GeneralPanel.Controls.Add(PumpNum_textBox);
@@ -268,6 +272,26 @@ namespace main.subcontents.EquipmentList
             GeneralPanel.Name = "GeneralPanel";
             GeneralPanel.Size = new Size(782, 367);
             GeneralPanel.TabIndex = 18;
+            // 
+            // label22
+            // 
+            label22.AutoSize = true;
+            label22.Font = new Font("나눔바른고딕", 9.75F);
+            label22.Location = new Point(564, 126);
+            label22.Name = "label22";
+            label22.Size = new Size(58, 15);
+            label22.TabIndex = 142;
+            label22.Text = "펌프 효율";
+            // 
+            // eta_textBox
+            // 
+            eta_textBox.BorderStyle = BorderStyle.FixedSingle;
+            eta_textBox.Location = new Point(625, 123);
+            eta_textBox.Name = "eta_textBox";
+            eta_textBox.Size = new Size(120, 23);
+            eta_textBox.TabIndex = 141;
+            eta_textBox.TextAlign = HorizontalAlignment.Center;
+            eta_textBox.TextChanged += eta_textBox_TextChanged;
             // 
             // panel2
             // 
@@ -553,5 +577,8 @@ namespace main.subcontents.EquipmentList
         private Label label19;
         private Label label20;
         private TextBox PumpPower_textBox;
+        private Label label22;
+        private TextBox textBox1;
+        private TextBox eta_textBox;
     }
 }

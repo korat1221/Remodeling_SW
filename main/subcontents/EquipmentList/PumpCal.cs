@@ -20,10 +20,9 @@ namespace main.subcontents.EquipmentList
         double L, B, hG, nG;
         public double Lmax, PumpHead;
 
-        public PumpCal(String PumpNum)
+        public PumpCal()
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
-            PumpNum_textBox.Text = PumpNum;
             pictureBox1.Load(Program.gPath + "images/HeatingSystem/PumpArea.png");
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
         }

@@ -212,9 +212,9 @@ namespace main.subcontents
                 {
                     if (Door_dataGridView.Rows[nRow].Cells[10].Value.ToString() == "단열재")
                     {
-                        CW_PanelDB material = new CW_PanelDB();
+                        MaterialDB material = new MaterialDB();
                         DialogResult result = material.ShowDialog();
-                        Door_dataGridView.Rows[e.RowIndex].Cells[11].Value = material.Select_CWPanel[1];
+                        Door_dataGridView.Rows[e.RowIndex].Cells[11].Value = material.Select[1];
                     }
                     else { }
 

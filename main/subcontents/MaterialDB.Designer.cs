@@ -35,6 +35,7 @@ namespace main.subcontents
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            info = new Button();
             MaterialType_comboBox = new CustomComboBox();
             label24 = new Label();
             label2 = new Label();
@@ -44,7 +45,6 @@ namespace main.subcontents
             Deletebutton = new Button();
             Save_button = new Button();
             dataGridView = new DataGridView();
-            info = new Button();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView).BeginInit();
@@ -66,6 +66,21 @@ namespace main.subcontents
             GeneralPanel.Size = new Size(985, 161);
             GeneralPanel.TabIndex = 18;
             // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(943, 11);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 179;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
+            // 
             // MaterialType_comboBox
             // 
             MaterialType_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
@@ -73,7 +88,7 @@ namespace main.subcontents
             MaterialType_comboBox.FormattingEnabled = true;
             MaterialType_comboBox.Location = new Point(136, 120);
             MaterialType_comboBox.Name = "MaterialType_comboBox";
-            MaterialType_comboBox.Size = new Size(120, 23);
+            MaterialType_comboBox.Size = new Size(198, 23);
             MaterialType_comboBox.TabIndex = 56;
             MaterialType_comboBox.SelectedIndexChanged += MaterialType_comboBox_SelectedIndexChanged;
             // 
@@ -198,21 +213,6 @@ namespace main.subcontents
             dataGridView.Size = new Size(985, 470);
             dataGridView.TabIndex = 19;
             dataGridView.CellContentClick += dataGridView_CellContentClick;
-            // 
-            // info
-            // 
-            info.BackColor = SystemColors.ControlLight;
-            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            info.FlatStyle = FlatStyle.System;
-            info.Font = new Font("나눔바른고딕", 9.75F);
-            info.Location = new Point(943, 11);
-            info.Margin = new Padding(0);
-            info.Name = "info";
-            info.Size = new Size(23, 23);
-            info.TabIndex = 179;
-            info.Text = "?";
-            info.UseVisualStyleBackColor = false;
-            info.Click += info_Click;
             // 
             // MaterialDB
             // 

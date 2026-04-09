@@ -55,7 +55,7 @@ namespace main.subcontents.CoolingSystem
             Pump_dataGridView.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.GradientActiveCaption;
-            dataGridViewCellStyle1.Font = new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle1.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = SystemColors.GradientActiveCaption;
             dataGridViewCellStyle1.SelectionForeColor = Color.Black;
@@ -66,7 +66,7 @@ namespace main.subcontents.CoolingSystem
             Pump_dataGridView.Name = "Pump_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle2.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Control;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
@@ -75,20 +75,19 @@ namespace main.subcontents.CoolingSystem
             Pump_dataGridView.RowHeadersVisible = false;
             Pump_dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Font =  new Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            dataGridViewCellStyle3.Font = new Font("나눔바른고딕", 9.75F);
             dataGridViewCellStyle3.ForeColor = Color.Black;
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             Pump_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            Pump_dataGridView.RowTemplate.Height = 25;
-            Pump_dataGridView.Size = new Size(800, 358);
+            Pump_dataGridView.Size = new Size(424, 358);
             Pump_dataGridView.TabIndex = 22;
             // 
             // Save_button
             // 
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(625, 449);
+            Save_button.Location = new Point(265, 445);
             Save_button.Name = "Save_button";
             Save_button.Size = new Size(135, 25);
             Save_button.TabIndex = 23;
@@ -103,16 +102,16 @@ namespace main.subcontents.CoolingSystem
             GeneralPanel.Controls.Add(Icon_pictureBox);
             GeneralPanel.Location = new Point(-2, 5);
             GeneralPanel.Name = "GeneralPanel";
-            GeneralPanel.Size = new Size(800, 74);
+            GeneralPanel.Size = new Size(424, 74);
             GeneralPanel.TabIndex = 21;
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label4.Location = new Point(68, 32);
             label4.Name = "label4";
-            label4.Size = new Size(179, 15);
+            label4.Size = new Size(175, 15);
             label4.TabIndex = 103;
             label4.Text = "냉방 설비 관련 펌프 장비일람표";
             // 
@@ -128,7 +127,7 @@ namespace main.subcontents.CoolingSystem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(797, 479);
+            ClientSize = new Size(422, 479);
             Controls.Add(Pump_dataGridView);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);

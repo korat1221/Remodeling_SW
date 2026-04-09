@@ -53,7 +53,7 @@ namespace main.subcontents.HeatingSystem
             Pump_dataGridView.Columns.Add("A3", "종류");
             Pump_dataGridView.Columns.Add("A4", "효율.B.[%]");
             Pump_dataGridView.Columns.Add("A5", " .동력.[kW]");
-
+            Pump_dataGridView.Columns[4].Visible = false;
 
             string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_Pump", "번호,명칭,종류,B효율,동력", "종류 ='온수순환펌프' OR 종류 = '냉온수순환펌프'OR 종류 = '지열순환펌프'");
             if (User_Value.Length > 0)

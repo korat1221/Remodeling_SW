@@ -22,13 +22,12 @@ namespace main.subcontents.EquipmentList
         double Lmax, PumpHead;
         double eta;
 
-        public PumpPower(String PumpNum, double 효율)
+        public PumpPower(String PumpNum)
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             PumpNum_textBox.Text = PumpNum;
             pictureBox1.Load(Program.gPath + "images/HeatingSystem/PumpArea.png");
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            this.eta = 효율;
         }
 
         private void Qmax_textBox_TextChanged(object sender, EventArgs e)
@@ -40,6 +39,15 @@ namespace main.subcontents.EquipmentList
                 Volume_textBox.Text = Volume.ToString("#,0.#");
                 Clac_Power();
             }
+        }
+        private void eta_textBox_TextChanged(object sender, EventArgs e)
+        {
+            if (eta_textBox.Text != null)
+            {
+                eta = Convert.ToDouble(eta_textBox.Text);
+                Calc_head();
+            }
+
         }
         private void L_textBox_TextChanged(object sender, EventArgs e)
         {
@@ -93,7 +101,7 @@ namespace main.subcontents.EquipmentList
 
         private void Clac_Power()
         {
-            if(PumpHead >0 && Volume >0)
+            if (PumpHead > 0 && Volume > 0)
             {
                 Power = (PumpHead * 1000 * 9.81) * Volume / 3600 / (eta / 100);
                 PumpPower_textBox.Text = Power.ToString();
@@ -103,7 +111,7 @@ namespace main.subcontents.EquipmentList
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-            if(Power > 0)
+            if (Power > 0)
             {
                 this.DialogResult = DialogResult.OK;
                 this.Close();
