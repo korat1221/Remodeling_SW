@@ -114,11 +114,11 @@ namespace main
                         Qmax_tot[1] += zone.Q_max[1];
                         tvmech_avg += Convert.ToDouble(ZoneValue[0][3]) * zone.Qb_a[1];
                         for (int mth = 0; mth < 12; mth++)
-                        {
-                            Qb_mth_tot[0, mth] += zone.Qb_mth[0, 1, mth];
-                            Qb_mth_tot[1, mth] += zone.Qb_mth[1, 1, mth];
-                            dvmechmth_avg[mth] += zone.dwd_mth[mth] * zone.Qb_a[1];
-                        }
+                    {
+                        Qb_mth_tot[0, mth] += zone.Qb_mth[0, mth];
+                        Qb_mth_tot[1, mth] += zone.Qb_mth[1, mth];
+                        dvmechmth_avg[mth] += zone.dwd_mth[mth] * zone.Qb_a[1];
+                    }
                         string[][] Usage = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "난방설정온도,냉방설정온도,공조운전시부재율,공조냉방부분운전계수", "용도명='" + ZoneValue[0][0] + "'");
                         if (Usage.Length > 0)
                         {

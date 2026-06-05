@@ -122,7 +122,7 @@ namespace main
                         zone = Program.CALC.getZone(Value_ce[n][1]);
                         for (int mth = 0; mth < 12; mth++)
                         {
-                            Cal_Zone_data_(zone, Value_ce, n, Qhb_mth, theta_ih, th, dop_mth, Qh_a, th_op_day, theta_i_h_set, zone.Qb_mth[0, 1, mth], mth);
+                            Cal_Zone_data_(zone, Value_ce, n, Qhb_mth, theta_ih, th, dop_mth, Qh_a, th_op_day, theta_i_h_set, zone.Qb_mth[0, mth], mth);
                         }
                     }
                     else
@@ -140,7 +140,7 @@ namespace main
                                         zone = Program.CALC.getZone(PostZone[j][0]);
                                         for (int mth = 0; mth < 12; mth++)
                                         {
-                                            Cal_Zone_data_(zone, Value_ce, n, Qhb_mth, theta_ih, th,  dop_mth, Qh_a, th_op_day, theta_i_h_set, zone.Qb_mth[0, 1, mth],mth);
+                                            Cal_Zone_data_(zone, Value_ce, n, Qhb_mth, theta_ih, th, dop_mth, Qh_a, th_op_day, theta_i_h_set, zone.Qb_mth[0, mth], mth);
                                         }
                                     }
                                 }                           
@@ -371,12 +371,12 @@ namespace main
             if (zone != null)
             {
                 Qhb_mth[n, mth] += Qhb_mth_ * Convert.ToDouble(Value_ce[n][2]);
-                theta_ih[n, mth] = zone.theta_i[0, 1, mth]; //이용일 난방
+                theta_ih[n, mth] = zone.theta_i[0, mth]; //이용일 난방
                 th[n, mth] = zone.t_max[0, mth]; // 난방 시간                             
                 dop_mth[n, mth] = zone.dwd_mth[mth];
                 Qh_a[n] += zone.Qb_a[0] * Convert.ToDouble(Value_ce[n][2]); //연간 난방요구량
                 th_op_day[n] = zone.th_op_d;
-                theta_i_h_set[n] = zone.theta_i_h_set;
+                theta_i_h_set[n] = zone.theta_i_set[0];
             }
         }
         private void Cal_Zone_data_(Zone zone, AHU ahu, string[][] Value_ce, int n, double[,] Qhb_mth, double[,] theta_ih, double[,] th, double[,] dop_mth, double[] Qh_a, double[] th_op_day, double[] theta_i_h_set, double Qhb_mth_, int mth)
@@ -384,12 +384,12 @@ namespace main
             if (zone != null)
             {
                 Qhb_mth[n, mth] += Qhb_mth_ * Convert.ToDouble(Value_ce[n][2]);
-                theta_ih[n, mth] = zone.theta_i[0, 1, mth]; //이용일 난방
+                theta_ih[n, mth] = zone.theta_i[0, mth]; //이용일 난방
                 th[n, mth] = zone.t_max[0, mth]; // 난방 시간                             
                 dop_mth[n, mth] = zone.dwd_mth[mth];
                 Qh_a[n] += ahu.Qh_a_tot * Convert.ToDouble(Value_ce[n][2]); //연간 난방요구량
                 th_op_day[n] = zone.th_op_d;
-                theta_i_h_set[n] = zone.theta_i_h_set;
+                theta_i_h_set[n] = zone.theta_i_set[0];
             }
         }
         private void Cal_Zone_Qmax_(Zone zone, int k, double[] Qh_max)
@@ -1061,8 +1061,8 @@ namespace main
             {
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    if ((zone.theta_i[0, 1, mth] - theta_e[mth]) > 1)
-                    { Qh_ce[mth] += Math.Max(zone.Qb_mth[0, 1, mth] * ce.Zone_Percent() * ce.theta_ce() / (zone.theta_i[0, 1, mth] - theta_e[mth]), 0); }
+                    if ((zone.theta_i[0, mth] - theta_e[mth]) > 1)
+                    { Qh_ce[mth] += Math.Max(zone.Qb_mth[0, mth] * ce.Zone_Percent() * ce.theta_ce() / (zone.theta_i[0, mth] - theta_e[mth]), 0); }
                     if (double.IsNaN(Qh_ce[mth]))
                     {
                         Qh_ce[mth] = 0;

@@ -166,10 +166,10 @@ namespace main
                         for (int mth = 0; mth < 12; mth++)
                         {
                             Qwb_mth[n, mth] = Qwb_day * dop_a[n] * dmth[mth] / 365 * (-0.02 * theta_e[mth] + 1.25);
-                            theta_ih[n, mth] = zone.theta_i[1, 0, mth]; //이용일 난방
+                            theta_ih[n, mth] = zone.theta_i[1, mth]; //이용일 난방
                             Qwb_a[n] += Qwb_mth[n, mth]; //연간 요구량
                             th_op_day[n] = zone.th_op_d;
-                            theta_i_h_set[n] = zone.theta_i_h_set;
+                            theta_i_h_set[n] = zone.theta_i_set[0];
                         }
                     }
                     ZoneCount = ZoneCount + 1;

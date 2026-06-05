@@ -413,7 +413,7 @@ namespace main.contents.Result
                 {
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select  QTsink_tot * dwd_mth /1000 as total_1, QVsink_tot* dwd_mth/1000 as total_2, QSopsink_tot* dwd_mth/1000 as total_3, Qsink* dwd_mth/1000 as total_4 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select  QTsink_tot  as total_1, QVsink_tot as total_2, QSopsink_tot as total_3, Qsink as total_4 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
                        if(Value.Length >0)
                         {
                             HeatingMthData[0].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
@@ -425,7 +425,7 @@ namespace main.contents.Result
                     }
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select QTsource_tot * dwd_mth /1000 as total_1, QVsource_tot * dwd_mth /1000 as total_2, QStr_Win * dwd_mth /1000 as total_3, QStr_CW * dwd_mth /1000 as total_4,QSopsource_tot * dwd_mth /1000 as total_5,QI_tot * dwd_mth /1000 as total_6,Qsource  * dwd_mth /1000 as total_7 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select QTsource_tot as total_1, QVsource_tot as total_2, QStr_Win as total_3, QStr_CW as total_4,QSopsource_tot as total_5,QI_tot as total_6,Qsource  as total_7 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
                             HeatingMthData[8].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
@@ -453,7 +453,7 @@ namespace main.contents.Result
                 {
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select  QTsink_tot * dwd_mth /1000 as total_1, QVsink_tot* dwd_mth/1000 as total_2, QSopsink_tot* dwd_mth/1000 as total_3, Qsink* dwd_mth/1000 as total_4 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select  QTsink_tot as total_1, QVsink_tot* dwd_mth/1000 as total_2, QSopsink_tot* dwd_mth/1000 as total_3, Qsink* dwd_mth/1000 as total_4 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
                             CoolingMthData[0].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
@@ -465,7 +465,7 @@ namespace main.contents.Result
                     }
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select QTsource_tot * dwd_mth /1000 as total_1, QVsource_tot * dwd_mth /1000 as total_2, QStr_Win * dwd_mth /1000 as total_3, QStr_CW * dwd_mth /1000 as total_4,QSopsource_tot * dwd_mth /1000 as total_5,QI_tot * dwd_mth /1000 as total_6,Qsource  * dwd_mth /1000 as total_7 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select QTsource_tot as total_1, QVsource_tot as total_2, QStr_Win as total_3, QStr_CW as total_4,QSopsource_tot as total_5,QI_tot as total_6,Qsource  as total_7 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
                             CoolingMthData[8].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
@@ -479,7 +479,7 @@ namespace main.contents.Result
                     for (int mth = 0; mth < 12; mth++)
                     {
 
-                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth, eta, Q_DHU_tot * dwd_mth /1000 as total_1 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth, eta, Q_DHU_tot as total_1 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
                             CoolingMthData[13].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });

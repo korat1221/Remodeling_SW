@@ -800,9 +800,9 @@ namespace main
                     {
                         load_sum += Convert.ToDouble(v2[k][0]);
                     }
-                    QC_nd_z[i] += value.Qb_mth[1,1,i] * load_sum; //공급설비 부하율을 반영한 요구량 산정
-                    dwd_z[i] += value.dwd_mth[i] * value.Qb_mth[1, 1, i] * load_sum; // 요구량 가중하여 산정함
-                    theta_z[i] += value.theta_i[1, 1, i] * value.Qb_mth[1, 1, i] * load_sum; //요구량 가중하여 산정함
+                    QC_nd_z[i] += value.Qb_mth[1, i] * load_sum; //공급설비 부하율을 반영한 요구량 산정
+                    dwd_z[i] += value.dwd_mth[i] * value.Qb_mth[1, i] * load_sum; // 요구량 가중하여 산정함
+                    theta_z[i] += value.theta_i[1, i] * value.Qb_mth[1, i] * load_sum; //요구량 가중하여 산정함
                     pre = pre + 1; 
                 }
                 if (QC_nd_z[i] == 0)
