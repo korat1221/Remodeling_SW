@@ -3521,7 +3521,7 @@ namespace main
             double dtheta_red_mn_y = dtheta_float + (1 - dtheta_float) * (1 - Math.Exp(-dtH_red_y_tao_H)) / dtH_red_y_tao_H;
 
             double dtheta_set_H_low_y = 0;
-            if (dtheta_i_NA <= theta_e)
+            if ((theta_i_set- dtheta_i_NA) <= theta_e)
             {
                 dtheta_set_H_low_y = 0;
             }
@@ -3531,7 +3531,7 @@ namespace main
             }
             else
             {
-                dtheta_set_H_low_y = (dtheta_i_NA - theta_e) / (theta_i_set - theta_e);
+                dtheta_set_H_low_y = (theta_i_set - dtheta_i_NA - theta_e) / (theta_i_set - theta_e);
             }
 
             double dt_red_low_y_tao_H = 1;
