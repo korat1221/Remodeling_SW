@@ -232,6 +232,12 @@
     <Compile Update="subcontents\CoolingSystem\Cooling_Zone.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="subcontents\CoolingSystem\Pipe_Diameter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="subcontents\CoolingSystem\Pipe_Length.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="subcontents\DHWSystem\DHWHP_DB.cs">
       <SubType>Form</SubType>
     </Compile>

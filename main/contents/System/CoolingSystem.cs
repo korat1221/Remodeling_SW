@@ -101,6 +101,9 @@ namespace main.contents
 
         enum PumpType { 냉수1차, 냉수2차, 열원1차, 열원2차 };
 
+        //
+        String PipeIns;
+        double PipeIns_Lamda;
 
         public CoolingSystem()
         {
@@ -163,11 +166,11 @@ namespace main.contents
             CPump2_textBox.Visible = false;
             CPump2_button.Visible = false;
 
-
-
             ce1Type_comboBox.Items.AddRange(ceType.ToArray());
             ce2Type_comboBox.Items.AddRange(ceType.ToArray());
             label7.Text = "면적 [m" + Program.UTIL.Subscript(2, true) + "]";
+            //배관단열
+            Pipe_Diameter_ComboBox.Items.AddRange(new string[] { "표준", "직접" });
         }
 
         private string[] storagelist()
@@ -497,6 +500,20 @@ namespace main.contents
                 CoolingTop_dataGridView.Visible = false;
             }
             LoadtabPage(CG); //텝페이지 개시
+
+            if (CG == "실외기12kW")
+            {
+                Pipe_dataGridView.Visible = false;
+                Pipe_panel.Visible = false;
+
+            }
+            else
+            {
+                Pipe_dataGridView.Visible = true;
+                Pipe_panel.Visible = true;
+
+                Create_Pipe_Table("직접");
+            }
         }
 
         private void LoadtabPage(string _CG) //탭활성화 및 열원설비 콤보박스
@@ -569,7 +586,7 @@ namespace main.contents
         #region //그림작성
         private void Distribute_Image() // 1.분배설비 그림넣기
         {
-            string[][] Image = Program.DB.getValue(DB.type.BaseDB_Cooling, "냉방설비이미지", "이미지", "항목유형 = '분배설비'");
+            string[][] Image = Program.DB.getValue(DB.type.BaseDB_Cooling, "냉방설비이미지", "이미지", "항목유형 = '분배설비' And 설치유형='메인'");
             if (Image.Length > 0)
             {
                 DistpictureBox.Size = new System.Drawing.Size(610, 254);
@@ -2449,6 +2466,91 @@ namespace main.contents
 
         // ////////////////////////////////////////////////////////////////////////분배설비//////////////////////////////////////////////////
 
+        #region 분배열손실 산정
+        //AirCooler, WaterCooler, SoilCooler, SoilWaterCooler, 흡수식냉동기의 경우 적용함
+        //데이터 그리드 뷰 활성화
+        //배관길이 산정 버튼 활성화
+
+
+
+        //배관길이 표 산정
+        private void Create_Pipe_Table(string type) //type: 표준, 직접
+        {
+            Pipe_dataGridView.Columns.Clear();
+            new StackedHeaderDecorator(Pipe_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
+            Pipe_dataGridView.Columns.Add("A0", "구분"); //주배관, 수직배관, 분기관
+            Pipe_dataGridView.Columns.Add("A1", "길이[m]"); //위에서 직접입력 또는 표준값 적용하면 작성되도록 이벤트 발생
+            Pipe_dataGridView.Columns.Add("A2", "배관외경[mm]");//위에서 직접입력 또는 표준값 적용하면 작성되도록 이벤트 발생
+            Pipe_dataGridView.Columns.Add("A3", "단열재"); //선택툴로 이동됨
+            Pipe_dataGridView.Columns.Add("A4", "열전도율[W/m∙K]");
+            Pipe_dataGridView.Columns.Add("A5", "단열재 두께[mm]");
+            Pipe_dataGridView.Columns.Add("A6", "배관선형열관류율[W/m∙K]");
+
+            Pipe_dataGridView.Columns[0].Width = 60;
+            Pipe_dataGridView.Columns[1].Width = 100;
+            Pipe_dataGridView.Columns[2].Width = 100;
+            Pipe_dataGridView.Columns[3].Width = 100;
+            Pipe_dataGridView.Columns[4].Width = 100;
+            Pipe_dataGridView.Columns[5].Width = 100;
+            Pipe_dataGridView.Columns[6].Width = 160;
+
+            Pipe_dataGridView.ReadOnly = false;
+            foreach (DataGridViewColumn col in Pipe_dataGridView.Columns)
+            {
+                col.ReadOnly = (col.Index != 5);
+                if (type == "직접")
+                {
+                    col.ReadOnly = (col.Index != 2);
+                }
+            }
+
+            Load_Pipe_Table();
+        }
+
+
+        //배관길이 표 로드
+
+        private void Load_Pipe_Table()
+        {
+            string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "Distribution_Form", "번호,단열재,열전도율", "번호 ='" + Num + "'");
+            if (User_Value.Length > 0)
+            {
+                if (User_Value[0][1] != null&& User_Value[0][1]!="")
+                {
+                    PipeIns = User_Value[0][1].ToString();
+                    insul_textBox.Text = PipeIns;
+                }
+                if (User_Value[0][2] != null&& User_Value[0][2]!="")
+                {
+                    PipeIns_Lamda = Convert.ToDouble(User_Value[0][2].ToString());
+                    lamda_textBox.Text = User_Value[0][2].ToString();
+                }
+               
+                string 배관유형;
+                for (int k = 0; k < 3; k++)
+                {
+                    if (k == 0) 배관유형 = "주배관";
+                    else if (k == 1) 배관유형 = "수직배관";
+                    else 배관유형 = "분기관";
+                    Pipe_dataGridView.Rows.Add();
+                    string[][] 배관 = Program.DB.getValue(DB.type.ProjDB, "Distribution_Form", "배관유형,배관길이,배관외경,단열재,열전도율,단열두께,선형열관류율", "번호 ='" + Num + "' And 배관유형='" + 배관유형 + "'");
+                    if (배관.Length > 0)
+                    {
+                        for (int i = 0; i < 7; i++)
+                        {
+                            Pipe_dataGridView.Rows[k].Cells[i].Value = 배관[0][i].ToString();
+                        }
+                    }
+                }
+            }
+        }
+
+        //설치 체크 해당되면 버튼 활성화[부하측 배관길이 산정]
+        //표를 하나 활성화 서비스영역입력
+        //표를 통해서 작성 주배관/수직배관/분기관 길이, 단열 두께, 적용자재선택 -> 해당값에 대한 테이블 필요
+        #endregion
+
+
         #region H.펌프
         private void PumpUse_comboBox_SelectedIndexChanged(object sender, EventArgs e) //펌프유무
         {
@@ -2532,11 +2634,12 @@ namespace main.contents
             Pump_dataGridView.Columns.Add("A12", "설치대수.[EA]"); //save
 
             Pump_dataGridView.Columns[0].Width = 50;
-            Pump_dataGridView.Columns[1].Width = 100;
+            Pump_dataGridView.Columns[1].Width = 90;
             Pump_dataGridView.Columns[2].Width = 60;
             Pump_dataGridView.Columns[3].Width = 60;
-            Pump_dataGridView.Columns[4].Width = 130;
+            Pump_dataGridView.Columns[4].Width = 90;
             Pump_dataGridView.Columns[9].Width = 30;
+            Pump_dataGridView.Columns[12].Width = 60;
             Pump_dataGridView.Columns[5].Visible = false;
             Pump_dataGridView.Columns[7].Visible = false;
             Pump_dataGridView.Columns[8].Visible = false;
@@ -3503,7 +3606,7 @@ namespace main.contents
                 MessageBox.Show("오류 발생: " + ex.Message);
             }
         }
-       
+
         public bool ValidateAndSave(bool isManualSave = false)
         {
             try
@@ -3520,9 +3623,9 @@ namespace main.contents
                     {
                         return true;
                     }
-                    
+
                 }
-                else if (CSource == null || CSource.Length == 0) 
+                else if (CSource == null || CSource.Length == 0)
                 {
                     DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
                     if (res == DialogResult.Yes)
@@ -3554,6 +3657,7 @@ namespace main.contents
         {
             Save_Pump();
             Save_ce();
+            Pipe_Save();
             if (Save_CG() == true)
             {
                 Program.DB.saveProject();
@@ -3696,6 +3800,11 @@ namespace main.contents
 
             ZoneS_label.Visible = false;
             AhuS_label.Visible = false;
+
+            //분배설비
+            Pipe_dataGridView.Visible = false;
+            Pipe_dataGridView.Columns.Clear();
+            Pipe_dataGridView.Rows.Clear();
         }
 
         public void LoadData(String ID) // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
@@ -3943,6 +4052,19 @@ namespace main.contents
                     Pump_dataGridView.Visible = false;
                 }
 
+            }
+            //배관길이 정보 로드함
+
+            if (CG == "실외기12kW")
+            {
+                Pipe_dataGridView.Visible = false;
+                Pipe_panel.Visible = false;
+            }
+            else
+            {
+                Pipe_dataGridView.Visible = true;
+                Pipe_panel.Visible = true;
+                Create_Pipe_Table("직접");
             }
 
             //공급설비 공급설비1/2종류는 공조기, 실내기 등을 지칭하며, 공급설비3/4종류는 공조기 선택시 적용되는 VAV유닛, 팬파워유닛을 지칭함
@@ -4250,6 +4372,153 @@ namespace main.contents
             else
             {
                 MessageBox.Show("The folder path does not exist.");
+            }
+        }
+
+        //배관버튼 클릭 이벤트 발생
+        //Pipe_dataGridView에 배관 길이 입력해줘야함
+        private void Pipe_Length_button_Click(object sender, EventArgs e)
+        {
+            if (insul_textBox.Text == null || insul_textBox.Text == "")
+            {
+                MessageBox.Show("배관 단열재를 먼저 선택해 주세요");
+                return;
+            }
+
+            QC_max = QC_max_z + QC_max_Ahu;
+            Pipe_Length PL = new Pipe_Length(Num, "냉방");
+            DialogResult result = PL.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                Create_Pipe_Table("직접");
+            }
+            else
+            {
+
+            }
+        }
+
+        private void insul_button_Click(object sender, EventArgs e)
+        {
+            insul_textBox.Text = null;
+            lamda_textBox.Text = null;
+            MaterialDB InsDB_form = new MaterialDB();
+            DialogResult result = InsDB_form.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                PipeIns = InsDB_form.Select[1];
+                PipeIns_Lamda = Convert.ToDouble(InsDB_form.Select[4]);
+            }
+            insul_textBox.Text = PipeIns;
+            lamda_textBox.Text = PipeIns_Lamda.ToString("0.000");
+        }
+        public static double GetPipeOuterDiameter(double flowRate, string pipeType)
+        {
+            // {외경, 개별관 최대유량, 주관 최대유량}
+            double[,] pipeTable = new double[,]
+            {
+                //  외경    분기관      주배관,수직배관
+                {  17.2,    130,      double.NaN },
+                {  21.3,    250,        300 },
+                {  26.9,    500,        700 },
+                {  33.7,   1000,       1200 },
+                {  42.4,   2000,       2500 },
+                {  48.3,   2800,       3800 },
+                {  60.3,   5000,       7000 },
+                {  76.1,   9000,      12000 },
+                {  88.9,  14000,      18000 },
+                { 114.3,  double.NaN, 35000 },
+                { 139.7,  double.NaN, 55000 },
+                { 168.3,  double.NaN, 90000 },
+            };
+
+            int col = (pipeType == "분기관") ? 1 : 2;
+            for (int i = 0; i < pipeTable.GetLength(0); i++)
+            {
+                double limit = pipeTable[i, col];
+                if (double.IsNaN(limit)) continue; // "-" 항목 건너뜀
+                if (flowRate <= limit)
+                    return pipeTable[i, 0]; // 외경 반환
+            }
+            return -1; // 범위 초과 (표에 없음)
+        }
+        private void Pipe_Save()
+        {
+            string 배관유형, 배관길이, 배관외경, 단열재, 열전도율, 단열두께, 선형열관류율;
+            foreach (DataGridViewRow selectrow in Pipe_dataGridView.Rows)
+            {
+                배관유형 = selectrow.Cells[0].Value.ToString();
+                배관길이 = selectrow.Cells[1].Value.ToString();
+                배관외경 = selectrow.Cells[2].Value.ToString();
+                단열재 = selectrow.Cells[3].Value.ToString();
+                열전도율 = selectrow.Cells[4].Value.ToString();
+                단열두께 = selectrow.Cells[5].Value.ToString();
+                선형열관류율 = selectrow.Cells[6].Value.ToString();
+                Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관길이,배관외경,단열재,열전도율,단열두께,선형열관류율",
+          "'" + Num + "','냉방','" + 배관유형 + "', '" + 배관길이 + "','" + 배관외경 + "', '" + 단열재 + "', '" + 열전도율 + "', '" + 단열두께 + "','" + 선형열관류율 + "','" + PipeIns + "','" + lamda_textBox.Text + "'", "번호,배관유형");
+            }
+            Program.DB.saveProject();
+        }
+
+        private void Pipe_Diameter_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            double tempDiffer, ceNumber; //냉수 온도차와 공급설비 개수
+            string Lv_pipe, Ls_pipe, La_pipe;
+
+            if (Pipe_Diameter_ComboBox.SelectedItem.ToString() == "표준")
+            {
+                Pipe_Diameter PD = new Pipe_Diameter();
+                DialogResult result = PD.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    tempDiffer = PD._tempDiffer;
+                    ceNumber = PD._ceNumber;
+
+                    double lvWW = QC_max / (0.001163 * tempDiffer);
+                    double laWW = QC_max / (0.001163 * tempDiffer) / ceNumber;
+
+                    Lv_pipe = GetPipeOuterDiameter(lvWW, "주배관").ToString();
+                    Ls_pipe = Lv_pipe;
+                    La_pipe = GetPipeOuterDiameter(laWW, "분기관").ToString();
+
+                    Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율", "'" + Num + "','냉방','주배관', '" + Lv_pipe + "','" + PipeIns + "','" + lamda_textBox.Text + "'", "번호,배관유형");
+                    Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율", "'" + Num + "','냉방','수직배관', '" + Ls_pipe + "','" + PipeIns + "','" + lamda_textBox.Text + "'", "번호,배관유형");
+                    Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율", "'" + Num + "','냉방','분기관', '" + La_pipe + "','" + PipeIns + "','" + lamda_textBox.Text + "'", "번호,배관유형");
+                    Program.DB.saveProject();
+
+                    Create_Pipe_Table("표준");
+                }
+            }
+            else if (Pipe_Diameter_ComboBox.SelectedItem.ToString() == "직접")
+            {
+                Create_Pipe_Table("직접");
+            }
+        }
+
+        private void Pipe_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                try
+                {
+                    if (e.ColumnIndex == 5)
+                    {
+                        if (double.TryParse(Pipe_dataGridView.Rows[e.RowIndex].Cells[2].Value?.ToString(), out double di) &&
+                            double.TryParse(Pipe_dataGridView.Rows[e.RowIndex].Cells[4].Value?.ToString(), out double lamda) &&
+                            double.TryParse(Pipe_dataGridView.Rows[e.RowIndex].Cells[5].Value?.ToString(), out double da))
+                        {
+                            double _di = di / 1000;
+                            double _da = 2 * (da / 1000) + _di;
+                            double term1 = (1.0 / (2.0 * lamda)) * Math.Log(_da / _di);
+                            double term2 = 1.0 / (8 * _da);
+                            Pipe_dataGridView.Rows[e.RowIndex].Cells[6].Value = (Math.PI / (term1 + term2)).ToString("0.000");
+                        }
+                        else Pipe_dataGridView.Rows[e.RowIndex].Cells[6].Value = "";
+                    }
+                }
+                catch { }
             }
         }
     }
