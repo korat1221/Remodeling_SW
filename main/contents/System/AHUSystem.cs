@@ -86,7 +86,6 @@ namespace main.contents
             //예열/예냉유형 콤보박스
             PrehPrecOptions_comboBox.Items.Clear();
             PrehPrecOptions_comboBox.Items.Add("없음");
-            PrehPrecOptions_comboBox.Items.Add("쿨튜브");
             PrehPrecOptions_comboBox.Items.Add("프리히터");
 
             //토양유형 콤보박스
@@ -207,6 +206,12 @@ namespace main.contents
             }
         }
 
+        private void AHUZone_Button_Click(object sender, EventArgs e)
+        {
+            AHUZoneVent form = new AHUZoneVent(AHUOptions, Num);
+            form.ShowDialog();
+        }
+
         ///////////////////////////////////////////////////////////존////////////////////////////////////////////////////////////////////
         #region 존
 
@@ -240,22 +245,22 @@ namespace main.contents
                 string[][] 난방 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a,Q_max", "번호 ='" + SelectZone_split[i] + "' AND 난방_냉방 = '난방'");
                 if (난방.Length > 0)
                 {
-                    AnnualHeatingNeed += Convert.ToDouble(난방[0][0]);
+                    AnnualHeatingNeed += Program.UTIL.ToDoubleOrZero(난방[0][0]);
                     AnnualHeatingNeed_textBox.Text = AnnualHeatingNeed.ToString();
                     Program.UTIL.textBox_doubleComa(AnnualHeatingNeed_textBox, true, 0);
 
-                    HeatingLoad += Convert.ToDouble(난방[0][1]) / 1000;
+                    HeatingLoad += Program.UTIL.ToDoubleOrZero(난방[0][1]) / 1000;
                     HeatingLoad_textBox.Text = HeatingLoad.ToString();
                     Program.UTIL.textBox_doubleComa(HeatingLoad_textBox, true, 2);
                 }
                 string[][] 냉방 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a,Q_max", "번호 ='" + SelectZone_split[i] + "' AND 난방_냉방 = '냉방'");
                 if (냉방.Length > 0)
                 {
-                    AnnualCoolingNeed += Convert.ToDouble(냉방[0][0]);
+                    AnnualCoolingNeed += Program.UTIL.ToDoubleOrZero(냉방[0][0]);
                     AnnualCoolingNeed_textBox.Text = AnnualCoolingNeed.ToString();
                     Program.UTIL.textBox_doubleComa(AnnualCoolingNeed_textBox, true, 0);
 
-                    CoolingLoad += Convert.ToDouble(냉방[0][1]) / 1000;
+                    CoolingLoad += Program.UTIL.ToDoubleOrZero(냉방[0][1]) / 1000;
                     CoolingLoad_textBox.Text = CoolingLoad.ToString();
                     Program.UTIL.textBox_doubleComa(CoolingLoad_textBox, true, 2);
                 }
@@ -481,7 +486,7 @@ namespace main.contents
                 else if (Value[0][28] == "신규") { radioButton1.Checked = false; radioButton2.Checked = true; radioButton3.Checked = false; }
                 else { radioButton1.Checked = false; radioButton2.Checked = false; radioButton3.Checked = true; }
 
-                Cal_Coil(Convert.ToDouble(Value[0][11]), Convert.ToDouble(Value[0][12]), Convert.ToDouble(Value[0][13]), Convert.ToDouble(Value[0][14]), Convert.ToDouble(Value[0][16]), Convert.ToDouble(Value[0][17]), Convert.ToDouble(Value[0][21]));
+                Cal_Coil(Program.UTIL.ToDoubleOrZero(Value[0][11]), Program.UTIL.ToDoubleOrZero(Value[0][12]), Program.UTIL.ToDoubleOrZero(Value[0][13]), Program.UTIL.ToDoubleOrZero(Value[0][14]), Program.UTIL.ToDoubleOrZero(Value[0][16]), Program.UTIL.ToDoubleOrZero(Value[0][17]), Program.UTIL.ToDoubleOrZero(Value[0][21]));
             }
         }
         private void load_Table_HRV(string SelectHRV)
@@ -566,7 +571,7 @@ namespace main.contents
         {
             if (AHUInsulationThickness_comboBox.SelectedItem != null)
             {
-                AHUInsulationThickness = Convert.ToDouble(AHUInsulationThickness_comboBox.SelectedItem.ToString());
+                AHUInsulationThickness = Program.UTIL.ToDoubleOrZero(AHUInsulationThickness_comboBox.SelectedItem.ToString());
             }
             else
             {
@@ -640,7 +645,7 @@ namespace main.contents
             {
                 PipeIns = InsDB_form.Select[1];
                 PipeIns_textBox.Text = PipeIns;
-                PipeIns_Ramda = Convert.ToDouble(InsDB_form.Select[4]);
+                PipeIns_Ramda = Program.UTIL.ToDoubleOrZero(InsDB_form.Select[4]);
                 PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
             }
             else
@@ -713,26 +718,26 @@ namespace main.contents
                 for (int mth = 1; mth < 13; mth++)
                 {
                     string[][] 기후 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_온도습도", "최소온도", "지역명 ='" + Location[0][0] + "'And 기간 = '" + mth + "월'");
-                    theta_e_min[mth - 1] = Convert.ToDouble(기후[0][0].ToString());
+                    theta_e_min[mth - 1] = Program.UTIL.ToDoubleOrZero(기후[0][0].ToString());
                 }
             }
 
             if (AHUOptions == "열회수기")
             {
                 string[][] 풍량 = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "팬풍량,열회수유형", "번호 = '" + Num + "'");
-                Volume = Convert.ToDouble(풍량[0][0].ToString());
+                Volume = Program.UTIL.ToDoubleOrZero(풍량[0][0].ToString());
                 string[][] 결빙방지 = Program.DB.getValue(DB.type.BaseDB_AHU, "결빙방지온도", "결빙방지온도", "건물유형 ='비주거건물' And 열회수기유형 = '" + 풍량[0][1].ToString() + "'");
                 {
-                    theta_defrost = Convert.ToDouble(결빙방지[0][0].ToString());
+                    theta_defrost = Program.UTIL.ToDoubleOrZero(결빙방지[0][0].ToString());
                 }
             }
             else
             {
                 string[][] 풍량 = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "급기풍량,열회수유형", "번호 = '" + Num + "'");
-                Volume = Convert.ToDouble(풍량[0][0].ToString());
+                Volume = Program.UTIL.ToDoubleOrZero(풍량[0][0].ToString());
                 string[][] 결빙방지 = Program.DB.getValue(DB.type.BaseDB_AHU, "결빙방지온도", "결빙방지온도", "건물유형 ='비주거건물' And 열회수기유형 = '" + 풍량[0][1].ToString() + "'");
                 {
-                    theta_defrost = Convert.ToDouble(결빙방지[0][0].ToString());
+                    theta_defrost = Program.UTIL.ToDoubleOrZero(결빙방지[0][0].ToString());
                 }
             }
             double Ppreh_default = 0.34 * Volume * (theta_defrost - (theta_e_min.Min()));
@@ -755,7 +760,7 @@ namespace main.contents
         {
             if (PrehPower_textBox.Text != null && PrehPower_textBox.Text != "")
             {
-                PrehPower = Convert.ToDouble(PrehPower_textBox.Text.ToString());
+                PrehPower = Program.UTIL.ToDoubleOrZero(PrehPower_textBox.Text.ToString());
             }
             else
             {
@@ -1021,6 +1026,10 @@ namespace main.contents
         {
             try
             {
+                if (!ValidateZoneVentilationComplete())
+                {
+                    return false;
+                }
                 Save_Image();
                 Save(isManualSave);
                 none_AHU_HRV_check();
@@ -1032,6 +1041,47 @@ namespace main.contents
                 System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
                 return false;
             }
+        }
+        // 이 설비에 연결된 모든 존이 AHUZoneVent_Form(존별 급배기량)을 저장했는지 확인 —
+        // 빠진 존이 있으면 경고하고 저장 자체를 막음(AHUZoneVent_Form 입력이 이제 필수라서)
+        private bool ValidateZoneVentilationComplete()
+        {
+            string[][] Zones = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름", "선택열회수기 = '" + Num_textBox.Text + "' and 환기유무='True'");
+            ArrayList missing = new ArrayList();
+            for (int i = 0; i < Zones.Length; i++)
+            {
+                string[][] Saved = Program.DB.getValue(DB.type.ProjDB, "AHUZoneVent_Form", "급기량,배기량", "설비 = '" + Num_textBox.Text + "' And 존 = '" + Zones[i][0] + "'");
+                if (Saved.Length == 0)
+                {
+                    missing.Add(Zones[i][0] + " " + Zones[i][1]);
+                }
+            }
+            if (missing.Count > 0)
+            {
+                // ZoneGeneral.cs의 ValidateAndSave() 패턴과 동일: 먼저 "저장하시겠습니까?"를 묻고,
+                // 예 → 뭐가 빠졌는지 안내 후 저장 막음(false) / 아니오 → 저장 없이 그냥 나가게(true)
+                // 해서, 실수로 들어왔다가 못 나가고 갇히는 상황을 방지함
+                DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
+                if (res == DialogResult.Yes)
+                {
+                    const int maxListed = 10;
+                    int shownCount = Math.Min(missing.Count, maxListed);
+                    string[] shown = new string[shownCount];
+                    missing.CopyTo(0, shown, 0, shownCount);
+                    string listText = string.Join("\n", shown);
+                    if (missing.Count > maxListed)
+                    {
+                        listText += "\n외 " + (missing.Count - maxListed) + "개 존 더";
+                    }
+                    MessageBox.Show("급배기량이 입력되지 않은 존이 " + missing.Count + "개 있습니다:\n" + listText + "\n\n\"+\" 버튼을 눌러 존별 급배기량을 먼저 입력해주세요.");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            return true;
         }
         private void Save(bool isManualSave = false)
         {
@@ -1198,7 +1248,7 @@ namespace main.contents
                 Chaeck_AHULeakageLevel(AHULeakageLevel1);
 
                 AHUInsulationThickness_comboBox.SelectedItem = Value[0][4];
-                AHUInsulationThickness = Convert.ToDouble(Value[0][4]);
+                AHUInsulationThickness = Program.UTIL.ToDoubleOrZero(Value[0][4]);
 
                 TABOptions_comboBox.SelectedItem = Value[0][5];
                 TABOptions = Value[0][5];
@@ -1212,37 +1262,37 @@ namespace main.contents
 
                 if (AHULocation == "단열외피 내부")
                 {
-                    OALength = Convert.ToDouble(Value[0][0]);
+                    OALength = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                     OASALength_textBox.Text = OALength.ToString();
                     Program.UTIL.textBox_doubleComa(OASALength_textBox, true, 2);
 
-                    EALength = Convert.ToDouble(Value[0][1]);
+                    EALength = Program.UTIL.ToDoubleOrZero(Value[0][1]);
                     EARALength_textBox.Text = EALength.ToString();
                     Program.UTIL.textBox_doubleComa(EARALength_textBox, true, 2);
                 }
                 else
                 {
-                    SALength = Convert.ToDouble(Value[0][2]);
+                    SALength = Program.UTIL.ToDoubleOrZero(Value[0][2]);
                     OASALength_textBox.Text = SALength.ToString();
                     Program.UTIL.textBox_doubleComa(OASALength_textBox, true, 2);
 
-                    RALength = Convert.ToDouble(Value[0][3]);
+                    RALength = Program.UTIL.ToDoubleOrZero(Value[0][3]);
                     EARALength_textBox.Text = RALength.ToString();
                     Program.UTIL.textBox_doubleComa(EARALength_textBox, true, 2);
                 }
 
-                DuctInsulationThickness = Convert.ToDouble(Value[0][4]);
+                DuctInsulationThickness = Program.UTIL.ToDoubleOrZero(Value[0][4]);
                 DuctInsulationThickness_textBox.Text = DuctInsulationThickness.ToString();
                 Program.UTIL.textBox_doubleComa(DuctInsulationThickness_textBox, true, 3);
 
-                DuctDiameter = Convert.ToDouble(Value[0][5]);
+                DuctDiameter = Program.UTIL.ToDoubleOrZero(Value[0][5]);
                 DuctDiameter_textBox.Text = DuctDiameter.ToString();
                 Program.UTIL.textBox_doubleComa(DuctDiameter_textBox, true, 3);
 
                 PipeIns = Value[0][6];
                 PipeIns_textBox.Text = PipeIns.ToString();
 
-                PipeIns_Ramda = Convert.ToDouble(Value[0][7]);
+                PipeIns_Ramda = Program.UTIL.ToDoubleOrZero(Value[0][7]);
                 PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
                 Program.UTIL.textBox_doubleComa(PipeIns_Ramda_textBox, true, 3);
             }
@@ -1259,7 +1309,7 @@ namespace main.contents
                 PrehControlOptions_comboBox.SelectedItem = Value[0][0];
 
                 PrehPower_textBox.Text = Value[0][1];
-                PrehPower = Convert.ToDouble(Value[0][1]);
+                PrehPower = Program.UTIL.ToDoubleOrZero(Value[0][1]);
             }
             else
             {
@@ -1272,19 +1322,19 @@ namespace main.contents
                 GroundOptions_comboBox.SelectedItem = Value[0][0];
                 GroundOptions = Value[0][0];
 
-                GroundDepth = Convert.ToDouble(Value[0][1]);
+                GroundDepth = Program.UTIL.ToDoubleOrZero(Value[0][1]);
                 GroundDepth_textBox.Text = GroundDepth.ToString();
                 Program.UTIL.textBox_doubleComa(GroundDepth_textBox, true, 3);
 
-                CooltubeDiameter = Convert.ToDouble(Value[0][2]);
+                CooltubeDiameter = Program.UTIL.ToDoubleOrZero(Value[0][2]);
                 CooltubeDiameter_textBox.Text = CooltubeDiameter.ToString();
                 Program.UTIL.textBox_doubleComa(CooltubeDiameter_textBox, true, 2);
 
-                CooltubeThickness = Convert.ToDouble(Value[0][3]);
+                CooltubeThickness = Program.UTIL.ToDoubleOrZero(Value[0][3]);
                 CooltubeThickness_textBox.Text = CooltubeThickness.ToString();
                 Program.UTIL.textBox_doubleComa(CooltubeThickness_textBox, true, 2);
 
-                CooltubeLength = Convert.ToDouble(Value[0][4]);
+                CooltubeLength = Program.UTIL.ToDoubleOrZero(Value[0][4]);
                 CooltubeLength_textBox.Text = CooltubeLength.ToString();
                 Program.UTIL.textBox_doubleComa(CooltubeLength_textBox, true, 3);
 

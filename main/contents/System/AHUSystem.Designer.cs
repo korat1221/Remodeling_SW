@@ -42,6 +42,7 @@ namespace main.contents
             label28 = new Label();
             label29 = new Label();
             Zone_textBox = new TextBox();
+            AHUZone_Button = new Button();
             CoolingLoad_textBox = new TextBox();
             AnnualHeatingNeed_textBox = new TextBox();
             label25 = new Label();
@@ -176,6 +177,7 @@ namespace main.contents
             GeneralPanel.Controls.Add(label28);
             GeneralPanel.Controls.Add(label29);
             GeneralPanel.Controls.Add(Zone_textBox);
+            GeneralPanel.Controls.Add(AHUZone_Button);
             GeneralPanel.Controls.Add(CoolingLoad_textBox);
             GeneralPanel.Controls.Add(AnnualHeatingNeed_textBox);
             GeneralPanel.Controls.Add(label25);
@@ -302,7 +304,22 @@ namespace main.contents
             Zone_textBox.Size = new Size(120, 15);
             Zone_textBox.TabIndex = 156;
             Zone_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
+            //
+            // AHUZone_Button
+            //
+            AHUZone_Button.BackColor = SystemColors.ControlLight;
+            AHUZone_Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            AHUZone_Button.FlatStyle = FlatStyle.System;
+            AHUZone_Button.Font = new Font("나눔바른고딕", 11.9999981F, FontStyle.Bold);
+            AHUZone_Button.Location = new Point(300, 56);
+            AHUZone_Button.Margin = new Padding(0);
+            AHUZone_Button.Name = "AHUZone_Button";
+            AHUZone_Button.Size = new Size(23, 23);
+            AHUZone_Button.TabIndex = 182;
+            AHUZone_Button.Text = "+";
+            AHUZone_Button.UseVisualStyleBackColor = false;
+            AHUZone_Button.Click += AHUZone_Button_Click;
+            //
             // CoolingLoad_textBox
             // 
             CoolingLoad_textBox.BackColor = SystemColors.GradientActiveCaption;
@@ -644,7 +661,7 @@ namespace main.contents
             PrehPrec_tabPage.Padding = new Padding(3);
             PrehPrec_tabPage.Size = new Size(992, 221);
             PrehPrec_tabPage.TabIndex = 4;
-            PrehPrec_tabPage.Text = "예열/예냉";
+            PrehPrec_tabPage.Text = "예열";
             PrehPrec_tabPage.UseVisualStyleBackColor = true;
             // 
             // label4
@@ -655,7 +672,7 @@ namespace main.contents
             label4.Name = "label4";
             label4.Size = new Size(85, 15);
             label4.TabIndex = 195;
-            label4.Text = "예열/예냉유형";
+            label4.Text = "예열유형";
             // 
             // PrehPrecOptions_comboBox
             // 
@@ -1575,6 +1592,7 @@ namespace main.contents
         public TextBox Name_textBox;
         private CustomComboBox AHUOptions_comboBox;
         private TextBox Zone_textBox;
+        private Button AHUZone_Button;
         private TextBox AnnualCoolingNeed_textBox;
         private Label label24;
         private TextBox AnnualHeatingNeed_textBox;
