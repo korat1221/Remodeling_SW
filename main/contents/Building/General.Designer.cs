@@ -119,6 +119,10 @@ namespace main.contents
             Door_False_radioButton = new RadioButton();
             Door_True_radioButton = new RadioButton();
             BlowDoorTest_comboBox = new CustomComboBox();
+            AirtightReport_label = new Label();
+            AirtightReport_comboBox = new CustomComboBox();
+            AirtightMethod_label = new Label();
+            AirtightMethod_comboBox = new CustomComboBox();
             textBox3 = new TextBox();
             label40 = new Label();
             GeneralPanel = new Panel();
@@ -153,7 +157,7 @@ namespace main.contents
             Panel10.Controls.Add(label4);
             Panel10.Location = new Point(0, 84);
             Panel10.Name = "Panel10";
-            Panel10.Size = new Size(1000, 560);
+            Panel10.Size = new Size(1000, 620);
             Panel10.TabIndex = 17;
             Panel10.Paint += GeneralPanel_Paint;
             // 
@@ -161,7 +165,7 @@ namespace main.contents
             // 
             label21.BorderStyle = BorderStyle.Fixed3D;
             label21.Font = new Font("Microsoft Sans Serif", 9.75F);
-            label21.Location = new Point(12, 465);
+            label21.Location = new Point(12, 521);
             label21.Name = "label21";
             label21.Size = new Size(956, 2);
             label21.TabIndex = 145;
@@ -170,7 +174,7 @@ namespace main.contents
             // 
             label15.BorderStyle = BorderStyle.Fixed3D;
             label15.Font = new Font("Microsoft Sans Serif", 9.75F);
-            label15.Location = new Point(12, 325);
+            label15.Location = new Point(12, 356);
             label15.Name = "label15";
             label15.Size = new Size(956, 2);
             label15.TabIndex = 144;
@@ -188,7 +192,7 @@ namespace main.contents
             // 
             label2.BorderStyle = BorderStyle.Fixed3D;
             label2.Font = new Font("Microsoft Sans Serif", 9.75F);
-            label2.Location = new Point(12, 207);
+            label2.Location = new Point(12, 225);
             label2.Name = "label2";
             label2.Size = new Size(956, 2);
             label2.TabIndex = 142;
@@ -197,7 +201,7 @@ namespace main.contents
             // 
             label33.AutoSize = true;
             label33.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
-            label33.Location = new Point(12, 310);
+            label33.Location = new Point(12, 341);
             label33.Name = "label33";
             label33.Size = new Size(58, 15);
             label33.TabIndex = 107;
@@ -207,7 +211,7 @@ namespace main.contents
             // 
             label28.AutoSize = true;
             label28.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
-            label28.Location = new Point(12, 450);
+            label28.Location = new Point(12, 506);
             label28.Name = "label28";
             label28.Size = new Size(70, 15);
             label28.TabIndex = 104;
@@ -217,7 +221,7 @@ namespace main.contents
             // 
             label3.AutoSize = true;
             label3.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
-            label3.Location = new Point(12, 192);
+            label3.Location = new Point(12, 210);
             label3.Name = "label3";
             label3.Size = new Size(97, 15);
             label3.TabIndex = 100;
@@ -537,9 +541,9 @@ namespace main.contents
             panel3.Controls.Add(GrossArea_textBox);
             panel3.Controls.Add(label23);
             panel3.Controls.Add(label30);
-            panel3.Location = new Point(3, 294);
+            panel3.Location = new Point(3, 316);
             panel3.Name = "panel3";
-            panel3.Size = new Size(994, 94);
+            panel3.Size = new Size(994, 86);
             panel3.TabIndex = 101;
             panel3.Paint += panel3_Paint;
             // 
@@ -781,9 +785,9 @@ namespace main.contents
             panel5.Controls.Add(label31);
             panel5.Controls.Add(label36);
             panel5.Controls.Add(label32);
-            panel5.Location = new Point(3, 551);
+            panel5.Location = new Point(3, 612);
             panel5.Name = "panel5";
-            panel5.Size = new Size(994, 90);
+            panel5.Size = new Size(994, 80);
             panel5.TabIndex = 105;
             panel5.Paint += panel5_Paint;
             // 
@@ -806,7 +810,7 @@ namespace main.contents
             ReviewerName_textBox.ForeColor = SystemColors.ControlText;
             ReviewerName_textBox.Location = new Point(108, 20);
             ReviewerName_textBox.Name = "ReviewerName_textBox";
-            ReviewerName_textBox.Size = new Size(120, 22);
+            ReviewerName_textBox.Size = new Size(320, 22);
             ReviewerName_textBox.TabIndex = 134;
             ReviewerName_textBox.TextAlign = HorizontalAlignment.Center;
             ReviewerName_textBox.TextChanged += ReviewerName_textBox_TextChanged;
@@ -843,7 +847,7 @@ namespace main.contents
             ReviewerCompany_textBox.ForeColor = SystemColors.ControlText;
             ReviewerCompany_textBox.Location = new Point(582, 20);
             ReviewerCompany_textBox.Name = "ReviewerCompany_textBox";
-            ReviewerCompany_textBox.Size = new Size(120, 22);
+            ReviewerCompany_textBox.Size = new Size(320, 22);
             ReviewerCompany_textBox.TabIndex = 128;
             ReviewerCompany_textBox.TextAlign = HorizontalAlignment.Center;
             ReviewerCompany_textBox.TextChanged += ReviewerCompany_textBox_TextChanged;
@@ -939,9 +943,13 @@ namespace main.contents
             panel7.Controls.Add(Door_label);
             panel7.Controls.Add(Door_groupBox);
             panel7.Controls.Add(BlowDoorTest_comboBox);
+            panel7.Controls.Add(AirtightReport_label);
+            panel7.Controls.Add(AirtightReport_comboBox);
+            panel7.Controls.Add(AirtightMethod_label);
+            panel7.Controls.Add(AirtightMethod_comboBox);
             panel7.Controls.Add(textBox3);
             panel7.Controls.Add(label40);
-            panel7.Location = new Point(3, 412);
+            panel7.Location = new Point(3, 447);
             panel7.Name = "panel7";
             panel7.Size = new Size(994, 120);
             panel7.TabIndex = 108;
@@ -953,7 +961,7 @@ namespace main.contents
             BlowDoor_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             BlowDoor_button.FlatStyle = FlatStyle.System;
             BlowDoor_button.Font = new Font("Microsoft Sans Serif", 9.75F);
-            BlowDoor_button.Location = new Point(454, 19);
+            BlowDoor_button.Location = new Point(232, 26);
             BlowDoor_button.Margin = new Padding(0);
             BlowDoor_button.Name = "BlowDoor_button";
             BlowDoor_button.Size = new Size(23, 23);
@@ -968,9 +976,9 @@ namespace main.contents
             n50_textBox.BorderStyle = BorderStyle.None;
             n50_textBox.Font = new Font("Microsoft Sans Serif", 9.75F);
             n50_textBox.ForeColor = SystemColors.ControlText;
-            n50_textBox.Location = new Point(308, 23);
+            n50_textBox.Location = new Point(782, 30);
             n50_textBox.Name = "n50_textBox";
-            n50_textBox.Size = new Size(120, 15);
+            n50_textBox.Size = new Size(123, 15);
             n50_textBox.TabIndex = 149;
             n50_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -979,7 +987,7 @@ namespace main.contents
             n50_label2.AutoSize = true;
             n50_label2.Font = new Font("나눔바른고딕", 9.75F);
             n50_label2.ForeColor = SystemColors.ControlText;
-            n50_label2.Location = new Point(428, 23);
+            n50_label2.Location = new Point(906, 32);
             n50_label2.Name = "n50_label2";
             n50_label2.Size = new Size(29, 15);
             n50_label2.TabIndex = 150;
@@ -990,7 +998,7 @@ namespace main.contents
             n50_label1.AutoSize = true;
             n50_label1.Font = new Font("나눔바른고딕", 9.75F);
             n50_label1.ForeColor = SystemColors.ControlText;
-            n50_label1.Location = new Point(251, 24);
+            n50_label1.Location = new Point(725, 9);
             n50_label1.Name = "n50_label1";
             n50_label1.Size = new Size(31, 15);
             n50_label1.TabIndex = 148;
@@ -1000,7 +1008,7 @@ namespace main.contents
             // 
             Pipe_label.AutoSize = true;
             Pipe_label.Font = new Font("나눔바른고딕", 9.75F);
-            Pipe_label.Location = new Point(667, 65);
+            Pipe_label.Location = new Point(725, 58);
             Pipe_label.Name = "Pipe_label";
             Pipe_label.Size = new Size(112, 15);
             Pipe_label.TabIndex = 147;
@@ -1010,16 +1018,16 @@ namespace main.contents
             // 
             Pipe_groupBox.Controls.Add(Pipe_False_radioButton);
             Pipe_groupBox.Controls.Add(Pipe_True_radioButton);
-            Pipe_groupBox.Location = new Point(782, 48);
+            Pipe_groupBox.Location = new Point(725, 70);
             Pipe_groupBox.Name = "Pipe_groupBox";
-            Pipe_groupBox.Size = new Size(120, 69);
+            Pipe_groupBox.Size = new Size(210, 45);
             Pipe_groupBox.TabIndex = 146;
             Pipe_groupBox.TabStop = false;
             // 
             // Pipe_False_radioButton
             // 
             Pipe_False_radioButton.AutoSize = true;
-            Pipe_False_radioButton.Location = new Point(27, 44);
+            Pipe_False_radioButton.Location = new Point(118, 17);
             Pipe_False_radioButton.Name = "Pipe_False_radioButton";
             Pipe_False_radioButton.Size = new Size(61, 19);
             Pipe_False_radioButton.TabIndex = 1;
@@ -1031,7 +1039,7 @@ namespace main.contents
             // Pipe_True_radioButton
             // 
             Pipe_True_radioButton.AutoSize = true;
-            Pipe_True_radioButton.Location = new Point(27, 17);
+            Pipe_True_radioButton.Location = new Point(35, 17);
             Pipe_True_radioButton.Name = "Pipe_True_radioButton";
             Pipe_True_radioButton.Size = new Size(49, 19);
             Pipe_True_radioButton.TabIndex = 0;
@@ -1044,7 +1052,7 @@ namespace main.contents
             // 
             ElecWiring_label.AutoSize = true;
             ElecWiring_label.Font = new Font("나눔바른고딕", 9.75F);
-            ElecWiring_label.Location = new Point(449, 65);
+            ElecWiring_label.Location = new Point(490, 58);
             ElecWiring_label.Name = "ElecWiring_label";
             ElecWiring_label.Size = new Size(82, 15);
             ElecWiring_label.TabIndex = 145;
@@ -1054,7 +1062,7 @@ namespace main.contents
             // 
             Win_label.AutoSize = true;
             Win_label.Font = new Font("나눔바른고딕", 9.75F);
-            Win_label.Location = new Point(243, 65);
+            Win_label.Location = new Point(255, 58);
             Win_label.Name = "Win_label";
             Win_label.Size = new Size(58, 15);
             Win_label.TabIndex = 143;
@@ -1064,16 +1072,16 @@ namespace main.contents
             // 
             ElecWiring_groupBox.Controls.Add(ElecWiring_False_radioButton);
             ElecWiring_groupBox.Controls.Add(ElecWiring_True_radioButton);
-            ElecWiring_groupBox.Location = new Point(533, 48);
+            ElecWiring_groupBox.Location = new Point(490, 70);
             ElecWiring_groupBox.Name = "ElecWiring_groupBox";
-            ElecWiring_groupBox.Size = new Size(120, 69);
+            ElecWiring_groupBox.Size = new Size(210, 45);
             ElecWiring_groupBox.TabIndex = 144;
             ElecWiring_groupBox.TabStop = false;
             // 
             // ElecWiring_False_radioButton
             // 
             ElecWiring_False_radioButton.AutoSize = true;
-            ElecWiring_False_radioButton.Location = new Point(27, 44);
+            ElecWiring_False_radioButton.Location = new Point(118, 17);
             ElecWiring_False_radioButton.Name = "ElecWiring_False_radioButton";
             ElecWiring_False_radioButton.Size = new Size(61, 19);
             ElecWiring_False_radioButton.TabIndex = 1;
@@ -1085,7 +1093,7 @@ namespace main.contents
             // ElecWiring_True_radioButton
             // 
             ElecWiring_True_radioButton.AutoSize = true;
-            ElecWiring_True_radioButton.Location = new Point(27, 17);
+            ElecWiring_True_radioButton.Location = new Point(35, 17);
             ElecWiring_True_radioButton.Name = "ElecWiring_True_radioButton";
             ElecWiring_True_radioButton.Size = new Size(49, 19);
             ElecWiring_True_radioButton.TabIndex = 0;
@@ -1098,16 +1106,16 @@ namespace main.contents
             // 
             Win_groupBox.Controls.Add(Win_False_radioButton);
             Win_groupBox.Controls.Add(Win_True_radioButton);
-            Win_groupBox.Location = new Point(308, 48);
+            Win_groupBox.Location = new Point(255, 70);
             Win_groupBox.Name = "Win_groupBox";
-            Win_groupBox.Size = new Size(120, 69);
+            Win_groupBox.Size = new Size(210, 45);
             Win_groupBox.TabIndex = 142;
             Win_groupBox.TabStop = false;
             // 
             // Win_False_radioButton
             // 
             Win_False_radioButton.AutoSize = true;
-            Win_False_radioButton.Location = new Point(27, 44);
+            Win_False_radioButton.Location = new Point(118, 17);
             Win_False_radioButton.Name = "Win_False_radioButton";
             Win_False_radioButton.Size = new Size(61, 19);
             Win_False_radioButton.TabIndex = 1;
@@ -1119,7 +1127,7 @@ namespace main.contents
             // Win_True_radioButton
             // 
             Win_True_radioButton.AutoSize = true;
-            Win_True_radioButton.Location = new Point(27, 17);
+            Win_True_radioButton.Location = new Point(35, 17);
             Win_True_radioButton.Name = "Win_True_radioButton";
             Win_True_radioButton.Size = new Size(49, 19);
             Win_True_radioButton.TabIndex = 0;
@@ -1132,7 +1140,7 @@ namespace main.contents
             // 
             Door_label.AutoSize = true;
             Door_label.Font = new Font("나눔바른고딕", 9.75F);
-            Door_label.Location = new Point(21, 65);
+            Door_label.Location = new Point(20, 58);
             Door_label.Name = "Door_label";
             Door_label.Size = new Size(70, 15);
             Door_label.TabIndex = 141;
@@ -1142,16 +1150,16 @@ namespace main.contents
             // 
             Door_groupBox.Controls.Add(Door_False_radioButton);
             Door_groupBox.Controls.Add(Door_True_radioButton);
-            Door_groupBox.Location = new Point(108, 48);
+            Door_groupBox.Location = new Point(20, 70);
             Door_groupBox.Name = "Door_groupBox";
-            Door_groupBox.Size = new Size(120, 69);
+            Door_groupBox.Size = new Size(210, 45);
             Door_groupBox.TabIndex = 140;
             Door_groupBox.TabStop = false;
             // 
             // Door_False_radioButton
             // 
             Door_False_radioButton.AutoSize = true;
-            Door_False_radioButton.Location = new Point(27, 44);
+            Door_False_radioButton.Location = new Point(118, 17);
             Door_False_radioButton.Name = "Door_False_radioButton";
             Door_False_radioButton.Size = new Size(61, 19);
             Door_False_radioButton.TabIndex = 1;
@@ -1163,7 +1171,7 @@ namespace main.contents
             // Door_True_radioButton
             // 
             Door_True_radioButton.AutoSize = true;
-            Door_True_radioButton.Location = new Point(27, 17);
+            Door_True_radioButton.Location = new Point(35, 17);
             Door_True_radioButton.Name = "Door_True_radioButton";
             Door_True_radioButton.Size = new Size(49, 19);
             Door_True_radioButton.TabIndex = 0;
@@ -1175,13 +1183,55 @@ namespace main.contents
             // BlowDoorTest_comboBox
             // 
             BlowDoorTest_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            BlowDoorTest_comboBox.Font = new Font("Microsoft Sans Serif", 9.75F);
+            BlowDoorTest_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             BlowDoorTest_comboBox.FormattingEnabled = true;
-            BlowDoorTest_comboBox.Location = new Point(108, 19);
+            BlowDoorTest_comboBox.Location = new Point(108, 26);
             BlowDoorTest_comboBox.Name = "BlowDoorTest_comboBox";
             BlowDoorTest_comboBox.Size = new Size(120, 23);
             BlowDoorTest_comboBox.TabIndex = 122;
             BlowDoorTest_comboBox.SelectedIndexChanged += BlowDoorTest_comboBox_SelectedIndexChanged;
+            // 
+            // AirtightReport_label
+            // 
+            AirtightReport_label.AutoSize = true;
+            AirtightReport_label.Font = new Font("나눔바른고딕", 9.75F);
+            AirtightReport_label.Location = new Point(255, 9);
+            AirtightReport_label.Name = "AirtightReport_label";
+            AirtightReport_label.Size = new Size(97, 15);
+            AirtightReport_label.TabIndex = 123;
+            AirtightReport_label.Text = "기밀 설계 보고서";
+            // 
+            // AirtightReport_comboBox
+            // 
+            AirtightReport_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            AirtightReport_comboBox.Font = new Font("나눔바른고딕", 9.75F);
+            AirtightReport_comboBox.FormattingEnabled = true;
+            AirtightReport_comboBox.Location = new Point(308, 26);
+            AirtightReport_comboBox.Name = "AirtightReport_comboBox";
+            AirtightReport_comboBox.Size = new Size(120, 23);
+            AirtightReport_comboBox.TabIndex = 124;
+            AirtightReport_comboBox.SelectedIndexChanged += AirtightReport_comboBox_SelectedIndexChanged;
+            // 
+            // AirtightMethod_label
+            // 
+            AirtightMethod_label.AutoSize = true;
+            AirtightMethod_label.Font = new Font("나눔바른고딕", 9.75F);
+            AirtightMethod_label.Location = new Point(490, 9);
+            AirtightMethod_label.Name = "AirtightMethod_label";
+            AirtightMethod_label.Size = new Size(97, 15);
+            AirtightMethod_label.TabIndex = 125;
+            AirtightMethod_label.Text = "표준값 적용 방식";
+            // 
+            // AirtightMethod_comboBox
+            // 
+            AirtightMethod_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            AirtightMethod_comboBox.Font = new Font("나눔바른고딕", 9.75F);
+            AirtightMethod_comboBox.FormattingEnabled = true;
+            AirtightMethod_comboBox.Location = new Point(582, 26);
+            AirtightMethod_comboBox.Name = "AirtightMethod_comboBox";
+            AirtightMethod_comboBox.Size = new Size(123, 23);
+            AirtightMethod_comboBox.TabIndex = 126;
+            AirtightMethod_comboBox.SelectedIndexChanged += AirtightMethod_comboBox_SelectedIndexChanged;
             // 
             // textBox3
             // 
@@ -1200,7 +1250,7 @@ namespace main.contents
             // 
             label40.AutoSize = true;
             label40.Font = new Font("나눔바른고딕", 9.75F);
-            label40.Location = new Point(20, 24);
+            label40.Location = new Point(20, 9);
             label40.Name = "label40";
             label40.Size = new Size(79, 15);
             label40.TabIndex = 41;
@@ -1354,6 +1404,10 @@ namespace main.contents
         private Label label33;
         private Panel panel7;
         private CustomComboBox BlowDoorTest_comboBox;
+        private Label AirtightReport_label;
+        private CustomComboBox AirtightReport_comboBox;
+        private Label AirtightMethod_label;
+        private CustomComboBox AirtightMethod_comboBox;
         private TextBox textBox3;
         private Label label40;
         private CustomComboBox Climate_comboBox;

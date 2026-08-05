@@ -17,6 +17,8 @@ namespace main.contents
         double[] law = new double[11];
         string OldProject;
         string BlowDoorTest;
+        string AirtightReport = "없음"; // 기밀 설계 보고서 유무 — 기밀 테스트 미실시일 때만 의미 있음
+        string AirtightMethod = "기밀 시공 여부별"; // 보고서도 없을 때, 표준값을 어떻게 적용할지
         bool Door_Infil = false, Win_Infil = false, ElecWiring_Infil = false, Pipe_Infil = false;
         double n50;
 
@@ -131,11 +133,26 @@ namespace main.contents
             BlowDoorTest_comboBox.SelectedIndex = 1;
             BlowDoorTest = "기밀 테스트 미실시";
 
+            //기밀 설계 보고서 유무 — 테스트 미실시일 때만 노출
+            AirtightReport_comboBox.Items.Clear();
+            AirtightReport_comboBox.Items.Add("없음");
+            AirtightReport_comboBox.Items.Add("있음");
+            AirtightReport_comboBox.SelectedIndex = 0;
+
+            //표준값 적용 방식 — 테스트 미실시 + 보고서 없음일 때만 노출
+            AirtightMethod_comboBox.Items.Clear();
+            AirtightMethod_comboBox.Items.Add("기밀 시공 여부별");
+            AirtightMethod_comboBox.Items.Add("존별");
+            AirtightMethod_comboBox.SelectedIndex = 0;
+
+            Change_AirtightFlow();
+
             Door_False_radioButton.Checked = true;
             Win_False_radioButton.Checked = true;
             ElecWiring_False_radioButton.Checked = true;
             Pipe_False_radioButton.Checked = true;
         }
+
         private void BuildingCategory_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (BuildingCategory_comboBox.SelectedItem != null && BuildingCategory_comboBox.SelectedItem.ToString() != "")
@@ -241,38 +258,59 @@ namespace main.contents
         }
         private void Change_BlowDoorTest()
         {
-            if (BlowDoorTest == "기밀 테스트 실시")
+            BlowDoor_button.Visible = (BlowDoorTest == "기밀 테스트 실시");
+            Change_AirtightFlow();
+        }
+
+        private void AirtightReport_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (AirtightReport_comboBox.SelectedItem != null)
             {
-                BlowDoor_button.Visible = true;
-
-                Door_label.Visible = false;
-                Door_groupBox.Visible = false;
-
-                Win_label.Visible = false;
-                Win_groupBox.Visible = false;
-
-                ElecWiring_label.Visible = false;
-                ElecWiring_groupBox.Visible = false;
-
-                Pipe_label.Visible = false;
-                Pipe_groupBox.Visible = false;
+                AirtightReport = AirtightReport_comboBox.SelectedItem.ToString();
+                Change_AirtightFlow();
             }
-            else
+        }
+
+        private void AirtightMethod_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (AirtightMethod_comboBox.SelectedItem != null)
             {
-                BlowDoor_button.Visible = false;
-
-                Door_label.Visible = true;
-                Door_groupBox.Visible = true;
-
-                Win_label.Visible = true;
-                Win_groupBox.Visible = true;
-
-                ElecWiring_label.Visible = true;
-                ElecWiring_groupBox.Visible = true;
-
-                Pipe_label.Visible = true;
-                Pipe_groupBox.Visible = true;
+                AirtightMethod = AirtightMethod_comboBox.SelectedItem.ToString();
+                Change_AirtightFlow();
             }
+        }
+
+        // 기밀 테스트 실시 여부 > 기밀 설계 보고서 유무 > 표준값 적용 방식 순으로, 앞 단계에서 실측/보고서가
+        // 확인되면 뒷 단계는 물을 필요가 없어 숨김. 문/창/배선/배관 4개 판정은 "표준값 적용 방식"에서
+        // "기밀 시공 여부별"을 골랐을 때만 나타남(기존 로직 그대로 재사용).
+        private void Change_AirtightFlow()
+        {
+            bool testDone = BlowDoorTest == "기밀 테스트 실시";
+
+            AirtightReport_label.Visible = !testDone;
+            AirtightReport_comboBox.Visible = !testDone;
+
+            bool showMethodStep = !testDone && AirtightReport == "없음";
+            AirtightMethod_label.Visible = showMethodStep;
+            AirtightMethod_comboBox.Visible = showMethodStep;
+
+            bool showElementJudgement = showMethodStep && AirtightMethod == "기밀 시공 여부별";
+            Door_label.Visible = showElementJudgement;
+            Door_groupBox.Visible = showElementJudgement;
+            Win_label.Visible = showElementJudgement;
+            Win_groupBox.Visible = showElementJudgement;
+            ElecWiring_label.Visible = showElementJudgement;
+            ElecWiring_groupBox.Visible = showElementJudgement;
+            Pipe_label.Visible = showElementJudgement;
+            Pipe_groupBox.Visible = showElementJudgement;
+
+            // n50은 실측값이거나 "기밀 시공 여부별" 판정 결과일 때만 존재 — 기밀 설계 보고서/존별 표준값
+            // 경로는 존 데이터 기준 자동 산정 로직이 아직 없어 값을 비워둠
+            bool n50Available = testDone || showElementJudgement;
+            n50_label1.Visible = n50Available;
+            n50_textBox.Visible = n50Available;
+            n50_label2.Visible = n50Available;
+            if (!n50Available) { n50_textBox.Text = ""; }
         }
         private void Cal_Infiltration(string BlowDoorTest, bool door, bool win, bool elec, bool pipe)
         {
@@ -287,7 +325,7 @@ namespace main.contents
                 string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기밀", "n50", "방풍출입문 ='" + check[0] + "' and 창호='" + check[1] + "' and 배선='" + check[2] + "' and 배관='" + check[3] + "'");
                 if (Value.Length > 0)
                 {
-                    n50 = Convert.ToDouble(Value[0][0]);
+                    n50 = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                     n50_textBox.Text = n50.ToString("0.0");
                 }
             }
@@ -386,7 +424,7 @@ namespace main.contents
 
             if (Year_comboBox.SelectedItem != null && Year_comboBox.SelectedItem.ToString() != "")
             {
-                Year = Convert.ToDouble(Year_comboBox.SelectedItem.ToString());
+                Year = Program.UTIL.ToDoubleOrZero(Year_comboBox.SelectedItem.ToString());
                 Calc_LawDate();
 
             }
@@ -396,7 +434,7 @@ namespace main.contents
         {
             if (Month_comboBox.SelectedItem != null && Month_comboBox.SelectedItem.ToString() != "")
             {
-                Month = Convert.ToDouble(Month_comboBox.SelectedItem.ToString());
+                Month = Program.UTIL.ToDoubleOrZero(Month_comboBox.SelectedItem.ToString());
                 Calc_LawDate();
             }
         }
@@ -405,20 +443,20 @@ namespace main.contents
         {
             if (Year != null && Month != null)
             {
-                if (Convert.ToDouble(Month) < 10)
+                if (Program.UTIL.ToDoubleOrZero(Month) < 10)
                 {
-                    ConstrucitonDate = Convert.ToDouble((Year + ".0" + Month));
+                    ConstrucitonDate = Program.UTIL.ToDoubleOrZero((Year + ".0" + Month));
                 }
                 else
                 {
-                    ConstrucitonDate = Convert.ToDouble((Year + "." + Month));
+                    ConstrucitonDate = Program.UTIL.ToDoubleOrZero((Year + "." + Month));
                 }
                 string[][] Value = Program.DB.getValue_SameCheck(DB.type.BaseDB_HCneed, "법규열관류율", "시기", "");
                 if (Value.Length > 0)
                 {
                     for (int i = 0; i < Value.Length; i++)
                     {
-                        law[i] = Convert.ToDouble(Value[i][0]);
+                        law[i] = Program.UTIL.ToDoubleOrZero(Value[i][0]);
                     }
                 }
 
@@ -511,7 +549,7 @@ namespace main.contents
         {
             if (ReviewYear_comboBox.SelectedItem != null && ReviewYear_comboBox.SelectedItem.ToString() != "")
             {
-                ReviewYear = Convert.ToDouble(ReviewYear_comboBox.SelectedItem.ToString());
+                ReviewYear = Program.UTIL.ToDoubleOrZero(ReviewYear_comboBox.SelectedItem.ToString());
                 Calc_ReviewDate();
             }
         }
@@ -520,19 +558,19 @@ namespace main.contents
         {
             if (ReviewMonth_comboBox.SelectedItem != null && ReviewMonth_comboBox.SelectedItem.ToString() != "")
             {
-                ReviewMonth = Convert.ToDouble(ReviewMonth_comboBox.SelectedItem.ToString());
+                ReviewMonth = Program.UTIL.ToDoubleOrZero(ReviewMonth_comboBox.SelectedItem.ToString());
                 Calc_ReviewDate();
             }
         }
         private void Calc_ReviewDate()
         {
-            if (Convert.ToDouble(ReviewMonth) < 10)
+            if (Program.UTIL.ToDoubleOrZero(ReviewMonth) < 10)
             {
-                ReviewDate = Convert.ToDouble((ReviewYear + ".0" + ReviewMonth));
+                ReviewDate = Program.UTIL.ToDoubleOrZero((ReviewYear + ".0" + ReviewMonth));
             }
             else
             {
-                ReviewDate = Convert.ToDouble((ReviewYear + "." + ReviewMonth));
+                ReviewDate = Program.UTIL.ToDoubleOrZero((ReviewYear + "." + ReviewMonth));
             }
         }
 
@@ -654,12 +692,16 @@ namespace main.contents
                "출입문기밀여부," +
                "창호기밀여부," +
                "배선기밀여부," +
-               "배관기밀여부",
+               "배관기밀여부," +
+               "기밀보고서," +
+               "기밀적용방식",
                 "'" + 번호[0][0] + "','" + BlowDoorTest + "','" + n50.ToString() + "','" +
                 Door_Infil + "','" +
                 Win_Infil + "','" +
                 ElecWiring_Infil + "','" +
-                Pipe_Infil + "'", "프로젝트번호");
+                Pipe_Infil + "','" +
+                AirtightReport + "','" +
+                AirtightMethod + "'", "프로젝트번호");
 
             Program.DB.saveProject();
         }
@@ -765,31 +807,31 @@ namespace main.contents
                 ByRawClimate_textBox.Text = BylawClimate;
                 if (Value[0][13] != "")
                 {
-                    Year = Convert.ToDouble(Value[0][13]);
+                    Year = Program.UTIL.ToDoubleOrZero(Value[0][13]);
                     Year_comboBox.SelectedItem = Year.ToString();
                 }
                 if (Value[0][14] != "")
                 {
-                    Month = Convert.ToDouble(Value[0][14]);
+                    Month = Program.UTIL.ToDoubleOrZero(Value[0][14]);
                     Month_comboBox.SelectedItem = Month.ToString();
                 }
 
                 if (Value[0][15] != "")
                 {
-                    ConstrucitonDate = Convert.ToDouble(Value[0][15]);
+                    ConstrucitonDate = Program.UTIL.ToDoubleOrZero(Value[0][15]);
                     Calc_LawDate();
                 }
 
                 if (Value[0][17] != "")
                 {
-                    GrossArea = Convert.ToDouble(Value[0][17]);
+                    GrossArea = Program.UTIL.ToDoubleOrZero(Value[0][17]);
                     GrossArea_textBox.Text = GrossArea.ToString();
                     Program.UTIL.textBox_doubleComa(GrossArea_textBox, true, 2);
                 }
 
                 if (Value[0][18] != "")
                 {
-                    BuildingArea = Convert.ToDouble(Value[0][18]);
+                    BuildingArea = Program.UTIL.ToDoubleOrZero(Value[0][18]);
                     BuildingArea_textBox.Text = BuildingArea.ToString();
                     Program.UTIL.textBox_doubleComa(BuildingArea_textBox, true, 2);
                 }
@@ -810,19 +852,19 @@ namespace main.contents
                 ReviewerCompany_textBox.Text = ReviewerCompany;
                 if (Value[0][24] != "")
                 {
-                    ReviewYear = Convert.ToDouble(Value[0][24]);
+                    ReviewYear = Program.UTIL.ToDoubleOrZero(Value[0][24]);
                     ReviewYear_comboBox.SelectedItem = ReviewYear.ToString();
                 }
 
                 if (Value[0][25] != "")
                 {
-                    ReviewMonth = Convert.ToDouble(Value[0][25]);
+                    ReviewMonth = Program.UTIL.ToDoubleOrZero(Value[0][25]);
                     ReviewMonth_comboBox.SelectedItem = ReviewMonth.ToString();
                 }
 
                 if (Value[0][26] != "")
                 {
-                    ReviewDate = Convert.ToDouble(Value[0][26]);
+                    ReviewDate = Program.UTIL.ToDoubleOrZero(Value[0][26]);
                     Calc_ReviewDate();
                 }
                 OldProject = Value[0][27];
@@ -834,7 +876,9 @@ namespace main.contents
                 "출입문기밀여부," +
                 "창호기밀여부," +
                 "배선기밀여부," +
-                "배관기밀여부", "");
+                "배관기밀여부," +
+                "기밀보고서," +
+                "기밀적용방식", "");
             if (Value.Length > 0)
             {
                 if (Value[0][0] != "")
@@ -846,6 +890,20 @@ namespace main.contents
                     BlowDoorTest = "기밀 테스트 미실시";
                 }
                 BlowDoorTest_comboBox.SelectedItem = Value[0][0];
+
+                // 새로 추가된 두 필드는 기존 프로젝트엔 저장돼 있지 않을 수 있음 — 없으면 기본값(보고서 없음/
+                // 기밀 시공 여부별 표준값)을 유지해 기존 계산 흐름 그대로 이어지게 함
+                if (Value[0][5] != null && Value[0][5] != "")
+                {
+                    AirtightReport = Value[0][5];
+                    AirtightReport_comboBox.SelectedItem = AirtightReport;
+                }
+                if (Value[0][6] != null && Value[0][6] != "")
+                {
+                    AirtightMethod = Value[0][6];
+                    AirtightMethod_comboBox.SelectedItem = AirtightMethod;
+                }
+
                 Change_BlowDoorTest();
 
                 if (Value[0][1] != null && Value[0][1] != "")
@@ -899,8 +957,8 @@ namespace main.contents
 
             if (Value.Length > 0 && Value[0][0] != "")
             {
-                n50 = Convert.ToDouble(Value[0][0]);
-                n50_textBox.Text = Convert.ToDouble(Value[0][0]).ToString("0.0");
+                n50 = Program.UTIL.ToDoubleOrZero(Value[0][0]);
+                n50_textBox.Text = Program.UTIL.ToDoubleOrZero(Value[0][0]).ToString("0.0");
             }
         }
 
