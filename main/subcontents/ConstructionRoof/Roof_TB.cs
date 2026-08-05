@@ -152,9 +152,9 @@ namespace main.subcontents.ConstructionRoof
                 {
                     for (int n = 0; n < TB.Length; n++)
                     {
-                        double row_A = Convert.ToDouble(TB[n][8]);
-                        double row_B = Convert.ToDouble(TB[n][9]);
-                        double row_C = Convert.ToDouble(TB[n][10]);
+                        double row_A = Program.UTIL.ToDoubleOrZero(TB[n][8]);
+                        double row_B = Program.UTIL.ToDoubleOrZero(TB[n][9]);
+                        double row_C = Program.UTIL.ToDoubleOrZero(TB[n][10]);
                         double row_Kai = (row_A * Math.Pow(d_Ins, 2) + row_B * d_Ins + row_C) / 1000;
 
                         TB_dataGridView.Rows.Add();
@@ -175,9 +175,9 @@ namespace main.subcontents.ConstructionRoof
                 {
                     for (int n = 0; n < TB.Length; n++)
                     {
-                        double row_A = Convert.ToDouble(TB[n][8]);
-                        double row_B = Convert.ToDouble(TB[n][9]);
-                        double row_C = Convert.ToDouble(TB[n][10]);
+                        double row_A = Program.UTIL.ToDoubleOrZero(TB[n][8]);
+                        double row_B = Program.UTIL.ToDoubleOrZero(TB[n][9]);
+                        double row_C = Program.UTIL.ToDoubleOrZero(TB[n][10]);
                         double row_Psi = (row_A * Math.Pow(d_Ins, 2) + row_B * d_Ins + row_C) / 1000;
 
                         TB_dataGridView.Rows.Add();
@@ -289,9 +289,9 @@ namespace main.subcontents.ConstructionRoof
                     {
                         for (int n = 0; n < TB.Length; n++)
                         {
-                            A = Convert.ToDouble(TB[n][1]);
-                            B = Convert.ToDouble(TB[n][2]);
-                            C = Convert.ToDouble(TB[n][3]);
+                            A = Program.UTIL.ToDoubleOrZero(TB[n][1]);
+                            B = Program.UTIL.ToDoubleOrZero(TB[n][2]);
+                            C = Program.UTIL.ToDoubleOrZero(TB[n][3]);
                             Kai = (A * Math.Pow(d_Ins, 2) + B * d_Ins + C) / 1000;
                             Count_DB = TB.Length;
                         }
@@ -304,17 +304,17 @@ namespace main.subcontents.ConstructionRoof
                     {
                         for (int n = 0; n < TB.Length; n++)
                         {
-                            A = Convert.ToDouble(TB[n][1]);
-                            B = Convert.ToDouble(TB[n][2]);
-                            C = Convert.ToDouble(TB[n][3]);
+                            A = Program.UTIL.ToDoubleOrZero(TB[n][1]);
+                            B = Program.UTIL.ToDoubleOrZero(TB[n][2]);
+                            C = Program.UTIL.ToDoubleOrZero(TB[n][3]);
                             Psi = (A * Math.Pow(d_Ins, 2) + B * d_Ins + C) / 1000;
                             Count_DB = TB.Length;
                         }
                     }
                 }
                  }
-                dx = Convert.ToDouble(row.Cells[7].Value) / 1000;
-                dy = Convert.ToDouble(row.Cells[8].Value) / 1000;
+                dx = Program.UTIL.ToDoubleOrZero(row.Cells[7].Value) / 1000;
+                dy = Program.UTIL.ToDoubleOrZero(row.Cells[8].Value) / 1000;
                 dx_textBox.Text = string.Format("{0:F1}", dx);
                 dy_textBox.Text = string.Format("{0:F1}", dy);
                 Calc_PerArea();

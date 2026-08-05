@@ -78,10 +78,10 @@ namespace main.subcontents.ZoneGeneral
                         Zone_dataGridView.Rows[nRow].Cells[4].Value = Value2[0][4];
                         if (요구량.Length > 0)
                         {
-                            Zone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", Convert.ToDouble(요구량[0][0]));
-                            Zone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Convert.ToDouble(요구량2[0][0]));
+                            Zone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(요구량[0][0]));
+                            Zone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(요구량2[0][0]));
                         }
-                        Zone_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(Value2[0][3]));
+                        Zone_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(Value2[0][3]));
                     }
 
                 }

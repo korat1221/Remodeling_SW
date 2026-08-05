@@ -113,7 +113,7 @@ public partial class BlowDoorTest : Form
         {
             if ((Blow_dataGridView.Rows[e.RowIndex].Cells[3].Value != null && Blow_dataGridView.Rows[e.RowIndex].Cells[3].Value.ToString() != "") && (Blow_dataGridView.Rows[e.RowIndex].Cells[4].Value != null && Blow_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString() != "" && Blow_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString() != "0"))
             {
-                Blow_dataGridView.Rows[e.RowIndex].Cells[5].Value = (Convert.ToDouble(Blow_dataGridView.Rows[e.RowIndex].Cells[3].Value.ToString()) / Convert.ToDouble(Blow_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString())).ToString("0.0");
+                Blow_dataGridView.Rows[e.RowIndex].Cells[5].Value = (Program.UTIL.ToDoubleOrZero(Blow_dataGridView.Rows[e.RowIndex].Cells[3].Value.ToString()) / Program.UTIL.ToDoubleOrZero(Blow_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString())).ToString("0.0");
                 Cal_n50_tot();
             }
         }
@@ -144,8 +144,8 @@ public partial class BlowDoorTest : Form
         {
             for (int a = 0; a < Blow_dataGridView.Rows.Count; a++)
             {
-                CMH_tot += Convert.ToDouble(Blow_dataGridView.Rows[a].Cells[3].Value.ToString());
-                volume_tot += Convert.ToDouble(Blow_dataGridView.Rows[a].Cells[5].Value.ToString());
+                CMH_tot += Program.UTIL.ToDoubleOrZero(Blow_dataGridView.Rows[a].Cells[3].Value.ToString());
+                volume_tot += Program.UTIL.ToDoubleOrZero(Blow_dataGridView.Rows[a].Cells[5].Value.ToString());
                 n50 = CMH_tot / volume_tot;
                 n50_textBox.Text = n50.ToString("0.00");
             }

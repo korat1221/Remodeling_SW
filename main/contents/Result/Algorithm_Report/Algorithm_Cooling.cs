@@ -116,11 +116,11 @@ namespace main.contents.Result
                     FormData[4].Add(new { idx = i, val = Value[0][1] });
                     if (double.TryParse(Value[0][2], out double result1))
                     {
-                        FormData[5].Add(new { idx = i, val = Convert.ToDouble(Value[0][2]).ToString("0.0") });
+                        FormData[5].Add(new { idx = i, val = Program.UTIL.ToDoubleOrZero(Value[0][2]).ToString("0.0") });
                     }
                     if (double.TryParse(Value[0][3], out double result2))
                     {
-                        FormData[6].Add(new { idx = i, val = Convert.ToDouble(Value[0][3]).ToString("0.0") });
+                        FormData[6].Add(new { idx = i, val = Program.UTIL.ToDoubleOrZero(Value[0][3]).ToString("0.0") });
                     }
                     FormData[7].Add(new { idx = i, val = Value[0][4] });
                     FormData[8].Add(new { idx = i, val = Value[0][5] });
@@ -195,7 +195,7 @@ namespace main.contents.Result
                     foreach (string k in zonelist)
                     {
                         string[][] zonecheck = Program.DB.querySQL(DB.type.ProjDB, "Select 순바닥면적 From ZoneGeneral_Form Where 존번호 ='" + k + "'");
-                        zoneArea += Convert.ToDouble(zonecheck[0][0].ToString());
+                        zoneArea += Program.UTIL.ToDoubleOrZero(zonecheck[0][0].ToString());
                     }
                     ZoneData[6].Add(new { idx = i, val = string.Format("{0:F2}", zoneArea) });
                 }
@@ -209,7 +209,7 @@ namespace main.contents.Result
                         
                         for(int g = 0; g < zonecheck.Length; g++)
                         {
-                            zahuArea += Convert.ToDouble(zonecheck[g][1].ToString());
+                            zahuArea += Program.UTIL.ToDoubleOrZero(zonecheck[g][1].ToString());
                             zoneAhulist.Add(zonecheck[g][0]);
                         }
                         ZahuData[5].Add(new { idx = i, val = string.Format("{0:N2}", zahuArea) });
@@ -251,7 +251,7 @@ namespace main.contents.Result
                 foreach (string k in uniquelist)
                 {
                     string[][] zonecheck = Program.DB.querySQL(DB.type.ProjDB, "Select 순바닥면적 From ZoneGeneral_Form Where 존번호 ='" + k + "'");
-                    totalArea += Convert.ToDouble(zonecheck[0][0].ToString());
+                    totalArea += Program.UTIL.ToDoubleOrZero(zonecheck[0][0].ToString());
                 }
 
                 //보조설비 항목 작성
@@ -282,7 +282,7 @@ namespace main.contents.Result
                                         string[][] Value2 = Program.DB.querySQL(DB.type.ProjDB, "Select 동력 From  User_Pump Where 번호='" + pump1[0] + "'");
                                         if (Value2.Length > 0)
                                         {
-                                            double val = Convert.ToDouble(Value2[0][0].ToString()) * Convert.ToDouble(pump1[2].ToString());
+                                            double val = Program.UTIL.ToDoubleOrZero(Value2[0][0].ToString()) * Program.UTIL.ToDoubleOrZero(pump1[2].ToString());
                                             AuxData[2].Add(new { idx = i, val = string.Format("{0:N2}", val)});
                                         }
                                         AuxData[4].Add(new { idx = i, val = pump1[4] });
@@ -295,7 +295,7 @@ namespace main.contents.Result
                                         string[][] Value2 = Program.DB.querySQL(DB.type.ProjDB, "Select 동력 From  User_Pump Where 번호='" + pump2[0] + "'");
                                         if (Value2.Length > 0)
                                         {
-                                            double val = Convert.ToDouble(Value2[0][0].ToString()) * Convert.ToDouble(pump2[2].ToString());
+                                            double val = Program.UTIL.ToDoubleOrZero(Value2[0][0].ToString()) * Program.UTIL.ToDoubleOrZero(pump2[2].ToString());
                                             AuxData[3].Add(new { idx = i, val = string.Format("{0:N2}", val) });
                                         }
                                     }
@@ -307,7 +307,7 @@ namespace main.contents.Result
                                         string[][] Value2 = Program.DB.querySQL(DB.type.ProjDB, "Select 동력 From  User_Pump Where 번호='" + sourcepump1[0] + "'");
                                         if (Value2.Length > 0)
                                         {
-                                            double val = Convert.ToDouble(Value2[0][0].ToString()) * Convert.ToDouble(sourcepump1[2].ToString());
+                                            double val = Program.UTIL.ToDoubleOrZero(Value2[0][0].ToString()) * Program.UTIL.ToDoubleOrZero(sourcepump1[2].ToString());
                                             AuxData[5].Add(new { idx = i, val = string.Format("{0:N2}", val) });
                                         }
                                         AuxData[7].Add(new { idx = i, val = sourcepump1[4] });
@@ -320,7 +320,7 @@ namespace main.contents.Result
                                         string[][] Value2 = Program.DB.querySQL(DB.type.ProjDB, "Select 동력 From  User_Pump Where 번호='" + sourcepump2[0] + "'");
                                         if (Value2.Length > 0)
                                         {
-                                            double val = Convert.ToDouble(Value2[0][0].ToString()) * Convert.ToDouble(sourcepump2[2].ToString());
+                                            double val = Program.UTIL.ToDoubleOrZero(Value2[0][0].ToString()) * Program.UTIL.ToDoubleOrZero(sourcepump2[2].ToString());
                                             AuxData[6].Add(new { idx = i, val = string.Format("{0:N2}", val) });
                                         }
                                     }
@@ -372,13 +372,13 @@ namespace main.contents.Result
                 {
                     if (totalArea > 0)
                     {
-                        AnnualData[0].Add(new { idx = i, val = string.Format("{0:N2}", Convert.ToDouble(Value[0][0]) / totalArea) });
-                        AnnualData[1].Add(new { idx = i, val = string.Format("{0:N2}", Convert.ToDouble(Value[0][1]) / totalArea) });
-                        AnnualData[2].Add(new { idx = i, val = string.Format("{0:N2}", Convert.ToDouble(Value[0][2]) / totalArea) });
-                        AnnualData[3].Add(new { idx = i, val = string.Format("{0:N2}", Convert.ToDouble(Value[0][3]) / totalArea) });
-                        AnnualData[4].Add(new { idx = i, val = string.Format("{0:N2}", Convert.ToDouble(Value[0][4]) / totalArea) });
-                        AnnualData[5].Add(new { idx = i, val = string.Format("{0:N2}", Convert.ToDouble(Value[0][5]) / totalArea) });
-                        AnnualData[6].Add(new { idx = i, val = string.Format("{0:N2}", Convert.ToDouble(Value[0][6]) / totalArea) });
+                        AnnualData[0].Add(new { idx = i, val = string.Format("{0:N2}", Program.UTIL.ToDoubleOrZero(Value[0][0]) / totalArea) });
+                        AnnualData[1].Add(new { idx = i, val = string.Format("{0:N2}", Program.UTIL.ToDoubleOrZero(Value[0][1]) / totalArea) });
+                        AnnualData[2].Add(new { idx = i, val = string.Format("{0:N2}", Program.UTIL.ToDoubleOrZero(Value[0][2]) / totalArea) });
+                        AnnualData[3].Add(new { idx = i, val = string.Format("{0:N2}", Program.UTIL.ToDoubleOrZero(Value[0][3]) / totalArea) });
+                        AnnualData[4].Add(new { idx = i, val = string.Format("{0:N2}", Program.UTIL.ToDoubleOrZero(Value[0][4]) / totalArea) });
+                        AnnualData[5].Add(new { idx = i, val = string.Format("{0:N2}", Program.UTIL.ToDoubleOrZero(Value[0][5]) / totalArea) });
+                        AnnualData[6].Add(new { idx = i, val = string.Format("{0:N2}", Program.UTIL.ToDoubleOrZero(Value[0][6]) / totalArea) });
                     }
                     else
                     {
@@ -394,19 +394,19 @@ namespace main.contents.Result
                         double primary = 0, tco2 = 0; 
                     if(Value[0][7]=="전기")
                     {
-                        primary = (Convert.ToDouble(Value[0][5]) + Convert.ToDouble(Value[0][6])) * 2.75;
-                        tco2 = (Convert.ToDouble(Value[0][5]) + Convert.ToDouble(Value[0][6])) * 0.4747 / 1000000 * 1000;
+                        primary = (Program.UTIL.ToDoubleOrZero(Value[0][5]) + Program.UTIL.ToDoubleOrZero(Value[0][6])) * 2.75;
+                        tco2 = (Program.UTIL.ToDoubleOrZero(Value[0][5]) + Program.UTIL.ToDoubleOrZero(Value[0][6])) * 0.4747 / 1000000 * 1000;
                     }
                     else
                     {
-                        primary = Convert.ToDouble(Value[0][5]) * 1.1 + Convert.ToDouble(Value[0][6]) *2.75;
-                        tco2 = Convert.ToDouble(Value[0][5]) * 0.4747 / 1000000 * 1000 + Convert.ToDouble(Value[0][6]) / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
+                        primary = Program.UTIL.ToDoubleOrZero(Value[0][5]) * 1.1 + Program.UTIL.ToDoubleOrZero(Value[0][6]) *2.75;
+                        tco2 = Program.UTIL.ToDoubleOrZero(Value[0][5]) * 0.4747 / 1000000 * 1000 + Program.UTIL.ToDoubleOrZero(Value[0][6]) / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000;
                     }
 
                     if (totalArea > 0)
                     {
-                        AnnualData[7].Add(new { idx = i, val = string.Format("{0:N2}", Convert.ToDouble(primary / totalArea))});
-                        AnnualData[8].Add(new { idx = i, val = string.Format("{0:N2}", Convert.ToDouble(tco2 / totalArea * 1000))}); //kgCO2로 변경함
+                        AnnualData[7].Add(new { idx = i, val = string.Format("{0:N2}", Program.UTIL.ToDoubleOrZero(primary / totalArea))});
+                        AnnualData[8].Add(new { idx = i, val = string.Format("{0:N2}", Program.UTIL.ToDoubleOrZero(tco2 / totalArea * 1000))}); //kgCO2로 변경함
                     }
                     else
                     {
@@ -631,11 +631,11 @@ namespace main.contents.Result
                     Value = Program.DB.querySQL(DB.type.ProjDB, "Select QC_nd, QC_ce, QC_d, QC_s, QC_f From CoolingSystem_Result Where 번호='" + Num + "' and 월='" + (mth + 1) + "월'");
                     if (Value.Length > 0)
                     {
-                        nd_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(Value[0][0], 0)));
-                        ce_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(Value[0][1], 0)));
-                        d_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(Value[0][2], 0)));
-                        s_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(Value[0][3], 0)));
-                        f_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(Value[0][4], 0)));
+                        nd_chart.Add(Program.UTIL.ToDoubleOrZero(Program.UTIL.doubleComa(Value[0][0], 0)));
+                        ce_chart.Add(Program.UTIL.ToDoubleOrZero(Program.UTIL.doubleComa(Value[0][1], 0)));
+                        d_chart.Add(Program.UTIL.ToDoubleOrZero(Program.UTIL.doubleComa(Value[0][2], 0)));
+                        s_chart.Add(Program.UTIL.ToDoubleOrZero(Program.UTIL.doubleComa(Value[0][3], 0)));
+                        f_chart.Add(Program.UTIL.ToDoubleOrZero(Program.UTIL.doubleComa(Value[0][4], 0)));
                     }
                 }
                 chart_nd.Add(System.Text.Json.JsonSerializer.Serialize(nd_chart.ToArray()));
@@ -647,17 +647,17 @@ namespace main.contents.Result
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select QC_out From CoolingSystem_Result Where 번호='" + Num + "'");
                 if (Value.Length >0)
                 {
-                    max = Convert.ToDouble(Value[0][0]);
+                    max = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                     for (int a= 1; a<Value.Length; a++)
                     {
-                        if(max < Convert.ToDouble(Value[a][0]))
+                        if(max < Program.UTIL.ToDoubleOrZero(Value[a][0]))
                         {
-                            max = Convert.ToDouble(Value[a][0]);
+                            max = Program.UTIL.ToDoubleOrZero(Value[a][0]);
                         }                       
                     }                    
                 }
                 int n = ((int)max).ToString().Length;
-                max = Convert.ToDouble(String.Format("{0:F0}", max / Math.Pow(10, n - 1))) * Math.Pow(10, n - 1) + Math.Pow(10, n - 1);
+                max = Program.UTIL.ToDoubleOrZero(String.Format("{0:F0}", max / Math.Pow(10, n - 1))) * Math.Pow(10, n - 1) + Math.Pow(10, n - 1);
                 if (charts != "") charts += ",";
                 charts += "{data:[" +
                 "{type:\"bar\",barPercentage:0.4,label:\"에너지요구량 [kWh]\",data:" + chart_nd[i] + ",borderColor:\"#A9D18E\",backgroundColor:\"#A9D18E\",dash:false}," +

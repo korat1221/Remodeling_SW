@@ -129,11 +129,11 @@ namespace main.contentslist
                         Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "급기풍량,온도교환효율_난방,온도교환효율_냉방,난방코일출력,냉각코일출력,명칭", "번호='" + List[n][0] + "'");
                         if (Value.Length > 0)
                         {
-                            dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][0]));
-                            dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][1]));
-                            dataGridView1.Rows[nRow].Cells[6].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][2]));
-                            dataGridView1.Rows[nRow].Cells[7].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][3]));
-                            dataGridView1.Rows[nRow].Cells[8].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][4]));
+                            dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(Value[0][0]));
+                            dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(Value[0][1]));
+                            dataGridView1.Rows[nRow].Cells[6].Value = String.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(Value[0][2]));
+                            dataGridView1.Rows[nRow].Cells[7].Value = String.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(Value[0][3]));
+                            dataGridView1.Rows[nRow].Cells[8].Value = String.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(Value[0][4]));
                         }
                     }
                     else
@@ -141,9 +141,9 @@ namespace main.contentslist
                         Value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "팬풍량,온도교환효율_난방,온도교환효율_냉방,명칭", "번호='" + List[n][0] + "'");
                         if (Value.Length > 0)
                         {
-                            dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][0]));
-                            dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][1]));
-                            dataGridView1.Rows[nRow].Cells[6].Value = String.Format("{0:F0}", Convert.ToDouble(Value[0][2]));
+                            dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(Value[0][0]));
+                            dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(Value[0][1]));
+                            dataGridView1.Rows[nRow].Cells[6].Value = String.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(Value[0][2]));
                             dataGridView1.Rows[nRow].Cells[7].Value = "-";
                             dataGridView1.Rows[nRow].Cells[8].Value = "-";
                         }

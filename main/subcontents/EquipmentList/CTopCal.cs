@@ -53,7 +53,7 @@ namespace main.subcontents.EquipmentList
             CTFluid = 0;
             InTemp = 0;
             OutTemp = 0;
-            if (Information.IsNumeric(Convert.ToDouble(Power_textBox.Text)) != true)
+            if (Information.IsNumeric(Program.UTIL.ToDoubleOrZero(Power_textBox.Text)) != true)
             {
                 MessageBox.Show("냉방출력을 입력해 주세요.");
             }
@@ -69,9 +69,9 @@ namespace main.subcontents.EquipmentList
             {
                 Fan = Fan_comboBox.Text;
                 string[][] val = Program.DB.getValue(DB.type.BaseDB_Cooling,"CoolTop_Power","전기소비계수", "냉각탑유형 = '" + TYP + "' and 팬유형 = '" + Fan + "'");
-                FanConsum = Convert.ToDouble(val[0][0]);
+                FanConsum = Program.UTIL.ToDoubleOrZero(val[0][0]);
                 string Type = (string)CG_comboBox.SelectedItem;
-                double Value = Convert.ToDouble(Power_textBox.Text);
+                double Value = Program.UTIL.ToDoubleOrZero(Power_textBox.Text);
                 switch (Type)
                 {
                     case "1중효용흡수식냉동기":

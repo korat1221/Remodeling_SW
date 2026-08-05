@@ -31,7 +31,7 @@
                 {
                     TBType = TB_Type[0][1];
                     Type_Textbox.Text = TB_Type[0][1];
-                    Length_Textbox.Text = Convert.ToDouble(TB_Type[0][2]).ToString("0.0") + " m";
+                    Length_Textbox.Text = Program.UTIL.ToDoubleOrZero(TB_Type[0][2]).ToString("0.0") + " m";
                     SelectTBNum = TB_Type[0][3];
                     string[][] tb2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "접합부열교", "번호,명칭,값,구조체1_단열유형, 구조체2_단열유형", "번호 ='" + SelectTBNum + "'");
 
@@ -40,7 +40,7 @@
                     {
                         SelectTBName = tb2[0][1];
                         TB_Textbox.Text = SelectTBNum + "." + " " + tb2[0][1];
-                        Psi_textBox.Text = Convert.ToDouble(tb2[0][2]).ToString("0.000");
+                        Psi_textBox.Text = Program.UTIL.ToDoubleOrZero(tb2[0][2]).ToString("0.000");
                         SelectTBIns1 = tb2[0][3];
                         SelectTBIns2 = tb2[0][4];
                         Load_Image2();

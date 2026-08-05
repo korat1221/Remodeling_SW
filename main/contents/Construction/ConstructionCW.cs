@@ -504,11 +504,11 @@ namespace main.contents
                     FrameName2_textBox.Text = FrameName;
                     tabControl1.SelectedTab = tabControl1.TabPages["Frame_tabPage"];
                     check_FrameType = cw_frameDB_form.Select_CWFrame[3];
-                    Uf_mt = Convert.ToDouble(cw_frameDB_form.Select_CWFrame[5]);
-                    Uf_open = Convert.ToDouble(cw_frameDB_form.Select_CWFrame[6]);
-                    Psi_p = Convert.ToDouble(cw_frameDB_form.Select_CWFrame[7]);
-                    df_mt = Convert.ToDouble(cw_frameDB_form.Select_CWFrame[8]);
-                    df_open = Convert.ToDouble(cw_frameDB_form.Select_CWFrame[9]);
+                    Uf_mt = Program.UTIL.ToDoubleOrZero(cw_frameDB_form.Select_CWFrame[5]);
+                    Uf_open = Program.UTIL.ToDoubleOrZero(cw_frameDB_form.Select_CWFrame[6]);
+                    Psi_p = Program.UTIL.ToDoubleOrZero(cw_frameDB_form.Select_CWFrame[7]);
+                    df_mt = Program.UTIL.ToDoubleOrZero(cw_frameDB_form.Select_CWFrame[8]);
+                    df_open = Program.UTIL.ToDoubleOrZero(cw_frameDB_form.Select_CWFrame[9]);
                     Uf_mt_textBox.Text = Uf_mt.ToString();
                     Uf_open_textBox.Text = Uf_open.ToString();
                     df_mt_textBox.Text = df_mt.ToString();
@@ -553,11 +553,11 @@ namespace main.contents
                 FixGlassName2_textBox.Text = FixGlassName;
                 tabControl1.SelectedTab = tabControl1.TabPages["Glass_tabPage"];
                 LE_CL_V = cw_glassDB_form.Select_Glass[5];
-                Ug_Fix = Convert.ToDouble(cw_glassDB_form.Select_Glass[6]);
+                Ug_Fix = Program.UTIL.ToDoubleOrZero(cw_glassDB_form.Select_Glass[6]);
                 Ug_Fix_textBox.Text = Ug_Fix.ToString();
-                g = Convert.ToDouble(cw_glassDB_form.Select_Glass[7]);
+                g = Program.UTIL.ToDoubleOrZero(cw_glassDB_form.Select_Glass[7]);
                 g_textBox.Text = g.ToString();
-                τ = Convert.ToDouble(cw_glassDB_form.Select_Glass[8]);
+                τ = Program.UTIL.ToDoubleOrZero(cw_glassDB_form.Select_Glass[8]);
                 τg_textBox.Text = τ.ToString();
                 Program.UTIL.textBox_doubleComa(Ug_Fix_textBox, true, 3);
                 Program.UTIL.textBox_doubleComa(g_textBox, true, 3);
@@ -594,7 +594,7 @@ namespace main.contents
                 OpenGlassName_textBox.Text = OpenGlassName;
                 OpenGlassName2_textBox.Text = OpenGlassName;
                 tabControl1.SelectedTab = tabControl1.TabPages["Glass_tabPage"];
-                Ug_Open = Convert.ToDouble(cw_glassDB_form.Select_Glass[6]);
+                Ug_Open = Program.UTIL.ToDoubleOrZero(cw_glassDB_form.Select_Glass[6]);
                 Ug_Open_textBox.Text = Ug_Open.ToString();
                 Program.UTIL.textBox_doubleComa(Ug_Open_textBox, true, 3);
             }
@@ -625,13 +625,13 @@ namespace main.contents
                     SpacerName_textBox.Text = SpacerName;
                     if (LE_CL_V.Contains("LE"))
                     {
-                        Psi_g_fix = Convert.ToDouble(cw_spacerDB_form.Select_Spacer[7]);
-                        Psi_g_open = Convert.ToDouble(cw_spacerDB_form.Select_Spacer[8]);
+                        Psi_g_fix = Program.UTIL.ToDoubleOrZero(cw_spacerDB_form.Select_Spacer[7]);
+                        Psi_g_open = Program.UTIL.ToDoubleOrZero(cw_spacerDB_form.Select_Spacer[8]);
                     }
                     else
                     {
-                        Psi_g_fix = Convert.ToDouble(cw_spacerDB_form.Select_Spacer[5]);
-                        Psi_g_open = Convert.ToDouble(cw_spacerDB_form.Select_Spacer[6]);
+                        Psi_g_fix = Program.UTIL.ToDoubleOrZero(cw_spacerDB_form.Select_Spacer[5]);
+                        Psi_g_open = Program.UTIL.ToDoubleOrZero(cw_spacerDB_form.Select_Spacer[6]);
                     }
                     Psi_g_fix_textBox.Text = Psi_g_fix.ToString();
                     Psi_g_open_textBox.Text = Psi_g_open.ToString();
@@ -721,7 +721,7 @@ namespace main.contents
             if (result == DialogResult.OK)
             {
                 PanelName = cw_panelDB_form.Select[1];
-                Conductivity_p = Convert.ToDouble(cw_panelDB_form.Select[4]);
+                Conductivity_p = Program.UTIL.ToDoubleOrZero(cw_panelDB_form.Select[4]);
                 Panel_textBox.Text = PanelName;
             }
             Calc_Up();
@@ -745,7 +745,7 @@ namespace main.contents
             {
                 PanelGlassName = cw_glassDB_form.Select_Glass[1];
                 PanelGlass_textBox.Text = PanelGlassName;
-                Ug_panel = Convert.ToDouble(cw_glassDB_form.Select_Glass[6]);
+                Ug_panel = Program.UTIL.ToDoubleOrZero(cw_glassDB_form.Select_Glass[6]);
                 LE_CL_V_Panel = cw_glassDB_form.Select_Glass[5];
             }
             Calc_Up();
@@ -777,7 +777,7 @@ namespace main.contents
                 String[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "흡수율", "흡수율", "외장재색 = '" + PanelColor + "'");
                 if (value.Length > 0)
                 {
-                    αp = Convert.ToDouble(value[0][0]);
+                    αp = Program.UTIL.ToDoubleOrZero(value[0][0]);
                     αp_textBox.Text = String.Format("{0:F1}", αp);
                 }
             }
@@ -871,8 +871,8 @@ namespace main.contents
                 DoorFrame_textBox.Text = DoorFrame;
                 tabControl1.SelectedTab = tabControl1.TabPages["Frame_tabPage"];
                 check_DoorFrame = cw_doorframeDB_form.Select_DoorFrame[3];
-                Uf_door = Convert.ToDouble(cw_doorframeDB_form.Select_DoorFrame[4]);
-                df_door = Convert.ToDouble(cw_doorframeDB_form.Select_DoorFrame[5]);
+                Uf_door = Program.UTIL.ToDoubleOrZero(cw_doorframeDB_form.Select_DoorFrame[4]);
+                df_door = Program.UTIL.ToDoubleOrZero(cw_doorframeDB_form.Select_DoorFrame[5]);
                 Uf_door_textBox.Text = Uf_door.ToString();
                 df_door_textBox.Text = df_door.ToString();
                 Program.UTIL.textBox_doubleComa(Uf_door_textBox, true, 2);
@@ -893,11 +893,11 @@ namespace main.contents
                 DoorGlass_textBox.Text = DoorGlassName;
                 DoorGlass2_textBox.Text = DoorGlassName;
                 LE_CL_V_Door = cw_glassDB_form.Select_Glass[5];
-                Ug_Door = Convert.ToDouble(cw_glassDB_form.Select_Glass[6]);
+                Ug_Door = Program.UTIL.ToDoubleOrZero(cw_glassDB_form.Select_Glass[6]);
                 Ug_Door_textBox.Text = Ug_Door.ToString();
-                gd = Convert.ToDouble(cw_glassDB_form.Select_Glass[7]);
+                gd = Program.UTIL.ToDoubleOrZero(cw_glassDB_form.Select_Glass[7]);
                 gd_textBox.Text = gd.ToString();
-                τd = Convert.ToDouble(cw_glassDB_form.Select_Glass[8]);
+                τd = Program.UTIL.ToDoubleOrZero(cw_glassDB_form.Select_Glass[8]);
                 τd_textBox.Text = τd.ToString();
                 Program.UTIL.textBox_doubleComa(Ug_Door_textBox, true, 3);
                 Program.UTIL.textBox_doubleComa(gd_textBox, true, 3);
@@ -947,11 +947,11 @@ namespace main.contents
                     DoorSpacer_textBox.Text = DoorSpacer;
                     if (LE_CL_V_Door.Contains("LE"))
                     {
-                        Psi_g_Door = Convert.ToDouble(cw_spacerDB_form.Select_Spacer[7]);
+                        Psi_g_Door = Program.UTIL.ToDoubleOrZero(cw_spacerDB_form.Select_Spacer[7]);
                     }
                     else
                     {
-                        Psi_g_Door = Convert.ToDouble(cw_spacerDB_form.Select_Spacer[5]);
+                        Psi_g_Door = Program.UTIL.ToDoubleOrZero(cw_spacerDB_form.Select_Spacer[5]);
                     }
                     Psi_g_Door_textBox.Text = Psi_g_Door.ToString();
                     Program.UTIL.textBox_doubleComa(Psi_g_Door_textBox, true, 3);
@@ -1009,9 +1009,9 @@ namespace main.contents
                         Install_textBox.Text = InstallName;
                         check_InstallType = cw_installDB_form.Select_CWInstall[2];
                         tabControl1.SelectedTab = tabControl1.TabPages["Install_tabPage"];
-                        Psi_InstallTop = Convert.ToDouble(cw_installDB_form.Select_CWInstall[5]);
-                        Psi_InstallSide = Convert.ToDouble(cw_installDB_form.Select_CWInstall[6]);
-                        Psi_InstallButtom = Convert.ToDouble(cw_installDB_form.Select_CWInstall[7]);
+                        Psi_InstallTop = Program.UTIL.ToDoubleOrZero(cw_installDB_form.Select_CWInstall[5]);
+                        Psi_InstallSide = Program.UTIL.ToDoubleOrZero(cw_installDB_form.Select_CWInstall[6]);
+                        Psi_InstallButtom = Program.UTIL.ToDoubleOrZero(cw_installDB_form.Select_CWInstall[7]);
 
                         Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString();
                         Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString();
@@ -1047,9 +1047,9 @@ namespace main.contents
                         check_InstallType = window_installDB_form.Select_CWInstall[2];
                         FrameType = window_installDB_form.Select_CWInstall[3];
                         tabControl1.SelectedTab = tabControl1.TabPages["Install_tabPage"];
-                        Psi_InstallTop = Convert.ToDouble(window_installDB_form.Select_CWInstall[5]);
-                        Psi_InstallSide = Convert.ToDouble(window_installDB_form.Select_CWInstall[6]);
-                        Psi_InstallButtom = Convert.ToDouble(window_installDB_form.Select_CWInstall[7]);
+                        Psi_InstallTop = Program.UTIL.ToDoubleOrZero(window_installDB_form.Select_CWInstall[5]);
+                        Psi_InstallSide = Program.UTIL.ToDoubleOrZero(window_installDB_form.Select_CWInstall[6]);
+                        Psi_InstallButtom = Program.UTIL.ToDoubleOrZero(window_installDB_form.Select_CWInstall[7]);
 
                         Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString();
                         Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString();
@@ -1112,20 +1112,20 @@ namespace main.contents
             if (result == DialogResult.OK)
             {
                 SizeName = Importsize_form.Select[1];
-                Area = Convert.ToDouble(Importsize_form.Select[3]);
-                Width = Convert.ToDouble(Importsize_form.Select[4]);
-                Height = Convert.ToDouble(Importsize_form.Select[5]);
-                Ag_fix = Convert.ToDouble(Importsize_form.Select[6]);
-                Ag_open = Convert.ToDouble(Importsize_form.Select[7]);
-                Lg_fix = Convert.ToDouble(Importsize_form.Select[8]);
-                Lg_open = Convert.ToDouble(Importsize_form.Select[9]);
-                Ap = Convert.ToDouble(Importsize_form.Select[10]);
-                Lp = Convert.ToDouble(Importsize_form.Select[11]);
-                Af_mt = Convert.ToDouble(Importsize_form.Select[12]);
-                Af_open = Convert.ToDouble(Importsize_form.Select[13]);
-                Af_d = Convert.ToDouble(Importsize_form.Select[14]);
-                Ag_d = Convert.ToDouble(Importsize_form.Select[15]);
-                Lg_d = Convert.ToDouble(Importsize_form.Select[16]);
+                Area = Program.UTIL.ToDoubleOrZero(Importsize_form.Select[3]);
+                Width = Program.UTIL.ToDoubleOrZero(Importsize_form.Select[4]);
+                Height = Program.UTIL.ToDoubleOrZero(Importsize_form.Select[5]);
+                Ag_fix = Program.UTIL.ToDoubleOrZero(Importsize_form.Select[6]);
+                Ag_open = Program.UTIL.ToDoubleOrZero(Importsize_form.Select[7]);
+                Lg_fix = Program.UTIL.ToDoubleOrZero(Importsize_form.Select[8]);
+                Lg_open = Program.UTIL.ToDoubleOrZero(Importsize_form.Select[9]);
+                Ap = Program.UTIL.ToDoubleOrZero(Importsize_form.Select[10]);
+                Lp = Program.UTIL.ToDoubleOrZero(Importsize_form.Select[11]);
+                Af_mt = Program.UTIL.ToDoubleOrZero(Importsize_form.Select[12]);
+                Af_open = Program.UTIL.ToDoubleOrZero(Importsize_form.Select[13]);
+                Af_d = Program.UTIL.ToDoubleOrZero(Importsize_form.Select[14]);
+                Ag_d = Program.UTIL.ToDoubleOrZero(Importsize_form.Select[15]);
+                Lg_d = Program.UTIL.ToDoubleOrZero(Importsize_form.Select[16]);
 
                 Size_textBox.Text = SizeName + " 치수 적용";
                 Area_textBox.Text = Area.ToString();
@@ -1186,7 +1186,7 @@ namespace main.contents
                 }
                 if (Uvalue.Length > 0)
                 {
-                    Ucw_g = Convert.ToDouble(Uvalue[0][0]);
+                    Ucw_g = Program.UTIL.ToDoubleOrZero(Uvalue[0][0]);
                     UCW_g_textBox.Text = Ucw_g.ToString();
                     Program.UTIL.textBox_doubleComa(UCW_g_textBox, true, 3);
                 }
@@ -1214,7 +1214,7 @@ namespace main.contents
                 {
                     if (Uvalue.Length > 0)
                     {
-                        Ucw_p = Convert.ToDouble(Uvalue[0][0]);
+                        Ucw_p = Program.UTIL.ToDoubleOrZero(Uvalue[0][0]);
                         UCW_p_textBox.Text = Ucw_p.ToString();
                         Program.UTIL.textBox_doubleComa(UCW_p_textBox, true, 3);
                     }
@@ -1245,7 +1245,7 @@ namespace main.contents
                 {
                     if (Uvalue.Length > 0)
                     {
-                        Ucw_d = Convert.ToDouble(Uvalue[0][0]);
+                        Ucw_d = Program.UTIL.ToDoubleOrZero(Uvalue[0][0]);
                         UCW_d_textBox.Text = Ucw_d.ToString();
                         Program.UTIL.textBox_doubleComa(UCW_d_textBox, true, 3);
                         Ff_d = 0.7;
@@ -1639,13 +1639,13 @@ namespace main.contents
             String[][] Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '창호' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
             if (Uvalue.Length > 0)
             {
-                법규Ucw_g = Convert.ToDouble(Uvalue[0][0]);
-                법규Ucw_d = Convert.ToDouble(Uvalue[0][0]);
+                법규Ucw_g = Program.UTIL.ToDoubleOrZero(Uvalue[0][0]);
+                법규Ucw_d = Program.UTIL.ToDoubleOrZero(Uvalue[0][0]);
             }
             Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '외벽' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi + "'");
             if (Uvalue.Length > 0)
             {
-                법규Ucw_p = Convert.ToDouble(Uvalue[0][0]);
+                법규Ucw_p = Program.UTIL.ToDoubleOrZero(Uvalue[0][0]);
             }
             #endregion
 
@@ -1663,7 +1663,7 @@ namespace main.contents
                     법규Ucw_g.ToString()
                     + "'", "번호");
 
-            if(Convert.ToDouble(g)==0 &&Convert.ToDouble(gd)>0 && Convert.ToDouble(τd) >0)
+            if(Program.UTIL.ToDoubleOrZero(g)==0 &&Program.UTIL.ToDoubleOrZero(gd)>0 && Program.UTIL.ToDoubleOrZero(τd) >0)
             {
                 Program.DB.setValue(DB.type.ProjDB, "ConstructionCW", "번호,태양열취득률,빛투과율",
                          "'" + CWNum_textBox.Text + "','" + gd.ToString() + "','" + τd.ToString() 
@@ -1876,25 +1876,25 @@ namespace main.contents
                 LE_CL_V = Load[0][13];
                 check_LE_CL_V = Load[0][13];
 
-                Ug_Fix = Convert.ToDouble(Load[0][14]);
+                Ug_Fix = Program.UTIL.ToDoubleOrZero(Load[0][14]);
                 Ug_Fix_textBox.Text = Ug_Fix.ToString();
-                Ug_Open = Convert.ToDouble(Load[0][15]);
+                Ug_Open = Program.UTIL.ToDoubleOrZero(Load[0][15]);
                 Ug_Open_textBox.Text = Ug_Open.ToString();
-                g = Convert.ToDouble(Load[0][16]);
+                g = Program.UTIL.ToDoubleOrZero(Load[0][16]);
                 g_textBox.Text = g.ToString();
-                τ = Convert.ToDouble(Load[0][17]);
+                τ = Program.UTIL.ToDoubleOrZero(Load[0][17]);
                 τg_textBox.Text = τ.ToString();
-                Psi_g_fix = Convert.ToDouble(Load[0][18]);
+                Psi_g_fix = Program.UTIL.ToDoubleOrZero(Load[0][18]);
                 Psi_g_fix_textBox.Text = Psi_g_fix.ToString();
-                Psi_g_open = Convert.ToDouble(Load[0][19]);
+                Psi_g_open = Program.UTIL.ToDoubleOrZero(Load[0][19]);
                 Psi_g_open_textBox.Text = Psi_g_open.ToString();
-                Uf_mt = Convert.ToDouble(Load[0][20]);
+                Uf_mt = Program.UTIL.ToDoubleOrZero(Load[0][20]);
                 Uf_mt_textBox.Text = Uf_mt.ToString();
-                Uf_open = Convert.ToDouble(Load[0][21]);
+                Uf_open = Program.UTIL.ToDoubleOrZero(Load[0][21]);
                 Uf_open_textBox.Text = Uf_open.ToString();
-                df_mt = Convert.ToDouble(Load[0][22]);
+                df_mt = Program.UTIL.ToDoubleOrZero(Load[0][22]);
                 df_mt_textBox.Text = df_mt.ToString();
-                df_open = Convert.ToDouble(Load[0][23]);
+                df_open = Program.UTIL.ToDoubleOrZero(Load[0][23]);
                 df_open_textBox.Text = df_open.ToString();
                 Program.UTIL.textBox_doubleComa(Ug_Fix_textBox, true, 3);
                 Program.UTIL.textBox_doubleComa(Ug_Open_textBox, true, 3);
@@ -1907,26 +1907,26 @@ namespace main.contents
                 Program.UTIL.textBox_doubleComa(df_mt_textBox, true, 3);
                 Program.UTIL.textBox_doubleComa(df_open_textBox, true, 3);
 
-                Psi_InstallTop = Convert.ToDouble(Load[0][24]);
+                Psi_InstallTop = Program.UTIL.ToDoubleOrZero(Load[0][24]);
                 Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString();
-                Psi_InstallSide = Convert.ToDouble(Load[0][25]);
+                Psi_InstallSide = Program.UTIL.ToDoubleOrZero(Load[0][25]);
                 Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString();
-                Psi_InstallButtom = Convert.ToDouble(Load[0][26]);
+                Psi_InstallButtom = Program.UTIL.ToDoubleOrZero(Load[0][26]);
                 Psi_InstallButtom_textBox.Text = Psi_InstallButtom.ToString();
                 Program.UTIL.textBox_doubleComa(Psi_InstallTop_textBox, true, 3);
                 Program.UTIL.textBox_doubleComa(Psi_InstallSide_textBox, true, 3);
                 Program.UTIL.textBox_doubleComa(Psi_InstallButtom_textBox, true, 3);
 
                 SizeName = Load[0][27];
-                Area = Convert.ToDouble(Load[0][28]);
-                Width = Convert.ToDouble(Load[0][29]);
-                Height = Convert.ToDouble(Load[0][30]);
-                Ag_fix = Convert.ToDouble(Load[0][31]);
-                Ag_open = Convert.ToDouble(Load[0][32]);
-                Lg_fix = Convert.ToDouble(Load[0][33]);
-                Lg_open = Convert.ToDouble(Load[0][34]);
-                Af_mt = Convert.ToDouble(Load[0][35]);
-                Af_open = Convert.ToDouble(Load[0][36]);
+                Area = Program.UTIL.ToDoubleOrZero(Load[0][28]);
+                Width = Program.UTIL.ToDoubleOrZero(Load[0][29]);
+                Height = Program.UTIL.ToDoubleOrZero(Load[0][30]);
+                Ag_fix = Program.UTIL.ToDoubleOrZero(Load[0][31]);
+                Ag_open = Program.UTIL.ToDoubleOrZero(Load[0][32]);
+                Lg_fix = Program.UTIL.ToDoubleOrZero(Load[0][33]);
+                Lg_open = Program.UTIL.ToDoubleOrZero(Load[0][34]);
+                Af_mt = Program.UTIL.ToDoubleOrZero(Load[0][35]);
+                Af_open = Program.UTIL.ToDoubleOrZero(Load[0][36]);
 
                 Size_textBox.Text = SizeName + " 치수 적용";
                 Area_textBox.Text = Area.ToString();
@@ -1959,17 +1959,17 @@ namespace main.contents
                 Program.UTIL.textBox_doubleComa(d_InstallButtom_textBox, true, 2);
                 Program.UTIL.textBox_doubleComa(d_InstallSide_textBox, true, 2);
 
-                Ucw = Convert.ToDouble(Load[0][37]);
-                Ucw_g = Convert.ToDouble(Load[0][38]);
+                Ucw = Program.UTIL.ToDoubleOrZero(Load[0][37]);
+                Ucw_g = Program.UTIL.ToDoubleOrZero(Load[0][38]);
                 UCW_g_textBox.Text = Ucw_g.ToString();
                 Program.UTIL.textBox_doubleComa(UCW_g_textBox, true, 3);
 
-                dUinst = Convert.ToDouble(Load[0][39]);
+                dUinst = Program.UTIL.ToDoubleOrZero(Load[0][39]);
                 dUinst_textBox.Text = dUinst.ToString();
                 Program.UTIL.textBox_doubleComa(dUinst_textBox, true, 3);
 
-                Ucw_inst = Convert.ToDouble(Load[0][40]);
-                Ucw_g_inst = Convert.ToDouble(Load[0][41]);
+                Ucw_inst = Program.UTIL.ToDoubleOrZero(Load[0][40]);
+                Ucw_g_inst = Program.UTIL.ToDoubleOrZero(Load[0][41]);
 
 
                 Panel_check = Convert.ToBoolean(Load[0][42]);
@@ -1995,31 +1995,31 @@ namespace main.contents
 
                     LE_CL_V_Panel = Load[0][2];
 
-                    Up = Convert.ToDouble(Load[0][3]);
-                    Ug_panel = Convert.ToDouble(Load[0][4]);
-                    Conductivity_p = Convert.ToDouble(Load[0][5]);
+                    Up = Program.UTIL.ToDoubleOrZero(Load[0][3]);
+                    Ug_panel = Program.UTIL.ToDoubleOrZero(Load[0][4]);
+                    Conductivity_p = Program.UTIL.ToDoubleOrZero(Load[0][5]);
 
-                    αp = Convert.ToDouble(Load[0][6]);
+                    αp = Program.UTIL.ToDoubleOrZero(Load[0][6]);
                     αp_textBox.Text = String.Format("{0:F1}", αp);
 
-                    Psi_p = Convert.ToDouble(Load[0][7]);
+                    Psi_p = Program.UTIL.ToDoubleOrZero(Load[0][7]);
 
-                    dPanel = Convert.ToDouble(Load[0][8]);
+                    dPanel = Program.UTIL.ToDoubleOrZero(Load[0][8]);
                     dPanel_textBox.Text = dPanel.ToString();
                     Program.UTIL.textBox_doubleComa(dPanel_textBox, true, 1);
 
-                    Ap = Convert.ToDouble(Load[0][9]);
-                    Lp = Convert.ToDouble(Load[0][10]);
+                    Ap = Program.UTIL.ToDoubleOrZero(Load[0][9]);
+                    Lp = Program.UTIL.ToDoubleOrZero(Load[0][10]);
                     Ap_textBox.Text = Ap.ToString();
                     Lp_textBox.Text = Lp.ToString();
                     Program.UTIL.textBox_doubleComa(Ap_textBox, true, 2);
                     Program.UTIL.textBox_doubleComa(Lp_textBox, true, 2);
 
 
-                    Ucw_p = Convert.ToDouble(Load[0][11]);
+                    Ucw_p = Program.UTIL.ToDoubleOrZero(Load[0][11]);
                     UCW_p_textBox.Text = Ucw_p.ToString();
                     Program.UTIL.textBox_doubleComa(UCW_p_textBox, true, 3);
-                    Ucw_p_inst = Convert.ToDouble(Load[0][12]);
+                    Ucw_p_inst = Program.UTIL.ToDoubleOrZero(Load[0][12]);
                 }
             }
             else { }
@@ -2046,33 +2046,33 @@ namespace main.contents
                     LE_CL_V_Door = Load[0][4];
                     check_LE_CL_V_Door = LE_CL_V_Door;
 
-                    Ug_Door = Convert.ToDouble(Load[0][5]);
+                    Ug_Door = Program.UTIL.ToDoubleOrZero(Load[0][5]);
                     Ug_Door_textBox.Text = Ug_Door.ToString();
                     Program.UTIL.textBox_doubleComa(Ug_Door_textBox, true, 3);
 
-                    gd = Convert.ToDouble(Load[0][6]);
+                    gd = Program.UTIL.ToDoubleOrZero(Load[0][6]);
                     gd_textBox.Text = gd.ToString();
                     Program.UTIL.textBox_doubleComa(gd_textBox, true, 3);
 
-                    τd = Convert.ToDouble(Load[0][7]);
+                    τd = Program.UTIL.ToDoubleOrZero(Load[0][7]);
                     τd_textBox.Text = τd.ToString();
                     Program.UTIL.textBox_doubleComa(τd_textBox, true, 3);
 
-                    Psi_g_Door = Convert.ToDouble(Load[0][8]);
+                    Psi_g_Door = Program.UTIL.ToDoubleOrZero(Load[0][8]);
                     Psi_g_Door_textBox.Text = Psi_g_Door.ToString();
                     Program.UTIL.textBox_doubleComa(Psi_g_Door_textBox, true, 3);
 
-                    df_door = Convert.ToDouble(Load[0][9]);
+                    df_door = Program.UTIL.ToDoubleOrZero(Load[0][9]);
                     df_door_textBox.Text = df_door.ToString();
                     Program.UTIL.textBox_doubleComa(df_door_textBox, true, 3);
 
-                    Uf_door = Convert.ToDouble(Load[0][10]);
+                    Uf_door = Program.UTIL.ToDoubleOrZero(Load[0][10]);
                     Uf_door_textBox.Text = Uf_door.ToString();
                     Program.UTIL.textBox_doubleComa(Uf_door_textBox, true, 3);
 
-                    Af_d = Convert.ToDouble(Load[0][11]);
-                    Ag_d = Convert.ToDouble(Load[0][12]);
-                    Lg_d = Convert.ToDouble(Load[0][13]);
+                    Af_d = Program.UTIL.ToDoubleOrZero(Load[0][11]);
+                    Ag_d = Program.UTIL.ToDoubleOrZero(Load[0][12]);
+                    Lg_d = Program.UTIL.ToDoubleOrZero(Load[0][13]);
                     Af_d_textBox.Text = Af_d.ToString();
                     Ag_d_textBox.Text = Ag_d.ToString();
                     Lg_d_textBox.Text = Lg_d.ToString();
@@ -2080,10 +2080,10 @@ namespace main.contents
                     Program.UTIL.textBox_doubleComa(Ag_d_textBox, true, 2);
                     Program.UTIL.textBox_doubleComa(Lg_d_textBox, true, 2);
 
-                    Ucw_d = Convert.ToDouble(Load[0][14]);
+                    Ucw_d = Program.UTIL.ToDoubleOrZero(Load[0][14]);
                     UCW_d_textBox.Text = Ucw_d.ToString();
                     Program.UTIL.textBox_doubleComa(UCW_d_textBox, true, 3);
-                    Ucw_d_inst = Convert.ToDouble(Load[0][15]);
+                    Ucw_d_inst = Program.UTIL.ToDoubleOrZero(Load[0][15]);
                 }
             }
             else { }

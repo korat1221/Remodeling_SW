@@ -128,8 +128,8 @@ namespace main.contentslist
                                 {
                                     존이름[k] = Value[0][0];
                                     용도프로필[k] = Value[0][1];
-                                    순바닥면적[k] = Convert.ToDouble(Value[0][2]);
-                                    천장고[k] = Convert.ToDouble(Value[0][3]);
+                                    순바닥면적[k] = Program.UTIL.ToDoubleOrZero(Value[0][2]);
+                                    천장고[k] = Program.UTIL.ToDoubleOrZero(Value[0][3]);
                                 }
                                 else
                                 {

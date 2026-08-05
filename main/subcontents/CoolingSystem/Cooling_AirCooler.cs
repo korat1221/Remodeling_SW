@@ -50,15 +50,15 @@ namespace main.subcontents.CoolingSystem
             {
                 for (int i = 0; i < AirHP.Length; i++)
                 {
-                    if (Convert.ToDouble(AirHP[i][2]) > 12)
+                    if (Program.UTIL.ToDoubleOrZero(AirHP[i][2]) > 12)
                     {
                         AirCooler_dataGridView.Rows.Add();
                         int nRow = AirCooler_dataGridView.Rows.Count - 1;
                         AirCooler_dataGridView.Rows[nRow].Cells[2].Value = AirHP[i][0];
                         AirCooler_dataGridView.Rows[nRow].Cells[3].Value = AirHP[i][1];
-                        AirCooler_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Convert.ToDouble(AirHP   [i][2]));
-                        AirCooler_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(AirHP[i][3]));
-                        AirCooler_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(AirHP   [i][4])); //EER
+                        AirCooler_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(AirHP   [i][2]));
+                        AirCooler_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(AirHP[i][3]));
+                        AirCooler_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(AirHP   [i][4])); //EER
 
 
                         DataGridViewComboBoxCell PressorCombo = new DataGridViewComboBoxCell();
@@ -94,9 +94,9 @@ namespace main.subcontents.CoolingSystem
                     int nRow = AirCooler_dataGridView.Rows.Count - 1;
                     AirCooler_dataGridView.Rows[nRow].Cells[2].Value = AirCooler[i][0];
                     AirCooler_dataGridView.Rows[nRow].Cells[3].Value = AirCooler[i][1];
-                    AirCooler_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Convert.ToDouble(AirCooler[i][2]));
-                    AirCooler_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(AirCooler[i][3]));
-                    AirCooler_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(AirCooler[i][4])); //EER
+                    AirCooler_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(AirCooler[i][2]));
+                    AirCooler_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(AirCooler[i][3]));
+                    AirCooler_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(AirCooler[i][4])); //EER
                     AirCooler_dataGridView.Rows[nRow].Cells[7].Value = AirCooler[i][5]; //압축기
                     AirCooler_dataGridView.Rows[nRow].Cells[8].Value = AirCooler[i][6]; //연료
                     AirCooler_dataGridView.Rows[nRow].Cells[9].Value = AirCooler[i][7]; //대기전력

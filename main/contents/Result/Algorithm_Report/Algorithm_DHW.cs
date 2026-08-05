@@ -129,28 +129,28 @@ namespace main.contents.Result
                         systemnum = List[0][3];
                         etaunit = "%";
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "용량,전부하효율", "번호 ='" + systemnum + "'");
-                        count = count_[0][3] != "" ? Convert.ToDouble(count_[0][3]) : 0;
+                        count = count_[0][3] != "" ? Program.UTIL.ToDoubleOrZero(count_[0][3]) : 0;
                     }
                     else if (MainSystem == "외기 히트펌프")
                     {
                         systemnum = List[0][4];
                         etaunit = "W/W";
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DHWHP", "급탕정격용량,급탕정격COP", "번호 ='" + systemnum + "'");
-                        count = count_[0][4] != "" ? Convert.ToDouble(count_[0][4]) : 0;
+                        count = count_[0][4] != "" ? Program.UTIL.ToDoubleOrZero(count_[0][4]) : 0;
                     }
                     else if (MainSystem == "지역난방")
                     {
                         systemnum = List[0][5];
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DH", "용량", "번호 ='" + systemnum + "'");
-                        count = count_[0][5] != "" ? Convert.ToDouble(count_[0][5]) : 0;
+                        count = count_[0][5] != "" ? Program.UTIL.ToDoubleOrZero(count_[0][5]) : 0;
                     }
 
                     if (SystemValue.Length > 0)
                     {
-                        power = SystemValue[0][0] != "" ? Convert.ToDouble(SystemValue[0][0]) : 0;
+                        power = SystemValue[0][0] != "" ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) : 0;
                         if (SystemValue[0].Length > 1)
                         {
-                            eta = SystemValue[0][1] != "" ? Convert.ToDouble(SystemValue[0][1]) : 0;
+                            eta = SystemValue[0][1] != "" ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : 0;
                         }
                     }
                 }
@@ -183,16 +183,16 @@ namespace main.contents.Result
                        
                         if (ZoneValue.Length > 0 && ZoneValue[0][0] != "" && ZoneValue[0][1] != "")
                         {
-                            Qwb.Add(Convert.ToDouble(ZoneValue[0][0]));
+                            Qwb.Add(Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]));
                             string[][] Usage = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "급탕시간당비율", "용도명 = '" + ZoneValue[0][1] + "'");
                             if (Usage.Length > 0)
-                            { Zmax += Convert.ToDouble(ZoneValue[0][0]) * Convert.ToDouble(Usage[0][0]); }
+                            { Zmax += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]) * Program.UTIL.ToDoubleOrZero(Usage[0][0]); }
                         }
 
                         ZoneValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호='" + splitzone[a].ToString() + "'");
                         if (ZoneValue.Length > 0)
                         {
-                            ZArea += Convert.ToDouble(ZoneValue[0][0]);
+                            ZArea += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
                         }
                         ZoneValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,용도프로필", "일일급탕요구량 = '" + Qwb.Max() + "'");
                         if(ZoneValue.Length >0)
@@ -215,7 +215,7 @@ namespace main.contents.Result
                     string[][] Z = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호='" + splitzone[a].ToString() + "'");
                     if (Z.Length > 0)
                     {
-                        Area += Convert.ToDouble(Z[0][0]);
+                        Area += Program.UTIL.ToDoubleOrZero(Z[0][0]);
                     }
                 }
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select  sum(Qwb_mth_sum),  sum(Qw_d), sum(Qw_s),  sum(Qw_gen), sum(Qw_f),sum(Ww_d),sum(Ww_s),sum(Ww_g),연료 From DHWSystem_Result Where 번호='" + Num + "'");
@@ -223,33 +223,33 @@ namespace main.contents.Result
                 {
                     double d = 0, st = 0, g = 0, f = 0;
 
-                    d = (Convert.ToDouble(Value[0][1]) + Convert.ToDouble(Value[0][5])) / Area;
-                    st = (Convert.ToDouble(Value[0][2]) + Convert.ToDouble(Value[0][6])) / Area;
-                    g = (Convert.ToDouble(Value[0][3]) + Convert.ToDouble(Value[0][7])) / Area;
-                    AnnualData[0].Add(new { idx = i, val = Program.UTIL.doubleComa((Convert.ToDouble(Value[0][0]) / Area).ToString(), 1) });
+                    d = (Program.UTIL.ToDoubleOrZero(Value[0][1]) + Program.UTIL.ToDoubleOrZero(Value[0][5])) / Area;
+                    st = (Program.UTIL.ToDoubleOrZero(Value[0][2]) + Program.UTIL.ToDoubleOrZero(Value[0][6])) / Area;
+                    g = (Program.UTIL.ToDoubleOrZero(Value[0][3]) + Program.UTIL.ToDoubleOrZero(Value[0][7])) / Area;
+                    AnnualData[0].Add(new { idx = i, val = Program.UTIL.doubleComa((Program.UTIL.ToDoubleOrZero(Value[0][0]) / Area).ToString(), 1) });
                     AnnualData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(d.ToString(), 1) });
                     AnnualData[2].Add(new { idx = i, val = Program.UTIL.doubleComa(st.ToString(), 1) });
                     AnnualData[3].Add(new { idx = i, val = Program.UTIL.doubleComa(g.ToString(), 1) });
                     double w = 0;
                     for (int a = 5; a < 8; a++)
                     {
-                        w += Value[0][a] != "" ? Convert.ToDouble(Value[0][a]) : 0;
+                        w += Value[0][a] != "" ? Program.UTIL.ToDoubleOrZero(Value[0][a]) : 0;
                     }
                     w = w / Area;
-                    f = (Convert.ToDouble(Value[0][4]) + w) / Area;
+                    f = (Program.UTIL.ToDoubleOrZero(Value[0][4]) + w) / Area;
                     AnnualData[4].Add(new { idx = i, val = Program.UTIL.doubleComa(f.ToString(), 1) });
 
                     AnnualData[5].Add(new { idx = i, val = Program.UTIL.doubleComa(w.ToString(), 0) });
                     double primary = 0, kgco2 = 0;
                     if (Value[0][8] == "전기")
                     {
-                        primary = (Convert.ToDouble(Value[0][4]) + w) * 2.75;
-                        kgco2 = (Convert.ToDouble(Value[0][4]) + w) * 0.4747 / 1000000 * 1000 * 1000;
+                        primary = (Program.UTIL.ToDoubleOrZero(Value[0][4]) + w) * 2.75;
+                        kgco2 = (Program.UTIL.ToDoubleOrZero(Value[0][4]) + w) * 0.4747 / 1000000 * 1000 * 1000;
                     }
                     else
                     {
-                        primary = Convert.ToDouble(Value[0][4]) * 1.1 + w * 2.75;
-                        kgco2 = Convert.ToDouble(Value[0][4]) * 0.4747 / 1000000 * 1000 * 1000 + w / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000 * 1000;
+                        primary = Program.UTIL.ToDoubleOrZero(Value[0][4]) * 1.1 + w * 2.75;
+                        kgco2 = Program.UTIL.ToDoubleOrZero(Value[0][4]) * 0.4747 / 1000000 * 1000 * 1000 + w / 38.9 / 0.277778 * 38.5 * 15.236 / 1000000 * 44 / 12 * 1000 / 1000 * 1000;
                     }
                     primary = primary / Area;
                     kgco2 = kgco2 / Area;
@@ -290,15 +290,15 @@ namespace main.contents.Result
                     Value = Program.DB.querySQL(DB.type.ProjDB, "Select Ww_d, Ww_s, Ww_g From DHWSystem_Result Where 번호='" + Num + "' and 월='" + (mth + 1) + "월'");
                     if (Value.Length > 0)
                     {
-                        d_mth[mth] = Convert.ToDouble(Value[0][0]); s_mth[mth] = Convert.ToDouble(Value[0][1]); g_mth[mth] = Convert.ToDouble(Value[0][2]);
-                        f_mth[mth] = Convert.ToDouble(Value[0][0]) + Convert.ToDouble(Value[0][1]) + Convert.ToDouble(Value[0][2]);
+                        d_mth[mth] = Program.UTIL.ToDoubleOrZero(Value[0][0]); s_mth[mth] = Program.UTIL.ToDoubleOrZero(Value[0][1]); g_mth[mth] = Program.UTIL.ToDoubleOrZero(Value[0][2]);
+                        f_mth[mth] = Program.UTIL.ToDoubleOrZero(Value[0][0]) + Program.UTIL.ToDoubleOrZero(Value[0][1]) + Program.UTIL.ToDoubleOrZero(Value[0][2]);
 
                         WMthData[1].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(Value[0][0], 1) });
                         WMthData[2].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(Value[0][1], 1) });
                         WMthData[3].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(Value[0][2], 1) });
                         for (int a = 0; a < Value[0].Length; a++)
                         {
-                            w += Value[0][a] != "" ? Convert.ToDouble(Value[0][a]) : 0;
+                            w += Value[0][a] != "" ? Program.UTIL.ToDoubleOrZero(Value[0][a]) : 0;
                         }
                         WMthData[0].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(w.ToString(), 1) });
                     }
@@ -307,14 +307,14 @@ namespace main.contents.Result
                 if (Value.Length > 0)
                 {
                     double w = 0;
-                    d_a = Convert.ToDouble(Value[0][0]); s_a = Convert.ToDouble(Value[0][1]); g_a = Convert.ToDouble(Value[0][2]);
-                    f_a = Convert.ToDouble(Value[0][0]) + Convert.ToDouble(Value[0][1]) + Convert.ToDouble(Value[0][2]);
+                    d_a = Program.UTIL.ToDoubleOrZero(Value[0][0]); s_a = Program.UTIL.ToDoubleOrZero(Value[0][1]); g_a = Program.UTIL.ToDoubleOrZero(Value[0][2]);
+                    f_a = Program.UTIL.ToDoubleOrZero(Value[0][0]) + Program.UTIL.ToDoubleOrZero(Value[0][1]) + Program.UTIL.ToDoubleOrZero(Value[0][2]);
                     WMthData[1].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][0], 1) });
                     WMthData[2].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][1], 1) });
                     WMthData[3].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][2], 1) });
                     for (int a = 0; a < Value[0].Length; a++)
                     {
-                        w += Value[0][a] != "" ? Convert.ToDouble(Value[0][a]) : 0;
+                        w += Value[0][a] != "" ? Program.UTIL.ToDoubleOrZero(Value[0][a]) : 0;
                     }
                     WMthData[0].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(w.ToString(), 1) });
                 }
@@ -325,8 +325,8 @@ namespace main.contents.Result
                     Value = Program.DB.querySQL(DB.type.ProjDB, "Select  Qw_f,  Qw_outg, Qw_d, Qw_s, Qw_gen, Qwb_mth_sum From DHWSystem_Result Where 번호='" + Num + "' and 월='" + (mth + 1) + "월'");
                     if (Value.Length > 0)
                     {
-                        d_mth[mth] = d_mth[mth] + Convert.ToDouble(Value[0][2]); s_mth[mth] = s_mth[mth] + Convert.ToDouble(Value[0][3]); g_mth[mth] = g_mth[mth] + Convert.ToDouble(Value[0][4]);
-                        f_mth[mth] = Convert.ToDouble(Value[0][0]) + f_mth[mth];
+                        d_mth[mth] = d_mth[mth] + Program.UTIL.ToDoubleOrZero(Value[0][2]); s_mth[mth] = s_mth[mth] + Program.UTIL.ToDoubleOrZero(Value[0][3]); g_mth[mth] = g_mth[mth] + Program.UTIL.ToDoubleOrZero(Value[0][4]);
+                        f_mth[mth] = Program.UTIL.ToDoubleOrZero(Value[0][0]) + f_mth[mth];
                         MthData[0].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(f_mth[mth].ToString(), 0) });
                         MthData[1].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(Value[0][1], 0) });
                         MthData[2].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(d_mth[mth].ToString(), 0) });
@@ -338,8 +338,8 @@ namespace main.contents.Result
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select  Sum(Qw_f), Sum(Qw_outg), sum(Qw_d), sum(Qw_s),sum(Qw_gen), sum(Qwb_mth_sum)  From DHWSystem_Result Where 번호='" + Num + "'");
                 if (Value.Length > 0)
                 {
-                     d_a = d_a + Convert.ToDouble(Value[0][2]); s_a = s_a + Convert.ToDouble(Value[0][3]); g_a = g_a + Convert.ToDouble(Value[0][4]);
-                    f_a = Convert.ToDouble(Value[0][0]) + f_a;
+                     d_a = d_a + Program.UTIL.ToDoubleOrZero(Value[0][2]); s_a = s_a + Program.UTIL.ToDoubleOrZero(Value[0][3]); g_a = g_a + Program.UTIL.ToDoubleOrZero(Value[0][4]);
+                    f_a = Program.UTIL.ToDoubleOrZero(Value[0][0]) + f_a;
                     MthData[0].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(f_a.ToString(), 0) });
                     MthData[1].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][1], 0) });
                     MthData[2].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(d_a.ToString(), 0) });
@@ -443,11 +443,11 @@ namespace main.contents.Result
                     Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qwb_mth_sum, Qw_d, Qw_s, Qw_gen,Qw_f From DHWSystem_Result Where 번호='" + Num + "' and 월='" + (mth + 1) + "월'");
                     if (Value.Length > 0)
                     {
-                        nd_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(Value[0][0], 0)));
-                        d_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(Value[0][1], 0)));
-                        s_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(Value[0][2], 0)));
-                        g_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(Value[0][3], 0)));
-                        f_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(Value[0][4], 0)));
+                        nd_chart.Add(Program.UTIL.ToDoubleOrZero(Program.UTIL.doubleComa(Value[0][0], 0)));
+                        d_chart.Add(Program.UTIL.ToDoubleOrZero(Program.UTIL.doubleComa(Value[0][1], 0)));
+                        s_chart.Add(Program.UTIL.ToDoubleOrZero(Program.UTIL.doubleComa(Value[0][2], 0)));
+                        g_chart.Add(Program.UTIL.ToDoubleOrZero(Program.UTIL.doubleComa(Value[0][3], 0)));
+                        f_chart.Add(Program.UTIL.ToDoubleOrZero(Program.UTIL.doubleComa(Value[0][4], 0)));
                     }
                 }
                 chart_nd.Add(System.Text.Json.JsonSerializer.Serialize(nd_chart.ToArray()));
@@ -459,10 +459,10 @@ namespace main.contents.Result
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select Max(Qwb_mth_sum), (Qw_outg), Max(Qw_f) From DHWSystem_Result Where 번호='" + Num + "' and 월='1월'");
                 if (Value.Length > 0)
                 {
-                    max = Convert.ToDouble(Value[0][0]) > Convert.ToDouble(Value[0][1]) ? Convert.ToDouble(Value[0][0]) : Convert.ToDouble(Value[0][1]);   
+                    max = Program.UTIL.ToDoubleOrZero(Value[0][0]) > Program.UTIL.ToDoubleOrZero(Value[0][1]) ? Program.UTIL.ToDoubleOrZero(Value[0][0]) : Program.UTIL.ToDoubleOrZero(Value[0][1]);   
                 }
                 int n = ((int)max).ToString().Length;
-                max = Convert.ToDouble(String.Format("{0:F0}", max / Math.Pow(10, n - 1))) * Math.Pow(10, n - 1) + Math.Pow(10, n - 1);
+                max = Program.UTIL.ToDoubleOrZero(String.Format("{0:F0}", max / Math.Pow(10, n - 1))) * Math.Pow(10, n - 1) + Math.Pow(10, n - 1);
                 if (charts != "") charts += ",";
                 charts += "{data:[" +
                 "{type:\"bar\",barPercentage:0.4,label:\"에너지요구량 [kWh]\",data:" + chart_nd[i] + ",borderColor:\"#FFE0B2\",backgroundColor:\"#FFE0B2\",dash:false}," +

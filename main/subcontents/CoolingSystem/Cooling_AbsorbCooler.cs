@@ -48,9 +48,9 @@ namespace main.subcontents.CoolingSystem
 
                 AbsorbCooler_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[i][0];//번호
                 AbsorbCooler_dataGridView.Rows[nRow].Cells[3].Value = DefaultDB_Value[i][1]; //명칭
-                AbsorbCooler_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][2]));//냉방출력
-                AbsorbCooler_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", Convert.ToDouble(DefaultDB_Value[i][3]));//통합성능
-                AbsorbCooler_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Convert.ToDouble(DefaultDB_Value[i][4])); //EER
+                AbsorbCooler_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][2]));//냉방출력
+                AbsorbCooler_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][3]));//통합성능
+                AbsorbCooler_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][4])); //EER
                 AbsorbCooler_dataGridView.Rows[nRow].Cells[7].Value = DefaultDB_Value[i][5]; //대기전력1
                 AbsorbCooler_dataGridView.Rows[nRow].Cells[10].Value = DefaultDB_Value[i][6]; //냉수입구온도
                 AbsorbCooler_dataGridView.Rows[nRow].Cells[11].Value = DefaultDB_Value[i][7]; //냉수출구온도

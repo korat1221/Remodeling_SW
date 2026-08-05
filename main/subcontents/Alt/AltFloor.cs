@@ -123,14 +123,14 @@ namespace main.subcontents.Alt
                     {
                         int nRow = Alt_dataGridView.Rows.Add();
                         Alt_dataGridView.Rows[nRow].Cells[1].Value = Value[a][0];
-                        Alt_dataGridView.Rows[nRow].Cells[2].Value = Convert.ToDouble(Value[a][1]).ToString("0.00");
-                        Alt_dataGridView.Rows[nRow].Cells[3].Value = Convert.ToDouble(Value[a][12]).ToString("0.0") + " 점";
-                        Alt_dataGridView.Rows[nRow].Cells[4].Value = Convert.ToDouble(Value[a][8]).ToString("0.0") + " 점";
-                        Alt_dataGridView.Rows[nRow].Cells[5].Value = Convert.ToDouble(Value[a][9]).ToString("0.0") + " 점";
-                        Alt_dataGridView.Rows[nRow].Cells[6].Value = Convert.ToDouble(Value[a][10]).ToString("0.0") + " 점";
-                        Alt_dataGridView.Rows[nRow].Cells[7].Value = Convert.ToDouble(Value[a][11]).ToString("0.0") + " 점";
-                        Alt_dataGridView.Rows[nRow].Cells[8].Value = Convert.ToDouble(Value[a][7]).ToString("0.0") + " %";
-                        Alt_dataGridView.Rows[nRow].Cells[9].Value = Convert.ToDouble(Value[a][2]).ToString("#,##0"); //직접공사비
+                        Alt_dataGridView.Rows[nRow].Cells[2].Value = Program.UTIL.ToDoubleOrZero(Value[a][1]).ToString("0.00");
+                        Alt_dataGridView.Rows[nRow].Cells[3].Value = Program.UTIL.ToDoubleOrZero(Value[a][12]).ToString("0.0") + " 점";
+                        Alt_dataGridView.Rows[nRow].Cells[4].Value = Program.UTIL.ToDoubleOrZero(Value[a][8]).ToString("0.0") + " 점";
+                        Alt_dataGridView.Rows[nRow].Cells[5].Value = Program.UTIL.ToDoubleOrZero(Value[a][9]).ToString("0.0") + " 점";
+                        Alt_dataGridView.Rows[nRow].Cells[6].Value = Program.UTIL.ToDoubleOrZero(Value[a][10]).ToString("0.0") + " 점";
+                        Alt_dataGridView.Rows[nRow].Cells[7].Value = Program.UTIL.ToDoubleOrZero(Value[a][11]).ToString("0.0") + " 점";
+                        Alt_dataGridView.Rows[nRow].Cells[8].Value = Program.UTIL.ToDoubleOrZero(Value[a][7]).ToString("0.0") + " %";
+                        Alt_dataGridView.Rows[nRow].Cells[9].Value = Program.UTIL.ToDoubleOrZero(Value[a][2]).ToString("#,##0"); //직접공사비
                     }
                 }
             }
@@ -227,11 +227,11 @@ namespace main.subcontents.Alt
                         int nRow = Ucalc_dataGridView.Rows.Add();
                         Ucalc_dataGridView.Rows[nRow].Cells[0].Value = nRow + 1;
                         Ucalc_dataGridView.Rows[nRow].Cells[1].Value = Value[a][0];
-                        if (Value[a][1] != "" && Convert.ToDouble(Value[a][1]) != 0) { Ucalc_dataGridView.Rows[nRow].Cells[2].Value = Value[a][1]; }
+                        if (Value[a][1] != "" && Program.UTIL.ToDoubleOrZero(Value[a][1]) != 0) { Ucalc_dataGridView.Rows[nRow].Cells[2].Value = Value[a][1]; }
                         else { Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "-"; }
-                        if (Value[a][2] != "" && Convert.ToDouble(Value[a][2]) != 0) { Ucalc_dataGridView.Rows[nRow].Cells[3].Value = Value[a][2]; }
+                        if (Value[a][2] != "" && Program.UTIL.ToDoubleOrZero(Value[a][2]) != 0) { Ucalc_dataGridView.Rows[nRow].Cells[3].Value = Value[a][2]; }
                         else { Ucalc_dataGridView.Rows[nRow].Cells[3].Value = "-"; }
-                        if (Value[a][1] != "" && Convert.ToDouble(Value[a][1]) != 0 && Value[a][3] != "외부마감재") { Ucalc_dataGridView.Rows[nRow].Cells[4].Value = (Convert.ToDouble(Value[a][2]) / 1000 / Convert.ToDouble(Value[a][1])).ToString("0.00"); }
+                        if (Value[a][1] != "" && Program.UTIL.ToDoubleOrZero(Value[a][1]) != 0 && Value[a][3] != "외부마감재") { Ucalc_dataGridView.Rows[nRow].Cells[4].Value = (Program.UTIL.ToDoubleOrZero(Value[a][2]) / 1000 / Program.UTIL.ToDoubleOrZero(Value[a][1])).ToString("0.00"); }
                         else { Ucalc_dataGridView.Rows[nRow].Cells[4].Value = "-"; }
                     }
 
@@ -257,7 +257,7 @@ namespace main.subcontents.Alt
                     string[][] WArea = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "Sum(면적)", "구조체번호='" + WList[a][0] + "'");
                     if (WArea.Length > 0 && WArea[0][0]!="")
                     {
-                        area[a] = Convert.ToDouble(WArea[0][0]);
+                        area[a] = Program.UTIL.ToDoubleOrZero(WArea[0][0]);
                     }
                 }
                 double MaxArea = area.Max();
@@ -296,9 +296,9 @@ namespace main.subcontents.Alt
                             double Material_R = 0;
                             if (Alt[a][4] != "")
                             {
-                                Material_d = Convert.ToDouble(Alt[a][4]);
-                                if ((Convert.ToDouble(Alt[a][3]) != 0) && Alt[a][1] != "외부마감재")
-                                { Material_R = Convert.ToDouble(Alt[a][4]) / 1000 / Convert.ToDouble(Alt[a][3]); }
+                                Material_d = Program.UTIL.ToDoubleOrZero(Alt[a][4]);
+                                if ((Program.UTIL.ToDoubleOrZero(Alt[a][3]) != 0) && Alt[a][1] != "외부마감재")
+                                { Material_R = Program.UTIL.ToDoubleOrZero(Alt[a][4]) / 1000 / Program.UTIL.ToDoubleOrZero(Alt[a][3]); }
                             }
                             string Material_Color = "e1dfdf";
                             if (Alt[a][1] == "단열재") { Material_Color = "FFDB58"; }
@@ -372,7 +372,7 @@ namespace main.subcontents.Alt
                 for (int a = 0; a < 10; a++)
                 {
                     Material_sub[a] = Load[0][(2 * a)];
-                    Material_d[a] = Convert.ToDouble(Load[0][(2 * a + 1)]);
+                    Material_d[a] = Program.UTIL.ToDoubleOrZero(Load[0][(2 * a + 1)]);
                 }
             }
 
@@ -389,8 +389,8 @@ namespace main.subcontents.Alt
                     }
                     if (Value.Length > 0)
                     {
-                        if (Convert.ToDouble(Value[0][1]) != 0)
-                        { Material_R[a] = Material_d[a] / 1000 / Convert.ToDouble(Value[0][1]); }
+                        if (Program.UTIL.ToDoubleOrZero(Value[0][1]) != 0)
+                        { Material_R[a] = Material_d[a] / 1000 / Program.UTIL.ToDoubleOrZero(Value[0][1]); }
                         Material_main[a] = Value[0][0];
                         try
                         { Material_Color[a] = Value[0][2]; }
@@ -473,7 +473,7 @@ namespace main.subcontents.Alt
                     pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
                 }
 
-                double dU = Convert.ToDouble(Value[0][1]);
+                double dU = Program.UTIL.ToDoubleOrZero(Value[0][1]);
                 TB_textBox.Visible = true;
                 dU_textBox.Visible = true;
                 if (TBName == "열교없음")
@@ -534,10 +534,10 @@ namespace main.subcontents.Alt
                     double[] Point5 = new double[Value2.Length]; //종합
                     for (int a = 0; a < Value2.Length; a++)
                     {
-                        Point1[a] = Convert.ToDouble(Value2[a][1]);
-                        Point2[a] = Convert.ToDouble(Value2[a][2]);
-                        Point3[a] = Convert.ToDouble(Value2[a][3]);
-                        Point4[a] = Convert.ToDouble(Value2[a][4]);
+                        Point1[a] = Program.UTIL.ToDoubleOrZero(Value2[a][1]);
+                        Point2[a] = Program.UTIL.ToDoubleOrZero(Value2[a][2]);
+                        Point3[a] = Program.UTIL.ToDoubleOrZero(Value2[a][3]);
+                        Point4[a] = Program.UTIL.ToDoubleOrZero(Value2[a][4]);
                     }
                     double Avg1, Avg2, Avg3, Avg4;
                     Avg1 = Point1.ToArray().Average();
@@ -547,10 +547,10 @@ namespace main.subcontents.Alt
 
                     for (int a = 0; a < Value2.Length; a++)
                     {
-                        Point1[a] = Convert.ToDouble(Value2[a][1]) / Avg1 * 100;
-                        Point2[a] = Convert.ToDouble(Value2[a][2]) / Avg2 * 100;
-                        Point3[a] = Convert.ToDouble(Value2[a][3]) / Avg3 * 100;
-                        Point4[a] = Convert.ToDouble(Value2[a][4]) / Avg4 * 100;
+                        Point1[a] = Program.UTIL.ToDoubleOrZero(Value2[a][1]) / Avg1 * 100;
+                        Point2[a] = Program.UTIL.ToDoubleOrZero(Value2[a][2]) / Avg2 * 100;
+                        Point3[a] = Program.UTIL.ToDoubleOrZero(Value2[a][3]) / Avg3 * 100;
+                        Point4[a] = Program.UTIL.ToDoubleOrZero(Value2[a][4]) / Avg4 * 100;
                         Point5[a] = (Point1[a] + Point2[a] + Point3[a] + Point4[a]) / 4; //종합
                         Program.DB.setValue(DB.type.ProjDB, "Optimal_PreResult", "프로젝트번호,프로젝트유형,검토유형,리모델링안," +
                         "에너지점수,쾌적성점수,적법성점수,경제성점수,종합점수",
@@ -583,12 +583,12 @@ namespace main.subcontents.Alt
 
                 if (ar.Length > 0 && ar[0][0] != "")
                 {
-                    Area_수평 = Convert.ToDouble(ar[0][0]);
+                    Area_수평 = Program.UTIL.ToDoubleOrZero(ar[0][0]);
                 }
-                cost[0] = Convert.ToDouble(Value[0][1]) * Area_수평;
-                cost[1] = Convert.ToDouble(Value[0][2]) * Area_수평;
-                cost[2] = Convert.ToDouble(Value[0][3]) * Area_수평;
-                cost[3] = Convert.ToDouble(Value[0][4]) * Area_수평;
+                cost[0] = Program.UTIL.ToDoubleOrZero(Value[0][1]) * Area_수평;
+                cost[1] = Program.UTIL.ToDoubleOrZero(Value[0][2]) * Area_수평;
+                cost[2] = Program.UTIL.ToDoubleOrZero(Value[0][3]) * Area_수평;
+                cost[3] = Program.UTIL.ToDoubleOrZero(Value[0][4]) * Area_수평;
             }
             return cost;
         }
@@ -599,8 +599,8 @@ namespace main.subcontents.Alt
             string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result_Optimal Where 리모델링안='" + 리모델링안 + "' and 검토유형='최하층바닥' and 연료='전체'");
             if (Value.Length > 0 && PreValue.Length > 0)
             {
-                double pre = Convert.ToDouble(PreValue[0][0]) - Convert.ToDouble(PreValue[0][1]);
-                SavingPercent = Math.Max((Convert.ToDouble(PreValue[0][0]) - Convert.ToDouble(Value[0][0])) / pre * 100, 0);
+                double pre = Program.UTIL.ToDoubleOrZero(PreValue[0][0]) - Program.UTIL.ToDoubleOrZero(PreValue[0][1]);
+                SavingPercent = Math.Max((Program.UTIL.ToDoubleOrZero(PreValue[0][0]) - Program.UTIL.ToDoubleOrZero(Value[0][0])) / pre * 100, 0);
             }
             return SavingPercent;
         }
@@ -611,7 +611,7 @@ namespace main.subcontents.Alt
             string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result_Optimal Where 리모델링안='" + 리모델링안 + "' and 검토유형='최하층바닥' and 연료='전체'");
             if (Value.Length > 0 && PreValue.Length > 0)
             {
-                Saving = Math.Max((Convert.ToDouble(PreValue[0][0]) - Convert.ToDouble(Value[0][0])), 0);
+                Saving = Math.Max((Program.UTIL.ToDoubleOrZero(PreValue[0][0]) - Program.UTIL.ToDoubleOrZero(Value[0][0])), 0);
             }
             return Saving;
         }
@@ -624,8 +624,8 @@ namespace main.subcontents.Alt
             string[][] Alt = Program.DB.getValue(DB.type.BaseDB_Optimal, "불투명최적안", "열저항합계,열교가산치,리모델링유형", "최적안='" + 리모델링안 + "'");
             if (Alt.Length > 0)
             {
-                R = Convert.ToDouble(Alt[0][0]);
-                dU = Convert.ToDouble(Alt[0][1]);
+                R = Program.UTIL.ToDoubleOrZero(Alt[0][0]);
+                dU = Program.UTIL.ToDoubleOrZero(Alt[0][1]);
                 리모델링유형 = Alt[0][2];
             }
             double Total_Area = 0, Ueff_avg = 0;
@@ -634,15 +634,15 @@ namespace main.subcontents.Alt
             {
                 for (int k = 0; k < Value.Length; k++)
                 {
-                    double Ueff = Convert.ToDouble(Value[k][1]);
-                    Total_Area += Convert.ToDouble(Value[k][0]);
+                    double Ueff = Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                    Total_Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
                     
                     if (리모델링유형 == "내부덧댐" || (리모델링유형 == "외부덧댐" && Value[k][2] == "바닥(외기)"))
                     {
-                        Ueff = 1 / (1 / Convert.ToDouble(Value[k][1]) + R) + dU;
+                        Ueff = 1 / (1 / Program.UTIL.ToDoubleOrZero(Value[k][1]) + R) + dU;
                     }
 
-                    Ueff_avg += Convert.ToDouble(Value[k][0]) * Ueff;
+                    Ueff_avg += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Ueff;
                 }
                 Ueff_avg = Ueff_avg / Total_Area;
             }
@@ -657,8 +657,8 @@ namespace main.subcontents.Alt
             {
                 for (int k = 0; k < Value.Length; k++)
                 {
-                    Total_Area += Convert.ToDouble(Value[k][0]);
-                    RuleValue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                    Total_Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                    RuleValue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                 }
                 RuleValue = RuleValue / Total_Area;
                 point = (RuleValue / Ueff * 100);
@@ -672,7 +672,7 @@ namespace main.subcontents.Alt
             string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result_Rule Where 검토유형='최하층바닥' and 연료='전체'");
             if (Value.Length > 0 && PreValue.Length > 0)
             {
-                RuleSaving = Math.Max((Convert.ToDouble(PreValue[0][0]) - Convert.ToDouble(Value[0][0])), 0);
+                RuleSaving = Math.Max((Program.UTIL.ToDoubleOrZero(PreValue[0][0]) - Program.UTIL.ToDoubleOrZero(Value[0][0])), 0);
                 point = (Saving_Optimal / RuleSaving * 100);
             }
             return point;
@@ -703,7 +703,7 @@ namespace main.subcontents.Alt
             {
                 for (int a = 0; a < Value.Length; a++)
                 {
-                    CostAVG += Convert.ToDouble(Value[a][0]);
+                    CostAVG += Program.UTIL.ToDoubleOrZero(Value[a][0]);
                 }
                 CostAVG = CostAVG / Value.Length;
             }

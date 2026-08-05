@@ -51,15 +51,15 @@ namespace main.subcontents.CoolingSystem
             string[][] DefaultDB_Value = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "번호,명칭,냉방정격용량,냉방정격소비전력,냉방정격COP,대기전력,연료", "난방냉방 = '냉난방' OR 난방냉방 = '냉방'");
             for (int i = 0; i < DefaultDB_Value.Length; i++)
             {
-               // if (Convert.ToDouble(DefaultDB_Value[i][2]) <= 12)
+               // if (Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][2]) <= 12)
                 //{
                     AirCon_dataGridView.Rows.Add();
                     int nRow = AirCon_dataGridView.Rows.Count - 1;
                     AirCon_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[i][0];
                     AirCon_dataGridView.Rows[nRow].Cells[3].Value = DefaultDB_Value[i][1];
-                    AirCon_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][2]));
-                    AirCon_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][3]));
-                    AirCon_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][4]));
+                    AirCon_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][2]));
+                    AirCon_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][3]));
+                    AirCon_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][4]));
                     AirCon_dataGridView.Rows[nRow].Cells[7].Value = DefaultDB_Value[i][5];
                     AirCon_dataGridView.Rows[nRow].Cells[8].Value = DefaultDB_Value[i][6];
                 //}

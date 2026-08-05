@@ -261,7 +261,7 @@ namespace main.subcontents.RESystem_PV
 
                     if (double.TryParse(aa, out a) && double.TryParse(bb, out b) && aa != null && bb != null)
                     {
-                        double c = Convert.ToDouble(PVModule_dataGridView.Rows[e.RowIndex].Cells[6].Value) / (a * b * 1000);
+                        double c = Program.UTIL.ToDoubleOrZero(PVModule_dataGridView.Rows[e.RowIndex].Cells[6].Value) / (a * b * 1000);
                         PVModule_dataGridView.Rows[e.RowIndex].Cells[9].Value = string.Format("{0:F3}", c);
                     }
 

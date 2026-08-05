@@ -133,8 +133,8 @@ namespace main.contentslist
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "용량,전부하효율", "번호 ='" + List[n][3] + "'");
                         if (SystemValue.Length > 0)
                         {
-                            dataGridView1.Rows[nRow].Cells[4].Value = (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][3])).ToString("0.0");
-                            dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " %";
+                            dataGridView1.Rows[nRow].Cells[4].Value = (Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[n][3])).ToString("0.0");
+                            dataGridView1.Rows[nRow].Cells[5].Value = Program.UTIL.ToDoubleOrZero(SystemValue[0][1]).ToString("0.0") + " %";
                         }
                     }
                     else if (List[n][2] == "외기 히트펌프")
@@ -142,8 +142,8 @@ namespace main.contentslist
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "난방정격용량,난방정격COP", "번호 ='" + List[n][4] + "'");
                         if (SystemValue.Length > 0)
                         {
-                            dataGridView1.Rows[nRow].Cells[4].Value = (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][4])).ToString("0.0");
-                            dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " [W/W]";
+                            dataGridView1.Rows[nRow].Cells[4].Value = (Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[n][4])).ToString("0.0");
+                            dataGridView1.Rows[nRow].Cells[5].Value = Program.UTIL.ToDoubleOrZero(SystemValue[0][1]).ToString("0.0") + " [W/W]";
                         }
                     }
                     else if (List[n][2] == "흡수식온수기")
@@ -151,8 +151,8 @@ namespace main.contentslist
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "난방용량,난방성능", "번호 ='" + List[n][5] + "'");
                         if (SystemValue.Length > 0)
                         {
-                            dataGridView1.Rows[nRow].Cells[4].Value = (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][5])).ToString("0.0");
-                            dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " [W/W]";
+                            dataGridView1.Rows[nRow].Cells[4].Value = (Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[n][5])).ToString("0.0");
+                            dataGridView1.Rows[nRow].Cells[5].Value = Program.UTIL.ToDoubleOrZero(SystemValue[0][1]).ToString("0.0") + " [W/W]";
                         }
                     }
                     else if (List[n][2] == "지역난방")
@@ -160,7 +160,7 @@ namespace main.contentslist
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DH", "용량", "번호 ='" + List[n][6] + "'");
                         if (SystemValue.Length > 0)
                         {
-                            dataGridView1.Rows[nRow].Cells[4].Value = Convert.ToDouble(SystemValue[0][0]).ToString("0.0");
+                            dataGridView1.Rows[nRow].Cells[4].Value = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]).ToString("0.0");
                             dataGridView1.Rows[nRow].Cells[5].Value = "-";
                         }
                     }
@@ -170,8 +170,8 @@ namespace main.contentslist
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "모듈면적,효율", "번호 ='" + List[n][7] + "'");
                         if (SystemValue.Length > 0)
                         {
-                            dataGridView1.Rows[nRow].Cells[4].Value = (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][7])).ToString("0.0") + "m2";
-                            dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " %";
+                            dataGridView1.Rows[nRow].Cells[4].Value = (Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[n][7])).ToString("0.0") + "m2";
+                            dataGridView1.Rows[nRow].Cells[5].Value = Program.UTIL.ToDoubleOrZero(SystemValue[0][1]).ToString("0.0") + " %";
                         }
                     }
                     else if (List[n][2] == "지열 히트펌프")
@@ -179,8 +179,8 @@ namespace main.contentslist
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_GroundHP", "난방정격용량,난방정격COP", "번호 ='" + List[n][8] + "'");
                         if (SystemValue.Length > 0)
                         {
-                            dataGridView1.Rows[nRow].Cells[4].Value = (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][8])).ToString("0.0");
-                            dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " [W/W]";
+                            dataGridView1.Rows[nRow].Cells[4].Value = (Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[n][8])).ToString("0.0");
+                            dataGridView1.Rows[nRow].Cells[5].Value = Program.UTIL.ToDoubleOrZero(SystemValue[0][1]).ToString("0.0") + " [W/W]";
                         }
                     }
                     else if (List[n][2] == "지하수 히트펌프")
@@ -188,8 +188,8 @@ namespace main.contentslist
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_GroundWHP", "난방정격용량,난방정격COP", "번호 ='" + List[n][9] + "'");
                         if (SystemValue.Length > 0)
                         {
-                            dataGridView1.Rows[nRow].Cells[4].Value = (Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[n][9])).ToString("0.0");
-                            dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " [W/W]";
+                            dataGridView1.Rows[nRow].Cells[4].Value = (Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[n][9])).ToString("0.0");
+                            dataGridView1.Rows[nRow].Cells[5].Value = Program.UTIL.ToDoubleOrZero(SystemValue[0][1]).ToString("0.0") + " [W/W]";
                         }
                     }
                     dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];

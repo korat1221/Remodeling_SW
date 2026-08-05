@@ -194,7 +194,7 @@ namespace main.contents.Building
                 }
             }
             int n = ((int)Elec_max).ToString().Length;
-            Elec_max = Convert.ToDouble(String.Format("{0:F0}", Elec_max / Math.Pow(10, n - 1))) * Math.Pow(10, n - 1) + Math.Pow(10, n - 1);
+            Elec_max = Program.UTIL.ToDoubleOrZero(String.Format("{0:F0}", Elec_max / Math.Pow(10, n - 1))) * Math.Pow(10, n - 1) + Math.Pow(10, n - 1);
             webView22.CoreWebView2.ExecuteScriptAsync("drawChart_energyuse([" + s + "]," + Elec_max.ToString() + ")");
         }
         #endregion
@@ -267,10 +267,10 @@ namespace main.contents.Building
         private void Load_Gas_kWh_Value()
         {
             if (Gas_SelectColumn > 1)
-            { Gas_kWh_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value = string.Format("{0:F0}", Convert.ToDouble(Gas_m3_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value.ToString()) * 38.9 * 0.277778); }
+            { Gas_kWh_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value = string.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(Gas_m3_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value.ToString()) * 38.9 * 0.277778); }
             else
             {
-                Gas_kWh_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value = string.Format("{0:F0}", Convert.ToDouble(Gas_m3_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value.ToString()));
+                Gas_kWh_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value = string.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(Gas_m3_dataGridView.Rows[Gas_SelectRow].Cells[Gas_SelectColumn].Value.ToString()));
             }
         }
         private void Gas_updateGraph()
@@ -336,7 +336,7 @@ namespace main.contents.Building
                 }
             }
             int n = ((int)Gas_max).ToString().Length;
-            Gas_max = Convert.ToDouble(String.Format("{0:F0}", Gas_max / Math.Pow(10, n - 1))) * Math.Pow(10, n - 1) + Math.Pow(10, n - 1);
+            Gas_max = Program.UTIL.ToDoubleOrZero(String.Format("{0:F0}", Gas_max / Math.Pow(10, n - 1))) * Math.Pow(10, n - 1) + Math.Pow(10, n - 1);
             webView21.CoreWebView2.ExecuteScriptAsync("drawChart_energyuse([" + s + "]," + Gas_max.ToString() + ")");
         }
 
@@ -410,10 +410,10 @@ namespace main.contents.Building
         private void Load_DH_kWh_Value()
         {
             if (DH_SelectColumn > 1)
-            { DH_kWh_dataGridView.Rows[DH_SelectRow].Cells[DH_SelectColumn].Value = string.Format("{0:F0}", Convert.ToDouble(DH_Mcal_dataGridView.Rows[DH_SelectRow].Cells[DH_SelectColumn].Value.ToString()) * 1.1622); }
+            { DH_kWh_dataGridView.Rows[DH_SelectRow].Cells[DH_SelectColumn].Value = string.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(DH_Mcal_dataGridView.Rows[DH_SelectRow].Cells[DH_SelectColumn].Value.ToString()) * 1.1622); }
             else
             {
-                DH_kWh_dataGridView.Rows[DH_SelectRow].Cells[DH_SelectColumn].Value = string.Format("{0:F0}", Convert.ToDouble(DH_Mcal_dataGridView.Rows[DH_SelectRow].Cells[DH_SelectColumn].Value.ToString()));
+                DH_kWh_dataGridView.Rows[DH_SelectRow].Cells[DH_SelectColumn].Value = string.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(DH_Mcal_dataGridView.Rows[DH_SelectRow].Cells[DH_SelectColumn].Value.ToString()));
             }
         }
 
@@ -480,7 +480,7 @@ namespace main.contents.Building
                 }
             }
             int n = ((int)DH_max).ToString().Length;
-            DH_max = Convert.ToDouble(String.Format("{0:F0}", DH_max / Math.Pow(10, n - 1))) * Math.Pow(10, n - 1) + Math.Pow(10, n - 1);
+            DH_max = Program.UTIL.ToDoubleOrZero(String.Format("{0:F0}", DH_max / Math.Pow(10, n - 1))) * Math.Pow(10, n - 1) + Math.Pow(10, n - 1);
             webView23.CoreWebView2.ExecuteScriptAsync("drawChart_energyuse([" + s + "]," + DH_max.ToString() + ")");
         }
 

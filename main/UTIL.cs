@@ -20,6 +20,12 @@ namespace main
         {
             AddFontFromMemory();
         }
+        // DB.getValue() 등이 빈 문자열/null을 돌려줄 수 있는데 Convert.ToDouble("")은 예외를 던지므로,
+        // 파싱 실패 시 예외 대신 0을 반환하는 안전한 버전. 프로젝트 전체에서 Convert.ToDouble 대신 이걸 쓴다.
+        public double ToDoubleOrZero(object value)
+        {
+            return double.TryParse(value?.ToString(), out double result) ? result : 0;
+        }
         public void trim(string[] arr)
         {
             int i = -1;
@@ -409,7 +415,7 @@ namespace main
         public string doubleComa(string s, int NumberDecimal)
         {
             s = s.Trim();
-            return s != "" ? Convert.ToDouble(s).ToString(NumberDecimalPlaces(NumberDecimal, Convert.ToDouble(s))) : "0";
+            return s != "" ? Program.UTIL.ToDoubleOrZero(s).ToString(NumberDecimalPlaces(NumberDecimal, Program.UTIL.ToDoubleOrZero(s))) : "0";
         }
         private string NumberDecimalPlaces(int a, double Value)
         {
@@ -494,7 +500,7 @@ namespace main
                     {
                         string code_N = NumberDecimalPlaces(NumberDecimal, value);
                         textBox.Text = value.ToString(code_N);
-                        this.textdouble = Convert.ToDouble(textBox.Text.ToString());
+                        this.textdouble = Program.UTIL.ToDoubleOrZero(textBox.Text.ToString());
                     }
                     else
                     {
@@ -510,7 +516,7 @@ namespace main
                 {
                     if (double.TryParse(textBox.Text, out value) == true)
                     {
-                        this.textdouble = Convert.ToDouble(textBox.Text.ToString());
+                        this.textdouble = Program.UTIL.ToDoubleOrZero(textBox.Text.ToString());
                     }
                     else
                     {
@@ -538,7 +544,7 @@ namespace main
                 {
                     string code_N = NumberDecimalPlaces(NumberDecimal, parsedValue);
                     dataGridView.Rows[row].Cells[column].Value = parsedValue.ToString(code_N);
-                    this.textdouble = Convert.ToDouble(cellValue.ToString());
+                    this.textdouble = Program.UTIL.ToDoubleOrZero(cellValue.ToString());
                 }
                 else
                 {
@@ -551,7 +557,7 @@ namespace main
         public string asFixed(string s)
         {
             s = s.Trim();
-            return s != "" ? Convert.ToDouble(s).ToString("0.##") : "0.00";
+            return s != "" ? Program.UTIL.ToDoubleOrZero(s).ToString("0.##") : "0.00";
         }
         public String CreateNum(String 테이블명,String 컬럼명,String 기호)
         {

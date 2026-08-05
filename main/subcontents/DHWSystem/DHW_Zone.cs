@@ -67,8 +67,8 @@ namespace main.subcontents.DHWSystem
                     }
                     Zone_dataGridView.Rows[nRow].Cells[3].Value = Value[n][1];
                     Zone_dataGridView.Rows[nRow].Cells[4].Value = Value[n][2];
-                    Zone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", Convert.ToDouble(Value[n][4]));
-                    Zone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(Value[n][3]));
+                    Zone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(Value[n][4]));
+                    Zone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(Value[n][3]));
 
                     Count_DB = Value.Length;
                 }

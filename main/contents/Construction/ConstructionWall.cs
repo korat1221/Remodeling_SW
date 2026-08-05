@@ -351,7 +351,7 @@ namespace main.contents
                 string[][] OldWall_U = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "열관류율", "명칭 = '" + OldWall + "'");
                 if (OldWall_U.Length > 0)
                 {
-                    OldWall_R = 1 / Convert.ToDouble(OldWall_U[0][0]);
+                    OldWall_R = 1 / Program.UTIL.ToDoubleOrZero(OldWall_U[0][0]);
                     Add_OldWall();
                 }
             }
@@ -413,7 +413,7 @@ namespace main.contents
                 string[][] CW_U = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "패널부분열관류율", "명칭 = '" + CWName + "'");
                 if (CW_U.Length > 0)
                 {
-                    CW_R = 1 / Convert.ToDouble(CW_U[0][0]);
+                    CW_R = 1 / Program.UTIL.ToDoubleOrZero(CW_U[0][0]);
                     Add_CW();
                 }
             }
@@ -437,7 +437,7 @@ namespace main.contents
                 String[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "흡수율", "흡수율", "외장재색 = '" + Color_Envelope + "'");
                 if (value.Length > 0)
                 {
-                    α = Convert.ToDouble(value[0][0]);
+                    α = Program.UTIL.ToDoubleOrZero(value[0][0]);
                     α_textBox.Text = String.Format("{0:F1}", α);
                     α2_textBox.Text = String.Format("{0:F1}", α);
                 }
@@ -490,7 +490,7 @@ namespace main.contents
         {
             if (UMethod == "진단" && U_textBox.Text != string.Empty)
             {
-                Uvalue = Convert.ToDouble(U_textBox.Text);
+                Uvalue = Program.UTIL.ToDoubleOrZero(U_textBox.Text);
                 dins = (1 / Uvalue) * 0.04 * 1000;
                 Calc_dU();
                 Calc_Ueff();
@@ -590,23 +590,23 @@ namespace main.contents
                         TBName_textBox.Text = TBName;
                         check_StructureType = TB_form.Select_TB[2];
                         TBType = TB_form.Select_TB[3];
-                        A = Convert.ToDouble(TB_form.Select_TB[4]);
-                        B = Convert.ToDouble(TB_form.Select_TB[5]);
-                        C = Convert.ToDouble(TB_form.Select_TB[6]);
-                        PerArea = Convert.ToDouble(TB_form.Select_TB[7]);
+                        A = Program.UTIL.ToDoubleOrZero(TB_form.Select_TB[4]);
+                        B = Program.UTIL.ToDoubleOrZero(TB_form.Select_TB[5]);
+                        C = Program.UTIL.ToDoubleOrZero(TB_form.Select_TB[6]);
+                        PerArea = Program.UTIL.ToDoubleOrZero(TB_form.Select_TB[7]);
                         if (PerArea != 0)
                         { PerArea_textBox.Text = string.Format("{0:F3}", PerArea); }
 
                         check_Type = TB_form.Select_TB[8];
-                        check_dins = Convert.ToDouble(TB_form.Select_TB[9]);
-                        dU = Convert.ToDouble(TB_form.Select_TB[10]);   // TB_form.Select_TB[12]
+                        check_dins = Program.UTIL.ToDoubleOrZero(TB_form.Select_TB[9]);
+                        dU = Program.UTIL.ToDoubleOrZero(TB_form.Select_TB[10]);   // TB_form.Select_TB[12]
                         dU_textBox.Text = string.Format("{0:F3}", dU);
 
                         if (PerArea_textBox.Text != "" && PerArea != 0)
                         { dU2_textBox.Text = string.Format("{0:F3}", dU); }
 
                         LinearPoint = TB_form.Select_TB[11];
-                        PsiKai = Convert.ToDouble(TB_form.Select_TB[12]);
+                        PsiKai = Program.UTIL.ToDoubleOrZero(TB_form.Select_TB[12]);
 
                         if (PerArea_textBox.Text != "" && PerArea != 0)
                         { PsiKai_textBox.Text = string.Format("{0:F3}", PsiKai); }
@@ -743,7 +743,7 @@ namespace main.contents
             string[][] value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "두께합계", "명칭 ='" + OldWall + "'");
             if (value.Length > 0)
             {
-                Ucalc_dataGridView.Rows[nRow].Cells[5].Value = Convert.ToDouble(value[0][0]).ToString("0");
+                Ucalc_dataGridView.Rows[nRow].Cells[5].Value = Program.UTIL.ToDoubleOrZero(value[0][0]).ToString("0");
             }
             Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldWall_R);
             Load_Material_Num();
@@ -933,12 +933,12 @@ namespace main.contents
                 {
                     if (Ucalc_dataGridView.Rows[e.RowIndex].Cells[5].Value != null)
                     {
-                        double d = Convert.ToDouble(Ucalc_dataGridView.Rows[e.RowIndex].Cells[5].Value);
+                        double d = Program.UTIL.ToDoubleOrZero(Ucalc_dataGridView.Rows[e.RowIndex].Cells[5].Value);
                         if (Ucalc_dataGridView.Rows[e.RowIndex].Cells[2].Value != null && Ucalc_dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString() == "공기층")
                         {
                             Calc_Air_Layer(e.RowIndex, d);
                         }
-                        double λ = Convert.ToDouble(Ucalc_dataGridView.Rows[e.RowIndex].Cells[4].Value);
+                        double λ = Program.UTIL.ToDoubleOrZero(Ucalc_dataGridView.Rows[e.RowIndex].Cells[4].Value);
                         double R = d / 1000 / λ;
                         Ucalc_dataGridView.Rows[e.RowIndex].Cells[6].Value = String.Format("{0:F2}", R);
                     }
@@ -949,9 +949,9 @@ namespace main.contents
                     {
                         if (Ucalc_dataGridView.Rows[e.RowIndex].Cells[2].Value != null && Ucalc_dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString() == "공기층")
                         {
-                            double d = Convert.ToDouble(Ucalc_dataGridView.Rows[e.RowIndex].Cells[5].Value);
+                            double d = Program.UTIL.ToDoubleOrZero(Ucalc_dataGridView.Rows[e.RowIndex].Cells[5].Value);
                             Calc_Air_Layer(e.RowIndex, d);
-                            double λ = Convert.ToDouble(Ucalc_dataGridView.Rows[e.RowIndex].Cells[4].Value);
+                            double λ = Program.UTIL.ToDoubleOrZero(Ucalc_dataGridView.Rows[e.RowIndex].Cells[4].Value);
                             double R = d / 1000 / λ;
                             Ucalc_dataGridView.Rows[e.RowIndex].Cells[6].Value = String.Format("{0:F2}", R);
                         }
@@ -1000,7 +1000,7 @@ namespace main.contents
                         }
                         else
                         {
-                            Uvalue = Convert.ToDouble(Value[0][0]);
+                            Uvalue = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                         }
                         U_textBox.Text = string.Format("{0:F3}", Uvalue);
                         dins = (1 / Uvalue) * 0.04 * 1000;
@@ -1019,7 +1019,7 @@ namespace main.contents
                 String[][] RsiValue = Program.DB.getValue(DB.type.BaseDB_HCneed, "표면열전달저항", "저항값", "구조체 ='외벽' And 유형 = '실내' AND 기준 = '" + ISO_KS + "'");
                 if (RsiValue.Length > 0)
                 {
-                    Rsi = Convert.ToDouble(RsiValue[0][0]);
+                    Rsi = Program.UTIL.ToDoubleOrZero(RsiValue[0][0]);
                     Rsi_textBox.Text = string.Format("{0:F3}", Rsi);
 
                 }
@@ -1027,7 +1027,7 @@ namespace main.contents
                 String[][] RseValue = Program.DB.getValue(DB.type.BaseDB_HCneed, "표면열전달저항", "저항값", "구조체 ='외벽' And 유형 = '" + DiIndi + "' AND 기준 = '" + ISO_KS + "'");
                 if (RseValue.Length > 0)
                 {
-                    Rse = Convert.ToDouble(RseValue[0][0]);
+                    Rse = Program.UTIL.ToDoubleOrZero(RseValue[0][0]);
                     Rse_textBox.Text = string.Format("{0:F3}", Rse);
 
                 }
@@ -1044,8 +1044,8 @@ namespace main.contents
             {
                 for (int k = 0; k < Value.Length; k++)
                 {
-                    arr_Value[k, 0] = Convert.ToDouble(Value[k][0]);
-                    arr_Value[k, 1] = Convert.ToDouble(Value[k][1]);
+                    arr_Value[k, 0] = Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                    arr_Value[k, 1] = Program.UTIL.ToDoubleOrZero(Value[k][1]);
                 }
             }
             for (int k = 0; k < Value.Length; k++)
@@ -1093,9 +1093,9 @@ namespace main.contents
                         Material[k] = Ucalc_dataGridView.Rows[k].Cells[3].Value.ToString();
                     }
                     else { }
-                    Material_d[k] = !string.IsNullOrWhiteSpace(Ucalc_dataGridView.Rows[k].Cells[5].Value?.ToString()) ? Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[5].Value) : 0;
-                    Material_λ[k] = !string.IsNullOrWhiteSpace(Ucalc_dataGridView.Rows[k].Cells[4].Value?.ToString()) ? Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[4].Value) : 0;
-                    Material_R[k] = !string.IsNullOrWhiteSpace(Ucalc_dataGridView.Rows[k].Cells[6].Value?.ToString()) ? Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[6].Value) : 0;
+                    Material_d[k] = !string.IsNullOrWhiteSpace(Ucalc_dataGridView.Rows[k].Cells[5].Value?.ToString()) ? Program.UTIL.ToDoubleOrZero(Ucalc_dataGridView.Rows[k].Cells[5].Value) : 0;
+                    Material_λ[k] = !string.IsNullOrWhiteSpace(Ucalc_dataGridView.Rows[k].Cells[4].Value?.ToString()) ? Program.UTIL.ToDoubleOrZero(Ucalc_dataGridView.Rows[k].Cells[4].Value) : 0;
+                    Material_R[k] = !string.IsNullOrWhiteSpace(Ucalc_dataGridView.Rows[k].Cells[6].Value?.ToString()) ? Program.UTIL.ToDoubleOrZero(Ucalc_dataGridView.Rows[k].Cells[6].Value) : 0;
                     dtot += Material_d[k];
                     Rtot += Material_R[k];
                 }
@@ -1145,7 +1145,7 @@ namespace main.contents
                 {
                     if (Ucalc_dataGridView.Rows[k].Cells[2].Value.ToString() == "단열재")
                     {
-                        dins += Convert.ToDouble(Ucalc_dataGridView.Rows[k].Cells[5].Value);
+                        dins += Program.UTIL.ToDoubleOrZero(Ucalc_dataGridView.Rows[k].Cells[5].Value);
                     }
 
                 }
@@ -1277,7 +1277,7 @@ namespace main.contents
                 String[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율,기준,시기,지역", "구조체 = '외벽' And 시기 = '2018.09' AND  지역 ='" + Date[0][1] + "'  AND 직접간접 =  '" + DiIndi_ + "'");
                 if (Value.Length > 0)
                 {
-                    법규U = Convert.ToDouble(Value[0][0]);
+                    법규U = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                 }
             }
             #endregion
@@ -1523,34 +1523,34 @@ namespace main.contents
                 }
                 else { }
 
-                A = Convert.ToDouble(Load[0][13]);
-                B = Convert.ToDouble(Load[0][14]);
-                C = Convert.ToDouble(Load[0][15]);
+                A = Program.UTIL.ToDoubleOrZero(Load[0][13]);
+                B = Program.UTIL.ToDoubleOrZero(Load[0][14]);
+                C = Program.UTIL.ToDoubleOrZero(Load[0][15]);
 
-                PsiKai = Convert.ToDouble(Load[0][16]);
+                PsiKai = Program.UTIL.ToDoubleOrZero(Load[0][16]);
 
 
-                PerArea = Convert.ToDouble(Load[0][17]);
+                PerArea = Program.UTIL.ToDoubleOrZero(Load[0][17]);
 
-                Rse = Convert.ToDouble(Load[0][18]);
+                Rse = Program.UTIL.ToDoubleOrZero(Load[0][18]);
                 Rse_textBox.Text = string.Format("{0:F3}", Rse);
-                Rsi = Convert.ToDouble(Load[0][19]);
+                Rsi = Program.UTIL.ToDoubleOrZero(Load[0][19]);
                 Rsi_textBox.Text = string.Format("{0:F3}", Rsi);
 
-                dtot = Convert.ToDouble(Load[0][20]);
-                Rtot = Convert.ToDouble(Load[0][21]);
+                dtot = Program.UTIL.ToDoubleOrZero(Load[0][20]);
+                Rtot = Program.UTIL.ToDoubleOrZero(Load[0][21]);
                 Material_dtot_textBox.Text = String.Format("{0:F0}", dtot);
                 Material_Rtot_textBox.Text = String.Format("{0:F2}", Rtot);
 
-                dins = Convert.ToDouble(Load[0][22]);
-                check_dins = Convert.ToDouble(Load[0][22]);
+                dins = Program.UTIL.ToDoubleOrZero(Load[0][22]);
+                check_dins = Program.UTIL.ToDoubleOrZero(Load[0][22]);
 
 
-                α = Convert.ToDouble(Load[0][43]);
+                α = Program.UTIL.ToDoubleOrZero(Load[0][43]);
                 α_textBox.Text = String.Format("{0:F1}", α);
                 α2_textBox.Text = String.Format("{0:F1}", α);
 
-                Uvalue = Convert.ToDouble(Load[0][44]);
+                Uvalue = Program.UTIL.ToDoubleOrZero(Load[0][44]);
                 U_textBox.Text = string.Format("{0:F3}", Uvalue);
 
 
@@ -1559,7 +1559,7 @@ namespace main.contents
                 for (int i = 0; i < 10; i++)
                 {
                     Material[i] = Load[0][(2 * i + 23)];
-                    Material_d[i] = Convert.ToDouble(Load[0][(2 * i + 24)]);
+                    Material_d[i] = Program.UTIL.ToDoubleOrZero(Load[0][(2 * i + 24)]);
                 }
 
                 for (int i = 0; i < 10; i++)
@@ -1590,7 +1590,7 @@ namespace main.contents
                                 string[][] CW_U = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "패널부분열관류율", "명칭 = '" + Material[i] + "'");
                                 if (CW_U.Length > 0)
                                 {
-                                    CW_R = 1 / Convert.ToDouble(CW_U[0][0]);
+                                    CW_R = 1 / Program.UTIL.ToDoubleOrZero(CW_U[0][0]);
                                     Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "덧댐커튼월";
                                     Ucalc_dataGridView.Rows[nRow].Cells[3].Value = CWName;
                                     Ucalc_dataGridView.Rows[nRow].Cells[5].Value = 150;
@@ -1600,13 +1600,13 @@ namespace main.contents
                             }
                             else
                             {
-                                OldWall_R = 1 / Convert.ToDouble(OldWall_U[0][0]);
+                                OldWall_R = 1 / Program.UTIL.ToDoubleOrZero(OldWall_U[0][0]);
                                 Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "기존외벽";
                                 Ucalc_dataGridView.Rows[nRow].Cells[3].Value = OldWall;
                                 string[][] value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "두께합계", "명칭 ='" + OldWall + "'");
                                 if (value.Length > 0)
                                 {
-                                    Ucalc_dataGridView.Rows[nRow].Cells[5].Value = Convert.ToDouble(value[0][0]).ToString("0");
+                                    Ucalc_dataGridView.Rows[nRow].Cells[5].Value = Program.UTIL.ToDoubleOrZero(value[0][0]).ToString("0");
                                 }
                                 Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldWall_R);
                                 Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "6e6e6e";
@@ -1614,8 +1614,8 @@ namespace main.contents
                         }
                         else
                         {
-                            Material_λ[i] = Convert.ToDouble(Value[0][1]);
-                            Material_R[i] = Convert.ToDouble(Load[0][(2 * i + 24)]) / 1000 / Material_λ[i];
+                            Material_λ[i] = Program.UTIL.ToDoubleOrZero(Value[0][1]);
+                            Material_R[i] = Program.UTIL.ToDoubleOrZero(Load[0][(2 * i + 24)]) / 1000 / Material_λ[i];
                             Ucalc_dataGridView.Rows[nRow].Cells[2].Value = Value[0][0];
                             Ucalc_dataGridView.Rows[nRow].Cells[3].Value = Material[i];
                             Ucalc_dataGridView.Rows[nRow].Cells[4].Value = Value[0][1];
@@ -1687,20 +1687,20 @@ namespace main.contents
 
                 Load_Material_Num();
 
-                dU = Convert.ToDouble(Load[0][45]);
+                dU = Program.UTIL.ToDoubleOrZero(Load[0][45]);
                 dU_textBox.Text = string.Format("{0:F3}", dU);
 
                 if (PerArea != 0)
                 {
-                    PerArea_textBox.Text = string.Format("{0:F3}", Convert.ToDouble(Load[0][17]));
+                    PerArea_textBox.Text = string.Format("{0:F3}", Program.UTIL.ToDoubleOrZero(Load[0][17]));
                 }
                 if (PerArea_textBox.Text != "" && PerArea != 0)
                 {
-                    PsiKai_textBox.Text = string.Format("{0:F3}", Convert.ToDouble(Load[0][16]));
-                    dU2_textBox.Text = string.Format("{0:F3}", Convert.ToDouble(Load[0][45]));
+                    PsiKai_textBox.Text = string.Format("{0:F3}", Program.UTIL.ToDoubleOrZero(Load[0][16]));
+                    dU2_textBox.Text = string.Format("{0:F3}", Program.UTIL.ToDoubleOrZero(Load[0][45]));
                 }
 
-                Ueff = Convert.ToDouble(Load[0][46]);
+                Ueff = Program.UTIL.ToDoubleOrZero(Load[0][46]);
                 Ueff_textBox.Text = string.Format("{0:F3}", Ueff);
                 Ueff2_textBox.Text = string.Format("{0:F3}", Ueff);
 

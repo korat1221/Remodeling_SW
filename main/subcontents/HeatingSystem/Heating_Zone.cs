@@ -71,10 +71,10 @@ namespace main.subcontents.HeatingSystem
                     Zone_dataGridView.Rows[nRow].Cells[4].Value = Value[n][2];
                     if (요구량.Length > 0)
                     {
-                        Zone_dataGridView.Rows[nRow].Cells[5].Value = Convert.ToDouble(요구량[0][0]).ToString("#,##0");
-                        Zone_dataGridView.Rows[nRow].Cells[6].Value =(Convert.ToDouble(요구량[0][1]) / 1000).ToString("#,0.##");
+                        Zone_dataGridView.Rows[nRow].Cells[5].Value = Program.UTIL.ToDoubleOrZero(요구량[0][0]).ToString("#,##0");
+                        Zone_dataGridView.Rows[nRow].Cells[6].Value =(Program.UTIL.ToDoubleOrZero(요구량[0][1]) / 1000).ToString("#,0.##");
                     }
-                    Zone_dataGridView.Rows[nRow].Cells[7].Value =  Convert.ToDouble(Value[n][3]).ToString("#,0.##");
+                    Zone_dataGridView.Rows[nRow].Cells[7].Value =  Program.UTIL.ToDoubleOrZero(Value[n][3]).ToString("#,0.##");
 
                    
                     Count_DB = Value.Length;

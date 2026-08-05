@@ -84,11 +84,11 @@ namespace main.subcontents.HeatingSystem
                         Boiler_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[n][0];
                         Boiler_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[n][1];
                         Boiler_dataGridView.Rows[nRow].Cells[3].Value = DefaultDB_Value[n][2];
-                        Boiler_dataGridView.Rows[nRow].Cells[4].Value = (Convert.ToDouble(DefaultDB_Value[n][3]) * 100).ToString();
-                        Boiler_dataGridView.Rows[nRow].Cells[5].Value = (Convert.ToDouble(DefaultDB_Value[n][4]) * 100).ToString();
-                        Boiler_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[n][5]));
-                        Boiler_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F0}", Convert.ToDouble(DefaultDB_Value[n][6]));
-                        // Boiler_table.Rows.Add(DefaultDB_Value[n][0], DefaultDB_Value[n][1], DefaultDB_Value[n][2], (Convert.ToDouble(DefaultDB_Value[n][3]) * 100).ToString(), (Convert.ToDouble(DefaultDB_Value[n][4]) * 100).ToString(), string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[n][5])), string.Format("{0:F0}", Convert.ToDouble(DefaultDB_Value[n][6])));
+                        Boiler_dataGridView.Rows[nRow].Cells[4].Value = (Program.UTIL.ToDoubleOrZero(DefaultDB_Value[n][3]) * 100).ToString();
+                        Boiler_dataGridView.Rows[nRow].Cells[5].Value = (Program.UTIL.ToDoubleOrZero(DefaultDB_Value[n][4]) * 100).ToString();
+                        Boiler_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[n][5]));
+                        Boiler_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[n][6]));
+                        // Boiler_table.Rows.Add(DefaultDB_Value[n][0], DefaultDB_Value[n][1], DefaultDB_Value[n][2], (Program.UTIL.ToDoubleOrZero(DefaultDB_Value[n][3]) * 100).ToString(), (Program.UTIL.ToDoubleOrZero(DefaultDB_Value[n][4]) * 100).ToString(), string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[n][5])), string.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[n][6])));
                     }
                 }
             }
@@ -102,23 +102,23 @@ namespace main.subcontents.HeatingSystem
                         string 용량 = "", 전부하효율 = "", 부분부하효율 = "", 소비전력 = "", 대기전력 = "";
                         if (User_Value[n][4] != null && User_Value[n][4] != "")
                         {
-                            용량 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][4]));
+                            용량 = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(User_Value[n][4]));
                         }
                         if (User_Value[n][5] != null && User_Value[n][5] != "")
                         {
-                            전부하효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][5]));
+                            전부하효율 = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(User_Value[n][5]));
                         }
                         if (User_Value[n][6] != null && User_Value[n][6] != "")
                         {
-                            부분부하효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][6]));
+                            부분부하효율 = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(User_Value[n][6]));
                         }
                         if (User_Value[n][7] != null && User_Value[n][7] != "")
                         {
-                            소비전력 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][7]));
+                            소비전력 = string.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(User_Value[n][7]));
                         }
                         if (User_Value[n][8] != null && User_Value[n][8] != "")
                         {
-                            대기전력 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][8]));
+                            대기전력 = string.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(User_Value[n][8]));
                         }
                         Boiler_dataGridView.Rows.Add();
                         int nRow = Boiler_dataGridView.Rows.Count - 1;

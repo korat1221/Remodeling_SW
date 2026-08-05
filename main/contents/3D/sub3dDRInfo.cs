@@ -30,9 +30,9 @@ namespace main.contents
             if (rec.Length > 0)
             {
                 Name_textBox.Text = rec[0][0];
-                Area_textBox.Text = String.Format("{0:F2}", Convert.ToDouble(rec[0][1]));
-                Width_textBox.Text = rec[0][2] == "" ? "0" : String.Format("{0:F2}", Convert.ToDouble(rec[0][2]));
-                height_textBox.Text = rec[0][3] == "" ? "0" : String.Format("{0:F2}", Convert.ToDouble(rec[0][3]));
+                Area_textBox.Text = String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(rec[0][1]));
+                Width_textBox.Text = rec[0][2] == "" ? "0" : String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(rec[0][2]));
+                height_textBox.Text = rec[0][3] == "" ? "0" : String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(rec[0][3]));
 
 
                 //문짝제품, 문틀내부, 열교가산치, 문유효열관류율
@@ -42,8 +42,8 @@ namespace main.contents
                     Panel1.Visible = true;
                     Door_textBox.Text = DRLoad[0][0];
                     DRFrame_textBox.Text = DRLoad[0][1];
-                    dUinst_textBox.Text = String.Format("{0:F3}", Convert.ToDouble(DRLoad[0][2])) + " W/m" + Program.UTIL.Subscript(2, true)+"K";
-                    UD_textBox.Text = String.Format("{0:F3}", Convert.ToDouble(DRLoad[0][3])) + " W/m" + Program.UTIL.Subscript(2, true)+"K";
+                    dUinst_textBox.Text = String.Format("{0:F3}", Program.UTIL.ToDoubleOrZero(DRLoad[0][2])) + " W/m" + Program.UTIL.Subscript(2, true)+"K";
+                    UD_textBox.Text = String.Format("{0:F3}", Program.UTIL.ToDoubleOrZero(DRLoad[0][3])) + " W/m" + Program.UTIL.Subscript(2, true)+"K";
                     string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "출입문유형이미지", "이미지", "유형 = '" + "치수" + "'");
                     pictureBox1.Visible = true;
                     pictureBox1.Load(Program.gPath + Image[0][0]);

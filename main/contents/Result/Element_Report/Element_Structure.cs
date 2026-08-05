@@ -91,8 +91,8 @@ namespace main.contents.Result
                 double wall_saving = 0;
                 if (value.Length > 0 && value3.Length > 0)
                 {
-                    Total_Energy_pre = Convert.ToDouble(value3[0][0]);
-                    wall_saving = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
+                    Total_Energy_pre = Program.UTIL.ToDoubleOrZero(value3[0][0]);
+                    wall_saving = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
                 }
 
                 value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 From FinalEnergy_Result_Rule Where 월='연간' and 연료='전기' and 검토유형='외벽'");
@@ -100,14 +100,14 @@ namespace main.contents.Result
                 double wall_saving_elec = 0;
                 if (value.Length > 0 && value3.Length > 0)
                 {
-                    wall_saving_elec = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
+                    wall_saving_elec = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
                 }
                 value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 From FinalEnergy_Result_Rule Where 월='연간' and 연료='전체' and 검토유형='외벽'");
                 value3 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "총에너지소요량", "월='연간' and 연료='전체'");
                 double wall_saving_noelec = 0;
                 if (value.Length > 0 && value3.Length > 0)
                 {
-                    wall_saving_noelec = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
+                    wall_saving_noelec = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
                 }
 
                 d = (wall_saving / Total_Energy_pre * 100);
@@ -145,22 +145,22 @@ namespace main.contents.Result
                     {
                         wall_name[k] = Value[k][0];
                         wall_retype[k] = Value[k][6];
-                        wall_ueff[k] = Convert.ToDouble(Value[k][1]);
-                        wall_ueff_law[k] = Convert.ToDouble(Value[k][2]);
+                        wall_ueff[k] = Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                        wall_ueff_law[k] = Program.UTIL.ToDoubleOrZero(Value[k][2]);
                         wall_num[k] = Value[k][3];
                         string[][] valuek = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "외피유형='외벽' And 구조체번호='" + Value[k][3] + "'");
                         if (valuek.Length > 0)
                         {
                             for (int a = 0; a < valuek.Length; a++)
-                            { wall_area[k] += Convert.ToDouble(valuek[a][0]); }
+                            { wall_area[k] += Program.UTIL.ToDoubleOrZero(valuek[a][0]); }
                         }
 
                         if (Value[k][5] == "법규") { wall_feature[k] = "-"; }
                         else
                         {
-                            if (Convert.ToDouble(Value[k][4]) > 0)
+                            if (Program.UTIL.ToDoubleOrZero(Value[k][4]) > 0)
                             {
-                                wall_feature[k] = "단열두께 " + Convert.ToDouble(Value[k][4]).ToString("") + "mm";
+                                wall_feature[k] = "단열두께 " + Program.UTIL.ToDoubleOrZero(Value[k][4]).ToString("") + "mm";
                             }
                             else
                             {
@@ -234,14 +234,14 @@ namespace main.contents.Result
                             string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "법규열관류율", "번호 ='" + wall_num[a] + "'");
                             if (value2.Length > 0)
                             {
-                                d = Math.Min(100, (Convert.ToDouble(value2[0][0]) / wall_ueff[a] * 100));
+                                d = Math.Min(100, (Program.UTIL.ToDoubleOrZero(value2[0][0]) / wall_ueff[a] * 100));
                                 if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 117) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 117는 픽셀 최대 크기
                                 else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 117) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 117는 픽셀 최대 크기
                                 else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 117) / 100) + "px'></div>"; }
                                 sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
                                 Wall_data[65 + a].Add(new { idx = i, val = sp });//법규대비 성능점수
                                 data.Add(new { cname = "wall_law_point" + a, data = Wall_data[65 + a] });
-                                wall_law_avg += Convert.ToDouble(value2[0][0]) * wall_area[a] / wall_area_sum;
+                                wall_law_avg += Program.UTIL.ToDoubleOrZero(value2[0][0]) * wall_area[a] / wall_area_sum;
                             }
                         }
                     }
@@ -258,22 +258,22 @@ namespace main.contents.Result
                     string[][] area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where 방위 ='동' and 외피유형='외벽'");
                     if (area.Length > 0 && area[0][0] != "")
                     {
-                        east = Convert.ToDouble(area[0][0]);
+                        east = Program.UTIL.ToDoubleOrZero(area[0][0]);
                     }
                     area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where 방위 ='서' and 외피유형='외벽'");
                     if (area.Length > 0 && area[0][0] != "")
                     {
-                        west = Convert.ToDouble(area[0][0]);
+                        west = Program.UTIL.ToDoubleOrZero(area[0][0]);
                     }
                     area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where (방위 ='남' or 방위 ='남동' or 방위 ='남서') and 외피유형='외벽'");
                     if (area.Length > 0 && area[0][0] != "")
                     {
-                        south = Convert.ToDouble(area[0][0]);
+                        south = Program.UTIL.ToDoubleOrZero(area[0][0]);
                     }
                     area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where (방위 ='북' or 방위 ='북동' or 방위 ='북서')and 외피유형='외벽'");
                     if (area.Length > 0 && area[0][0] != "")
                     {
-                        north = Convert.ToDouble(area[0][0]);
+                        north = Program.UTIL.ToDoubleOrZero(area[0][0]);
                     }
                     Wall_data[74].Add(new { idx = i, val = east.ToString("0.0") });
                     data.Add(new { cname = "wall_east", data = Wall_data[74] });
@@ -293,7 +293,7 @@ namespace main.contents.Result
                 double roof_saving = 0;
                 if (value.Length > 0 && value3.Length > 0)
                 {
-                    roof_saving = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
+                    roof_saving = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
                 }
 
                 value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 From FinalEnergy_Result_Rule Where 월='연간' and 연료='전기' and 검토유형='지붕'");
@@ -301,14 +301,14 @@ namespace main.contents.Result
                 double roof_saving_elec = 0;
                 if (value.Length > 0 && value3.Length > 0)
                 {
-                    roof_saving_elec = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
+                    roof_saving_elec = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
                 }
                 value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 From FinalEnergy_Result_Rule Where 월='연간' and 연료='전체' and 검토유형='지붕'");
                 value3 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "총에너지소요량", "월='연간' and 연료='전체'");
                 double roof_saving_noelec = 0;
                 if (value.Length > 0 && value3.Length > 0)
                 {
-                    roof_saving_noelec = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
+                    roof_saving_noelec = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
                 }
 
                 d = (roof_saving / Total_Energy_pre * 100);
@@ -345,23 +345,23 @@ namespace main.contents.Result
                     {
                         roof_name[k] = Value[k][0];
                         roof_retype[k] = Value[k][6];
-                        roof_ueff[k] = Convert.ToDouble(Value[k][1]);
-                        roof_ueff_law[k] = Convert.ToDouble(Value[k][2]);
+                        roof_ueff[k] = Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                        roof_ueff_law[k] = Program.UTIL.ToDoubleOrZero(Value[k][2]);
 
                         roof_num[k] = Value[k][3];
                         string[][] valuek = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "외피유형='지붕' And 구조체번호='" + Value[k][3] + "'");
                         if (valuek.Length > 0)
                         {
                             for (int a = 0; a < valuek.Length; a++)
-                            { roof_area[k] += Convert.ToDouble(valuek[a][0]); }
+                            { roof_area[k] += Program.UTIL.ToDoubleOrZero(valuek[a][0]); }
                         }
 
                         if (Value[k][5] == "법규") { roof_feature[k] = "-"; }
                         else
                         {
-                            if (Convert.ToDouble(Value[k][4]) > 0)
+                            if (Program.UTIL.ToDoubleOrZero(Value[k][4]) > 0)
                             {
-                                roof_feature[k] = "단열두께 " + Convert.ToDouble(Value[k][4]).ToString("") + "mm";
+                                roof_feature[k] = "단열두께 " + Program.UTIL.ToDoubleOrZero(Value[k][4]).ToString("") + "mm";
                             }
                             else
                             {
@@ -433,7 +433,7 @@ namespace main.contents.Result
                             string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "법규열관류율", "번호 ='" + roof_num[a] + "'");
                             if (value2.Length > 0)
                             {
-                                d = Math.Min(100, (Convert.ToDouble(value2[0][0]) / roof_ueff[a] * 100));
+                                d = Math.Min(100, (Program.UTIL.ToDoubleOrZero(value2[0][0]) / roof_ueff[a] * 100));
                                 if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 117) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 117는 픽셀 최대 크기
                                 else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 117) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 117는 픽셀 최대 크기
                                 else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 117) / 100) + "px'></div>"; }
@@ -441,7 +441,7 @@ namespace main.contents.Result
 
                                 Roof_data[65 + a].Add(new { idx = i, val = sp });//법규대비 성능점수
                                 data.Add(new { cname = "roof_law_point" + a, data = Roof_data[65 + a] });
-                                roof_law_avg += Convert.ToDouble(value2[0][0]) * roof_area[a] / roof_area_sum;
+                                roof_law_avg += Program.UTIL.ToDoubleOrZero(value2[0][0]) * roof_area[a] / roof_area_sum;
                             }
                         }
                     }
@@ -457,27 +457,27 @@ namespace main.contents.Result
                     string[][] area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where 방위 ='동' and 외피유형='지붕'");
                     if (area.Length > 0 && area[0][0] != "")
                     {
-                        east = Convert.ToDouble(area[0][0]);
+                        east = Program.UTIL.ToDoubleOrZero(area[0][0]);
                     }
                     area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where 방위 ='서' and 외피유형='지붕'");
                     if (area.Length > 0 && area[0][0] != "")
                     {
-                        west = Convert.ToDouble(area[0][0]);
+                        west = Program.UTIL.ToDoubleOrZero(area[0][0]);
                     }
                     area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where (방위 ='남' or 방위 ='남동' or 방위 ='남서') and 외피유형='지붕'");
                     if (area.Length > 0 && area[0][0] != "")
                     {
-                        south = Convert.ToDouble(area[0][0]);
+                        south = Program.UTIL.ToDoubleOrZero(area[0][0]);
                     }
                     area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where (방위 ='북' or 방위 ='북동' or 방위 ='북서')and 외피유형='지붕'");
                     if (area.Length > 0 && area[0][0] != "")
                     {
-                        north = Convert.ToDouble(area[0][0]);
+                        north = Program.UTIL.ToDoubleOrZero(area[0][0]);
                     }
                     area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where 방위 ='수평' and 외피유형='지붕'");
                     if (area.Length > 0 && area[0][0] != "")
                     {
-                        horizontal = Convert.ToDouble(area[0][0]);
+                        horizontal = Program.UTIL.ToDoubleOrZero(area[0][0]);
                     }
                     Roof_data[74].Add(new { idx = i, val = east.ToString("0.0") });
                     data.Add(new { cname = "roof_east", data = Roof_data[74] });
@@ -500,7 +500,7 @@ namespace main.contents.Result
                 double floor_saving = 0;
                 if (value.Length > 0 && value3.Length > 0)
                 {
-                    floor_saving = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
+                    floor_saving = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
                 }
 
                 value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 From FinalEnergy_Result_Rule Where 월='연간' and 연료='전기' and 검토유형='최하층바닥'");
@@ -508,14 +508,14 @@ namespace main.contents.Result
                 double floor_saving_elec = 0;
                 if (value.Length > 0 && value3.Length > 0)
                 {
-                    floor_saving_elec = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
+                    floor_saving_elec = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
                 }
                 value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 From FinalEnergy_Result_Rule Where 월='연간' and 연료='전체' and 검토유형='최하층바닥'");
                 value3 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "총에너지소요량", "월='연간' and 연료='전체'");
                 double floor_saving_noelec = 0;
                 if (value.Length > 0 && value3.Length > 0)
                 {
-                    floor_saving_noelec = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
+                    floor_saving_noelec = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
                 }
                 d = (floor_saving / Total_Energy_pre * 100);
 
@@ -551,22 +551,22 @@ namespace main.contents.Result
                     {
                         floor_name[k] = Value[k][0];
                         floor_retype[k] = Value[k][6];
-                        floor_ueff[k] = Convert.ToDouble(Value[k][1]);
-                        floor_ueff_law[k] = Convert.ToDouble(Value[k][2]);
+                        floor_ueff[k] = Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                        floor_ueff_law[k] = Program.UTIL.ToDoubleOrZero(Value[k][2]);
 
                         floor_num[k] = Value[k][3];
                         string[][] valuek = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "외피유형='최하층바닥' And 구조체번호='" + Value[k][3] + "'");
                         if (valuek.Length > 0)
                         {
                             for (int a = 0; a < valuek.Length; a++)
-                            { floor_area[k] += Convert.ToDouble(valuek[a][0]); }
+                            { floor_area[k] += Program.UTIL.ToDoubleOrZero(valuek[a][0]); }
                         }
                         if (Value[k][5] == "법규") { floor_feature[k] = "-"; }
                         else
                         {
-                            if (Convert.ToDouble(Value[k][4]) > 0)
+                            if (Program.UTIL.ToDoubleOrZero(Value[k][4]) > 0)
                             {
-                                floor_feature[k] = "단열두께 " + Convert.ToDouble(Value[k][4]).ToString("") + "mm";
+                                floor_feature[k] = "단열두께 " + Program.UTIL.ToDoubleOrZero(Value[k][4]).ToString("") + "mm";
                             }
                             else
                             {
@@ -638,14 +638,14 @@ namespace main.contents.Result
                             string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "법규열관류율", "번호 ='" + floor_num[a] + "'");
                             if (value2.Length > 0)
                             {
-                                d = Math.Min(100, (Convert.ToDouble(value2[0][0]) / floor_ueff[a] * 100));
+                                d = Math.Min(100, (Program.UTIL.ToDoubleOrZero(value2[0][0]) / floor_ueff[a] * 100));
                                 if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 117) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 117는 픽셀 최대 크기
                                 else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 117) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 117는 픽셀 최대 크기
                                 else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 117) / 100) + "px'></div>"; }
                                 sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
                                 Floor_data[65 + a].Add(new { idx = i, val = sp });//법규대비 성능점수
                                 data.Add(new { cname = "floor_law_point" + a, data = Floor_data[65 + a] });
-                                floor_law_avg += Convert.ToDouble(value2[0][0]) * floor_area[a] / floor_area_sum;
+                                floor_law_avg += Program.UTIL.ToDoubleOrZero(value2[0][0]) * floor_area[a] / floor_area_sum;
                             }
                         }
                     }
@@ -661,22 +661,22 @@ namespace main.contents.Result
                     string[][] area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(a.면적) From ZoneEnvelope_3D as a  Inner Join ConstructionFloor as b on a.구조체번호 = b.번호 where a.외피유형='최하층바닥' and  b.기초설치 ='지면위'");
                     if (area.Length > 0 && area[0][0] != "")
                     {
-                        east = Convert.ToDouble(area[0][0]);
+                        east = Program.UTIL.ToDoubleOrZero(area[0][0]);
                     }
                     area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(a.면적) From ZoneEnvelope_3D as a  Inner Join ConstructionFloor as b on a.구조체번호 = b.번호 where a.외피유형='최하층바닥' and  b.기초설치 ='단열지하실'");
                     if (area.Length > 0 && area[0][0] != "")
                     {
-                        west = Convert.ToDouble(area[0][0]);
+                        west = Program.UTIL.ToDoubleOrZero(area[0][0]);
                     }
                     area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(a.면적) From ZoneEnvelope_3D as a  Inner Join ConstructionFloor as b on a.구조체번호 = b.번호 where a.외피유형='최하층바닥' and  b.기초설치 ='비단열지하실'");
                     if (area.Length > 0 && area[0][0] != "")
                     {
-                        south = Convert.ToDouble(area[0][0]);
+                        south = Program.UTIL.ToDoubleOrZero(area[0][0]);
                     }
                     area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(a.면적) From ZoneEnvelope_3D as a  Inner Join ConstructionFloor as b on a.구조체번호 = b.번호 where a.외피유형='최하층바닥' and  b.기초설치 ='바닥(외기)'");
                     if (area.Length > 0 && area[0][0] != "")
                     {
-                        north = Convert.ToDouble(area[0][0]);
+                        north = Program.UTIL.ToDoubleOrZero(area[0][0]);
                     }
                     Floor_data[74].Add(new { idx = i, val = east.ToString("0.0") });
                     data.Add(new { cname = "floor_east", data = Floor_data[74] });
@@ -797,7 +797,7 @@ namespace main.contents.Result
                         {
                             wall_name[k] = Value[k][0];
                             wall_retype[k] = Value[k][6];
-                            wall_ueff[k] = Convert.ToDouble(Value[k][1]);
+                            wall_ueff[k] = Program.UTIL.ToDoubleOrZero(Value[k][1]);
                             if (wall_retype[k] != "신규")
                             {
                                 if (Value[k][2] != "")
@@ -805,7 +805,7 @@ namespace main.contents.Result
                                     string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "명칭 ='" + Value[k][2] + "'");
                                     if (value2.Length > 0)
                                     {
-                                        wall_ueff_old[k] = Convert.ToDouble(value2[0][0]);
+                                        wall_ueff_old[k] = Program.UTIL.ToDoubleOrZero(value2[0][0]);
                                     }
                                 }
                                 else
@@ -819,15 +819,15 @@ namespace main.contents.Result
                             if (valuek.Length > 0)
                             {
                                 for (int a = 0; a < valuek.Length; a++)
-                                { wall_area[k] += Convert.ToDouble(valuek[a][0]); }
+                                { wall_area[k] += Program.UTIL.ToDoubleOrZero(valuek[a][0]); }
                             }
 
                             if (Value[k][5] == "법규") { wall_feature[k] = "-"; }
                             else
                             {
-                                if (Convert.ToDouble(Value[k][4]) > 0)
+                                if (Program.UTIL.ToDoubleOrZero(Value[k][4]) > 0)
                                 {
-                                    wall_feature[k] = "단열두께 " + Convert.ToDouble(Value[k][4]).ToString("") + "mm";
+                                    wall_feature[k] = "단열두께 " + Program.UTIL.ToDoubleOrZero(Value[k][4]).ToString("") + "mm";
                                 }
                                 else
                                 {
@@ -926,14 +926,14 @@ namespace main.contents.Result
                                 string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "법규열관류율", "번호 ='" + wall_num[a] + "'");
                                 if (value2.Length > 0)
                                 {
-                                    d = Math.Min(100, (Convert.ToDouble(value2[0][0]) / wall_ueff[a] * 100));
+                                    d = Math.Min(100, (Program.UTIL.ToDoubleOrZero(value2[0][0]) / wall_ueff[a] * 100));
                                     if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 117) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 117는 픽셀 최대 크기
                                     else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 117) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 117는 픽셀 최대 크기
                                     else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 117) / 100) + "px'></div>"; }
                                     sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
                                     Wall_data[65 + a].Add(new { idx = i, val = sp });//법규대비 성능점수
                                     data.Add(new { cname = "wall_law_point" + a, data = Wall_data[65 + a] });
-                                    wall_law_avg += Convert.ToDouble(value2[0][0]) * wall_area[a] / wall_area_sum;
+                                    wall_law_avg += Program.UTIL.ToDoubleOrZero(value2[0][0]) * wall_area[a] / wall_area_sum;
                                 }
                             }
                         }
@@ -950,22 +950,22 @@ namespace main.contents.Result
                         string[][] area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where 방위 ='동' and 외피유형='외벽'");
                         if (area.Length > 0 && area[0][0] != "")
                         {
-                            east = Convert.ToDouble(area[0][0]);
+                            east = Program.UTIL.ToDoubleOrZero(area[0][0]);
                         }
                         area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where 방위 ='서' and 외피유형='외벽'");
                         if (area.Length > 0 && area[0][0] != "")
                         {
-                            west = Convert.ToDouble(area[0][0]);
+                            west = Program.UTIL.ToDoubleOrZero(area[0][0]);
                         }
                         area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where (방위 ='남' or 방위 ='남동' or 방위 ='남서') and 외피유형='외벽'");
                         if (area.Length > 0 && area[0][0] != "")
                         {
-                            south = Convert.ToDouble(area[0][0]);
+                            south = Program.UTIL.ToDoubleOrZero(area[0][0]);
                         }
                         area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where (방위 ='북' or 방위 ='북동' or 방위 ='북서')and 외피유형='외벽'");
                         if (area.Length > 0 && area[0][0] != "")
                         {
-                            north = Convert.ToDouble(area[0][0]);
+                            north = Program.UTIL.ToDoubleOrZero(area[0][0]);
                         }
                         Wall_data[74].Add(new { idx = i, val = east.ToString("0.0") });
                         data.Add(new { cname = "wall_east", data = Wall_data[74] });
@@ -1030,7 +1030,7 @@ namespace main.contents.Result
                         {
                             roof_name[k] = Value[k][0];
                             roof_retype[k] = Value[k][6];
-                            roof_ueff[k] = Convert.ToDouble(Value[k][1]);
+                            roof_ueff[k] = Program.UTIL.ToDoubleOrZero(Value[k][1]);
                             if (roof_retype[k] != "신규")
                             {
                                 if (Value[k][2] != "")
@@ -1038,7 +1038,7 @@ namespace main.contents.Result
                                     string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "유효열관류율", "명칭 ='" + Value[k][2] + "'");
                                     if (value2.Length > 0)
                                     {
-                                        roof_ueff_old[k] = Convert.ToDouble(value2[0][0]);
+                                        roof_ueff_old[k] = Program.UTIL.ToDoubleOrZero(value2[0][0]);
                                     }
                                 }
                                 else
@@ -1052,15 +1052,15 @@ namespace main.contents.Result
                             if (valuek.Length > 0)
                             {
                                 for (int a = 0; a < valuek.Length; a++)
-                                { roof_area[k] += Convert.ToDouble(valuek[a][0]); }
+                                { roof_area[k] += Program.UTIL.ToDoubleOrZero(valuek[a][0]); }
                             }
 
                             if (Value[k][5] == "법규") { roof_feature[k] = "-"; }
                             else
                             {
-                                if (Convert.ToDouble(Value[k][4]) > 0)
+                                if (Program.UTIL.ToDoubleOrZero(Value[k][4]) > 0)
                                 {
-                                    roof_feature[k] = "단열두께 " + Convert.ToDouble(Value[k][4]).ToString("") + "mm";
+                                    roof_feature[k] = "단열두께 " + Program.UTIL.ToDoubleOrZero(Value[k][4]).ToString("") + "mm";
                                 }
                                 else
                                 {
@@ -1158,7 +1158,7 @@ namespace main.contents.Result
                                 string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "법규열관류율", "번호 ='" + roof_num[a] + "'");
                                 if (value2.Length > 0)
                                 {
-                                    d = Math.Min(100, (Convert.ToDouble(value2[0][0]) / roof_ueff[a] * 100));
+                                    d = Math.Min(100, (Program.UTIL.ToDoubleOrZero(value2[0][0]) / roof_ueff[a] * 100));
                                     if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 117) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 117는 픽셀 최대 크기
                                     else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 117) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 117는 픽셀 최대 크기
                                     else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 117) / 100) + "px'></div>"; }
@@ -1166,7 +1166,7 @@ namespace main.contents.Result
 
                                     Roof_data[65 + a].Add(new { idx = i, val = sp });//법규대비 성능점수
                                     data.Add(new { cname = "roof_law_point" + a, data = Roof_data[65 + a] });
-                                    roof_law_avg += Convert.ToDouble(value2[0][0]) * roof_area[a] / roof_area_sum;
+                                    roof_law_avg += Program.UTIL.ToDoubleOrZero(value2[0][0]) * roof_area[a] / roof_area_sum;
                                 }
                             }
                         }
@@ -1182,27 +1182,27 @@ namespace main.contents.Result
                         string[][] area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where 방위 ='동' and 외피유형='지붕'");
                         if (area.Length > 0 && area[0][0] != "")
                         {
-                            east = Convert.ToDouble(area[0][0]);
+                            east = Program.UTIL.ToDoubleOrZero(area[0][0]);
                         }
                         area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where 방위 ='서' and 외피유형='지붕'");
                         if (area.Length > 0 && area[0][0] != "")
                         {
-                            west = Convert.ToDouble(area[0][0]);
+                            west = Program.UTIL.ToDoubleOrZero(area[0][0]);
                         }
                         area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where (방위 ='남' or 방위 ='남동' or 방위 ='남서') and 외피유형='지붕'");
                         if (area.Length > 0 && area[0][0] != "")
                         {
-                            south = Convert.ToDouble(area[0][0]);
+                            south = Program.UTIL.ToDoubleOrZero(area[0][0]);
                         }
                         area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where (방위 ='북' or 방위 ='북동' or 방위 ='북서')and 외피유형='지붕'");
                         if (area.Length > 0 && area[0][0] != "")
                         {
-                            north = Convert.ToDouble(area[0][0]);
+                            north = Program.UTIL.ToDoubleOrZero(area[0][0]);
                         }
                         area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(면적) From ZoneEnvelope_3D  where 방위 ='수평' and 외피유형='지붕'");
                         if (area.Length > 0 && area[0][0] != "")
                         {
-                            horizontal = Convert.ToDouble(area[0][0]);
+                            horizontal = Program.UTIL.ToDoubleOrZero(area[0][0]);
                         }
                         Roof_data[74].Add(new { idx = i, val = east.ToString("0.0") });
                         data.Add(new { cname = "roof_east", data = Roof_data[74] });
@@ -1270,7 +1270,7 @@ namespace main.contents.Result
                         {
                             floor_name[k] = Value[k][0];
                             floor_retype[k] = Value[k][6];
-                            floor_ueff[k] = Convert.ToDouble(Value[k][1]);
+                            floor_ueff[k] = Program.UTIL.ToDoubleOrZero(Value[k][1]);
                             if (floor_retype[k] != "신규")
                             {
                                 if (Value[k][2] != "")
@@ -1278,7 +1278,7 @@ namespace main.contents.Result
                                     string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "유효열관류율", "명칭 ='" + Value[k][2] + "'");
                                     if (value2.Length > 0)
                                     {
-                                        floor_ueff_old[k] = Convert.ToDouble(value2[0][0]);
+                                        floor_ueff_old[k] = Program.UTIL.ToDoubleOrZero(value2[0][0]);
                                     }
                                 }
                                 else
@@ -1292,14 +1292,14 @@ namespace main.contents.Result
                             if (valuek.Length > 0)
                             {
                                 for (int a = 0; a < valuek.Length; a++)
-                                { floor_area[k] += Convert.ToDouble(valuek[a][0]); }
+                                { floor_area[k] += Program.UTIL.ToDoubleOrZero(valuek[a][0]); }
                             }
                             if (Value[k][5] == "법규") { floor_feature[k] = "-"; }
                             else
                             {
-                                if (Convert.ToDouble(Value[k][4]) > 0)
+                                if (Program.UTIL.ToDoubleOrZero(Value[k][4]) > 0)
                                 {
-                                    floor_feature[k] = "단열두께 " + Convert.ToDouble(Value[k][4]).ToString("") + "mm";
+                                    floor_feature[k] = "단열두께 " + Program.UTIL.ToDoubleOrZero(Value[k][4]).ToString("") + "mm";
                                 }
                                 else
                                 {
@@ -1396,14 +1396,14 @@ namespace main.contents.Result
                                 string[][] value2 = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "법규열관류율", "번호 ='" + floor_num[a] + "'");
                                 if (value2.Length > 0)
                                 {
-                                    d = Math.Min(100, (Convert.ToDouble(value2[0][0]) / floor_ueff[a] * 100));
+                                    d = Math.Min(100, (Program.UTIL.ToDoubleOrZero(value2[0][0]) / floor_ueff[a] * 100));
                                     if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 117) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 117는 픽셀 최대 크기
                                     else if (d <= 30) { sp = "<div class='cls-sparkline-red' style='width:" + (int)((d * 117) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 117는 픽셀 최대 크기
                                     else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 117) / 100) + "px'></div>"; }
                                     sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
                                     Floor_data[65 + a].Add(new { idx = i, val = sp });//법규대비 성능점수
                                     data.Add(new { cname = "floor_law_point" + a, data = Floor_data[65 + a] });
-                                    floor_law_avg += Convert.ToDouble(value2[0][0]) * floor_area[a] / floor_area_sum;
+                                    floor_law_avg += Program.UTIL.ToDoubleOrZero(value2[0][0]) * floor_area[a] / floor_area_sum;
                                 }
                             }
                         }
@@ -1419,22 +1419,22 @@ namespace main.contents.Result
                         string[][] area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(a.면적) From ZoneEnvelope_3D as a  Inner Join ConstructionFloor as b on a.구조체번호 = b.번호 where a.외피유형='최하층바닥' and  b.기초설치 ='지면위'");
                         if (area.Length > 0 && area[0][0] != "")
                         {
-                            east = Convert.ToDouble(area[0][0]);
+                            east = Program.UTIL.ToDoubleOrZero(area[0][0]);
                         }
                         area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(a.면적) From ZoneEnvelope_3D as a  Inner Join ConstructionFloor as b on a.구조체번호 = b.번호 where a.외피유형='최하층바닥' and  b.기초설치 ='단열지하실'");
                         if (area.Length > 0 && area[0][0] != "")
                         {
-                            west = Convert.ToDouble(area[0][0]);
+                            west = Program.UTIL.ToDoubleOrZero(area[0][0]);
                         }
                         area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(a.면적) From ZoneEnvelope_3D as a  Inner Join ConstructionFloor as b on a.구조체번호 = b.번호 where a.외피유형='최하층바닥' and  b.기초설치 ='비단열지하실'");
                         if (area.Length > 0 && area[0][0] != "")
                         {
-                            south = Convert.ToDouble(area[0][0]);
+                            south = Program.UTIL.ToDoubleOrZero(area[0][0]);
                         }
                         area = Program.DB.querySQL(DB.type.ProjDB, "SELECT SUM(a.면적) From ZoneEnvelope_3D as a  Inner Join ConstructionFloor as b on a.구조체번호 = b.번호 where a.외피유형='최하층바닥' and  b.기초설치 ='바닥(외기)'");
                         if (area.Length > 0 && area[0][0] != "")
                         {
-                            north = Convert.ToDouble(area[0][0]);
+                            north = Program.UTIL.ToDoubleOrZero(area[0][0]);
                         }
                         Floor_data[74].Add(new { idx = i, val = east.ToString("0.0") });
                         data.Add(new { cname = "floor_east", data = Floor_data[74] });

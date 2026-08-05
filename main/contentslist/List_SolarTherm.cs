@@ -114,9 +114,9 @@ namespace main.contentslist
                     //적용설비를 바탕으로 작성함
                     string[][] solartherm = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "모듈면적,효율,유효열용량", "번호 = '" + stdb[i][1] + "'");
 
-                    dataGridView1.Rows[i].Cells[5].Value = string.Format("{0:N2}", Convert.ToDouble(stdb[i][4]) * Convert.ToDouble(solartherm[0][0]));
-                    dataGridView1.Rows[i].Cells[6].Value = string.Format("{0:N2}", Convert.ToDouble(stdb[i][4]) * Convert.ToDouble(solartherm[0][2]));
-                    dataGridView1.Rows[i].Cells[7].Value = string.Format("{0:N0}", Convert.ToDouble(solartherm[0][1]) * 100);
+                    dataGridView1.Rows[i].Cells[5].Value = string.Format("{0:N2}", Program.UTIL.ToDoubleOrZero(stdb[i][4]) * Program.UTIL.ToDoubleOrZero(solartherm[0][0]));
+                    dataGridView1.Rows[i].Cells[6].Value = string.Format("{0:N2}", Program.UTIL.ToDoubleOrZero(stdb[i][4]) * Program.UTIL.ToDoubleOrZero(solartherm[0][2]));
+                    dataGridView1.Rows[i].Cells[7].Value = string.Format("{0:N0}", Program.UTIL.ToDoubleOrZero(solartherm[0][1]) * 100);
                     //연간 생산량 작성
 
                     if (stdb[i][3] == "난방")
@@ -125,7 +125,7 @@ namespace main.contentslist
                         double qh = 0;
                         for (int j = 0; j < 12; j++)
                         {
-                            qh += Convert.ToDouble(stherm[j][1]);
+                            qh += Program.UTIL.ToDoubleOrZero(stherm[j][1]);
                         }
                         dataGridView1.Rows[i].Cells[8].Value = string.Format("{0:N0}", qh);
                     }
@@ -135,7 +135,7 @@ namespace main.contentslist
                         double qw = 0;
                         for (int j = 0; j < 12; j++)
                         {
-                            qw += Convert.ToDouble(stherm[j][1]);
+                            qw += Program.UTIL.ToDoubleOrZero(stherm[j][1]);
                         }
                         dataGridView1.Rows[i].Cells[8].Value = string.Format("{0:N0}", qw);
                     }

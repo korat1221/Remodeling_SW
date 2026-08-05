@@ -128,8 +128,8 @@ namespace main.contentslist
                         dataGridView1.Rows[nRow].Cells[3].Value = Value[0][2];
                         if (Value[0][3] != "" || Value[0][4] != "")
                         {
-                         dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F1}", Convert.ToDouble(Value[0][3]));
-                         dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F1}", Convert.ToDouble(Value[0][4]));
+                         dataGridView1.Rows[nRow].Cells[4].Value = String.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(Value[0][3]));
+                         dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(Value[0][4]));
                         } 
                     }
                     else

@@ -246,12 +246,12 @@ namespace main.subcontents.HeatingSystem
                         HP_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
                         HP_dataGridView.Rows[nRow].Cells[3].Value = User_Value[n][2];
                         HP_dataGridView.Rows[nRow].Cells[4].Value = User_Value[n][3];
-                        HP_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][4]));
-                        HP_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][5]));
-                        HP_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][6]));
-                        HP_dataGridView.Rows[nRow].Cells[8].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][7]));
-                        HP_dataGridView.Rows[nRow].Cells[9].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][8]));
-                        HP_dataGridView.Rows[nRow].Cells[10].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][9]));
+                        HP_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(User_Value[n][4]));
+                        HP_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(User_Value[n][5]));
+                        HP_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(User_Value[n][6]));
+                        HP_dataGridView.Rows[nRow].Cells[8].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(User_Value[n][7]));
+                        HP_dataGridView.Rows[nRow].Cells[9].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(User_Value[n][8]));
+                        HP_dataGridView.Rows[nRow].Cells[10].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(User_Value[n][9]));
                     }
                 }
 

@@ -177,17 +177,17 @@ namespace main.subcontents
                         UserDB_SingleDoubleTriple = Select1_Glass[0][4] + "+" + Select2_Glass[0][4];
                         UserDB_ArAir = Select1_Glass[0][5] + "+" + Select2_Glass[0][5];
                         UserDB_LE_CL_V = Select1_Glass[0][6] + "+" + Select2_Glass[0][6];
-                        UserDB_Ug = 1 / ((1 / Convert.ToDouble(Select1_Glass[0][7])) - 0.04 + 0.189 - 0.13 + (1 / Convert.ToDouble(Select2_Glass[0][7])));
+                        UserDB_Ug = 1 / ((1 / Program.UTIL.ToDoubleOrZero(Select1_Glass[0][7])) - 0.04 + 0.189 - 0.13 + (1 / Program.UTIL.ToDoubleOrZero(Select2_Glass[0][7])));
                         String[][] f_shgc = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + UserDB_LE_CL_V + "' AND 보정유형 = '태양열취득률'");
                         String[][] f_τ = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + UserDB_LE_CL_V + "' AND 보정유형 = '빛투과율'");
                         if (f_shgc.Length > 0)
                         {
-                            UserDB_g = Convert.ToDouble(f_shgc[0][0]) * Convert.ToDouble(Select1_Glass[0][8]) * Convert.ToDouble(Select2_Glass[0][8]);
+                            UserDB_g = Program.UTIL.ToDoubleOrZero(f_shgc[0][0]) * Program.UTIL.ToDoubleOrZero(Select1_Glass[0][8]) * Program.UTIL.ToDoubleOrZero(Select2_Glass[0][8]);
                         }
                         if (f_τ.Length > 0)
-                        { UserDB_Tao = Convert.ToDouble(f_τ[0][0]) * Convert.ToDouble(Select1_Glass[0][9]) * Convert.ToDouble(Select2_Glass[0][9]); }
-                        UserDB_RExternal = Convert.ToDouble(Select1_Glass[0][10]);
-                        UserDB_RInternal = Convert.ToDouble(Select2_Glass[0][11]);
+                        { UserDB_Tao = Program.UTIL.ToDoubleOrZero(f_τ[0][0]) * Program.UTIL.ToDoubleOrZero(Select1_Glass[0][9]) * Program.UTIL.ToDoubleOrZero(Select2_Glass[0][9]); }
+                        UserDB_RExternal = Program.UTIL.ToDoubleOrZero(Select1_Glass[0][10]);
+                        UserDB_RInternal = Program.UTIL.ToDoubleOrZero(Select2_Glass[0][11]);
                     }
                 }
             }
@@ -247,7 +247,7 @@ namespace main.subcontents
                     }
                     for (int a = 7; a < 10; a++)
                     {
-                        DoubleGlass_dataGridView.Rows[nRow].Cells[a + 1].Value = String.Format("{0:F3}", Convert.ToDouble(User_DGlass[n][a]));
+                        DoubleGlass_dataGridView.Rows[nRow].Cells[a + 1].Value = String.Format("{0:F3}", Program.UTIL.ToDoubleOrZero(User_DGlass[n][a]));
                     }
                     DoubleGlass_dataGridView.Rows[nRow].Cells[11].Value = User_DGlass[n][10];
                     DoubleGlass_dataGridView.Rows[nRow].Cells[12].Value = User_DGlass[n][11];

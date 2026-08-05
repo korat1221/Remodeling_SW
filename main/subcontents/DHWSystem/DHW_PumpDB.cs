@@ -70,23 +70,23 @@ namespace main.subcontents.DHWSystem
                     string A효율 = "", B효율 = "", 유량 = "", 동력 = "", 양정 = "";
                     if (User_Value[n][3] != null && User_Value[n][3] != "")
                     {
-                        A효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][3]));
+                        A효율 = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(User_Value[n][3]));
                     }
                     if (User_Value[n][4] != null && User_Value[n][4] != "")
                     {
-                        B효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][4]));
+                        B효율 = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(User_Value[n][4]));
                     }
                     if (User_Value[n][5] != null && User_Value[n][5] != "")
                     {
-                        유량 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][5]));
+                        유량 = string.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(User_Value[n][5]));
                     }
                     if (User_Value[n][6] != null && User_Value[n][6] != "")
                     {
-                        동력 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][6]));
+                        동력 = string.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(User_Value[n][6]));
                     }
                     if (User_Value[n][7] != null && User_Value[n][7] != "")
                     {
-                        양정 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][7]));
+                        양정 = string.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(User_Value[n][7]));
                     }
 
                     Pump_dataGridView.Rows.Add();

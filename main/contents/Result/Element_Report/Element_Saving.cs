@@ -34,12 +34,12 @@ namespace main.contents.Result.Element_Report
                 string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "총에너지소요량,기저에너지", "검토유형='" + ElementAlt[a] + "' And 연료='전기'");
                 if (Value2.Length > 0)
                 {
-                    Element_ElecSum[a] += Convert.ToDouble(Value2[0][0]) - Convert.ToDouble(Value2[0][1]);
+                    Element_ElecSum[a] += Program.UTIL.ToDoubleOrZero(Value2[0][0]) - Program.UTIL.ToDoubleOrZero(Value2[0][1]);
                 }
                 Value2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "총에너지소요량,기저에너지", "검토유형='" + ElementAlt[a] + "' And Not 연료='전기' and Not 연료='전체'");
                 if (Value2.Length > 0)
                 {
-                    Element_GasSum[a] += Convert.ToDouble(Value2[0][0]) - Convert.ToDouble(Value2[0][1]);
+                    Element_GasSum[a] += Program.UTIL.ToDoubleOrZero(Value2[0][0]) - Program.UTIL.ToDoubleOrZero(Value2[0][1]);
                 }
 
                 Element_EnergySum[a] = Element_ElecSum[a] + Element_GasSum[a];
@@ -49,16 +49,16 @@ namespace main.contents.Result.Element_Report
             string[][] Final2 = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량,기저에너지 from FinalEnergy_Result Where 연료='전기' and 월 ='연간'");
             if (Final1.Length > 0 && Final2.Length > 0)
             {
-                Total_Energy_pre += Convert.ToDouble(Final1[0][0]) - Convert.ToDouble(Final1[0][1]);
-                Total_ElecSaving += (Convert.ToDouble(Final1[0][0]) - Convert.ToDouble(Final2[0][0]));
+                Total_Energy_pre += Program.UTIL.ToDoubleOrZero(Final1[0][0]) - Program.UTIL.ToDoubleOrZero(Final1[0][1]);
+                Total_ElecSaving += (Program.UTIL.ToDoubleOrZero(Final1[0][0]) - Program.UTIL.ToDoubleOrZero(Final2[0][0]));
             }
 
             Final1 = Program.DB.querySQL(res[0][0], "Select 총에너지소요량,기저에너지 from FinalEnergy_Result Where Not 연료='전기' and Not 연료='전체' and 월 ='연간'");
             Final2 = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량,기저에너지 from FinalEnergy_Result Where Not 연료='전기' and Not 연료='전체' and 월 ='연간'");
             if (Final1.Length > 0 && Final2.Length > 0)
             {
-                Total_Energy_pre += Convert.ToDouble(Final1[0][0]) - Convert.ToDouble(Final1[0][1]);
-                Total_GasSaving += (Convert.ToDouble(Final1[0][0]) - Convert.ToDouble(Final2[0][0]));
+                Total_Energy_pre += Program.UTIL.ToDoubleOrZero(Final1[0][0]) - Program.UTIL.ToDoubleOrZero(Final1[0][1]);
+                Total_GasSaving += (Program.UTIL.ToDoubleOrZero(Final1[0][0]) - Program.UTIL.ToDoubleOrZero(Final2[0][0]));
             }
 
             Total_EnergySaving = Total_ElecSaving + Total_GasSaving;
@@ -103,13 +103,13 @@ namespace main.contents.Result.Element_Report
                         {
                             string[][] NewSum_this = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(난방소요량) From Heating_Result_Element where 검토유형='난방' and 계획존번호 ='" + NewZone[aa][0] + "' and 난방시스템 ='" + HeatingNum[a][0] + "'");
                             if (NewSum_this.Length > 0)
-                            { after_energy += Convert.ToDouble(NewSum_this[0][0]); }
+                            { after_energy += Program.UTIL.ToDoubleOrZero(NewSum_this[0][0]); }
                             string[][] NewSum_All = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(난방소요량) From Heating_Result_Element where 검토유형='난방' and 계획존번호 ='" + NewZone[aa][0] + "'");
                             string[][] Old_ = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(난방소요량) From Heating_Result_Element where 검토유형='조닝' and 계획존번호 ='" + NewZone[aa][0] + "'");
                             if (Old_.Length > 0)
                             {
                                 if (Old_[0][0] != "")
-                                { before_energy += Convert.ToDouble(Old_[0][0]) * Convert.ToDouble(NewSum_this[0][0]) / Convert.ToDouble(NewSum_All[0][0]); }
+                                { before_energy += Program.UTIL.ToDoubleOrZero(Old_[0][0]) * Program.UTIL.ToDoubleOrZero(NewSum_this[0][0]) / Program.UTIL.ToDoubleOrZero(NewSum_All[0][0]); }
                             }
                         }
                     }
@@ -164,13 +164,13 @@ namespace main.contents.Result.Element_Report
                         {
                             string[][] NewSum_this = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(냉방소요량) From Cooling_Result_Element where 검토유형='냉방' and 계획존번호 ='" + NewZone[aa][0] + "' and 냉방시스템 ='" + CoolingNum[a][0] + "'");
                             if (NewSum_this.Length > 0)
-                            { after_energy += Convert.ToDouble(NewSum_this[0][0]); }
+                            { after_energy += Program.UTIL.ToDoubleOrZero(NewSum_this[0][0]); }
                             string[][] NewSum_All = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(냉방소요량) From Cooling_Result_Element where 검토유형='냉방' and 계획존번호 ='" + NewZone[aa][0] + "'");
                             string[][] Old_ = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(냉방소요량) From Cooling_Result_Element where 검토유형='조닝' and 계획존번호 ='" + NewZone[aa][0] + "'");
                             if (Old_.Length > 0)
                             {
                                 if (Old_[0][0] != "")
-                                { before_energy += Convert.ToDouble(Old_[0][0]) * Convert.ToDouble(NewSum_this[0][0]) / Convert.ToDouble(NewSum_All[0][0]); }
+                                { before_energy += Program.UTIL.ToDoubleOrZero(Old_[0][0]) * Program.UTIL.ToDoubleOrZero(NewSum_this[0][0]) / Program.UTIL.ToDoubleOrZero(NewSum_All[0][0]); }
                             }
                         }
                     }
@@ -225,13 +225,13 @@ namespace main.contents.Result.Element_Report
                         {
                             string[][] NewSum_this = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(급탕소요량) From DHWSystem_Result_Element where 검토유형='급탕' and 계획존번호 ='" + NewZone[aa][0] + "' and 급탕시스템 ='" + DHWNum[a][0] + "'");
                             if (NewSum_this.Length > 0)
-                            { after_energy += Convert.ToDouble(NewSum_this[0][0]); }
+                            { after_energy += Program.UTIL.ToDoubleOrZero(NewSum_this[0][0]); }
                             string[][] NewSum_All = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(급탕소요량) From DHWSystem_Result_Element where 검토유형='급탕' and 계획존번호 ='" + NewZone[aa][0] + "'");
                             string[][] Old_ = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(급탕소요량) From DHWSystem_Result_Element where 검토유형='조닝' and 계획존번호 ='" + NewZone[aa][0] + "'");
                             if (Old_.Length > 0)
                             {
                                 if (Old_[0][0] != "")
-                                { before_energy += Convert.ToDouble(Old_[0][0]) * Convert.ToDouble(NewSum_this[0][0]) / Convert.ToDouble(NewSum_All[0][0]); }
+                                { before_energy += Program.UTIL.ToDoubleOrZero(Old_[0][0]) * Program.UTIL.ToDoubleOrZero(NewSum_this[0][0]) / Program.UTIL.ToDoubleOrZero(NewSum_All[0][0]); }
                             }
                         }
                     }

@@ -154,14 +154,14 @@ namespace main.contents
             string[][] value = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(Q_max) From Zone_HCneed_Result Where 난방_냉방='난방' and 비이용일_이용일='이용일' and  월='1월'");
             if (value.Length > 0 && value[0][0] != "")
             {
-                Qhmax_textBox.Text = (Convert.ToDouble(value[0][0]) / 1000).ToString();
+                Qhmax_textBox.Text = (Program.UTIL.ToDoubleOrZero(value[0][0]) / 1000).ToString();
                 Program.UTIL.textBox_doubleComa(Qhmax_textBox, true, 1);
 
             }
             value = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(Q_max) From Zone_HCneed_Result Where 난방_냉방='냉방' and 비이용일_이용일='이용일' and  월='1월'");
             if (value.Length > 0 && value[0][0] != "")
             {
-                Qcmax_textBox.Text = (Convert.ToDouble(value[0][0]) / 1000).ToString();
+                Qcmax_textBox.Text = (Program.UTIL.ToDoubleOrZero(value[0][0]) / 1000).ToString();
                 Program.UTIL.textBox_doubleComa(Qcmax_textBox, true, 1);
             }
             string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "일일급탕요구량,용도프로필");
@@ -175,7 +175,7 @@ namespace main.contents
                     {
                         if (ZoneValue[a][0] != "" && Usage[0][0] != "")
                         {
-                            Qmax_w += Convert.ToDouble(ZoneValue[a][0]) * Convert.ToDouble(Usage[0][0]);
+                            Qmax_w += Program.UTIL.ToDoubleOrZero(ZoneValue[a][0]) * Program.UTIL.ToDoubleOrZero(Usage[0][0]);
                         }
                     }
                 }
@@ -301,8 +301,8 @@ namespace main.contents
                         }
                         else { Boiler_dataGridView.Rows[nRow].Cells[5].Value = Value[0][1]; }
                         Boiler_dataGridView.Rows[nRow].Cells[6].Value = Value[0][2];
-                        Boiler_dataGridView.Rows[nRow].Cells[8].Value = Convert.ToDouble(Value[0][3]) * 100;
-                        Boiler_dataGridView.Rows[nRow].Cells[9].Value = Convert.ToDouble(Value[0][4]) * 100;
+                        Boiler_dataGridView.Rows[nRow].Cells[8].Value = Program.UTIL.ToDoubleOrZero(Value[0][3]) * 100;
+                        Boiler_dataGridView.Rows[nRow].Cells[9].Value = Program.UTIL.ToDoubleOrZero(Value[0][4]) * 100;
                         Boiler_dataGridView.Rows[nRow].Cells[10].Value = Value[0][5];
                         Boiler_dataGridView.Rows[nRow].Cells[11].Value = Value[0][6];
                     }
@@ -509,24 +509,24 @@ namespace main.contents
 
                     if (User_Value[n][4] != null && User_Value[n][4] != "")
                     {
-                        double a = Convert.ToDouble(User_Value[n][4]);
-                        용량 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][4]));
+                        double a = Program.UTIL.ToDoubleOrZero(User_Value[n][4]);
+                        용량 = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(User_Value[n][4]));
                     }
                     if (User_Value[n][5] != null && User_Value[n][5] != "")
                     {
-                        전부하효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][5]));
+                        전부하효율 = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(User_Value[n][5]));
                     }
                     if (User_Value[n][6] != null && User_Value[n][6] != "")
                     {
-                        부분부하효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][6]));
+                        부분부하효율 = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(User_Value[n][6]));
                     }
                     if (User_Value[n][7] != null && User_Value[n][7] != "")
                     {
-                        소비전력 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][7]));
+                        소비전력 = string.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(User_Value[n][7]));
                     }
                     if (User_Value[n][8] != null && User_Value[n][8] != "")
                     {
-                        대기전력 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][8]));
+                        대기전력 = string.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(User_Value[n][8]));
                     }
                     Boiler_dataGridView.Rows[nRow].Cells[7].Value = 용량;
                     Boiler_dataGridView.Rows[nRow].Cells[8].Value = 전부하효율;
@@ -1174,17 +1174,17 @@ namespace main.contents
             {
                 if (Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 5, 1) && Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 6, 1) && Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 7, 1))
                 {
-                    Length = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString());
-                    Height = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString());
-                    Power = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString());
+                    Length = Program.UTIL.ToDoubleOrZero(PV_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString());
+                    Height = Program.UTIL.ToDoubleOrZero(PV_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString());
+                    Power = Program.UTIL.ToDoubleOrZero(PV_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString());
                     Power_m2 = Power / 1000 / (Length * Height);
                     PV_dataGridView.Rows[e.RowIndex].Cells[8].Value = string.Format("{0:F3}", Power_m2);
                 }
                 else if (Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 5, 1) && Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 6, 1) && Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 8, 1))
                 {
-                    Length = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString());
-                    Height = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString());
-                    Power_m2 = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString());
+                    Length = Program.UTIL.ToDoubleOrZero(PV_dataGridView.Rows[e.RowIndex].Cells[5].Value.ToString());
+                    Height = Program.UTIL.ToDoubleOrZero(PV_dataGridView.Rows[e.RowIndex].Cells[6].Value.ToString());
+                    Power_m2 = Program.UTIL.ToDoubleOrZero(PV_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString());
                     Power = Power_m2 * 1000 * (Length * Height);
                     PV_dataGridView.Rows[e.RowIndex].Cells[7].Value = Power.ToString("0");
                 }
@@ -2711,7 +2711,7 @@ namespace main.contents
                     {
                         try
                         {
-                            if (Convert.ToDouble(Pump_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value) < 1)
+                            if (Program.UTIL.ToDoubleOrZero(Pump_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value) < 1)
                             {
                                 MessageBox.Show("퍼센트 단위로 입력하세요.(Ex : 90.1% ⇒ 90.1)");
                                 Pump_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = null;
@@ -2829,7 +2829,7 @@ namespace main.contents
 
                     if (Value[n][4] != null && Value[n][4] != "")
                     {
-                        동력 = string.Format("{0:F0}", Convert.ToDouble(Value[n][4]));
+                        동력 = string.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(Value[n][4]));
                     }
 
                     Pump_dataGridView.Rows[nRow].Cells[1].Value = Value[n][0];
@@ -3851,6 +3851,8 @@ namespace main.contents
             AHU_dataGridView.Columns.Add("A28", "송풍기.팬동력.급기.[kW]");
             AHU_dataGridView.Columns.Add("A29", "송풍기.팬동력.배기.[kW]");
             AHU_dataGridView.Columns.Add("A30", "송풍기.모터제어");
+            AHU_dataGridView.Columns.Add("A31", "송풍기.모터유형");
+            AHU_dataGridView.Columns.Add("A32", "송풍기.팬효율");
             AHU_dataGridView.Columns[0].Width = 40;
             AHU_dataGridView.Columns[1].Width = 60;
             AHU_dataGridView.Columns[2].Width = 60;
@@ -3882,6 +3884,8 @@ namespace main.contents
             AHU_dataGridView.Columns[28].Width = 40;
             AHU_dataGridView.Columns[29].Width = 40;
             AHU_dataGridView.Columns[30].Width = 100;
+            AHU_dataGridView.Columns[31].Width = 100;
+            AHU_dataGridView.Columns[32].Width = 80;
         }
         private bool AHU_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
         {
@@ -3937,6 +3941,14 @@ namespace main.contents
             송풍기모터제어Combo.Items.Add("인버터제어");
             AHU_dataGridView.Rows[nRow].Cells[30] = 송풍기모터제어Combo;
 
+            DataGridViewComboBoxCell 팬효율모터유형Combo = new DataGridViewComboBoxCell();
+            팬효율모터유형Combo.Items.Add("AC");
+            팬효율모터유형Combo.Items.Add("DC_전곡형");
+            팬효율모터유형Combo.Items.Add("DC_후곡형");
+            팬효율모터유형Combo.Items.Add("EC_전곡형");
+            팬효율모터유형Combo.Items.Add("EC_후곡형");
+            AHU_dataGridView.Rows[nRow].Cells[31] = 팬효율모터유형Combo;
+
         }
 
         private void AHU_Remove_button_Click(global::System.Object sender, global::System.EventArgs e)
@@ -3985,7 +3997,15 @@ namespace main.contents
             송풍기모터제어Combo.Items.Add("인버터제어");
             AHU_dataGridView.Rows[nRow].Cells[30] = 송풍기모터제어Combo;
 
-            for (int k = 2; k < 31; k++)
+            DataGridViewComboBoxCell 팬효율모터유형Combo = new DataGridViewComboBoxCell();
+            팬효율모터유형Combo.Items.Add("AC");
+            팬효율모터유형Combo.Items.Add("DC_전곡형");
+            팬효율모터유형Combo.Items.Add("DC_후곡형");
+            팬효율모터유형Combo.Items.Add("EC_전곡형");
+            팬효율모터유형Combo.Items.Add("EC_후곡형");
+            AHU_dataGridView.Rows[nRow].Cells[31] = 팬효율모터유형Combo;
+
+            for (int k = 2; k < 33; k++)
             {
                 if (AHU_dataGridView.Rows[AHU_SelectRow].Cells[k].Value != null)
                 {
@@ -4042,6 +4062,18 @@ namespace main.contents
                         AHU_dataGridView.Rows[e.RowIndex].Cells[11].Value = Humidity_eta.ToString("0.0");
                     }
                 }
+                if (e.ColumnIndex == 31)
+                {
+                    if (AHU_dataGridView.Rows[e.RowIndex].Cells[31].Value != null)
+                    {
+                        string 모터유형 = AHU_dataGridView.Rows[e.RowIndex].Cells[31].Value.ToString();
+                        string[][] 팬효율Value = Program.DB.getValue(DB.type.BaseDB_AHU, "팬효율", "효율", "유형='" + 모터유형 + "'");
+                        if (팬효율Value.Length > 0)
+                        {
+                            AHU_dataGridView.Rows[e.RowIndex].Cells[32].Value = 팬효율Value[0][0];
+                        }
+                    }
+                }
             }
         }
         private double Calc_HumidityEta_Heating(double temp_eta, double all_eta)
@@ -4082,8 +4114,8 @@ namespace main.contents
 
             for (int k = 0; k < AHU_dataGridView.RowCount; k++)
             {
-                String[] Value = new String[30];
-                for (int i = 1; i < 31; i++)
+                String[] Value = new String[32];
+                for (int i = 1; i < 33; i++)
                 {
                     if (AHU_dataGridView.Rows[k].Cells[i].Value != null)
                     {
@@ -4132,6 +4164,8 @@ namespace main.contents
                 + Value[26] + "','" + Value[27] + "','" + Value[28] + "','"
                 + Value[29]
                 + "'", "번호");
+                Program.DB.setValue(DB.type.ProjDB, "User_AHU", "번호,팬모터유형,팬효율",
+                "'" + Value[0] + "','" + Value[30] + "','" + Value[31] + "'", "번호");
             }
             Program.DB.saveProject();
 
@@ -4139,7 +4173,7 @@ namespace main.contents
         private void Load_AHU()
         {
             AHU_dataGridView.Rows.Clear();
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "번호,명칭,설치유형,공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기제어유형,가습기습도수준,가습기용량,급기풍량,배기풍량,급기정압,배기정압,급기팬동력,배기팬동력,모터제어", "");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "번호,명칭,설치유형,공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기제어유형,가습기습도수준,가습기용량,급기풍량,배기풍량,급기정압,배기정압,급기팬동력,배기팬동력,모터제어,팬모터유형,팬효율", "");
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
@@ -4179,7 +4213,15 @@ namespace main.contents
                     송풍기모터제어Combo.Items.Add("인버터제어");
                     AHU_dataGridView.Rows[nRow].Cells[30] = 송풍기모터제어Combo;
 
-                    for (int i = 0; i < 30; i++)
+                    DataGridViewComboBoxCell 팬효율모터유형Combo = new DataGridViewComboBoxCell();
+                    팬효율모터유형Combo.Items.Add("AC");
+                    팬효율모터유형Combo.Items.Add("DC_전곡형");
+                    팬효율모터유형Combo.Items.Add("DC_후곡형");
+                    팬효율모터유형Combo.Items.Add("EC_전곡형");
+                    팬효율모터유형Combo.Items.Add("EC_후곡형");
+                    AHU_dataGridView.Rows[nRow].Cells[31] = 팬효율모터유형Combo;
+
+                    for (int i = 0; i < 32; i++)
                     { AHU_dataGridView.Rows[nRow].Cells[i + 1].Value = Value[n][i]; }
 
                 }
@@ -4214,7 +4256,9 @@ namespace main.contents
             HRV_dataGridView.Columns.Add("A11", "팬.풍량.[CMH]");
             HRV_dataGridView.Columns.Add("A12", "팬.정압.[Pa]");
             HRV_dataGridView.Columns.Add("A13", "팬.모터제어");
-            HRV_dataGridView.Columns.Add("A14", "소비전력.[W]");
+            HRV_dataGridView.Columns.Add("A14", "팬.모터유형");
+            HRV_dataGridView.Columns.Add("A15", "팬.팬효율");
+            HRV_dataGridView.Columns.Add("A16", "소비전력.[W]");
             HRV_dataGridView.Columns[0].Width = 40;
         }
         private bool HRV_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
@@ -4249,6 +4293,14 @@ namespace main.contents
             모터제어Combo.Items.Add("3단제어");
             모터제어Combo.Items.Add("인버터제어");
             HRV_dataGridView.Rows[nRow].Cells[13] = 모터제어Combo;
+
+            DataGridViewComboBoxCell 팬효율모터유형Combo = new DataGridViewComboBoxCell();
+            팬효율모터유형Combo.Items.Add("AC");
+            팬효율모터유형Combo.Items.Add("DC_전곡형");
+            팬효율모터유형Combo.Items.Add("DC_후곡형");
+            팬효율모터유형Combo.Items.Add("EC_전곡형");
+            팬효율모터유형Combo.Items.Add("EC_후곡형");
+            HRV_dataGridView.Rows[nRow].Cells[14] = 팬효율모터유형Combo;
         }
         private void Load_HRV_Num()
         {
@@ -4286,7 +4338,15 @@ namespace main.contents
             모터제어Combo.Items.Add("인버터제어");
             HRV_dataGridView.Rows[nRow].Cells[13] = 모터제어Combo;
 
-            for (int k = 2; k < 15; k++)
+            DataGridViewComboBoxCell 팬효율모터유형Combo = new DataGridViewComboBoxCell();
+            팬효율모터유형Combo.Items.Add("AC");
+            팬효율모터유형Combo.Items.Add("DC_전곡형");
+            팬효율모터유형Combo.Items.Add("DC_후곡형");
+            팬효율모터유형Combo.Items.Add("EC_전곡형");
+            팬효율모터유형Combo.Items.Add("EC_후곡형");
+            HRV_dataGridView.Rows[nRow].Cells[14] = 팬효율모터유형Combo;
+
+            for (int k = 2; k < 17; k++)
             {
                 if (HRV_dataGridView.Rows[HRV_SelectRow].Cells[k].Value != null)
                 {
@@ -4305,8 +4365,8 @@ namespace main.contents
 
             for (int k = 0; k < HRV_dataGridView.RowCount; k++)
             {
-                String[] Value = new String[14];
-                for (int i = 1; i < 15; i++)
+                String[] Value = new String[16];
+                for (int i = 1; i < 14; i++)
                 {
                     if (HRV_dataGridView.Rows[k].Cells[i].Value != null)
                     {
@@ -4322,6 +4382,16 @@ namespace main.contents
                     }
                     else { Value[i - 1] = ""; }
                 }
+                // 팬모터유형(14),팬효율(15)
+                Value[13] = HRV_dataGridView.Rows[k].Cells[14].Value != null ? HRV_dataGridView.Rows[k].Cells[14].Value.ToString() : "";
+                Value[14] = HRV_dataGridView.Rows[k].Cells[15].Value != null ? HRV_dataGridView.Rows[k].Cells[15].Value.ToString() : "";
+                // 소비전력(팬동력)은 팬효율.모터유형/팬효율 컬럼(14,15) 뒤로 밀려 마지막 컬럼(16)에 있음
+                if (HRV_dataGridView.Rows[k].Cells[16].Value != null)
+                {
+                    double parsedPower;
+                    Value[15] = double.TryParse(HRV_dataGridView.Rows[k].Cells[16].Value.ToString(), out parsedPower) ? parsedPower.ToString() : HRV_dataGridView.Rows[k].Cells[16].Value.ToString();
+                }
+                else { Value[15] = ""; }
                 Program.DB.setValue(DB.type.ProjDB, "User_HRV", "번호,프로젝트유형," +
                     "명칭,설치유형",
                 "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
@@ -4338,8 +4408,10 @@ namespace main.contents
                    "팬풍량,팬정압,모터제어,팬동력",
                "'" + Value[0] + "','"
                 + Value[10] + "','" + Value[11] + "','" + Value[12] + "','"
-                + Value[13]
+                + Value[15]
                 + "'", "번호");
+                Program.DB.setValue(DB.type.ProjDB, "User_HRV", "번호,팬모터유형,팬효율",
+                "'" + Value[0] + "','" + Value[13] + "','" + Value[14] + "'", "번호");
             }
             Program.DB.saveProject();
         }
@@ -4384,13 +4456,25 @@ namespace main.contents
                         }
                     }
                 }
+                if (e.ColumnIndex == 14)
+                {
+                    if (HRV_dataGridView.Rows[e.RowIndex].Cells[14].Value != null)
+                    {
+                        string 모터유형 = HRV_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString();
+                        string[][] 팬효율Value = Program.DB.getValue(DB.type.BaseDB_AHU, "팬효율", "효율", "유형='" + 모터유형 + "'");
+                        if (팬효율Value.Length > 0)
+                        {
+                            HRV_dataGridView.Rows[e.RowIndex].Cells[15].Value = 팬효율Value[0][0];
+                        }
+                    }
+                }
             }
         }
 
         private void Load_HRV()
         {
             HRV_dataGridView.Rows.Clear();
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "번호,명칭,설치유형,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,팬풍량,팬정압,모터제어,팬동력", "");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "번호,명칭,설치유형,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,팬풍량,팬정압,모터제어,팬동력,팬모터유형,팬효율", "");
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
@@ -4411,8 +4495,20 @@ namespace main.contents
                     모터제어Combo.Items.Add("인버터제어");
                     HRV_dataGridView.Rows[nRow].Cells[13] = 모터제어Combo;
 
-                    for (int i = 0; i < 14; i++)
+                    DataGridViewComboBoxCell 팬효율모터유형Combo = new DataGridViewComboBoxCell();
+                    팬효율모터유형Combo.Items.Add("AC");
+                    팬효율모터유형Combo.Items.Add("DC_전곡형");
+                    팬효율모터유형Combo.Items.Add("DC_후곡형");
+                    팬효율모터유형Combo.Items.Add("EC_전곡형");
+                    팬효율모터유형Combo.Items.Add("EC_후곡형");
+                    HRV_dataGridView.Rows[nRow].Cells[14] = 팬효율모터유형Combo;
+
+                    for (int i = 0; i < 13; i++)
                     { HRV_dataGridView.Rows[nRow].Cells[i + 1].Value = Value[n][i]; }
+                    // 소비전력(팬동력)은 팬효율.모터유형/팬효율 컬럼(14,15) 뒤로 밀려 마지막 컬럼(16)에 있음
+                    HRV_dataGridView.Rows[nRow].Cells[16].Value = Value[n][13];
+                    HRV_dataGridView.Rows[nRow].Cells[14].Value = Value[n][14];
+                    HRV_dataGridView.Rows[nRow].Cells[15].Value = Value[n][15];
 
                 }
             }
@@ -5113,7 +5209,7 @@ namespace main.contents
             double v;
             if (double.TryParse(input_textBox.Text, out v))
             {
-                v = Convert.ToDouble(input_textBox.Text);
+                v = Program.UTIL.ToDoubleOrZero(input_textBox.Text);
                 output_text.Visible = true;
             }
             else

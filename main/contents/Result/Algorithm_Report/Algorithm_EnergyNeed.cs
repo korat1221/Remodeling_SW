@@ -104,8 +104,8 @@ namespace main.contents.Result
                 {
                     GeneralData[3].Add(new { idx = i, val = Num + ". "+ Value[0][0]+" 존 에너지요구량 검토 보고서" }); //title
                     GeneralData[4].Add(new { idx = i, val = Value[0][0] }); //명칭
-                    area = Convert.ToDouble(Value[0][1]);
-                    height = Convert.ToDouble(Value[0][2]);
+                    area = Program.UTIL.ToDoubleOrZero(Value[0][1]);
+                    height = Program.UTIL.ToDoubleOrZero(Value[0][2]);
                     volume = area * height;
                     GeneralData[5].Add(new { idx = i, val = Program.UTIL.doubleComa(area.ToString(), 1) }); //면적
                     GeneralData[6].Add(new { idx = i, val = Program.UTIL.doubleComa(volume.ToString(), 1) }); //체적
@@ -188,7 +188,7 @@ namespace main.contents.Result
                     VentilData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][1], 1) }); //침기
                     VentilData[2].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][2], 1) }); //기계환기
                     VentilData[3].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][3], 1) }); //자연환기
-                    VentilData[4].Add(new { idx = i, val = (Convert.ToDouble(Value[0][1]) /0.05).ToString("0.0")}); //n50
+                    VentilData[4].Add(new { idx = i, val = (Program.UTIL.ToDoubleOrZero(Value[0][1]) /0.05).ToString("0.0")}); //n50
                 }
                 #endregion
 
@@ -197,25 +197,25 @@ namespace main.contents.Result
                 double annual = 0;
                 if (Value.Length > 0)
                 {
-                    annual = Convert.ToDouble(Value[0][0]) / area;
+                    annual = Program.UTIL.ToDoubleOrZero(Value[0][0]) / area;
                     AnnualData[0].Add(new { idx = i, val = Program.UTIL.doubleComa(annual.ToString(), 1) }); //난방
-                    annual = Convert.ToDouble(Value[0][1]) / area;
+                    annual = Program.UTIL.ToDoubleOrZero(Value[0][1]) / area;
                     AnnualData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(annual.ToString(), 1) }); //난방부하
                 }
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct Qb_a, Q_max From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일='이용일' and 난방_냉방='냉방'");
                 annual = 0;
                 if (Value.Length > 0)
                 {
-                    annual = Convert.ToDouble(Value[0][0]) / area;
+                    annual = Program.UTIL.ToDoubleOrZero(Value[0][0]) / area;
                     AnnualData[2].Add(new { idx = i, val = Program.UTIL.doubleComa(annual.ToString(), 1) }); //냉방
-                    annual = Convert.ToDouble(Value[0][1]) / area;
+                    annual = Program.UTIL.ToDoubleOrZero(Value[0][1]) / area;
                     AnnualData[3].Add(new { idx = i, val = Program.UTIL.doubleComa(annual.ToString(), 1) }); //냉방부하
                 }
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select sum(Final_kWh) From Zone_LightResult Where 번호='" + Num + "'");
                 annual = 0;
                 if (Value.Length > 0)
                 {
-                    annual = Convert.ToDouble(Value[0][0]) / area;
+                    annual = Program.UTIL.ToDoubleOrZero(Value[0][0]) / area;
                     AnnualData[4].Add(new { idx = i, val = Program.UTIL.doubleComa(annual.ToString(), 1) }); //조명
                 }
                 annual = 0; double dwd_a = 0; 
@@ -223,14 +223,14 @@ namespace main.contents.Result
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select sum(dwd_mth) From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일='이용일' and 난방_냉방='난방'");
                 if (Value.Length > 0)
                 {
-                    dwd_a = Convert.ToDouble(Value[0][0]);
+                    dwd_a = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                 }
                 for (int mth =0; mth < 12; mth ++)
                 {
                     Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.일일급탕요구량,b.theta_e From ZoneGeneral_Form as a Inner Join Zone_HCneed_Result as b on a.존번호=b.번호 Where b.번호='" + Num + "' and b.비이용일_이용일='이용일' and b.난방_냉방='난방' and b.월='" + (mth +1) + "월'");
                     if (Value.Length > 0)
                     {
-                        annual  += Convert.ToDouble(Value[0][0]) * dwd_a * dmth[mth] / 365 * (-0.02 * Convert.ToDouble(Value[0][1]) + 1.25);
+                        annual  += Program.UTIL.ToDoubleOrZero(Value[0][0]) * dwd_a * dmth[mth] / 365 * (-0.02 * Program.UTIL.ToDoubleOrZero(Value[0][1]) + 1.25);
                     }
                 }
                 annual = annual / area;
@@ -245,10 +245,10 @@ namespace main.contents.Result
                 {
                     for(int a=0 ; a<Value.Length; a++)
                     {
-                        wall_면적 += Convert.ToDouble(Value[a][0]);
-                        wall_열관류율 += Convert.ToDouble(Value[a][0]) * Convert.ToDouble(Value[a][1]);
-                        wall_유효열관류율 += Convert.ToDouble(Value[a][0]) * Convert.ToDouble(Value[a][2]);
-                        wall_흡수율 += Convert.ToDouble(Value[a][0]) * Convert.ToDouble(Value[a][3]);
+                        wall_면적 += Program.UTIL.ToDoubleOrZero(Value[a][0]);
+                        wall_열관류율 += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value[a][1]);
+                        wall_유효열관류율 += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value[a][2]);
+                        wall_흡수율 += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value[a][3]);
                     }
                     wall_열관류율 = wall_열관류율 / wall_면적;
                     wall_유효열관류율 = wall_유효열관류율 / wall_면적;
@@ -271,10 +271,10 @@ namespace main.contents.Result
                 {
                     for (int a = 0; a < Value.Length; a++)
                     {
-                        roof_면적 += Convert.ToDouble(Value[a][0]);
-                        roof_열관류율 += Convert.ToDouble(Value[a][0]) * Convert.ToDouble(Value[a][1]);
-                        roof_유효열관류율 += Convert.ToDouble(Value[a][0]) * Convert.ToDouble(Value[a][2]);
-                        roof_흡수율 += Convert.ToDouble(Value[a][0]) * Convert.ToDouble(Value[a][3]);
+                        roof_면적 += Program.UTIL.ToDoubleOrZero(Value[a][0]);
+                        roof_열관류율 += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value[a][1]);
+                        roof_유효열관류율 += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value[a][2]);
+                        roof_흡수율 += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value[a][3]);
                     }
                     roof_열관류율 = roof_열관류율 / roof_면적;
                     roof_유효열관류율 = roof_유효열관류율 / roof_면적;
@@ -297,9 +297,9 @@ namespace main.contents.Result
                 {
                     for (int a = 0; a < Value.Length; a++)
                     {
-                        floor_면적 += Convert.ToDouble(Value[a][0]);
-                        floor_열관류율 += Convert.ToDouble(Value[a][0]) * Convert.ToDouble(Value[a][1]);
-                        floor_유효열관류율 += Convert.ToDouble(Value[a][0]) * Convert.ToDouble(Value[a][2]);
+                        floor_면적 += Program.UTIL.ToDoubleOrZero(Value[a][0]);
+                        floor_열관류율 += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value[a][1]);
+                        floor_유효열관류율 += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value[a][2]);
                     }
                     floor_열관류율 = floor_열관류율 / floor_면적;
                     floor_유효열관류율 = floor_유효열관류율 / floor_면적;
@@ -321,13 +321,13 @@ namespace main.contents.Result
                 {
                     for (int a = 0; a < Value.Length; a++)
                     {
-                        win_면적 += Convert.ToDouble(Value[a][0]);
-                        win_열관류율 += Convert.ToDouble(Value[a][0]) * Convert.ToDouble(Value[a][1]);
-                        win_유효열관류율 += Convert.ToDouble(Value[a][0]) * Convert.ToDouble(Value[a][2]);
+                        win_면적 += Program.UTIL.ToDoubleOrZero(Value[a][0]);
+                        win_열관류율 += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value[a][1]);
+                        win_유효열관류율 += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value[a][2]);
                         string[][] Value2 = Program.DB.querySQL(DB.type.ProjDB, "Select 태양열취득률 From ConstructionWindow  Where 번호='" + Value[a][3] + "'");
                         if(Value2.Length > 0)
                         {
-                            win_shgc += Convert.ToDouble(Value[a][0]) * Convert.ToDouble(Value2[0][0]);
+                            win_shgc += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value2[0][0]);
                         }
                     }
                     win_열관류율 = win_열관류율 / win_면적;
@@ -352,7 +352,7 @@ namespace main.contents.Result
                     for (int a = 0; a < Value.Length; a++)
                     {
                         string[][] Value3 = null;
-                        cw_면적 += Convert.ToDouble(Value[a][0]);
+                        cw_면적 += Program.UTIL.ToDoubleOrZero(Value[a][0]);
                         if (Value[a][1] == "패널부분")
                         {
                             Value3 = Program.DB.querySQL(DB.type.ProjDB, "Select 패널부분열관류율,패널부분유효열관류율,패널흡수율 From ConstructionCW Where 번호='" + Value[a][2] + "'");
@@ -365,9 +365,9 @@ namespace main.contents.Result
                         {
                             Value3 = Program.DB.querySQL(DB.type.ProjDB, "Select 유리부분열관류율,유리부분유효열관류율,태양열취득률 From ConstructionCW Where 번호='" + Value[a][2] + "'");
                         }
-                        cw_열관류율 += Convert.ToDouble(Value[a][0]) * Convert.ToDouble(Value3[0][0]); 
-                        cw_유효열관류율 += Convert.ToDouble(Value[a][0]) * Convert.ToDouble(Value3[0][1]);
-                        cw_shgc += Convert.ToDouble(Value[a][0]) * Convert.ToDouble(Value3[0][2]);
+                        cw_열관류율 += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value3[0][0]); 
+                        cw_유효열관류율 += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value3[0][1]);
+                        cw_shgc += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value3[0][2]);
                     }
                     cw_열관류율 = cw_열관류율 / cw_면적;
                     cw_유효열관류율 = cw_유효열관류율 / cw_면적;
@@ -390,10 +390,10 @@ namespace main.contents.Result
                 {
                     for (int a = 0; a < Value.Length; a++)
                     {
-                        door_면적 += Convert.ToDouble(Value[a][0]);
-                        door_열관류율 += Convert.ToDouble(Value[a][0]) * Convert.ToDouble(Value[a][1]);
-                        door_유효열관류율 += Convert.ToDouble(Value[a][0]) * Convert.ToDouble(Value[a][2]);
-                        door_흡수율 += Convert.ToDouble(Value[a][0]) * Convert.ToDouble(Value[a][3]);
+                        door_면적 += Program.UTIL.ToDoubleOrZero(Value[a][0]);
+                        door_열관류율 += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value[a][1]);
+                        door_유효열관류율 += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value[a][2]);
+                        door_흡수율 += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value[a][3]);
                     }
                     door_열관류율 = door_열관류율 / door_면적;
                     door_유효열관류율 = door_유효열관류율 / door_면적;
@@ -430,7 +430,7 @@ namespace main.contents.Result
                         {
                             HeatingMthData[8].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
                             HeatingMthData[9].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 0) });
-                            double qs = Convert.ToDouble(Value[0][2]) + Convert.ToDouble(Value[0][3]) + Convert.ToDouble(Value[0][4]);
+                            double qs = Program.UTIL.ToDoubleOrZero(Value[0][2]) + Program.UTIL.ToDoubleOrZero(Value[0][3]) + Program.UTIL.ToDoubleOrZero(Value[0][4]);
                             HeatingMthData[10].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(qs.ToString(), 0) });
                             HeatingMthData[11].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][5], 0) });
                             HeatingMthData[12].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][6], 0) });
@@ -470,7 +470,7 @@ namespace main.contents.Result
                         {
                             CoolingMthData[8].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
                             CoolingMthData[9].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 0) });
-                            double qs = Convert.ToDouble(Value[0][2]) + Convert.ToDouble(Value[0][3]) + Convert.ToDouble(Value[0][4]);
+                            double qs = Program.UTIL.ToDoubleOrZero(Value[0][2]) + Program.UTIL.ToDoubleOrZero(Value[0][3]) + Program.UTIL.ToDoubleOrZero(Value[0][4]);
                             CoolingMthData[10].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(qs.ToString(), 0) });
                             CoolingMthData[11].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][5], 0) });
                             CoolingMthData[12].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][6], 0) });
@@ -497,13 +497,13 @@ namespace main.contents.Result
                     if (Value.Length > 0)
                     {
                         MthData[0].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) }); //난방
-                        MthData[1].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa((Convert.ToDouble(Value[0][0]) / area).ToString(), 1) }); //단위면적당 난방
+                        MthData[1].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa((Program.UTIL.ToDoubleOrZero(Value[0][0]) / area).ToString(), 1) }); //단위면적당 난방
                     }
                     Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
                     if (Value.Length > 0)
                     {
                         MthData[2].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) }); //냉방
-                        MthData[3].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa((Convert.ToDouble(Value[0][0]) / area).ToString(), 1) }); //단위면적당 냉방
+                        MthData[3].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa((Program.UTIL.ToDoubleOrZero(Value[0][0]) / area).ToString(), 1) }); //단위면적당 냉방
                     }
                     Value = Program.DB.querySQL(DB.type.ProjDB, "Select Final_kWh From Zone_LightResult Where 번호='" + Num + "'and 월='" + (mth + 1).ToString() + "월'");
                     if (Value.Length > 0)
@@ -514,13 +514,13 @@ namespace main.contents.Result
                     Value = Program.DB.querySQL(DB.type.ProjDB, "Select sum(dwd_mth) From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일='이용일' and 난방_냉방='난방'");
                     if (Value.Length > 0)
                     {
-                        dwd_a = Convert.ToDouble(Value[0][0]);
+                        dwd_a = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                     }
 
                     Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.일일급탕요구량,b.theta_e From ZoneGeneral_Form as a Inner Join Zone_HCneed_Result as b on a.존번호=b.번호 Where b.번호='" + Num + "' and b.비이용일_이용일='이용일' and b.난방_냉방='난방' and b.월='" + (mth + 1) + "월'");
                     if (Value.Length > 0)
                     {
-                        double DHW  = Convert.ToDouble(Value[0][0]) * dwd_a * dmth[mth] / 365 * (-0.02 * Convert.ToDouble(Value[0][1]) + 1.25);
+                        double DHW  = Program.UTIL.ToDoubleOrZero(Value[0][0]) * dwd_a * dmth[mth] / 365 * (-0.02 * Program.UTIL.ToDoubleOrZero(Value[0][1]) + 1.25);
                         MthData[5].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(DHW.ToString(), 0) }); //급탕
                     }
                 }

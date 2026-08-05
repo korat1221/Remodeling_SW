@@ -86,7 +86,7 @@ namespace main.contents
                     else { dataGridView1.Rows[nRow].Cells[0].Value = false; }
                     dataGridView1.Rows[nRow].Cells[1].Value = Value[i][0]; ;
                     dataGridView1.Rows[nRow].Cells[2].Value = Value[i][1]; ;
-                    dataGridView1.Rows[nRow].Cells[6].Value = Convert.ToDouble(Value[i][2]).ToString("0.0");
+                    dataGridView1.Rows[nRow].Cells[6].Value = Program.UTIL.ToDoubleOrZero(Value[i][2]).ToString("0.0");
                     dataGridView1.Rows[nRow].Cells[3].Value = Value[i][3]; ;
                     if (Value[i][3] != null && Value[i][3] != "")
                     {
@@ -101,7 +101,7 @@ namespace main.contents
                         {
                             dataGridView1.Rows[i].Cells[3].Value = tb2[0][0]; ;
                             dataGridView1.Rows[i].Cells[4].Value = tb2[0][1]; ;
-                            dataGridView1.Rows[i].Cells[5].Value = Convert.ToDouble(tb2[0][2]).ToString("0.000");
+                            dataGridView1.Rows[i].Cells[5].Value = Program.UTIL.ToDoubleOrZero(tb2[0][2]).ToString("0.000");
                         }
                     }
                 }
@@ -115,9 +115,9 @@ namespace main.contents
                 dUtbFloor_label.Visible = true;
 
                 string script = Program.UTIL.Subscript(2, true);
-                dUtbWall_label.Text = "외벽 : " + Convert.ToDouble(dU[0][0]).ToString("0.00") + " W/m" + script + "·K";
-                dUtbRoof_label.Text = "지붕 : " + Convert.ToDouble(dU[0][1]).ToString("0.00") + " W/m" + script + "·K";
-                dUtbFloor_label.Text = "바닥 : " + Convert.ToDouble(dU[0][2]).ToString("0.00") + " W/m" + script + "·K";
+                dUtbWall_label.Text = "외벽 : " + Program.UTIL.ToDoubleOrZero(dU[0][0]).ToString("0.00") + " W/m" + script + "·K";
+                dUtbRoof_label.Text = "지붕 : " + Program.UTIL.ToDoubleOrZero(dU[0][1]).ToString("0.00") + " W/m" + script + "·K";
+                dUtbFloor_label.Text = "바닥 : " + Program.UTIL.ToDoubleOrZero(dU[0][2]).ToString("0.00") + " W/m" + script + "·K";
             }
             else
             {
@@ -283,7 +283,7 @@ namespace main.contents
                                 {
                                     dataGridView1.Rows[i].Cells[3].Value = tb2[0][0]; ;
                                     dataGridView1.Rows[i].Cells[4].Value = tb2[0][1]; ;
-                                    dataGridView1.Rows[i].Cells[5].Value = Convert.ToDouble(tb2[0][2]).ToString("0.000");
+                                    dataGridView1.Rows[i].Cells[5].Value = Program.UTIL.ToDoubleOrZero(tb2[0][2]).ToString("0.000");
                                 }
                             }
                         }

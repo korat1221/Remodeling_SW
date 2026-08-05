@@ -135,8 +135,8 @@ namespace main.contentslist
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "용량,전부하효율", "번호 ='" + List[n][3] + "'");
                         if (num.Length > 0 && SystemValue.Length > 0)
                         {
-                            dataGridView1.Rows[nRow].Cells[4].Value = (Convert.ToDouble(num[0][0]) * Convert.ToDouble(SystemValue[0][0])).ToString("0.0");
-                            dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " %";
+                            dataGridView1.Rows[nRow].Cells[4].Value = (Program.UTIL.ToDoubleOrZero(num[0][0]) * Program.UTIL.ToDoubleOrZero(SystemValue[0][0])).ToString("0.0");
+                            dataGridView1.Rows[nRow].Cells[5].Value = Program.UTIL.ToDoubleOrZero(SystemValue[0][1]).ToString("0.0") + " %";
                         }
                     }
                     else if (List[n][2] == "태양열시스템")
@@ -145,8 +145,8 @@ namespace main.contentslist
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "모듈면적,효율", "번호 ='" + List[n][4] + "'");
                         if (num.Length > 0 && SystemValue.Length > 0)
                         {
-                            dataGridView1.Rows[nRow].Cells[4].Value = (Convert.ToDouble(num[0][0]) * Convert.ToDouble(SystemValue[0][0])).ToString("0.0") + "m2";
-                            dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0") + " %";
+                            dataGridView1.Rows[nRow].Cells[4].Value = (Program.UTIL.ToDoubleOrZero(num[0][0]) * Program.UTIL.ToDoubleOrZero(SystemValue[0][0])).ToString("0.0") + "m2";
+                            dataGridView1.Rows[nRow].Cells[5].Value = Program.UTIL.ToDoubleOrZero(SystemValue[0][1]).ToString("0.0") + " %";
                         }
                     }
                     else if (List[n][2] == "외기 히트펌프")
@@ -155,8 +155,8 @@ namespace main.contentslist
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DHWHP", "급탕정격용량,급탕정격COP", "번호 ='" + List[n][5] + "'");
                         if (num.Length > 0 && SystemValue.Length > 0)
                         {
-                            dataGridView1.Rows[nRow].Cells[4].Value = (Convert.ToDouble(num[0][0]) * Convert.ToDouble(SystemValue[0][0])).ToString("0.0");
-                            dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(SystemValue[0][1]).ToString("0.0");
+                            dataGridView1.Rows[nRow].Cells[4].Value = (Program.UTIL.ToDoubleOrZero(num[0][0]) * Program.UTIL.ToDoubleOrZero(SystemValue[0][0])).ToString("0.0");
+                            dataGridView1.Rows[nRow].Cells[5].Value = Program.UTIL.ToDoubleOrZero(SystemValue[0][1]).ToString("0.0");
                         }
                     }
                     else if (List[n][2] == "지역난방")
@@ -164,7 +164,7 @@ namespace main.contentslist
                         SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DH", "용량", "번호 ='" + List[n][6] + "'");
                         if (SystemValue.Length > 0)
                         {
-                            dataGridView1.Rows[nRow].Cells[4].Value = Convert.ToDouble(SystemValue[0][0]).ToString("0.0");
+                            dataGridView1.Rows[nRow].Cells[4].Value = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]).ToString("0.0");
                             dataGridView1.Rows[nRow].Cells[5].Value = "-";
                         }
                     }

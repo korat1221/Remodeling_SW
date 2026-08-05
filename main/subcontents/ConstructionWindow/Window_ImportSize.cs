@@ -107,8 +107,8 @@ namespace main.subcontents
                     Size_dataGridView.Rows[nRow].Cells[1].Value = WinSize[n][0];
                     for (int k = 1; k < 11; k++)
                     {
-                        if (WinSize[n][k] != "" && Convert.ToDouble(WinSize[n][k]) > 0)
-                        { Size_dataGridView.Rows[nRow].Cells[k + 1].Value = Convert.ToDouble(WinSize[n][k]).ToString("0.00"); }
+                        if (WinSize[n][k] != "" && Program.UTIL.ToDoubleOrZero(WinSize[n][k]) > 0)
+                        { Size_dataGridView.Rows[nRow].Cells[k + 1].Value = Program.UTIL.ToDoubleOrZero(WinSize[n][k]).ToString("0.00"); }
                         else
                         {
                             Size_dataGridView.Rows[nRow].Cells[k + 1].Value = 0;
@@ -164,9 +164,9 @@ namespace main.subcontents
                 번호 = 상위창호기호.ToString() + "_" + (n + 1).ToString();
                 명칭 = 상위창호명칭 + "_" + row.Cells[1].Value.ToString();
 
-                double 창호면적 = Convert.ToDouble(row.Cells[2].Value);
-                double 고정유리면적 = Convert.ToDouble(row.Cells[5].Value);
-                double 개폐유리면적 = Convert.ToDouble(row.Cells[6].Value);
+                double 창호면적 = Program.UTIL.ToDoubleOrZero(row.Cells[2].Value);
+                double 고정유리면적 = Program.UTIL.ToDoubleOrZero(row.Cells[5].Value);
+                double 개폐유리면적 = Program.UTIL.ToDoubleOrZero(row.Cells[6].Value);
                 double 유리면적비 = (고정유리면적 + 개폐유리면적) / 창호면적;
                 string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
                 Program.DB.setValue(DB.type.ProjDB, "SubWindow", "번호,프로젝트유형,명칭,상위창호번호,창호면적,창호너비,창호높이,고정유리면적,개폐유리면적,개폐프레임면적,고정프레임면적,중간프레임면적,고정유리둘레길이,개폐유리둘레길이,유리면적비",

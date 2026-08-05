@@ -96,7 +96,7 @@ namespace main.subcontents.ConstructionCW
                     }
                     for (int i = 6; i < 11; i++)
                     {
-                        Frame_dataGridView.Rows[nRow].Cells[i + 1].Value = String.Format("{0:F2}", Convert.ToDouble(User_CWFrame[n][i]));
+                        Frame_dataGridView.Rows[nRow].Cells[i + 1].Value = String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(User_CWFrame[n][i]));
                     }
                 }
             }
@@ -142,7 +142,7 @@ namespace main.subcontents.ConstructionCW
         }
         private void UserDBUw_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserDB_Ucw = Convert.ToDouble(UserDBUw_textBox.Text);
+            UserDB_Ucw = Program.UTIL.ToDoubleOrZero(UserDBUw_textBox.Text);
             Calc_Uf();
         }
         private void UserDB_FrameShape_comboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -164,7 +164,7 @@ namespace main.subcontents.ConstructionCW
             if (User_WinGlass.Length > 0)
             {
                 UserDB_LE_CL_V = User_WinGlass[0][2];
-                UserDB_Ug = Convert.ToDouble(User_WinGlass[0][3]);
+                UserDB_Ug = Program.UTIL.ToDoubleOrZero(User_WinGlass[0][3]);
                 UserDB_Ug_textBox.Text = String.Format("{0:F3}", UserDB_Ug);
             }
 
@@ -172,7 +172,7 @@ namespace main.subcontents.ConstructionCW
             if (WinGlass.Length > 0)
             {
                 UserDB_LE_CL_V = WinGlass[0][2];
-                UserDB_Ug = Convert.ToDouble(WinGlass[0][3]);
+                UserDB_Ug = Program.UTIL.ToDoubleOrZero(WinGlass[0][3]);
                 UserDB_Ug_textBox.Text = String.Format("{0:F3}", UserDB_Ug);
             }
             Calc_Uf();
@@ -187,16 +187,16 @@ namespace main.subcontents.ConstructionCW
             {
                 if (UserDB_LE_CL_V.Contains("LE"))
                 {
-                    UserDB_Psimt = Convert.ToDouble(User_CWSpacer[0][4]);
-                    UserDB_PsiOpen = Convert.ToDouble(User_CWSpacer[0][5]);
+                    UserDB_Psimt = Program.UTIL.ToDoubleOrZero(User_CWSpacer[0][4]);
+                    UserDB_PsiOpen = Program.UTIL.ToDoubleOrZero(User_CWSpacer[0][5]);
                 }
                 else
                 {
-                    UserDB_Psimt = Convert.ToDouble(User_CWSpacer[0][2]);
-                    UserDB_PsiOpen = Convert.ToDouble(User_CWSpacer[0][3]);
+                    UserDB_Psimt = Program.UTIL.ToDoubleOrZero(User_CWSpacer[0][2]);
+                    UserDB_PsiOpen = Program.UTIL.ToDoubleOrZero(User_CWSpacer[0][3]);
                 }
                 UserDBSpacer_Type = User_CWSpacer[0][6];
-                UserDB_Psip = Convert.ToDouble(User_CWSpacer[0][2]);
+                UserDB_Psip = Program.UTIL.ToDoubleOrZero(User_CWSpacer[0][2]);
                 UserDB_PsiOpen_textBox.Text = String.Format("{0:F3}", UserDB_PsiOpen);
                 UserDB_Psimt_textBox.Text = String.Format("{0:F3}", UserDB_Psimt);
             }
@@ -206,16 +206,16 @@ namespace main.subcontents.ConstructionCW
             {
                 if (UserDB_LE_CL_V.Contains("LE"))
                 {
-                    UserDB_Psimt = Convert.ToDouble(CWSpacer[0][4]);
-                    UserDB_PsiOpen = Convert.ToDouble(CWSpacer[0][5]);
+                    UserDB_Psimt = Program.UTIL.ToDoubleOrZero(CWSpacer[0][4]);
+                    UserDB_PsiOpen = Program.UTIL.ToDoubleOrZero(CWSpacer[0][5]);
                 }
                 else
                 {
-                    UserDB_Psimt = Convert.ToDouble(CWSpacer[0][2]);
-                    UserDB_PsiOpen = Convert.ToDouble(CWSpacer[0][3]);
+                    UserDB_Psimt = Program.UTIL.ToDoubleOrZero(CWSpacer[0][2]);
+                    UserDB_PsiOpen = Program.UTIL.ToDoubleOrZero(CWSpacer[0][3]);
                 }
                 UserDBSpacer_Type = UserDBSpacer;
-                UserDB_Psip = Convert.ToDouble(CWSpacer[0][2]);
+                UserDB_Psip = Program.UTIL.ToDoubleOrZero(CWSpacer[0][2]);
                 UserDB_PsiOpen_textBox.Text = String.Format("{0:F3}", UserDB_PsiOpen);
                 UserDB_Psimt_textBox.Text = String.Format("{0:F3}", UserDB_Psimt);
             }

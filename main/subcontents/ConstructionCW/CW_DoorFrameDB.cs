@@ -112,12 +112,12 @@ namespace main.subcontents.ConstructionCW
         }
         private void UserDB_Ufd_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserDB_Ufd = Convert.ToDouble(UserDB_Ufd_textBox.Text);
+            UserDB_Ufd = Program.UTIL.ToDoubleOrZero(UserDB_Ufd_textBox.Text);
         }
 
         private void UserDB_dfd_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserDB_dfd = Convert.ToDouble(UserDB_dfd_textBox.Text);
+            UserDB_dfd = Program.UTIL.ToDoubleOrZero(UserDB_dfd_textBox.Text);
         }
 
         private void AddUserDB_button_Click(object sender, EventArgs e)

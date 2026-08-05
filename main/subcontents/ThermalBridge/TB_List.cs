@@ -77,8 +77,8 @@ namespace main.contents
 
                 dataGridView1.Rows[nRow].Cells[0].Value = Value[i][0]; ;
                 dataGridView1.Rows[nRow].Cells[1].Value = Value[i][1]; ;
-                dataGridView1.Rows[nRow].Cells[5].Value = Convert.ToDouble(Value[i][2]).ToString("0.0");
-                Total_length += Convert.ToDouble(Value[i][2]);
+                dataGridView1.Rows[nRow].Cells[5].Value = Program.UTIL.ToDoubleOrZero(Value[i][2]).ToString("0.0");
+                Total_length += Program.UTIL.ToDoubleOrZero(Value[i][2]);
                 dataGridView1.Rows[nRow].Cells[2].Value = Value[i][3]; ;
                 if (Value[i][3] != null && Value[i][3] != "")
                 {
@@ -93,7 +93,7 @@ namespace main.contents
                     {
                         dataGridView1.Rows[i].Cells[2].Value = tb2[0][0]; ;
                         dataGridView1.Rows[i].Cells[3].Value = tb2[0][1]; ;
-                        dataGridView1.Rows[i].Cells[4].Value = Convert.ToDouble(tb2[0][2]).ToString("0.000");
+                        dataGridView1.Rows[i].Cells[4].Value = Program.UTIL.ToDoubleOrZero(tb2[0][2]).ToString("0.000");
                     }
                 }
             }

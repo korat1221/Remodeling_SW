@@ -167,17 +167,17 @@ namespace main.subcontents.ConstructionCW
 
         private void UserDB_Psi_InstallTop_TextChanged(object sender, EventArgs e)
         {
-            UserDB_Psi_InstallTop = Convert.ToDouble(UserDB_Psi_InstallTop_textBox.Text);
+            UserDB_Psi_InstallTop = Program.UTIL.ToDoubleOrZero(UserDB_Psi_InstallTop_textBox.Text);
         }
 
         private void UserDB_Psi_InstallSide_TextChanged(object sender, EventArgs e)
         {
-            UserDB_Psi_InstallSide = Convert.ToDouble(UserDB_Psi_InstallSide_textBox.Text);
+            UserDB_Psi_InstallSide = Program.UTIL.ToDoubleOrZero(UserDB_Psi_InstallSide_textBox.Text);
         }
 
         private void UserDB_Psi_InstallButtom_TextChanged(object sender, EventArgs e)
         {
-            UserDB_Psi_InstallButtom = Convert.ToDouble(UserDB_Psi_InstallButtom_textBox.Text);
+            UserDB_Psi_InstallButtom = Program.UTIL.ToDoubleOrZero(UserDB_Psi_InstallButtom_textBox.Text);
         }
 
         private void AddUserDB_button_Click(object sender, EventArgs e)

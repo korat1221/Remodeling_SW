@@ -64,11 +64,11 @@ namespace main.subcontents.HeatingSystem
                   
                     if (User_Value[n][3] != null && User_Value[n][3] != "")
                     {
-                        B효율 = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][3]));
+                        B효율 = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(User_Value[n][3]));
                     }
                     if (User_Value[n][4] != null && User_Value[n][4] != "")
                     {
-                        동력 = string.Format("{0:F0}", Convert.ToDouble(User_Value[n][4]));
+                        동력 = string.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(User_Value[n][4]));
                     }
 
                     Pump_dataGridView.Rows.Add();

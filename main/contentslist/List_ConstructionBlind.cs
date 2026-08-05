@@ -147,7 +147,7 @@ namespace main.contentslist
                     {
                         for (int a = 0; a < Area.Length; a++)
                         {
-                            A += Convert.ToDouble(Area[a][0]);
+                            A += Program.UTIL.ToDoubleOrZero(Area[a][0]);
                         }
                         dataGridView1.Rows[nRow].Cells[8].Value = String.Format("{0:F2}", A);
                     }

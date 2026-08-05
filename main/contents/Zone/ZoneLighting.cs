@@ -153,8 +153,8 @@ namespace main.contents
                 LightConverter = lightingdb_form.Select_Light[5];
                 LightFi = lightingdb_form.Select_Light[6];
                 LightW = lightingdb_form.Select_Light[7];
-                lm_W = Convert.ToDouble(lightingdb_form.Select_Light[8]);  //광효율
-                LightFL = Convert.ToDouble(lightingdb_form.Select_Light[9]);
+                lm_W = Program.UTIL.ToDoubleOrZero(lightingdb_form.Select_Light[8]);  //광효율
+                LightFL = Program.UTIL.ToDoubleOrZero(lightingdb_form.Select_Light[9]);
                 //Default의 경우 VAR이지만 사용자 DB의 경우 숫자
                 //사용자 이름 나중에 LP 포함해서 하지 말아야겠다
 
@@ -166,8 +166,8 @@ namespace main.contents
 
                 else
                 {
-                    U_LightFi = Convert.ToDouble(lightingdb_form.Select_Light[6]);
-                    U_LightPi = Convert.ToDouble(lightingdb_form.Select_Light[7]);
+                    U_LightFi = Program.UTIL.ToDoubleOrZero(lightingdb_form.Select_Light[6]);
+                    U_LightPi = Program.UTIL.ToDoubleOrZero(lightingdb_form.Select_Light[7]);
                 }
             }
             LightInfo();
@@ -197,7 +197,7 @@ namespace main.contents
                 }
 
                 string[][] val = Program.DB.getValue_SameCheck(DB.type.BaseDB_Lighting, "조명_럭스당조명밀도", "UFF", "조명방식='" + Method + "'");
-                UFF = Convert.ToDouble(val[0][0]);
+                UFF = Program.UTIL.ToDoubleOrZero(val[0][0]);
 
                 if (LightType_textBox.Text != null && LightType_textBox.Text != "")
                 {
@@ -222,7 +222,7 @@ namespace main.contents
         {
             if (double.TryParse(lightHeight_textBox.Text, out double result))
             {
-                LightInstallHeight = Convert.ToDouble(lightHeight_textBox.Text);
+                LightInstallHeight = Program.UTIL.ToDoubleOrZero(lightHeight_textBox.Text);
                 LightMethod_comboBox_SelectedIndexChanged(sender, e);
                 Calc_AD();
             }
@@ -403,8 +403,8 @@ namespace main.contents
                 String[][] val2 = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_럭스당조명밀도", "값", "조명방식='" + Method + "' AND K = '" + x1.ToString() + "'");
                 if (val1.Length > 0 && val2.Length > 0)
                 {
-                    y0 = Convert.ToDouble(val1[0][0].ToString());
-                    y1 = Convert.ToDouble(val2[0][0].ToString());
+                    y0 = Program.UTIL.ToDoubleOrZero(val1[0][0].ToString());
+                    y1 = Program.UTIL.ToDoubleOrZero(val2[0][0].ToString());
 
                     if (x1 - x0 == 0)
                     {
@@ -421,7 +421,7 @@ namespace main.contents
             String[][] value = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_조명제어", "Foc", "제어종류 = '" + control + "'");
             if (value.Length > 0)
             {
-                Foc = Convert.ToDouble(value[0][0]);
+                Foc = Program.UTIL.ToDoubleOrZero(value[0][0]);
             }
         }
         public void Calc_Pj()
@@ -1130,7 +1130,7 @@ namespace main.contents
             {
                 Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,자연채광유형,주향,주창면적합,주창유리종류,주창아이디,차양",
                     "'" + Num_textBox.Text + "','" +
-                   NaturalType + "','" + direction_textBox.Text + "','" + Convert.ToDouble(Aca_textBox.Text.ToString()) + "','" + Main_glass + "','" + MainType_ID + "','" + Blind3_textBox.Text + "'", "번호");
+                   NaturalType + "','" + direction_textBox.Text + "','" + Program.UTIL.ToDoubleOrZero(Aca_textBox.Text.ToString()) + "','" + Main_glass + "','" + MainType_ID + "','" + Blind3_textBox.Text + "'", "번호");
 
 
                 if (facadeButton.Checked == true)
@@ -1279,24 +1279,24 @@ namespace main.contents
                 dimming = Load[0][3];
                 DimmingType_comboBox.SelectedItem = dimming;
 
-                Pj = Convert.ToDouble(Load[0][4]);
+                Pj = Program.UTIL.ToDoubleOrZero(Load[0][4]);
                 Pj_textbox.Text = Pj.ToString();
                 Program.UTIL.textBox_doubleComa(Pj_textbox, true, 2);
 
-                Pci = Convert.ToDouble(Load[0][5]);
+                Pci = Program.UTIL.ToDoubleOrZero(Load[0][5]);
                 Pci_textBox.Text = Pci.ToString();
                 Program.UTIL.textBox_doubleComa(Pci_textBox, true, 1);
 
-                Fo = Convert.ToDouble(Load[0][6]);
+                Fo = Program.UTIL.ToDoubleOrZero(Load[0][6]);
 
-                Fc = Convert.ToDouble(Load[0][7]);
+                Fc = Program.UTIL.ToDoubleOrZero(Load[0][7]);
                 fc_textBox.Text = (Fc * Fo).ToString();
                 Program.UTIL.textBox_doubleComa(fc_textBox, true, 2);
 
-                lm_W = Convert.ToDouble(Load[0][8]);
+                lm_W = Program.UTIL.ToDoubleOrZero(Load[0][8]);
 
                 String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "주이용일", "존번호='" + ZoneNum + "'");
-                dayofuse = Convert.ToDouble(Value[0][0]);
+                dayofuse = Program.UTIL.ToDoubleOrZero(Value[0][0]);
             }
 
             Load_NaturalType_image(NaturalType);
@@ -1313,25 +1313,25 @@ namespace main.contents
                     if (NaturalType == "파사드")
                     {
                         facade_di = Load[0][1];
-                        Zone_f_Aca = Convert.ToDouble(Load[0][2]);
+                        Zone_f_Aca = Program.UTIL.ToDoubleOrZero(Load[0][2]);
                         facade = Load[0][3];
                         doubleskinglass = Load[0][4];
                         atriumglass = Load[0][5];
-                        zoneGlassLight = Convert.ToDouble(Load[0][6]);
-                        facadeW = Convert.ToDouble(Load[0][7]);
-                        facadeL = Convert.ToDouble(Load[0][8]);
-                        facadeH = Convert.ToDouble(Load[0][9]);
+                        zoneGlassLight = Program.UTIL.ToDoubleOrZero(Load[0][6]);
+                        facadeW = Program.UTIL.ToDoubleOrZero(Load[0][7]);
+                        facadeL = Program.UTIL.ToDoubleOrZero(Load[0][8]);
+                        facadeH = Program.UTIL.ToDoubleOrZero(Load[0][9]);
                     }
                     else if (NaturalType == "천창")
                     {
                         roof_di = Load[0][1];
-                        r_Aca = Convert.ToDouble(Load[0][2]);
+                        r_Aca = Program.UTIL.ToDoubleOrZero(Load[0][2]);
                         roof = Load[0][3];
-                        zoneRoofAngle1 = Convert.ToDouble(Load[0][10]);
-                        zoneRoofAngle2 = Convert.ToDouble(Load[0][11]);
-                        zoneRoofLenght1 = Convert.ToDouble(Load[0][12]);
-                        zoneRoofLenght2 = Convert.ToDouble(Load[0][13]);
-                        zoneRoofLenght3 = Convert.ToDouble(Load[0][14]);
+                        zoneRoofAngle1 = Program.UTIL.ToDoubleOrZero(Load[0][10]);
+                        zoneRoofAngle2 = Program.UTIL.ToDoubleOrZero(Load[0][11]);
+                        zoneRoofLenght1 = Program.UTIL.ToDoubleOrZero(Load[0][12]);
+                        zoneRoofLenght2 = Program.UTIL.ToDoubleOrZero(Load[0][13]);
+                        zoneRoofLenght3 = Program.UTIL.ToDoubleOrZero(Load[0][14]);
                     }
                     else { }
 
@@ -1398,7 +1398,7 @@ namespace main.contents
                 L4_textBox.Text = LightConverter;
                 LightFi = Load[0][4];
                 LightW = Load[0][5];
-                LightFL = Convert.ToDouble(Load[0][6]);
+                LightFL = Program.UTIL.ToDoubleOrZero(Load[0][6]);
                 L8_textBox.Text = Load[0][6].ToString(); //광효율(lm/W)
                 Program.UTIL.textBox_doubleComa(L8_textBox, true, 2);
                 FL_textBox.Text = LightFL.ToString();
@@ -1415,8 +1415,8 @@ namespace main.contents
                     L6_textBox.Text = Load[0][10];
                 }
 
-                Pn = Convert.ToDouble(Load[0][11]);
-                hm = Convert.ToDouble(Load[0][12]); //조명설치높이 반영함-공간계수
+                Pn = Program.UTIL.ToDoubleOrZero(Load[0][11]);
+                hm = Program.UTIL.ToDoubleOrZero(Load[0][12]); //조명설치높이 반영함-공간계수
 
                 if (hm > 0)
                 {
@@ -1469,13 +1469,13 @@ namespace main.contents
                 ZoneName_textBox.Text = ZoneName;
                 if (Value[0][1] != "")
                 {
-                    hR = Convert.ToDouble(Value[0][1]);
+                    hR = Program.UTIL.ToDoubleOrZero(Value[0][1]);
                 }
 
                 Usage = Value[0][2];
                 if (Value[0][3] != "")
                 {
-                    A = Convert.ToDouble(Value[0][3]); //순바닥면적
+                    A = Program.UTIL.ToDoubleOrZero(Value[0][3]); //순바닥면적
                     A_textBox.Text = A.ToString();
                     Program.UTIL.textBox_doubleComa(A_textBox, true, 2);
                 }
@@ -1491,19 +1491,19 @@ namespace main.contents
                 string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "조도,이용영역계수,조명이용시부재율,작업면높이", "용도명 = '" + Usage + "'");
                 if (ValueA[0][0] != "")
                 {
-                    Em = Convert.ToDouble(ValueA[0][0]);
+                    Em = Program.UTIL.ToDoubleOrZero(ValueA[0][0]);
                 }
                 if (ValueA[0][1] != "")
                 {
-                    KA = Convert.ToDouble(ValueA[0][1]);
+                    KA = Program.UTIL.ToDoubleOrZero(ValueA[0][1]);
                 }
                 if (ValueA[0][2] != "")
                 {
-                    FA = Convert.ToDouble(ValueA[0][2]);
+                    FA = Program.UTIL.ToDoubleOrZero(ValueA[0][2]);
                 }
                 if (ValueA[0][3] != "")
                 {
-                    hTa = Convert.ToDouble(ValueA[0][3]);
+                    hTa = Program.UTIL.ToDoubleOrZero(ValueA[0][3]);
                 }
 
                 Check_MainDirection();
@@ -1527,7 +1527,7 @@ namespace main.contents
                 string[][] val = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "공간계수", "번호='" + ZoneNum + "'");
                 if (val.Length > 0)
                 {
-                    LightInstallHeight = Convert.ToDouble(val[0][0].ToString());
+                    LightInstallHeight = Program.UTIL.ToDoubleOrZero(val[0][0].ToString());
                 }
                 Match_Pjlx();
                 Calc_Pj();
@@ -1558,7 +1558,7 @@ namespace main.contents
                         for (int j = 0; j < Direction.Length; j++)
                         {
                             if (TotalEnvelope_Win[k][2] == Direction[j])
-                                AreaSum_Win[j] += Convert.ToDouble(TotalEnvelope_Win[k][1]);
+                                AreaSum_Win[j] += Program.UTIL.ToDoubleOrZero(TotalEnvelope_Win[k][1]);
 
                         }
                     }
@@ -1573,7 +1573,7 @@ namespace main.contents
                         for (int j = 0; j < Direction.Length; j++)
                         {
                             if (TotalEnvelope_CW[k][2] == Direction[j])
-                                AreaSum_CW[j] += Convert.ToDouble(TotalEnvelope_CW[k][1]);
+                                AreaSum_CW[j] += Program.UTIL.ToDoubleOrZero(TotalEnvelope_CW[k][1]);
                         }
                     }
                 }
@@ -1608,7 +1608,7 @@ namespace main.contents
                     for (int k = 0; k < TotalEnvelope_Win2.Length; k++)
                     {
                         if (TotalEnvelope_Win2[k][2] == Direction2[j])
-                            AreaSum_Win2[j] += Convert.ToDouble(TotalEnvelope_Win2[k][1]);
+                            AreaSum_Win2[j] += Program.UTIL.ToDoubleOrZero(TotalEnvelope_Win2[k][1]);
                     }
                 }
             }
@@ -1619,7 +1619,7 @@ namespace main.contents
                     for (int k = 0; k < TotalEnvelope_CW2.Length; k++)
                     {
                         if (TotalEnvelope_CW2[k][2] == Direction2[j])
-                            AreaSum_CW2[j] += Convert.ToDouble(TotalEnvelope_CW2[k][1]);
+                            AreaSum_CW2[j] += Program.UTIL.ToDoubleOrZero(TotalEnvelope_CW2[k][1]);
                     }
                 }
             }
@@ -1694,7 +1694,7 @@ namespace main.contents
                 for (int j = 0; j < Wall_Length.Length; j++)
                 {
                     if (Wall_Length[j][0] == "") { Wr += 1; }
-                    else { Wr += Convert.ToDouble(Wall_Length[j][0]); }
+                    else { Wr += Program.UTIL.ToDoubleOrZero(Wall_Length[j][0]); }
                 }
                 Lr = A / Wr;
             }
@@ -1744,7 +1744,7 @@ namespace main.contents
                             {
                                 if (MEnvelope_Win[j][3] == Win_Type[k][0])
                                 {
-                                    AreaSum_ConstructionWin[k] += Convert.ToDouble(MEnvelope_Win[j][1]);
+                                    AreaSum_ConstructionWin[k] += Program.UTIL.ToDoubleOrZero(MEnvelope_Win[j][1]);
                                 }
                             }
 
@@ -1770,14 +1770,14 @@ namespace main.contents
                         //찾은 주 창호 유형의 빛투과율 찾기 
                         MainType_Win_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "빛투과율, 유리종류", "번호 = '" + MainType_Win[0][0].ToString() + "'");
                         Main_WinCW = MainType_Win[0][0];
-                        K1 = Convert.ToDouble(MainType_Win[0][1]);
+                        K1 = Program.UTIL.ToDoubleOrZero(MainType_Win[0][1]);
                         if (MainType_Win_Value.Length > 0)
                         {
-                            f_τD65_SNA = Convert.ToDouble(MainType_Win_Value[0][0]);
+                            f_τD65_SNA = Program.UTIL.ToDoubleOrZero(MainType_Win_Value[0][0]);
                             Main_glass = MainType_Win_Value[0][1];
                         }
                         string[][] 상인방높이 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "상인방높이", "방위='" + facade_di + "' AND 존 = '" + ZoneNum + "' AND 구조체 = '" + MainType_Win[0][2].ToString() + "'");
-                        hLi = Convert.ToDouble(상인방높이[0][0].ToString());
+                        hLi = Program.UTIL.ToDoubleOrZero(상인방높이[0][0].ToString());
                     }
                     else { }
                 }
@@ -1794,7 +1794,7 @@ namespace main.contents
                                 for (int k = 0; k < CW_Type.Length; k++)
                                 {
                                     if (MEnvelope_CW[j][4] == CW_Type[k][1])
-                                    { AreaSum_ConstructionCW[k] += Convert.ToDouble(MEnvelope_CW[j][1]); }
+                                    { AreaSum_ConstructionCW[k] += Program.UTIL.ToDoubleOrZero(MEnvelope_CW[j][1]); }
                                 }
                             }
                         }
@@ -1816,11 +1816,11 @@ namespace main.contents
                             MainType_ID = CW_Type[index][2];
 
                             Main_WinCW = CW_Type[index][0];
-                            f_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
+                            f_τD65_SNA = Program.UTIL.ToDoubleOrZero(MainType_CW_Value[0][0]);
                             Main_glass = MainType_CW_Value[0][1];
-                            K1 = Convert.ToDouble(MainType_CW_Value[0][3]);
+                            K1 = Program.UTIL.ToDoubleOrZero(MainType_CW_Value[0][3]);
                             string[][] 상인방높이 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "상인방높이", "방위='" + facade_di + "' AND 존 = '" + ZoneNum + "' AND 구조체 = '" + MainType_CW + "'");
-                            hLi = Convert.ToDouble(상인방높이[0][0].ToString());
+                            hLi = Program.UTIL.ToDoubleOrZero(상인방높이[0][0].ToString());
                         }
                     }
                 }
@@ -1837,7 +1837,7 @@ namespace main.contents
                             for (int k = 0; k < Win_Type.Length; k++)
                             {
                                 if (MEnvelope_Win[j][3] == Win_Type[k][0])
-                                { AreaSum_ConstructionWin[k] += Convert.ToDouble(MEnvelope_Win[j][1]); }
+                                { AreaSum_ConstructionWin[k] += Program.UTIL.ToDoubleOrZero(MEnvelope_Win[j][1]); }
                             }
                         }
                     }
@@ -1874,7 +1874,7 @@ namespace main.contents
                                 for (int k = 0; k < CW_Type.Length; k++)
                                 {
                                     if (MEnvelope_CW[j][4] == CW_Type[k][1])
-                                    { AreaSum_ConstructionCW[k] += Convert.ToDouble(MEnvelope_CW[j][1]); }
+                                    { AreaSum_ConstructionCW[k] += Program.UTIL.ToDoubleOrZero(MEnvelope_CW[j][1]); }
                                 }
                             }
                         }
@@ -1895,7 +1895,7 @@ namespace main.contents
                                 MainType_ID = CW_Type[index2][2];
 
                                 Main_WinCW = CW_Type[index2][0];
-                                f_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
+                                f_τD65_SNA = Program.UTIL.ToDoubleOrZero(MainType_CW_Value[0][0]);
                                 Main_glass = MainType_CW_Value[0][1];
 
 
@@ -1904,20 +1904,20 @@ namespace main.contents
                                 {
                                     Main_WinCW = CW_Type[index2][0];
                                     MainType_ID = CW_Type[index2][2];
-                                    f_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
+                                    f_τD65_SNA = Program.UTIL.ToDoubleOrZero(MainType_CW_Value[0][0]);
                                     Main_glass = MainType_CW_Value[0][1];
-                                    K1 = Convert.ToDouble(MainType_CW_Value[0][3]);
+                                    K1 = Program.UTIL.ToDoubleOrZero(MainType_CW_Value[0][3]);
                                 }
                                 else
                                 {
                                     Main_WinCW = MainType_Win[0][0];
                                     MainType_ID = Win_Type[index][2];
-                                    f_τD65_SNA = Convert.ToDouble(MainType_Win_Value[0][0]);
+                                    f_τD65_SNA = Program.UTIL.ToDoubleOrZero(MainType_Win_Value[0][0]);
                                     Main_glass = MainType_Win_Value[0][1];
-                                    K1 = Convert.ToDouble(MainType_Win[0][1]);
+                                    K1 = Program.UTIL.ToDoubleOrZero(MainType_Win[0][1]);
                                 }
                                 string[][] 상인방높이 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneEnvelope_3D", "상인방높이", "방위='" + facade_di + "' AND 존 = '" + ZoneNum + "' AND 구조체 = '" + Main_WinCW + "'");
-                                hLi = Convert.ToDouble(상인방높이[0][0].ToString());
+                                hLi = Program.UTIL.ToDoubleOrZero(상인방높이[0][0].ToString());
                             }
                         }
                     }
@@ -1939,7 +1939,7 @@ namespace main.contents
                     if (Wall_Length[j][0] == "") { Wr += 1; }
                     else
                     {
-                        Wr += Convert.ToDouble(Wall_Length[j][0]);
+                        Wr += Program.UTIL.ToDoubleOrZero(Wall_Length[j][0]);
                     }
                 }
             }
@@ -1987,7 +1987,7 @@ namespace main.contents
                         for (int k = 0; k < Win_Type.Length; k++)
                         {
                             if (MEnvelope_Win[j][3] == Win_Type[k][0])
-                            { AreaSum_ConstructionWin[k] += Convert.ToDouble(MEnvelope_Win[j][1]); }
+                            { AreaSum_ConstructionWin[k] += Program.UTIL.ToDoubleOrZero(MEnvelope_Win[j][1]); }
                         }
                     }
                 }
@@ -2011,9 +2011,9 @@ namespace main.contents
                 if (MainType_Win.Length > 0 && MainType_Win_Value.Length > 0)
                 {
                     Main_WinCW = MainType_Win[0][0];
-                    r_τD65_SNA = Convert.ToDouble(MainType_Win_Value[0][0]);
+                    r_τD65_SNA = Program.UTIL.ToDoubleOrZero(MainType_Win_Value[0][0]);
                     Main_glass = MainType_Win_Value[0][1];
-                    Kobl_1 = Convert.ToDouble(MainType_Win[0][1]);
+                    Kobl_1 = Program.UTIL.ToDoubleOrZero(MainType_Win[0][1]);
                 }
             }
             else if (Win_Type.Length == 0)
@@ -2027,7 +2027,7 @@ namespace main.contents
                         for (int k = 0; k < CW_Type.Length; k++)
                         {
                             if (MEnvelope_CW[j][3] == CW_Type[k][1])
-                            { AreaSum_ConstructionCW[k] += Convert.ToDouble(MEnvelope_CW[j][1]); }
+                            { AreaSum_ConstructionCW[k] += Program.UTIL.ToDoubleOrZero(MEnvelope_CW[j][1]); }
                         }
                     }
                 }
@@ -2048,9 +2048,9 @@ namespace main.contents
                         MainType_ID = CW_Type[index][2];
 
                         Main_WinCW = CW_Type[index][0];
-                        r_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
+                        r_τD65_SNA = Program.UTIL.ToDoubleOrZero(MainType_CW_Value[0][0]);
                         Main_glass = MainType_CW_Value[0][1];
-                        Kobl_1 = Convert.ToDouble(MainType_CW_Value[0][3]);
+                        Kobl_1 = Program.UTIL.ToDoubleOrZero(MainType_CW_Value[0][3]);
                     }
                 }
             }
@@ -2064,7 +2064,7 @@ namespace main.contents
                         for (int k = 0; k < Win_Type.Length; k++)
                         {
                             if (MEnvelope_Win[j][3] == Win_Type[k][0])
-                            { AreaSum_ConstructionWin[k] += Convert.ToDouble(MEnvelope_Win[j][1]); }
+                            { AreaSum_ConstructionWin[k] += Program.UTIL.ToDoubleOrZero(MEnvelope_Win[j][1]); }
                         }
                     }
                 }
@@ -2095,7 +2095,7 @@ namespace main.contents
                             for (int k = 0; k < CW_Type.Length; k++)
                             {
                                 if (MEnvelope_CW[j][3] == CW_Type[k][1])
-                                { AreaSum_ConstructionCW[k] += Convert.ToDouble(MEnvelope_CW[j][1]); }
+                                { AreaSum_ConstructionCW[k] += Program.UTIL.ToDoubleOrZero(MEnvelope_CW[j][1]); }
                             }
                         }
                         MaxSum_CW = AreaSum_ConstructionCW.Max(); //커튼월창 구조체 타입별로 면적 합계 중 가장 큰 값
@@ -2115,16 +2115,16 @@ namespace main.contents
 
                                 Main_WinCW = CW_Type[index][0];
 
-                                r_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
+                                r_τD65_SNA = Program.UTIL.ToDoubleOrZero(MainType_CW_Value[0][0]);
                                 Main_glass = MainType_CW_Value[0][1];
 
                                 if (MaxSum_CW > MaxSum_Win)
                                 {
                                     Main_WinCW = CW_Type[index][0];
                                     MainType_ID = CW_Type[index][2];
-                                    r_τD65_SNA = Convert.ToDouble(MainType_CW_Value[0][0]);
+                                    r_τD65_SNA = Program.UTIL.ToDoubleOrZero(MainType_CW_Value[0][0]);
                                     Main_glass = MainType_CW_Value[0][1];
-                                    Kobl_1 = Convert.ToDouble(MainType_CW_Value[0][3]);
+                                    Kobl_1 = Program.UTIL.ToDoubleOrZero(MainType_CW_Value[0][3]);
 
                                 }
                                 else
@@ -2135,9 +2135,9 @@ namespace main.contents
                                         MainType_ID = Win_Type[index][2];
                                         if (MainType_Win_Value.Length > 0)
                                         {
-                                            r_τD65_SNA = Convert.ToDouble(MainType_Win_Value[0][0]);
+                                            r_τD65_SNA = Program.UTIL.ToDoubleOrZero(MainType_Win_Value[0][0]);
                                             Main_glass = MainType_Win_Value[0][1];
-                                            Kobl_1 = Convert.ToDouble(MainType_Win[0][1]);
+                                            Kobl_1 = Program.UTIL.ToDoubleOrZero(MainType_Win[0][1]);
                                         }
                                     }
                                 }
@@ -2158,7 +2158,7 @@ namespace main.contents
                 Wr = 0;
                 for (int j = 0; j < Wall_Length.Length; j++)
                 {
-                    Wr += Convert.ToDouble(Wall_Length[j][0]);
+                    Wr += Program.UTIL.ToDoubleOrZero(Wall_Length[j][0]);
                 }
                 Lr = A / Wr;
             }

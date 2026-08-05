@@ -87,15 +87,15 @@ namespace main.contents.Result.Building_Report
                         string[][] Final = Program.DB.querySQL(res[0][0], "SELECT 난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량 FROM FinalEnergy_Result where not  연료 = '전기' and 월 = '" + (mth + 1).ToString() + "월'");
                         if (Final.Length > 0)
                         {
-                            __data[0].Add(new { idx = i * 13 + mth, val = Convert.ToDouble(Final[0][0]).ToString("#,##0") }); //월별 난방 
-                            __data[1].Add(new { idx = i * 13 + mth, val = Convert.ToDouble(Final[0][1]).ToString("#,##0") }); // 월별 냉방 
-                            __data[2].Add(new { idx = i * 13 + mth, val = Convert.ToDouble(Final[0][2]).ToString("#,##0") }); //월별 급탕 
-                            __data[3].Add(new { idx = i * 13 + mth, val = Convert.ToDouble(Final[0][3]).ToString("#,##0") }); //월별 조명 
-                            __data[4].Add(new { idx = i * 13 + mth, val = Convert.ToDouble(Final[0][4]).ToString("#,##0") }); //월별 공조
+                            __data[0].Add(new { idx = i * 13 + mth, val = Program.UTIL.ToDoubleOrZero(Final[0][0]).ToString("#,##0") }); //월별 난방 
+                            __data[1].Add(new { idx = i * 13 + mth, val = Program.UTIL.ToDoubleOrZero(Final[0][1]).ToString("#,##0") }); // 월별 냉방 
+                            __data[2].Add(new { idx = i * 13 + mth, val = Program.UTIL.ToDoubleOrZero(Final[0][2]).ToString("#,##0") }); //월별 급탕 
+                            __data[3].Add(new { idx = i * 13 + mth, val = Program.UTIL.ToDoubleOrZero(Final[0][3]).ToString("#,##0") }); //월별 조명 
+                            __data[4].Add(new { idx = i * 13 + mth, val = Program.UTIL.ToDoubleOrZero(Final[0][4]).ToString("#,##0") }); //월별 공조
                             if (Final[0][5] != null && Final[0][5] != "")
-                            { __data[5].Add(new { idx = i * 13 + mth, val = Convert.ToDouble(Final[0][5]).ToString("#,##0") }); } //월별 기저            
-                            __data[100].Add(new { idx = i * 13 + mth, val = Convert.ToDouble(Final[0][6]).ToString("#,##0") }); //월별 신재생 생산량 
-                            Qtot2_mth_가스[mth] = Convert.ToDouble(Final[0][7]);
+                            { __data[5].Add(new { idx = i * 13 + mth, val = Program.UTIL.ToDoubleOrZero(Final[0][5]).ToString("#,##0") }); } //월별 기저            
+                            __data[100].Add(new { idx = i * 13 + mth, val = Program.UTIL.ToDoubleOrZero(Final[0][6]).ToString("#,##0") }); //월별 신재생 생산량 
+                            Qtot2_mth_가스[mth] = Program.UTIL.ToDoubleOrZero(Final[0][7]);
                             __data[6].Add(new { idx = i * 13 + mth, val = Qtot2_mth_가스[mth].ToString("#,##0") }); //월별 가스 에너지소요량 
 
                             전_난방_가스Chart.Add(Math.Round(Double.Parse(Final[0][0]), 3) + 0);
@@ -108,12 +108,12 @@ namespace main.contents.Result.Building_Report
                             전_총_가스Chart.Add(Math.Round(Double.Parse(Qtot2_mth_가스[mth].ToString()), 3) + 0);
                             전_가스Chart.Add(Math.Round(Double.Parse(Qtot2_mth_가스[mth].ToString()), 3) + 0);
 
-                            Qh_a2_가스 += Convert.ToDouble(Final[0][0]);
-                            Qc_a2_가스 += Convert.ToDouble(Final[0][1]);
-                            Qw_a2_가스 += Convert.ToDouble(Final[0][2]);
-                            Ql_a2_가스 += Convert.ToDouble(Final[0][3]);
-                            Qv_a2_가스 += Convert.ToDouble(Final[0][4]);
-                            Qbase_a2_가스 += Convert.ToDouble(Final[0][5]);
+                            Qh_a2_가스 += Program.UTIL.ToDoubleOrZero(Final[0][0]);
+                            Qc_a2_가스 += Program.UTIL.ToDoubleOrZero(Final[0][1]);
+                            Qw_a2_가스 += Program.UTIL.ToDoubleOrZero(Final[0][2]);
+                            Ql_a2_가스 += Program.UTIL.ToDoubleOrZero(Final[0][3]);
+                            Qv_a2_가스 += Program.UTIL.ToDoubleOrZero(Final[0][4]);
+                            Qbase_a2_가스 += Program.UTIL.ToDoubleOrZero(Final[0][5]);
                         }
                     }
                     Qtot_a2_가스 = Qh_a2_가스 + Qc_a2_가스 + Qw_a2_가스 + Ql_a2_가스 + Qv_a2_가스 + Qbase_a2_가스;
@@ -140,7 +140,7 @@ namespace main.contents.Result.Building_Report
                     {
                         for (int a = 0; a < A2.Length; a++)
                         {
-                            Area2_가스 += Convert.ToDouble(A2[a][0]);
+                            Area2_가스 += Program.UTIL.ToDoubleOrZero(A2[a][0]);
                         }
                     }
                     __data[14].Add(new { idx = i, val = (Qh_a2_가스 / Area2_가스).ToString("0.0") });
@@ -159,14 +159,14 @@ namespace main.contents.Result.Building_Report
                         string[][] Final2 = Program.DB.querySQL(res[0][0], "SELECT 기저에너지 FROM FinalEnergy_Result where not 연료 = '전기' and 월 = '" + (mth + 1).ToString() + "월'");
                         if (Final.Length > 0 && Final2.Length > 0)
                         {
-                            __data[21].Add(new { idx = i * 13 + mth, val = Convert.ToDouble(Final[0][0]).ToString("#,##0") }); //월별 난방 
-                            __data[22].Add(new { idx = i * 13 + mth, val = Convert.ToDouble(Final[0][1]).ToString("#,##0") }); //월별 냉방 
-                            __data[23].Add(new { idx = i * 13 + mth, val = Convert.ToDouble(Final[0][2]).ToString("#,##0") }); //월별 급탕 
-                            __data[24].Add(new { idx = i * 13 + mth, val = Convert.ToDouble(Final[0][3]).ToString("#,##0") }); //월별 조명 
-                            __data[25].Add(new { idx = i * 13 + mth, val = Convert.ToDouble(Final[0][4]).ToString("#,##0") }); //월별 공조
+                            __data[21].Add(new { idx = i * 13 + mth, val = Program.UTIL.ToDoubleOrZero(Final[0][0]).ToString("#,##0") }); //월별 난방 
+                            __data[22].Add(new { idx = i * 13 + mth, val = Program.UTIL.ToDoubleOrZero(Final[0][1]).ToString("#,##0") }); //월별 냉방 
+                            __data[23].Add(new { idx = i * 13 + mth, val = Program.UTIL.ToDoubleOrZero(Final[0][2]).ToString("#,##0") }); //월별 급탕 
+                            __data[24].Add(new { idx = i * 13 + mth, val = Program.UTIL.ToDoubleOrZero(Final[0][3]).ToString("#,##0") }); //월별 조명 
+                            __data[25].Add(new { idx = i * 13 + mth, val = Program.UTIL.ToDoubleOrZero(Final[0][4]).ToString("#,##0") }); //월별 공조
                             if (Final2[0][0] != null && Final2[0][0] != "")
-                            { __data[26].Add(new { idx = i * 13 + mth, val = Convert.ToDouble(Final2[0][0]).ToString("#,##0") }); } //월별 기저 >>>리모델링 전 값 가져옴 
-                            Qtot_mth_가스[mth] = Convert.ToDouble(Final[0][7]);
+                            { __data[26].Add(new { idx = i * 13 + mth, val = Program.UTIL.ToDoubleOrZero(Final2[0][0]).ToString("#,##0") }); } //월별 기저 >>>리모델링 전 값 가져옴 
+                            Qtot_mth_가스[mth] = Program.UTIL.ToDoubleOrZero(Final[0][7]);
                             __data[27].Add(new { idx = i * 13 + mth, val = Qtot_mth_가스[mth].ToString("#,##0") }); //월별 가스 에너지소요량 
 
                             후_난방_가스Chart.Add(Math.Round(Double.Parse(Final[0][0]), 3) + 0);
@@ -179,13 +179,13 @@ namespace main.contents.Result.Building_Report
                             후_총_가스Chart.Add(Math.Round(Double.Parse(Qtot_mth_가스[mth].ToString()), 3) + 0);
                             후_가스Chart.Add(Math.Round(Double.Parse(Qtot_mth_가스[mth].ToString()), 3) + 0);
 
-                            Qh_a_가스 += Convert.ToDouble(Final[0][0]);
-                            Qc_a_가스 += Convert.ToDouble(Final[0][1]);
-                            Qw_a_가스 += Convert.ToDouble(Final[0][2]);
-                            Ql_a_가스 += Convert.ToDouble(Final[0][3]);
-                            Qv_a_가스 += Convert.ToDouble(Final[0][4]);
+                            Qh_a_가스 += Program.UTIL.ToDoubleOrZero(Final[0][0]);
+                            Qc_a_가스 += Program.UTIL.ToDoubleOrZero(Final[0][1]);
+                            Qw_a_가스 += Program.UTIL.ToDoubleOrZero(Final[0][2]);
+                            Ql_a_가스 += Program.UTIL.ToDoubleOrZero(Final[0][3]);
+                            Qv_a_가스 += Program.UTIL.ToDoubleOrZero(Final[0][4]);
                             if (Final2[0][0] != null && Final2[0][0] != "")
-                            { Qbase_a_가스 += Convert.ToDouble(Final2[0][0]); }//리모델링전 값 가져옴 
+                            { Qbase_a_가스 += Program.UTIL.ToDoubleOrZero(Final2[0][0]); }//리모델링전 값 가져옴 
                         }
                     }
                     Qtot_a_가스 = Qh_a_가스 + Qc_a_가스 + Qw_a_가스 + Ql_a_가스 + Qv_a_가스 + Qbase_a_가스;
@@ -213,7 +213,7 @@ namespace main.contents.Result.Building_Report
                     {
                         for (int a = 0; a < A.Length; a++)
                         {
-                            Area_가스 += Convert.ToDouble(A[a][0]);
+                            Area_가스 += Program.UTIL.ToDoubleOrZero(A[a][0]);
                         }
                     }
                     __data[35].Add(new { idx = i, val = (Qh_a_가스 / Area_가스).ToString("0.0") });

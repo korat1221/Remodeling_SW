@@ -124,16 +124,16 @@ namespace main.contents
                     for (int i = 0; i < 10; i++)
                     {
                         Material[i] = Load[0][(2 * i + 22)];
-                        Material_d[i] = Convert.ToDouble(Load[0][(2 * i + 23)]);
+                        Material_d[i] = Program.UTIL.ToDoubleOrZero(Load[0][(2 * i + 23)]);
                     }
 
                     //표면열전달저항 및 합계
 
-                    Rsi = Convert.ToDouble(Load[0][18]);
+                    Rsi = Program.UTIL.ToDoubleOrZero(Load[0][18]);
                     //Rsi_textBox.Text = string.Format("{0:F2}", Rsi);
-                    Rse = Convert.ToDouble(Load[0][17]);
+                    Rse = Program.UTIL.ToDoubleOrZero(Load[0][17]);
                     //Rse_textBox.Text = string.Format("{0:F2}", Rse);
-                    Rtot = Convert.ToDouble(Load[0][20]);
+                    Rtot = Program.UTIL.ToDoubleOrZero(Load[0][20]);
                     //Material_Rtot_textBox.Text = String.Format("{0:F2}", Rtot);
                     OldRoof = Load[0][3];
 
@@ -156,8 +156,8 @@ namespace main.contents
                             }
                             try
                             {
-                                Material_λ[i] = Convert.ToDouble(Value[0][1]);
-                                Material_R[i] = Convert.ToDouble(Load[0][(2 * i + 23)]) / 1000 / Material_λ[i];
+                                Material_λ[i] = Program.UTIL.ToDoubleOrZero(Value[0][1]);
+                                Material_R[i] = Program.UTIL.ToDoubleOrZero(Load[0][(2 * i + 23)]) / 1000 / Material_λ[i];
 
 
                                 Ucalc_dataGridView.Rows[nRow].Cells[1].Value = Value[0][0];
@@ -174,13 +174,13 @@ namespace main.contents
                                 OldRoof_U = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "열관류율", "명칭 = '" + Material[i] + "'");
                                 try
                                 {
-                                    OldRoof_R = 1 / Convert.ToDouble(OldRoof_U[0][0]);
+                                    OldRoof_R = 1 / Program.UTIL.ToDoubleOrZero(OldRoof_U[0][0]);
                                     Ucalc_dataGridView.Rows[nRow].Cells[1].Value = "기존지붕";
                                     Ucalc_dataGridView.Rows[nRow].Cells[2].Value = OldRoof;
                                     string[][] value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "두께합계", "명칭 ='" + OldRoof + "'");
                                     if (value.Length > 0)
                                     {
-                                        Ucalc_dataGridView.Rows[nRow].Cells[4].Value = Convert.ToDouble(value[0][0]).ToString("0");
+                                        Ucalc_dataGridView.Rows[nRow].Cells[4].Value = Program.UTIL.ToDoubleOrZero(value[0][0]).ToString("0");
                                     }
                                     Ucalc_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", OldRoof_R);
                                 }
@@ -200,7 +200,7 @@ namespace main.contents
 
                     int nRow3 = Ucalc_dataGridView.Rows.Add();
                     Ucalc_dataGridView.Rows[nRow3].Cells[2].Value = "합계";
-                    Ucalc_dataGridView.Rows[nRow3].Cells[4].Value = string.Format("{0:F0}", Convert.ToDouble(Load[0][20]));
+                    Ucalc_dataGridView.Rows[nRow3].Cells[4].Value = string.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(Load[0][20]));
                     Ucalc_dataGridView.Rows[nRow3].Cells[5].Value = string.Format("{0:F2}", Rtot);
 
                     Load_Material_Num();
@@ -210,7 +210,7 @@ namespace main.contents
                     Name_textBox1.Text = Load[0][1];
                     DI_textBox.Text = Load[0][5];
                     abs_textBox.Text = Load[0][42];
-                    UW = Convert.ToDouble(Load[0][45]);
+                    UW = Program.UTIL.ToDoubleOrZero(Load[0][45]);
                     uw_textBox.Text = String.Format("{0:F2}", UW);
                     if (Load[0][8] == null || Load[0][8] == "")
                     { Type_textBox.Text = ""; }
@@ -259,7 +259,7 @@ namespace main.contents
 
                 //정보 불러오기
                 Name_textBox.Text = value1[0][2];
-                Area = Convert.ToDouble(value1[0][1]);
+                Area = Program.UTIL.ToDoubleOrZero(value1[0][1]);
                 Area_textBox.Text = String.Format("{0:F2}", Area);
 
             }

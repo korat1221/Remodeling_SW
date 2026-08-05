@@ -140,7 +140,7 @@ namespace main.contentslist
                     dataGridView1.Rows[nRow].Cells[1].Value = List[n][0];
                     dataGridView1.Rows[nRow].Cells[2].Value = List[n][1];
                     Load_alt(List[n][0], nRow);
-                    dataGridView1.Rows[nRow].Cells[6].Value = Convert.ToDouble(List[n][2]).ToString("0.0") + " 점";
+                    dataGridView1.Rows[nRow].Cells[6].Value = Program.UTIL.ToDoubleOrZero(List[n][2]).ToString("0.0") + " 점";
                     mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":59,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
                 }
 
@@ -165,8 +165,8 @@ namespace main.contentslist
                         string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 리모델링값,순공사비,에너지절감량,에너지절감률,종합점수 From Optimal_PreResult Where 검토유형='"+ Load[0][a * 2] + "' and 리모델링안='" + Load[0][a * 2  + 1] + "'");
                         if (Value.Length > 0)
                         {
-                            TotalCost += Convert.ToDouble(Value[0][1]);
-                            TotalSaving += Convert.ToDouble(Value[0][3]);
+                            TotalCost += Program.UTIL.ToDoubleOrZero(Value[0][1]);
+                            TotalSaving += Program.UTIL.ToDoubleOrZero(Value[0][3]);
                         }
                     }
                     else

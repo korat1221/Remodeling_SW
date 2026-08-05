@@ -64,21 +64,21 @@ namespace main.contents
                     tabControl1.TabPages.Remove(tabPage2);
                 }
                 //음영정보
-                R1 = Convert.ToDouble(rec[0][5]);
+                R1 = Program.UTIL.ToDoubleOrZero(rec[0][5]);
                 R1_textBox.Text = R1.ToString("0.00") + "m";
-                R2 = Convert.ToDouble(rec[0][1]);
+                R2 = Program.UTIL.ToDoubleOrZero(rec[0][1]);
                 R2_textBox.Text = R2.ToString("0.00") + "°";
-                L1 = Convert.ToDouble(rec[0][6]);
+                L1 = Program.UTIL.ToDoubleOrZero(rec[0][6]);
                 L1_textBox.Text = L1.ToString("0.00") + "m";
-                L2 = Convert.ToDouble(rec[0][2]);
+                L2 = Program.UTIL.ToDoubleOrZero(rec[0][2]);
                 L2_textBox.Text = L2.ToString("0.00") + "°";
-                S1 = Convert.ToDouble(rec[0][8]);
+                S1 = Program.UTIL.ToDoubleOrZero(rec[0][8]);
                 S1_textBox.Text = S1.ToString("0.00") + "m";
-                S2 = Convert.ToDouble(rec[0][4]);
+                S2 = Program.UTIL.ToDoubleOrZero(rec[0][4]);
                 S2_textBox.Text = S2.ToString("0.00") + "°";
-                T1 = Convert.ToDouble(rec[0][7]);
+                T1 = Program.UTIL.ToDoubleOrZero(rec[0][7]);
                 T1_textBox.Text = T1.ToString("0.00") + "m";
-                T2 = Convert.ToDouble(rec[0][3]);
+                T2 = Program.UTIL.ToDoubleOrZero(rec[0][3]);
                 T2_textBox.Text = T2.ToString("0.00") + "°";
 
 
@@ -93,11 +93,11 @@ namespace main.contents
                     Name_textBox.Text = rec[0][9];
                     Name_textBox1.Text = CWLoad[0][1];
 
-                    Area = Convert.ToDouble(rec[0][13]);
+                    Area = Program.UTIL.ToDoubleOrZero(rec[0][13]);
                     Area_textBox.Text = String.Format("{0:F2}", Area);
 
-                    Width_textBox.Text = String.Format("{0:F2}", Convert.ToDouble(rec[0][14]));
-                    height_textBox.Text = String.Format("{0:F2}", Convert.ToDouble(rec[0][15]));
+                    Width_textBox.Text = String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(rec[0][14]));
+                    height_textBox.Text = String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(rec[0][15]));
                     if (CWLoad[0][9] == "내단열" || CWLoad[0][9] == "외단열")
                     {
                         install_textBox.Text = "콘크리트조 " + CWLoad[0][9];
@@ -117,9 +117,9 @@ namespace main.contents
                     Tao_on_textBox.Text = CWLoad[0][11];
                     Tao_off_textBox.Text = CWLoad[0][11];
 
-                    uw = Convert.ToDouble(CWLoad[0][13]);
+                    uw = Program.UTIL.ToDoubleOrZero(CWLoad[0][13]);
                     uw_textBox.Text = uw.ToString("0.000") + " W/m" + Program.UTIL.Subscript(2, true) + "K";
-                    install = Convert.ToDouble(CWLoad[0][12]);
+                    install = Program.UTIL.ToDoubleOrZero(CWLoad[0][12]);
                     inst_textBox.Text = install.ToString("0.000") + " W/m" + Program.UTIL.Subscript(2, true) + "K";
 
                     Type = CWLoad[0][14];
@@ -176,7 +176,7 @@ namespace main.contents
                 {
                     for (int k = 0; k < res.Length; k++)
                     {
-                        s += Convert.ToDouble(res[k][0]) * 100 + ",";
+                        s += Program.UTIL.ToDoubleOrZero(res[k][0]) * 100 + ",";
                     }
 
                     runScript("drawChart([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\"}])");
@@ -206,8 +206,8 @@ namespace main.contents
                 String[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "아이디 = '" + rec[0][9] + "'");
                 if (Blind.Length > 0)
                 {
-                    SHGC_on_textBox.Text = Convert.ToDouble(Blind[0][0]).ToString("0.000");
-                    Tao_on_textBox.Text = Convert.ToDouble(Blind[0][1]).ToString("0.000");
+                    SHGC_on_textBox.Text = Program.UTIL.ToDoubleOrZero(Blind[0][0]).ToString("0.000");
+                    Tao_on_textBox.Text = Program.UTIL.ToDoubleOrZero(Blind[0][1]).ToString("0.000");
                 }
             }
             else
@@ -230,7 +230,7 @@ namespace main.contents
                     if (res1.Length > 0)
                     {
                         webView21.Visible = true;
-                        s += Convert.ToDouble(res1[0][0]) * 100 + ",";
+                        s += Program.UTIL.ToDoubleOrZero(res1[0][0]) * 100 + ",";
                     }
                     else
                     {
@@ -239,7 +239,7 @@ namespace main.contents
 
                 }
                 res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='" + Direction + "' And 기간 = '" + 12.ToString() + "월'");
-                s += Convert.ToDouble(res1[0][0]) * 100;
+                s += Program.UTIL.ToDoubleOrZero(res1[0][0]) * 100;
 
 
 
@@ -247,7 +247,7 @@ namespace main.contents
 
                 for (int k = 0; k < res2.Length; k++)
                 {
-                    s2 += Convert.ToDouble(res2[k][0]) + ",";
+                    s2 += Program.UTIL.ToDoubleOrZero(res2[k][0]) + ",";
                 }
 
                 runScript("drawChart3([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:150}])");

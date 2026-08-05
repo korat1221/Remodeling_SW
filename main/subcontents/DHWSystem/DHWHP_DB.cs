@@ -71,9 +71,9 @@ namespace main.subcontents.DHWSystem
                     int nRow = HP_dataGridView.Rows.Count - 1;
                     HP_dataGridView.Rows[nRow].Cells[1].Value = User_Value[n][0];
                     HP_dataGridView.Rows[nRow].Cells[2].Value = User_Value[n][1];
-                    HP_dataGridView.Rows[nRow].Cells[3].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][2]));
-                    HP_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][3]));
-                    HP_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(User_Value[n][4]));
+                    HP_dataGridView.Rows[nRow].Cells[3].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(User_Value[n][2]));
+                    HP_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(User_Value[n][3]));
+                    HP_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(User_Value[n][4]));
                 }
             }
         }

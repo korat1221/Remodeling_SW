@@ -48,9 +48,9 @@ namespace main.subcontents.CoolingSystem
                 
                 SoilWaterCooler_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[i][0];//번호
                 SoilWaterCooler_dataGridView.Rows[nRow].Cells[3].Value = DefaultDB_Value[i][1]; //명칭
-                SoilWaterCooler_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][2]));//냉방출력
-                SoilWaterCooler_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][3]));//냉방소비전력
-                SoilWaterCooler_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][4])); //EER
+                SoilWaterCooler_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][2]));//냉방출력
+                SoilWaterCooler_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][3]));//냉방소비전력
+                SoilWaterCooler_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][4])); //EER
                 SoilWaterCooler_dataGridView.Rows[nRow].Cells[7].Value = DefaultDB_Value[i][5]; //대기전력
                 SoilWaterCooler_dataGridView.Rows[nRow].Cells[8].Value = DefaultDB_Value[i][6]; //연료
                 SoilWaterCooler_dataGridView.Rows[nRow].Cells[9].Value = DefaultDB_Value[i][7]; //압축기

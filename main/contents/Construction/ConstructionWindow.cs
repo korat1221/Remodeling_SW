@@ -267,7 +267,7 @@ namespace main.contents
                     Old = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호,창호명칭,Type,LE_CL_V,유리열관류율,태양열취득률,빛투과율,창호열관류율", "창호명칭 = '" + OldWindow + "'");
                     if (Old.Length > 0)
                     {
-                        Uw = 1 / (0.019 + 1 / Convert.ToDouble(Old[0][7]) + 1 / NewUw);
+                        Uw = 1 / (0.019 + 1 / Program.UTIL.ToDoubleOrZero(Old[0][7]) + 1 / NewUw);
                     }
                 }
                 else if (Type == "내부덧댐")
@@ -275,7 +275,7 @@ namespace main.contents
                     Old = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "번호,창호명칭,Type,LE_CL_V,유리열관류율,태양열취득률,빛투과율,창호열관류율", "창호명칭 = '" + OldWindow + "'");
                     if (Old.Length > 0)
                     {
-                        Uw = 1 / (0.019 + 1 / Convert.ToDouble(Old[0][7]) + 1 / NewUw);
+                        Uw = 1 / (0.019 + 1 / Program.UTIL.ToDoubleOrZero(Old[0][7]) + 1 / NewUw);
                     }
                 }
                 else
@@ -303,9 +303,9 @@ namespace main.contents
                         f_shgc = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '태양열취득률'");
                         f_τ = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '빛투과율'");
                         if (f_shgc.Length > 0)
-                        { g = Convert.ToDouble(f_shgc[0][0]) * Convert.ToDouble(Old[0][5]) * g; }
+                        { g = Program.UTIL.ToDoubleOrZero(f_shgc[0][0]) * Program.UTIL.ToDoubleOrZero(Old[0][5]) * g; }
                         if (f_τ.Length > 0)
-                        { τD65_SNA = Convert.ToDouble(f_τ[0][0]) * Convert.ToDouble(Old[0][6]) * τD65_SNA; }
+                        { τD65_SNA = Program.UTIL.ToDoubleOrZero(f_τ[0][0]) * Program.UTIL.ToDoubleOrZero(Old[0][6]) * τD65_SNA; }
                     }
                 }
             }
@@ -320,9 +320,9 @@ namespace main.contents
                         f_shgc = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '태양열취득률'");
                         f_τ = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '빛투과율'");
                         if (f_shgc.Length > 0)
-                        { g = Convert.ToDouble(f_shgc[0][0]) * Convert.ToDouble(Old[0][5]) * g; }
+                        { g = Program.UTIL.ToDoubleOrZero(f_shgc[0][0]) * Program.UTIL.ToDoubleOrZero(Old[0][5]) * g; }
                         if (f_τ.Length > 0)
-                        { τD65_SNA = Convert.ToDouble(f_τ[0][0]) * Convert.ToDouble(Old[0][6]) * τD65_SNA; }
+                        { τD65_SNA = Program.UTIL.ToDoubleOrZero(f_τ[0][0]) * Program.UTIL.ToDoubleOrZero(Old[0][6]) * τD65_SNA; }
                     }
                 }
             }
@@ -482,7 +482,7 @@ namespace main.contents
         {
             if (UwMethod == "진단" && Uw2_textBox.Text != string.Empty)
             {
-                Uw = Convert.ToDouble(Uw2_textBox.Text);
+                Uw = Program.UTIL.ToDoubleOrZero(Uw2_textBox.Text);
                 Uw3_textBox.Text = Uw2_textBox.Text;
             }
         }
@@ -552,7 +552,7 @@ namespace main.contents
 
                 if (Uvalue.Length > 0)
                 {
-                    법규U = Convert.ToDouble(Uvalue[0][0]);
+                    법규U = Program.UTIL.ToDoubleOrZero(Uvalue[0][0]);
                 }
             }
 
@@ -564,27 +564,27 @@ namespace main.contents
                 for (int i = 0; i < Size.Length; i++)
                 {
 
-                    Sub_Area.Add(Convert.ToDouble(Size[i][3])); //나중에 row가 여러개로 되도록 고쳐야함 
-                    Sub_Width.Add(Convert.ToDouble(Size[i][4]));
-                    Sub_Height.Add(Convert.ToDouble(Size[i][5]));
-                    Sub_Ag_fix.Add(Convert.ToDouble(Size[i][6]));
-                    Sub_Ag_open.Add(Convert.ToDouble(Size[i][7]));
-                    Sub_Af_open.Add(Convert.ToDouble(Size[i][8]));
-                    Sub_Af_fix.Add(Convert.ToDouble(Size[i][9]));
-                    Sub_Af_btw.Add(Convert.ToDouble(Size[i][10]));
-                    Sub_Lg_fix.Add(Convert.ToDouble(Size[i][11]));
-                    Sub_Lg_open.Add(Convert.ToDouble(Size[i][12]));
+                    Sub_Area.Add(Program.UTIL.ToDoubleOrZero(Size[i][3])); //나중에 row가 여러개로 되도록 고쳐야함 
+                    Sub_Width.Add(Program.UTIL.ToDoubleOrZero(Size[i][4]));
+                    Sub_Height.Add(Program.UTIL.ToDoubleOrZero(Size[i][5]));
+                    Sub_Ag_fix.Add(Program.UTIL.ToDoubleOrZero(Size[i][6]));
+                    Sub_Ag_open.Add(Program.UTIL.ToDoubleOrZero(Size[i][7]));
+                    Sub_Af_open.Add(Program.UTIL.ToDoubleOrZero(Size[i][8]));
+                    Sub_Af_fix.Add(Program.UTIL.ToDoubleOrZero(Size[i][9]));
+                    Sub_Af_btw.Add(Program.UTIL.ToDoubleOrZero(Size[i][10]));
+                    Sub_Lg_fix.Add(Program.UTIL.ToDoubleOrZero(Size[i][11]));
+                    Sub_Lg_open.Add(Program.UTIL.ToDoubleOrZero(Size[i][12]));
 
-                    Sub_Uw.Add(Calc_Uw(Convert.ToDouble(Sub_Area[i]), Convert.ToDouble(Sub_Width[i]), Convert.ToDouble(Sub_Height[i]), Convert.ToDouble(Sub_Ag_fix[i]), Convert.ToDouble(Sub_Ag_open[i]), Convert.ToDouble(Sub_Af_open[i]), Convert.ToDouble(Sub_Af_fix[i]), Convert.ToDouble(Sub_Af_btw[i]), Convert.ToDouble(Sub_Lg_fix[i]), Convert.ToDouble(Sub_Lg_open[i])));
+                    Sub_Uw.Add(Calc_Uw(Program.UTIL.ToDoubleOrZero(Sub_Area[i]), Program.UTIL.ToDoubleOrZero(Sub_Width[i]), Program.UTIL.ToDoubleOrZero(Sub_Height[i]), Program.UTIL.ToDoubleOrZero(Sub_Ag_fix[i]), Program.UTIL.ToDoubleOrZero(Sub_Ag_open[i]), Program.UTIL.ToDoubleOrZero(Sub_Af_open[i]), Program.UTIL.ToDoubleOrZero(Sub_Af_fix[i]), Program.UTIL.ToDoubleOrZero(Sub_Af_btw[i]), Program.UTIL.ToDoubleOrZero(Sub_Lg_fix[i]), Program.UTIL.ToDoubleOrZero(Sub_Lg_open[i])));
                     if (UwMethod == "계산")
                     {
-                        Sub_dUinst.Add(Calc_dUinst(Convert.ToDouble(Sub_Uw[i]), Convert.ToDouble(Sub_Area[i]), Convert.ToDouble(Sub_Width[i]), Convert.ToDouble(Sub_Height[i])));
-                        Sub_Uw_inst.Add(Convert.ToDouble(Sub_Uw[i]) + Convert.ToDouble(Sub_dUinst[i]));
+                        Sub_dUinst.Add(Calc_dUinst(Program.UTIL.ToDoubleOrZero(Sub_Uw[i]), Program.UTIL.ToDoubleOrZero(Sub_Area[i]), Program.UTIL.ToDoubleOrZero(Sub_Width[i]), Program.UTIL.ToDoubleOrZero(Sub_Height[i])));
+                        Sub_Uw_inst.Add(Program.UTIL.ToDoubleOrZero(Sub_Uw[i]) + Program.UTIL.ToDoubleOrZero(Sub_dUinst[i]));
                     }
                     else
                     {
-                        Sub_dUinst.Add(Calc_dUinst(Uw, Convert.ToDouble(Sub_Area[i]), Convert.ToDouble(Sub_Width[i]), Convert.ToDouble(Sub_Height[i])));
-                        Sub_Uw_inst.Add(Uw + Convert.ToDouble(Sub_dUinst[i]));
+                        Sub_dUinst.Add(Calc_dUinst(Uw, Program.UTIL.ToDoubleOrZero(Sub_Area[i]), Program.UTIL.ToDoubleOrZero(Sub_Width[i]), Program.UTIL.ToDoubleOrZero(Sub_Height[i])));
+                        Sub_Uw_inst.Add(Uw + Program.UTIL.ToDoubleOrZero(Sub_dUinst[i]));
                         Sub_Uw[i] = Uw;
                     }
                     Sub_Uw[i] = Calc_Uw_AdditionalWindow(Sub_Uw[i]);
@@ -682,27 +682,27 @@ namespace main.contents
                     tabControl1.SelectedTab = tabControl1.TabPages["Frame_tabPage"];
                     check_FrameType = window_frameDB_form.Select_WindowFrame[3];
 
-                    Uf_open = Convert.ToDouble(window_frameDB_form.Select_WindowFrame[5]);
+                    Uf_open = Program.UTIL.ToDoubleOrZero(window_frameDB_form.Select_WindowFrame[5]);
                     Uf_open_textBox.Text = Uf_open.ToString();
                     Program.UTIL.textBox_doubleComa(Uf_open_textBox, true, 2);
 
-                    Uf_fix = Convert.ToDouble(window_frameDB_form.Select_WindowFrame[6]);
+                    Uf_fix = Program.UTIL.ToDoubleOrZero(window_frameDB_form.Select_WindowFrame[6]);
                     Uf_fix_textBox.Text = Uf_fix.ToString();
                     Program.UTIL.textBox_doubleComa(Uf_fix_textBox, true, 2);
 
-                    Uf_btw = Convert.ToDouble(window_frameDB_form.Select_WindowFrame[7]);
+                    Uf_btw = Program.UTIL.ToDoubleOrZero(window_frameDB_form.Select_WindowFrame[7]);
                     Uf_btw_textBox.Text = Uf_btw.ToString();
                     Program.UTIL.textBox_doubleComa(Uf_btw_textBox, true, 2);
 
-                    df_open = Convert.ToDouble(window_frameDB_form.Select_WindowFrame[8]);
+                    df_open = Program.UTIL.ToDoubleOrZero(window_frameDB_form.Select_WindowFrame[8]);
                     df_open_textBox.Text = df_open.ToString();
                     Program.UTIL.textBox_doubleComa(df_open_textBox, true, 2);
 
-                    df_fix = Convert.ToDouble(window_frameDB_form.Select_WindowFrame[9]);
+                    df_fix = Program.UTIL.ToDoubleOrZero(window_frameDB_form.Select_WindowFrame[9]);
                     df_fix_textBox.Text = df_fix.ToString();
                     Program.UTIL.textBox_doubleComa(df_fix_textBox, true, 2);
 
-                    df_btw = Convert.ToDouble(window_frameDB_form.Select_WindowFrame[10]);
+                    df_btw = Program.UTIL.ToDoubleOrZero(window_frameDB_form.Select_WindowFrame[10]);
                     df_btw_textBox.Text = df_btw.ToString();
                     Program.UTIL.textBox_doubleComa(df_btw_textBox, true, 2);
 
@@ -801,11 +801,11 @@ namespace main.contents
                     GlassName_textBox2.Text = GlassName;
                     LE_CL_V = window_doubleglassDB_form.Select_WindowGlass[5];
 
-                    Ug = Convert.ToDouble(window_doubleglassDB_form.Select_WindowGlass[6]);
+                    Ug = Program.UTIL.ToDoubleOrZero(window_doubleglassDB_form.Select_WindowGlass[6]);
                     Ug_textBox.Text = Ug.ToString();
                     Program.UTIL.textBox_doubleComa(Ug_textBox, true, 3);
 
-                    g = Convert.ToDouble(window_doubleglassDB_form.Select_WindowGlass[7]);
+                    g = Program.UTIL.ToDoubleOrZero(window_doubleglassDB_form.Select_WindowGlass[7]);
                     g_textBox.Text = g.ToString();
                     Program.UTIL.textBox_doubleComa(g_textBox, true, 3);
                     g2_textBox.Text = g.ToString();
@@ -813,7 +813,7 @@ namespace main.contents
                     g3_textBox.Text = g.ToString();
                     Program.UTIL.textBox_doubleComa(g3_textBox, true, 3);
 
-                    τD65_SNA = Convert.ToDouble(window_doubleglassDB_form.Select_WindowGlass[8]);
+                    τD65_SNA = Program.UTIL.ToDoubleOrZero(window_doubleglassDB_form.Select_WindowGlass[8]);
                     τD65_SNA_textBox.Text = τD65_SNA.ToString();
                     Program.UTIL.textBox_doubleComa(τD65_SNA_textBox, true, 3);
                     τD65_SNA2_textBox.Text = τD65_SNA.ToString();
@@ -849,9 +849,9 @@ namespace main.contents
                     GlassName_textBox.Text = GlassName;
                     GlassName_textBox2.Text = GlassName;
                     LE_CL_V = window_glassDB_form.Select_Glass[5];
-                    Ug = Convert.ToDouble(window_glassDB_form.Select_Glass[6]);
-                    g = Convert.ToDouble(window_glassDB_form.Select_Glass[7]);
-                    τD65_SNA = Convert.ToDouble(window_glassDB_form.Select_Glass[8]);
+                    Ug = Program.UTIL.ToDoubleOrZero(window_glassDB_form.Select_Glass[6]);
+                    g = Program.UTIL.ToDoubleOrZero(window_glassDB_form.Select_Glass[7]);
+                    τD65_SNA = Program.UTIL.ToDoubleOrZero(window_glassDB_form.Select_Glass[8]);
 
                     Ug_textBox.Text = Ug.ToString();
                     Program.UTIL.textBox_doubleComa(Ug_textBox, true, 3);
@@ -913,13 +913,13 @@ namespace main.contents
                     SpacerName_textBox2.Text = SpacerName;
                     if (LE_CL_V.Contains("LE"))
                     {
-                        Psi_g_fix = Convert.ToDouble(form.Select_WindowSpacer[8]);
-                        Psi_g_open = Convert.ToDouble(form.Select_WindowSpacer[9]);
+                        Psi_g_fix = Program.UTIL.ToDoubleOrZero(form.Select_WindowSpacer[8]);
+                        Psi_g_open = Program.UTIL.ToDoubleOrZero(form.Select_WindowSpacer[9]);
                     }
                     else
                     {
-                        Psi_g_fix = Convert.ToDouble(form.Select_WindowSpacer[6]);
-                        Psi_g_open = Convert.ToDouble(form.Select_WindowSpacer[7]);
+                        Psi_g_fix = Program.UTIL.ToDoubleOrZero(form.Select_WindowSpacer[6]);
+                        Psi_g_open = Program.UTIL.ToDoubleOrZero(form.Select_WindowSpacer[7]);
                     }
                     Psi_g_fix_textBox.Text = Psi_g_fix.ToString();
                     Program.UTIL.textBox_doubleComa(Psi_g_fix_textBox, true, 3);
@@ -975,9 +975,9 @@ namespace main.contents
                         Install_textBox.Text = InstallName;
                         check_InstallType = window_installDB_form.Select_WindowInstall[2];
                         tabControl1.SelectedTab = tabControl1.TabPages["Install_tabPage"];
-                        Psi_InstallTop = Convert.ToDouble(window_installDB_form.Select_WindowInstall[6]);
-                        Psi_InstallSide = Convert.ToDouble(window_installDB_form.Select_WindowInstall[7]);
-                        Psi_InstallButtom = Convert.ToDouble(window_installDB_form.Select_WindowInstall[8]);
+                        Psi_InstallTop = Program.UTIL.ToDoubleOrZero(window_installDB_form.Select_WindowInstall[6]);
+                        Psi_InstallSide = Program.UTIL.ToDoubleOrZero(window_installDB_form.Select_WindowInstall[7]);
+                        Psi_InstallButtom = Program.UTIL.ToDoubleOrZero(window_installDB_form.Select_WindowInstall[8]);
 
                         Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString();
                         Program.UTIL.textBox_doubleComa(Psi_InstallTop_textBox, true, 3);
@@ -1014,9 +1014,9 @@ namespace main.contents
                         FrameMaterial = window_installDB_form.Select_WindowInstall[3];
                         SingleDoubleType = window_installDB_form.Select_WindowInstall[4];
                         tabControl1.SelectedTab = tabControl1.TabPages["Install_tabPage"];
-                        Psi_InstallTop = Convert.ToDouble(window_installDB_form.Select_WindowInstall[6]);
-                        Psi_InstallSide = Convert.ToDouble(window_installDB_form.Select_WindowInstall[7]);
-                        Psi_InstallButtom = Convert.ToDouble(window_installDB_form.Select_WindowInstall[8]);
+                        Psi_InstallTop = Program.UTIL.ToDoubleOrZero(window_installDB_form.Select_WindowInstall[6]);
+                        Psi_InstallSide = Program.UTIL.ToDoubleOrZero(window_installDB_form.Select_WindowInstall[7]);
+                        Psi_InstallButtom = Program.UTIL.ToDoubleOrZero(window_installDB_form.Select_WindowInstall[8]);
 
                         Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString();
                         Program.UTIL.textBox_doubleComa(Psi_InstallTop_textBox, true, 3);
@@ -1057,7 +1057,7 @@ namespace main.contents
                     }
                     if (Uvalue.Length > 0)
                     {
-                        Uw = Convert.ToDouble(Uvalue[0][0]);
+                        Uw = Program.UTIL.ToDoubleOrZero(Uvalue[0][0]);
                         Uw2_textBox.Text = Uw.ToString();
                         Program.UTIL.textBox_doubleComa(Uw2_textBox, true, 3);
                         Uw3_textBox.Text = Uw.ToString();
@@ -1258,7 +1258,7 @@ namespace main.contents
 
                 if (Uvalue.Length > 0)
                 {
-                    법규U = Convert.ToDouble(Uvalue[0][0]);
+                    법규U = Program.UTIL.ToDoubleOrZero(Uvalue[0][0]);
                 }
             }
             #endregion
@@ -1458,10 +1458,10 @@ namespace main.contents
                 LE_CL_V = Load[0][14];
                 check_LE_CL_V = Load[0][14];
 
-                Ug = Convert.ToDouble(Load[0][15]);
+                Ug = Program.UTIL.ToDoubleOrZero(Load[0][15]);
                 Ug_textBox.Text = Load[0][15];
 
-                g = Convert.ToDouble(Load[0][16]);
+                g = Program.UTIL.ToDoubleOrZero(Load[0][16]);
                 g_textBox.Text = g.ToString();
                 Program.UTIL.textBox_doubleComa(g_textBox, true, 3);
                 g2_textBox.Text = g.ToString();
@@ -1469,23 +1469,23 @@ namespace main.contents
                 g3_textBox.Text = g.ToString();
                 Program.UTIL.textBox_doubleComa(g3_textBox, true, 3);
 
-                τD65_SNA = Convert.ToDouble(Load[0][17]);
+                τD65_SNA = Program.UTIL.ToDoubleOrZero(Load[0][17]);
                 τD65_SNA_textBox.Text = τD65_SNA.ToString();
                 Program.UTIL.textBox_doubleComa(τD65_SNA_textBox, true, 3);
                 τD65_SNA2_textBox.Text = τD65_SNA.ToString();
                 Program.UTIL.textBox_doubleComa(τD65_SNA2_textBox, true, 3);
 
-                Psi_g_fix = Convert.ToDouble(Load[0][18]);
+                Psi_g_fix = Program.UTIL.ToDoubleOrZero(Load[0][18]);
                 Psi_g_fix_textBox.Text = Psi_g_fix.ToString();
                 Program.UTIL.textBox_doubleComa(Psi_g_fix_textBox, true, 3);
 
-                Psi_g_open = Convert.ToDouble(Load[0][19]);
+                Psi_g_open = Program.UTIL.ToDoubleOrZero(Load[0][19]);
                 Psi_g_open_textBox.Text = Psi_g_open.ToString();
                 Program.UTIL.textBox_doubleComa(Psi_g_open_textBox, true, 3);
 
-                Psi_InstallTop = Convert.ToDouble(Load[0][20]);
-                Psi_InstallSide = Convert.ToDouble(Load[0][21]);
-                Psi_InstallButtom = Convert.ToDouble(Load[0][22]);
+                Psi_InstallTop = Program.UTIL.ToDoubleOrZero(Load[0][20]);
+                Psi_InstallSide = Program.UTIL.ToDoubleOrZero(Load[0][21]);
+                Psi_InstallButtom = Program.UTIL.ToDoubleOrZero(Load[0][22]);
                 Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString();
                 Program.UTIL.textBox_doubleComa(Psi_InstallTop_textBox, true, 3);
                 Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString();
@@ -1493,7 +1493,7 @@ namespace main.contents
                 Psi_InstallButtom_textBox.Text = Psi_InstallButtom.ToString();
                 Program.UTIL.textBox_doubleComa(Psi_InstallButtom_textBox, true, 3);
 
-                Uw = Convert.ToDouble(Load[0][23]);
+                Uw = Program.UTIL.ToDoubleOrZero(Load[0][23]);
                 if (UwMethod == "계산")
                 {
                     Uw2_textBox.Text = Uw.ToString();
@@ -1510,27 +1510,27 @@ namespace main.contents
                     Uw3_textBox.Text = Uw.ToString();
                     Program.UTIL.textBox_doubleComa(Uw3_textBox, true, 3);
                 }
-                Uf_open = Convert.ToDouble(Load[0][24]);
+                Uf_open = Program.UTIL.ToDoubleOrZero(Load[0][24]);
                 Uf_open_textBox.Text = Uf_open.ToString();
                 Program.UTIL.textBox_doubleComa(Uf_open_textBox, true, 2);
 
-                Uf_fix = Convert.ToDouble(Load[0][25]);
+                Uf_fix = Program.UTIL.ToDoubleOrZero(Load[0][25]);
                 Uf_fix_textBox.Text = Uf_fix.ToString();
                 Program.UTIL.textBox_doubleComa(Uf_fix_textBox, true, 2);
 
-                Uf_btw = Convert.ToDouble(Load[0][26]);
+                Uf_btw = Program.UTIL.ToDoubleOrZero(Load[0][26]);
                 Uf_btw_textBox.Text = Uf_btw.ToString();
                 Program.UTIL.textBox_doubleComa(Uf_btw_textBox, true, 2);
 
-                df_open = Convert.ToDouble(Load[0][27]);
+                df_open = Program.UTIL.ToDoubleOrZero(Load[0][27]);
                 df_open_textBox.Text = df_open.ToString();
                 Program.UTIL.textBox_doubleComa(df_open_textBox, true, 2);
 
-                df_fix = Convert.ToDouble(Load[0][28]);
+                df_fix = Program.UTIL.ToDoubleOrZero(Load[0][28]);
                 df_fix_textBox.Text = df_fix.ToString();
                 Program.UTIL.textBox_doubleComa(df_fix_textBox, true, 2);
 
-                df_btw = Convert.ToDouble(Load[0][29]);
+                df_btw = Program.UTIL.ToDoubleOrZero(Load[0][29]);
                 df_btw_textBox.Text = df_btw.ToString();
                 Program.UTIL.textBox_doubleComa(df_btw_textBox, true, 2);
 

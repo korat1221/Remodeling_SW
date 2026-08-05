@@ -73,7 +73,7 @@ public partial class TB_DB : Form
                 TB_dataGridView.Rows[nRow].Cells[4].Value = value[i][3];
                 TB_dataGridView.Rows[nRow].Cells[5].Value = value[i][4];
                 TB_dataGridView.Rows[nRow].Cells[6].Value = value[i][5];
-                TB_dataGridView.Rows[nRow].Cells[7].Value = Convert.ToDouble(value[i][6]).ToString("0.000");
+                TB_dataGridView.Rows[nRow].Cells[7].Value = Program.UTIL.ToDoubleOrZero(value[i][6]).ToString("0.000");
             }
         }
 
@@ -89,7 +89,7 @@ public partial class TB_DB : Form
                 TB_dataGridView.Rows[nRow].Cells[4].Value = value[i][3];
                 TB_dataGridView.Rows[nRow].Cells[5].Value = value[i][4];
                 TB_dataGridView.Rows[nRow].Cells[6].Value = value[i][5];
-                TB_dataGridView.Rows[nRow].Cells[7].Value = Convert.ToDouble(value[i][6]).ToString("0.000");
+                TB_dataGridView.Rows[nRow].Cells[7].Value = Program.UTIL.ToDoubleOrZero(value[i][6]).ToString("0.000");
             }
         }
     }
@@ -242,7 +242,7 @@ public partial class TB_DB : Form
     private void Create_UserNum(int nRow)
     {
         UserTBNum = Program.UTIL.CreateNum("User_TB", "번호", "UTB");
-        double splitnum = Convert.ToDouble(UserTBNum.Substring(3, 2));
+        double splitnum = Program.UTIL.ToDoubleOrZero(UserTBNum.Substring(3, 2));
         double Count_UserDB = 0;
         for (int i = 0; i < TB_dataGridView.Rows.Count; i++)
         {

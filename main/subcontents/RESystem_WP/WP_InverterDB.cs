@@ -67,7 +67,7 @@ namespace main.subcontents.RESystem_WP
             {
                 for (int n = 0; n < WPInverter.Length; n++)
                 {
-                    table_WPInverter.Rows.Add(WPInverter[n][0], WPInverter[n][1], WPInverter[n][2], WPInverter[n][3], String.Format("{0:F2}", Convert.ToDouble(WPInverter[n][4])));
+                    table_WPInverter.Rows.Add(WPInverter[n][0], WPInverter[n][1], WPInverter[n][2], WPInverter[n][3], String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(WPInverter[n][4])));
                 }
             }
 
@@ -120,7 +120,7 @@ namespace main.subcontents.RESystem_WP
 
             if (int.TryParse(UserDB_EURO_TextBox.Text, out result) == true)
             {
-                UserDB_EURO = Convert.ToDouble(UserDB_EURO_TextBox.Text);
+                UserDB_EURO = Program.UTIL.ToDoubleOrZero(UserDB_EURO_TextBox.Text);
             }
             else
             {

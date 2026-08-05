@@ -230,11 +230,11 @@ namespace main.contents.Result
                         {
                             pv_name[a] = Value[a][1];
                             pv_cell[a] = Value[a][7];
-                            pv_eta[a] = Convert.ToDouble(Value[a][8]);
-                            pv_count[a] = Convert.ToDouble(Value[a][3]);
-                            pv_power[a] = Convert.ToDouble(Value[a][5]);
-                            pv_area_new[a] = Convert.ToDouble(Value[a][6]);
-                            sum_new += Convert.ToDouble(Value[a][6]);
+                            pv_eta[a] = Program.UTIL.ToDoubleOrZero(Value[a][8]);
+                            pv_count[a] = Program.UTIL.ToDoubleOrZero(Value[a][3]);
+                            pv_power[a] = Program.UTIL.ToDoubleOrZero(Value[a][5]);
+                            pv_area_new[a] = Program.UTIL.ToDoubleOrZero(Value[a][6]);
+                            sum_new += Program.UTIL.ToDoubleOrZero(Value[a][6]);
                             pv_point[a] = 100;
                         }
                     }
@@ -243,7 +243,7 @@ namespace main.contents.Result
                     {
                         for (int a = 0; a < Value.Length; a++)
                         {
-                            sum_old += Convert.ToDouble(Value[a][0]);
+                            sum_old += Program.UTIL.ToDoubleOrZero(Value[a][0]);
                         }
                         for (int a = 0; a < 8; a++)
                         {
@@ -376,11 +376,11 @@ namespace main.contents.Result
                         {
                             wp_name[a] = Value[a][1];
                             wp_type[a] = Value[a][8];
-                            wp_area[a] = Convert.ToDouble(Value[a][6]);
-                            wp_height[a] = Convert.ToDouble(Value[a][7]);
-                            wp_power[a] = Convert.ToDouble(Value[a][5]);
-                            wp_count_new[a] = Convert.ToDouble(Value[a][4]);
-                            sum_new += Convert.ToDouble(Value[a][4]);
+                            wp_area[a] = Program.UTIL.ToDoubleOrZero(Value[a][6]);
+                            wp_height[a] = Program.UTIL.ToDoubleOrZero(Value[a][7]);
+                            wp_power[a] = Program.UTIL.ToDoubleOrZero(Value[a][5]);
+                            wp_count_new[a] = Program.UTIL.ToDoubleOrZero(Value[a][4]);
+                            sum_new += Program.UTIL.ToDoubleOrZero(Value[a][4]);
                             wp_point[a] = 100;
                         }
                     }
@@ -389,7 +389,7 @@ namespace main.contents.Result
                     {
                         for (int a = 0; a < Value.Length; a++)
                         {
-                            sum_old += Convert.ToDouble(Value[a][0]);
+                            sum_old += Program.UTIL.ToDoubleOrZero(Value[a][0]);
                         }
                         for (int a = 0; a < 8; a++)
                         {
@@ -504,9 +504,9 @@ namespace main.contents.Result
                                     string[][] fc_소비 = Program.DB.querySQL(DB.type.ProjDB, "Select sum(총에너지) From RESystem_Result  Where 신재생시스템 ='" + Value[a][8] + "' and 생산소비='소비'and 급탕설비='" + Value[a][7] + "'");
                                     if (fc_생산.Length > 0)
                                     {
-                                        fc_Saving[a] = Convert.ToDouble(fc_생산[0][0]) - Convert.ToDouble(fc_소비[0][0]);
+                                        fc_Saving[a] = Program.UTIL.ToDoubleOrZero(fc_생산[0][0]) - Program.UTIL.ToDoubleOrZero(fc_소비[0][0]);
                                         fc_생산 = Program.DB.querySQL(DB.type.ProjDB, "Select sum(총에너지) From RESystem_Result  Where 신재생시스템 ='" + Value[a][8] + "' and 생산소비='생산' and 급탕설비='" + Value[a][7] + "' and 생산유형='전기'");
-                                        fc_elec[a] = Convert.ToDouble(fc_생산[0][0]);
+                                        fc_elec[a] = Program.UTIL.ToDoubleOrZero(fc_생산[0][0]);
                                         fc_gas[a] = fc_Saving[a] - fc_elec[a];
                                     }
                                     for (int aaa = 0; aaa < cc.Num_Old().Count; aaa++)
@@ -514,7 +514,7 @@ namespace main.contents.Result
                                         string[][] OldSystem = Program.DB.querySQL(res[0][0], "Select b.연료전지대수 From fc_Form INNER JOIN DHWSystem_Form AS c ON b.연료전지번호 = c.연료전지번호 Where c.번호 ='" + cc.Num_Old()[aaa] + "'");
                                         if (OldSystem.Length > 0)
                                         {
-                                            fc_count_old[a] = Convert.ToDouble(OldSystem[0][0]);
+                                            fc_count_old[a] = Program.UTIL.ToDoubleOrZero(OldSystem[0][0]);
                                         }
                                     }
                                 }
@@ -528,11 +528,11 @@ namespace main.contents.Result
                         {
                             fc_Name[a] = Value[a][1];
                             fc_H_W[a] = Value[a][6];
-                            fc_count_new[a] = Convert.ToDouble(Value[a][9]);
-                            fc_elec_power[a] = Convert.ToDouble(Value[a][2]);
-                            fc_elec_eta[a] = Convert.ToDouble(Value[a][3]);
-                            fc_heat_eta[a] = Convert.ToDouble(Value[a][4]);
-                            fc_heat_power[a] = Convert.ToDouble(Value[a][5]);
+                            fc_count_new[a] = Program.UTIL.ToDoubleOrZero(Value[a][9]);
+                            fc_elec_power[a] = Program.UTIL.ToDoubleOrZero(Value[a][2]);
+                            fc_elec_eta[a] = Program.UTIL.ToDoubleOrZero(Value[a][3]);
+                            fc_heat_eta[a] = Program.UTIL.ToDoubleOrZero(Value[a][4]);
+                            fc_heat_power[a] = Program.UTIL.ToDoubleOrZero(Value[a][5]);
                             fc_Point[a] = 100;
                         }
 
@@ -558,9 +558,9 @@ namespace main.contents.Result
                                     string[][] fc_소비 = Program.DB.querySQL(DB.type.ProjDB, "Select sum(총에너지) From RESystem_Result  Where 신재생시스템 ='" + Value[a][8] + "' and 생산소비='소비'and 난방설비='" + Value[a][7] + "'");
                                     if (fc_생산.Length > 0)
                                     {
-                                        fc_Saving[a] = Convert.ToDouble(fc_생산[0][0]) - Convert.ToDouble(fc_소비[0][0]);
+                                        fc_Saving[a] = Program.UTIL.ToDoubleOrZero(fc_생산[0][0]) - Program.UTIL.ToDoubleOrZero(fc_소비[0][0]);
                                         fc_생산 = Program.DB.querySQL(DB.type.ProjDB, "Select sum(총에너지) From RESystem_Result  Where 신재생시스템 ='" + Value[a][8] + "' and 생산소비='생산' and 난방설비='" + Value[a][7] + "' and 생산유형='전기'");
-                                        fc_elec[a] = Convert.ToDouble(fc_생산[0][0]);
+                                        fc_elec[a] = Program.UTIL.ToDoubleOrZero(fc_생산[0][0]);
                                         fc_gas[a] = fc_Saving[a] - fc_elec[a];
                                     }
                                     for (int aaa = 0; aaa < cc.Num_Old().Count; aaa++)
@@ -568,7 +568,7 @@ namespace main.contents.Result
                                         string[][] OldSystem = Program.DB.querySQL(res[0][0], "Select b.연료전지대수 From fc_Form INNER JOIN DHWSystem_Form AS c ON b.연료전지번호 = c.연료전지번호 Where c.번호 ='" + cc.Num_Old()[aaa] + "'");
                                         if (OldSystem.Length > 0)
                                         {
-                                            fc_count_old[a] = Convert.ToDouble(OldSystem[0][0]);
+                                            fc_count_old[a] = Program.UTIL.ToDoubleOrZero(OldSystem[0][0]);
                                         }
                                     }
                                 }
@@ -582,11 +582,11 @@ namespace main.contents.Result
                         {
                             fc_Name[a] = Value[a][1];
                             fc_H_W[a] = Value[a][6];
-                            fc_count_new[a] = Convert.ToDouble(Value[a][9]);
-                            fc_elec_power[a] = Convert.ToDouble(Value[a][2]);
-                            fc_elec_eta[a] = Convert.ToDouble(Value[a][3]);
-                            fc_heat_eta[a] = Convert.ToDouble(Value[a][4]);
-                            fc_heat_power[a] = Convert.ToDouble(Value[a][5]);
+                            fc_count_new[a] = Program.UTIL.ToDoubleOrZero(Value[a][9]);
+                            fc_elec_power[a] = Program.UTIL.ToDoubleOrZero(Value[a][2]);
+                            fc_elec_eta[a] = Program.UTIL.ToDoubleOrZero(Value[a][3]);
+                            fc_heat_eta[a] = Program.UTIL.ToDoubleOrZero(Value[a][4]);
+                            fc_heat_power[a] = Program.UTIL.ToDoubleOrZero(Value[a][5]);
                             fc_Point[a] = 100;
                         }
 

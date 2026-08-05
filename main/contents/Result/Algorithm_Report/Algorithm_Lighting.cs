@@ -241,15 +241,15 @@ namespace main.contents.Result
 
                 string titleName = Num + " 조명에너지소요량 검토보고서";
                 zoneData[0].Add(new { idx = i, val = titleName }); //명칭
-                double area = Convert.ToDouble(Value[0][4].ToString());
+                double area = Program.UTIL.ToDoubleOrZero(Value[0][4].ToString());
 
 
                 if (Value.Length > 0)
                 {
                     //공간계수 구하기
-                    Wr = Convert.ToDouble(Value[0][2].ToString());
-                    Lr = Convert.ToDouble(Value[0][3].ToString());
-                    hm = Convert.ToDouble(Value[0][7].ToString());
+                    Wr = Program.UTIL.ToDoubleOrZero(Value[0][2].ToString());
+                    Lr = Program.UTIL.ToDoubleOrZero(Value[0][3].ToString());
+                    hm = Program.UTIL.ToDoubleOrZero(Value[0][7].ToString());
                     k = Lr * Wr / (hm * (Lr + Wr));
                 }
                 string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,용도프로필,시작시간,종료시간,주이용일,연이용일수,천장고", "존번호 = '" + Num + "'");
@@ -279,7 +279,7 @@ namespace main.contents.Result
                 {
                     for (int h = 0; h < 12; h++)
                     {
-                        주광율 += Convert.ToDouble(daylight2[h][1].ToString()); // 주광율
+                        주광율 += Program.UTIL.ToDoubleOrZero(daylight2[h][1].ToString()); // 주광율
                     }
                     주광율 = 주광율 / 12;
                 }
@@ -378,8 +378,8 @@ namespace main.contents.Result
 
 
                 light = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "julianday(time(시작시간)),julianday(time(종료시간))", "존번호='" + Num + "'");
-                double starttime = Convert.ToDouble(light[0][0]);
-                double endtime = Convert.ToDouble(light[0][1]);
+                double starttime = Program.UTIL.ToDoubleOrZero(light[0][0]);
+                double endtime = Program.UTIL.ToDoubleOrZero(light[0][1]);
                 double[] useofdays = new double[12], daytimes = new double[13], nighttimes = new double[13];
                 string[] mthday = new string[12], fds = new string[13];
                 double[] aux = new double[13], prod = new double[13], outlux = new double[13], final = new double[13], nd = new double[13], lightpower = new double[13], lightload=new double[13];
@@ -391,23 +391,23 @@ namespace main.contents.Result
                     light = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "dwd_mth", " 번호 = '" + Num + "' And 난방_냉방 = '냉방' And 비이용일_이용일='이용일' And  월 ='"+mth+"'");
                     mthday[j] = light[0][0].ToString();
                     Value = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_사용시간", "julianday(time(해뜨는시간)),julianday(time(해지는시간))", "ID = '" + (j + 1) + "'");
-                    sunrise = Convert.ToDouble(Value[0][0]);
-                    sunset = Convert.ToDouble(Value[0][1]);
-                    daytimes[j] = daytime(starttime, endtime, sunrise, sunset) * Convert.ToDouble(mthday[j]);
-                    nighttimes[j] = nighttime(starttime, endtime, sunrise, sunset) * Convert.ToDouble(mthday[j]);
+                    sunrise = Program.UTIL.ToDoubleOrZero(Value[0][0]);
+                    sunset = Program.UTIL.ToDoubleOrZero(Value[0][1]);
+                    daytimes[j] = daytime(starttime, endtime, sunrise, sunset) * Program.UTIL.ToDoubleOrZero(mthday[j]);
+                    nighttimes[j] = nighttime(starttime, endtime, sunrise, sunset) * Program.UTIL.ToDoubleOrZero(mthday[j]);
                     Value = Program.DB.getValue(DB.type.ProjDB, "Zone_LightResult", "f_FDS", "번호 = '" + Num + "' And 월 ='"+mth+"'");
                     fds[j] = Value[0][0].ToString();
                     daytimes[12] += daytimes[j];
                     nighttimes[12] += nighttimes[j];
-                    fds_value += Convert.ToDouble(fds[j]);
+                    fds_value += Program.UTIL.ToDoubleOrZero(fds[j]);
                     
                     light = Program.DB.getValue(DB.type.ProjDB, "Zone_LightResult", "Aux_kWh,Prod_kWh,OutdoorLux,Final_kWh,Sunlight_SCW,Sunlight_PjSC", " 번호 = '" + Num + "' And  월 ='" + mth + "'");
-                    aux[j] = Convert.ToDouble(light[0][0].ToString());
-                    prod[j] = Convert.ToDouble(light[0][1].ToString());
-                    outlux[j] = Convert.ToDouble(light[0][2].ToString());
-                    final[j] = Convert.ToDouble(light[0][3].ToString());
-                    lightpower[j] = Convert.ToDouble(light[0][4].ToString());
-                    lightload[j] = Convert.ToDouble(light[0][5].ToString());
+                    aux[j] = Program.UTIL.ToDoubleOrZero(light[0][0].ToString());
+                    prod[j] = Program.UTIL.ToDoubleOrZero(light[0][1].ToString());
+                    outlux[j] = Program.UTIL.ToDoubleOrZero(light[0][2].ToString());
+                    final[j] = Program.UTIL.ToDoubleOrZero(light[0][3].ToString());
+                    lightpower[j] = Program.UTIL.ToDoubleOrZero(light[0][4].ToString());
+                    lightload[j] = Program.UTIL.ToDoubleOrZero(light[0][5].ToString());
                     nd[j] = final[j] - aux[j];
                     
                     aux[12] += aux[j];
@@ -543,10 +543,10 @@ namespace main.contents.Result
 
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    final_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(final[mth].ToString(), 0)));
-                    aux_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(aux[mth].ToString(), 0)));
-                    nd_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(nd[mth].ToString(), 0)));
-                    prod_chart.Add(Convert.ToDouble(Program.UTIL.doubleComa(prod[mth].ToString(), 0)));
+                    final_chart.Add(Program.UTIL.ToDoubleOrZero(Program.UTIL.doubleComa(final[mth].ToString(), 0)));
+                    aux_chart.Add(Program.UTIL.ToDoubleOrZero(Program.UTIL.doubleComa(aux[mth].ToString(), 0)));
+                    nd_chart.Add(Program.UTIL.ToDoubleOrZero(Program.UTIL.doubleComa(nd[mth].ToString(), 0)));
+                    prod_chart.Add(Program.UTIL.ToDoubleOrZero(Program.UTIL.doubleComa(prod[mth].ToString(), 0)));
                 }
                 chart_final.Add(System.Text.Json.JsonSerializer.Serialize(final_chart.ToArray()));
                 chart_aux.Add(System.Text.Json.JsonSerializer.Serialize(aux_chart.ToArray()));
@@ -564,7 +564,7 @@ namespace main.contents.Result
 
 
                 int n = ((int)max).ToString().Length;
-                max = Convert.ToDouble(String.Format("{0:F0}", max / Math.Pow(10, n - 1))) * Math.Pow(10, n - 1) + Math.Pow(10, n - 1);
+                max = Program.UTIL.ToDoubleOrZero(String.Format("{0:F0}", max / Math.Pow(10, n - 1))) * Math.Pow(10, n - 1) + Math.Pow(10, n - 1);
                 if (charts != "") charts += ",";
                 charts += "{data:[" +
                 "{type:\"bar\",barPercentage:0.4,label:\"에너지요구량 [kWh]\",data:" + chart_nd[i] + ",borderColor:\"#FFD966\",backgroundColor:\"#FFD966\",dash:false}," +

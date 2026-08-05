@@ -1,4 +1,4 @@
-﻿using main.subcontents.CoolingSystem;
+using main.subcontents.CoolingSystem;
 using main.subcontents.HeatingSystem;
 using System;
 using System.Collections;
@@ -63,8 +63,8 @@ namespace main
                  string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + ort + "' AND 방향 ='" + orientation + "' AND  각도 = '" + slope + "' and 기간 ='" + (mth + 1).ToString() + "월'");
                 //태양고도각 불러오기
                  string[][] token3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_고도각", "고도각", "지역명 ='" + ort + "' AND 방향 ='" + orientation + "' AND  각도 = '" + slope + "' and 기간 ='" + (mth + 1).ToString() + "월'");
-                 Esol[mth] = Convert.ToDouble(token[0][0]) * 0.024 * dmth[mth];
-                 PVαsol[mth] = Convert.ToDouble(token3[0][0]);
+                 Esol[mth] = Program.UTIL.ToDoubleOrZero(token[0][0]) * 0.024 * dmth[mth];
+                 PVαsol[mth] = Program.UTIL.ToDoubleOrZero(token3[0][0]);
             }
            
             for(int k = 0; k < 10; k++)
@@ -78,18 +78,18 @@ namespace main
         {
             double Slope, fPerf, InverterEff, shLength, shHeight, Arrayheight, tan, totalArea, Kpk;
            
-            Slope = Convert.ToDouble(PVdata[0]);
-            fPerf = Convert.ToDouble(PVdata[1]);
-            InverterEff = Convert.ToDouble(PVdata[2])/100;
-            shLength = Convert.ToDouble(PVdata[3]);
-            shHeight = Convert.ToDouble(PVdata[4]);
-            Arrayheight = Convert.ToDouble(PVdata[5]);
+            Slope = Program.UTIL.ToDoubleOrZero(PVdata[0]);
+            fPerf = Program.UTIL.ToDoubleOrZero(PVdata[1]);
+            InverterEff = Program.UTIL.ToDoubleOrZero(PVdata[2])/100;
+            shLength = Program.UTIL.ToDoubleOrZero(PVdata[3]);
+            shHeight = Program.UTIL.ToDoubleOrZero(PVdata[4]);
+            Arrayheight = Program.UTIL.ToDoubleOrZero(PVdata[5]);
 
             double[] hshobst = new double[12], hshobstwi = new double[12], hsh = new double[12], AreaC = new double[12];
 
             PVType = PVdata[6];
-            totalArea = Convert.ToDouble(PVdata[7]);
-            Kpk = Convert.ToDouble(PVdata[8]) / totalArea;
+            totalArea = Program.UTIL.ToDoubleOrZero(PVdata[7]);
+            Kpk = Program.UTIL.ToDoubleOrZero(PVdata[8]) / totalArea;
 
             fPerf = fPerf - (1-InverterEff);
 
@@ -135,13 +135,13 @@ namespace main
                 PVBatteryNumber = PVdata[9];
                 string[][] battery = Program.DB.getValue(DB.type.ProjDB, "User_PVBattery", "정격전력,배터리타입", "번호='" + PVBatteryNumber + "'");
 
-                Cnenm = Convert.ToDouble(battery[0][0]);
+                Cnenm = Program.UTIL.ToDoubleOrZero(battery[0][0]);
                 batteryType = battery[0][1].ToString();
                 
                 string[][] Binfo = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광배터리계수", "최대방전깊이,시스템효율", "배터리타입 ='" + batteryType + "'");
 
-                ηDoD = Convert.ToDouble(Binfo[0][0]);
-                ηBatt = Convert.ToDouble(Binfo[0][1]);
+                ηDoD = Program.UTIL.ToDoubleOrZero(Binfo[0][0]);
+                ηBatt = Program.UTIL.ToDoubleOrZero(Binfo[0][1]);
                             
                 Cal_Battery();
 
@@ -165,7 +165,7 @@ namespace main
                 string[][] value = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "총에너지소요량", "연료='전기' And 월='"+k+"'");
                 if (value.Length > 0)
                 {
-                    Qf_elec[j] = Convert.ToDouble(value[0][0]);
+                    Qf_elec[j] = Program.UTIL.ToDoubleOrZero(value[0][0]);
                 }
             }
             
@@ -284,11 +284,11 @@ namespace main
                     string[][] value = Program.DB.querySQL(DB.type.ProjDB, "select a.PV생산량, b.계통유형 from PV_Result as a Inner Join PV_Form as b on a.번호= b.번호 where a.번호='" + _pvname[j] + "' And 월 ='" + m + "'");
                     if (value[0][1] == "계통연계형")
                     {
-                        Qfkwh_totalGrid[k] = Convert.ToDouble(value[0][0]);
+                        Qfkwh_totalGrid[k] = Program.UTIL.ToDoubleOrZero(value[0][0]);
                     }
                     else
                     {
-                        Qfkwh_totalBattery[k] = Convert.ToDouble(value[0][0]);
+                        Qfkwh_totalBattery[k] = Program.UTIL.ToDoubleOrZero(value[0][0]);
                     }
                 }
             }
@@ -301,7 +301,7 @@ namespace main
                 Qf_elec[j] = 0;
                 string k = (j + 1).ToString() + "월";
                 string[][] value = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "총에너지소요량", "연료='전기' And 월='" + k + "'");
-                Qf_elec[j] = Convert.ToDouble(value[0][0]);
+                Qf_elec[j] = Program.UTIL.ToDoubleOrZero(value[0][0]);
             }
             //배터리 방전깊이와 용량 그리고 효율
             //대표타입에 따른 방전깊이 지정
@@ -320,7 +320,7 @@ namespace main
                 {
                     string[][] typ = Program.DB.getValue(DB.type.ProjDB, "User_PVBattery", "배터리타입,정격전력", "번호 = '" + batt[0][0] +"'");
                     names.Add(typ[0][0]);
-                    capacity.Add(Convert.ToDouble(typ[0][1]));
+                    capacity.Add(Program.UTIL.ToDoubleOrZero(typ[0][1]));
                 }
             }
 
@@ -328,8 +328,8 @@ namespace main
             {
                 string type = names[capacity.IndexOf(capacity.Max())];
                 string[][] va = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광배터리계수", "최대방전깊이,시스템효율,방전시간", "배터리타입 = '" + type + "'");
-                ηDoD = Convert.ToDouble(va[0][0]);
-                ηBatt = Convert.ToDouble(va[0][1]);
+                ηDoD = Program.UTIL.ToDoubleOrZero(va[0][0]);
+                ηBatt = Program.UTIL.ToDoubleOrZero(va[0][1]);
 
                 for (int b = 0; b < capacity.Count; b++)
                 {
@@ -412,7 +412,7 @@ namespace main
                         {
                             for (int time = 1; time <= 24; time++)
                             {
-                                Vr[mth - 1, (day - 1) * 24 + time - 1] = Convert.ToDouble(Value2[t][0]);
+                                Vr[mth - 1, (day - 1) * 24 + time - 1] = Program.UTIL.ToDoubleOrZero(Value2[t][0]);
                                 t++;
                             }
                         }
@@ -422,12 +422,12 @@ namespace main
             Value= Program.DB.querySQL(DB.type.ProjDB, "Select  b.회전면적, b.허브높이, b.시동풍속, b.종단풍속, b.정격출력, b.정격출력풍속, b.적용유형, b.풍속구간별출력, a.주변환경,a.설치높이,a.설치대수 From  WindPower_Form as a inner join  User_WP as b on a.풍력=b.번호 Where a.번호='"+Num+"'");
             if (Value.Length >0)
             {
-                회전면적 = Convert.ToDouble(Value[0][0]);
-                허브높이 = Convert.ToDouble(Value[0][1]);
+                회전면적 = Program.UTIL.ToDoubleOrZero(Value[0][0]);
+                허브높이 = Program.UTIL.ToDoubleOrZero(Value[0][1]);
                 시동풍속 = Convert.ToInt32(Value[0][2]);
                 종단풍속 = Convert.ToInt32(Value[0][3]);
-                정격출력 = Convert.ToDouble(Value[0][4]);
-                정격출력풍속 = Convert.ToDouble(Value[0][5]);
+                정격출력 = Program.UTIL.ToDoubleOrZero(Value[0][4]);
+                정격출력풍속 = Program.UTIL.ToDoubleOrZero(Value[0][5]);
                 적용유형 = Value[0][6];
                 풍속구간출력_nonsplit = Value[0][7];
                 if(풍속구간출력_nonsplit.Contains('+'))
@@ -444,8 +444,8 @@ namespace main
                     }                    
                 }
                 주변환경 = Value[0][8];
-                설치높이 = Convert.ToDouble(Value[0][9]);
-                설치대수 = Convert.ToDouble(Value[0][10]);
+                설치높이 = Program.UTIL.ToDoubleOrZero(Value[0][9]);
+                설치대수 = Program.UTIL.ToDoubleOrZero(Value[0][10]);
             }
         }
 
@@ -455,14 +455,14 @@ namespace main
             string[][] Value = Program.DB.getValue(DB.type.BaseDB_RESystem, "지면거칠기계수", "KR,Z0,Zmin", "지형구분='" + 주변환경 + "'");
             if(Value.Length >0)
             {
-                KR = Convert.ToDouble(Value[0][0]);
-                Z0 = Convert.ToDouble(Value[0][1]);
-                Zmin = Convert.ToDouble(Value[0][2]);
+                KR = Program.UTIL.ToDoubleOrZero(Value[0][0]);
+                Z0 = Program.UTIL.ToDoubleOrZero(Value[0][1]);
+                Zmin = Program.UTIL.ToDoubleOrZero(Value[0][2]);
             }
             Value = Program.DB.getValue(DB.type.BaseDB_RESystem, "관측장비지상높이", "관측장비지상높이", "지역='" + 지역 + "'");
             if(Value.Length >0)
             {
-                h1 = Convert.ToDouble(Value[0][0]); 
+                h1 = Program.UTIL.ToDoubleOrZero(Value[0][0]); 
             }
 
            if(h1 >=Zmin)
@@ -580,7 +580,7 @@ namespace main
                 int a = 0;
                 for (int v= 시동풍속; v <= 종단풍속; v++ )
                 {
-                    Qfwps[mth] += t_wkn[mth, v] * Convert.ToDouble(풍속구간출력[a]) /1000 * 설치대수;
+                    Qfwps[mth] += t_wkn[mth, v] * Program.UTIL.ToDoubleOrZero(풍속구간출력[a]) /1000 * 설치대수;
                     a++;
                 } 
             }

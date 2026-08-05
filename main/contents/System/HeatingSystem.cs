@@ -242,13 +242,13 @@ namespace main.contents
                         string[][] 요구량 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a, Q_max", "번호 ='" + SelectZone_split[a].ToString() + "' AND 난방_냉방 = '난방'");
                         if (요구량.Length > 0)
                         {
-                            Qba += Convert.ToDouble(요구량[0][0]);
-                            Qmax += Convert.ToDouble(요구량[0][1]) / 1000;
+                            Qba += Program.UTIL.ToDoubleOrZero(요구량[0][0]);
+                            Qmax += Program.UTIL.ToDoubleOrZero(요구량[0][1]) / 1000;
                         }
                         string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호 ='" + SelectZone_split[a].ToString() + "'");
                         if (Value.Length > 0)
                         {
-                            Area += Convert.ToDouble(Value[0][0]);
+                            Area += Program.UTIL.ToDoubleOrZero(Value[0][0]);
                         }
                     }
                     Zone_Qba_textBox.Text = string.Empty;
@@ -300,18 +300,18 @@ namespace main.contents
                             string[][] 요구량 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "공조요구량", "번호 ='" + SelectAHU_split[a].ToString() + "' And 난방_냉방 = '난방' And 월 = '" + (mth + 1).ToString() + "월'");
                             if (요구량.Length > 0)
                             {
-                                Qba += Convert.ToDouble(요구량[0][0]);
+                                Qba += Program.UTIL.ToDoubleOrZero(요구량[0][0]);
                             }
                         }
                         string[][] 부하 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "Qmax_tot", "번호 ='" + SelectAHU_split[a].ToString() + "' And 난방_냉방 = '난방' And 월 = '1월'");
                         if (부하.Length > 0)
                         {
-                            Qmax += Convert.ToDouble(부하[0][0]) / 1000;
+                            Qmax += Program.UTIL.ToDoubleOrZero(부하[0][0]) / 1000;
                         }
                         string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "선택열회수기 ='" + SelectAHU_split[a].ToString() + "'");
                         if (Value.Length > 0)
                         {
-                            Area += Convert.ToDouble(Value[0][0]);
+                            Area += Program.UTIL.ToDoubleOrZero(Value[0][0]);
                         }
                     }
                     AHU_Qba_textBox.Text = string.Empty;
@@ -2182,7 +2182,7 @@ namespace main.contents
                 string[][] value = Program.DB.getValue(DB.type.BaseDB_Heating, "부피별관경", "외경", "호칭경A='" + PipeD_comboBox.SelectedItem.ToString().Substring(0, PipeD_comboBox.SelectedItem.ToString().Length - 1) + "'");
                 if (value.Length > 0)
                 {
-                    PipeD = Convert.ToDouble(value[0][0]);
+                    PipeD = Program.UTIL.ToDoubleOrZero(value[0][0]);
                 }
             }
         }
@@ -2201,26 +2201,26 @@ namespace main.contents
             double Qmax_sum = 0;
             if (Zone_Area_textBox.Text != null && Zone_Area_textBox.Text != "")
             {
-                ZoneArea = Convert.ToDouble(Zone_Area_textBox.Text.ToString());
+                ZoneArea = Program.UTIL.ToDoubleOrZero(Zone_Area_textBox.Text.ToString());
             }
             if (AHU_Area_textBox.Text != null && AHU_Area_textBox.Text != "")
             {
-                ZoneArea += Convert.ToDouble(AHU_Area_textBox.Text.ToString());
+                ZoneArea += Program.UTIL.ToDoubleOrZero(AHU_Area_textBox.Text.ToString());
             }
             if (Zone_Qmax_textBox.Text != null && Zone_Qmax_textBox.Text != "")
             {
-                Qmax_sum = Convert.ToDouble(Zone_Qmax_textBox.Text.ToString());
+                Qmax_sum = Program.UTIL.ToDoubleOrZero(Zone_Qmax_textBox.Text.ToString());
             }
             if (AHU_Qmax_textBox.Text != null && AHU_Qmax_textBox.Text != "")
             {
-                Qmax_sum += Convert.ToDouble(AHU_Qmax_textBox.Text.ToString());
+                Qmax_sum += Program.UTIL.ToDoubleOrZero(AHU_Qmax_textBox.Text.ToString());
             }
 
             double dtheta = 10;
             string[][] v = Program.DB.getValue(DB.type.BaseDB_Heating, "공급환수온도", "공급온도, 환수온도", "공급환수온도='" + SLRL + "'");
             if (v.Length > 0)
             {
-                dtheta = Convert.ToDouble(v[0][0]) - Convert.ToDouble(v[0][1]);
+                dtheta = Program.UTIL.ToDoubleOrZero(v[0][0]) - Program.UTIL.ToDoubleOrZero(v[0][1]);
             }
             double Volume = Qmax_sum  * 3600 / (4.18 * dtheta) / 60; // Liter/min 
 
@@ -2234,9 +2234,9 @@ namespace main.contents
                 {
                     for (int a = 0; a < P.Length; a++)
                     {
-                        if (Convert.ToDouble(P[a][0]) >= Volume)
+                        if (Program.UTIL.ToDoubleOrZero(P[a][0]) >= Volume)
                         {
-                            PipeD = Convert.ToDouble(P[a][1]);
+                            PipeD = Program.UTIL.ToDoubleOrZero(P[a][1]);
                         }
                     }
                 }
@@ -2266,7 +2266,7 @@ namespace main.contents
                 PipeIns = InsDB_form.Select[1];
                 PipeIns_textBox.Text = PipeIns;
 
-                PipeIns_Ramda = Convert.ToDouble(InsDB_form.Select[4]);
+                PipeIns_Ramda = Program.UTIL.ToDoubleOrZero(InsDB_form.Select[4]);
                 PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
                 Program.UTIL.textBox_doubleComa(PipeIns_Ramda_textBox, true, 3);
             }
@@ -2304,14 +2304,14 @@ namespace main.contents
                         PumpHead_label.Visible = true;
                         PumpHead_button.Visible = true;
                         PumpHead_textBox.Visible = true;
-                        double Max = AHU_Qmax_textBox.Text == null || AHU_Qmax_textBox.Text.ToString() == "" ? 0 : Convert.ToDouble(AHU_Qmax_textBox.Text.ToString());
-                        Max = Zone_Qmax_textBox.Text == null || Zone_Qmax_textBox.Text.ToString() == "" ? Max + 0 : Max + Convert.ToDouble(Zone_Qmax_textBox.Text.ToString());
+                        double Max = AHU_Qmax_textBox.Text == null || AHU_Qmax_textBox.Text.ToString() == "" ? 0 : Program.UTIL.ToDoubleOrZero(AHU_Qmax_textBox.Text.ToString());
+                        Max = Zone_Qmax_textBox.Text == null || Zone_Qmax_textBox.Text.ToString() == "" ? Max + 0 : Max + Program.UTIL.ToDoubleOrZero(Zone_Qmax_textBox.Text.ToString());
 
                         double dtheta = 10;
                         string[][] v = Program.DB.getValue(DB.type.BaseDB_Heating, "공급환순온도", "공급온도,환수온도", "공급환수온도='" + SLRL + "'");
                         if (v.Length > 0)
                         {
-                            dtheta = Convert.ToDouble(v[0][0]) - Convert.ToDouble(v[0][1]);
+                            dtheta = Program.UTIL.ToDoubleOrZero(v[0][0]) - Program.UTIL.ToDoubleOrZero(v[0][1]);
                         }
                         Pump1Volume = Max * 3600 / (dtheta * 4.18); //kg/h
                     }
@@ -3827,31 +3827,31 @@ namespace main.contents
                     }
                     ///
                     arr = Split_(Value[0][10]);
-                    Pump1Volume = Convert.ToDouble(arr[0].ToString());
+                    Pump1Volume = Program.UTIL.ToDoubleOrZero(arr[0].ToString());
                     if (arr.Count > 1)
                     {
-                        GPump1Volume = Convert.ToDouble(arr[1].ToString());
+                        GPump1Volume = Program.UTIL.ToDoubleOrZero(arr[1].ToString());
                     }
                     ///
                     arr = Split_(Value[0][11]);
-                    Pump2Volume = Convert.ToDouble(arr[0].ToString());
+                    Pump2Volume = Program.UTIL.ToDoubleOrZero(arr[0].ToString());
                     if (arr.Count > 1)
                     {
-                        GPump2Volume = Convert.ToDouble(arr[1].ToString());
+                        GPump2Volume = Program.UTIL.ToDoubleOrZero(arr[1].ToString());
                     }
                     ///
                     arr = Split_(Value[0][12]);
-                    Pump1Head = Convert.ToDouble(arr[0].ToString());
+                    Pump1Head = Program.UTIL.ToDoubleOrZero(arr[0].ToString());
                     if (arr.Count > 1)
                     {
-                        GPump1Head = Convert.ToDouble(arr[1].ToString());
+                        GPump1Head = Program.UTIL.ToDoubleOrZero(arr[1].ToString());
                     }
                     ///
                     arr = Split_(Value[0][13]);
-                    Pump2Head = Convert.ToDouble(arr[0].ToString());
+                    Pump2Head = Program.UTIL.ToDoubleOrZero(arr[0].ToString());
                     if (arr.Count > 1)
                     {
-                        GPump2Head = Convert.ToDouble(arr[1].ToString());
+                        GPump2Head = Program.UTIL.ToDoubleOrZero(arr[1].ToString());
                     }
                     ///
                     if (Pump1 != null && Pump1 != "")
@@ -3917,8 +3917,8 @@ namespace main.contents
                         PumpHead_label.Visible = true;
                         PumpHead_button.Visible = true;
                         PumpHead_textBox.Visible = true;
-                        Pump1Volume = Convert.ToDouble(Value[0][10]);
-                        Pump1Head = Convert.ToDouble(Value[0][12]);
+                        Pump1Volume = Program.UTIL.ToDoubleOrZero(Value[0][10]);
+                        Pump1Head = Program.UTIL.ToDoubleOrZero(Value[0][12]);
                         PumpHead_textBox.Text = Pump1Head.ToString("0.00");
                     }
                     else
@@ -4019,7 +4019,7 @@ namespace main.contents
 
                 if (Value[0][3] != null && Value[0][3] != "")
                 {
-                    Vs = Convert.ToDouble(Value[0][3]);
+                    Vs = Program.UTIL.ToDoubleOrZero(Value[0][3]);
                     Vs_textBox.Text = Vs.ToString();
                     Program.UTIL.textBox_doubleComa(Vs_textBox, true, 3);
                 }
@@ -4027,18 +4027,18 @@ namespace main.contents
             Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재,노출배관길이", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
-                PipeD = Convert.ToDouble(Value[0][0]);
+                PipeD = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                 string[][] p = Program.DB.getValue(DB.type.BaseDB_Heating, "부피별관경", "호칭경A", "외경 = '" + PipeD + "'");
                 if (p.Length > 0)
                 {
                     PipeD_comboBox.SelectedItem = p[0][0] + "A";
                 }
 
-                PipeInsD = Convert.ToDouble(Value[0][1]);
+                PipeInsD = Program.UTIL.ToDoubleOrZero(Value[0][1]);
                 PipeInsD_textBox.Text = PipeInsD.ToString();
                 Program.UTIL.textBox_doubleComa(PipeInsD_textBox, true, 1);
 
-                PipeIns_Ramda = Convert.ToDouble(Value[0][2]);
+                PipeIns_Ramda = Program.UTIL.ToDoubleOrZero(Value[0][2]);
                 PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
                 Program.UTIL.textBox_doubleComa(PipeIns_Ramda_textBox, true, 3);
 
@@ -4048,7 +4048,7 @@ namespace main.contents
                 { PipeL = 0; }
                 else
                 {
-                    PipeL = Convert.ToDouble(Value[0][4]);
+                    PipeL = Program.UTIL.ToDoubleOrZero(Value[0][4]);
                 }
                 PipeL_textBox.Text = PipeL.ToString();
                 Program.UTIL.textBox_doubleComa(PipeL_textBox, true, 2);

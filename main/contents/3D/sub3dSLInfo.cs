@@ -24,7 +24,7 @@ namespace main.contents
             if (value1.Length > 0)
             {
                 Name_textBox.Text = value1[0][1];
-                double Area = Convert.ToDouble(value1[0][0]);
+                double Area = Program.UTIL.ToDoubleOrZero(value1[0][0]);
                 Area_textBox.Text = Area.ToString();
                 Program.UTIL.textBox_doubleComa(Area_textBox, true, 2);
                 Area_textBox.Text = Area_textBox.Text.ToString() + " m" + Program.UTIL.Subscript(2, true);

@@ -135,14 +135,14 @@ namespace main.subcontents.Alt
                     {
                         int nRow = Alt_dataGridView.Rows.Add();
                         Alt_dataGridView.Rows[nRow].Cells[1].Value = Value[a][0];
-                        Alt_dataGridView.Rows[nRow].Cells[2].Value = Convert.ToDouble(Value[a][1]).ToString("0.00");
-                        Alt_dataGridView.Rows[nRow].Cells[3].Value = Convert.ToDouble(Value[a][12]).ToString("0.0") + " 점";
-                        Alt_dataGridView.Rows[nRow].Cells[4].Value = Convert.ToDouble(Value[a][8]).ToString("0.0") + " 점";
-                        Alt_dataGridView.Rows[nRow].Cells[5].Value = Convert.ToDouble(Value[a][9]).ToString("0.0") + " 점";
-                        Alt_dataGridView.Rows[nRow].Cells[6].Value = Convert.ToDouble(Value[a][10]).ToString("0.0") + " 점";
-                        Alt_dataGridView.Rows[nRow].Cells[7].Value = Convert.ToDouble(Value[a][11]).ToString("0.0") + " 점";
-                        Alt_dataGridView.Rows[nRow].Cells[8].Value = Convert.ToDouble(Value[a][7]).ToString("0.0") + " %";
-                        Alt_dataGridView.Rows[nRow].Cells[9].Value = Convert.ToDouble(Value[a][2]).ToString("#,##0"); //직접공사비
+                        Alt_dataGridView.Rows[nRow].Cells[2].Value = Program.UTIL.ToDoubleOrZero(Value[a][1]).ToString("0.00");
+                        Alt_dataGridView.Rows[nRow].Cells[3].Value = Program.UTIL.ToDoubleOrZero(Value[a][12]).ToString("0.0") + " 점";
+                        Alt_dataGridView.Rows[nRow].Cells[4].Value = Program.UTIL.ToDoubleOrZero(Value[a][8]).ToString("0.0") + " 점";
+                        Alt_dataGridView.Rows[nRow].Cells[5].Value = Program.UTIL.ToDoubleOrZero(Value[a][9]).ToString("0.0") + " 점";
+                        Alt_dataGridView.Rows[nRow].Cells[6].Value = Program.UTIL.ToDoubleOrZero(Value[a][10]).ToString("0.0") + " 점";
+                        Alt_dataGridView.Rows[nRow].Cells[7].Value = Program.UTIL.ToDoubleOrZero(Value[a][11]).ToString("0.0") + " 점";
+                        Alt_dataGridView.Rows[nRow].Cells[8].Value = Program.UTIL.ToDoubleOrZero(Value[a][7]).ToString("0.0") + " %";
+                        Alt_dataGridView.Rows[nRow].Cells[9].Value = Program.UTIL.ToDoubleOrZero(Value[a][2]).ToString("#,##0"); //직접공사비
                     }
                 }
             }
@@ -331,10 +331,10 @@ namespace main.subcontents.Alt
                     double[] Point5 = new double[Value2.Length]; //종합
                     for (int a = 0; a < Value2.Length; a++)
                     {
-                        Point1[a] = Convert.ToDouble(Value2[a][1]);
-                        Point2[a] = Convert.ToDouble(Value2[a][2]);
-                        Point3[a] = Convert.ToDouble(Value2[a][3]);
-                        Point4[a] = Convert.ToDouble(Value2[a][4]);
+                        Point1[a] = Program.UTIL.ToDoubleOrZero(Value2[a][1]);
+                        Point2[a] = Program.UTIL.ToDoubleOrZero(Value2[a][2]);
+                        Point3[a] = Program.UTIL.ToDoubleOrZero(Value2[a][3]);
+                        Point4[a] = Program.UTIL.ToDoubleOrZero(Value2[a][4]);
                     }
                     double Avg1, Avg2, Avg3, Avg4;
                     Avg1 = Point1.ToArray().Average();
@@ -344,10 +344,10 @@ namespace main.subcontents.Alt
 
                     for (int a = 0; a < Value2.Length; a++)
                     {
-                        Point1[a] = Convert.ToDouble(Value2[a][1]) / Avg1 * 100;
-                        Point2[a] = Convert.ToDouble(Value2[a][2]) / Avg2 * 100;
-                        Point3[a] = Convert.ToDouble(Value2[a][3]) / Avg3 * 100;
-                        Point4[a] = Convert.ToDouble(Value2[a][4]) / Avg4 * 100;
+                        Point1[a] = Program.UTIL.ToDoubleOrZero(Value2[a][1]) / Avg1 * 100;
+                        Point2[a] = Program.UTIL.ToDoubleOrZero(Value2[a][2]) / Avg2 * 100;
+                        Point3[a] = Program.UTIL.ToDoubleOrZero(Value2[a][3]) / Avg3 * 100;
+                        Point4[a] = Program.UTIL.ToDoubleOrZero(Value2[a][4]) / Avg4 * 100;
                         Point5[a] = (Point1[a] + Point2[a] + Point3[a] + Point4[a]) / 4; //종합
                         Program.DB.setValue(DB.type.ProjDB, "Optimal_PreResult", "프로젝트번호,프로젝트유형,검토유형,리모델링안," +
                         "에너지점수,쾌적성점수,적법성점수,경제성점수,종합점수",
@@ -387,7 +387,7 @@ namespace main.subcontents.Alt
                             double Newtao = WinValue[2];
                             if (WinRemodelingType == "내부덧댐")
                             {
-                                double[] v = Calc_AdditionalWindow(NewUw, Convert.ToDouble(ZoneWin[0][3]), Newg, Convert.ToDouble(ZoneWin_P[0][1]), Newtao, Convert.ToDouble(ZoneWin_P[0][2])); //double NewUw, double OldUw, double Newg, double Oldg, double Newtao, double Oldtao
+                                double[] v = Calc_AdditionalWindow(NewUw, Program.UTIL.ToDoubleOrZero(ZoneWin[0][3]), Newg, Program.UTIL.ToDoubleOrZero(ZoneWin_P[0][1]), Newtao, Program.UTIL.ToDoubleOrZero(ZoneWin_P[0][2])); //double NewUw, double OldUw, double Newg, double Oldg, double Newtao, double Oldtao
                                 Uw = v[0]; g = v[1]; tao = v[2];
                             }
                             else
@@ -396,9 +396,9 @@ namespace main.subcontents.Alt
                             }
                             dU = Calc_dUinst(size, Psi_InstallTop, Psi_InstallButtom, Psi_InstallSide);
                             Ueff = Uw + dU;
-                            Area_sum += Convert.ToDouble(ZoneWin[i][1]);
-                            result[0] += Ueff * Convert.ToDouble(ZoneWin[i][1]);
-                            result[3] += Uw * Convert.ToDouble(ZoneWin[i][1]);
+                            Area_sum += Program.UTIL.ToDoubleOrZero(ZoneWin[i][1]);
+                            result[0] += Ueff * Program.UTIL.ToDoubleOrZero(ZoneWin[i][1]);
+                            result[3] += Uw * Program.UTIL.ToDoubleOrZero(ZoneWin[i][1]);
                         }
                     }
                 }
@@ -425,12 +425,12 @@ namespace main.subcontents.Alt
                 string[][] frameValue = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select 개폐부프레임열관류율,고정부프레임열관류율,중간바프레임열관류율  From 창호프레임  where 프레임종류='" + value[0][0] + "' and 프레임재료='" + value[0][1] + "' and DB유형='표준'");
                 if (frameValue.Length > 0)
                 {
-                    Uf_open = Convert.ToDouble(frameValue[0][0]); Uf_fix = Convert.ToDouble(frameValue[0][1]); Uf_btw = Convert.ToDouble(frameValue[0][2]);
+                    Uf_open = Program.UTIL.ToDoubleOrZero(frameValue[0][0]); Uf_fix = Program.UTIL.ToDoubleOrZero(frameValue[0][1]); Uf_btw = Program.UTIL.ToDoubleOrZero(frameValue[0][2]);
                 }
                 string[][] glassValue = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select 번호,DB유형,제품명,제조사,복층_삼중_단창,아르곤_공기,LE_CL_V,열관류율,태양열취득율,빛투과율,외부반사율,내부반사율  From 유리  where 제품명='" + 유리 + "'and DB유형='표준'");
                 if (glassValue.Length > 0)
                 {
-                    ug = Convert.ToDouble(glassValue[0][7]); g = Convert.ToDouble(glassValue[0][8]); tao = Convert.ToDouble(glassValue[0][9]);
+                    ug = Program.UTIL.ToDoubleOrZero(glassValue[0][7]); g = Program.UTIL.ToDoubleOrZero(glassValue[0][8]); tao = Program.UTIL.ToDoubleOrZero(glassValue[0][9]);
                 }
                 if (value[0][0] == "이중창_SL")
                 {
@@ -439,10 +439,10 @@ namespace main.subcontents.Alt
                 string[][] TBValue = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select 상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율  From 창호설치열교  where 구분1='외단열'and 구분2='" + 프레임재료 + "'and 구분3='" + 단창이중창 + "'and 구분4='외부측'");
                 if (TBValue.Length > 0)
                 {
-                    Psi_InstallTop = Convert.ToDouble(TBValue[0][0]); Psi_InstallSide = Convert.ToDouble(TBValue[0][1]); Psi_InstallButtom = Convert.ToDouble(TBValue[0][2]);
+                    Psi_InstallTop = Program.UTIL.ToDoubleOrZero(TBValue[0][0]); Psi_InstallSide = Program.UTIL.ToDoubleOrZero(TBValue[0][1]); Psi_InstallButtom = Program.UTIL.ToDoubleOrZero(TBValue[0][2]);
                 }
                 string[][] Spacer = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select 고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율  From 창호간봉  where 구분1='단열간봉'and 구분2='" + 단창이중창 + "'and 구분3='" + 프레임재료 + "'");
-                if (Spacer.Length > 0) { Psi_g_fix = Convert.ToDouble(Spacer[0][0]); Psi_g_open = Convert.ToDouble(Spacer[0][1]); }
+                if (Spacer.Length > 0) { Psi_g_fix = Program.UTIL.ToDoubleOrZero(Spacer[0][0]); Psi_g_open = Program.UTIL.ToDoubleOrZero(Spacer[0][1]); }
 
                 WinValue[0] = ug; WinValue[1] = g; WinValue[2] = tao;
                 WinValue[3] = Uf_open; WinValue[4] = Uf_fix; WinValue[5] = Uf_btw;
@@ -453,7 +453,7 @@ namespace main.subcontents.Alt
         }
         private double Calc_Uw(string[][] Size, double Ug, double Uf_open, double Uf_fix, double Uf_btw, double Psi_g_fix, double Psi_g_open)
         {
-            double Area = Convert.ToDouble(Size[0][0]), Width = Convert.ToDouble(Size[0][1]), Height = Convert.ToDouble(Size[0][2]), Ag_fix = Convert.ToDouble(Size[0][3]), Ag_open = Convert.ToDouble(Size[0][4]), Af_open = Convert.ToDouble(Size[0][5]), Af_fix = Convert.ToDouble(Size[0][6]), Af_btw = Convert.ToDouble(Size[0][7]), Lg_fix = Convert.ToDouble(Size[0][8]), Lg_open = Convert.ToDouble(Size[0][0]);
+            double Area = Program.UTIL.ToDoubleOrZero(Size[0][0]), Width = Program.UTIL.ToDoubleOrZero(Size[0][1]), Height = Program.UTIL.ToDoubleOrZero(Size[0][2]), Ag_fix = Program.UTIL.ToDoubleOrZero(Size[0][3]), Ag_open = Program.UTIL.ToDoubleOrZero(Size[0][4]), Af_open = Program.UTIL.ToDoubleOrZero(Size[0][5]), Af_fix = Program.UTIL.ToDoubleOrZero(Size[0][6]), Af_btw = Program.UTIL.ToDoubleOrZero(Size[0][7]), Lg_fix = Program.UTIL.ToDoubleOrZero(Size[0][8]), Lg_open = Program.UTIL.ToDoubleOrZero(Size[0][0]);
             double Uw = (Ug * (Ag_fix + Ag_open) + (Uf_open * Af_open) + (Uf_fix * Af_fix) + (Uf_btw * Af_btw) + (Psi_g_fix * Lg_fix) + (Psi_g_open * Lg_open)) / Area;
             return Uw;
         }
@@ -465,15 +465,15 @@ namespace main.subcontents.Alt
             string[][] f_shgc = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '태양열취득률'");
             string[][] f_τ = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '빛투과율'");
             if (f_shgc.Length > 0)
-            { g = Convert.ToDouble(f_shgc[0][0]) * Oldg * Newg; }
+            { g = Program.UTIL.ToDoubleOrZero(f_shgc[0][0]) * Oldg * Newg; }
             if (f_τ.Length > 0)
-            { tao = Convert.ToDouble(f_τ[0][0]) * Oldtao * Newtao; }
+            { tao = Program.UTIL.ToDoubleOrZero(f_τ[0][0]) * Oldtao * Newtao; }
             value[0] = Uw; value[1] = g; value[2] = tao;
             return value;
         }
         public double Calc_dUinst(string[][] Size, double Psi_InstallTop, double Psi_InstallButtom, double Psi_InstallSide)
         {
-            double Area = Convert.ToDouble(Size[0][0]), Width = Convert.ToDouble(Size[0][1]), Height = Convert.ToDouble(Size[0][2]), Ag_fix = Convert.ToDouble(Size[0][3]), Ag_open = Convert.ToDouble(Size[0][4]), Af_open = Convert.ToDouble(Size[0][5]), Af_fix = Convert.ToDouble(Size[0][6]), Af_btw = Convert.ToDouble(Size[0][7]), Lg_fix = Convert.ToDouble(Size[0][8]), Lg_open = Convert.ToDouble(Size[0][0]);
+            double Area = Program.UTIL.ToDoubleOrZero(Size[0][0]), Width = Program.UTIL.ToDoubleOrZero(Size[0][1]), Height = Program.UTIL.ToDoubleOrZero(Size[0][2]), Ag_fix = Program.UTIL.ToDoubleOrZero(Size[0][3]), Ag_open = Program.UTIL.ToDoubleOrZero(Size[0][4]), Af_open = Program.UTIL.ToDoubleOrZero(Size[0][5]), Af_fix = Program.UTIL.ToDoubleOrZero(Size[0][6]), Af_btw = Program.UTIL.ToDoubleOrZero(Size[0][7]), Lg_fix = Program.UTIL.ToDoubleOrZero(Size[0][8]), Lg_open = Program.UTIL.ToDoubleOrZero(Size[0][0]);
             double dUinst = ((Psi_InstallTop * Width) + (Psi_InstallButtom * Width) + (Psi_InstallSide * Height * 2)) / Area;
             return dUinst;
         }
@@ -481,15 +481,15 @@ namespace main.subcontents.Alt
         {
             String LE_CL_V = GlassValue[0][6] + "+" + GlassValue[0][6];
             double[] value = new double[3];// Ug, g, Tao;
-            value[0] = 1 / ((1 / Convert.ToDouble(GlassValue[0][7])) - 0.04 + 0.189 - 0.13 + (1 / Convert.ToDouble(GlassValue[0][7])));
+            value[0] = 1 / ((1 / Program.UTIL.ToDoubleOrZero(GlassValue[0][7])) - 0.04 + 0.189 - 0.13 + (1 / Program.UTIL.ToDoubleOrZero(GlassValue[0][7])));
             String[][] f_shgc = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + LE_CL_V + "' AND 보정유형 = '태양열취득률'");
             String[][] f_τ = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + LE_CL_V + "' AND 보정유형 = '빛투과율'");
             if (f_shgc.Length > 0)
             {
-                value[1] = Convert.ToDouble(f_shgc[0][0]) * Convert.ToDouble(GlassValue[0][8]) * Convert.ToDouble(GlassValue[0][8]);
+                value[1] = Program.UTIL.ToDoubleOrZero(f_shgc[0][0]) * Program.UTIL.ToDoubleOrZero(GlassValue[0][8]) * Program.UTIL.ToDoubleOrZero(GlassValue[0][8]);
             }
             if (f_τ.Length > 0)
-            { value[2] = Convert.ToDouble(f_τ[0][0]) * Convert.ToDouble(GlassValue[0][9]) * Convert.ToDouble(GlassValue[0][9]); }
+            { value[2] = Program.UTIL.ToDoubleOrZero(f_τ[0][0]) * Program.UTIL.ToDoubleOrZero(GlassValue[0][9]) * Program.UTIL.ToDoubleOrZero(GlassValue[0][9]); }
             return value;
         }
         private double[] Cal_Cost(string 리모델링안)
@@ -499,15 +499,15 @@ namespace main.subcontents.Alt
             string[][] ar = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(면적) From ZoneEnvelope_3D  where 외피유형='창호'");
             if (ar.Length > 0 && ar[0][0] != "")
             {
-                Area = Convert.ToDouble(ar[0][0]);
+                Area = Program.UTIL.ToDoubleOrZero(ar[0][0]);
             }
             string[][] Value = Program.DB.querySQL(DB.type.BaseDB_Optimal, "Select 철거유형,직접공사비,재료비,노무비,경비 from 투명최적안 Where 최적안='" + 리모델링안 + "'");
             if (Value.Length > 0)
             {
-                cost[0] = Convert.ToDouble(Value[0][1]) * Area;
-                cost[1] = Convert.ToDouble(Value[0][2]) * Area;
-                cost[2] = Convert.ToDouble(Value[0][3]) * Area;
-                cost[3] = Convert.ToDouble(Value[0][4]) * Area;
+                cost[0] = Program.UTIL.ToDoubleOrZero(Value[0][1]) * Area;
+                cost[1] = Program.UTIL.ToDoubleOrZero(Value[0][2]) * Area;
+                cost[2] = Program.UTIL.ToDoubleOrZero(Value[0][3]) * Area;
+                cost[3] = Program.UTIL.ToDoubleOrZero(Value[0][4]) * Area;
             }
             return cost;
         }
@@ -518,8 +518,8 @@ namespace main.subcontents.Alt
             string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result_Optimal Where 리모델링안='" + 리모델링안 + "' and 검토유형='창호' and 연료='전체'");
             if (Value.Length > 0 && PreValue.Length > 0)
             {
-                double pre = Convert.ToDouble(PreValue[0][0]) - Convert.ToDouble(PreValue[0][1]);
-                SavingPercent = Math.Max((Convert.ToDouble(PreValue[0][0]) - Convert.ToDouble(Value[0][0])) / pre * 100, 0);
+                double pre = Program.UTIL.ToDoubleOrZero(PreValue[0][0]) - Program.UTIL.ToDoubleOrZero(PreValue[0][1]);
+                SavingPercent = Math.Max((Program.UTIL.ToDoubleOrZero(PreValue[0][0]) - Program.UTIL.ToDoubleOrZero(Value[0][0])) / pre * 100, 0);
             }
             return SavingPercent;
         }
@@ -530,7 +530,7 @@ namespace main.subcontents.Alt
             string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result_Optimal Where 리모델링안='" + 리모델링안 + "' and 검토유형='창호' and 연료='전체'");
             if (Value.Length > 0 && PreValue.Length > 0)
             {
-                Saving = Math.Max((Convert.ToDouble(PreValue[0][0]) - Convert.ToDouble(Value[0][0])), 0);
+                Saving = Math.Max((Program.UTIL.ToDoubleOrZero(PreValue[0][0]) - Program.UTIL.ToDoubleOrZero(Value[0][0])), 0);
             }
             return Saving;
         }
@@ -548,8 +548,8 @@ namespace main.subcontents.Alt
             {
                 for (int k = 0; k < Value.Length; k++)
                 {
-                    Total_Area += Convert.ToDouble(Value[k][0]);
-                    RuleValue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
+                    Total_Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                    RuleValue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
                 }
                 RuleValue = RuleValue / Total_Area;
                 point = (RuleValue / Ueff * 100);
@@ -563,7 +563,7 @@ namespace main.subcontents.Alt
             string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 from FinalEnergy_Result_Rule Where 검토유형='창호' and 연료='전체'");
             if (Value.Length > 0 && PreValue.Length > 0)
             {
-                RuleSaving = Math.Max((Convert.ToDouble(PreValue[0][0]) - Convert.ToDouble(Value[0][0])), 0);
+                RuleSaving = Math.Max((Program.UTIL.ToDoubleOrZero(PreValue[0][0]) - Program.UTIL.ToDoubleOrZero(Value[0][0])), 0);
                 point = (Saving_Optimal / RuleSaving * 100);
             }
             return point;
@@ -590,7 +590,7 @@ namespace main.subcontents.Alt
             {
                 for (int a = 0; a < Value.Length; a++)
                 {
-                    CostAVG += Convert.ToDouble(Value[a][0]);
+                    CostAVG += Program.UTIL.ToDoubleOrZero(Value[a][0]);
                 }
                 CostAVG = CostAVG / Value.Length;
             }

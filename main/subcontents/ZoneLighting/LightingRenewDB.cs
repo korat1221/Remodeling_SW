@@ -146,13 +146,13 @@ namespace main.subcontents.ZoneLighting
 
         private void UserDB_Length1_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserDB_Length1 = Convert.ToDouble(UserDB_Length1_textBox.Text);
+            UserDB_Length1 = Program.UTIL.ToDoubleOrZero(UserDB_Length1_textBox.Text);
             calc_A();
         }
 
         private void UserDB_Length2_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserDB_Length2 = Convert.ToDouble(UserDB_Length2_textBox.Text);
+            UserDB_Length2 = Program.UTIL.ToDoubleOrZero(UserDB_Length2_textBox.Text);
             calc_A();
         }
 
@@ -169,7 +169,7 @@ namespace main.subcontents.ZoneLighting
 
         private void UserDB_eff_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserDB_eff = Convert.ToDouble(UserDB_eff_textBox.Text);
+            UserDB_eff = Program.UTIL.ToDoubleOrZero(UserDB_eff_textBox.Text);
         }
 
 

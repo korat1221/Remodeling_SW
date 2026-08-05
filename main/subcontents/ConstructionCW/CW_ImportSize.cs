@@ -106,8 +106,8 @@ namespace main.subcontents
                     Size_dataGridView.Rows[nRow].Cells[1].Value = CWSize[n][0];
                     for (int k = 1; k < 15; k++)
                     {
-                        if (CWSize[n][k] != "" && Convert.ToDouble(CWSize[n][k]) > 0)
-                        { Size_dataGridView.Rows[nRow].Cells[k + 1].Value = Convert.ToDouble(CWSize[n][k]).ToString("0.00"); }
+                        if (CWSize[n][k] != "" && Program.UTIL.ToDoubleOrZero(CWSize[n][k]) > 0)
+                        { Size_dataGridView.Rows[nRow].Cells[k + 1].Value = Program.UTIL.ToDoubleOrZero(CWSize[n][k]).ToString("0.00"); }
                         else
                         {
                             Size_dataGridView.Rows[nRow].Cells[k + 1].Value = 0;

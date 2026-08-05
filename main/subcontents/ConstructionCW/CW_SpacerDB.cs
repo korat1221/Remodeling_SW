@@ -125,12 +125,12 @@ namespace main.subcontents.ConstructionCW
 
         private void UserDB_Psi_fix_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserDB_Psi_fix = Convert.ToDouble(UserDB_Psi_fix_textBox.Text);
+            UserDB_Psi_fix = Program.UTIL.ToDoubleOrZero(UserDB_Psi_fix_textBox.Text);
         }
 
         private void UserDB_Psi_open_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserDB_Psi_open = Convert.ToDouble(UserDB_Psi_open_textBox.Text);
+            UserDB_Psi_open = Program.UTIL.ToDoubleOrZero(UserDB_Psi_open_textBox.Text);
         }
 
         private void AddUserDB_button_Click(object sender, EventArgs e)

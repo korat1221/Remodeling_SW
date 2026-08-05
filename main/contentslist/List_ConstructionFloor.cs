@@ -135,14 +135,14 @@ namespace main.contentslist
                     dataGridView1.Rows[nRow].Cells[2].Value = List[n][1];
                     dataGridView1.Rows[nRow].Cells[3].Value = List[n][2];
                     dataGridView1.Rows[nRow].Cells[4].Value = List[n][3];
-                    dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F2}", Convert.ToDouble(List[n][4]));
+                    dataGridView1.Rows[nRow].Cells[5].Value = String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(List[n][4]));
                     string[][] Area = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "면적", "구조체번호='" + List[n][0] + "'");
                     double A = 0;
                     if (Area.Length > 0)
                     {
                         for (int a = 0; a < Area.Length; a++)
                         {
-                            A += Convert.ToDouble(Area[a][0]);
+                            A += Program.UTIL.ToDoubleOrZero(Area[a][0]);
                         }
                         dataGridView1.Rows[nRow].Cells[6].Value = String.Format("{0:F2}", A);
                     }

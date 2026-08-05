@@ -92,8 +92,8 @@ namespace main.contents.Result
                 double ghp_total_saving = 0;
                 if (value.Length > 0 && value3.Length > 0)
                 {
-                    Total_Energy_pre = Convert.ToDouble(value3[0][0]);
-                    ghp_total_saving = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
+                    Total_Energy_pre = Program.UTIL.ToDoubleOrZero(value3[0][0]);
+                    ghp_total_saving = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
                 }
 
                 value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 From FinalEnergy_Result_Rule Where 월='연간' and 연료='전기' and 검토유형='냉난방GHP'");
@@ -101,14 +101,14 @@ namespace main.contents.Result
                 double ghp_total_elec = 0;
                 if (value.Length > 0 && value3.Length > 0)
                 {
-                    ghp_total_elec = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
+                    ghp_total_elec = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
                 }
                 value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 From FinalEnergy_Result_Rule Where 월='연간' and 연료='전체' and 검토유형='냉난방GHP'");
                 value3 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "총에너지소요량", "월='연간' and 연료='전체'");
                 double ghp_total_gas = 0;
                 if (value.Length > 0 && value3.Length > 0)
                 {
-                    ghp_total_gas = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
+                    ghp_total_gas = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
                 }
 
                 string[][] Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.외기히트펌프번호,a.명칭,b.존,a.난방정격용량,a.난방정격COP,a.냉방정격용량,a.냉방정격COP,b.번호,b.외기히트펌프대수 From User_AirHP as a Inner Join HeatingSystem_Form as b ON a.번호 = b.외기히트펌프번호 Where a.난방냉방='냉난방' And NOT a.연료='전기'");
@@ -139,16 +139,16 @@ namespace main.contents.Result
                         }
 
 
-                        ghp_Power_H[a] = Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][8]);
-                        ghp_COP_New_H[a] = Convert.ToDouble(Value[a][4]);
+                        ghp_Power_H[a] = Program.UTIL.ToDoubleOrZero(Value[a][3]) * Program.UTIL.ToDoubleOrZero(Value[a][8]);
+                        ghp_COP_New_H[a] = Program.UTIL.ToDoubleOrZero(Value[a][4]);
 
-                        ghp_Power_C[a] = Convert.ToDouble(Value[a][5]) * Convert.ToDouble(Value[a][8]);
-                        ghp_COP_New_C[a] = Convert.ToDouble(Value[a][6]);
+                        ghp_Power_C[a] = Program.UTIL.ToDoubleOrZero(Value[a][5]) * Program.UTIL.ToDoubleOrZero(Value[a][8]);
+                        ghp_COP_New_C[a] = Program.UTIL.ToDoubleOrZero(Value[a][6]);
 
                         double Rule = 0; string[][] kkk = Program.DB.getValue(DB.type.BaseDB_Cooling, "AirCooler", "EER", "압축기= '스크롤' And 냉매='R134a' And 냉수출구온도 = '14' And 평균증발기온도='8'");
                         if (kkk.Length > 0)
                         {
-                            Rule = Convert.ToDouble(kkk[0][0]);
+                            Rule = Program.UTIL.ToDoubleOrZero(kkk[0][0]);
                         }
                         ghp_COP_Rule_H[a] = 3.8; //DIN V 18599-5 table C.1
                         ghp_COP_Rule_C[a] = Rule; //DIN V 18599-7 table 27
@@ -287,17 +287,17 @@ namespace main.contents.Result
                     string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호='" + ghp_Zones_split[a].ToString() + "' And 난방_냉방='난방' and 비이용일_이용일='이용일' and 월='1월'");
                     if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                     {
-                        ghp_Qmax_h += Convert.ToDouble(ZoneValue[0][0]);
+                        ghp_Qmax_h += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
                     }
                     ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호='" + ghp_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 비이용일_이용일='이용일' and 월='8월'");
                     if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                     {
-                        ghp_Qmax_c += Convert.ToDouble(ZoneValue[0][0]);
+                        ghp_Qmax_c += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
                     }
                     ZoneValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호='" + ghp_Zones_split[a].ToString() + "'");
                     if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                     {
-                        ghp_ZoneArea += Convert.ToDouble(ZoneValue[0][0]);
+                        ghp_ZoneArea += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
                     }
                 }
                 ghp_data[230].Add(new { idx = i, val = (ghp_Qmax_h / 1000).ToString("0.0") });//난방부하 
@@ -329,8 +329,8 @@ namespace main.contents.Result
                 double abs_total_saving = 0;
                 if (value.Length > 0 && value3.Length > 0)
                 {
-                    Total_Energy_pre = Convert.ToDouble(value3[0][0]);
-                    abs_total_saving = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
+                    Total_Energy_pre = Program.UTIL.ToDoubleOrZero(value3[0][0]);
+                    abs_total_saving = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
                 }
 
                 value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 From FinalEnergy_Result_Rule Where 월='연간' and 연료='전기' and 검토유형='흡수식냉온수기'");
@@ -338,14 +338,14 @@ namespace main.contents.Result
                 double abs_total_elec = 0;
                 if (value.Length > 0 && value3.Length > 0)
                 {
-                    abs_total_elec = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
+                    abs_total_elec = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
                 }
                 value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 From FinalEnergy_Result_Rule Where 월='연간' and 연료='전체' and 검토유형='흡수식냉온수기'");
                 value3 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "총에너지소요량", "월='연간' and 연료='전체'");
                 double abs_total_gas = 0;
                 if (value.Length > 0 && value3.Length > 0)
                 {
-                    abs_total_gas = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
+                    abs_total_gas = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
                 }
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.흡수식온수기번호,a.명칭,b.존,a.난방용량,a.난방성능,a.냉방용량,a.냉방성능,b.번호,b.흡수식온수기대수 From User_ABS as a Inner Join HeatingSystem_Form as b ON a.번호 = b.흡수식온수기번호 Where a.난방냉방='냉난방'");
                 string[] abs_Name = new string[18]; string[] abs_Zone_text = new string[18];
@@ -373,11 +373,11 @@ namespace main.contents.Result
                         }
 
 
-                        abs_Power_H[a] = Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][8]);
-                        abs_COP_New_H[a] = Convert.ToDouble(Value[a][4]);
+                        abs_Power_H[a] = Program.UTIL.ToDoubleOrZero(Value[a][3]) * Program.UTIL.ToDoubleOrZero(Value[a][8]);
+                        abs_COP_New_H[a] = Program.UTIL.ToDoubleOrZero(Value[a][4]);
 
-                        abs_Power_C[a] = Convert.ToDouble(Value[a][5]) * Convert.ToDouble(Value[a][8]);
-                        abs_COP_New_C[a] = Convert.ToDouble(Value[a][6]);
+                        abs_Power_C[a] = Program.UTIL.ToDoubleOrZero(Value[a][5]) * Program.UTIL.ToDoubleOrZero(Value[a][8]);
+                        abs_COP_New_C[a] = Program.UTIL.ToDoubleOrZero(Value[a][6]);
 
                         abs_COP_Rule_H[a] = 1.2; //EPI 1점 
                         abs_COP_Rule_C[a] = 1.2;
@@ -492,17 +492,17 @@ namespace main.contents.Result
                     string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호='" + abs_Zones_split[a].ToString() + "' And 난방_냉방='난방' and 비이용일_이용일='이용일' and 월='1월'");
                     if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                     {
-                        abs_Qmax_h += Convert.ToDouble(ZoneValue[0][0]);
+                        abs_Qmax_h += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
                     }
                     ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호='" + abs_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 비이용일_이용일='이용일' and 월='8월'");
                     if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                     {
-                        abs_Qmax_c += Convert.ToDouble(ZoneValue[0][0]);
+                        abs_Qmax_c += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
                     }
                     ZoneValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호='" + abs_Zones_split[a].ToString() + "'");
                     if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                     {
-                        abs_ZoneArea += Convert.ToDouble(ZoneValue[0][0]);
+                        abs_ZoneArea += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
                     }
                 }
                 abs_data[230].Add(new { idx = i, val = (abs_Qmax_h / 1000).ToString("0.0") });//난방부하 
@@ -665,10 +665,10 @@ namespace main.contents.Result
                                         string[][] OldSystem = Program.DB.querySQL(res[0][0], "Select a.난방정격COP From User_AirHP as a Inner Join HeatingSystem_Form as b ON a.번호 = b.외기히트펌프번호 Where b.번호 ='" + hh.Num_Old()[aaa] + "'");
                                         if (OldSystem.Length > 0)
                                         {
-                                            if (Convert.ToDouble(OldSystem[0][0]) == Convert.ToDouble(Value[a][4]))
-                                            { ghp_COP_Old_H[a] = Convert.ToDouble(Value[a][4]); break; }
-                                            else if (Convert.ToDouble(OldSystem[0][0]) < ghp_COP_Old_H[a]) { ghp_COP_Old_H[a] = Convert.ToDouble(OldSystem[0][0]); }
-                                            else if (ghp_COP_Old_H[a] == 0) { ghp_COP_Old_H[a] = Convert.ToDouble(OldSystem[0][0]); }
+                                            if (Program.UTIL.ToDoubleOrZero(OldSystem[0][0]) == Program.UTIL.ToDoubleOrZero(Value[a][4]))
+                                            { ghp_COP_Old_H[a] = Program.UTIL.ToDoubleOrZero(Value[a][4]); break; }
+                                            else if (Program.UTIL.ToDoubleOrZero(OldSystem[0][0]) < ghp_COP_Old_H[a]) { ghp_COP_Old_H[a] = Program.UTIL.ToDoubleOrZero(OldSystem[0][0]); }
+                                            else if (ghp_COP_Old_H[a] == 0) { ghp_COP_Old_H[a] = Program.UTIL.ToDoubleOrZero(OldSystem[0][0]); }
                                         }
                                     }
                                     if (Value[a][7] != "")
@@ -679,7 +679,7 @@ namespace main.contents.Result
                                             string[][] Solar = Program.DB.querySQL(DB.type.ProjDB, "Select a.Qh_sol From HeatingSystem_Result as a Inner Join HeatingSystem_Form as b ON a.번호 = b.번호 Where b.태양열번호 ='" + Value[a][7] + "' and 월='" + mth + "월'");
                                             if (Solar.Length > 0)
                                             {
-                                                Q_sol_a += Convert.ToDouble(Solar[0][0]);
+                                                Q_sol_a += Program.UTIL.ToDoubleOrZero(Solar[0][0]);
                                             }
                                         }
                                         ghp_Saving_H[a] = ghp_Saving_H[a] - Q_sol_a;
@@ -704,10 +704,10 @@ namespace main.contents.Result
                                             string[][] OldSystem = Program.DB.querySQL(res[0][0], "Select a.냉방정격COP From User_AirHP as a Inner Join CoolingSystem_Form as b ON a.번호 = b.냉방유닛 Where b.번호 ='" + cc.Num_Old()[aaa] + "'");
                                             if (OldSystem.Length > 0)
                                             {
-                                                if (Convert.ToDouble(OldSystem[0][0]) == Convert.ToDouble(Value[a][6]))
-                                                { ghp_COP_Old_C[a] = Convert.ToDouble(Value[a][6]); break; }
-                                                else if (Convert.ToDouble(OldSystem[0][0]) < ghp_COP_Old_C[a]) { ghp_COP_Old_C[a] = Convert.ToDouble(OldSystem[0][0]); }
-                                                else if (ghp_COP_Old_C[a] == 0) { ghp_COP_Old_C[a] = Convert.ToDouble(OldSystem[0][0]); }
+                                                if (Program.UTIL.ToDoubleOrZero(OldSystem[0][0]) == Program.UTIL.ToDoubleOrZero(Value[a][6]))
+                                                { ghp_COP_Old_C[a] = Program.UTIL.ToDoubleOrZero(Value[a][6]); break; }
+                                                else if (Program.UTIL.ToDoubleOrZero(OldSystem[0][0]) < ghp_COP_Old_C[a]) { ghp_COP_Old_C[a] = Program.UTIL.ToDoubleOrZero(OldSystem[0][0]); }
+                                                else if (ghp_COP_Old_C[a] == 0) { ghp_COP_Old_C[a] = Program.UTIL.ToDoubleOrZero(OldSystem[0][0]); }
                                             }
                                         }
                                     }
@@ -735,16 +735,16 @@ namespace main.contents.Result
                             }
 
 
-                            ghp_Power_H[a] = Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][8]);
-                            ghp_COP_New_H[a] = Convert.ToDouble(Value[a][4]);
+                            ghp_Power_H[a] = Program.UTIL.ToDoubleOrZero(Value[a][3]) * Program.UTIL.ToDoubleOrZero(Value[a][8]);
+                            ghp_COP_New_H[a] = Program.UTIL.ToDoubleOrZero(Value[a][4]);
 
-                            ghp_Power_C[a] = Convert.ToDouble(Value[a][5]) * Convert.ToDouble(Value[a][8]);
-                            ghp_COP_New_C[a] = Convert.ToDouble(Value[a][6]);
+                            ghp_Power_C[a] = Program.UTIL.ToDoubleOrZero(Value[a][5]) * Program.UTIL.ToDoubleOrZero(Value[a][8]);
+                            ghp_COP_New_C[a] = Program.UTIL.ToDoubleOrZero(Value[a][6]);
 
                             double Rule = 0; string[][] kkk = Program.DB.getValue(DB.type.BaseDB_Cooling, "AirCooler", "EER", "압축기= '스크롤' And 냉매='R134a' And 냉수출구온도 = '14' And 평균증발기온도='8'");
                             if (kkk.Length > 0)
                             {
-                                Rule = Convert.ToDouble(kkk[0][0]);
+                                Rule = Program.UTIL.ToDoubleOrZero(kkk[0][0]);
                             }
                             ghp_COP_Rule_H[a] = 3.8; //DIN V 18599-5 table C.1
                             ghp_COP_Rule_C[a] = Rule; //DIN V 18599-7 table 27
@@ -909,17 +909,17 @@ namespace main.contents.Result
                         string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호='" + ghp_Zones_split[a].ToString() + "' And 난방_냉방='난방' and 비이용일_이용일='이용일' and 월='1월'");
                         if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                         {
-                            ghp_Qmax_h += Convert.ToDouble(ZoneValue[0][0]);
+                            ghp_Qmax_h += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
                         }
                         ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호='" + ghp_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 비이용일_이용일='이용일' and 월='8월'");
                         if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                         {
-                            ghp_Qmax_c += Convert.ToDouble(ZoneValue[0][0]);
+                            ghp_Qmax_c += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
                         }
                         ZoneValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호='" + ghp_Zones_split[a].ToString() + "'");
                         if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                         {
-                            ghp_ZoneArea += Convert.ToDouble(ZoneValue[0][0]);
+                            ghp_ZoneArea += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
                         }
                     }
                     ghp_data[230].Add(new { idx = i, val = (ghp_Qmax_h / 1000).ToString("0.0") });//난방부하 
@@ -971,10 +971,10 @@ namespace main.contents.Result
                                         string[][] OldSystem = Program.DB.querySQL(res[0][0], "Select a.난방정격COP From User_AirHP as a Inner Join HeatingSystem_Form as b ON a.번호 = b.흡수식온수기번호 Where b.번호 ='" + hh.Num_Old()[aaa] + "'");
                                         if (OldSystem.Length > 0)
                                         {
-                                            if (Convert.ToDouble(OldSystem[0][0]) == Convert.ToDouble(Value[a][4]))
-                                            { abs_COP_Old_H[a] = Convert.ToDouble(Value[a][4]); break; }
-                                            else if (Convert.ToDouble(OldSystem[0][0]) < abs_COP_Old_H[a]) { abs_COP_Old_H[a] = Convert.ToDouble(OldSystem[0][0]); }
-                                            else if (abs_COP_Old_H[a] == 0) { abs_COP_Old_H[a] = Convert.ToDouble(OldSystem[0][0]); }
+                                            if (Program.UTIL.ToDoubleOrZero(OldSystem[0][0]) == Program.UTIL.ToDoubleOrZero(Value[a][4]))
+                                            { abs_COP_Old_H[a] = Program.UTIL.ToDoubleOrZero(Value[a][4]); break; }
+                                            else if (Program.UTIL.ToDoubleOrZero(OldSystem[0][0]) < abs_COP_Old_H[a]) { abs_COP_Old_H[a] = Program.UTIL.ToDoubleOrZero(OldSystem[0][0]); }
+                                            else if (abs_COP_Old_H[a] == 0) { abs_COP_Old_H[a] = Program.UTIL.ToDoubleOrZero(OldSystem[0][0]); }
                                         }
                                     }
                                     if (Value[a][7] != "")
@@ -985,7 +985,7 @@ namespace main.contents.Result
                                             string[][] Solar = Program.DB.querySQL(DB.type.ProjDB, "Select a.Qh_sol From HeatingSystem_Result as a Inner Join HeatingSystem_Form as b ON a.번호 = b.번호 Where b.태양열번호 ='" + Value[a][7] + "' and 월='" + mth + "월'");
                                             if (Solar.Length > 0)
                                             {
-                                                Q_sol_a += Convert.ToDouble(Solar[0][0]);
+                                                Q_sol_a += Program.UTIL.ToDoubleOrZero(Solar[0][0]);
                                             }
                                         }
                                         abs_Saving_H[a] = abs_Saving_H[a] - Q_sol_a;
@@ -1010,10 +1010,10 @@ namespace main.contents.Result
                                             string[][] OldSystem = Program.DB.querySQL(res[0][0], "Select a.냉방정격COP From User_AirHP as a Inner Join CoolingSystem_Form as b ON a.번호 = b.냉방유닛 Where b.번호 ='" + cc.Num_Old()[aaa] + "'");
                                             if (OldSystem.Length > 0)
                                             {
-                                                if (Convert.ToDouble(OldSystem[0][0]) == Convert.ToDouble(Value[a][6]))
-                                                { abs_COP_Old_C[a] = Convert.ToDouble(Value[a][6]); break; }
-                                                else if (Convert.ToDouble(OldSystem[0][0]) < abs_COP_Old_C[a]) { abs_COP_Old_C[a] = Convert.ToDouble(OldSystem[0][0]); }
-                                                else if (abs_COP_Old_C[a] == 0) { abs_COP_Old_C[a] = Convert.ToDouble(OldSystem[0][0]); }
+                                                if (Program.UTIL.ToDoubleOrZero(OldSystem[0][0]) == Program.UTIL.ToDoubleOrZero(Value[a][6]))
+                                                { abs_COP_Old_C[a] = Program.UTIL.ToDoubleOrZero(Value[a][6]); break; }
+                                                else if (Program.UTIL.ToDoubleOrZero(OldSystem[0][0]) < abs_COP_Old_C[a]) { abs_COP_Old_C[a] = Program.UTIL.ToDoubleOrZero(OldSystem[0][0]); }
+                                                else if (abs_COP_Old_C[a] == 0) { abs_COP_Old_C[a] = Program.UTIL.ToDoubleOrZero(OldSystem[0][0]); }
                                             }
                                         }
                                     }
@@ -1041,11 +1041,11 @@ namespace main.contents.Result
                             }
 
 
-                            abs_Power_H[a] = Convert.ToDouble(Value[a][3]) * Convert.ToDouble(Value[a][8]);
-                            abs_COP_New_H[a] = Convert.ToDouble(Value[a][4]);
+                            abs_Power_H[a] = Program.UTIL.ToDoubleOrZero(Value[a][3]) * Program.UTIL.ToDoubleOrZero(Value[a][8]);
+                            abs_COP_New_H[a] = Program.UTIL.ToDoubleOrZero(Value[a][4]);
 
-                            abs_Power_C[a] = Convert.ToDouble(Value[a][5]) * Convert.ToDouble(Value[a][8]);
-                            abs_COP_New_C[a] = Convert.ToDouble(Value[a][6]);
+                            abs_Power_C[a] = Program.UTIL.ToDoubleOrZero(Value[a][5]) * Program.UTIL.ToDoubleOrZero(Value[a][8]);
+                            abs_COP_New_C[a] = Program.UTIL.ToDoubleOrZero(Value[a][6]);
 
                             abs_COP_Rule_H[a] = 1.2; //EPI 1점 
                             abs_COP_Rule_C[a] = 1.2;
@@ -1205,17 +1205,17 @@ namespace main.contents.Result
                         string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호='" + abs_Zones_split[a].ToString() + "' And 난방_냉방='난방' and 비이용일_이용일='이용일' and 월='1월'");
                         if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                         {
-                            abs_Qmax_h += Convert.ToDouble(ZoneValue[0][0]);
+                            abs_Qmax_h += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
                         }
                         ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호='" + abs_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 비이용일_이용일='이용일' and 월='8월'");
                         if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                         {
-                            abs_Qmax_c += Convert.ToDouble(ZoneValue[0][0]);
+                            abs_Qmax_c += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
                         }
                         ZoneValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호='" + abs_Zones_split[a].ToString() + "'");
                         if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                         {
-                            abs_ZoneArea += Convert.ToDouble(ZoneValue[0][0]);
+                            abs_ZoneArea += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
                         }
                     }
                     abs_data[230].Add(new { idx = i, val = (abs_Qmax_h / 1000).ToString("0.0") });//난방부하 

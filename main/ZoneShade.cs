@@ -51,20 +51,20 @@ namespace main
                 //string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,번호,방위,기울기,외피유형", "아이디 = '" + "S6_N_WIN_1" + "'");   //창호 혹은 커튼월 가로 세로 나와야함 (임시로 가로길이, 세로길이라고함)
                 string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "존,우측면돌출각도,좌측면돌출각도,상부돌출각도,주변요소음영각도,우측면돌출길이,좌측면돌출길이,상부돌출길이,주변요소음영길이,번호,방위,기울기,외피유형,창호너비,창호높이,상인방높이,지면으로부터의상인방높이", "번호 = '" + ID + "'");  
                 
-                우측돌출부각도 = Convert.ToDouble(rec[0][1]);
-                좌측돌출부각도 = Convert.ToDouble(rec[0][2]);
-                상부돌출부각도 = Convert.ToDouble(rec[0][3]);
-                주변지형물각도 = Convert.ToDouble(rec[0][4]);
-                우측돌출부길이 = Convert.ToDouble(rec[0][5]);
-                좌측돌출부길이 = Convert.ToDouble(rec[0][6]);
-                상부돌출부길이 = Convert.ToDouble(rec[0][7]);//테이블의 상부돌출길이는 실제로는 높이 값임 
-                주변지형물높이 = Convert.ToDouble(rec[0][8]); //테이블의 주변요소음영길이는 실제로는 높이 값임 
+                우측돌출부각도 = Program.UTIL.ToDoubleOrZero(rec[0][1]);
+                좌측돌출부각도 = Program.UTIL.ToDoubleOrZero(rec[0][2]);
+                상부돌출부각도 = Program.UTIL.ToDoubleOrZero(rec[0][3]);
+                주변지형물각도 = Program.UTIL.ToDoubleOrZero(rec[0][4]);
+                우측돌출부길이 = Program.UTIL.ToDoubleOrZero(rec[0][5]);
+                좌측돌출부길이 = Program.UTIL.ToDoubleOrZero(rec[0][6]);
+                상부돌출부길이 = Program.UTIL.ToDoubleOrZero(rec[0][7]);//테이블의 상부돌출길이는 실제로는 높이 값임 
+                주변지형물높이 = Program.UTIL.ToDoubleOrZero(rec[0][8]); //테이블의 주변요소음영길이는 실제로는 높이 값임 
                 방위 = rec[0][10];
-                경사 = Convert.ToDouble(rec[0][11]);
-                창호가로길이 = Convert.ToDouble(rec[0][13]);
-                창호세로길이 = Convert.ToDouble(rec[0][14]);
-                상인방높이 = Convert.ToDouble(rec[0][15]);
-                지면으로부터의상인방높이 = Convert.ToDouble(rec[0][16]);
+                경사 = Program.UTIL.ToDoubleOrZero(rec[0][11]);
+                창호가로길이 = Program.UTIL.ToDoubleOrZero(rec[0][13]);
+                창호세로길이 = Program.UTIL.ToDoubleOrZero(rec[0][14]);
+                상인방높이 = Program.UTIL.ToDoubleOrZero(rec[0][15]);
+                지면으로부터의상인방높이 = Program.UTIL.ToDoubleOrZero(rec[0][16]);
                 //rec[0][12] = 창호가로길이.ToString();
                 //rec[0][13] = 창호세로길이.ToString();
 
@@ -72,20 +72,20 @@ namespace main
                 string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
 
                 string[][] var = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_위도", "위도", "지역 = '" + ValueA[0][0] + "'");
-                위도 = Convert.ToDouble(var[0][0]);
+                위도 = Program.UTIL.ToDoubleOrZero(var[0][0]);
 
                 //지역,방향,각도(경사)에 따른 월별 설치면직달일사세기 (기후데이터_직달일사량)
                 for (int i = 0; i < 12; i++)
                 {
                     string[][] aa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_직달일사량", "일사량", "지역명 ='" + ValueA[0][0] + "' AND 방향 ='" + rec[0][10] + "' AND 각도 ='" + rec[0][11] + "˚" + "' AND 기간 ='" + (i + 1).ToString() + "월" + "'");
-                    설치면직달[i] = Convert.ToDouble(aa[0][0]);
+                    설치면직달[i] = Program.UTIL.ToDoubleOrZero(aa[0][0]);
                 }
 
                 //지역,방향,각도에 따른 월별 설치면산란일사세기 (기후데이터_산란일사량)
                 for (int i = 0; i < 12; i++)
                 {
                     string[][] aa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_산란일사량", "일사량", "지역명= '" + ValueA[0][0] + "' AND 방향 = '" + rec[0][10] + "' AND 각도 ='" + rec[0][11] + "˚" + "' AND 기간 ='" + (i + 1).ToString() + "월" + "'");
-                    설치면산란[i] = Convert.ToDouble(aa[0][0]);
+                    설치면산란[i] = Program.UTIL.ToDoubleOrZero(aa[0][0]);
                 }
 
                 //지역,방향,각도에 따른 월별 태양고도각 (기후데이터_고도각)
@@ -93,7 +93,7 @@ namespace main
                 {
                     //string[][] aa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_고도각", "고도각", "지역명= '" + ValueA[0][0] + "' AND 방향 = '" + rec[0][10] + "' AND 각도 ='" + rec[0][11] + "˚" + "' AND 기간 ='" + (i + 1).ToString() + "월" + "'");
                     string[][] aa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_고도각", "고도각", "지역명= '" + ValueA[0][0] + "' AND 방향 = '" + rec[0][10] + "' AND 각도 ='" + rec[0][11] + "˚" + "' AND 기간 ='" + (i + 1).ToString() + "월" + "'");
-                    태양고도각[i] = Convert.ToDouble(aa[0][0]);
+                    태양고도각[i] = Program.UTIL.ToDoubleOrZero(aa[0][0]);
                     //MessageBox.Show(태양고도각[i].ToString());
 
                     //int i = 0;
@@ -108,7 +108,7 @@ namespace main
                     //string[][] aa2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_고도각", "고도각", "지역명= '" + ValueA[0][0] + "' AND 방향 = '" + "남" + "' AND 각도 ='" + "90" + "˚" + "' AND 기간 IN (" + s + ")");
 
                     ////i = i;
-                    ////  태양고도각[i] = Convert.ToDouble(aa2[0][0]);
+                    ////  태양고도각[i] = Program.UTIL.ToDoubleOrZero(aa2[0][0]);
                     //MessageBox.Show(aa2[0][0].ToString());
                 }
 
@@ -116,14 +116,14 @@ namespace main
                 for (int i = 0; i < 12; i++)
                 {
                     string[][] aa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_방위각", "방위각", "방향 = '" + rec[0][10] + "' AND 각도 ='" + rec[0][11] + "˚" + "' AND 종류 = '" + "우측" + "' AND 기간 ='" + (i + 1).ToString() + "월" + "'");
-                    태양우측방위각[i] = Convert.ToDouble(aa[0][0]);
+                    태양우측방위각[i] = Program.UTIL.ToDoubleOrZero(aa[0][0]);
                 }
 
                 //방위, 우측에 따른 태양 좌측 방위각 (기후데이터_방위각)
                 for (int i = 0; i < 12; i++)
                 {
                     string[][] aa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_방위각", "방위각", "지역명= '" + ValueA[0][0] + "' AND 방향 = '" + rec[0][10] + "' AND 각도 ='" + rec[0][11] + "˚" + "' AND 종류 = '" + "좌측" + "' AND 기간 ='" + (i + 1).ToString() + "월" + "'");
-                    태양좌측방위각[i] = Convert.ToDouble(aa[0][0]);
+                    태양좌측방위각[i] = Program.UTIL.ToDoubleOrZero(aa[0][0]);
                 }
             }
             catch (Exception ex)
@@ -213,10 +213,10 @@ namespace main
             string[][] var = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_음영계수", "A1,B1,A2,B2", "구분 = '상부' and 방위 = '" + 방위 + "'");
             if (var.Length > 0)
             {
-                A1 = Convert.ToDouble(var[0][0]);
-                B1 = Convert.ToDouble(var[0][1]);
-                A2 = Convert.ToDouble(var[0][2]);
-                B2 = Convert.ToDouble(var[0][3]);
+                A1 = Program.UTIL.ToDoubleOrZero(var[0][0]);
+                B1 = Program.UTIL.ToDoubleOrZero(var[0][1]);
+                A2 = Program.UTIL.ToDoubleOrZero(var[0][2]);
+                B2 = Program.UTIL.ToDoubleOrZero(var[0][3]);
             }
             for (int i = 0; i < 12; i++)
             {
@@ -247,10 +247,10 @@ namespace main
             string[][] var = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_음영계수", "A1,B1,A2,B2", "구분 = '측면' and 방위 = '"+ 방위 +"'");
             if( var.Length > 0)
             {
-                A1 = Convert.ToDouble(var[0][0]);
-                B1 = Convert.ToDouble(var[0][1]);
-                A2 = Convert.ToDouble(var[0][2]);
-                B2 = Convert.ToDouble(var[0][3]);
+                A1 = Program.UTIL.ToDoubleOrZero(var[0][0]);
+                B1 = Program.UTIL.ToDoubleOrZero(var[0][1]);
+                A2 = Program.UTIL.ToDoubleOrZero(var[0][2]);
+                B2 = Program.UTIL.ToDoubleOrZero(var[0][3]);
             }
             for (int i = 0; i < 12; i++)
             {
@@ -275,10 +275,10 @@ namespace main
             string[][] var = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_음영계수", "A1,B1,A2,B2", "구분 = '측면' and 방위 = '" + 방위 + "'");
             if (var.Length > 0)
             {
-                A1 = Convert.ToDouble(var[0][0]);
-                B1 = Convert.ToDouble(var[0][1]);
-                A2 = Convert.ToDouble(var[0][2]);
-                B2 = Convert.ToDouble(var[0][3]);
+                A1 = Program.UTIL.ToDoubleOrZero(var[0][0]);
+                B1 = Program.UTIL.ToDoubleOrZero(var[0][1]);
+                A2 = Program.UTIL.ToDoubleOrZero(var[0][2]);
+                B2 = Program.UTIL.ToDoubleOrZero(var[0][3]);
             }
             for (int i = 0; i < 12; i++)
             {
@@ -340,9 +340,9 @@ namespace main
                     {
                         for (int i = 0; i < 4; i++)
                         {
-                            hobj_k = Math.Max(0, hobj - lobj * Math.Tan(Convert.ToDouble(각도[0][i]) * Math.PI / 180.0));
+                            hobj_k = Math.Max(0, hobj - lobj * Math.Tan(Program.UTIL.ToDoubleOrZero(각도[0][i]) * Math.PI / 180.0));
                             hobj_k = Math.Min(h, hobj_k);
-                            hobj_m += Convert.ToDouble(비율[0][i]) * hobj_k;
+                            hobj_m += Program.UTIL.ToDoubleOrZero(비율[0][i]) * hobj_k;
                         }
                     }
                 }
@@ -354,9 +354,9 @@ namespace main
                     {
                         for (int i = 0; i < 4; i++)
                         {
-                            hobj_k = Math.Max(0, hobj - lobj * Math.Tan(Convert.ToDouble(각도[0][i]) * Math.PI / 180.0));
+                            hobj_k = Math.Max(0, hobj - lobj * Math.Tan(Program.UTIL.ToDoubleOrZero(각도[0][i]) * Math.PI / 180.0));
                             hobj_k = Math.Min(h, hobj_k);
-                            hobj_m += Convert.ToDouble(비율[0][i]) * hobj_k;
+                            hobj_m += Program.UTIL.ToDoubleOrZero(비율[0][i]) * hobj_k;
                         }
                     }
                 }

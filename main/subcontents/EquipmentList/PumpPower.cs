@@ -44,7 +44,7 @@ namespace main.subcontents.EquipmentList
         {
             if (eta_textBox.Text != null)
             {
-                eta = Convert.ToDouble(eta_textBox.Text);
+                eta = Program.UTIL.ToDoubleOrZero(eta_textBox.Text);
                 Calc_head();
             }
 
@@ -53,7 +53,7 @@ namespace main.subcontents.EquipmentList
         {
             if (L_textBox.Text != null)
             {
-                L = Convert.ToDouble(L_textBox.Text);
+                L = Program.UTIL.ToDoubleOrZero(L_textBox.Text);
                 Calc_head();
             }
         }
@@ -62,7 +62,7 @@ namespace main.subcontents.EquipmentList
         {
             if (B_textBox.Text != null)
             {
-                B = Convert.ToDouble(B_textBox.Text);
+                B = Program.UTIL.ToDoubleOrZero(B_textBox.Text);
                 Calc_head();
             }
         }
@@ -71,7 +71,7 @@ namespace main.subcontents.EquipmentList
         {
             if (hG_textBox.Text != null)
             {
-                hG = Convert.ToDouble(hG_textBox.Text);
+                hG = Program.UTIL.ToDoubleOrZero(hG_textBox.Text);
                 Calc_head();
             }
         }
@@ -80,7 +80,7 @@ namespace main.subcontents.EquipmentList
         {
             if (nG_textBox.Text != null)
             {
-                nG = Convert.ToDouble(nG_textBox.Text);
+                nG = Program.UTIL.ToDoubleOrZero(nG_textBox.Text);
                 Calc_head();
             }
         }

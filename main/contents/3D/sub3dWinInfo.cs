@@ -85,21 +85,21 @@ namespace main.contents
                     tabControl1.TabPages.Remove(tabPage2);
                 }
                 //음영정보
-                R1 = Convert.ToDouble(rec[0][5]);
+                R1 = Program.UTIL.ToDoubleOrZero(rec[0][5]);
                 R1_textBox.Text = R1.ToString("0.00") + "m";
-                R2 = Convert.ToDouble(rec[0][1]);
+                R2 = Program.UTIL.ToDoubleOrZero(rec[0][1]);
                 R2_textBox.Text = R2.ToString("0.00") + "°";
-                L1 = Convert.ToDouble(rec[0][6]);
+                L1 = Program.UTIL.ToDoubleOrZero(rec[0][6]);
                 L1_textBox.Text = L1.ToString("0.00") + "m";
-                L2 = Convert.ToDouble(rec[0][2]);
+                L2 = Program.UTIL.ToDoubleOrZero(rec[0][2]);
                 L2_textBox.Text = L2.ToString("0.00") + "°";
-                S1 = Convert.ToDouble(rec[0][8]);
+                S1 = Program.UTIL.ToDoubleOrZero(rec[0][8]);
                 S1_textBox.Text = S1.ToString("0.00") + "m";
-                S2 = Convert.ToDouble(rec[0][4]);
+                S2 = Program.UTIL.ToDoubleOrZero(rec[0][4]);
                 S2_textBox.Text = S2.ToString("0.00") + "°";
-                T1 = Convert.ToDouble(rec[0][7]);
+                T1 = Program.UTIL.ToDoubleOrZero(rec[0][7]);
                 T1_textBox.Text = T1.ToString("0.00") + "m";
-                T2 = Convert.ToDouble(rec[0][3]);
+                T2 = Program.UTIL.ToDoubleOrZero(rec[0][3]);
                 T2_textBox.Text = T2.ToString("0.00") + "°";
 
                 //창호정보 불러오기 // *************************창호 너비 높이 면적은 존 인벨롭에서 들어오는 값으로 해야함 (임시방편)
@@ -154,10 +154,10 @@ namespace main.contents
 
                 //정보
                 Name_textBox.Text = rec[0][9];
-                Area = Convert.ToDouble(rec[0][13]);
+                Area = Program.UTIL.ToDoubleOrZero(rec[0][13]);
                 Area_textBox.Text = String.Format("{0:F2}", Area);
-                Width_textBox.Text = rec[0][14] == "" ? "0" : String.Format("{0:F2}", Convert.ToDouble(rec[0][14]));
-                height_textBox.Text = rec[0][15] == "" ? "0" : String.Format("{0:F2}", Convert.ToDouble(rec[0][15]));
+                Width_textBox.Text = rec[0][14] == "" ? "0" : String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(rec[0][14]));
+                height_textBox.Text = rec[0][15] == "" ? "0" : String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(rec[0][15]));
 
                 if (SubLoad.Length > 0 && SubLoad[0][0] != "")
                 {
@@ -174,25 +174,25 @@ namespace main.contents
                     frame_textBox.Text = MainLoad[0][2];
                     Spacer_textBox.Text = MainLoad[0][5];
                     shgc_textBox.Text = MainLoad[0][8];
-                    shgc = Convert.ToDouble(MainLoad[0][8]);
+                    shgc = Program.UTIL.ToDoubleOrZero(MainLoad[0][8]);
                     SHGC_off_textBox.Text = shgc.ToString("0.000");
                     SHGC_on_textBox.Text = shgc.ToString("0.000");
 
                     light_textBox.Text = MainLoad[0][9];
-                    light = Convert.ToDouble(MainLoad[0][9]);
+                    light = Program.UTIL.ToDoubleOrZero(MainLoad[0][9]);
                     Tao_off_textBox.Text = light.ToString("0.000");
                     Tao_on_textBox.Text = light.ToString("0.000");
 
-                    uw = Convert.ToDouble(SubLoad[0][6]);
+                    uw = Program.UTIL.ToDoubleOrZero(SubLoad[0][6]);
                     uw_textBox.Text = uw.ToString("0.000");
-                    install = Convert.ToDouble(SubLoad[0][7]);
+                    install = Program.UTIL.ToDoubleOrZero(SubLoad[0][7]);
                     inst_textBox.Text = install.ToString("0.000");
                     Type = MainLoad[0][10];
                     InstallType = MainLoad[0][11];
                     FrameMaterial = MainLoad[0][12];
                     SingleDoubleType = MainLoad[0][13];
                     InstallName = MainLoad[0][14];
-                    Ug = Convert.ToDouble(MainLoad[0][15]);
+                    Ug = Program.UTIL.ToDoubleOrZero(MainLoad[0][15]);
                     Ug_off_textBox.Text = Ug.ToString("0.000");
                     Ug_on_textBox.Text = Ug.ToString("0.000");
 
@@ -239,8 +239,8 @@ namespace main.contents
                     String[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "번호 = '" + 번호 + "'");
                     if (Blind.Length > 0)
                     {
-                        SHGC_on_textBox.Text = Convert.ToDouble(Blind[0][0]).ToString("0.000");
-                        Tao_on_textBox.Text = Convert.ToDouble(Blind[0][1]).ToString("0.000");
+                        SHGC_on_textBox.Text = Program.UTIL.ToDoubleOrZero(Blind[0][0]).ToString("0.000");
+                        Tao_on_textBox.Text = Program.UTIL.ToDoubleOrZero(Blind[0][1]).ToString("0.000");
                     }
                 }
                 else
@@ -272,13 +272,13 @@ namespace main.contents
                 for (int mth = 1; mth < 12; mth++)
                 {
                     res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='" + Direction + "' And 기간 = '" + mth.ToString() + "월'");
-                    s += Convert.ToDouble(res1[0][0]) * 100 + ",";
+                    s += Program.UTIL.ToDoubleOrZero(res1[0][0]) * 100 + ",";
                 }
                 res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='" + Direction + "' And 기간 = '" + 12.ToString() + "월'");
                 if (res1.Length > 0)
                 {
                     webView21.Visible = true;
-                    s += Convert.ToDouble(res1[0][0]) * 100;
+                    s += Program.UTIL.ToDoubleOrZero(res1[0][0]) * 100;
                 }
                 else
                 {
@@ -288,10 +288,10 @@ namespace main.contents
                 for (int mth = 0; mth < 11; mth++)
                 {
                     res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 일사량 From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='" + Direction + "' And 각도='" + Slope + "˚'And 기간 ='" + (mth + 1) + "월'");
-                    s2 += Convert.ToDouble(res2[0][0]) + ",";
+                    s2 += Program.UTIL.ToDoubleOrZero(res2[0][0]) + ",";
                 }
                 res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 일사량 From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='" + Direction + "' And 각도='" + Slope + "˚'And 기간 ='" + (12) + "월'");
-                s2 += Convert.ToDouble(res2[0][0]);
+                s2 += Program.UTIL.ToDoubleOrZero(res2[0][0]);
                 string unit = "kWh/m" + Program.UTIL.Subscript(2, true) + "·mth";
                 runScript("drawChart4([{type:\"line\",label:\"차양가동율\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100,tension: 0.4},{type:\"bar\",label:\"일사량(" + unit + ")\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:300,barPercentage:0.7}])");
 
@@ -308,13 +308,13 @@ namespace main.contents
                 for (int mth = 1; mth < 12; mth++)
                 {
                     res1 = Program.DB.getValue(DB.type.ProjDB, "Shade_3D", "음영계수", "번호= '" + Num + "' And 월 = '" + mth.ToString() + "월'");
-                    s += Convert.ToDouble(res1[0][0]) * 100 + ",";
+                    s += Program.UTIL.ToDoubleOrZero(res1[0][0]) * 100 + ",";
                 }
                 res1 = Program.DB.getValue(DB.type.ProjDB, "Shade_3D", "음영계수", "번호= '" + Num + "' And 월 = '" + 12.ToString() + "월'");
                 if (res1.Length > 0)
                 {
                     webView22.Visible = true;
-                    s += Convert.ToDouble(res1[0][0]) * 100;
+                    s += Program.UTIL.ToDoubleOrZero(res1[0][0]) * 100;
                 }
                 else
                 {

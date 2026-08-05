@@ -75,7 +75,7 @@ namespace main.subcontents.BuildingGeneral
 
             if (Value.Length > 0)
             {
-                double 습도 = Convert.ToDouble(Value[0][5].ToString()) * 1000;
+                double 습도 = Program.UTIL.ToDoubleOrZero(Value[0][5].ToString()) * 1000;
                 localLabel.Text = local;
                 heightLabel.Text = "해발고도: " + Program.UTIL.doubleComa(Value[0][0].ToString(), 1) + "m";
                 latituLabel.Text = "위도: " + Program.UTIL.doubleComa(Value[0][1].ToString(), 1) + "˚";
@@ -102,8 +102,8 @@ namespace main.subcontents.BuildingGeneral
             {
                 string mth = (i + 1).ToString() + "월";
                 string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_온도습도", "온도,상대습도", "지역명 = '" + local + "' And 기간 = '" + mth + "'");
-                temp[i] = Convert.ToDouble(Value[0][0].ToString());
-                humi[i] = Convert.ToDouble(Value[0][1].ToString());
+                temp[i] = Program.UTIL.ToDoubleOrZero(Value[0][0].ToString());
+                humi[i] = Program.UTIL.ToDoubleOrZero(Value[0][1].ToString());
 
                 double Pa = 611.2 * Math.Pow(Math.E, 17.62 * temp[i] / (243.12 + temp[i])); //현재온도 포화수증기압
                 Pa = Pa * humi[i];
@@ -115,7 +115,7 @@ namespace main.subcontents.BuildingGeneral
                     if (k == "수평")
                     {
                         Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 = '" + local + "' And 기간 = '" + mth + "' And 방향 = '" + k + "' And 각도 = '0˚'");
-                        hori[i] = Convert.ToDouble(Value[0][0].ToString()) * 24 * month[i] / 1000;
+                        hori[i] = Program.UTIL.ToDoubleOrZero(Value[0][0].ToString()) * 24 * month[i] / 1000;
                     }
                     else
                     {
@@ -123,16 +123,16 @@ namespace main.subcontents.BuildingGeneral
                         switch (k)
                         {
                             case "남":
-                                south[i] = Convert.ToDouble(Value[0][0].ToString()) * 24 * month[i] / 1000;
+                                south[i] = Program.UTIL.ToDoubleOrZero(Value[0][0].ToString()) * 24 * month[i] / 1000;
                                 break;
                             case "동":
-                                east[i] = Convert.ToDouble(Value[0][0].ToString()) * 24 * month[i] / 1000;
+                                east[i] = Program.UTIL.ToDoubleOrZero(Value[0][0].ToString()) * 24 * month[i] / 1000;
                                 break;
                             case "서":
-                                west[i] = Convert.ToDouble(Value[0][0].ToString()) * 24 * month[i] / 1000;
+                                west[i] = Program.UTIL.ToDoubleOrZero(Value[0][0].ToString()) * 24 * month[i] / 1000;
                                 break;
                             case "북":
-                                north[i] = Convert.ToDouble(Value[0][0].ToString()) * 24 * month[i] / 1000;
+                                north[i] = Program.UTIL.ToDoubleOrZero(Value[0][0].ToString()) * 24 * month[i] / 1000;
                                 break;
                             default:
                                 break;

@@ -1,4 +1,4 @@
-﻿using main.contents;
+using main.contents;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -59,7 +59,7 @@ namespace main
             double[] dmth = new double[12] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
             if (Value1.Length > 0)
             {
-                if (Convert.ToDouble(Value1[0][0]) > 1)
+                if (Program.UTIL.ToDoubleOrZero(Value1[0][0]) > 1)
                 {
                     string[][] Elec1, Elec2;
                     for (int mth = 0; mth < 11; mth++)
@@ -70,7 +70,7 @@ namespace main
                         {
                             for (int i = 0; i < Elec1.Length; i++) //연도별
                             {
-                                Quse_elec_mth[mth] += (Convert.ToDouble(Elec1[i][0]) * Convert.ToDouble(Value1[0][0]) / dmth[mth] + Convert.ToDouble(Elec2[i][0]) * (dmth[mth] - Convert.ToDouble(Value1[0][0])) / dmth[mth]);
+                                Quse_elec_mth[mth] += (Program.UTIL.ToDoubleOrZero(Elec1[i][0]) * Program.UTIL.ToDoubleOrZero(Value1[0][0]) / dmth[mth] + Program.UTIL.ToDoubleOrZero(Elec2[i][0]) * (dmth[mth] - Program.UTIL.ToDoubleOrZero(Value1[0][0])) / dmth[mth]);
                             }
                         }
                         Quse_elec_mth[mth] = Quse_elec_mth[mth] / Elec1.Length;
@@ -82,7 +82,7 @@ namespace main
                     {
                         for (int i = 0; i < Elec1.Length; i++) //연도별
                         {
-                            Quse_elec_mth[11] += (Convert.ToDouble(Elec1[i][0]) * Convert.ToDouble(Value1[0][0]) / dmth[11] + Convert.ToDouble(Elec2[i][0]) * (dmth[11] - Convert.ToDouble(Value1[0][0])) / dmth[11]);
+                            Quse_elec_mth[11] += (Program.UTIL.ToDoubleOrZero(Elec1[i][0]) * Program.UTIL.ToDoubleOrZero(Value1[0][0]) / dmth[11] + Program.UTIL.ToDoubleOrZero(Elec2[i][0]) * (dmth[11] - Program.UTIL.ToDoubleOrZero(Value1[0][0])) / dmth[11]);
                         }
                     }
                     Quse_elec_mth[11] = Quse_elec_mth[11] / Elec1.Length;
@@ -97,7 +97,7 @@ namespace main
                         {
                             for (int i = 0; i < Elec.Length; i++) //연도별
                             {
-                                Quse_elec_mth[mth] += Convert.ToDouble(Elec[i][0]);
+                                Quse_elec_mth[mth] += Program.UTIL.ToDoubleOrZero(Elec[i][0]);
                             }
                         }
                         Quse_elec_mth[mth] = Quse_elec_mth[mth] / Elec.Length;
@@ -107,7 +107,7 @@ namespace main
             }
             if (Value2.Length > 0)
             {
-                if (Convert.ToDouble(Value2[0][0]) > 1)
+                if (Program.UTIL.ToDoubleOrZero(Value2[0][0]) > 1)
                 {
                     string[][] Gas1, Gas2;
                     for (int mth = 0; mth < 11; mth++)
@@ -118,7 +118,7 @@ namespace main
                         {
                             for (int i = 0; i < Gas1.Length; i++) //연도별
                             {
-                                Quse_gas_mth[mth] += (Convert.ToDouble(Gas1[i][0]) * Convert.ToDouble(Value2[0][0]) / dmth[mth] + Convert.ToDouble(Gas2[i][0]) * (dmth[mth] - Convert.ToDouble(Value2[0][0])) / dmth[mth]);
+                                Quse_gas_mth[mth] += (Program.UTIL.ToDoubleOrZero(Gas1[i][0]) * Program.UTIL.ToDoubleOrZero(Value2[0][0]) / dmth[mth] + Program.UTIL.ToDoubleOrZero(Gas2[i][0]) * (dmth[mth] - Program.UTIL.ToDoubleOrZero(Value2[0][0])) / dmth[mth]);
                             }
                         }
                         Quse_gas_mth[mth] = Quse_gas_mth[mth] / Gas1.Length;
@@ -130,7 +130,7 @@ namespace main
                     {
                         for (int i = 0; i < Gas1.Length; i++) //연도별
                         {
-                            Quse_gas_mth[11] += (Convert.ToDouble(Gas1[i][0]) * Convert.ToDouble(Value2[0][0]) / dmth[11] + Convert.ToDouble(Gas2[i][0]) * (dmth[11] - Convert.ToDouble(Value2[0][0])) / dmth[11]);
+                            Quse_gas_mth[11] += (Program.UTIL.ToDoubleOrZero(Gas1[i][0]) * Program.UTIL.ToDoubleOrZero(Value2[0][0]) / dmth[11] + Program.UTIL.ToDoubleOrZero(Gas2[i][0]) * (dmth[11] - Program.UTIL.ToDoubleOrZero(Value2[0][0])) / dmth[11]);
                         }
                     }
                     Quse_gas_mth[11] = Quse_gas_mth[11] / Gas1.Length;
@@ -144,7 +144,7 @@ namespace main
                         {
                             for (int i = 0; i < Gas.Length; i++) //연도별
                             {
-                                Quse_gas_mth[mth] += Convert.ToDouble(Gas[i][0]);
+                                Quse_gas_mth[mth] += Program.UTIL.ToDoubleOrZero(Gas[i][0]);
                             }
                         }
                         Quse_gas_mth[mth] = Quse_gas_mth[mth] / Gas.Length;

@@ -227,9 +227,9 @@ namespace main.contents
                     PVModuleNumber = User_Value[0][0].ToString();
                     PV_dataGridView.Rows[nRow].Cells[0].Value = PVModuleNumber;
                     PVModuleName = User_Value[0][1];
-                    PVpower = Convert.ToDouble(User_Value[0][4]);
-                    PVwidth = Convert.ToDouble(User_Value[0][2]);
-                    PVheight = Convert.ToDouble(User_Value[0][3]);
+                    PVpower = Program.UTIL.ToDoubleOrZero(User_Value[0][4]);
+                    PVwidth = Program.UTIL.ToDoubleOrZero(User_Value[0][2]);
+                    PVheight = Program.UTIL.ToDoubleOrZero(User_Value[0][3]);
                     PVarea = PVwidth * PVheight;
                     PVMoudle_textBox.Text = num;
                     Kpk = PVpower / PVarea; //단위면적당 출력
@@ -246,7 +246,7 @@ namespace main.contents
             if (result == DialogResult.OK)
             {
                 Inverter = PV_InverterDB_form.SelectInverter;
-                InverterEff = Convert.ToDouble(PV_InverterDB_form.SelectInverterEff);
+                InverterEff = Program.UTIL.ToDoubleOrZero(PV_InverterDB_form.SelectInverterEff);
             }
             Inverter_textBox.Text = Inverter;
             InverterEff_textbox.Visible = true;
@@ -263,10 +263,10 @@ namespace main.contents
             if (result == DialogResult.OK)
             {
                 Battery = PV_BatteryDB_form.SelectBattery;
-                BatteryCa = Convert.ToDouble(PV_BatteryDB_form.SelectBatteryCa);
+                BatteryCa = Program.UTIL.ToDoubleOrZero(PV_BatteryDB_form.SelectBatteryCa);
                 BatteryType = PV_BatteryDB_form.SelectBatteryType;
                 string[][] value = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광배터리계수", "시스템효율", "배터리타입 = '" + BatteryType + "'");
-                BatteryEff = Convert.ToDouble(value[0][0]) * 100;
+                BatteryEff = Program.UTIL.ToDoubleOrZero(value[0][0]) * 100;
             }
 
             Battery_label.Visible = true;
@@ -287,7 +287,7 @@ namespace main.contents
                 if (Program.UTIL.data_inputcheck(PV_dataGridView, e.RowIndex, 1, 1))
                 {
                     double val = 0;
-                    val = Convert.ToDouble(PV_dataGridView.Rows[e.RowIndex].Cells[1].Value);
+                    val = Program.UTIL.ToDoubleOrZero(PV_dataGridView.Rows[e.RowIndex].Cells[1].Value);
                     Ppk = val * PVpower / 1000; //kW 25년후 성능저하를 반영함
 
                     pvtotal.Visible = true;
@@ -494,10 +494,10 @@ namespace main.contents
                     Battery = Value[0][5];
 
                     string[][] Va = Program.DB.getValue(DB.type.ProjDB, "User_PVBattery", "정격전력,배터리타입", "번호 = '" + Battery + "'");
-                    BatteryCa = Convert.ToDouble(Va[0][0]);
+                    BatteryCa = Program.UTIL.ToDoubleOrZero(Va[0][0]);
                     BatteryType = Va[0][1];
                     string[][] lue = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광배터리계수", "시스템효율", "배터리타입 = '" + BatteryType + "'");
-                    BatteryEff = Convert.ToDouble(lue[0][0]) * 100;
+                    BatteryEff = Program.UTIL.ToDoubleOrZero(lue[0][0]) * 100;
 
                     Battery_textBox.Text = Battery;
                     BatteryEff_textbox.Visible = true;
@@ -519,9 +519,9 @@ namespace main.contents
 
                     PV_dataGridView.Rows[nRow].Cells[0].Value = PVModuleNumber;
                     PVModuleName = User_Value[0][1];
-                    PVpower = Convert.ToDouble(User_Value[0][4]);
-                    PVwidth = Convert.ToDouble(User_Value[0][2]);
-                    PVheight = Convert.ToDouble(User_Value[0][3]);
+                    PVpower = Program.UTIL.ToDoubleOrZero(User_Value[0][4]);
+                    PVwidth = Program.UTIL.ToDoubleOrZero(User_Value[0][2]);
+                    PVheight = Program.UTIL.ToDoubleOrZero(User_Value[0][3]);
                     PVarea = PVwidth * PVheight;
                     PVMoudle_textBox.Text = PVModuleNumber;
                     Kpk = PVpower / PVarea; //단위면적당 출력
@@ -529,7 +529,7 @@ namespace main.contents
                 }
 
                 Inverter = Value[0][3];
-                InverterEff = Convert.ToDouble(Value[0][4]);
+                InverterEff = Program.UTIL.ToDoubleOrZero(Value[0][4]);
                 Inverter_textBox.Text = Inverter;
                 InverterEff_textbox.Visible = true;
                 InverterEff_textbox.Location = new Point(382, 207);

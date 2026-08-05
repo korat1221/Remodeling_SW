@@ -161,10 +161,10 @@ namespace main.contents
                 //풍력,타입,세부타입,회전면적,허브높이
                 WP = value[0][0];
                 Type = value[0][2];
-                v_start = Convert.ToDouble( value[0][8]);
-                v_end = Convert.ToDouble(value[0][9]);
-                RotateArea = Convert.ToDouble(value[0][6]);
-                HerbHeight = Convert.ToDouble(value[0][7]);
+                v_start = Program.UTIL.ToDoubleOrZero( value[0][8]);
+                v_end = Program.UTIL.ToDoubleOrZero(value[0][9]);
+                RotateArea = Program.UTIL.ToDoubleOrZero(value[0][6]);
+                HerbHeight = Program.UTIL.ToDoubleOrZero(value[0][7]);
                 적용유형 = value[0][13];
                 if(적용유형=="제품값")
                 {
@@ -265,7 +265,7 @@ namespace main.contents
             else
             {
                 Install = Program.UTIL.dataGridView_doubleComa(WP_dataGridView, 0, 14, 0);
-                h2 = Convert.ToDouble(h2_textBox.Text);
+                h2 = Program.UTIL.ToDoubleOrZero(h2_textBox.Text);
                 Condition = Condition_ComboBox.SelectedItem.ToString();
 
                 Program.DB.setValue(DB.type.ProjDB, "WindPower_Form", "번호,프로젝트유형,명칭,풍력,주변환경,설치높이,설치대수",
@@ -388,7 +388,7 @@ namespace main.contents
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "WindPower_Result", "h, Pwind, Pwps, Qfwps", "번호='" + Num + "' And 월 ='" + (mth + 1).ToString() + "월'");
                     if (Value.Length > 0)
                     {
-                        Qfwps[mth] = Convert.ToDouble(Value[0][3]);
+                        Qfwps[mth] = Program.UTIL.ToDoubleOrZero(Value[0][3]);
                         sum += Qfwps[mth];
                         s += Qfwps[mth] + ",";
                     }
@@ -405,7 +405,7 @@ namespace main.contents
                         string[][] Value2 = Program.DB.getValue(DB.type.BaseDB_RESystem, "시간별기후데이터", "AVG(풍속)", "지역='" + 지역 + "' and 월='" + mth + "'");
                         if (Value2.Length > 0)
                         {
-                            v_mth[mth - 1] = Convert.ToDouble(Value2[0][0]);
+                            v_mth[mth - 1] = Program.UTIL.ToDoubleOrZero(Value2[0][0]);
                             v += v_mth[mth - 1] + ",";
                         }
                     }

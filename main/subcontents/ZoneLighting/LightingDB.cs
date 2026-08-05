@@ -87,8 +87,8 @@ namespace main.subcontents.ZoneLighting
                     {
                         Light_dataGridView.Rows[nRow].Cells[k + 1].Value = User_Lighting[n][k];
                     }
-                    Light_dataGridView.Rows[nRow].Cells[9].Value = Convert.ToDouble(User_Lighting[n][8]).ToString("0.00");
-                    Light_dataGridView.Rows[nRow].Cells[10].Value = Convert.ToDouble(User_Lighting[n][9]).ToString("0.00");
+                    Light_dataGridView.Rows[nRow].Cells[9].Value = Program.UTIL.ToDoubleOrZero(User_Lighting[n][8]).ToString("0.00");
+                    Light_dataGridView.Rows[nRow].Cells[10].Value = Program.UTIL.ToDoubleOrZero(User_Lighting[n][9]).ToString("0.00");
                 }
             }
             //표준 DB
@@ -103,9 +103,9 @@ namespace main.subcontents.ZoneLighting
                     {
                         Light_dataGridView.Rows[nRow].Cells[k + 1].Value = Light[n][k];
                     }
-                    Light_dataGridView.Rows[nRow].Cells[9].Value = Convert.ToDouble(Light[n][8]).ToString("0.00");
-                    Light_dataGridView.Rows[nRow].Cells[10].Value = Convert.ToDouble(Light[n][9]).ToString("0.00");
-                    //table_Light.Rows.Add(Light[n][0],Light[n][1],Light[n][2],Light[n][3],Light[n][4],Light[n][5], Light[n][6], Light[n][7], String.Format("{0:F2}", Convert.ToDouble(Light[n][8])), String.Format("{0:F2}", Convert.ToDouble(Light[n][9])));
+                    Light_dataGridView.Rows[nRow].Cells[9].Value = Program.UTIL.ToDoubleOrZero(Light[n][8]).ToString("0.00");
+                    Light_dataGridView.Rows[nRow].Cells[10].Value = Program.UTIL.ToDoubleOrZero(Light[n][9]).ToString("0.00");
+                    //table_Light.Rows.Add(Light[n][0],Light[n][1],Light[n][2],Light[n][3],Light[n][4],Light[n][5], Light[n][6], Light[n][7], String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(Light[n][8])), String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(Light[n][9])));
                 }
             }
             //Light_dataGridView.DataSource = table_Light;
@@ -144,25 +144,25 @@ namespace main.subcontents.ZoneLighting
 
         private void UserDB_lm_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserDB_lm = Convert.ToDouble(UserDB_lm_textBox.Text);
+            UserDB_lm = Program.UTIL.ToDoubleOrZero(UserDB_lm_textBox.Text);
             Calc_eff_FL();
         }
 
 
         private void UserDB_W_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserDB_W = Convert.ToDouble(UserDB_W_textBox.Text);
+            UserDB_W = Program.UTIL.ToDoubleOrZero(UserDB_W_textBox.Text);
             Calc_eff_FL();
         }
 
         private void UserDB_eff_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserDB_eff = Convert.ToDouble(UserDB_eff_textBox.Text);
+            UserDB_eff = Program.UTIL.ToDoubleOrZero(UserDB_eff_textBox.Text);
         }
 
         private void UserDB_FL_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserDB_FL = Convert.ToDouble(UserDB_FL_textBox.Text);
+            UserDB_FL = Program.UTIL.ToDoubleOrZero(UserDB_FL_textBox.Text);
         }
 
         private void LampType_comboBox_SelectedIndexChanged(object sender, EventArgs e)

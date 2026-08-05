@@ -124,8 +124,8 @@ namespace main.contents.Result.Building_Report
                     __data[2].Add(new { idx = i, val = Value[0][2] }); //지역
                     __data[3].Add(new { idx = i, val = Value[0][3] }); //지역구분
                     __data[4].Add(new { idx = i, val = Value[0][4] }); //준공시기
-                    __data[5].Add(new { idx = i, val = Convert.ToDouble(Value[0][5]).ToString("0.00") }); //연면적
-                    __data[6].Add(new { idx = i, val = Convert.ToDouble(Value[0][6]).ToString("0.00") }); //건축면적
+                    __data[5].Add(new { idx = i, val = Program.UTIL.ToDoubleOrZero(Value[0][5]).ToString("0.00") }); //연면적
+                    __data[6].Add(new { idx = i, val = Program.UTIL.ToDoubleOrZero(Value[0][6]).ToString("0.00") }); //건축면적
                     __data[7].Add(new { idx = i, val = Value[0][7] }); //지상층수
                     __data[8].Add(new { idx = i, val = Value[0][8] }); //지하층수
                     __data[9].Add(new { idx = i, val = Value[0][9] }); //작성자회사
@@ -165,7 +165,7 @@ namespace main.contents.Result.Building_Report
                 
                 for(int l =0; l < 존정보.Length; l++)
                 {
-                    순바닥면적 += Convert.ToDouble(존정보[l][2]);
+                    순바닥면적 += Program.UTIL.ToDoubleOrZero(존정보[l][2]);
                 }
                 //요구량값 가져오기
                 double[] 난방요구량 = new double[12], 냉방요구량 = new double[12], 급탕요구량 = new double[12], 조명요구량 = new double[12], 공조요구량 = new double[12];
@@ -177,7 +177,7 @@ namespace main.contents.Result.Building_Report
                     {
                         for (int h = 0; h < heat.Length; h++)
                         {
-                            난방요구량[mt] += Convert.ToDouble(heat[h][0]);
+                            난방요구량[mt] += Program.UTIL.ToDoubleOrZero(heat[h][0]);
                         }
                     }
                     string[][] cool = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "난방_냉방 = '냉방' and 비이용일_이용일='이용일' and 월 ='" + (mt + 1).ToString() + "월'");
@@ -185,7 +185,7 @@ namespace main.contents.Result.Building_Report
                     {
                         for (int h = 0; h < cool.Length; h++)
                         {
-                             냉방요구량[mt] += Convert.ToDouble(cool[h][0]);
+                             냉방요구량[mt] += Program.UTIL.ToDoubleOrZero(cool[h][0]);
                         }
                     }
                     string[][] hotw = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "번호, dwd_mth", "비이용일_이용일='이용일' and 월 ='" + (mt + 1).ToString() + "월'");
@@ -197,7 +197,7 @@ namespace main.contents.Result.Building_Report
                             {
                                 if (존정보[k][0] == hotw[aaa][0])
                                 {
-                                    급탕요구량[mt] += Convert.ToDouble(hotw[aaa][1]) * Convert.ToDouble(존정보[k][1]);
+                                    급탕요구량[mt] += Program.UTIL.ToDoubleOrZero(hotw[aaa][1]) * Program.UTIL.ToDoubleOrZero(존정보[k][1]);
                                 }
                             }
                         }
@@ -208,7 +208,7 @@ namespace main.contents.Result.Building_Report
                     {
                         for (int h = 0; h < 요구량2.Length; h++)
                         {
-                            조명요구량[mt] += Convert.ToDouble(요구량2[h][0]);
+                            조명요구량[mt] += Program.UTIL.ToDoubleOrZero(요구량2[h][0]);
                         }
                     }
                     string[][] 요구량3 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "공조요구량,가습요구량", "월 ='" + (mt + 1).ToString() + "월'");
@@ -216,7 +216,7 @@ namespace main.contents.Result.Building_Report
                     {
                         for (int h = 0; h < 요구량3.Length; h++)
                         {
-                            공조요구량[mt] += Convert.ToDouble(요구량3[h][0]) + Convert.ToDouble(요구량3[h][1]);
+                            공조요구량[mt] += Program.UTIL.ToDoubleOrZero(요구량3[h][0]) + Program.UTIL.ToDoubleOrZero(요구량3[h][1]);
                         }
                     }
                 }
@@ -261,9 +261,9 @@ namespace main.contents.Result.Building_Report
                     double Total_Area = 0, Uvalue = 0, RuleValue = 0;
                     for (int k = 0; k < Value.Length; k++)
                     {
-                        Total_Area += Convert.ToDouble(Value[k][0]);
-                        Uvalue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                        RuleValue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                        Total_Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                        Uvalue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                        RuleValue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                     }
                     Uvalue = Uvalue / Total_Area;
                     RuleValue = RuleValue / Total_Area;
@@ -300,9 +300,9 @@ namespace main.contents.Result.Building_Report
                     double Total_Area = 0, Uvalue = 0, RuleValue = 0;
                     for (int k = 0; k < Value.Length; k++)
                     {
-                        Total_Area += Convert.ToDouble(Value[k][0]);
-                        Uvalue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                        RuleValue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                        Total_Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                        Uvalue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                        RuleValue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                     }
                     Uvalue = Uvalue / Total_Area;
                     RuleValue = RuleValue / Total_Area;
@@ -339,9 +339,9 @@ namespace main.contents.Result.Building_Report
                     double Total_Area = 0, Uvalue = 0, RuleValue = 0;
                     for (int k = 0; k < Value.Length; k++)
                     {
-                        Total_Area += Convert.ToDouble(Value[k][0]);
-                        Uvalue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                        RuleValue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                        Total_Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                        Uvalue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                        RuleValue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                     }
                     Uvalue = Uvalue / Total_Area;
                     RuleValue = RuleValue / Total_Area;
@@ -378,9 +378,9 @@ namespace main.contents.Result.Building_Report
                     double Total_Area = 0, Uvalue = 0, RuleValue = 0;
                     for (int k = 0; k < Value.Length; k++)
                     {
-                        Total_Area += Convert.ToDouble(Value[k][0]);
-                        Uvalue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                        RuleValue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                        Total_Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                        Uvalue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                        RuleValue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                     }
                     Uvalue = Uvalue / Total_Area;
                     RuleValue = RuleValue / Total_Area;
@@ -416,9 +416,9 @@ namespace main.contents.Result.Building_Report
                 {
                     if (Value.Length > 0)
                     {
-                        Total_Area_CW += Convert.ToDouble(Value[k][0]);
-                        Uvalue_CW += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                        RuleValue_CW += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                        Total_Area_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                        Uvalue_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                        RuleValue_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                     }
                 }
                 Value = Program.DB.querySQL(DB.type.ProjDB, "select a.면적,b.패널부분유효열관류율,b.법규패널부분열관류율 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionCW AS b ON a.구조체번호 = b.번호 where a.커튼월부위 ='패널부분'");
@@ -426,9 +426,9 @@ namespace main.contents.Result.Building_Report
                 {
                     if (Value.Length > 0)
                     {
-                        Total_Area_CW += Convert.ToDouble(Value[k][0]);
-                        Uvalue_CW += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                        RuleValue_CW += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                        Total_Area_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                        Uvalue_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                        RuleValue_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                     }
                 }
                 Value = Program.DB.querySQL(DB.type.ProjDB, "select a.면적,b.출입문부분유효열관류율,b.법규출입문부분열관류율 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionCW AS b ON a.구조체번호 = b.번호 where a.커튼월부위 ='출입문부분'");
@@ -436,9 +436,9 @@ namespace main.contents.Result.Building_Report
                 {
                     if (Value.Length > 0)
                     {
-                        Total_Area_CW += Convert.ToDouble(Value[k][0]);
-                        Uvalue_CW += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                        RuleValue_CW += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                        Total_Area_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                        Uvalue_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                        RuleValue_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                     }
                 }
                 Uvalue_CW = double.IsNaN(Uvalue_CW / Total_Area_CW) ? 0 : Uvalue_CW / Total_Area_CW;
@@ -473,9 +473,9 @@ namespace main.contents.Result.Building_Report
                     double Total_Area = 0, Uvalue = 0, RuleValue = 0;
                     for (int k = 0; k < Value.Length; k++)
                     {
-                        Total_Area += Convert.ToDouble(Value[k][0]);
-                        Uvalue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                        RuleValue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                        Total_Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                        Uvalue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                        RuleValue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                     }
                     Uvalue = double.IsNaN(Uvalue / Total_Area) ? 0 : Uvalue / Total_Area;
                     RuleValue = double.IsNaN(RuleValue / Total_Area) ? 0 : RuleValue / Total_Area;
@@ -504,7 +504,7 @@ namespace main.contents.Result.Building_Report
                 string[][] nValue = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "n50");
                 if (nValue.Length > 0)
                 {
-                    n50 = Convert.ToDouble(nValue[0][0]);
+                    n50 = Program.UTIL.ToDoubleOrZero(nValue[0][0]);
                     __Edata[42].Add(new { idx = i, val =n50.ToString("0.00") }); //n50
                     __Edata[43].Add(new { idx = i, val = (0.6).ToString("0.00") }); //패시브하우스 n50
                 }
@@ -516,7 +516,7 @@ namespace main.contents.Result.Building_Report
                 {
                     for (int a = 0; a < ZoneV.Length; a++)
                     {
-                        Volume += Convert.ToDouble(ZoneV[a][0]) * Convert.ToDouble(ZoneV[a][1]);
+                        Volume += Program.UTIL.ToDoubleOrZero(ZoneV[a][0]) * Program.UTIL.ToDoubleOrZero(ZoneV[a][1]);
                     }
                     CMH = n50 * Volume;
                     CMH_rule = 0.6 * Volume;
@@ -545,20 +545,20 @@ namespace main.contents.Result.Building_Report
                     string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "Sum(면적)", "외피유형='외벽'");
                     if (ZoneE.Length > 0)
                     {
-                        utb += Convert.ToDouble(tValue[0][0]) * Convert.ToDouble(ZoneE[0][0]);
-                        area_sum +=  Convert.ToDouble(ZoneE[0][0]);
+                        utb += Program.UTIL.ToDoubleOrZero(tValue[0][0]) * Program.UTIL.ToDoubleOrZero(ZoneE[0][0]);
+                        area_sum +=  Program.UTIL.ToDoubleOrZero(ZoneE[0][0]);
                     }
                     ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "Sum(면적)", "외피유형='지붕'");
                     if (ZoneE.Length > 0)
                     {
-                        utb += Convert.ToDouble(tValue[0][1]) * Convert.ToDouble(ZoneE[0][0]);
-                        area_sum += Convert.ToDouble(ZoneE[0][0]);
+                        utb += Program.UTIL.ToDoubleOrZero(tValue[0][1]) * Program.UTIL.ToDoubleOrZero(ZoneE[0][0]);
+                        area_sum += Program.UTIL.ToDoubleOrZero(ZoneE[0][0]);
                     }
                     ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "Sum(면적)", "외피유형='최하층바닥'");
                     if (ZoneE.Length > 0)
                     {
-                        utb += Convert.ToDouble(tValue[0][2]) * Convert.ToDouble(ZoneE[0][0]);
-                        area_sum += Convert.ToDouble(ZoneE[0][0]);
+                        utb += Program.UTIL.ToDoubleOrZero(tValue[0][2]) * Program.UTIL.ToDoubleOrZero(ZoneE[0][0]);
+                        area_sum += Program.UTIL.ToDoubleOrZero(ZoneE[0][0]);
                     }
                     utb = utb / area_sum;
                     __Edata[47].Add(new { idx = i, val = utb.ToString("0.00") });
@@ -589,11 +589,11 @@ namespace main.contents.Result.Building_Report
                             SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "용량,전부하효율", "번호 ='" + Hvalue[a][3] + "'");
                             if (SystemValue.Length > 0)
                             {
-                                power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][3]);
-                                power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][3]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][3]) : power ;
-                                eta = power== Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][3]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][3]) ? 90 : eta_rule ;
-                                unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][3]) ? "%" : unit;
+                                power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][3]);
+                                power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][3]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][3]) : power ;
+                                eta = power== Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][3]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][3]) ? 90 : eta_rule ;
+                                unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][3]) ? "%" : unit;
                             }
                         }
                         else if (Hvalue[a][2] == "외기 히트펌프")
@@ -601,11 +601,11 @@ namespace main.contents.Result.Building_Report
                             SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "난방정격용량,난방정격COP", "번호 ='" + Hvalue[a][4] + "'");
                             if (SystemValue.Length > 0)
                             {
-                                power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][4]);
-                                power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][4]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][4]) : power;
-                                eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][4]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][4]) ? 3.8 : eta_rule;
-                                unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][4]) ? "W/W" : unit;
+                                power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][4]);
+                                power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][4]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][4]) : power;
+                                eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][4]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][4]) ? 3.8 : eta_rule;
+                                unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][4]) ? "W/W" : unit;
                             }
                         }
                         else if (Hvalue[a][2] == "흡수식온수기")
@@ -613,11 +613,11 @@ namespace main.contents.Result.Building_Report
                             SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "난방용량,난방성능", "번호 ='" + Hvalue[a][5] + "'");
                             if (SystemValue.Length > 0)
                             {
-                                power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][5]);
-                                power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][5]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][5]) : power;
-                                eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][5]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][5]) ? 1.2 : eta_rule;
-                                unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][5]) ? "W/W" : unit;
+                                power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][5]);
+                                power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][5]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][5]) : power;
+                                eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][5]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][5]) ? 1.2 : eta_rule;
+                                unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][5]) ? "W/W" : unit;
                             }
                         }
                         else if (Hvalue[a][2] == "지역난방")
@@ -625,11 +625,11 @@ namespace main.contents.Result.Building_Report
                             SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DH", "용량", "번호 ='" + Hvalue[a][6] + "'");
                             if (SystemValue.Length > 0)
                             {
-                                power_tot += Convert.ToDouble(SystemValue[0][0]);
-                                power = Convert.ToDouble(SystemValue[0][0]) > power ? Convert.ToDouble(SystemValue[0][0]) : power;
-                                eta = power == Convert.ToDouble(SystemValue[0][0]) ? 100 : eta;
-                                eta_rule = power == Convert.ToDouble(SystemValue[0][0]) ? 100 : eta_rule;
-                                unit = power == Convert.ToDouble(SystemValue[0][0]) ? "%" : unit;
+                                power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]);
+                                power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) : power;
+                                eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) ? 100 : eta;
+                                eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) ? 100 : eta_rule;
+                                unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) ? "%" : unit;
                             }
                         }
                         else if (Hvalue[a][2] == "지열 히트펌프")
@@ -637,11 +637,11 @@ namespace main.contents.Result.Building_Report
                             SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_GroundHP", "난방정격용량,난방정격COP", "번호 ='" + Hvalue[a][8] + "'");
                             if (SystemValue.Length > 0)
                             {
-                                power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][8]);
-                                power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][8]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][8]) : power;
-                                eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][8]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][8]) ? 3.8 : eta_rule;
-                                unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][8]) ? "W/W" : unit;
+                                power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][8]);
+                                power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][8]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][8]) : power;
+                                eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][8]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][8]) ? 3.8 : eta_rule;
+                                unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][8]) ? "W/W" : unit;
                             }
                         }
                         else if (Hvalue[a][2] == "지하수 히트펌프")
@@ -649,11 +649,11 @@ namespace main.contents.Result.Building_Report
                             SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_GroundWHP", "난방정격용량,난방정격COP", "번호 ='" + Hvalue[a][9] + "'");
                             if (SystemValue.Length > 0)
                             {
-                                power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][9]);
-                                power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][9]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][9]) : power;
-                                eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][9]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][9]) ? 3.8 : eta_rule;
-                                unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][9]) ? "W/W" : unit;
+                                power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][9]);
+                                power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][9]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][9]) : power;
+                                eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][9]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][9]) ? 3.8 : eta_rule;
+                                unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][9]) ? "W/W" : unit;
                             }
                         }
                     }
@@ -699,11 +699,11 @@ namespace main.contents.Result.Building_Report
                             SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "용량,전부하효율", "번호 ='" + Dvalue[a][3] + "'");
                             if (SystemValue.Length > 0)
                             {
-                                power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][3]);
-                                power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][3]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][3]) : power;
-                                eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][3]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][3]) ? 90 : eta_rule;
-                                unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][3]) ? "%" : unit;
+                                power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][3]);
+                                power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][3]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][3]) : power;
+                                eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][3]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][3]) ? 90 : eta_rule;
+                                unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][3]) ? "%" : unit;
                             }
                         }
                         else if (Dvalue[a][2] == "외기 히트펌프")
@@ -711,11 +711,11 @@ namespace main.contents.Result.Building_Report
                             SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DHWHP", "급탕정격용량,급탕정격COP", "번호 ='" + Dvalue[a][4] + "'");
                             if (SystemValue.Length > 0)
                             {
-                                power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][4]);
-                                power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][4]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][4]) : power;
-                                eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][4]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][4]) ? 3.8 : eta_rule;
-                                unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][4]) ? "W/W" : unit;
+                                power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][4]);
+                                power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][4]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][4]) : power;
+                                eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][4]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][4]) ? 3.8 : eta_rule;
+                                unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][4]) ? "W/W" : unit;
                             }
                         }
                         else if (Dvalue[a][2] == "지역난방")
@@ -723,11 +723,11 @@ namespace main.contents.Result.Building_Report
                             SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DH", "용량", "번호 ='" + Dvalue[a][5] + "'");
                             if (SystemValue.Length > 0)
                             {
-                                power_tot += Convert.ToDouble(SystemValue[0][0]);
-                                power = Convert.ToDouble(SystemValue[0][0]) > power ? Convert.ToDouble(SystemValue[0][0]) : power;
-                                eta = power == Convert.ToDouble(SystemValue[0][0]) ? 100 : eta;
-                                eta_rule = power == Convert.ToDouble(SystemValue[0][0]) ? 100 : eta_rule;
-                                unit = power == Convert.ToDouble(SystemValue[0][0]) ? "%" : unit;
+                                power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]);
+                                power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) : power;
+                                eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) ? 100 : eta;
+                                eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) ? 100 : eta_rule;
+                                unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) ? "%" : unit;
                             }
                         }
                     }
@@ -765,9 +765,9 @@ namespace main.contents.Result.Building_Report
                     double power_tot = 0, power_max = 0, eta =0, eta_rule =3.4 ;
                     for(int a =0; a< Cvalue.Length; a++)
                     {
-                        power_tot += Convert.ToDouble(Cvalue[a][0]);
-                        power_max =  power_max < Convert.ToDouble(Cvalue[a][0]) ? Convert.ToDouble(Cvalue[0][0]) : power_max;
-                        eta = power_max == Convert.ToDouble(Cvalue[a][0]) ? Convert.ToDouble(Cvalue[0][1]) : eta;
+                        power_tot += Program.UTIL.ToDoubleOrZero(Cvalue[a][0]);
+                        power_max =  power_max < Program.UTIL.ToDoubleOrZero(Cvalue[a][0]) ? Program.UTIL.ToDoubleOrZero(Cvalue[0][0]) : power_max;
+                        eta = power_max == Program.UTIL.ToDoubleOrZero(Cvalue[a][0]) ? Program.UTIL.ToDoubleOrZero(Cvalue[0][1]) : eta;
                     }
                     __Edata[70].Add(new { idx = i, val = Cvalue.Length }); //개수
                     __Edata[71].Add(new { idx = i, val = Cvalue.Length }); //개수
@@ -803,9 +803,9 @@ namespace main.contents.Result.Building_Report
                         {
                             for (int aa = 0; aa < 조명존.Length; aa++)
                             {
-                                light_area = Convert.ToDouble(조명존[aa][1]);
-                                light_density = Convert.ToDouble(조명존[aa][1]) * Convert.ToDouble(조명존[aa][2]);
-                                light_eta_avg = Convert.ToDouble(조명존[aa][1]) * Convert.ToDouble(조명존[aa][4]);
+                                light_area = Program.UTIL.ToDoubleOrZero(조명존[aa][1]);
+                                light_density = Program.UTIL.ToDoubleOrZero(조명존[aa][1]) * Program.UTIL.ToDoubleOrZero(조명존[aa][2]);
+                                light_eta_avg = Program.UTIL.ToDoubleOrZero(조명존[aa][1]) * Program.UTIL.ToDoubleOrZero(조명존[aa][4]);
                             }
                         }
                     }
@@ -843,9 +843,9 @@ namespace main.contents.Result.Building_Report
 
                     for (int a = 0; a < Value.Length; a++)
                     {
-                        pv_count += Convert.ToDouble(Value[a][3]);
-                        pv_power += Convert.ToDouble(Value[a][5]);
-                        pv_eta_avg += Convert.ToDouble(Value[a][8]) * Convert.ToDouble(Value[a][5])*100;
+                        pv_count += Program.UTIL.ToDoubleOrZero(Value[a][3]);
+                        pv_power += Program.UTIL.ToDoubleOrZero(Value[a][5]);
+                        pv_eta_avg += Program.UTIL.ToDoubleOrZero(Value[a][8]) * Program.UTIL.ToDoubleOrZero(Value[a][5])*100;
                     }
                     pv_eta_avg = pv_eta_avg / pv_power;
                     pv_point = 100;
@@ -877,7 +877,7 @@ namespace main.contents.Result.Building_Report
                 {
                     for (int a = 0; a < Value.Length; a++)
                     {
-                        FC_power += (Convert.ToDouble(Value[a][2])+ Convert.ToDouble(Value[a][3])) * Convert.ToDouble(Value[a][1]);
+                        FC_power += (Program.UTIL.ToDoubleOrZero(Value[a][2])+ Program.UTIL.ToDoubleOrZero(Value[a][3])) * Program.UTIL.ToDoubleOrZero(Value[a][1]);
                     }
                     __Edata[200].Add(new { idx = i, val = FC_power.ToString("0.0") }); //용량
                 }
@@ -890,7 +890,7 @@ namespace main.contents.Result.Building_Report
                 {
                     for (int a = 0; a < Value.Length; a++)
                     {
-                        WP_power += Convert.ToDouble(Value[a][1])  * Convert.ToDouble(Value[a][2])/1000;
+                        WP_power += Program.UTIL.ToDoubleOrZero(Value[a][1])  * Program.UTIL.ToDoubleOrZero(Value[a][2])/1000;
                     }
                     __Edata[201].Add(new { idx = i, val = WP_power.ToString("0.0") }); //용량
                 }
@@ -908,35 +908,35 @@ namespace main.contents.Result.Building_Report
                     string[][] Final2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량", "not 연료='전기' and not 연료='전체'  and 월 ='" + (mth + 1).ToString() + "월'");
                     if (Final1.Length > 0)
                     {
-                        난방[mth] = Convert.ToDouble(Final1[0][0]);
-                        냉방[mth] = Convert.ToDouble(Final1[0][1]);
-                        급탕[mth] = Convert.ToDouble(Final1[0][2]);
-                        조명[mth] = Convert.ToDouble(Final1[0][3]);
-                        공조[mth] = Convert.ToDouble(Final1[0][4]);
+                        난방[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][0]);
+                        냉방[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][1]);
+                        급탕[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][2]);
+                        조명[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][3]);
+                        공조[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][4]);
                         if (Final1[0][5] != null && Final1[0][5] != "")
                         {
-                            기저[mth] = Convert.ToDouble(Final1[0][5]);
+                            기저[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][5]);
                         }
                         if (RES1.Length > 0 && RES1[0][0]!="")
-                        { 신재생[mth] = Convert.ToDouble(RES1[0][0]); }
-                        총전기[mth] = Convert.ToDouble(Final1[0][7]) - 기저[mth] ;
+                        { 신재생[mth] = Program.UTIL.ToDoubleOrZero(RES1[0][0]); }
+                        총전기[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][7]) - 기저[mth] ;
                     }
                     if (Final2.Length > 0)
                     {
-                        난방[mth] = 난방[mth] + Convert.ToDouble(Final2[0][0]);
-                        냉방[mth] = 냉방[mth] + Convert.ToDouble(Final2[0][1]);
-                        급탕[mth] = 급탕[mth] + Convert.ToDouble(Final2[0][2]);
-                        조명[mth] = 조명[mth] + Convert.ToDouble(Final2[0][3]);
-                        공조[mth] = 공조[mth] + Convert.ToDouble(Final2[0][4]);
+                        난방[mth] = 난방[mth] + Program.UTIL.ToDoubleOrZero(Final2[0][0]);
+                        냉방[mth] = 냉방[mth] + Program.UTIL.ToDoubleOrZero(Final2[0][1]);
+                        급탕[mth] = 급탕[mth] + Program.UTIL.ToDoubleOrZero(Final2[0][2]);
+                        조명[mth] = 조명[mth] + Program.UTIL.ToDoubleOrZero(Final2[0][3]);
+                        공조[mth] = 공조[mth] + Program.UTIL.ToDoubleOrZero(Final2[0][4]);
                         if (Final2[0][5] != null && Final2[0][5] != "")
                         {
-                            기저[mth] =  Convert.ToDouble(Final2[0][5]);
+                            기저[mth] =  Program.UTIL.ToDoubleOrZero(Final2[0][5]);
                         }
                         if (RES2.Length > 0 && RES2[0][0] != "")
                         {
-                            신재생[mth] = 신재생[mth] + Convert.ToDouble(RES2[0][0]);
+                            신재생[mth] = 신재생[mth] + Program.UTIL.ToDoubleOrZero(RES2[0][0]);
                         }
-                        총가스[mth] = Convert.ToDouble(Final2[0][7]) - 기저[mth];
+                        총가스[mth] = Program.UTIL.ToDoubleOrZero(Final2[0][7]) - 기저[mth];
                     }
 
                     난방[mth] = double.IsNaN(난방[mth]) ? 0 : 난방[mth];
@@ -997,38 +997,38 @@ namespace main.contents.Result.Building_Report
                     string[][] Fi3 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "연료='지역난방' and 월 ='" + (mth + 1).ToString() + "월'");
                     if (Fi1.Length > 0)
                     {
-                        난방1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][0]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][0]) * 2.75;
-                        냉방1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][1]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][1]) * 2.75;
-                        급탕1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][2]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][2]) * 2.75;
-                        조명1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][3]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][3]) * 2.75;
-                        공조1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][4]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][4]) * 2.75;
+                        난방1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][0]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][0]) * 2.75;
+                        냉방1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][1]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][1]) * 2.75;
+                        급탕1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][2]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][2]) * 2.75;
+                        조명1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][3]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][3]) * 2.75;
+                        공조1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][4]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][4]) * 2.75;
                         if (RES1.Length > 0 && RES1[0][0] != "")
                         {
-                            전기1[mth] = double.IsNaN(Convert.ToDouble(RES1[0][0]) * 2.75) ? 0 : Convert.ToDouble(RES1[0][0]) * 2.75;
+                            전기1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(RES1[0][0]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(RES1[0][0]) * 2.75;
                         }
-                        총소요1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][6]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][6]) * 2.75;
+                        총소요1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][6]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][6]) * 2.75;
                     }
                     if (Fi2.Length > 0)
                     {
-                        난방1[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][0]) *1.1) ? 0 : Convert.ToDouble(Fi2[0][0]) *1.1;
-                        냉방1[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][1]) *1.1) ? 0 : Convert.ToDouble(Fi2[0][1]) *1.1;
-                        급탕1[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][2]) *1.1) ? 0 : Convert.ToDouble(Fi2[0][2]) *1.1;
-                        조명1[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][3]) *1.1) ? 0 : Convert.ToDouble(Fi2[0][3]) *1.1;
-                        공조1[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][4]) *1.1) ? 0 : Convert.ToDouble(Fi2[0][4]) * 1.1;
+                        난방1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi2[0][0]) *1.1) ? 0 : Program.UTIL.ToDoubleOrZero(Fi2[0][0]) *1.1;
+                        냉방1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi2[0][1]) *1.1) ? 0 : Program.UTIL.ToDoubleOrZero(Fi2[0][1]) *1.1;
+                        급탕1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi2[0][2]) *1.1) ? 0 : Program.UTIL.ToDoubleOrZero(Fi2[0][2]) *1.1;
+                        조명1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi2[0][3]) *1.1) ? 0 : Program.UTIL.ToDoubleOrZero(Fi2[0][3]) *1.1;
+                        공조1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi2[0][4]) *1.1) ? 0 : Program.UTIL.ToDoubleOrZero(Fi2[0][4]) * 1.1;
                         if (RES2.Length > 0 && RES2[0][0] != "")
                         {
-                            열1[mth] = double.IsNaN(Convert.ToDouble(RES2[0][0]) * 1.1) ? 0 : Convert.ToDouble(RES2[0][0]) * 1.1;
+                            열1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(RES2[0][0]) * 1.1) ? 0 : Program.UTIL.ToDoubleOrZero(RES2[0][0]) * 1.1;
                         }
-                        총소요1[mth] = double.IsNaN(총소요1[mth] + Convert.ToDouble(Fi2[0][6]) * 1.1) ?  0 : 총소요1[mth] + Convert.ToDouble(Fi2[0][6]) * 1.1;
+                        총소요1[mth] = double.IsNaN(총소요1[mth] + Program.UTIL.ToDoubleOrZero(Fi2[0][6]) * 1.1) ?  0 : 총소요1[mth] + Program.UTIL.ToDoubleOrZero(Fi2[0][6]) * 1.1;
                     }
                     if (Fi3.Length > 0)
                     {
-                        난방1[mth] += double.IsNaN(Convert.ToDouble(Fi3[0][0]) * 0.728) ? 0 : Convert.ToDouble(Fi3[0][0]) *0.728;
-                        냉방1[mth] += double.IsNaN(Convert.ToDouble(Fi3[0][1]) *0.728) ? 0 : Convert.ToDouble(Fi3[0][1]) *0.728;
-                        급탕1[mth] += double.IsNaN(Convert.ToDouble(Fi3[0][2]) *0.728) ? 0 : Convert.ToDouble(Fi3[0][2]) *0.728;
-                        조명1[mth] += double.IsNaN(Convert.ToDouble(Fi3[0][3]) *0.728) ? 0 : Convert.ToDouble(Fi3[0][3]) *0.728;
-                        공조1[mth] += double.IsNaN(Convert.ToDouble(Fi3[0][4]) *0.728) ? 0 : Convert.ToDouble(Fi3[0][4]) * 0.728;
-                        총소요1[mth] = double.IsNaN(총소요1[mth] + Convert.ToDouble(Fi3[0][6]) * 0.728) ?  0: 총소요1[mth] + Convert.ToDouble(Fi3[0][6]) * 0.728;
+                        난방1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][0]) * 0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][0]) *0.728;
+                        냉방1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][1]) *0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][1]) *0.728;
+                        급탕1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][2]) *0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][2]) *0.728;
+                        조명1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][3]) *0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][3]) *0.728;
+                        공조1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][4]) *0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][4]) * 0.728;
+                        총소요1[mth] = double.IsNaN(총소요1[mth] + Program.UTIL.ToDoubleOrZero(Fi3[0][6]) * 0.728) ?  0: 총소요1[mth] + Program.UTIL.ToDoubleOrZero(Fi3[0][6]) * 0.728;
                     }
                 }
 
@@ -1223,8 +1223,8 @@ namespace main.contents.Result.Building_Report
                         __data[2].Add(new { idx = i, val = Value[0][2] }); //지역
                         __data[3].Add(new { idx = i, val = Value[0][3] }); //지역구분
                         __data[4].Add(new { idx = i, val = Value[0][4] }); //준공시기
-                        __data[5].Add(new { idx = i, val = Convert.ToDouble(Value[0][5]).ToString("0.00") }); //연면적
-                        __data[6].Add(new { idx = i, val = Convert.ToDouble(Value[0][6]).ToString("0.00") }); //건축면적
+                        __data[5].Add(new { idx = i, val = Program.UTIL.ToDoubleOrZero(Value[0][5]).ToString("0.00") }); //연면적
+                        __data[6].Add(new { idx = i, val = Program.UTIL.ToDoubleOrZero(Value[0][6]).ToString("0.00") }); //건축면적
                         __data[7].Add(new { idx = i, val = Value[0][7] }); //지상층수
                         __data[8].Add(new { idx = i, val = Value[0][8] }); //지하층수
                         __data[9].Add(new { idx = i, val = Value[0][9] }); //작성자회사
@@ -1265,11 +1265,11 @@ namespace main.contents.Result.Building_Report
 
                     for (int l = 0; l < 존정보.Length; l++)
                     {
-                        순바닥면적 += Convert.ToDouble(존정보[l][2]);
+                        순바닥면적 += Program.UTIL.ToDoubleOrZero(존정보[l][2]);
                     }
                     for (int l = 0; l < 존정보2.Length; l++)
                     {
-                        순바닥면적2 += Convert.ToDouble(존정보2[l][2]);
+                        순바닥면적2 += Program.UTIL.ToDoubleOrZero(존정보2[l][2]);
                     }
                     //요구량값 가져오기
                     double[] 난방요구량 = new double[12], 냉방요구량 = new double[12], 급탕요구량 = new double[12], 조명요구량 = new double[12], 공조요구량 = new double[12];
@@ -1282,7 +1282,7 @@ namespace main.contents.Result.Building_Report
                         {
                             for (int h = 0; h < heat.Length; h++)
                             {
-                                난방요구량[mt] += Convert.ToDouble(heat[h][0]);
+                                난방요구량[mt] += Program.UTIL.ToDoubleOrZero(heat[h][0]);
                             }
                         }
                         string[][] cool = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "난방_냉방 = '냉방' and 비이용일_이용일='이용일' and 월 ='" + (mt + 1).ToString() + "월'");
@@ -1290,7 +1290,7 @@ namespace main.contents.Result.Building_Report
                         {
                             for (int h = 0; h < cool.Length; h++)
                             {
-                                냉방요구량[mt] += Convert.ToDouble(cool[h][0]);
+                                냉방요구량[mt] += Program.UTIL.ToDoubleOrZero(cool[h][0]);
                             }
                         }
                         string[][] hotw = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "번호, dwd_mth", "비이용일_이용일='이용일' and 월 ='" + (mt + 1).ToString() + "월'");
@@ -1302,7 +1302,7 @@ namespace main.contents.Result.Building_Report
                                 {
                                     if (존정보[k][0] == hotw[aaa][0])
                                     {
-                                        급탕요구량[mt] += Convert.ToDouble(hotw[aaa][1]) * Convert.ToDouble(존정보[k][1]);
+                                        급탕요구량[mt] += Program.UTIL.ToDoubleOrZero(hotw[aaa][1]) * Program.UTIL.ToDoubleOrZero(존정보[k][1]);
                                     }
                                 }
                             }
@@ -1313,7 +1313,7 @@ namespace main.contents.Result.Building_Report
                         {
                             for (int h = 0; h < 요구량2.Length; h++)
                             {
-                                조명요구량[mt] += Convert.ToDouble(요구량2[h][0]);
+                                조명요구량[mt] += Program.UTIL.ToDoubleOrZero(요구량2[h][0]);
                             }
                         }
                         string[][] 요구량3 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "공조요구량,가습요구량", "월 ='" + (mt + 1).ToString() + "월'");
@@ -1321,7 +1321,7 @@ namespace main.contents.Result.Building_Report
                         {
                             for (int h = 0; h < 요구량3.Length; h++)
                             {
-                                공조요구량[mt] += Convert.ToDouble(요구량3[h][0]) + Convert.ToDouble(요구량3[h][1]);
+                                공조요구량[mt] += Program.UTIL.ToDoubleOrZero(요구량3[h][0]) + Program.UTIL.ToDoubleOrZero(요구량3[h][1]);
                             }
                         }
                     }
@@ -1346,7 +1346,7 @@ namespace main.contents.Result.Building_Report
                         {
                             for (int h = 0; h < heat.Length; h++)
                             {
-                                난방요구량2[mt] += Convert.ToDouble(heat[h][0]);
+                                난방요구량2[mt] += Program.UTIL.ToDoubleOrZero(heat[h][0]);
                             }
                         }
                         string[][] cool = Program.DB.getValue(res[0][0], "Zone_HCneed_Result", "Qb_mth", "난방_냉방 = '냉방' and 비이용일_이용일='이용일' and 월 ='" + (mt + 1).ToString() + "월'");
@@ -1354,7 +1354,7 @@ namespace main.contents.Result.Building_Report
                         {
                             for (int h = 0; h < cool.Length; h++)
                             {
-                                냉방요구량2[mt] += Convert.ToDouble(cool[h][0]);
+                                냉방요구량2[mt] += Program.UTIL.ToDoubleOrZero(cool[h][0]);
                             }
                         }
                         string[][] hotw = Program.DB.getValue_SameCheck(res[0][0], "Zone_HCneed_Result", "번호, dwd_mth", "비이용일_이용일='이용일' and 월 ='" + (mt + 1).ToString() + "월'");
@@ -1366,7 +1366,7 @@ namespace main.contents.Result.Building_Report
                                 {
                                     if (존정보2[k][0] == hotw[aaa][0])
                                     {
-                                        급탕요구량2[mt] += Convert.ToDouble(hotw[aaa][1]) * Convert.ToDouble(존정보2[k][1]);
+                                        급탕요구량2[mt] += Program.UTIL.ToDoubleOrZero(hotw[aaa][1]) * Program.UTIL.ToDoubleOrZero(존정보2[k][1]);
                                     }
                                 }
                             }
@@ -1377,7 +1377,7 @@ namespace main.contents.Result.Building_Report
                         {
                             for (int h = 0; h < 요구량2.Length; h++)
                             {
-                                조명요구량2[mt] += Convert.ToDouble(요구량2[h][0]);
+                                조명요구량2[mt] += Program.UTIL.ToDoubleOrZero(요구량2[h][0]);
                             }
                         }
                         string[][] 요구량3 = Program.DB.getValue(res[0][0], "AHUSystem_Result", "공조요구량,가습요구량", "월 ='" + (mt + 1).ToString() + "월'");
@@ -1385,7 +1385,7 @@ namespace main.contents.Result.Building_Report
                         {
                             for (int h = 0; h < 요구량3.Length; h++)
                             {
-                                공조요구량2[mt] += Convert.ToDouble(요구량3[h][0]) + Convert.ToDouble(요구량3[h][1]);
+                                공조요구량2[mt] += Program.UTIL.ToDoubleOrZero(요구량3[h][0]) + Program.UTIL.ToDoubleOrZero(요구량3[h][1]);
                             }
                         }
                     }
@@ -1453,9 +1453,9 @@ namespace main.contents.Result.Building_Report
                             double Total_Area = 0, Uvalue = 0, RuleValue = 0;
                             for (int k = 0; k < Value.Length; k++)
                             {
-                                Total_Area += Convert.ToDouble(Value[k][0]);
-                                Uvalue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                                RuleValue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                                Total_Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                                Uvalue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                                RuleValue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                             }
                             Uvalue = Uvalue / Total_Area;
                             RuleValue = RuleValue / Total_Area;
@@ -1491,9 +1491,9 @@ namespace main.contents.Result.Building_Report
                             double Total_Area = 0, Uvalue = 0, RuleValue = 0;
                             for (int k = 0; k < Value.Length; k++)
                             {
-                                Total_Area += Convert.ToDouble(Value[k][0]);
-                                Uvalue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                                RuleValue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                                Total_Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                                Uvalue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                                RuleValue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                             }
                             Uvalue = Uvalue / Total_Area;
                             RuleValue = RuleValue / Total_Area;
@@ -1525,9 +1525,9 @@ namespace main.contents.Result.Building_Report
                             double Total_Area = 0, Uvalue = 0, RuleValue = 0;
                             for (int k = 0; k < Value.Length; k++)
                             {
-                                Total_Area += Convert.ToDouble(Value[k][0]);
-                                Uvalue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                                RuleValue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                                Total_Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                                Uvalue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                                RuleValue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                             }
                             Uvalue = Uvalue / Total_Area;
                             RuleValue = RuleValue / Total_Area;
@@ -1563,9 +1563,9 @@ namespace main.contents.Result.Building_Report
                             double Total_Area = 0, Uvalue = 0, RuleValue = 0;
                             for (int k = 0; k < Value.Length; k++)
                             {
-                                Total_Area += Convert.ToDouble(Value[k][0]);
-                                Uvalue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                                RuleValue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                                Total_Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                                Uvalue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                                RuleValue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                             }
                             Uvalue = Uvalue / Total_Area;
                             RuleValue = RuleValue / Total_Area;
@@ -1596,9 +1596,9 @@ namespace main.contents.Result.Building_Report
                             double Total_Area = 0, Uvalue = 0, RuleValue = 0;
                             for (int k = 0; k < Value.Length; k++)
                             {
-                                Total_Area += Convert.ToDouble(Value[k][0]);
-                                Uvalue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                                RuleValue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                                Total_Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                                Uvalue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                                RuleValue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                             }
                             Uvalue = Uvalue / Total_Area;
                             RuleValue = RuleValue / Total_Area;
@@ -1634,9 +1634,9 @@ namespace main.contents.Result.Building_Report
                             double Total_Area = 0, Uvalue = 0, RuleValue = 0;
                             for (int k = 0; k < Value.Length; k++)
                             {
-                                Total_Area += Convert.ToDouble(Value[k][0]);
-                                Uvalue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                                RuleValue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                                Total_Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                                Uvalue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                                RuleValue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                             }
                             Uvalue = Uvalue / Total_Area;
                             RuleValue = RuleValue / Total_Area;
@@ -1667,9 +1667,9 @@ namespace main.contents.Result.Building_Report
                             double Total_Area = 0, Uvalue = 0, RuleValue = 0;
                             for (int k = 0; k < Value.Length; k++)
                             {
-                                Total_Area += Convert.ToDouble(Value[k][0]);
-                                Uvalue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                                RuleValue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                                Total_Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                                Uvalue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                                RuleValue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                             }
                             Uvalue = Uvalue / Total_Area;
                             RuleValue = RuleValue / Total_Area;
@@ -1705,9 +1705,9 @@ namespace main.contents.Result.Building_Report
                             double Total_Area = 0, Uvalue = 0, RuleValue = 0;
                             for (int k = 0; k < Value.Length; k++)
                             {
-                                Total_Area += Convert.ToDouble(Value[k][0]);
-                                Uvalue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                                RuleValue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                                Total_Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                                Uvalue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                                RuleValue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                             }
                             Uvalue = Uvalue / Total_Area;
                             RuleValue = RuleValue / Total_Area;
@@ -1738,9 +1738,9 @@ namespace main.contents.Result.Building_Report
                         {
                             if (Value.Length > 0)
                             {
-                                Total_Area_CW += Convert.ToDouble(Value[k][0]);
-                                Uvalue_CW += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                                RuleValue_CW += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                                Total_Area_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                                Uvalue_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                                RuleValue_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                             }
                         }
                         Value = Program.DB.querySQL(DB.type.ProjDB, "select a.면적,b.패널부분유효열관류율,b.법규패널부분열관류율 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionCW AS b ON a.구조체번호 = b.번호 where a.커튼월부위 ='패널부분'");
@@ -1748,9 +1748,9 @@ namespace main.contents.Result.Building_Report
                         {
                             if (Value.Length > 0)
                             {
-                                Total_Area_CW += Convert.ToDouble(Value[k][0]);
-                                Uvalue_CW += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                                RuleValue_CW += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                                Total_Area_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                                Uvalue_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                                RuleValue_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                             }
                         }
                         Value = Program.DB.querySQL(DB.type.ProjDB, "select a.면적,b.출입문부분유효열관류율,b.법규출입문부분열관류율 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionCW AS b ON a.구조체번호 = b.번호 where a.커튼월부위 ='출입문부분'");
@@ -1758,9 +1758,9 @@ namespace main.contents.Result.Building_Report
                         {
                             if (Value.Length > 0)
                             {
-                                Total_Area_CW += Convert.ToDouble(Value[k][0]);
-                                Uvalue_CW += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                                RuleValue_CW += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                                Total_Area_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                                Uvalue_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                                RuleValue_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                             }
                         }
                         Uvalue_CW = double.IsNaN(Uvalue_CW / Total_Area_CW) ? 0 : Uvalue_CW / Total_Area_CW;
@@ -1795,9 +1795,9 @@ namespace main.contents.Result.Building_Report
                         {
                             if (Value.Length > 0)
                             {
-                                Total_Area_CW += Convert.ToDouble(Value[k][0]);
-                                Uvalue_CW += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                                RuleValue_CW += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                                Total_Area_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                                Uvalue_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                                RuleValue_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                             }
                         }
                         Value = Program.DB.querySQL(res[0][0], "select a.면적,b.패널부분유효열관류율,b.법규패널부분열관류율 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionCW AS b ON a.구조체번호 = b.번호 where a.커튼월부위 ='패널부분'");
@@ -1805,9 +1805,9 @@ namespace main.contents.Result.Building_Report
                         {
                             if (Value.Length > 0)
                             {
-                                Total_Area_CW += Convert.ToDouble(Value[k][0]);
-                                Uvalue_CW += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                                RuleValue_CW += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                                Total_Area_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                                Uvalue_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                                RuleValue_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                             }
                         }
                         Value = Program.DB.querySQL(res[0][0], "select a.면적,b.출입문부분유효열관류율,b.법규출입문부분열관류율 FROM ZoneEnvelope_3D AS a INNER JOIN ConstructionCW AS b ON a.구조체번호 = b.번호 where a.커튼월부위 ='출입문부분'");
@@ -1815,9 +1815,9 @@ namespace main.contents.Result.Building_Report
                         {
                             if (Value.Length > 0)
                             {
-                                Total_Area_CW += Convert.ToDouble(Value[k][0]);
-                                Uvalue_CW += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                                RuleValue_CW += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                                Total_Area_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                                Uvalue_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                                RuleValue_CW += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                             }
                         }
                         Uvalue_CW = double.IsNaN(Uvalue_CW / Total_Area_CW) ? 0 : Uvalue_CW / Total_Area_CW;
@@ -1846,9 +1846,9 @@ namespace main.contents.Result.Building_Report
                             double Total_Area = 0, Uvalue = 0, RuleValue = 0;
                             for (int k = 0; k < Value.Length; k++)
                             {
-                                Total_Area += Convert.ToDouble(Value[k][0]);
-                                Uvalue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                                RuleValue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                                Total_Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                                Uvalue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                                RuleValue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                             }
                             Uvalue = double.IsNaN(Uvalue / Total_Area) ? 0 : Uvalue / Total_Area;
                             RuleValue = double.IsNaN(RuleValue / Total_Area) ? 0 : RuleValue / Total_Area;
@@ -1882,9 +1882,9 @@ namespace main.contents.Result.Building_Report
                             double Total_Area = 0, Uvalue = 0, RuleValue = 0;
                             for (int k = 0; k < Value.Length; k++)
                             {
-                                Total_Area += Convert.ToDouble(Value[k][0]);
-                                Uvalue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][1]);
-                                RuleValue += Convert.ToDouble(Value[k][0]) * Convert.ToDouble(Value[k][2]);
+                                Total_Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                                Uvalue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][1]);
+                                RuleValue += Program.UTIL.ToDoubleOrZero(Value[k][0]) * Program.UTIL.ToDoubleOrZero(Value[k][2]);
                             }
                             Uvalue = double.IsNaN(Uvalue / Total_Area) ? 0 : Uvalue / Total_Area;
                             RuleValue = double.IsNaN(RuleValue / Total_Area) ? 0 : RuleValue / Total_Area;
@@ -1907,7 +1907,7 @@ namespace main.contents.Result.Building_Report
                         string[][] nValue = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "n50");
                         if (nValue.Length > 0)
                         {
-                            n50 = Convert.ToDouble(nValue[0][0]);
+                            n50 = Program.UTIL.ToDoubleOrZero(nValue[0][0]);
                             __Edata[42].Add(new { idx = i, val = n50.ToString("0.00") }); //n50
                             __Edata[43].Add(new { idx = i, val = (0.6).ToString("0.00") }); //패시브하우스 n50
                         }
@@ -1919,7 +1919,7 @@ namespace main.contents.Result.Building_Report
                         {
                             for (int a = 0; a < ZoneV.Length; a++)
                             {
-                                Volume += Convert.ToDouble(ZoneV[a][0]) * Convert.ToDouble(ZoneV[a][1]);
+                                Volume += Program.UTIL.ToDoubleOrZero(ZoneV[a][0]) * Program.UTIL.ToDoubleOrZero(ZoneV[a][1]);
                             }
                             CMH = n50 * Volume;
                             CMH_rule = 0.6 * Volume;
@@ -1944,7 +1944,7 @@ namespace main.contents.Result.Building_Report
                         string[][] nValue = Program.DB.getValue(res[0][0], "BuildingGeneral", "n50");
                         if (nValue.Length > 0)
                         {
-                            n50 = Convert.ToDouble(nValue[0][0]);
+                            n50 = Program.UTIL.ToDoubleOrZero(nValue[0][0]);
                             __Edata2[42].Add(new { idx = i, val = n50.ToString("0.00") }); //n50
                             __Edata2[43].Add(new { idx = i, val = (0.6).ToString("0.00") }); //패시브하우스 n50
                         }
@@ -1956,7 +1956,7 @@ namespace main.contents.Result.Building_Report
                         {
                             for (int a = 0; a < ZoneV.Length; a++)
                             {
-                                Volume += Convert.ToDouble(ZoneV[a][0]) * Convert.ToDouble(ZoneV[a][1]);
+                                Volume += Program.UTIL.ToDoubleOrZero(ZoneV[a][0]) * Program.UTIL.ToDoubleOrZero(ZoneV[a][1]);
                             }
                             CMH = n50 * Volume;
                             CMH_rule = 0.6 * Volume;
@@ -1979,20 +1979,20 @@ namespace main.contents.Result.Building_Report
                             string[][] ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "Sum(면적)", "외피유형='외벽'");
                             if (ZoneE.Length > 0)
                             {
-                                utb += Convert.ToDouble(tValue[0][0]) * Convert.ToDouble(ZoneE[0][0]);
-                                area_sum += Convert.ToDouble(ZoneE[0][0]);
+                                utb += Program.UTIL.ToDoubleOrZero(tValue[0][0]) * Program.UTIL.ToDoubleOrZero(ZoneE[0][0]);
+                                area_sum += Program.UTIL.ToDoubleOrZero(ZoneE[0][0]);
                             }
                             ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "Sum(면적)", "외피유형='지붕'");
                             if (ZoneE.Length > 0)
                             {
-                                utb += Convert.ToDouble(tValue[0][1]) * Convert.ToDouble(ZoneE[0][0]);
-                                area_sum += Convert.ToDouble(ZoneE[0][0]);
+                                utb += Program.UTIL.ToDoubleOrZero(tValue[0][1]) * Program.UTIL.ToDoubleOrZero(ZoneE[0][0]);
+                                area_sum += Program.UTIL.ToDoubleOrZero(ZoneE[0][0]);
                             }
                             ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "Sum(면적)", "외피유형='최하층바닥'");
                             if (ZoneE.Length > 0)
                             {
-                                utb += Convert.ToDouble(tValue[0][2]) * Convert.ToDouble(ZoneE[0][0]);
-                                area_sum += Convert.ToDouble(ZoneE[0][0]);
+                                utb += Program.UTIL.ToDoubleOrZero(tValue[0][2]) * Program.UTIL.ToDoubleOrZero(ZoneE[0][0]);
+                                area_sum += Program.UTIL.ToDoubleOrZero(ZoneE[0][0]);
                             }
                             utb = utb / area_sum;
                             __Edata[47].Add(new { idx = i, val = utb.ToString("0.00") });
@@ -2017,20 +2017,20 @@ namespace main.contents.Result.Building_Report
                             string[][] ZoneE = Program.DB.getValue(res[0][0], "ZoneEnvelope_3D", "Sum(면적)", "외피유형='외벽'");
                             if (ZoneE.Length > 0)
                             {
-                                utb += Convert.ToDouble(tValue[0][0]) * Convert.ToDouble(ZoneE[0][0]);
-                                area_sum += Convert.ToDouble(ZoneE[0][0]);
+                                utb += Program.UTIL.ToDoubleOrZero(tValue[0][0]) * Program.UTIL.ToDoubleOrZero(ZoneE[0][0]);
+                                area_sum += Program.UTIL.ToDoubleOrZero(ZoneE[0][0]);
                             }
                             ZoneE = Program.DB.getValue(res[0][0], "ZoneEnvelope_3D", "Sum(면적)", "외피유형='지붕'");
                             if (ZoneE.Length > 0)
                             {
-                                utb += Convert.ToDouble(tValue[0][1]) * Convert.ToDouble(ZoneE[0][0]);
-                                area_sum += Convert.ToDouble(ZoneE[0][0]);
+                                utb += Program.UTIL.ToDoubleOrZero(tValue[0][1]) * Program.UTIL.ToDoubleOrZero(ZoneE[0][0]);
+                                area_sum += Program.UTIL.ToDoubleOrZero(ZoneE[0][0]);
                             }
                             ZoneE = Program.DB.getValue(res[0][0], "ZoneEnvelope_3D", "Sum(면적)", "외피유형='최하층바닥'");
                             if (ZoneE.Length > 0)
                             {
-                                utb += Convert.ToDouble(tValue[0][2]) * Convert.ToDouble(ZoneE[0][0]);
-                                area_sum += Convert.ToDouble(ZoneE[0][0]);
+                                utb += Program.UTIL.ToDoubleOrZero(tValue[0][2]) * Program.UTIL.ToDoubleOrZero(ZoneE[0][0]);
+                                area_sum += Program.UTIL.ToDoubleOrZero(ZoneE[0][0]);
                             }
                             utb = utb / area_sum;
                             __Edata2[47].Add(new { idx = i, val = utb.ToString("0.00") });
@@ -2058,11 +2058,11 @@ namespace main.contents.Result.Building_Report
                                     SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "용량,전부하효율", "번호 ='" + Hvalue[a][3] + "'");
                                     if (SystemValue.Length > 0)
                                     {
-                                        power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][3]);
-                                        power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][3]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][3]) : power;
-                                        eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][3]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                        eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][3]) ? 90 : eta_rule;
-                                        unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][3]) ? "%" : unit;
+                                        power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][3]);
+                                        power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][3]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][3]) : power;
+                                        eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][3]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                        eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][3]) ? 90 : eta_rule;
+                                        unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][3]) ? "%" : unit;
                                     }
                                 }
                                 else if (Hvalue[a][2] == "외기 히트펌프")
@@ -2070,11 +2070,11 @@ namespace main.contents.Result.Building_Report
                                     SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "난방정격용량,난방정격COP", "번호 ='" + Hvalue[a][4] + "'");
                                     if (SystemValue.Length > 0)
                                     {
-                                        power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][4]);
-                                        power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][4]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][4]) : power;
-                                        eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][4]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                        eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][4]) ? 3.8 : eta_rule;
-                                        unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][4]) ? "W/W" : unit;
+                                        power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][4]);
+                                        power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][4]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][4]) : power;
+                                        eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][4]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                        eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][4]) ? 3.8 : eta_rule;
+                                        unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][4]) ? "W/W" : unit;
                                     }
                                 }
                                 else if (Hvalue[a][2] == "흡수식온수기")
@@ -2082,11 +2082,11 @@ namespace main.contents.Result.Building_Report
                                     SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "난방용량,난방성능", "번호 ='" + Hvalue[a][5] + "'");
                                     if (SystemValue.Length > 0)
                                     {
-                                        power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][5]);
-                                        power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][5]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][5]) : power;
-                                        eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][5]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                        eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][5]) ? 1.2 : eta_rule;
-                                        unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][5]) ? "W/W" : unit;
+                                        power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][5]);
+                                        power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][5]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][5]) : power;
+                                        eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][5]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                        eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][5]) ? 1.2 : eta_rule;
+                                        unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][5]) ? "W/W" : unit;
                                     }
                                 }
                                 else if (Hvalue[a][2] == "지역난방")
@@ -2094,11 +2094,11 @@ namespace main.contents.Result.Building_Report
                                     SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DH", "용량", "번호 ='" + Hvalue[a][6] + "'");
                                     if (SystemValue.Length > 0)
                                     {
-                                        power_tot += Convert.ToDouble(SystemValue[0][0]);
-                                        power = Convert.ToDouble(SystemValue[0][0]) > power ? Convert.ToDouble(SystemValue[0][0]) : power;
-                                        eta = power == Convert.ToDouble(SystemValue[0][0]) ? 100 : eta;
-                                        eta_rule = power == Convert.ToDouble(SystemValue[0][0]) ? 100 : eta_rule;
-                                        unit = power == Convert.ToDouble(SystemValue[0][0]) ? "%" : unit;
+                                        power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]);
+                                        power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) : power;
+                                        eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) ? 100 : eta;
+                                        eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) ? 100 : eta_rule;
+                                        unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) ? "%" : unit;
                                     }
                                 }
                                 else if (Hvalue[a][2] == "지열 히트펌프")
@@ -2106,11 +2106,11 @@ namespace main.contents.Result.Building_Report
                                     SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_GroundHP", "난방정격용량,난방정격COP", "번호 ='" + Hvalue[a][8] + "'");
                                     if (SystemValue.Length > 0)
                                     {
-                                        power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][8]);
-                                        power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][8]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][8]) : power;
-                                        eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][8]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                        eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][8]) ? 3.8 : eta_rule;
-                                        unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][8]) ? "W/W" : unit;
+                                        power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][8]);
+                                        power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][8]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][8]) : power;
+                                        eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][8]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                        eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][8]) ? 3.8 : eta_rule;
+                                        unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][8]) ? "W/W" : unit;
                                     }
                                 }
                                 else if (Hvalue[a][2] == "지하수 히트펌프")
@@ -2118,11 +2118,11 @@ namespace main.contents.Result.Building_Report
                                     SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_GroundWHP", "난방정격용량,난방정격COP", "번호 ='" + Hvalue[a][9] + "'");
                                     if (SystemValue.Length > 0)
                                     {
-                                        power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][9]);
-                                        power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][9]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][9]) : power;
-                                        eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][9]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                        eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][9]) ? 3.8 : eta_rule;
-                                        unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][9]) ? "W/W" : unit;
+                                        power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][9]);
+                                        power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][9]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][9]) : power;
+                                        eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][9]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                        eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][9]) ? 3.8 : eta_rule;
+                                        unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][9]) ? "W/W" : unit;
                                     }
                                 }
                             }
@@ -2165,11 +2165,11 @@ namespace main.contents.Result.Building_Report
                                     SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "용량,전부하효율", "번호 ='" + Hvalue[a][3] + "'");
                                     if (SystemValue.Length > 0)
                                     {
-                                        power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][3]);
-                                        power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][3]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][3]) : power;
-                                        eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][3]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                        eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][3]) ? 90 : eta_rule;
-                                        unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][3]) ? "%" : unit;
+                                        power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][3]);
+                                        power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][3]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][3]) : power;
+                                        eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][3]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                        eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][3]) ? 90 : eta_rule;
+                                        unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][3]) ? "%" : unit;
                                     }
                                 }
                                 else if (Hvalue[a][2] == "외기 히트펌프")
@@ -2177,11 +2177,11 @@ namespace main.contents.Result.Building_Report
                                     SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_AirHP", "난방정격용량,난방정격COP", "번호 ='" + Hvalue[a][4] + "'");
                                     if (SystemValue.Length > 0)
                                     {
-                                        power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][4]);
-                                        power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][4]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][4]) : power;
-                                        eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][4]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                        eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][4]) ? 3.8 : eta_rule;
-                                        unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][4]) ? "W/W" : unit;
+                                        power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][4]);
+                                        power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][4]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][4]) : power;
+                                        eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][4]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                        eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][4]) ? 3.8 : eta_rule;
+                                        unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][4]) ? "W/W" : unit;
                                     }
                                 }
                                 else if (Hvalue[a][2] == "흡수식온수기")
@@ -2189,11 +2189,11 @@ namespace main.contents.Result.Building_Report
                                     SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_ABS", "난방용량,난방성능", "번호 ='" + Hvalue[a][5] + "'");
                                     if (SystemValue.Length > 0)
                                     {
-                                        power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][5]);
-                                        power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][5]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][5]) : power;
-                                        eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][5]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                        eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][5]) ? 1.2 : eta_rule;
-                                        unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][5]) ? "W/W" : unit;
+                                        power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][5]);
+                                        power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][5]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][5]) : power;
+                                        eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][5]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                        eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][5]) ? 1.2 : eta_rule;
+                                        unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][5]) ? "W/W" : unit;
                                     }
                                 }
                                 else if (Hvalue[a][2] == "지역난방")
@@ -2201,11 +2201,11 @@ namespace main.contents.Result.Building_Report
                                     SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DH", "용량", "번호 ='" + Hvalue[a][6] + "'");
                                     if (SystemValue.Length > 0)
                                     {
-                                        power_tot += Convert.ToDouble(SystemValue[0][0]);
-                                        power = Convert.ToDouble(SystemValue[0][0]) > power ? Convert.ToDouble(SystemValue[0][0]) : power;
-                                        eta = power == Convert.ToDouble(SystemValue[0][0]) ? 100 : eta;
-                                        eta_rule = power == Convert.ToDouble(SystemValue[0][0]) ? 100 : eta_rule;
-                                        unit = power == Convert.ToDouble(SystemValue[0][0]) ? "%" : unit;
+                                        power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]);
+                                        power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) : power;
+                                        eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) ? 100 : eta;
+                                        eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) ? 100 : eta_rule;
+                                        unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) ? "%" : unit;
                                     }
                                 }
                                 else if (Hvalue[a][2] == "지열 히트펌프")
@@ -2213,11 +2213,11 @@ namespace main.contents.Result.Building_Report
                                     SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_GroundHP", "난방정격용량,난방정격COP", "번호 ='" + Hvalue[a][8] + "'");
                                     if (SystemValue.Length > 0)
                                     {
-                                        power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][8]);
-                                        power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][8]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][8]) : power;
-                                        eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][8]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                        eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][8]) ? 3.8 : eta_rule;
-                                        unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][8]) ? "W/W" : unit;
+                                        power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][8]);
+                                        power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][8]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][8]) : power;
+                                        eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][8]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                        eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][8]) ? 3.8 : eta_rule;
+                                        unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][8]) ? "W/W" : unit;
                                     }
                                 }
                                 else if (Hvalue[a][2] == "지하수 히트펌프")
@@ -2225,11 +2225,11 @@ namespace main.contents.Result.Building_Report
                                     SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_GroundWHP", "난방정격용량,난방정격COP", "번호 ='" + Hvalue[a][9] + "'");
                                     if (SystemValue.Length > 0)
                                     {
-                                        power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][9]);
-                                        power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][9]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][9]) : power;
-                                        eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][9]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                        eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][9]) ? 3.8 : eta_rule;
-                                        unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count_[a][9]) ? "W/W" : unit;
+                                        power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][9]);
+                                        power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][9]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][9]) : power;
+                                        eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][9]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                        eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][9]) ? 3.8 : eta_rule;
+                                        unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count_[a][9]) ? "W/W" : unit;
                                     }
                                 }
                             }
@@ -2269,11 +2269,11 @@ namespace main.contents.Result.Building_Report
                                     SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "용량,전부하효율", "번호 ='" + Dvalue[a][3] + "'");
                                     if (SystemValue.Length > 0)
                                     {
-                                        power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][3]);
-                                        power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][3]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][3]) : power;
-                                        eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][3]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                        eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][3]) ? 90 : eta_rule;
-                                        unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][3]) ? "%" : unit;
+                                        power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][3]);
+                                        power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][3]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][3]) : power;
+                                        eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][3]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                        eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][3]) ? 90 : eta_rule;
+                                        unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][3]) ? "%" : unit;
                                     }
                                 }
                                 else if (Dvalue[a][2] == "외기 히트펌프")
@@ -2281,11 +2281,11 @@ namespace main.contents.Result.Building_Report
                                     SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DHWHP", "급탕정격용량,급탕정격COP", "번호 ='" + Dvalue[a][4] + "'");
                                     if (SystemValue.Length > 0)
                                     {
-                                        power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][4]);
-                                        power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][4]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][4]) : power;
-                                        eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][4]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                        eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][4]) ? 3.8 : eta_rule;
-                                        unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][4]) ? "W/W" : unit;
+                                        power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][4]);
+                                        power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][4]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][4]) : power;
+                                        eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][4]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                        eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][4]) ? 3.8 : eta_rule;
+                                        unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][4]) ? "W/W" : unit;
                                     }
                                 }
                                 else if (Dvalue[a][2] == "지역난방")
@@ -2293,11 +2293,11 @@ namespace main.contents.Result.Building_Report
                                     SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DH", "용량", "번호 ='" + Dvalue[a][5] + "'");
                                     if (SystemValue.Length > 0)
                                     {
-                                        power_tot += Convert.ToDouble(SystemValue[0][0]);
-                                        power = Convert.ToDouble(SystemValue[0][0]) > power ? Convert.ToDouble(SystemValue[0][0]) : power;
-                                        eta = power == Convert.ToDouble(SystemValue[0][0]) ? 100 : eta;
-                                        eta_rule = power == Convert.ToDouble(SystemValue[0][0]) ? 100 : eta_rule;
-                                        unit = power == Convert.ToDouble(SystemValue[0][0]) ? "%" : unit;
+                                        power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]);
+                                        power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) : power;
+                                        eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) ? 100 : eta;
+                                        eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) ? 100 : eta_rule;
+                                        unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) ? "%" : unit;
                                     }
                                 }
                             }
@@ -2340,11 +2340,11 @@ namespace main.contents.Result.Building_Report
                                     SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "용량,전부하효율", "번호 ='" + Dvalue[a][3] + "'");
                                     if (SystemValue.Length > 0)
                                     {
-                                        power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][3]);
-                                        power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][3]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][3]) : power;
-                                        eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][3]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                        eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][3]) ? 90 : eta_rule;
-                                        unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][3]) ? "%" : unit;
+                                        power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][3]);
+                                        power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][3]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][3]) : power;
+                                        eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][3]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                        eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][3]) ? 90 : eta_rule;
+                                        unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][3]) ? "%" : unit;
                                     }
                                 }
                                 else if (Dvalue[a][2] == "외기 히트펌프")
@@ -2352,11 +2352,11 @@ namespace main.contents.Result.Building_Report
                                     SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DHWHP", "급탕정격용량,급탕정격COP", "번호 ='" + Dvalue[a][4] + "'");
                                     if (SystemValue.Length > 0)
                                     {
-                                        power_tot += Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][4]);
-                                        power = Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][4]) > power ? Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][4]) : power;
-                                        eta = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][4]) ? Convert.ToDouble(SystemValue[0][1]) : eta;
-                                        eta_rule = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][4]) ? 3.8 : eta_rule;
-                                        unit = power == Convert.ToDouble(SystemValue[0][0]) * Convert.ToDouble(count__[a][4]) ? "W/W" : unit;
+                                        power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][4]);
+                                        power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][4]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][4]) : power;
+                                        eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][4]) ? Program.UTIL.ToDoubleOrZero(SystemValue[0][1]) : eta;
+                                        eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][4]) ? 3.8 : eta_rule;
+                                        unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) * Program.UTIL.ToDoubleOrZero(count__[a][4]) ? "W/W" : unit;
                                     }
                                 }
                                 else if (Dvalue[a][2] == "지역난방")
@@ -2364,11 +2364,11 @@ namespace main.contents.Result.Building_Report
                                     SystemValue = Program.DB.getValue(DB.type.ProjDB, "User_DH", "용량", "번호 ='" + Dvalue[a][5] + "'");
                                     if (SystemValue.Length > 0)
                                     {
-                                        power_tot += Convert.ToDouble(SystemValue[0][0]);
-                                        power = Convert.ToDouble(SystemValue[0][0]) > power ? Convert.ToDouble(SystemValue[0][0]) : power;
-                                        eta = power == Convert.ToDouble(SystemValue[0][0]) ? 100 : eta;
-                                        eta_rule = power == Convert.ToDouble(SystemValue[0][0]) ? 100 : eta_rule;
-                                        unit = power == Convert.ToDouble(SystemValue[0][0]) ? "%" : unit;
+                                        power_tot += Program.UTIL.ToDoubleOrZero(SystemValue[0][0]);
+                                        power = Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) > power ? Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) : power;
+                                        eta = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) ? 100 : eta;
+                                        eta_rule = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) ? 100 : eta_rule;
+                                        unit = power == Program.UTIL.ToDoubleOrZero(SystemValue[0][0]) ? "%" : unit;
                                     }
                                 }
                             }
@@ -2398,9 +2398,9 @@ namespace main.contents.Result.Building_Report
                             double power_tot = 0, power_max = 0, eta = 0, eta_rule = 3.4;
                             for (int a = 0; a < Cvalue.Length; a++)
                             {
-                                power_tot += Convert.ToDouble(Cvalue[a][0]);
-                                power_max = power_max < Convert.ToDouble(Cvalue[a][0]) ? Convert.ToDouble(Cvalue[0][0]) : power_max;
-                                eta = power_max == Convert.ToDouble(Cvalue[a][0]) ? Convert.ToDouble(Cvalue[0][1]) : eta;
+                                power_tot += Program.UTIL.ToDoubleOrZero(Cvalue[a][0]);
+                                power_max = power_max < Program.UTIL.ToDoubleOrZero(Cvalue[a][0]) ? Program.UTIL.ToDoubleOrZero(Cvalue[0][0]) : power_max;
+                                eta = power_max == Program.UTIL.ToDoubleOrZero(Cvalue[a][0]) ? Program.UTIL.ToDoubleOrZero(Cvalue[0][1]) : eta;
                             }
                             __Edata[70].Add(new { idx = i, val = Cvalue.Length }); //개수
                             __Edata[71].Add(new { idx = i, val = Cvalue.Length }); //개수
@@ -2429,9 +2429,9 @@ namespace main.contents.Result.Building_Report
                             double power_tot = 0, power_max = 0, eta = 0, eta_rule = 3.4;
                             for (int a = 0; a < Cvalue.Length; a++)
                             {
-                                power_tot += Convert.ToDouble(Cvalue[a][0]);
-                                power_max = power_max < Convert.ToDouble(Cvalue[a][0]) ? Convert.ToDouble(Cvalue[0][0]) : power_max;
-                                eta = power_max == Convert.ToDouble(Cvalue[a][0]) ? Convert.ToDouble(Cvalue[0][1]) : eta;
+                                power_tot += Program.UTIL.ToDoubleOrZero(Cvalue[a][0]);
+                                power_max = power_max < Program.UTIL.ToDoubleOrZero(Cvalue[a][0]) ? Program.UTIL.ToDoubleOrZero(Cvalue[0][0]) : power_max;
+                                eta = power_max == Program.UTIL.ToDoubleOrZero(Cvalue[a][0]) ? Program.UTIL.ToDoubleOrZero(Cvalue[0][1]) : eta;
                             }
                             __Edata2[70].Add(new { idx = i, val = Cvalue.Length }); //개수
                             __Edata2[71].Add(new { idx = i, val = Cvalue.Length }); //개수
@@ -2461,9 +2461,9 @@ namespace main.contents.Result.Building_Report
                                 {
                                     for (int aa = 0; aa < 조명존.Length; aa++)
                                     {
-                                        light_area = Convert.ToDouble(조명존[aa][1]);
-                                        light_density = Convert.ToDouble(조명존[aa][1]) * Convert.ToDouble(조명존[aa][2]);
-                                        light_eta_avg = Convert.ToDouble(조명존[aa][1]) * Convert.ToDouble(조명존[aa][4]);
+                                        light_area = Program.UTIL.ToDoubleOrZero(조명존[aa][1]);
+                                        light_density = Program.UTIL.ToDoubleOrZero(조명존[aa][1]) * Program.UTIL.ToDoubleOrZero(조명존[aa][2]);
+                                        light_eta_avg = Program.UTIL.ToDoubleOrZero(조명존[aa][1]) * Program.UTIL.ToDoubleOrZero(조명존[aa][4]);
                                     }
                                 }
                             }
@@ -2504,9 +2504,9 @@ namespace main.contents.Result.Building_Report
                                 {
                                     for (int aa = 0; aa < 조명존.Length; aa++)
                                     {
-                                        light_area = Convert.ToDouble(조명존[aa][1]);
-                                        light_density = Convert.ToDouble(조명존[aa][1]) * Convert.ToDouble(조명존[aa][2]);
-                                        light_eta_avg = Convert.ToDouble(조명존[aa][1]) * Convert.ToDouble(조명존[aa][4]);
+                                        light_area = Program.UTIL.ToDoubleOrZero(조명존[aa][1]);
+                                        light_density = Program.UTIL.ToDoubleOrZero(조명존[aa][1]) * Program.UTIL.ToDoubleOrZero(조명존[aa][2]);
+                                        light_eta_avg = Program.UTIL.ToDoubleOrZero(조명존[aa][1]) * Program.UTIL.ToDoubleOrZero(조명존[aa][4]);
                                     }
                                 }
                             }
@@ -2538,9 +2538,9 @@ namespace main.contents.Result.Building_Report
 
                             for (int a = 0; a < Value.Length; a++)
                             {
-                                pv_count += Convert.ToDouble(Value[a][3]);
-                                pv_power += Convert.ToDouble(Value[a][5]);
-                                pv_eta_avg += Convert.ToDouble(Value[a][8]) * Convert.ToDouble(Value[a][5]) * 100;
+                                pv_count += Program.UTIL.ToDoubleOrZero(Value[a][3]);
+                                pv_power += Program.UTIL.ToDoubleOrZero(Value[a][5]);
+                                pv_eta_avg += Program.UTIL.ToDoubleOrZero(Value[a][8]) * Program.UTIL.ToDoubleOrZero(Value[a][5]) * 100;
                             }
                             pv_eta_avg = pv_eta_avg / pv_power;
                             pv_point = 100;
@@ -2573,9 +2573,9 @@ namespace main.contents.Result.Building_Report
 
                             for (int a = 0; a < Value.Length; a++)
                             {
-                                pv_count += Convert.ToDouble(Value[a][3]);
-                                pv_power += Convert.ToDouble(Value[a][5]);
-                                pv_eta_avg += Convert.ToDouble(Value[a][8]) * Convert.ToDouble(Value[a][5]) * 100;
+                                pv_count += Program.UTIL.ToDoubleOrZero(Value[a][3]);
+                                pv_power += Program.UTIL.ToDoubleOrZero(Value[a][5]);
+                                pv_eta_avg += Program.UTIL.ToDoubleOrZero(Value[a][8]) * Program.UTIL.ToDoubleOrZero(Value[a][5]) * 100;
                             }
                             pv_eta_avg = pv_eta_avg / pv_power;
                             pv_point = 100;
@@ -2612,35 +2612,35 @@ namespace main.contents.Result.Building_Report
                             string[][] Final2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량", "not 연료='전기' and not 연료='전체'  and 월 ='" + (mth + 1).ToString() + "월'");
                             if (Final1.Length > 0)
                             {
-                                난방[mth] = Convert.ToDouble(Final1[0][0]);
-                                냉방[mth] = Convert.ToDouble(Final1[0][1]);
-                                급탕[mth] = Convert.ToDouble(Final1[0][2]);
-                                조명[mth] = Convert.ToDouble(Final1[0][3]);
-                                공조[mth] = Convert.ToDouble(Final1[0][4]);
+                                난방[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][0]);
+                                냉방[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][1]);
+                                급탕[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][2]);
+                                조명[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][3]);
+                                공조[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][4]);
                                 if (Final1[0][5] != null && Final1[0][5] != "")
                                 {
-                                    기저[mth] = Convert.ToDouble(Final1[0][5]);
+                                    기저[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][5]);
                                 }
                                 if (RES1.Length > 0 && RES1[0][0] != "")
-                                { 신재생[mth] = Convert.ToDouble(RES1[0][0]); }
-                                총전기[mth] = Convert.ToDouble(Final1[0][7]) - 기저[mth];
+                                { 신재생[mth] = Program.UTIL.ToDoubleOrZero(RES1[0][0]); }
+                                총전기[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][7]) - 기저[mth];
                             }
                             if (Final2.Length > 0)
                             {
-                                난방[mth] = 난방[mth] + Convert.ToDouble(Final2[0][0]);
-                                냉방[mth] = 냉방[mth] + Convert.ToDouble(Final2[0][1]);
-                                급탕[mth] = 급탕[mth] + Convert.ToDouble(Final2[0][2]);
-                                조명[mth] = 조명[mth] + Convert.ToDouble(Final2[0][3]);
-                                공조[mth] = 공조[mth] + Convert.ToDouble(Final2[0][4]);
+                                난방[mth] = 난방[mth] + Program.UTIL.ToDoubleOrZero(Final2[0][0]);
+                                냉방[mth] = 냉방[mth] + Program.UTIL.ToDoubleOrZero(Final2[0][1]);
+                                급탕[mth] = 급탕[mth] + Program.UTIL.ToDoubleOrZero(Final2[0][2]);
+                                조명[mth] = 조명[mth] + Program.UTIL.ToDoubleOrZero(Final2[0][3]);
+                                공조[mth] = 공조[mth] + Program.UTIL.ToDoubleOrZero(Final2[0][4]);
                                 if (Final2[0][5] != null && Final2[0][5] != "")
                                 {
-                                    기저[mth] = Convert.ToDouble(Final2[0][5]);
+                                    기저[mth] = Program.UTIL.ToDoubleOrZero(Final2[0][5]);
                                 }
                                 if (RES2.Length > 0 && RES2[0][0] != "")
                                 {
-                                    신재생[mth] = 신재생[mth] + Convert.ToDouble(RES2[0][0]);
+                                    신재생[mth] = 신재생[mth] + Program.UTIL.ToDoubleOrZero(RES2[0][0]);
                                 }
-                                총가스[mth] = Convert.ToDouble(Final2[0][7]) - 기저[mth];
+                                총가스[mth] = Program.UTIL.ToDoubleOrZero(Final2[0][7]) - 기저[mth];
                             }
 
                             난방[mth] = double.IsNaN(난방[mth]) ? 0 : 난방[mth];
@@ -2697,38 +2697,38 @@ namespace main.contents.Result.Building_Report
                             string[][] Fi3 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "연료='지역난방' and 월 ='" + (mth + 1).ToString() + "월'");
                             if (Fi1.Length > 0)
                             {
-                                난방1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][0]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][0]) * 2.75;
-                                냉방1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][1]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][1]) * 2.75;
-                                급탕1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][2]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][2]) * 2.75;
-                                조명1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][3]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][3]) * 2.75;
-                                공조1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][4]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][4]) * 2.75;
+                                난방1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][0]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][0]) * 2.75;
+                                냉방1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][1]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][1]) * 2.75;
+                                급탕1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][2]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][2]) * 2.75;
+                                조명1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][3]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][3]) * 2.75;
+                                공조1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][4]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][4]) * 2.75;
                                 if (RES1.Length > 0 && RES1[0][0] != "")
                                 {
-                                    전기1[mth] = double.IsNaN(Convert.ToDouble(RES1[0][0]) * 2.75) ? 0 : Convert.ToDouble(RES1[0][0]) * 2.75;
+                                    전기1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(RES1[0][0]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(RES1[0][0]) * 2.75;
                                 }
-                                총소요1[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][6]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][6]) * 2.75;
+                                총소요1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][6]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][6]) * 2.75;
                             }
                             if (Fi2.Length > 0)
                             {
-                                난방1[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][0]) * 1.1) ? 0 : Convert.ToDouble(Fi2[0][0]) * 1.1;
-                                냉방1[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][1]) * 1.1) ? 0 : Convert.ToDouble(Fi2[0][1]) * 1.1;
-                                급탕1[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][2]) * 1.1) ? 0 : Convert.ToDouble(Fi2[0][2]) * 1.1;
-                                조명1[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][3]) * 1.1) ? 0 : Convert.ToDouble(Fi2[0][3]) * 1.1;
-                                공조1[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][4]) * 1.1) ? 0 : Convert.ToDouble(Fi2[0][4]) * 1.1;
+                                난방1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi2[0][0]) * 1.1) ? 0 : Program.UTIL.ToDoubleOrZero(Fi2[0][0]) * 1.1;
+                                냉방1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi2[0][1]) * 1.1) ? 0 : Program.UTIL.ToDoubleOrZero(Fi2[0][1]) * 1.1;
+                                급탕1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi2[0][2]) * 1.1) ? 0 : Program.UTIL.ToDoubleOrZero(Fi2[0][2]) * 1.1;
+                                조명1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi2[0][3]) * 1.1) ? 0 : Program.UTIL.ToDoubleOrZero(Fi2[0][3]) * 1.1;
+                                공조1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi2[0][4]) * 1.1) ? 0 : Program.UTIL.ToDoubleOrZero(Fi2[0][4]) * 1.1;
                                 if (RES2.Length > 0 && RES2[0][0] != "")
                                 {
-                                    열1[mth] = double.IsNaN(Convert.ToDouble(RES2[0][0]) * 1.1) ? 0 : Convert.ToDouble(RES2[0][0]) * 1.1;
+                                    열1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(RES2[0][0]) * 1.1) ? 0 : Program.UTIL.ToDoubleOrZero(RES2[0][0]) * 1.1;
                                 }
-                                총소요1[mth] = double.IsNaN(총소요1[mth] + Convert.ToDouble(Fi2[0][6]) * 1.1) ? 0 : 총소요1[mth] + Convert.ToDouble(Fi2[0][6]) * 1.1;
+                                총소요1[mth] = double.IsNaN(총소요1[mth] + Program.UTIL.ToDoubleOrZero(Fi2[0][6]) * 1.1) ? 0 : 총소요1[mth] + Program.UTIL.ToDoubleOrZero(Fi2[0][6]) * 1.1;
                             }
                             if (Fi3.Length > 0)
                             {
-                                난방1[mth] += double.IsNaN(Convert.ToDouble(Fi3[0][0]) * 0.728) ? 0 : Convert.ToDouble(Fi3[0][0]) * 0.728;
-                                냉방1[mth] += double.IsNaN(Convert.ToDouble(Fi3[0][1]) * 0.728) ? 0 : Convert.ToDouble(Fi3[0][1]) * 0.728;
-                                급탕1[mth] += double.IsNaN(Convert.ToDouble(Fi3[0][2]) * 0.728) ? 0 : Convert.ToDouble(Fi3[0][2]) * 0.728;
-                                조명1[mth] += double.IsNaN(Convert.ToDouble(Fi3[0][3]) * 0.728) ? 0 : Convert.ToDouble(Fi3[0][3]) * 0.728;
-                                공조1[mth] += double.IsNaN(Convert.ToDouble(Fi3[0][4]) * 0.728) ? 0 : Convert.ToDouble(Fi3[0][4]) * 0.728;
-                                총소요1[mth] = double.IsNaN(총소요1[mth] + Convert.ToDouble(Fi3[0][6]) * 0.728) ? 0 : 총소요1[mth] + Convert.ToDouble(Fi3[0][6]) * 0.728;
+                                난방1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][0]) * 0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][0]) * 0.728;
+                                냉방1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][1]) * 0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][1]) * 0.728;
+                                급탕1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][2]) * 0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][2]) * 0.728;
+                                조명1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][3]) * 0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][3]) * 0.728;
+                                공조1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][4]) * 0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][4]) * 0.728;
+                                총소요1[mth] = double.IsNaN(총소요1[mth] + Program.UTIL.ToDoubleOrZero(Fi3[0][6]) * 0.728) ? 0 : 총소요1[mth] + Program.UTIL.ToDoubleOrZero(Fi3[0][6]) * 0.728;
                             }
                         }
 
@@ -2882,35 +2882,35 @@ namespace main.contents.Result.Building_Report
                             string[][] Final2 = Program.DB.getValue(res[0][0], "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량", "not 연료='전기' and not 연료='전체'  and 월 ='" + (mth + 1).ToString() + "월'");
                             if (Final1.Length > 0)
                             {
-                                난방2[mth] = Convert.ToDouble(Final1[0][0]);
-                                냉방2[mth] = Convert.ToDouble(Final1[0][1]);
-                                급탕2[mth] = Convert.ToDouble(Final1[0][2]);
-                                조명2[mth] = Convert.ToDouble(Final1[0][3]);
-                                공조2[mth] = Convert.ToDouble(Final1[0][4]);
+                                난방2[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][0]);
+                                냉방2[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][1]);
+                                급탕2[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][2]);
+                                조명2[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][3]);
+                                공조2[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][4]);
                                 if (Final1[0][5] != null && Final1[0][5] != "")
                                 {
-                                    기저2[mth] = Convert.ToDouble(Final1[0][5]);
+                                    기저2[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][5]);
                                 }
                                 if (RES1.Length > 0 && RES1[0][0] != "")
-                                { 신재생2[mth] = Convert.ToDouble(RES1[0][0]); }
-                                총전기2[mth] = Convert.ToDouble(Final1[0][7]) - 기저2[mth];
+                                { 신재생2[mth] = Program.UTIL.ToDoubleOrZero(RES1[0][0]); }
+                                총전기2[mth] = Program.UTIL.ToDoubleOrZero(Final1[0][7]) - 기저2[mth];
                             }
                             if (Final2.Length > 0)
                             {
-                                난방2[mth] = 난방2[mth] + Convert.ToDouble(Final2[0][0]);
-                                냉방2[mth] = 냉방2[mth] + Convert.ToDouble(Final2[0][1]);
-                                급탕2[mth] = 급탕2[mth] + Convert.ToDouble(Final2[0][2]);
-                                조명2[mth] = 조명2[mth] + Convert.ToDouble(Final2[0][3]);
-                                공조2[mth] = 공조2[mth] + Convert.ToDouble(Final2[0][4]);
+                                난방2[mth] = 난방2[mth] + Program.UTIL.ToDoubleOrZero(Final2[0][0]);
+                                냉방2[mth] = 냉방2[mth] + Program.UTIL.ToDoubleOrZero(Final2[0][1]);
+                                급탕2[mth] = 급탕2[mth] + Program.UTIL.ToDoubleOrZero(Final2[0][2]);
+                                조명2[mth] = 조명2[mth] + Program.UTIL.ToDoubleOrZero(Final2[0][3]);
+                                공조2[mth] = 공조2[mth] + Program.UTIL.ToDoubleOrZero(Final2[0][4]);
                                 if (Final2[0][5] != null && Final2[0][5] != "")
                                 {
-                                    기저2[mth] = Convert.ToDouble(Final2[0][5]);
+                                    기저2[mth] = Program.UTIL.ToDoubleOrZero(Final2[0][5]);
                                 }
                                 if (RES2.Length > 0 && RES2[0][0] != "")
                                 {
-                                    신재생2[mth] = 신재생2[mth] + Convert.ToDouble(RES2[0][0]);
+                                    신재생2[mth] = 신재생2[mth] + Program.UTIL.ToDoubleOrZero(RES2[0][0]);
                                 }
-                                총가스2[mth] = Convert.ToDouble(Final2[0][7]) - 기저2[mth];
+                                총가스2[mth] = Program.UTIL.ToDoubleOrZero(Final2[0][7]) - 기저2[mth];
                             }
 
                             난방2[mth] = double.IsNaN(난방2[mth]) ? 0 : 난방2[mth];
@@ -2961,38 +2961,38 @@ namespace main.contents.Result.Building_Report
                             string[][] Fi3 = Program.DB.getValue(res[0][0], "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "연료='지역난방' and 월 ='" + (mth + 1).ToString() + "월'");
                             if (Fi1.Length > 0)
                             {
-                                난방12[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][0]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][0]) * 2.75;
-                                냉방12[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][1]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][1]) * 2.75;
-                                급탕12[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][2]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][2]) * 2.75;
-                                조명12[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][3]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][3]) * 2.75;
-                                공조12[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][4]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][4]) * 2.75;
+                                난방12[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][0]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][0]) * 2.75;
+                                냉방12[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][1]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][1]) * 2.75;
+                                급탕12[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][2]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][2]) * 2.75;
+                                조명12[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][3]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][3]) * 2.75;
+                                공조12[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][4]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][4]) * 2.75;
                                 if (RES1.Length > 0 && RES1[0][0] != "")
                                 {
-                                    전기12[mth] = double.IsNaN(Convert.ToDouble(RES1[0][0]) * 2.75) ? 0 : Convert.ToDouble(RES1[0][0]) * 2.75;
+                                    전기12[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(RES1[0][0]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(RES1[0][0]) * 2.75;
                                 }
-                                총소요12[mth] = double.IsNaN(Convert.ToDouble(Fi1[0][6]) * 2.75) ? 0 : Convert.ToDouble(Fi1[0][6]) * 2.75;
+                                총소요12[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][6]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][6]) * 2.75;
                             }
                             if (Fi2.Length > 0)
                             {
-                                난방12[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][0]) * 1.1) ? 0 : Convert.ToDouble(Fi2[0][0]) * 1.1;
-                                냉방12[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][1]) * 1.1) ? 0 : Convert.ToDouble(Fi2[0][1]) * 1.1;
-                                급탕12[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][2]) * 1.1) ? 0 : Convert.ToDouble(Fi2[0][2]) * 1.1;
-                                조명12[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][3]) * 1.1) ? 0 : Convert.ToDouble(Fi2[0][3]) * 1.1;
-                                공조12[mth] += double.IsNaN(Convert.ToDouble(Fi2[0][4]) * 1.1) ? 0 : Convert.ToDouble(Fi2[0][4]) * 1.1;
+                                난방12[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi2[0][0]) * 1.1) ? 0 : Program.UTIL.ToDoubleOrZero(Fi2[0][0]) * 1.1;
+                                냉방12[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi2[0][1]) * 1.1) ? 0 : Program.UTIL.ToDoubleOrZero(Fi2[0][1]) * 1.1;
+                                급탕12[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi2[0][2]) * 1.1) ? 0 : Program.UTIL.ToDoubleOrZero(Fi2[0][2]) * 1.1;
+                                조명12[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi2[0][3]) * 1.1) ? 0 : Program.UTIL.ToDoubleOrZero(Fi2[0][3]) * 1.1;
+                                공조12[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi2[0][4]) * 1.1) ? 0 : Program.UTIL.ToDoubleOrZero(Fi2[0][4]) * 1.1;
                                 if (RES2.Length > 0 && RES2[0][0] != "")
                                 {
-                                    열12[mth] = double.IsNaN(Convert.ToDouble(RES2[0][0]) * 1.1) ? 0 : Convert.ToDouble(RES2[0][0]) * 1.1;
+                                    열12[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(RES2[0][0]) * 1.1) ? 0 : Program.UTIL.ToDoubleOrZero(RES2[0][0]) * 1.1;
                                 }
-                                총소요12[mth] = double.IsNaN(총소요12[mth] + Convert.ToDouble(Fi2[0][6]) * 1.1) ? 0 : 총소요12[mth] + Convert.ToDouble(Fi2[0][6]) * 1.1;
+                                총소요12[mth] = double.IsNaN(총소요12[mth] + Program.UTIL.ToDoubleOrZero(Fi2[0][6]) * 1.1) ? 0 : 총소요12[mth] + Program.UTIL.ToDoubleOrZero(Fi2[0][6]) * 1.1;
                             }
                             if (Fi3.Length > 0)
                             {
-                                난방12[mth] += double.IsNaN(Convert.ToDouble(Fi3[0][0]) * 0.728) ? 0 : Convert.ToDouble(Fi3[0][0]) * 0.728;
-                                냉방12[mth] += double.IsNaN(Convert.ToDouble(Fi3[0][1]) * 0.728) ? 0 : Convert.ToDouble(Fi3[0][1]) * 0.728;
-                                급탕12[mth] += double.IsNaN(Convert.ToDouble(Fi3[0][2]) * 0.728) ? 0 : Convert.ToDouble(Fi3[0][2]) * 0.728;
-                                조명12[mth] += double.IsNaN(Convert.ToDouble(Fi3[0][3]) * 0.728) ? 0 : Convert.ToDouble(Fi3[0][3]) * 0.728;
-                                공조12[mth] += double.IsNaN(Convert.ToDouble(Fi3[0][4]) * 0.728) ? 0 : Convert.ToDouble(Fi3[0][4]) * 0.728;
-                                총소요12[mth] = double.IsNaN(총소요12[mth] + Convert.ToDouble(Fi3[0][6]) * 0.728) ? 0 : 총소요12[mth] + Convert.ToDouble(Fi3[0][6]) * 0.728;
+                                난방12[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][0]) * 0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][0]) * 0.728;
+                                냉방12[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][1]) * 0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][1]) * 0.728;
+                                급탕12[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][2]) * 0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][2]) * 0.728;
+                                조명12[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][3]) * 0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][3]) * 0.728;
+                                공조12[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][4]) * 0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][4]) * 0.728;
+                                총소요12[mth] = double.IsNaN(총소요12[mth] + Program.UTIL.ToDoubleOrZero(Fi3[0][6]) * 0.728) ? 0 : 총소요12[mth] + Program.UTIL.ToDoubleOrZero(Fi3[0][6]) * 0.728;
                             }
                         }
 

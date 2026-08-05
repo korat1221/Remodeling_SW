@@ -146,27 +146,27 @@ namespace main.subcontents.ConstructionCW
         }
         private void UserDB_Conductivity_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserDB_Conductivity = Convert.ToDouble(UserDB_Conductivity_textBox.Text);
+            UserDB_Conductivity = Program.UTIL.ToDoubleOrZero(UserDB_Conductivity_textBox.Text);
         }
 
         private void UserDB_Density_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserDB_Density = Convert.ToDouble(UserDB_Density_textBox.Text);
+            UserDB_Density = Program.UTIL.ToDoubleOrZero(UserDB_Density_textBox.Text);
         }
 
         private void UserDB_c_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserDB_c = Convert.ToDouble(UserDB_c_textBox.Text);
+            UserDB_c = Program.UTIL.ToDoubleOrZero(UserDB_c_textBox.Text);
         }
 
         private void UserDB_dry_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserDB_dry = Convert.ToDouble(UserDB_dry_textBox.Text);
+            UserDB_dry = Program.UTIL.ToDoubleOrZero(UserDB_dry_textBox.Text);
         }
 
         private void UserDB_wet_textBox_TextChanged(object sender, EventArgs e)
         {
-            UserDB_wet = Convert.ToDouble(UserDB_wet_textBox.Text);
+            UserDB_wet = Program.UTIL.ToDoubleOrZero(UserDB_wet_textBox.Text);
         }
 
 

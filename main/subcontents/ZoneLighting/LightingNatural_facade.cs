@@ -203,12 +203,12 @@ namespace main.subcontents.ZoneLighting
             string[][] User_WinGlass = Program.DB.getValue(DB.type.ProjDB, "User_Glass", "번호,제품명,빛투과율", "제품명 ='" + glass1_comboBox.SelectedItem.ToString() + "'");
             if (User_WinGlass.Length > 0)
             {
-                Tao = Convert.ToDouble(User_WinGlass[0][2]);
+                Tao = Program.UTIL.ToDoubleOrZero(User_WinGlass[0][2]);
             }
             string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,제품명,빛투과율", "제품명 ='" + glass1_comboBox.SelectedItem.ToString() + "'");
             if (WinGlass.Length > 0)
             {
-                Tao = Convert.ToDouble(WinGlass[0][2]);
+                Tao = Program.UTIL.ToDoubleOrZero(WinGlass[0][2]);
             }
             Tao_textBox.Text = string.Format("{0:F3}", Tao);
 
@@ -245,9 +245,9 @@ namespace main.subcontents.ZoneLighting
 
             if (facadetype == "중정" || facadetype == "아트리움")
             {
-                W = Convert.ToDouble(W_textBox.Text);
-                L = Convert.ToDouble(L_textBox.Text);
-                H = Convert.ToDouble(H_textBox.Text);
+                W = Program.UTIL.ToDoubleOrZero(W_textBox.Text);
+                L = Program.UTIL.ToDoubleOrZero(L_textBox.Text);
+                H = Program.UTIL.ToDoubleOrZero(H_textBox.Text);
             }
 
             else
@@ -270,13 +270,13 @@ namespace main.subcontents.ZoneLighting
 
                 doubleskinglasstype = Load[0][1];
                 atriumglasstype = Load[0][2];
-                Tao = Convert.ToDouble(Load[0][3]);
+                Tao = Program.UTIL.ToDoubleOrZero(Load[0][3]);
                 glass1_comboBox.SelectedItem = doubleskinglasstype;
                 Tao_textBox.Text = Tao.ToString();
 
-                W = Convert.ToDouble(Load[0][4]);
-                L = Convert.ToDouble(Load[0][5]);
-                H = Convert.ToDouble(Load[0][6]);
+                W = Program.UTIL.ToDoubleOrZero(Load[0][4]);
+                L = Program.UTIL.ToDoubleOrZero(Load[0][5]);
+                H = Program.UTIL.ToDoubleOrZero(Load[0][6]);
 
                 W_textBox.Text = W.ToString();
                 L_textBox.Text = L.ToString();

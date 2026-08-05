@@ -106,9 +106,9 @@ namespace main.subcontents
                         CoolingZone_dataGridView.Rows[nRow].Cells[2].Value = 층[0][0];
                         CoolingZone_dataGridView.Rows[nRow].Cells[3].Value = Value[n][1];
                         CoolingZone_dataGridView.Rows[nRow].Cells[4].Value = Value[n][2];
-                        CoolingZone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F0}", Convert.ToDouble(부하[0][0]));
-                        CoolingZone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Convert.ToDouble(부하[0][1]) / 1000);
-                        CoolingZone_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Convert.ToDouble(Value[n][3]));
+                        CoolingZone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F0}", Program.UTIL.ToDoubleOrZero(부하[0][0]));
+                        CoolingZone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(부하[0][1]) / 1000);
+                        CoolingZone_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(Value[n][3]));
                         
                         if (설비.Length > 0)
                         {
@@ -168,7 +168,7 @@ namespace main.subcontents
                         string[][]  공조출력 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "AHUSystem_Result", "Qmax_tot", " 번호 ='" + Value[n][0] + "' And 난방_냉방 = '냉방'");
                         if (공조출력.Length > 0)
                         {
-                            Power = Convert.ToDouble(공조출력[0][0].ToString());
+                            Power = Program.UTIL.ToDoubleOrZero(공조출력[0][0].ToString());
                         }
                         else Power = 0;
 
@@ -176,7 +176,7 @@ namespace main.subcontents
                         for(int h= 0;h<존.Length ; h++)
                         {
                             SelectAhu_split.Add(존[h][0]);
-                            area += Convert.ToDouble(존[h][1]);
+                            area += Program.UTIL.ToDoubleOrZero(존[h][1]);
                         }
                       
                         CoolingZone_dataGridView.Rows.Add();

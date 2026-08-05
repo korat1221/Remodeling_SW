@@ -49,12 +49,12 @@ namespace main.subcontents.CoolingSystem
                 CoolerTop_dataGridView.Rows[nRow].Cells[3].Value = DefaultDB_Value[i][1]; //명칭
                 CoolerTop_dataGridView.Rows[nRow].Cells[4].Value = DefaultDB_Value[i][2]; //형식
 
-                CoolerTop_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][3]));//냉각능력
-                CoolerTop_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][4]));//냉각수량
+                CoolerTop_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][3]));//냉각능력
+                CoolerTop_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][4]));//냉각수량
                 CoolerTop_dataGridView.Rows[nRow].Cells[7].Value = DefaultDB_Value[i][5]; //입구온도
                 CoolerTop_dataGridView.Rows[nRow].Cells[8].Value = DefaultDB_Value[i][6]; //출구온도
                 CoolerTop_dataGridView.Rows[nRow].Cells[9].Value = DefaultDB_Value[i][7]; //팬유형
-                CoolerTop_dataGridView.Rows[nRow].Cells[10].Value = string.Format("{0:F1}", Convert.ToDouble(DefaultDB_Value[i][8]));//냉방전력소비계수
+                CoolerTop_dataGridView.Rows[nRow].Cells[10].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][8]));//냉방전력소비계수
                 CoolerTop_dataGridView.Rows[nRow].Cells[11].Value = DefaultDB_Value[i][9]; //대기전력
                 CoolerTop_dataGridView.Rows[nRow].Cells[12].Value = DefaultDB_Value[i][10]; //설치
             }

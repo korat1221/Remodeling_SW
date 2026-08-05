@@ -197,10 +197,10 @@ namespace main.contents
                 }
                 else
                 {
-                    BlindEx = Convert.ToDouble(DB_form.Select_Blind[7]);
-                    BlindIn = Convert.ToDouble(DB_form.Select_Blind[8]);
-                    BlindSHGC = Convert.ToDouble(DB_form.Select_Blind[9]);
-                    BlindAlpha = Convert.ToDouble(DB_form.Select_Blind[10]);
+                    BlindEx = Program.UTIL.ToDoubleOrZero(DB_form.Select_Blind[7]);
+                    BlindIn = Program.UTIL.ToDoubleOrZero(DB_form.Select_Blind[8]);
+                    BlindSHGC = Program.UTIL.ToDoubleOrZero(DB_form.Select_Blind[9]);
+                    BlindAlpha = Program.UTIL.ToDoubleOrZero(DB_form.Select_Blind[10]);
                 }
 
                 BlindName_textBox.Text = BlindName;
@@ -282,13 +282,13 @@ namespace main.contents
                     res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='남' And 기간 = '" + mth.ToString() + "월'");
                     if (res1.Length > 0)
                     {
-                        s += Convert.ToDouble(res1[0][0]) * 100 + ",";
+                        s += Program.UTIL.ToDoubleOrZero(res1[0][0]) * 100 + ",";
                     }
                 }
                 res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='남' And 기간 = '" + 12.ToString() + "월'");
                 if (res1.Length > 0)
                 {
-                    s += Convert.ToDouble(res1[0][0]) * 100;
+                    s += Program.UTIL.ToDoubleOrZero(res1[0][0]) * 100;
                 }
 
 
@@ -302,7 +302,7 @@ namespace main.contents
                     {
                         if (res2.Length > 0)
                         {
-                            s2 += (Convert.ToDouble(res2[0][0]) * 24 * day[mth -1] /1000)+ ",";
+                            s2 += (Program.UTIL.ToDoubleOrZero(res2[0][0]) * 24 * day[mth -1] /1000)+ ",";
                         }
                     }
                 }
@@ -311,8 +311,8 @@ namespace main.contents
                 double max = 0;
                 if (res3.Length > 0)
                 {
-                    int n2 = ((int)Convert.ToDouble(res3[0][0])).ToString().Length;
-                    max = Convert.ToInt64(Convert.ToDouble(res3[0][0]) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1);
+                    int n2 = ((int)Program.UTIL.ToDoubleOrZero(res3[0][0])).ToString().Length;
+                    max = Convert.ToInt64(Program.UTIL.ToDoubleOrZero(res3[0][0]) / Math.Pow(10, n2 - 1)) * Math.Pow(10, n2 - 1) + Math.Pow(10, n2 - 1);
 
                 }
                 string unit = "kWh/m" + Program.UTIL.Subscript(2, true) + "·mth";
@@ -429,13 +429,13 @@ namespace main.contents
                 ControlType = Value[0][13];
 
                 BlindEx_textBox.Text = Value[0][9];
-                BlindEx = Convert.ToDouble(Value[0][9]);
+                BlindEx = Program.UTIL.ToDoubleOrZero(Value[0][9]);
                 BlindIn_textBox.Text = Value[0][10];
-                BlindIn = Convert.ToDouble(Value[0][10]);
+                BlindIn = Program.UTIL.ToDoubleOrZero(Value[0][10]);
                 BlindSHGC_textBox.Text = Value[0][11];
-                BlindSHGC = Convert.ToDouble(Value[0][11]);
+                BlindSHGC = Program.UTIL.ToDoubleOrZero(Value[0][11]);
                 BlindAlpha_textBox.Text = Value[0][12];
-                BlindAlpha = Convert.ToDouble(Value[0][12]);
+                BlindAlpha = Program.UTIL.ToDoubleOrZero(Value[0][12]);
                 Load_Image();
 
             }

@@ -96,8 +96,8 @@ namespace main.contents.Result
                     double light_saving = 0;
                     if (value.Length > 0 && value3.Length > 0)
                     {
-                        Total_Energy_pre = Convert.ToDouble(value3[0][0]);
-                        light_saving = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
+                        Total_Energy_pre = Program.UTIL.ToDoubleOrZero(value3[0][0]);
+                        light_saving = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
                     }
 
                     value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 From FinalEnergy_Result_Rule Where 월='연간' and 연료='전기' and 검토유형='조명'");
@@ -105,14 +105,14 @@ namespace main.contents.Result
                     double light_saving_elec = 0;
                     if (value.Length > 0 && value3.Length > 0)
                     {
-                        light_saving_elec = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
+                        light_saving_elec = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
                     }
                     value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 From FinalEnergy_Result_Rule Where 월='연간' and 연료='전체' and 검토유형='조명'");
                     value3 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "총에너지소요량", "월='연간' and 연료='전체'");
                     double light_saving_noelec = 0;
                     if (value.Length > 0 && value3.Length > 0)
                     {
-                        light_saving_noelec = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
+                        light_saving_noelec = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
                     }
                     double v = double.IsNaN(light_saving) ? 0 : light_saving;
                     Light_data[0].Add(new { idx = i, val = v.ToString("#,##0") }); ; //절감량 
@@ -152,14 +152,14 @@ namespace main.contents.Result
                                 if (조명존.Length > 1) { Light_Zone_text[a] = 조명존[0][0] + " 외 " + (조명존.Length - 1).ToString() + "개"; }
                                 else { Light_Zone_text[a] = 조명존[0][0]; }
                                 //효율
-                                Light_eta[a] = Convert.ToDouble(조명존[0][4]);
+                                Light_eta[a] = Program.UTIL.ToDoubleOrZero(조명존[0][4]);
                                 Light_Density_Rule[a] = 8;//에절계 조명부문 1번 1점
                                 //면적, 조명밀도 
                                 Boolean samecheck = false;
                                 for (int aa = 0; aa < 조명존.Length; aa++)
                                 {
-                                    Light_Area_New[a] += Convert.ToDouble(조명존[aa][1]);
-                                    Light_Density_New[a] += Convert.ToDouble(조명존[aa][1]) * Convert.ToDouble(조명존[aa][2]);
+                                    Light_Area_New[a] += Program.UTIL.ToDoubleOrZero(조명존[aa][1]);
+                                    Light_Density_New[a] += Program.UTIL.ToDoubleOrZero(조명존[aa][1]) * Program.UTIL.ToDoubleOrZero(조명존[aa][2]);
                                 }
                                 Light_Density_New[a] = Light_Density_New[a] / Light_Area_New[a];
                                 Light_Point[a] = Math.Min(100, Light_Density_Rule[a] / Light_Density_New[a] * 100);
@@ -227,22 +227,22 @@ namespace main.contents.Result
                         {
                             if (Value[a][1] == "파사드")
                             {
-                                facade_area += Convert.ToDouble(Value[a][2]);
+                                facade_area += Program.UTIL.ToDoubleOrZero(Value[a][2]);
 
                                 string[][] result = Program.DB.querySQL(DB.type.ProjDB, "Select AVG(f_D) From Zone_LightResult Where 번호='" + Value[a][0] + "'");
                                 if (result.Length > 0)
                                 {
-                                    facade_D += Convert.ToDouble(Value[a][2]) * Convert.ToDouble(result[0][0]);
+                                    facade_D += Program.UTIL.ToDoubleOrZero(Value[a][2]) * Program.UTIL.ToDoubleOrZero(result[0][0]);
                                 }
                             }
                             else if (Value[a][1] == "천창")
                             {
-                                roof_area += Convert.ToDouble(Value[a][2]);
+                                roof_area += Program.UTIL.ToDoubleOrZero(Value[a][2]);
 
                                 string[][] result = Program.DB.querySQL(DB.type.ProjDB, "Select AVG(r_DSNA) From Zone_LightResult Where 번호='" + Value[a][0] + "'");
                                 if (result.Length > 0)
                                 {
-                                    roof_D += Convert.ToDouble(Value[a][2]) * Convert.ToDouble(result[0][0]);
+                                    roof_D += Program.UTIL.ToDoubleOrZero(Value[a][2]) * Program.UTIL.ToDoubleOrZero(result[0][0]);
                                 }
                             }
                         }
@@ -271,8 +271,8 @@ namespace main.contents.Result
                     double ventil_saving = 0; double infil_saving = 0;
                     if (value.Length > 0 && value2.Length > 0 && value3.Length > 0)
                     {
-                        ventil_saving = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
-                        infil_saving = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value2[0][0]));
+                        ventil_saving = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
+                        infil_saving = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value2[0][0]));
                         ventil_saving = Math.Max(0, ventil_saving - infil_saving);
                     }
 
@@ -282,8 +282,8 @@ namespace main.contents.Result
                     double ventil_saving_elec = 0; double infil_saving_elec = 0;
                     if (value.Length > 0 && value2.Length > 0 && value3.Length > 0)
                     {
-                        ventil_saving_elec = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
-                        infil_saving_elec = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value2[0][0]));
+                        ventil_saving_elec = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
+                        infil_saving_elec = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value2[0][0]));
                         ventil_saving_elec = Math.Max(0, ventil_saving_elec - infil_saving_elec);
                     }
                     value = Program.DB.querySQL(DB.type.ProjDB, "Select 총에너지소요량 From FinalEnergy_Result_Rule Where 월='연간' and 연료='전체' and 검토유형='기밀+열회수기'");
@@ -292,8 +292,8 @@ namespace main.contents.Result
                     double ventil_saving_noelec = 0; double infil_saving_noelec = 0;
                     if (value.Length > 0 && value3.Length > 0)
                     {
-                        ventil_saving_noelec = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value[0][0]));
-                        infil_saving_noelec = Math.Max(0, Convert.ToDouble(value3[0][0]) - Convert.ToDouble(value2[0][0]));
+                        ventil_saving_noelec = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value[0][0]));
+                        infil_saving_noelec = Math.Max(0, Program.UTIL.ToDoubleOrZero(value3[0][0]) - Program.UTIL.ToDoubleOrZero(value2[0][0]));
                         ventil_saving_noelec = Math.Max(0, ventil_saving_noelec - infil_saving_noelec);
                     }
 
@@ -325,9 +325,9 @@ namespace main.contents.Result
                         for (int a = 0; a < Value.Length; a++)
                         {
                             ventil_name[a] = Value[a][1];
-                            ventil_eta_temp[a] = Convert.ToDouble(Value[a][2]);
-                            ventil_eta_humidity[a] = Convert.ToDouble(Value[a][3]);
-                            ventil_power[a] = Convert.ToDouble(Value[a][4]);
+                            ventil_eta_temp[a] = Program.UTIL.ToDoubleOrZero(Value[a][2]);
+                            ventil_eta_humidity[a] = Program.UTIL.ToDoubleOrZero(Value[a][3]);
+                            ventil_power[a] = Program.UTIL.ToDoubleOrZero(Value[a][4]);
 
                             string[][] zonevalue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.존번호,a.기존존,a.순바닥면적,a.순체적,a.이용일환기량,a.환기횟수,b.ninf From ZoneGeneral_Form as a inner join Zone_HCneed_Result as b on a.존번호 = b.번호 where a.선택열회수기='" + Value[a][0] + "' and b.비이용일_이용일='이용일' and b.난방_냉방='난방'");
                             if (zonevalue.Length > 0)
@@ -337,11 +337,11 @@ namespace main.contents.Result
 
                                 for (int aa = 0; aa < zonevalue.Length; aa++)
                                 {
-                                    ventil_volume_new[a] += Convert.ToDouble(zonevalue[aa][4]);
-                                    ventil_zone_area += Convert.ToDouble(zonevalue[aa][2]);
-                                    ventil_zone_netvolume += Convert.ToDouble(zonevalue[aa][3]);
-                                    ventil_zone_ninf += Convert.ToDouble(zonevalue[aa][3]) * Convert.ToDouble(zonevalue[aa][6]);
-                                    ventil_zone_nmech += Convert.ToDouble(zonevalue[aa][3]) * Convert.ToDouble(zonevalue[aa][5]);
+                                    ventil_volume_new[a] += Program.UTIL.ToDoubleOrZero(zonevalue[aa][4]);
+                                    ventil_zone_area += Program.UTIL.ToDoubleOrZero(zonevalue[aa][2]);
+                                    ventil_zone_netvolume += Program.UTIL.ToDoubleOrZero(zonevalue[aa][3]);
+                                    ventil_zone_ninf += Program.UTIL.ToDoubleOrZero(zonevalue[aa][3]) * Program.UTIL.ToDoubleOrZero(zonevalue[aa][6]);
+                                    ventil_zone_nmech += Program.UTIL.ToDoubleOrZero(zonevalue[aa][3]) * Program.UTIL.ToDoubleOrZero(zonevalue[aa][5]);
                                 }
                                 ventil_zone_count += zonevalue.Length;
                             }
@@ -455,7 +455,7 @@ namespace main.contents.Result
                         if (Convert.ToBoolean(Value[0][1])) { win = "시공"; } else { win = "미시공"; }
                         if (Convert.ToBoolean(Value[0][2])) { wire = "시공"; } else { wire = "미시공"; }
                         if (Convert.ToBoolean(Value[0][3])) { pipe = "시공"; } else { pipe = "미시공"; }
-                        n50_new = Convert.ToDouble(Value[0][4]);
+                        n50_new = Program.UTIL.ToDoubleOrZero(Value[0][4]);
                     }
                     n50_rule = 0.6; //패시브하우스 기준 
                     Infil_data[4].Add(new { idx = i, val = door });  //출입문
@@ -595,14 +595,14 @@ namespace main.contents.Result
                                 if (조명존.Length > 1) { Light_Zone_text[a] = 조명존[0][0] + " 외 " + (조명존.Length - 1).ToString() + "개"; }
                                 else { Light_Zone_text[a] = 조명존[0][0]; }
                                 //효율
-                                Light_eta[a] = Convert.ToDouble(조명존[0][4]);
+                                Light_eta[a] = Program.UTIL.ToDoubleOrZero(조명존[0][4]);
                                 Light_Density_Rule[a] = 8;//에절계 조명부문 1번 1점
                                 //면적, 조명밀도 
                                 Boolean samecheck = false;
                                 for (int aa = 0; aa < 조명존.Length; aa++)
                                 {
-                                    Light_Area_New[a] += Convert.ToDouble(조명존[aa][1]);
-                                    Light_Density_New[a] += Convert.ToDouble(조명존[aa][1]) * Convert.ToDouble(조명존[aa][2]);
+                                    Light_Area_New[a] += Program.UTIL.ToDoubleOrZero(조명존[aa][1]);
+                                    Light_Density_New[a] += Program.UTIL.ToDoubleOrZero(조명존[aa][1]) * Program.UTIL.ToDoubleOrZero(조명존[aa][2]);
                                     ArrayList prezone = new ArrayList();
                                     prezone = Split_(조명존[aa][6]);
                                     for (int aaa = 0; aaa < prezone.Count; aaa++)
@@ -610,8 +610,8 @@ namespace main.contents.Result
                                         string[][] 기존존 = Program.DB.querySQL(res[0][0], "Select 번호,순바닥면적,조명밀도,조명번호 From ZoneLighting_form where 번호='" + prezone[aaa].ToString() + "'");
                                         if (기존존.Length > 0)
                                         {
-                                            Light_Area_Old[a] += Convert.ToDouble(기존존[0][1]);
-                                            Light_Density_Old[a] += Convert.ToDouble(기존존[0][1]) * Convert.ToDouble(기존존[0][2]);
+                                            Light_Area_Old[a] += Program.UTIL.ToDoubleOrZero(기존존[0][1]);
+                                            Light_Density_Old[a] += Program.UTIL.ToDoubleOrZero(기존존[0][1]) * Program.UTIL.ToDoubleOrZero(기존존[0][2]);
                                             if (기존존[0][3] == Value[a][0])
                                             {
                                                 samecheck = true;
@@ -639,11 +639,11 @@ namespace main.contents.Result
                             string[][] Result1 = Program.DB.querySQL(DB.type.ProjDB, "Select 존번호, 조명소요량 From Light_Result_Element Where 조명번호='" + Value[a][0] + "' And 검토유형='조명'");
                             for (int aa = 0; aa < Result1.Length; aa++)
                             {
-                                post_sum += Convert.ToDouble(Result1[aa][1]);
+                                post_sum += Program.UTIL.ToDoubleOrZero(Result1[aa][1]);
                                 string[][] Result2 = Program.DB.querySQL(DB.type.ProjDB, "Select 조명번호,조명소요량 From Light_Result_Element Where 존번호='" + Result1[aa][0] + "' And 검토유형='조닝'");
                                 if (Result2.Length > 0)
                                 {
-                                    pre_sum += Convert.ToDouble(Result2[0][1]);
+                                    pre_sum += Program.UTIL.ToDoubleOrZero(Result2[0][1]);
                                 }
                             }
                             Light_Saving[a] = pre_sum - post_sum;
@@ -748,22 +748,22 @@ namespace main.contents.Result
                         {
                             if (Value[a][1] == "파사드")
                             {
-                                facade_area += Convert.ToDouble(Value[a][2]);
+                                facade_area += Program.UTIL.ToDoubleOrZero(Value[a][2]);
 
                                 string[][] result = Program.DB.querySQL(DB.type.ProjDB, "Select AVG(f_D) From Zone_LightResult Where 번호='" + Value[a][0] + "'");
                                 if (result.Length > 0)
                                 {
-                                    facade_D += Convert.ToDouble(Value[a][2]) * Convert.ToDouble(result[0][0]);
+                                    facade_D += Program.UTIL.ToDoubleOrZero(Value[a][2]) * Program.UTIL.ToDoubleOrZero(result[0][0]);
                                 }
                             }
                             else if (Value[a][1] == "천창")
                             {
-                                roof_area += Convert.ToDouble(Value[a][2]);
+                                roof_area += Program.UTIL.ToDoubleOrZero(Value[a][2]);
 
                                 string[][] result = Program.DB.querySQL(DB.type.ProjDB, "Select AVG(r_DSNA) From Zone_LightResult Where 번호='" + Value[a][0] + "'");
                                 if (result.Length > 0)
                                 {
-                                    roof_D += Convert.ToDouble(Value[a][2]) * Convert.ToDouble(result[0][0]);
+                                    roof_D += Program.UTIL.ToDoubleOrZero(Value[a][2]) * Program.UTIL.ToDoubleOrZero(result[0][0]);
                                 }
                             }
                         }
@@ -838,9 +838,9 @@ namespace main.contents.Result
                         for (int a = 0; a < Value.Length; a++)
                         {
                             ventil_name[a] = Value[a][1];
-                            ventil_eta_temp[a] = Convert.ToDouble(Value[a][2]);
-                            ventil_eta_humidity[a] = Convert.ToDouble(Value[a][3]);
-                            ventil_power[a] = Convert.ToDouble(Value[a][4]);
+                            ventil_eta_temp[a] = Program.UTIL.ToDoubleOrZero(Value[a][2]);
+                            ventil_eta_humidity[a] = Program.UTIL.ToDoubleOrZero(Value[a][3]);
+                            ventil_power[a] = Program.UTIL.ToDoubleOrZero(Value[a][4]);
 
                             string[][] zonevalue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.존번호,a.기존존,a.순바닥면적,a.순체적,a.이용일환기량,a.환기횟수,b.ninf From ZoneGeneral_Form as a inner join Zone_HCneed_Result as b on a.존번호 = b.번호 where a.선택열회수기='" + Value[a][0] + "' and b.비이용일_이용일='이용일' and b.난방_냉방='난방'");
                             if (zonevalue.Length > 0)
@@ -850,7 +850,7 @@ namespace main.contents.Result
 
                                 for (int aa = 0; aa < zonevalue.Length; aa++)
                                 {
-                                    ventil_volume_new[a] += Convert.ToDouble(zonevalue[aa][4]);
+                                    ventil_volume_new[a] += Program.UTIL.ToDoubleOrZero(zonevalue[aa][4]);
 
                                     ArrayList prezone = new ArrayList();
                                     prezone = Split_(zonevalue[aa][1]);
@@ -861,15 +861,15 @@ namespace main.contents.Result
                                         {
                                             if (기존존[0][0] != "")
                                             {
-                                                ventil_volume_old[a] += Convert.ToDouble(기존존[0][1]);
+                                                ventil_volume_old[a] += Program.UTIL.ToDoubleOrZero(기존존[0][1]);
                                             }
                                         }
                                     }
 
-                                    ventil_zone_area += Convert.ToDouble(zonevalue[aa][2]);
-                                    ventil_zone_netvolume += Convert.ToDouble(zonevalue[aa][3]);
-                                    ventil_zone_ninf += Convert.ToDouble(zonevalue[aa][3]) * Convert.ToDouble(zonevalue[aa][6]);
-                                    ventil_zone_nmech += Convert.ToDouble(zonevalue[aa][3]) * Convert.ToDouble(zonevalue[aa][5]);
+                                    ventil_zone_area += Program.UTIL.ToDoubleOrZero(zonevalue[aa][2]);
+                                    ventil_zone_netvolume += Program.UTIL.ToDoubleOrZero(zonevalue[aa][3]);
+                                    ventil_zone_ninf += Program.UTIL.ToDoubleOrZero(zonevalue[aa][3]) * Program.UTIL.ToDoubleOrZero(zonevalue[aa][6]);
+                                    ventil_zone_nmech += Program.UTIL.ToDoubleOrZero(zonevalue[aa][3]) * Program.UTIL.ToDoubleOrZero(zonevalue[aa][5]);
                                 }
                                 ventil_zone_count += zonevalue.Length;
                             }
@@ -1003,12 +1003,12 @@ namespace main.contents.Result
                         if (Convert.ToBoolean(Value[0][1])) { win = "시공"; } else { win = "미시공"; }
                         if (Convert.ToBoolean(Value[0][2])) { wire = "시공"; } else { wire = "미시공"; }
                         if (Convert.ToBoolean(Value[0][3])) { pipe = "시공"; } else { pipe = "미시공"; }
-                        n50_new = Convert.ToDouble(Value[0][4]);
+                        n50_new = Program.UTIL.ToDoubleOrZero(Value[0][4]);
                     }
                     Value = Program.DB.getValue(res[0][0], "BuildingGeneral", "n50");
                     if (Value.Length > 0)
                     {
-                        n50_old = Convert.ToDouble(Value[0][0]);
+                        n50_old = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                     }
                     Infil_data[4].Add(new { idx = i, val = door });  //출입문
                     Infil_data[5].Add(new { idx = i, val = win });  //창호

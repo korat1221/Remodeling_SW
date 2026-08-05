@@ -1,4 +1,4 @@
-﻿using main.subcontents.EquipmentList;
+using main.subcontents.EquipmentList;
 using main.subcontents;
 using Newtonsoft.Json.Linq;
 using System;
@@ -73,7 +73,7 @@ namespace main
             {
                 while (++i < 12)
                 {
-                    theta_e[i] = Convert.ToDouble(외기온도[i][1]);
+                    theta_e[i] = Program.UTIL.ToDoubleOrZero(외기온도[i][1]);
                     theta_u[i] = theta_ih_avg[i] - 0.8 * (theta_ih_avg[i] - theta_e[i]);
                 }
             }
@@ -370,11 +370,11 @@ namespace main
         {
             if (zone != null)
             {
-                Qhb_mth[n, mth] += Qhb_mth_ * Convert.ToDouble(Value_ce[n][2]);
+                Qhb_mth[n, mth] += Qhb_mth_ * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]);
                 theta_ih[n, mth] = zone.theta_i[0, mth]; //이용일 난방
                 th[n, mth] = zone.t_max[0, mth]; // 난방 시간                             
                 dop_mth[n, mth] = zone.dwd_mth[mth];
-                Qh_a[n] += zone.Qb_a[0] * Convert.ToDouble(Value_ce[n][2]); //연간 난방요구량
+                Qh_a[n] += zone.Qb_a[0] * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]); //연간 난방요구량
                 th_op_day[n] = zone.th_op_d;
                 theta_i_h_set[n] = zone.theta_i_set[0];
             }
@@ -383,11 +383,11 @@ namespace main
         {
             if (zone != null)
             {
-                Qhb_mth[n, mth] += Qhb_mth_ * Convert.ToDouble(Value_ce[n][2]);
+                Qhb_mth[n, mth] += Qhb_mth_ * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]);
                 theta_ih[n, mth] = zone.theta_i[0, mth]; //이용일 난방
                 th[n, mth] = zone.t_max[0, mth]; // 난방 시간                             
                 dop_mth[n, mth] = zone.dwd_mth[mth];
-                Qh_a[n] += ahu.Qh_a_tot * Convert.ToDouble(Value_ce[n][2]); //연간 난방요구량
+                Qh_a[n] += ahu.Qh_a_tot * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]); //연간 난방요구량
                 th_op_day[n] = zone.th_op_d;
                 theta_i_h_set[n] = zone.theta_i_set[0];
             }
@@ -422,8 +422,8 @@ namespace main
                     string[][] Value2 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급환수온도", "공급온도,환수온도", "공급환수온도 = '" + SLRL + "'");
                     if (Value2.Length > 0)
                     {
-                        theta_SL = Convert.ToDouble(Value2[0][0]);
-                        theta_RL = Convert.ToDouble(Value2[0][1]);
+                        theta_SL = Program.UTIL.ToDoubleOrZero(Value2[0][0]);
+                        theta_RL = Program.UTIL.ToDoubleOrZero(Value2[0][1]);
                     }
                 }
 
@@ -583,48 +583,48 @@ namespace main
                     arr = Split_(Value[0][10]);
                     if (arr.Count > 0)
                     {
-                        Pump1Volume = Convert.ToDouble(arr[0].ToString());
+                        Pump1Volume = Program.UTIL.ToDoubleOrZero(arr[0].ToString());
                     }
                     if (arr.Count > 1)
                     {
-                        GPump1Volume = Convert.ToDouble(arr[1].ToString());
+                        GPump1Volume = Program.UTIL.ToDoubleOrZero(arr[1].ToString());
                     }
                     ///
                     arr = Split_(Value[0][11]);
                     if (arr.Count > 0)
                     {
-                        Pump2Volume = Convert.ToDouble(arr[0].ToString());
+                        Pump2Volume = Program.UTIL.ToDoubleOrZero(arr[0].ToString());
                     }
                     if (arr.Count > 1)
                     {
-                        GPump2Volume = Convert.ToDouble(arr[1].ToString());
+                        GPump2Volume = Program.UTIL.ToDoubleOrZero(arr[1].ToString());
                     }
                     ///
                     arr = Split_(Value[0][12]);
                     if (arr.Count > 0)
                     {
-                        Pump1Head = Convert.ToDouble(arr[0].ToString());
+                        Pump1Head = Program.UTIL.ToDoubleOrZero(arr[0].ToString());
                     }
                     if (arr.Count > 1)
                     {
-                        GPump1Head = Convert.ToDouble(arr[1].ToString());
+                        GPump1Head = Program.UTIL.ToDoubleOrZero(arr[1].ToString());
                     }
                     ///
                     arr = Split_(Value[0][13]);
                     if (arr.Count > 0)
                     {
-                        Pump2Head = Convert.ToDouble(arr[0].ToString());
+                        Pump2Head = Program.UTIL.ToDoubleOrZero(arr[0].ToString());
                     }
                     if (arr.Count > 1)
                     {
-                        GPump2Head = Convert.ToDouble(arr[1].ToString());
+                        GPump2Head = Program.UTIL.ToDoubleOrZero(arr[1].ToString());
                     }
                     ///
                 }
                 else
                 {
-                    Pump1Volume = Convert.ToDouble(Value[0][10]);
-                    Pump1Head = Convert.ToDouble(Value[0][12]); 
+                    Pump1Volume = Program.UTIL.ToDoubleOrZero(Value[0][10]);
+                    Pump1Head = Program.UTIL.ToDoubleOrZero(Value[0][12]); 
                 }
             }
         }
@@ -649,7 +649,7 @@ namespace main
                 StoragePump = Value[0][2];
                 if (Value[0][3] != null && Value[0][3] != "")
                 {
-                    Vs = Convert.ToDouble(Value[0][3]);
+                    Vs = Program.UTIL.ToDoubleOrZero(Value[0][3]);
                 }
             }
         }
@@ -659,12 +659,12 @@ namespace main
             string[][] Value = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재,노출배관길이", "번호 = '" + HeatingNum + "'");
             if (Value.Length > 0)
             {
-                PipeD = Convert.ToDouble(Value[0][0]);
-                PipeInsD = Convert.ToDouble(Value[0][1]);
-                PipeIns_Ramda = Convert.ToDouble(Value[0][2]);
+                PipeD = Program.UTIL.ToDoubleOrZero(Value[0][0]);
+                PipeInsD = Program.UTIL.ToDoubleOrZero(Value[0][1]);
+                PipeIns_Ramda = Program.UTIL.ToDoubleOrZero(Value[0][2]);
                 PipeIns = Value[0][3];
                 if (Value[0][4] == "" || Value[0][4] == null) { PipeL = 0; }
-                else { PipeL = Convert.ToDouble(Value[0][4]); }
+                else { PipeL = Program.UTIL.ToDoubleOrZero(Value[0][4]); }
             }
         }
         //외기 히트펌프 정보 불러오기 
@@ -842,11 +842,11 @@ namespace main
 
                 string[][] Value_str1 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "설비유형 = '" + ceType + "' AND 구분 ='" + SLRL + "' And 온도변수 = 'dtheta_str1'");
                 if (Value_str1.Length > 0)
-                { dtheta_str1 = Convert.ToDouble(Value_str1[0][0]); }
+                { dtheta_str1 = Program.UTIL.ToDoubleOrZero(Value_str1[0][0]); }
 
                 string[][] Value_str2 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "설비유형 = '" + ceType + "' AND 구분 ='" + 설치위치 + "'And 온도변수 = 'dtheta_str2'");
                 if (Value_str2.Length > 0)
-                { dtheta_str2 = Convert.ToDouble(Value_str2[0][0]); }
+                { dtheta_str2 = Program.UTIL.ToDoubleOrZero(Value_str2[0][0]); }
             }
             else if (ceType == "팬코일유닛")
             {
@@ -856,7 +856,7 @@ namespace main
 
                 string[][] Value_str2 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "설비유형 = '" + ceType + "' AND 구분 ='" + 설치위치 + "'And 온도변수 = 'dtheta_str2'");
                 if (Value_str2.Length > 0)
-                { dtheta_str2 = Convert.ToDouble(Value_str2[0][0]); }
+                { dtheta_str2 = Program.UTIL.ToDoubleOrZero(Value_str2[0][0]); }
             }
             else if (ceType == "복사난방")
             {
@@ -864,11 +864,11 @@ namespace main
 
                 string[][] Value_str1 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "설비유형 = '" + ceType + "' AND 구분 ='" + 설치위치 + "'And 온도변수 = 'dtheta_str1'");
                 if (Value_str1.Length > 0)
-                { dtheta_str1 = Convert.ToDouble(Value_str1[0][0]); }
+                { dtheta_str1 = Program.UTIL.ToDoubleOrZero(Value_str1[0][0]); }
                 dtheta_str2 = 0.0;
                 string[][] Value_emb1 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "설비유형 = '" + ceType + "' AND 구분 ='" + 설치위치 + "'And 온도변수 = 'dtheta_emb1'");
                 if (Value_emb1.Length > 0)
-                { dtheta_emb1 = Convert.ToDouble(Value_emb1[0][0]); }
+                { dtheta_emb1 = Program.UTIL.ToDoubleOrZero(Value_emb1[0][0]); }
                 dtheta_emb2 = 0.0;
             }
             else
@@ -877,17 +877,17 @@ namespace main
 
                 string[][] Value = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "설비유형 = '파워팬유닛' AND 구분 ='" + 제어방식 + "'And 온도변수 = 'theta_dash_str'");
                 if (Value.Length > 0)
-                { theta_dash_str = 10 * Convert.ToDouble(Value[0][0]) / (16 * (0.5 * 4 - 1.1)); }
+                { theta_dash_str = 10 * Program.UTIL.ToDoubleOrZero(Value[0][0]) / (16 * (0.5 * 4 - 1.1)); }
 
             }
 
             string[][] Value_ctr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "구분 ='" + 제어방식 + "'And 온도변수 = 'dtheta_ctr'");
             if (Value_ctr.Length > 0)
-            { dtheta_ctr = Convert.ToDouble(Value_ctr[0][0]); }
+            { dtheta_ctr = Program.UTIL.ToDoubleOrZero(Value_ctr[0][0]); }
 
             string[][] Value_roomaut = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "구분 ='" + 제어방식 + "'And 온도변수 = 'dtheta_roomaut'");
             if (Value_roomaut.Length > 0)
-            { dtheta_roomaut = Convert.ToDouble(Value_roomaut[0][0]); }
+            { dtheta_roomaut = Program.UTIL.ToDoubleOrZero(Value_roomaut[0][0]); }
 
 
             if (ceType == "방열기" || ceType == "실내기" || ceType == "팬코일유닛")
@@ -903,7 +903,7 @@ namespace main
                 string[][] value = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "구분 ='" + 제어방식 + "'And 온도변수 = 'dtheta' and 설비유형='"+ceType+"'");
                 if(value.Length >0)
                 {
-                    theta_ce = Convert.ToDouble(value[0][0]);
+                    theta_ce = Program.UTIL.ToDoubleOrZero(value[0][0]);
                 }            
             }
             else
@@ -941,7 +941,7 @@ namespace main
                     ceSystemNum = Value[n][1].Substring(0, Value[n][1].IndexOf("_"));
                     ceType = ce1Type;
                     Location = Value[n][2];
-                    double Zone_Percent = Convert.ToDouble(Value[n][3]);
+                    double Zone_Percent = Program.UTIL.ToDoubleOrZero(Value[n][3]);
                     string[][] 일람표정보 = Program.DB.getValue(ProjNum, "User_ce", "온도제어방식", "번호 = '" + ceSystemNum + "'");
                     Control = 일람표정보[0][0];
                     theta = Calc_theta_ce(ceType, SLRL, Location, Control);
@@ -970,7 +970,7 @@ namespace main
                     ceSystemNum = Value[n][1].Substring(0, Value[n][1].IndexOf("_"));
                     ceType = ce2Type;
                     Location = Value[n][2];
-                    double Zone_Percent = Convert.ToDouble(Value[n][3]);
+                    double Zone_Percent = Program.UTIL.ToDoubleOrZero(Value[n][3]);
                     string[][] 일람표정보 = Program.DB.getValue(ProjNum, "User_ce", "온도제어방식", "번호 = '" + ceSystemNum + "'");
                     Control = 일람표정보[0][0];
                     theta = Calc_theta_ce(ceType, SLRL, Location, Control);
@@ -1075,7 +1075,7 @@ namespace main
                             string[][] airHP = Program.DB.getValue(ProjNum, "User_AirHP", "난방정격소비전력", "번호 = '" + SelectAirHP_split[n] + "'");
                             if(airHP.Length > 0 && airHP[0][0]!="")
                             {
-                                if (Convert.ToDouble(Value2[0][0]).ToString("0") == Convert.ToDouble(airHP[0][0]).ToString("0") || Convert.ToDouble(Value2[0][0]) > 0.5)
+                                if (Program.UTIL.ToDoubleOrZero(Value2[0][0]).ToString("0") == Program.UTIL.ToDoubleOrZero(airHP[0][0]).ToString("0") || Program.UTIL.ToDoubleOrZero(Value2[0][0]) > 0.5)
                                 { goto goto_; }
                             }
                             
@@ -1083,7 +1083,7 @@ namespace main
 
                         if (Value2[0][0] != "")
                         {
-                           Wh_ce[mth] += Convert.ToDouble(Value2[0][0]) * th_op_day_avg * dop_mth_avg[mth]; 
+                           Wh_ce[mth] += Program.UTIL.ToDoubleOrZero(Value2[0][0]) * th_op_day_avg * dop_mth_avg[mth]; 
                         }
                         goto_: int a = 0; a = a;
                     }
@@ -1161,16 +1161,16 @@ namespace main
                 {
                     string[][] Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + Pump1 + "'");
                     if (Value.Length > 0)
-                    { Cal_Pump(Pump1, Pump1Valve, Pump1Control, Pump1Count, Convert.ToDouble(Value[0][0])); }
+                    { Cal_Pump(Pump1, Pump1Valve, Pump1Control, Pump1Count, Program.UTIL.ToDoubleOrZero(Value[0][0])); }
                     Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + Pump2 + "'");
                     if (Value.Length > 0)
-                    { Cal_Pump(Pump2, Pump2Valve, Pump2Control, Pump2Count, Convert.ToDouble(Value[0][0])); }
+                    { Cal_Pump(Pump2, Pump2Valve, Pump2Control, Pump2Count, Program.UTIL.ToDoubleOrZero(Value[0][0])); }
                     Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + GPump1 + "'");
                     if (Value.Length > 0)
-                    { Cal_Pump(GPump1, GPump1Valve, GPump1Control, GPump1Count, Convert.ToDouble(Value[0][0])); }
+                    { Cal_Pump(GPump1, GPump1Valve, GPump1Control, GPump1Count, Program.UTIL.ToDoubleOrZero(Value[0][0])); }
                     Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + GPump2 + "'");
                     if (Value.Length > 0)
-                    { Cal_Pump(GPump2, GPump2Valve, GPump2Control, GPump2Count, Convert.ToDouble(Value[0][0])); }
+                    { Cal_Pump(GPump2, GPump2Valve, GPump2Control, GPump2Count, Program.UTIL.ToDoubleOrZero(Value[0][0])); }
                 }
             }
         }
@@ -1184,8 +1184,8 @@ namespace main
             Pump pump1 = new Pump(Num_pump, PumpPower, PumpCount, PumpValve, PumpControl); ;
             this.Pump.Add(pump1);
             string[][] Value_Control = Program.DB.getValue(DB.type.BaseDB_Heating, "펌프제어", "Cp1,Cp2", "펌프제어 = '" + PumpControl + "'");
-            Cp1 = Convert.ToDouble(Value_Control[0][0]);
-            Cp2 = Convert.ToDouble(Value_Control[0][1]);
+            Cp1 = Program.UTIL.ToDoubleOrZero(Value_Control[0][0]);
+            Cp2 = Program.UTIL.ToDoubleOrZero(Value_Control[0][1]);
             if (PumpValve == "유량밸런스있음")
             {
                 fhydr = 1;
@@ -1252,7 +1252,7 @@ namespace main
                 for (int mth = 0; mth < 12; mth++)
                 {
                     double tPu = beta_h_s[mth] * 24 * dhrB[mth];
-                    Wh_s[mth] = Convert.ToDouble(Value[0][0]) * tPu / 1000;
+                    Wh_s[mth] = Program.UTIL.ToDoubleOrZero(Value[0][0]) * tPu / 1000;
                     if (double.IsNaN(Wh_s[mth])) { Wh_s[mth] = 0; }
                 }
             }
@@ -1284,10 +1284,10 @@ namespace main
                 if(Value.Length > 0 )
                 {
                     int FC_nea = Convert.ToInt16(FCNum_split[n]);
-                    double power_el = Convert.ToDouble(Value[0][3]);
-                    double eta_el = Convert.ToDouble(Value[0][4])/100;
-                    double power_th = Convert.ToDouble(Value[0][5]);
-                    double eta_th = Convert.ToDouble(Value[0][6])/100;
+                    double power_el = Program.UTIL.ToDoubleOrZero(Value[0][3]);
+                    double eta_el = Program.UTIL.ToDoubleOrZero(Value[0][4])/100;
+                    double power_th = Program.UTIL.ToDoubleOrZero(Value[0][5]);
+                    double eta_th = Program.UTIL.ToDoubleOrZero(Value[0][6])/100;
                     double eta_tot = eta_el + eta_th;
 
                     double Pfc_th = power_th ;
@@ -1315,7 +1315,7 @@ namespace main
                 string[][] DValue = Program.DB.querySQL(ProjNum, "Select b.Qw_outg,b.번호 From DHWSystem_Result as a Inner Join DHWSystem_Form as b on a.번호=b.번호 Where a.연료전지번호='" + FCNum + "' and 월='" + mth + "월'");
                 if (DValue.Length > 0)
                 {
-                    Qw_outg[mth] = Convert.ToDouble(DValue[0][0]);
+                    Qw_outg[mth] = Program.UTIL.ToDoubleOrZero(DValue[0][0]);
                     DHWNum = DValue[0][1];
                 }
                 QCHW_gen_out[mth] = Qh_outg[mth] + Qw_outg[mth];
@@ -1482,19 +1482,19 @@ namespace main
                     String Combi = Value[0][1];
                     Carrier = Value[0][2];
                     String Type = Value[0][3];
-                    double Power = Convert.ToDouble(Value[0][4]) * Convert.ToDouble(BoilerNum_split[n]);
+                    double Power = Program.UTIL.ToDoubleOrZero(Value[0][4]) * Program.UTIL.ToDoubleOrZero(BoilerNum_split[n]);
                     string[][] 기존신규 = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "프로젝트유형", "번호 = '" + HeatingNum + "'");
-                    double eta_Pn = Convert.ToDouble(Value[0][5]) / 100;
-                    double eta_Pint = Convert.ToDouble(Value[0][6]) / 100;
+                    double eta_Pn = Program.UTIL.ToDoubleOrZero(Value[0][5]) / 100;
+                    double eta_Pint = Program.UTIL.ToDoubleOrZero(Value[0][6]) / 100;
                     if (기존신규[0][0] == "1")
                     {
                         eta_Pn = eta_Pn * 0.95;
                         eta_Pint = eta_Pint * 0.95;
                     }
 
-                    double W = Convert.ToDouble(Value[0][7]);
-                    double W_0 = Convert.ToDouble(Value[0][8]);
-                    double count = Convert.ToDouble(BoilerNum_split[n]);
+                    double W = Program.UTIL.ToDoubleOrZero(Value[0][7]);
+                    double W_0 = Program.UTIL.ToDoubleOrZero(Value[0][8]);
+                    double count = Program.UTIL.ToDoubleOrZero(BoilerNum_split[n]);
                     Calc_Qh_gen_Boiler(Num, Combi, Type, Power, eta_Pn, eta_Pint, W, W_0, count);
                 }
             }
@@ -1502,23 +1502,23 @@ namespace main
         public void Calc_Qh_gen_Boiler(String Num, String Combi, String Type, double Power, double eta_Pn, double eta_Pint, double W, double W_0, double count)
         {
             string[][] Value = Program.DB.getValue(DB.type.BaseDB_Heating, "보일러", "온도보정계수K,온도보정계수L,대기상태열손실E,대기상태열손실F,보조설비G_Pn,보조설비H_Pn,보조설비n_Pn,보조설비G_Pint,보조설비H_Pint,보조설비n_Pint", "종류 = '" + Type + "'");
-            double K = Convert.ToDouble(Value[0][0]);
-            double L = Convert.ToDouble(Value[0][1]);
-            double E = Convert.ToDouble(Value[0][2]);
-            double F = Convert.ToDouble(Value[0][3]);
-            double G_Pn = Convert.ToDouble(Value[0][4]);
-            double H_Pn = Convert.ToDouble(Value[0][5]);
-            double n_Pn = Convert.ToDouble(Value[0][6]);
-            double G_Pint = Convert.ToDouble(Value[0][7]);
-            double H_Pint = Convert.ToDouble(Value[0][8]);
-            double n_Pint = Convert.ToDouble(Value[0][9]);
+            double K = Program.UTIL.ToDoubleOrZero(Value[0][0]);
+            double L = Program.UTIL.ToDoubleOrZero(Value[0][1]);
+            double E = Program.UTIL.ToDoubleOrZero(Value[0][2]);
+            double F = Program.UTIL.ToDoubleOrZero(Value[0][3]);
+            double G_Pn = Program.UTIL.ToDoubleOrZero(Value[0][4]);
+            double H_Pn = Program.UTIL.ToDoubleOrZero(Value[0][5]);
+            double n_Pn = Program.UTIL.ToDoubleOrZero(Value[0][6]);
+            double G_Pint = Program.UTIL.ToDoubleOrZero(Value[0][7]);
+            double H_Pint = Program.UTIL.ToDoubleOrZero(Value[0][8]);
+            double n_Pint = Program.UTIL.ToDoubleOrZero(Value[0][9]);
             Boiler boiler = new Boiler(Num, Combi, Carrier, Type, Power, eta_Pn, eta_Pint, W, W_0, count, K, L, E, F, G_Pn, H_Pn, n_Pn, G_Pint, H_Pint, n_Pint);
             double theta_pn, theta_pint, theta_con;
             theta_pn = (80 + 60) / 2;
             theta_pint = (80 + 30) / 2;
             theta_con = (50 + 30) / 2;
             Value = Program.DB.getValue(DB.type.BaseDB_Heating, "연소난방비", "연소난방비", "연료 = '" + Carrier + "'");
-            double fHN_HI = Convert.ToDouble(Value[0][0]);
+            double fHN_HI = Program.UTIL.ToDoubleOrZero(Value[0][0]);
             double qP0_70 = E * Math.Pow(Power, F) / 100;
             double tw_Pn_day = 1; //나중에 급탕과 연결 해야 함 
             double[] Pd_in = new double[12];
@@ -1578,7 +1578,7 @@ namespace main
                 Solarvalue = Program.DB.getValue(ProjNum, "User_Solar", "번호,모듈면적,효율,열손실계수1차,열손실계수2차,입사각50도,유효열용량", "번호 ='" + SelectSolar_split[k] + "'");
                 if (Solarvalue.Length > 0)
                 {
-                    Solar solar = new Solar(Solarvalue[0][0], Convert.ToDouble(Solarvalue[0][1]), Convert.ToDouble(Solarvalue[0][2]), Convert.ToDouble(Solarvalue[0][3]), Convert.ToDouble(Solarvalue[0][4]), Convert.ToDouble(Solarvalue[0][5]), Convert.ToDouble(Solarvalue[0][6]), Convert.ToDouble(SolarNum_split[k]), SolarDirection_split[k].ToString(), SolarDegree_split[k].ToString());
+                    Solar solar = new Solar(Solarvalue[0][0], Program.UTIL.ToDoubleOrZero(Solarvalue[0][1]), Program.UTIL.ToDoubleOrZero(Solarvalue[0][2]), Program.UTIL.ToDoubleOrZero(Solarvalue[0][3]), Program.UTIL.ToDoubleOrZero(Solarvalue[0][4]), Program.UTIL.ToDoubleOrZero(Solarvalue[0][5]), Program.UTIL.ToDoubleOrZero(Solarvalue[0][6]), Program.UTIL.ToDoubleOrZero(SolarNum_split[k]), SolarDirection_split[k].ToString(), SolarDegree_split[k].ToString());
                     Calc_Solar(solar, ProjNum, SolarDirection_split[k].ToString(), SolarDegree_split[k].ToString());
                 }
             }
@@ -1603,16 +1603,16 @@ namespace main
                  DValue = Program.DB.querySQL(DB.type.ProjDB, "Select b.Qw_outg,b.번호 From DHWSystem_Result as a Inner Join DHWSystem_Form as b on a.번호=b.번호 Where a.태양열번호='" + solar.Num + "' and 월='" + mth + "월'");
                 if (DValue.Length > 0)
                 {
-                    Qw_outg[mth] = Convert.ToDouble(DValue[0][0]);
+                    Qw_outg[mth] = Program.UTIL.ToDoubleOrZero(DValue[0][0]);
                 }
 
                 string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "'and 방향='" + direction+ "' and 각도 ='" +degree + "' and 기간 ='" + (mth + 1) + "월'");
-                qsol_HN_d = Convert.ToDouble(value[0][0]);
+                qsol_HN_d = Program.UTIL.ToDoubleOrZero(value[0][0]);
                 qsol_HN_mth[mth] = qsol_HN_d * dmth[mth] * 24 / 1000;
 
                 string[][] value2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select Max(일사량) from 기후데이터_전일사량 where 지역명 = '" + 지역[0][0] + "'and 방향 = '" + direction + "' and 각도 = '" + degree + "'");
 
-                Ac = Qh_max_sum * 2 * 1.03 * 1.03 / Convert.ToDouble(value2[0][0]) / 24 * 1000;
+                Ac = Qh_max_sum * 2 * 1.03 * 1.03 / Program.UTIL.ToDoubleOrZero(value2[0][0]) / 24 * 1000;
                 if (solar.M_Area() * solar.M_Count() / Ac < 1)
                 {
                     dtheta_korr = Math.Min(-20 + 20 * solar.M_Area() * solar.M_Count() / Ac, 0);
@@ -1622,7 +1622,7 @@ namespace main
                     dtheta_korr = Math.Min(-14 + 14 * solar.M_Area() * solar.M_Count() / Ac, 0);
                 }
                 value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_태양열", "온도차", "지역명 ='" + 지역[0][0] + "'and 방위='" + direction + "' and 기간 ='" + (mth + 1) + "월'");
-                eta[mth] = solar.eta() * solar._50() - solar.K1() * Convert.ToDouble(value[0][0]) / qsol_HN_d - solar.K2() * Convert.ToDouble(value[0][0]) * Convert.ToDouble(value[0][0]) / qsol_HN_d;
+                eta[mth] = solar.eta() * solar._50() - solar.K1() * Program.UTIL.ToDoubleOrZero(value[0][0]) / qsol_HN_d - solar.K2() * Program.UTIL.ToDoubleOrZero(value[0][0]) * Program.UTIL.ToDoubleOrZero(value[0][0]) / qsol_HN_d;
                 if (eta[mth] < 0) { eta[mth] = solar.eta(); }
                 qsol_mth[mth] = eta[mth] * qsol_HN_mth[mth];
                 Qsol_mth[mth] = qsol_mth[mth] * solar.M_Area() * solar.M_Count() / 1.03 / 1.03;
@@ -1741,13 +1741,13 @@ namespace main
                     Num = airHP[0][0];
                     Carrier = airHP[0][1];
                     SupplyType = airHP[0][2];
-                    Pi_nom = Convert.ToDouble(airHP[0][3]) * Convert.ToDouble(AirHPNum_split[n]); ; //정격용량
-                    COP_nom = Convert.ToDouble(airHP[0][4]); //정격COP
+                    Pi_nom = Program.UTIL.ToDoubleOrZero(airHP[0][3]) * Program.UTIL.ToDoubleOrZero(AirHPNum_split[n]); ; //정격용량
+                    COP_nom = Program.UTIL.ToDoubleOrZero(airHP[0][4]); //정격COP
                     W_nom = Pi_nom / COP_nom;
-                    Pi_15 = Convert.ToDouble(airHP[0][6]) * Convert.ToDouble(AirHPNum_split[n]); //정격용량
-                    COP_15 = Convert.ToDouble(airHP[0][7]); //정격COP
+                    Pi_15 = Program.UTIL.ToDoubleOrZero(airHP[0][6]) * Program.UTIL.ToDoubleOrZero(AirHPNum_split[n]); //정격용량
+                    COP_15 = Program.UTIL.ToDoubleOrZero(airHP[0][7]); //정격COP
                     W_15 = Pi_15 / COP_15;
-                    W_0 = Convert.ToDouble(airHP[0][9]);
+                    W_0 = Program.UTIL.ToDoubleOrZero(airHP[0][9]);
                     Calc_Q_Air_HP(Num, SupplyType, Pi_nom, COP_nom, W_nom, Pi_15, COP_15, W_15, W_0);
                 }
             }
@@ -1811,7 +1811,7 @@ namespace main
                     {
                         string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_히트펌프_하이브리드", "빈도", "지역명 ='" + 지역[0][0] + "' and 유형 ='선택운전' And 기간  = '" + mth + "월' and 구분 ='온도등급" + k + "'");
                         if (Value.Length > 0)
-                        { kbuh[k - 1, mth - 1] = Convert.ToDouble(Value[0][0]); }
+                        { kbuh[k - 1, mth - 1] = Program.UTIL.ToDoubleOrZero(Value[0][0]); }
 
                     }
                 }
@@ -1821,7 +1821,7 @@ namespace main
                     {
                         string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_히트펌프_일반", "빈도", "지역명 ='" + 지역[0][0] + "' and 단위 ='[Kh]' And 기간  = '" + mth + "월' and 구분 ='온도등급" + k + "'");
                         if (Value.Length > 0)
-                        { DH[k - 1, mth - 1] = Convert.ToDouble(Value[0][0]); }
+                        { DH[k - 1, mth - 1] = Program.UTIL.ToDoubleOrZero(Value[0][0]); }
                     }
 
                     Wi[0, mth - 1] = Math.Max(DH[0, mth - 1] / (DH[0, mth - 1] + DH[1, mth - 1] + DH[2, mth - 1]), 0);
@@ -1843,7 +1843,7 @@ namespace main
                         string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_히트펌프_일반", "빈도", "지역명 ='" + 지역[0][0] + "' and 단위 ='[h]' And 기간  = '" + mth + "월' and 구분 ='온도등급" + k + "'");
                         if (Value.Length > 0)
                         {
-                            H[k - 1, mth - 1] = Convert.ToDouble(Value[0][0]);
+                            H[k - 1, mth - 1] = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                         }
                     }
 
@@ -2020,7 +2020,7 @@ namespace main
                         }
                         string[][] Valuef = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프부하계수", "값", "구분 ='" + AirHPSupply_split[0] + "' AND FC ='" + FC[mth] + "'");
                         if (Valuef.Length >0)
-                        { fpint[mth] = Convert.ToDouble(Valuef[0][0]); }
+                        { fpint[mth] = Program.UTIL.ToDoubleOrZero(Valuef[0][0]); }
                     }
                     else
                     {
@@ -2038,7 +2038,7 @@ namespace main
                             Valuef = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프부하계수", "값", "구분 ='방열기' AND FC ='" + FC[mth] + "'");
                         }
                         if (Valuef.Length > 0)
-                        { fpint[mth] = Convert.ToDouble(Valuef[0][0]); }
+                        { fpint[mth] = Program.UTIL.ToDoubleOrZero(Valuef[0][0]); }
                     }
 
                     for (int k = 0; k < 3; k++)
@@ -2089,13 +2089,13 @@ namespace main
                     Num = GroundHP[0][0];
                     Carrier = GroundHP[0][1];
                     SupplyType = GroundHP[0][2];
-                    Pi_nom = Convert.ToDouble(GroundHP[0][3]) * Convert.ToDouble(GroundHPNum_split[n]); ; //정격용량
-                    COP_nom = Convert.ToDouble(GroundHP[0][4]); //정격COP
+                    Pi_nom = Program.UTIL.ToDoubleOrZero(GroundHP[0][3]) * Program.UTIL.ToDoubleOrZero(GroundHPNum_split[n]); ; //정격용량
+                    COP_nom = Program.UTIL.ToDoubleOrZero(GroundHP[0][4]); //정격COP
                     W_nom = Pi_nom / COP_nom;
-                    Pi_5 = Convert.ToDouble(GroundHP[0][6]) * Convert.ToDouble(GroundHPNum_split[n]); //정격용량
-                    COP_5 = Convert.ToDouble(GroundHP[0][7]); //정격COP
+                    Pi_5 = Program.UTIL.ToDoubleOrZero(GroundHP[0][6]) * Program.UTIL.ToDoubleOrZero(GroundHPNum_split[n]); //정격용량
+                    COP_5 = Program.UTIL.ToDoubleOrZero(GroundHP[0][7]); //정격COP
                     W_5 = Pi_5 / COP_5;
-                    W_0 = Convert.ToDouble(GroundHP[0][9]);
+                    W_0 = Program.UTIL.ToDoubleOrZero(GroundHP[0][9]);
                     수직수평 = GroundHP[0][10];
                     Calc_Q_Ground_HP(ProjNum, Num, SupplyType, Pi_nom, COP_nom, W_nom, Pi_5, COP_5, W_5, W_0,수직수평);
                 }
@@ -2311,13 +2311,13 @@ namespace main
                     Num = GWHP[0][0];
                     Carrier = GWHP[0][1];
                     SupplyType = GWHP[0][2];
-                    Pi_nom = Convert.ToDouble(GWHP[0][3]) * Convert.ToDouble(GroundHPNum_split[n]); ; //정격용량
-                    COP_nom = Convert.ToDouble(GWHP[0][4]); //정격COP
+                    Pi_nom = Program.UTIL.ToDoubleOrZero(GWHP[0][3]) * Program.UTIL.ToDoubleOrZero(GroundHPNum_split[n]); ; //정격용량
+                    COP_nom = Program.UTIL.ToDoubleOrZero(GWHP[0][4]); //정격COP
                     W_nom = Pi_nom / COP_nom;
-                    Pi_15 = Convert.ToDouble(GWHP[0][6]) * Convert.ToDouble(GroundHPNum_split[n]); //정격용량
-                    COP_15 = Convert.ToDouble(GWHP[0][7]); //정격COP
+                    Pi_15 = Program.UTIL.ToDoubleOrZero(GWHP[0][6]) * Program.UTIL.ToDoubleOrZero(GroundHPNum_split[n]); //정격용량
+                    COP_15 = Program.UTIL.ToDoubleOrZero(GWHP[0][7]); //정격COP
                     W_15 = Pi_15 / COP_15;
-                    W_0 = Convert.ToDouble(GWHP[0][9]);
+                    W_0 = Program.UTIL.ToDoubleOrZero(GWHP[0][9]);
                     수직수평 = GWHP[0][10];
                     Calc_Q_GWHP(ProjNum, Num, SupplyType, Pi_nom, COP_nom, W_nom, Pi_15, COP_15, W_15, W_0);
                 }
@@ -2571,15 +2571,15 @@ namespace main
                 {
                     String Num = Value[0][0];
                     Carrier = Value[0][1];
-                    double Power = Convert.ToDouble(Value[0][2]) * Convert.ToDouble(ABSNum_split[n]);
+                    double Power = Program.UTIL.ToDoubleOrZero(Value[0][2]) * Program.UTIL.ToDoubleOrZero(ABSNum_split[n]);
                     string[][] 기존신규 = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "프로젝트유형", "번호 = '" + HeatingNum + "'");
-                    double cop = Convert.ToDouble(Value[0][3]);
+                    double cop = Program.UTIL.ToDoubleOrZero(Value[0][3]);
                     if (기존신규[0][0] == "1")
                     {
                         cop = cop * 0.95;
                     }
-                    double W_0 = Convert.ToDouble(Value[0][4]);
-                    double count = Convert.ToDouble(ABSNum_split[n]);
+                    double W_0 = Program.UTIL.ToDoubleOrZero(Value[0][4]);
+                    double count = Program.UTIL.ToDoubleOrZero(ABSNum_split[n]);
                     if (Carrier == "지역난방" &&  Value[0][5]!=null&& Value[0][5]!="")
                     {
                         SelectDH_nonsplit = Value[0][5];
@@ -2598,9 +2598,9 @@ namespace main
             {
                for(int a=0; a<Value.Length; a++)
                 {
-                    if (Power <= Convert.ToDouble(Value[a][0]))
+                    if (Power <= Program.UTIL.ToDoubleOrZero(Value[a][0]))
                     {
-                        loss = Convert.ToDouble(Value[a][1]);
+                        loss = Program.UTIL.ToDoubleOrZero(Value[a][1]);
                     }
                 }
             }
@@ -2630,11 +2630,11 @@ namespace main
                 {
                     String Num = Value[0][0];
                     Carrier = "지역난방";
-                    double Power = Convert.ToDouble(Value[0][1]);
-                    double SL_1 = Convert.ToDouble(Value[0][2]);
-                    double RL_1 = Convert.ToDouble(Value[0][3]);
-                    double SL_2 = Convert.ToDouble(Value[0][4]);
-                    double RL_2 = Convert.ToDouble(Value[0][5]);
+                    double Power = Program.UTIL.ToDoubleOrZero(Value[0][1]);
+                    double SL_1 = Program.UTIL.ToDoubleOrZero(Value[0][2]);
+                    double RL_1 = Program.UTIL.ToDoubleOrZero(Value[0][3]);
+                    double SL_2 = Program.UTIL.ToDoubleOrZero(Value[0][4]);
+                    double RL_2 = Program.UTIL.ToDoubleOrZero(Value[0][5]);
                     Calc_Qh_DH(Num, Power, SL_1,SL_2);
                 }
             }

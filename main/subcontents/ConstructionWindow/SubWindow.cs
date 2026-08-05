@@ -245,10 +245,10 @@ namespace main.subcontents.ConstructionWindow
                         f_shgc = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '태양열취득률'");
                         f_τ = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '빛투과율'");
                         if (f_shgc.Length > 0)
-                        { g = Convert.ToDouble(f_shgc[0][0]) * Convert.ToDouble(Old[0][5]) * g; }
+                        { g = Program.UTIL.ToDoubleOrZero(f_shgc[0][0]) * Program.UTIL.ToDoubleOrZero(Old[0][5]) * g; }
                         if (f_τ.Length > 0)
-                        { τD65_SNA = Convert.ToDouble(f_τ[0][0]) * Convert.ToDouble(Old[0][6]) * τD65_SNA; }
-                        Uw = 1 / (0.019 + 1 / Convert.ToDouble(Old[0][7]) + 1 / Uw);
+                        { τD65_SNA = Program.UTIL.ToDoubleOrZero(f_τ[0][0]) * Program.UTIL.ToDoubleOrZero(Old[0][6]) * τD65_SNA; }
+                        Uw = 1 / (0.019 + 1 / Program.UTIL.ToDoubleOrZero(Old[0][7]) + 1 / Uw);
                     }
                 }
             }
@@ -263,10 +263,10 @@ namespace main.subcontents.ConstructionWindow
                         f_shgc = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '태양열취득률'");
                         f_τ = Program.DB.getValue(DB.type.BaseDB_HCneed, "이중창보정계수", "계수", "조합구성 = '" + 조합구성 + "' AND 보정유형 = '빛투과율'");
                         if (f_shgc.Length > 0)
-                        { g = Convert.ToDouble(f_shgc[0][0]) * Convert.ToDouble(Old[0][5]) * g; }
+                        { g = Program.UTIL.ToDoubleOrZero(f_shgc[0][0]) * Program.UTIL.ToDoubleOrZero(Old[0][5]) * g; }
                         if (f_τ.Length > 0)
-                        { τD65_SNA = Convert.ToDouble(f_τ[0][0]) * Convert.ToDouble(Old[0][6]) * τD65_SNA; }
-                        Uw = 1 / (0.019 + 1 / Convert.ToDouble(Old[0][7]) + 1 / Uw);
+                        { τD65_SNA = Program.UTIL.ToDoubleOrZero(f_τ[0][0]) * Program.UTIL.ToDoubleOrZero(Old[0][6]) * τD65_SNA; }
+                        Uw = 1 / (0.019 + 1 / Program.UTIL.ToDoubleOrZero(Old[0][7]) + 1 / Uw);
                     }
                 }
             }
@@ -384,7 +384,7 @@ namespace main.subcontents.ConstructionWindow
         {
             if (UwMethod == "진단" && Uw_textBox.Text != string.Empty)
             {
-                Uw = Convert.ToDouble(Uw_textBox.Text);
+                Uw = Program.UTIL.ToDoubleOrZero(Uw_textBox.Text);
                 Calc_dUinst();
             }
         }
@@ -489,7 +489,7 @@ namespace main.subcontents.ConstructionWindow
                 String[][] Uvalue = Program.DB.getValue(DB.type.BaseDB_HCneed, "법규열관류율", "열관류율", "구조체 = '창호' And 시기 = '2018.09' AND  지역 = '중부1' AND 직접간접 =  '" + DiIndi + "'");
                 if (Uvalue.Length > 0)
                 {
-                    Uw = Convert.ToDouble(Uvalue[0][0]);
+                    Uw = Program.UTIL.ToDoubleOrZero(Uvalue[0][0]);
                     Uw_textBox.Text = Uw.ToString();
                     Program.UTIL.textBox_doubleComa(Uw_textBox, true, 3);
                 }
@@ -730,11 +730,11 @@ namespace main.subcontents.ConstructionWindow
                     LE_CL_V = MainLoad[0][14];
                     check_LE_CL_V = MainLoad[0][14];
 
-                    Ug = Convert.ToDouble(MainLoad[0][15]);
+                    Ug = Program.UTIL.ToDoubleOrZero(MainLoad[0][15]);
                     Ug_textBox.Text = MainLoad[0][15];
 
-                    g = Convert.ToDouble(MainLoad[0][16]);
-                    τD65_SNA = Convert.ToDouble(MainLoad[0][17]);
+                    g = Program.UTIL.ToDoubleOrZero(MainLoad[0][16]);
+                    τD65_SNA = Program.UTIL.ToDoubleOrZero(MainLoad[0][17]);
 
                     g_textBox.Text = g.ToString();
                     Program.UTIL.textBox_doubleComa(g_textBox, true, 3);
@@ -748,8 +748,8 @@ namespace main.subcontents.ConstructionWindow
                     Program.UTIL.textBox_doubleComa(τD65_SNA2_textBox, true, 3);
 
 
-                    Psi_g_fix = Convert.ToDouble(MainLoad[0][18]);
-                    Psi_g_open = Convert.ToDouble(MainLoad[0][19]);
+                    Psi_g_fix = Program.UTIL.ToDoubleOrZero(MainLoad[0][18]);
+                    Psi_g_open = Program.UTIL.ToDoubleOrZero(MainLoad[0][19]);
 
                     Psi_g_fix_textBox.Text = Psi_g_fix.ToString();
                     Program.UTIL.textBox_doubleComa(Psi_g_fix_textBox, true, 3);
@@ -757,9 +757,9 @@ namespace main.subcontents.ConstructionWindow
                     Program.UTIL.textBox_doubleComa(Psi_g_open_textBox, true, 3);
 
 
-                    Psi_InstallTop = Convert.ToDouble(MainLoad[0][20]);
-                    Psi_InstallSide = Convert.ToDouble(MainLoad[0][21]);
-                    Psi_InstallButtom = Convert.ToDouble(MainLoad[0][22]);
+                    Psi_InstallTop = Program.UTIL.ToDoubleOrZero(MainLoad[0][20]);
+                    Psi_InstallSide = Program.UTIL.ToDoubleOrZero(MainLoad[0][21]);
+                    Psi_InstallButtom = Program.UTIL.ToDoubleOrZero(MainLoad[0][22]);
 
                     Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString();
                     Program.UTIL.textBox_doubleComa(Psi_InstallTop_textBox, true, 3);
@@ -769,7 +769,7 @@ namespace main.subcontents.ConstructionWindow
                     Program.UTIL.textBox_doubleComa(Psi_InstallButtom_textBox, true, 3);
 
 
-                    Uw = Convert.ToDouble(SubLoad[0][13]);
+                    Uw = Program.UTIL.ToDoubleOrZero(SubLoad[0][13]);
                     if (UwMethod == "계산")
                     {
                         Uw_textBox.Text = Uw.ToString();
@@ -780,49 +780,49 @@ namespace main.subcontents.ConstructionWindow
                         Uw_textBox.Text = Uw.ToString();
                         Program.UTIL.textBox_doubleComa(Uw_textBox, true, 3);
                     }
-                    dUinst = Convert.ToDouble(SubLoad[0][14]);
+                    dUinst = Program.UTIL.ToDoubleOrZero(SubLoad[0][14]);
                     dUinst_textBox.Text = dUinst.ToString();
                     Program.UTIL.textBox_doubleComa(dUinst_textBox, true, 3);
-                    Uw_inst = Convert.ToDouble(SubLoad[0][15]);
+                    Uw_inst = Program.UTIL.ToDoubleOrZero(SubLoad[0][15]);
                     Uw_inst_textBox.Text = Uw_inst.ToString();
                     Program.UTIL.textBox_doubleComa(Uw_inst_textBox, true, 3);
                     Uw_inst2_textBox.Text = Uw_inst.ToString();
                     Program.UTIL.textBox_doubleComa(Uw_inst2_textBox, true, 3);
 
-                    Uf_open = Convert.ToDouble(MainLoad[0][24]);
+                    Uf_open = Program.UTIL.ToDoubleOrZero(MainLoad[0][24]);
                     Uf_open_textBox.Text = Uf_open.ToString();
                     Program.UTIL.textBox_doubleComa(Uf_open_textBox, true, 2);
 
-                    Uf_fix = Convert.ToDouble(MainLoad[0][25]);
+                    Uf_fix = Program.UTIL.ToDoubleOrZero(MainLoad[0][25]);
                     Uf_fix_textBox.Text = Uf_fix.ToString();
                     Program.UTIL.textBox_doubleComa(Uf_fix_textBox, true, 2);
 
-                    Uf_btw = Convert.ToDouble(MainLoad[0][26]);
+                    Uf_btw = Program.UTIL.ToDoubleOrZero(MainLoad[0][26]);
                     Uf_btw_textBox.Text = Uf_btw.ToString();
                     Program.UTIL.textBox_doubleComa(Uf_btw_textBox, true, 2);
 
-                    df_open = Convert.ToDouble(MainLoad[0][27]);
+                    df_open = Program.UTIL.ToDoubleOrZero(MainLoad[0][27]);
                     df_open_textBox.Text = df_open.ToString();
                     Program.UTIL.textBox_doubleComa(df_open_textBox, true, 2);
 
-                    df_fix = Convert.ToDouble(MainLoad[0][28]);
+                    df_fix = Program.UTIL.ToDoubleOrZero(MainLoad[0][28]);
                     df_fix_textBox.Text = df_fix.ToString();
                     Program.UTIL.textBox_doubleComa(df_fix_textBox, true, 2);
 
-                    df_btw = Convert.ToDouble(MainLoad[0][29]);
+                    df_btw = Program.UTIL.ToDoubleOrZero(MainLoad[0][29]);
                     df_btw_textBox.Text = df_btw.ToString();
                     Program.UTIL.textBox_doubleComa(df_btw_textBox, true, 2);
 
-                    Area = Convert.ToDouble(SubLoad[0][3]);
-                    Width = Convert.ToDouble(SubLoad[0][4]);
-                    Height = Convert.ToDouble(SubLoad[0][5]);
-                    Ag_fix = Convert.ToDouble(SubLoad[0][6]);
-                    Ag_open = Convert.ToDouble(SubLoad[0][7]);
-                    Af_open = Convert.ToDouble(SubLoad[0][8]);
-                    Af_fix = Convert.ToDouble(SubLoad[0][9]);
-                    Af_btw = Convert.ToDouble(SubLoad[0][10]);
-                    Lg_fix = Convert.ToDouble(SubLoad[0][11]);
-                    Lg_open = Convert.ToDouble(SubLoad[0][12]);
+                    Area = Program.UTIL.ToDoubleOrZero(SubLoad[0][3]);
+                    Width = Program.UTIL.ToDoubleOrZero(SubLoad[0][4]);
+                    Height = Program.UTIL.ToDoubleOrZero(SubLoad[0][5]);
+                    Ag_fix = Program.UTIL.ToDoubleOrZero(SubLoad[0][6]);
+                    Ag_open = Program.UTIL.ToDoubleOrZero(SubLoad[0][7]);
+                    Af_open = Program.UTIL.ToDoubleOrZero(SubLoad[0][8]);
+                    Af_fix = Program.UTIL.ToDoubleOrZero(SubLoad[0][9]);
+                    Af_btw = Program.UTIL.ToDoubleOrZero(SubLoad[0][10]);
+                    Lg_fix = Program.UTIL.ToDoubleOrZero(SubLoad[0][11]);
+                    Lg_open = Program.UTIL.ToDoubleOrZero(SubLoad[0][12]);
 
                     Area_textBox.Text = Area.ToString();
                     Width_textBox.Text = Width.ToString();

@@ -110,7 +110,7 @@ namespace main.contentslist
                 this.List.Rows.Clear();
                 for (int n = 0; n < List.Length; n++)
                 {
-                    this.List.Rows.Add(List[n][0], List[n][1], List[n][2], List[n][3], Convert.ToDouble(List[n][4]).ToString("0.0"));
+                    this.List.Rows.Add(List[n][0], List[n][1], List[n][2], List[n][3], Program.UTIL.ToDoubleOrZero(List[n][4]).ToString("0.0"));
                     mainMenu.Add(new { text = List[n][0] + "." + List[n][1], id = "{\\\"formID\\\":20,\\\"ID\\\":\\\"" + List[n][0] + "\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
                 }
                 dataGridView1.DataSource = this.List;

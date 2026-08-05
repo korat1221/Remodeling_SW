@@ -66,7 +66,7 @@ namespace main.subcontents.HeatingSystem
                         AHU_dataGridView.Rows[nRow].Cells[3].Value = 존.Length;
                         for(int a=0; a< 존.Length ; a++)
                         {
-                           Area += Convert.ToDouble(존[0][1]);
+                           Area += Program.UTIL.ToDoubleOrZero(존[0][1]);
                         }
                     }
                     for (int mth=0; mth< 12; mth++)
@@ -76,9 +76,9 @@ namespace main.subcontents.HeatingSystem
                         {
                             for (int a = 0; a < 요구량.Length; a++)
                             {
-                                Qb_a += Convert.ToDouble(요구량[0][0]);
+                                Qb_a += Program.UTIL.ToDoubleOrZero(요구량[0][0]);
                             }
-                            Qmax = Convert.ToDouble(요구량[0][1]) / 1000;
+                            Qmax = Program.UTIL.ToDoubleOrZero(요구량[0][1]) / 1000;
                         }
                     }
                     AHU_dataGridView.Rows[nRow].Cells[4].Value = Qb_a.ToString("#,##0");

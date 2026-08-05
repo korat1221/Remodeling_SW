@@ -345,9 +345,9 @@ namespace main.contents
                         }
                         else
                         {
-                            A_z += Convert.ToDouble(면적[0][0]);
-                            QC_a_z += Convert.ToDouble(부하[0][0]);
-                            QC_max_z += Convert.ToDouble(부하[0][1]) / 1000;
+                            A_z += Program.UTIL.ToDoubleOrZero(면적[0][0]);
+                            QC_a_z += Program.UTIL.ToDoubleOrZero(부하[0][0]);
+                            QC_max_z += Program.UTIL.ToDoubleOrZero(부하[0][1]) / 1000;
                         }
                     }
                 }
@@ -397,14 +397,14 @@ namespace main.contents
                     string[][] 면적 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "선택열회수기 ='" + ahu + "'");
                     for (int i = 0; i < 면적.Length; i++)
                     {
-                        A_Ahu += Convert.ToDouble(면적[i][0]); //해당설비 면적 다 더하기
+                        A_Ahu += Program.UTIL.ToDoubleOrZero(면적[i][0]); //해당설비 면적 다 더하기
                     }
                     string[][] 부하 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "공조요구량,Qmax_tot", " 번호 = '" + ahu + "' And 난방_냉방 ='냉방'");
                     for (int k = 0; k < 12; k++)
                     {
-                        QC_a_Ahu += Convert.ToDouble(부하[k][0]);
+                        QC_a_Ahu += Program.UTIL.ToDoubleOrZero(부하[k][0]);
                     }
-                    QC_max_Ahu += Convert.ToDouble(부하[7][1]) / 1000; //7월로 한정함
+                    QC_max_Ahu += Program.UTIL.ToDoubleOrZero(부하[7][1]) / 1000; //7월로 한정함
                 }
             }
             else
@@ -997,9 +997,9 @@ namespace main.contents
 
             for (int h = 0; h < Power.Count; h++)
             {
-                EER_f += Power[h] * EER[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Power_f += Power[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Number_f += Convert.ToDouble(SelectCGN_split[h]);
+                EER_f += Power[h] * EER[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Power_f += Power[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Number_f += Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
             }
 
             EER_f = EER_f / Power_f;
@@ -1267,8 +1267,8 @@ namespace main.contents
                     EER.Add(Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, i, 9, 1));
                     if (Val[0][8] == "수방식")  //수정
                     {
-                        cwin.Add(Convert.ToDouble(Val[0][10]));
-                        cwout.Add(Convert.ToDouble(Val[0][12]));
+                        cwin.Add(Program.UTIL.ToDoubleOrZero(Val[0][10]));
+                        cwout.Add(Program.UTIL.ToDoubleOrZero(Val[0][12]));
                     }
 
                 }
@@ -1289,9 +1289,9 @@ namespace main.contents
 
             for (int h = 0; h < Power.Count; h++)
             {
-                EER_f += Power[h] * EER[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Power_f += Power[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Number_f += Convert.ToDouble(SelectCGN_split[h]);
+                EER_f += Power[h] * EER[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Power_f += Power[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Number_f += Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
                 //수정
                 if (Power.Max() == Power[h])
                 {
@@ -1307,8 +1307,8 @@ namespace main.contents
             {
                 for (int k = 0; k < cwin.Count; k++)
                 {
-                    Cwin_f += cwin[k] * Convert.ToDouble(SelectCGN_split[k]); //직팽식, 수방식에 대한 내용 체크
-                    Cwout_f += cwout[k] * Convert.ToDouble(SelectCGN_split[k]);
+                    Cwin_f += cwin[k] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[k]); //직팽식, 수방식에 대한 내용 체크
+                    Cwout_f += cwout[k] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[k]);
                 }
                 Cwin_f = Cwin_f / Number_f;
                 Cwout_f = Cwout_f / Number_f;
@@ -1558,11 +1558,11 @@ namespace main.contents
 
             for (int h = 0; h < Power.Count; h++)
             {
-                EER_f += Power[h] * EER[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Power_f += Power[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Cwin_f += cwin[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Cwout_f += cwout[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Number_f += Convert.ToDouble(SelectCGN_split[h]);
+                EER_f += Power[h] * EER[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Power_f += Power[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Cwin_f += cwin[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Cwout_f += cwout[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Number_f += Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
                 if (Power.Max() == Power[h])
                 {
                     Comp_f = WaterCooler_dataGridView.Rows[h].Cells[12].Value.ToString();
@@ -1813,11 +1813,11 @@ namespace main.contents
 
             for (int h = 0; h < Power.Count; h++)
             {
-                EER_f += Power[h] * EER[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Power_f += Power[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Cwin_f += cwin[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Cwout_f += cwout[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Number_f += Convert.ToDouble(SelectCGN_split[h]);
+                EER_f += Power[h] * EER[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Power_f += Power[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Cwin_f += cwin[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Cwout_f += cwout[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Number_f += Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
                 if (Power.Max() == Power[h])
                 {
                     Comp_f = SoilCooler_dataGridView.Rows[h].Cells[12].Value.ToString();
@@ -2080,11 +2080,11 @@ namespace main.contents
 
             for (int h = 0; h < Power.Count; h++)
             {
-                EER_f += Power[h] * EER[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Power_f += Power[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Cwin_f += cwin[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Cwout_f += cwout[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Number_f += Convert.ToDouble(SelectCGN_split[h]);
+                EER_f += Power[h] * EER[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Power_f += Power[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Cwin_f += cwin[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Cwout_f += cwout[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Number_f += Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
                 if (Power.Max() == Power[h])
                 {
                     Comp_f = SoilWaterCooler_dataGridView.Rows[h].Cells[12].Value.ToString();
@@ -2330,12 +2330,12 @@ namespace main.contents
 
             for (int h = 0; h < Power.Count; h++)
             {
-                EER_f += Power[h] * EER[h] * Convert.ToDouble(SelectCGN_split[h]);
-                SEER_f += Power[h] * SEER[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Power_f += Power[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Cwin_f += cwin[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Cwout_f += cwout[h] * Convert.ToDouble(SelectCGN_split[h]);
-                Number_f += Convert.ToDouble(SelectCGN_split[h]);
+                EER_f += Power[h] * EER[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                SEER_f += Power[h] * SEER[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Power_f += Power[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Cwin_f += cwin[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Cwout_f += cwout[h] * Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
+                Number_f += Program.UTIL.ToDoubleOrZero(SelectCGN_split[h]);
             }
             EER_f = EER_f / Power_f;
             SEER_f = SEER_f / Power_f;
@@ -3255,7 +3255,7 @@ namespace main.contents
 
                         string[][] 최대부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호 = '" + Value[i][0] + "' And 난방_냉방 = '냉방' And 비이용일_이용일 = '이용일'");
 
-                        double 용량 = Convert.ToDouble(최대부하[0][0]) / 1000;
+                        double 용량 = Program.UTIL.ToDoubleOrZero(최대부하[0][0]) / 1000;
                         ce_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", 용량); //해당존의 최대부하값을 반영하기
                         ce_dataGridView.Rows[nRow].Cells[5].Value = 일람표정보[0][3];//소비전력
 
@@ -4096,12 +4096,12 @@ namespace main.contents
                 Program.UTIL.dataGridView_doubleComa(CoolingTop_dataGridView, i, 3, 1);
                 Program.UTIL.dataGridView_doubleComa(CoolingTop_dataGridView, i, 4, 1);
 
-                CTPower.Add(Convert.ToDouble(Val[0][2]));
+                CTPower.Add(Program.UTIL.ToDoubleOrZero(Val[0][2]));
                 check.Add(Val[0][6]);
                 Type.Add(Val[0][7]);
 
-                cwin.Add(Convert.ToDouble(Val[0][8])); //수정
-                cwout.Add(Convert.ToDouble(Val[0][9])); //수정
+                cwin.Add(Program.UTIL.ToDoubleOrZero(Val[0][8])); //수정
+                cwout.Add(Program.UTIL.ToDoubleOrZero(Val[0][9])); //수정
 
                 for (int h = 0; h < check.Count; h++)
                 {

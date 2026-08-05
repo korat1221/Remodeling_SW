@@ -81,7 +81,7 @@ namespace main.contents
             installsystem = stdb[0][6];
             solarnum = stdb[0][8];
             systemnum = stdb[0][9];  
-            installednumber = Convert.ToDouble(stdb[0][7]);
+            installednumber = Program.UTIL.ToDoubleOrZero(stdb[0][7]);
 
             //태양열집열판 종합 정보
             string[][] solartherminfo = Program.DB.getValue(DB.type.ProjDB, "User_Solar", "모듈면적,유효열용량,효율,신규기존", "번호 = '" +  solarnum + "'");
@@ -89,11 +89,11 @@ namespace main.contents
             dataGridView1.Rows.Add();
             dataGridView1.Rows[0].Cells[0].Value = installpart;
             dataGridView1.Rows[0].Cells[1].Value = installsystem;
-            dataGridView1.Rows[0].Cells[2].Value = string.Format("{0:N2}" , installednumber * Convert.ToDouble(solartherminfo[0][0].ToString()));
-            dataGridView1.Rows[0].Cells[3].Value = string.Format("{0:N2}", installednumber * Convert.ToDouble(solartherminfo[0][1].ToString()));
-            dataGridView1.Rows[0].Cells[4].Value = string.Format("{0:N0}", 100 * Convert.ToDouble(solartherminfo[0][2].ToString()));
+            dataGridView1.Rows[0].Cells[2].Value = string.Format("{0:N2}" , installednumber * Program.UTIL.ToDoubleOrZero(solartherminfo[0][0].ToString()));
+            dataGridView1.Rows[0].Cells[3].Value = string.Format("{0:N2}", installednumber * Program.UTIL.ToDoubleOrZero(solartherminfo[0][1].ToString()));
+            dataGridView1.Rows[0].Cells[4].Value = string.Format("{0:N0}", 100 * Program.UTIL.ToDoubleOrZero(solartherminfo[0][2].ToString()));
             
-            installedarea = installednumber * Convert.ToDouble(solartherminfo[0][0].ToString());
+            installedarea = installednumber * Program.UTIL.ToDoubleOrZero(solartherminfo[0][0].ToString());
             install = solartherminfo[0][3];
             if (install =="기존") radioButton1.Checked = true;
             else if(install == "신규") radioButton3.Checked = true;
@@ -110,7 +110,7 @@ namespace main.contents
             for (int mth = 0; mth < 12; mth++)
             {
                 string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역 + "' AND 방향 ='" + direction + "' AND  각도 = '" + slope + "' and 기간 ='" + (mth + 1).ToString() + "월'");
-                sol[mth] = Convert.ToDouble(token[0][0]) * 0.024 * dmth[mth];
+                sol[mth] = Program.UTIL.ToDoubleOrZero(token[0][0]) * 0.024 * dmth[mth];
             }
 
             if (installsystem == "난방")
@@ -121,13 +121,13 @@ namespace main.contents
                     if (token[0][0].ToString()==null || token[0][0].ToString() == "")
                     {
                         ene[mth] = 0;
-                    } else ene[mth] = Convert.ToDouble(token[0][0].ToString())/installedarea;
+                    } else ene[mth] = Program.UTIL.ToDoubleOrZero(token[0][0].ToString())/installedarea;
 
                     if (token[0][1].ToString() == null || token[0][1].ToString() == "")
                     {
                         wgen[mth] = 0;
                     }
-                    else wgen[mth] = Convert.ToDouble(token[0][1].ToString()) / installedarea;
+                    else wgen[mth] = Program.UTIL.ToDoubleOrZero(token[0][1].ToString()) / installedarea;
                 }
             }
             else if(installsystem == "급탕")
@@ -138,13 +138,13 @@ namespace main.contents
                     if (token[0][0].ToString() == null || token[0][0].ToString() == "")
                     {
                         ene[mth] = 0;
-                    } else ene[mth] = Convert.ToDouble(token[0][0].ToString()) / installedarea;
+                    } else ene[mth] = Program.UTIL.ToDoubleOrZero(token[0][0].ToString()) / installedarea;
                     
                     if (token[0][1].ToString() == null || token[0][1].ToString() == "")
                     {
                         wgen[mth] = 0;
                     }
-                    else wgen[mth] = Convert.ToDouble(token[0][1].ToString()) / installedarea;
+                    else wgen[mth] = Program.UTIL.ToDoubleOrZero(token[0][1].ToString()) / installedarea;
                 }
             }
         }

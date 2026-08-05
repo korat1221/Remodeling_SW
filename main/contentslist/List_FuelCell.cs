@@ -114,8 +114,8 @@ namespace main.contentslist
                     //적용설비를 바탕으로 작성함
                     string[][] FuelCell = Program.DB.getValue(DB.type.ProjDB, "User_FC", "전기출력,전기효율", "번호 = '" + db[i][1] + "'");
 
-                    dataGridView1.Rows[i].Cells[5].Value = string.Format("{0:N2}", Convert.ToDouble(db[i][4]) * Convert.ToDouble(FuelCell[0][0]));
-                    dataGridView1.Rows[i].Cells[6].Value = string.Format("{0:N0}", Convert.ToDouble(FuelCell[0][1]));
+                    dataGridView1.Rows[i].Cells[5].Value = string.Format("{0:N2}", Program.UTIL.ToDoubleOrZero(db[i][4]) * Program.UTIL.ToDoubleOrZero(FuelCell[0][0]));
+                    dataGridView1.Rows[i].Cells[6].Value = string.Format("{0:N0}", Program.UTIL.ToDoubleOrZero(FuelCell[0][1]));
                     //연간 생산량 작성
 
                     if (db[i][3] == "난방")
@@ -123,10 +123,10 @@ namespace main.contentslist
                         double ql = 0, qh = 0;
                         string[][] v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "난방설비 = '" + db[i][2] + "' and 신재생시스템= '" + db[i][1] + "' and 신재생시스템유형='연료전지' and 생산소비 ='생산' and 생산유형='전기'");
                         if (v.Length > 0)
-                        { ql += Convert.ToDouble(v[0][0]); }
+                        { ql += Program.UTIL.ToDoubleOrZero(v[0][0]); }
                         v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "난방설비 = '" + db[i][2] + "' and 신재생시스템= '" + db[i][1] + "' and 신재생시스템유형='연료전지' and 생산소비 ='생산' and 생산유형='열'");
                         if (v.Length > 0)
-                        { qh += Convert.ToDouble(v[0][0]); }
+                        { qh += Program.UTIL.ToDoubleOrZero(v[0][0]); }
                         dataGridView1.Rows[i].Cells[7].Value = ql.ToString("#,##0");
                         dataGridView1.Rows[i].Cells[8].Value = qh.ToString("#,##0");
                     }
@@ -135,10 +135,10 @@ namespace main.contentslist
                         double ql = 0, qh = 0;
                         string[][] v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "급탕설비 = '" + db[i][2] + "' and 신재생시스템= '" + db[i][1] + "' and 신재생시스템유형='연료전지' and 생산소비 ='생산' and 생산유형='전기'");
                         if (v.Length > 0)
-                        { ql += Convert.ToDouble(v[0][0]); }
+                        { ql += Program.UTIL.ToDoubleOrZero(v[0][0]); }
                          v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "급탕설비 = '" + db[i][2] + "' and 신재생시스템= '" + db[i][1] + "' and 신재생시스템유형='연료전지' and 생산소비 ='생산' and 생산유형='열'");
                         if (v.Length > 0)
-                        { qh += Convert.ToDouble(v[0][0]); }
+                        { qh += Program.UTIL.ToDoubleOrZero(v[0][0]); }
                         dataGridView1.Rows[i].Cells[7].Value = ql.ToString("#,##0");
                         dataGridView1.Rows[i].Cells[8].Value = qh.ToString("#,##0");
                     }

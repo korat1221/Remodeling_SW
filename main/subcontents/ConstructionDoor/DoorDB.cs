@@ -255,7 +255,7 @@ namespace main.subcontents
                 {
                     if (Door_dataGridView.Rows[e.RowIndex].Cells[13].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-")
                     {
-                        d = Convert.ToDouble(Door_dataGridView.Rows[e.RowIndex].Cells[13].Value);
+                        d = Program.UTIL.ToDoubleOrZero(Door_dataGridView.Rows[e.RowIndex].Cells[13].Value);
                         if (열전도율 > 0 && d > 0)
                         {
                             R = d / 1000 / 열전도율;
@@ -263,19 +263,19 @@ namespace main.subcontents
                     }
                     if (Door_dataGridView.Rows[e.RowIndex].Cells[14].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "" && Door_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString() != "-")
                     {
-                        Width = Convert.ToDouble(Door_dataGridView.Rows[e.RowIndex].Cells[14].Value) / 1000;
+                        Width = Program.UTIL.ToDoubleOrZero(Door_dataGridView.Rows[e.RowIndex].Cells[14].Value) / 1000;
                     }
                     if (Door_dataGridView.Rows[e.RowIndex].Cells[15].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[15].Value.ToString() != "" && Door_dataGridView.Rows[e.RowIndex].Cells[15].Value.ToString() != "-")
                     {
-                        Height = Convert.ToDouble(Door_dataGridView.Rows[e.RowIndex].Cells[15].Value) / 1000;
+                        Height = Program.UTIL.ToDoubleOrZero(Door_dataGridView.Rows[e.RowIndex].Cells[15].Value) / 1000;
                     }
                     if (Door_dataGridView.Rows[e.RowIndex].Cells[7].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString() != "")
                     {
-                        psiWidth = Convert.ToDouble(Door_dataGridView.Rows[e.RowIndex].Cells[7].Value);
+                        psiWidth = Program.UTIL.ToDoubleOrZero(Door_dataGridView.Rows[e.RowIndex].Cells[7].Value);
                     }
                     if (Door_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString() != "")
                     {
-                        psiHeight = Convert.ToDouble(Door_dataGridView.Rows[e.RowIndex].Cells[8].Value);
+                        psiHeight = Program.UTIL.ToDoubleOrZero(Door_dataGridView.Rows[e.RowIndex].Cells[8].Value);
                     }
 
                     if (Door_dataGridView.Rows[e.RowIndex].Cells[11].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-")
@@ -287,7 +287,7 @@ namespace main.subcontents
                             Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "열전도율", "재료명 ='" + Door_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() + "'");
                             if (Value.Length > 0)
                             {
-                                열전도율 = Convert.ToDouble(Value[0][0]);
+                                열전도율 = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                                 if (열전도율 > 0 && d > 0)
                                 {
                                     R = d / 1000 / 열전도율;
@@ -323,8 +323,8 @@ namespace main.subcontents
                 double[,] arr_Value = new double[Value.Length, 2];
                 for (int k = 0; k < Value.Length; k++)
                 {
-                    arr_Value[k, 0] = Convert.ToDouble(Value[k][0]);
-                    arr_Value[k, 1] = Convert.ToDouble(Value[k][1]);
+                    arr_Value[k, 0] = Program.UTIL.ToDoubleOrZero(Value[k][0]);
+                    arr_Value[k, 1] = Program.UTIL.ToDoubleOrZero(Value[k][1]);
                 }
                 for (int k = 0; k < Value.Length; k++)
                 {

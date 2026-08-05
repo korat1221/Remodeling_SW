@@ -1,4 +1,4 @@
-﻿using main.contents;
+using main.contents;
 using main.subcontents.ConstructionRoof;
 using System;
 using System.IO;
@@ -115,7 +115,7 @@ namespace main
                 String[][] Valueaaaa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_외부조도", "외부조도", " 지역명 = '" + 지역[0][0] + "' and 방향 = '" + energy_di + "' and 각도 = '" + gakdo + "' and 기간 = '" + (i + 1) + "월'");
                 if (Valueaaaa.Length > 0)
                 {
-                    ext[i] = Convert.ToDouble(Valueaaaa[0][0]);
+                    ext[i] = Program.UTIL.ToDoubleOrZero(Valueaaaa[0][0]);
                 }
             }
 
@@ -126,10 +126,10 @@ namespace main
                 String[][] ValueAA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_사용시간", "월별일수,월별평일수,julianday(time(해뜨는시간)),julianday(time(해지는시간))", "ID = '" + (i + 1) + "'");
                 if (ValueAA.Length > 0)
                 {
-                    monthday[i] = Convert.ToDouble(ValueAA[0][0]);
-                    weekdays[i] = Convert.ToDouble(ValueAA[0][1]);
-                    sunrise[i] = Convert.ToDouble(ValueAA[0][2]);
-                    sunset[i] = Convert.ToDouble(ValueAA[0][3]);
+                    monthday[i] = Program.UTIL.ToDoubleOrZero(ValueAA[0][0]);
+                    weekdays[i] = Program.UTIL.ToDoubleOrZero(ValueAA[0][1]);
+                    sunrise[i] = Program.UTIL.ToDoubleOrZero(ValueAA[0][2]);
+                    sunset[i] = Program.UTIL.ToDoubleOrZero(ValueAA[0][3]);
                 }
 
             }
@@ -142,22 +142,22 @@ namespace main
             {
                 while (++kk < ValueA.Length)
                 {
-                    Wr = Convert.ToDouble(ValueA[kk][1]);
-                    Lr = Convert.ToDouble(ValueA[kk][2]);
-                    A = Convert.ToDouble(ValueA[kk][3]);
-                    Zone_hLi = Convert.ToDouble(ValueA[kk][4]);
-                    Zone_hTa = Convert.ToDouble(ValueA[kk][5]);
-                    K = Convert.ToDouble(ValueA[kk][6]);
-                    Em = Convert.ToDouble(ValueA[kk][7]);
+                    Wr = Program.UTIL.ToDoubleOrZero(ValueA[kk][1]);
+                    Lr = Program.UTIL.ToDoubleOrZero(ValueA[kk][2]);
+                    A = Program.UTIL.ToDoubleOrZero(ValueA[kk][3]);
+                    Zone_hLi = Program.UTIL.ToDoubleOrZero(ValueA[kk][4]);
+                    Zone_hTa = Program.UTIL.ToDoubleOrZero(ValueA[kk][5]);
+                    K = Program.UTIL.ToDoubleOrZero(ValueA[kk][6]);
+                    Em = Program.UTIL.ToDoubleOrZero(ValueA[kk][7]);
                     WinNum = ValueA[kk][8];
                 }
             }
             String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "주이용일,julianday(time(시작시간)),julianday(time(종료시간))", "존번호='" + ZoneNum + "'");
             if (Value.Length > 0)
             {
-                dayofuse = Convert.ToDouble(Value[0][0]);
-                starttime = Convert.ToDouble(Value[0][1]);
-                endtime = Convert.ToDouble(Value[0][2]);
+                dayofuse = Program.UTIL.ToDoubleOrZero(Value[0][0]);
+                starttime = Program.UTIL.ToDoubleOrZero(Value[0][1]);
+                endtime = Program.UTIL.ToDoubleOrZero(Value[0][2]);
             }
         }
         public void LoadData_LightSystem()
@@ -168,13 +168,13 @@ namespace main
             {
                 while (++kk < ValueA.Length)
                 {
-                    Pj = Convert.ToDouble(ValueA[kk][0]);
-                    Pn = Convert.ToDouble(ValueA[kk][1]);
-                    Fo = Convert.ToDouble(ValueA[kk][2]);
-                    Fc = Convert.ToDouble(ValueA[kk][3]);
-                    lm_W = Convert.ToDouble(ValueA[kk][4]); //광효율과 조명계수
-                    wsp = Convert.ToDouble(ValueA[kk][5]);
-                    N = Convert.ToDouble(ValueA[kk][6]);
+                    Pj = Program.UTIL.ToDoubleOrZero(ValueA[kk][0]);
+                    Pn = Program.UTIL.ToDoubleOrZero(ValueA[kk][1]);
+                    Fo = Program.UTIL.ToDoubleOrZero(ValueA[kk][2]);
+                    Fc = Program.UTIL.ToDoubleOrZero(ValueA[kk][3]);
+                    lm_W = Program.UTIL.ToDoubleOrZero(ValueA[kk][4]); //광효율과 조명계수
+                    wsp = Program.UTIL.ToDoubleOrZero(ValueA[kk][5]);
+                    N = Program.UTIL.ToDoubleOrZero(ValueA[kk][6]);
                 }
             }
         }
@@ -202,23 +202,23 @@ namespace main
                     else
                     {
                         facade_di = ValueA[0][0];
-                        Zone_f_Aca = Convert.ToDouble(ValueA[0][1]);
-                        Zone_f_a = Convert.ToDouble(ValueA[0][2]);
-                        Zone_f_b = Convert.ToDouble(ValueA[0][3]);
-                        Zone_f_AD = Convert.ToDouble(ValueA[0][4]);
+                        Zone_f_Aca = Program.UTIL.ToDoubleOrZero(ValueA[0][1]);
+                        Zone_f_a = Program.UTIL.ToDoubleOrZero(ValueA[0][2]);
+                        Zone_f_b = Program.UTIL.ToDoubleOrZero(ValueA[0][3]);
+                        Zone_f_AD = Program.UTIL.ToDoubleOrZero(ValueA[0][4]);
                         roof_di = ValueA[0][0];
-                        r_Aca = Convert.ToDouble(ValueA[0][1]);
-                        r_aD = Convert.ToDouble(ValueA[0][2]);
-                        r_bD = Convert.ToDouble(ValueA[0][3]);
-                        r_AD = Convert.ToDouble(ValueA[0][4]);
-                        f_τD65_SNA = Convert.ToDouble(ValueA[0][5]);
-                        r_τD65_SNA = Convert.ToDouble(ValueA[0][5]);
-                        r_τD65_SA = Convert.ToDouble(ValueA[0][5]) * 0.5;
+                        r_Aca = Program.UTIL.ToDoubleOrZero(ValueA[0][1]);
+                        r_aD = Program.UTIL.ToDoubleOrZero(ValueA[0][2]);
+                        r_bD = Program.UTIL.ToDoubleOrZero(ValueA[0][3]);
+                        r_AD = Program.UTIL.ToDoubleOrZero(ValueA[0][4]);
+                        f_τD65_SNA = Program.UTIL.ToDoubleOrZero(ValueA[0][5]);
+                        r_τD65_SNA = Program.UTIL.ToDoubleOrZero(ValueA[0][5]);
+                        r_τD65_SA = Program.UTIL.ToDoubleOrZero(ValueA[0][5]) * 0.5;
 
-                        K1 = Convert.ToDouble(ValueA[0][6]);
+                        K1 = Program.UTIL.ToDoubleOrZero(ValueA[0][6]);
                         K2 = 0.9;
                         K3 = 0.9;
-                        Kobl_1 = Convert.ToDouble(ValueA[0][6]);
+                        Kobl_1 = Program.UTIL.ToDoubleOrZero(ValueA[0][6]);
                         Kobl_2 = 0.9;
                         Kobl_3 = 0.9;
                         facade_shade = ValueA[0][7];
@@ -249,7 +249,7 @@ namespace main
                         ValueA = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + BlindValue[0][0], "계수", "지역명= '" + Location[0][0] + "' And 방향 ='" + facade_di + "' And 기간 = '" + (i + 1).ToString() + "월'");
                         if (ValueA.Length > 0)
                         {
-                            trel_D_SA[i] = Convert.ToDouble(ValueA[0][0]);
+                            trel_D_SA[i] = Program.UTIL.ToDoubleOrZero(ValueA[0][0]);
                             trel_D_SNA[i] = 1 - trel_D_SA[i];
                         }
                     }
@@ -265,11 +265,11 @@ namespace main
                 {
                     while (++kk < ValueA.Length)
                     {
-                        aIn_At = Convert.ToDouble(ValueA[kk][1]);
-                        bIn_At = Convert.ToDouble(ValueA[kk][2]);
-                        hIn_At = Convert.ToDouble(ValueA[kk][3]);
-                        τSh_In_At_D65 = Convert.ToDouble(ValueA[kk][4]);
-                        τSh_In_GDF_D65 = Convert.ToDouble(ValueA[kk][4]);
+                        aIn_At = Program.UTIL.ToDoubleOrZero(ValueA[kk][1]);
+                        bIn_At = Program.UTIL.ToDoubleOrZero(ValueA[kk][2]);
+                        hIn_At = Program.UTIL.ToDoubleOrZero(ValueA[kk][3]);
+                        τSh_In_At_D65 = Program.UTIL.ToDoubleOrZero(ValueA[kk][4]);
+                        τSh_In_GDF_D65 = Program.UTIL.ToDoubleOrZero(ValueA[kk][4]);
                         Ksh_In_At_1 = 0.7;
                         Ksh_In_At_2 = 0.9;
                         Ksh_In_At_3 = 0.9;
@@ -291,13 +291,13 @@ namespace main
                         if (ValueA[0][1] == "") { }
                         else
                         {
-                            γF = Convert.ToDouble(ValueA[kk][1]);
-                            γW = Convert.ToDouble(ValueA[kk][2]);
-                            As = Convert.ToDouble(ValueA[kk][3]);
-                            Bs = Convert.ToDouble(ValueA[kk][4]);
-                            hs = Convert.ToDouble(ValueA[kk][5]);
-                            hw = Convert.ToDouble(ValueA[kk][3]);
-                            hg = Convert.ToDouble(ValueA[kk][4]);
+                            γF = Program.UTIL.ToDoubleOrZero(ValueA[kk][1]);
+                            γW = Program.UTIL.ToDoubleOrZero(ValueA[kk][2]);
+                            As = Program.UTIL.ToDoubleOrZero(ValueA[kk][3]);
+                            Bs = Program.UTIL.ToDoubleOrZero(ValueA[kk][4]);
+                            hs = Program.UTIL.ToDoubleOrZero(ValueA[kk][5]);
+                            hw = Program.UTIL.ToDoubleOrZero(ValueA[kk][3]);
+                            hg = Program.UTIL.ToDoubleOrZero(ValueA[kk][4]);
                         }
                     }
                 }
@@ -315,10 +315,10 @@ namespace main
                     energy_type = ValueA[kk][1];
                     if (energy_type != null && energy_type != "")
                     {
-                        energy_area = Convert.ToDouble(ValueA[kk][2]);
-                        energy_eff = Convert.ToDouble(ValueA[kk][4]);
+                        energy_area = Program.UTIL.ToDoubleOrZero(ValueA[kk][2]);
+                        energy_eff = Program.UTIL.ToDoubleOrZero(ValueA[kk][4]);
                         energy_di = ValueA[kk][5];
-                        energy_slope = Convert.ToDouble(ValueA[kk][6]);
+                        energy_slope = Program.UTIL.ToDoubleOrZero(ValueA[kk][6]);
                     }
                 }
             }
@@ -337,7 +337,7 @@ namespace main
                 if (dayofuse == 5.5) { 주간일수 = "주 " + dayofuse + " 일 근무"; }
                 else { 주간일수 = "주 " + dayofuse + ".0 일 근무"; }
                 string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "이용일수", "이용일수", "월= '" + (i + 1) + "월' and 주간일수 ='" + 주간일수 + "'");
-                Zone_useofdays[i] = Convert.ToDouble(value[0][0]);
+                Zone_useofdays[i] = Program.UTIL.ToDoubleOrZero(value[0][0]);
                 Zone_daytime[i] = time.Calc_daytime(starttime, endtime, sunrise[i], sunset[i], Zone_useofdays[i], dayofuse);
                 Zone_nighttime[i] = time.Calc_nighttime(starttime, endtime, sunrise[i], sunset[i], Zone_useofdays[i], dayofuse);
             }
@@ -372,7 +372,7 @@ namespace main
                     {
                         string[][] Shade = Program.DB.getValue(DB.type.ProjDB, "Shade_3D", "음영계수", " 번호 = '" + WinNum + "' and 월 = '" + (i + 1) + "월'");
                         if (Shade.Length > 0)
-                        { Zone_Ish[i] = Convert.ToDouble(Shade[0][0]); }
+                        { Zone_Ish[i] = Program.UTIL.ToDoubleOrZero(Shade[0][0]); }
                     }
                 }
                 else
@@ -453,7 +453,7 @@ namespace main
                     {
                         while (++kk < ValueA.Length)
                         {
-                            find_fd_sna[i] = Convert.ToDouble(ValueA[0][0]);
+                            find_fd_sna[i] = Program.UTIL.ToDoubleOrZero(ValueA[0][0]);
                         }
                     }
                 }
@@ -498,7 +498,7 @@ namespace main
                         {
                             while (++kk < ValueA.Length)
                             {
-                                find_fd_sa[i] = Convert.ToDouble(ValueA[0][0]);
+                                find_fd_sa[i] = Program.UTIL.ToDoubleOrZero(ValueA[0][0]);
                             }
                         }
                     }
@@ -540,7 +540,7 @@ namespace main
                     {
                         while (++kk < ValueA.Length)
                         {
-                            find_fd_c[i] = Convert.ToDouble(ValueA[0][0]);
+                            find_fd_c[i] = Program.UTIL.ToDoubleOrZero(ValueA[0][0]);
                         }
                     }
                 }
@@ -560,7 +560,7 @@ namespace main
                     string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_파사드월별보정", "값", "방위='" + facade_di + "' AND 월 ='" + (i + 1) + "월".ToString() + "'");
                     if (ValueA.Length > 0)
                     {
-                        find_facade_Vmonth[i] = Convert.ToDouble(ValueA[0][0]);
+                        find_facade_Vmonth[i] = Program.UTIL.ToDoubleOrZero(ValueA[0][0]);
                     }
                 }
             }
@@ -621,7 +621,7 @@ namespace main
                         {
                             while (++kk < ValueA.Length)
                             {
-                                find_normal_ηR = Convert.ToDouble(ValueA[0][0]);
+                                find_normal_ηR = Program.UTIL.ToDoubleOrZero(ValueA[0][0]);
                             }
                         }
                     }
@@ -635,7 +635,7 @@ namespace main
                         {
                             while (++kk < ValueA.Length)
                             {
-                                find_saw_ηR = Convert.ToDouble(ValueA[0][0]);
+                                find_saw_ηR = Program.UTIL.ToDoubleOrZero(ValueA[0][0]);
                             }
                         }
                     }
@@ -655,7 +655,7 @@ namespace main
                 while (++kk < ValueA.Length)
                 {
                     if (ValueA[0][0] != null && ValueA[0][0] != "")
-                    { Da = Convert.ToDouble(ValueA[0][0]); }
+                    { Da = Program.UTIL.ToDoubleOrZero(ValueA[0][0]); }
                 }
             }
 
@@ -757,7 +757,7 @@ namespace main
                     while (++kk < ValueA.Length)
                     {
 
-                        find_roof_trel_D_SNA = Convert.ToDouble(ValueA[0][0]);
+                        find_roof_trel_D_SNA = Program.UTIL.ToDoubleOrZero(ValueA[0][0]);
                     }
                 }
 
@@ -770,7 +770,7 @@ namespace main
                     while (++kk < ValueA.Length)
                     {
 
-                        find_roof_trel_D_SA = Convert.ToDouble(ValueA[0][0]);
+                        find_roof_trel_D_SA = Program.UTIL.ToDoubleOrZero(ValueA[0][0]);
                     }
                 }
 
@@ -783,7 +783,7 @@ namespace main
                     while (++kk < ValueA.Length)
                     {
 
-                        find_roof_fd_sna = Convert.ToDouble(ValueA[0][0]);
+                        find_roof_fd_sna = Program.UTIL.ToDoubleOrZero(ValueA[0][0]);
                     }
                 }
 
@@ -796,7 +796,7 @@ namespace main
                     while (++kk < ValueA.Length)
                     {
 
-                        find_roof_fd_sa = Convert.ToDouble(ValueA[0][0]);
+                        find_roof_fd_sa = Program.UTIL.ToDoubleOrZero(ValueA[0][0]);
                     }
                 }
 
@@ -830,7 +830,7 @@ namespace main
                 {
                     while (++kk < ValueA.Length)
                     {
-                        find_roof_fd_c = Convert.ToDouble(ValueA[0][0]);
+                        find_roof_fd_c = Program.UTIL.ToDoubleOrZero(ValueA[0][0]);
                     }
                 }
 
@@ -839,7 +839,7 @@ namespace main
                     ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_천창월별보정값", "Vmonth", "월 ='" + (i + 1) + "월".ToString() + "'");
                     if (ValueA.Length > 0)
                     {
-                        roof_Vmonth[i] = Convert.ToDouble(ValueA[0][0]);
+                        roof_Vmonth[i] = Program.UTIL.ToDoubleOrZero(ValueA[0][0]);
                     }
                 }
 
@@ -865,7 +865,7 @@ namespace main
                 for (int i = 0; i < 12; i++)
                 {
                     string[][] ext_value = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_외부조도", "외부조도", " 지역 = '" + 지역[0][0] + "' and 방위 = '" + energy_di + "' and 각도 = '" + energy_slope + "' and 월 = '" + (i + 1) + "월'");
-                    ext[i] = Convert.ToDouble(ext_value[0][0].ToString());
+                    ext[i] = Program.UTIL.ToDoubleOrZero(ext_value[0][0].ToString());
                     Zone_Sunlight_SCW[i] = sunlight_scw.Calc_SCW(energy_eff, ext[i], energy_area, lm_W);
                     
                     Zone_Lux[i] = energy_eff * ext[i] * energy_area;
