@@ -74,7 +74,7 @@ namespace main
         {
             //프로젝트유형 기존:1, 리트로핏:2, 리모델링:3, 신규:4
             //Building 
-            {"BuildingGeneral", "CREATE TABLE IF NOT EXISTS BuildingGeneral (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트명 VARCHAR (32),프로젝트유형 VARCHAR (32),프로젝트유형번호 VARCHAR (32),기존프로젝트 VARCHAR (32),사업성능목표 VARCHAR (32),건물진단실시 VARCHAR (32),건물대상 VARCHAR (32),건물용도 VARCHAR (32),건물명 VARCHAR (32),주소 VARCHAR (32),지역인덱스 VARCHAR (32),지역 VARCHAR (32),지역구분 VARCHAR (32),외벽구조유형 VARCHAR (32),지붕구조유형 VARCHAR (32),준공연도 VARCHAR (32),준공월 VARCHAR (32),준공시기 VARCHAR (32),법규시기 VARCHAR (32),연면적 VARCHAR (32),건축면적 VARCHAR (32),지상층수 VARCHAR (32),지하층수 VARCHAR (32),작성자 VARCHAR (32),작성자주소 VARCHAR (32),작성자회사 VARCHAR (32),작성연도 VARCHAR (32),작성월 VARCHAR (32),작성시기 VARCHAR (32),기밀측정여부 VARCHAR (32),출입문기밀여부 VARCHAR (32),창호기밀여부 VARCHAR (32),배선기밀여부 VARCHAR (32),배관기밀여부 VARCHAR (32),n50 VARCHAR (32),출입문q50 VARCHAR (32),창호q50 VARCHAR (32),외벽q50 VARCHAR (32),지붕q50 VARCHAR (32),외벽dUtb VARCHAR (32),지붕dUtb VARCHAR (32),바닥dUtb VARCHAR (32))"},
+            {"BuildingGeneral", "CREATE TABLE IF NOT EXISTS BuildingGeneral (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트명 VARCHAR (32),프로젝트유형 VARCHAR (32),프로젝트유형번호 VARCHAR (32),기존프로젝트 VARCHAR (32),사업성능목표 VARCHAR (32),건물진단실시 VARCHAR (32),건물대상 VARCHAR (32),건물용도 VARCHAR (32),건물명 VARCHAR (32),주소 VARCHAR (32),지역인덱스 VARCHAR (32),지역 VARCHAR (32),지역구분 VARCHAR (32),외벽구조유형 VARCHAR (32),지붕구조유형 VARCHAR (32),준공연도 VARCHAR (32),준공월 VARCHAR (32),준공시기 VARCHAR (32),법규시기 VARCHAR (32),연면적 VARCHAR (32),건축면적 VARCHAR (32),지상층수 VARCHAR (32),지하층수 VARCHAR (32),작성자 VARCHAR (32),작성자주소 VARCHAR (32),작성자회사 VARCHAR (32),작성연도 VARCHAR (32),작성월 VARCHAR (32),작성시기 VARCHAR (32),기밀측정여부 VARCHAR (32),출입문기밀여부 VARCHAR (32),창호기밀여부 VARCHAR (32),배선기밀여부 VARCHAR (32),배관기밀여부 VARCHAR (32),기밀보고서 VARCHAR (32),기밀적용방식 VARCHAR (32),n50 VARCHAR (32),출입문q50 VARCHAR (32),창호q50 VARCHAR (32),외벽q50 VARCHAR (32),지붕q50 VARCHAR (32),외벽dUtb VARCHAR (32),지붕dUtb VARCHAR (32),바닥dUtb VARCHAR (32))"},
             {"BlowDoorTest", "CREATE TABLE IF NOT EXISTS BlowDoorTest (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),측정위치 VARCHAR (32),CMH VARCHAR (32),ACH VARCHAR (32),Volume VARCHAR (32))"},
             {"BuildingEnergyUse", "CREATE TABLE IF NOT EXISTS BuildingEnergyUse (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트유형 VARCHAR (32),연료 VARCHAR (32),연도 VARCHAR (32),월 VARCHAR (32),단위 VARCHAR (32),에너지사용량 VARCHAR (32),사용시작일 VARCHAR (32),사용종료일 VARCHAR (32))"}, 
             {"User_PV", "CREATE TABLE IF NOT EXISTS User_PV (ID INTEGER PRIMARY KEY AUTOINCREMENT, 번호 VARCHAR (32), 프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),명칭 VARCHAR (32),CELLTYPE VARCHAR (32),길이 VARCHAR (32),높이 VARCHAR (32),정격출력 VARCHAR (32),Kpk VARCHAR (32),설치 VARCHAR (32))"},
@@ -92,8 +92,8 @@ namespace main
             {"User_Solar", "CREATE TABLE IF NOT EXISTS User_Solar (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),명칭 VARCHAR (32),난방급탕 VARCHAR (32),모듈면적 VARCHAR (32),효율 VARCHAR (32),열손실계수1차 VARCHAR (32),열손실계수2차 VARCHAR (32),입사각50도 VARCHAR (32),유효열용량 VARCHAR (32),신규기존 VARCHAR (32))"},
             {"User_ABS", "CREATE TABLE IF NOT EXISTS User_ABS (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),명칭 VARCHAR (32), 난방냉방 VARCHAR (32),연료 VARCHAR (32),지역난방 VARCHAR (32),냉방용량 VARCHAR (32),냉방성능 VARCHAR (32),난방용량 VARCHAR (32),난방성능 VARCHAR (32),냉수입구온도 VARCHAR (32),냉수출구온도 VARCHAR (32),온수입구온도 VARCHAR (32),온수출구온도 VARCHAR (32),대기전력 VARCHAR (32),통합성능 VARCHAR (32),대수 VARCHAR (32),설치 VARCHAR (32))"},
             {"User_DH", "CREATE TABLE IF NOT EXISTS User_DH (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),명칭 VARCHAR (32),용도 VARCHAR (32),용량 VARCHAR (32),공급온도1차 VARCHAR (32),환수온도1차 VARCHAR (32),공급온도2차 VARCHAR (32),환수온도2차 VARCHAR (32),대수 VARCHAR (32),신규기존 VARCHAR (32))"},
-            {"User_AHU", "CREATE TABLE IF NOT EXISTS User_AHU (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),설치유형 VARCHAR (32),공조방식 VARCHAR (32),열회수유형 VARCHAR (32),온도교환효율_냉방 VARCHAR (32),온도교환효율_난방 VARCHAR (32),전열교환효율_냉방 VARCHAR (32),전열교환효율_난방 VARCHAR (32),습도교환효율_냉방 VARCHAR (32),습도교환효율_난방 VARCHAR (32),냉각코일출력 VARCHAR (32),냉각코일_입구_건구온도 VARCHAR (32),냉각코일_입구_습구온도 VARCHAR (32),냉각코일_출구_건구온도 VARCHAR (32),냉각코일_출구_습구온도 VARCHAR (32),난방코일출력 VARCHAR (32),난방코일_입구온도 VARCHAR (32),난방코일_출구온도 VARCHAR (32),가습기유형 VARCHAR (32),가습기제어유형 VARCHAR (32),가습기습도수준 VARCHAR (32),가습기용량 VARCHAR (32),급기풍량 VARCHAR (32),배기풍량 VARCHAR (32),급기정압 VARCHAR (32),배기정압 VARCHAR (32),급기팬동력 VARCHAR (32),배기팬동력 VARCHAR (32),모터제어 VARCHAR (32))"},
-            {"User_HRV", "CREATE TABLE IF NOT EXISTS User_HRV (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),설치유형 VARCHAR (32),열회수유형 VARCHAR (32),온도교환효율_냉방 VARCHAR (32),온도교환효율_난방 VARCHAR (32),전열교환효율_냉방 VARCHAR (32),전열교환효율_난방 VARCHAR (32),습도교환효율_냉방 VARCHAR (32),습도교환효율_난방 VARCHAR (32),팬풍량 VARCHAR (32),팬정압 VARCHAR (32),팬동력 VARCHAR (32),모터제어 VARCHAR (32))"},
+            {"User_AHU", "CREATE TABLE IF NOT EXISTS User_AHU (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),설치유형 VARCHAR (32),공조방식 VARCHAR (32),열회수유형 VARCHAR (32),온도교환효율_냉방 VARCHAR (32),온도교환효율_난방 VARCHAR (32),전열교환효율_냉방 VARCHAR (32),전열교환효율_난방 VARCHAR (32),습도교환효율_냉방 VARCHAR (32),습도교환효율_난방 VARCHAR (32),냉각코일출력 VARCHAR (32),냉각코일_입구_건구온도 VARCHAR (32),냉각코일_입구_습구온도 VARCHAR (32),냉각코일_출구_건구온도 VARCHAR (32),냉각코일_출구_습구온도 VARCHAR (32),난방코일출력 VARCHAR (32),난방코일_입구온도 VARCHAR (32),난방코일_출구온도 VARCHAR (32),가습기유형 VARCHAR (32),가습기제어유형 VARCHAR (32),가습기습도수준 VARCHAR (32),가습기용량 VARCHAR (32),급기풍량 VARCHAR (32),배기풍량 VARCHAR (32),급기정압 VARCHAR (32),배기정압 VARCHAR (32),급기팬동력 VARCHAR (32),배기팬동력 VARCHAR (32),모터제어 VARCHAR (32),팬모터유형 VARCHAR (32),팬효율 VARCHAR (32))"},
+            {"User_HRV", "CREATE TABLE IF NOT EXISTS User_HRV (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),설치유형 VARCHAR (32),열회수유형 VARCHAR (32),온도교환효율_냉방 VARCHAR (32),온도교환효율_난방 VARCHAR (32),전열교환효율_냉방 VARCHAR (32),전열교환효율_난방 VARCHAR (32),습도교환효율_냉방 VARCHAR (32),습도교환효율_난방 VARCHAR (32),팬풍량 VARCHAR (32),팬정압 VARCHAR (32),팬동력 VARCHAR (32),모터제어 VARCHAR (32),팬모터유형 VARCHAR (32),팬효율 VARCHAR (32))"},
             {"User_DHWHP", "CREATE TABLE IF NOT EXISTS User_DHWHP (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),명칭 VARCHAR (32),난방급탕 VARCHAR (32),급탕정격용량 VARCHAR (32),급탕정격COP VARCHAR (32),급탕정격소비전력 VARCHAR (32),난방정격용량 VARCHAR (32),난방정격COP VARCHAR (32),난방정격소비전력 VARCHAR (32),한랭지용량 VARCHAR (32),한랭지COP VARCHAR (32),한랭지소비전력 VARCHAR (32),대기전력 VARCHAR (32),대수 VARCHAR (32),설치 VARCHAR (32))"},
             {"User_Fan", "CREATE TABLE IF NOT EXISTS User_Fan (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),설치유형 VARCHAR (32),풍량 VARCHAR (32),정압 VARCHAR (32),모터제어 VARCHAR (32),소비전력 VARCHAR (32))"},
            
@@ -133,13 +133,14 @@ namespace main
             //Zone
             {"User_Lighting", "CREATE TABLE IF NOT EXISTS User_Lighting (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),등기구명칭 VARCHAR (32),램프유형 VARCHAR (32),제조사 VARCHAR (32),안정기_컨버터 VARCHAR (32),광속 VARCHAR (32),소비전력 VARCHAR (32),광효율 VARCHAR (32),조명계수 VARCHAR (32))"},
             {"User_Renew", "CREATE TABLE IF NOT EXISTS User_Renew (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),집광채광명칭 VARCHAR (32),집광채광종류 VARCHAR (32),제조사 VARCHAR (32),집광채광효율 VARCHAR (32),산광부가로길이 VARCHAR (32),산광부세로길이 VARCHAR (32),산광부면적 VARCHAR (32))"},
-            {"ZoneGeneral_Form", "CREATE TABLE IF NOT EXISTS ZoneGeneral_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32),프로젝트유형 VARCHAR (32),존이름 VARCHAR (32),실제어방식 VARCHAR (32),냉난방유무 VARCHAR (32),환기유무 VARCHAR (32),환기방식 VARCHAR (32),선택열회수기 VARCHAR (32),용도프로필 VARCHAR (32),순바닥면적 VARCHAR (32),천장고 VARCHAR (32),시작시간 VARCHAR (32),종료시간 VARCHAR (32),주이용일 VARCHAR (32),재실자수 VARCHAR (32),기기발열수준 VARCHAR (32),일일급탕요구량 VARCHAR (32),냉난방시간 VARCHAR (32),사용시간 VARCHAR (32),공조시간 VARCHAR (32),연이용일수 VARCHAR (32),재실밀도 VARCHAR (32),재실수준 VARCHAR (32),일일인체발열 VARCHAR (32),면적당인체발열 VARCHAR (32),일일기기발열 VARCHAR (32),면적당기기발열 VARCHAR (32),순체적 VARCHAR (32),환기횟수 VARCHAR (32),이용일환기량 VARCHAR (32),비이용일환기량  VARCHAR (32),천장축열선택 VARCHAR (32),외벽축열선택 VARCHAR (32),내벽축열선택 VARCHAR (32),바닥축열선택 VARCHAR (32),천장축열 VARCHAR (32),외벽축열 VARCHAR (32),내벽축열 VARCHAR (32),바닥축열 VARCHAR (32),천장면적 VARCHAR (32),외벽면적 VARCHAR (32),내벽면적 VARCHAR (32),바닥면적 VARCHAR (32),존축열성능 VARCHAR (32),존기밀타입 VARCHAR (32),기존존 VARCHAR (32),증축여부 VARCHAR (32))"},
+            {"ZoneGeneral_Form", "CREATE TABLE IF NOT EXISTS ZoneGeneral_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32),프로젝트유형 VARCHAR (32),존이름 VARCHAR (32),실제어방식 VARCHAR (32),냉난방유무 VARCHAR (32),환기유무 VARCHAR (32),환기방식 VARCHAR (32),선택열회수기 VARCHAR (32),용도프로필 VARCHAR (32),순바닥면적 VARCHAR (32),천장고 VARCHAR (32),시작시간 VARCHAR (32),종료시간 VARCHAR (32),주이용일 VARCHAR (32),재실자수 VARCHAR (32),기기발열수준 VARCHAR (32),일일급탕요구량 VARCHAR (32),냉난방시간 VARCHAR (32),사용시간 VARCHAR (32),공조시간 VARCHAR (32),연이용일수 VARCHAR (32),재실밀도 VARCHAR (32),재실수준 VARCHAR (32),일일인체발열 VARCHAR (32),면적당인체발열 VARCHAR (32),일일기기발열 VARCHAR (32),면적당기기발열 VARCHAR (32),순체적 VARCHAR (32),환기횟수 VARCHAR (32),이용일환기량 VARCHAR (32),비이용일환기량  VARCHAR (32),천장축열선택 VARCHAR (32),외벽축열선택 VARCHAR (32),내벽축열선택 VARCHAR (32),바닥축열선택 VARCHAR (32),천장축열 VARCHAR (32),외벽축열 VARCHAR (32),내벽축열 VARCHAR (32),바닥축열 VARCHAR (32),천장면적 VARCHAR (32),외벽면적 VARCHAR (32),내벽면적 VARCHAR (32),바닥면적 VARCHAR (32),존축열성능 VARCHAR (32),존기밀타입 VARCHAR (32),기존존 VARCHAR (32),증축여부 VARCHAR (32),n50 VARCHAR (32),냉방습도 VARCHAR (32),난방습도 VARCHAR (32))"},
             {"ZoneLighting_form", "CREATE TABLE IF NOT EXISTS ZoneLighting_form (ID INTEGER PRIMARY KEY AUTOINCREMENT, 번호 VARCHAR (32),프로젝트유형 VARCHAR (32),너비 VARCHAR (32),길이 VARCHAR (32),순바닥면적 VARCHAR (32),상인방높이 VARCHAR (32),작업면높이 VARCHAR (32),공간계수 VARCHAR (32),기준조도 VARCHAR (32),조명방식 VARCHAR (32),제어방식 VARCHAR (32),디밍유형 VARCHAR (32),조명밀도 VARCHAR (32),조명예상전력 VARCHAR (32),대기전력 VARCHAR (32),재실계수 VARCHAR (32),조도제어계수 VARCHAR (32),조명번호 VARCHAR (32),등기구명칭 VARCHAR (32), 램프유형 VARCHAR (32), 컨버터_안정기 VARCHAR (32), 광속 VARCHAR (32), 소비전력 VARCHAR (32), 광효율 VARCHAR (32), 조명계수 VARCHAR (32),표준광속 VARCHAR (32), 표준소비전력 VARCHAR (32), 사용자광속 VARCHAR (32), 사용자소비전력 VARCHAR (32),자연채광유형 VARCHAR (32),주향 VARCHAR (32),주창면적합 VARCHAR (32),주창유리종류 VARCHAR (32),주창아이디 VARCHAR (32),차양 VARCHAR (32),주광길이 VARCHAR (32),주광깊이 VARCHAR (32),주광면적 VARCHAR (32),비주광면적 VARCHAR (32),서브유형 VARCHAR (32),주창유리빛투과율 VARCHAR (32),주창유리면적비 VARCHAR (32),이중외피유리 VARCHAR (32),아트리움유리 VARCHAR (32),파사드유리빛투과율 VARCHAR (32),파사드너비 VARCHAR (32),파사드길이 VARCHAR (32),파사드높이 VARCHAR (32),천창유리각 VARCHAR (32),천창수평측면각 VARCHAR (32),천창장변부길이 VARCHAR (32),천창단변부길이 VARCHAR (32),천창수평상부높이 VARCHAR (32),집광채광체크 VARCHAR (32),집광채광번호 VARCHAR (32),집광채광명칭 VARCHAR (32),집광채광종류 VARCHAR (32),집광채광향 VARCHAR (32),집광채광각도 VARCHAR (32),집광채광효율 VARCHAR (32),집광채광면적 VARCHAR (32),표준길이1 VARCHAR (32),표준길이2 VARCHAR (32),사용자길이1 VARCHAR (32),사용자길이2 VARCHAR (32),사용자면적 VARCHAR (32),조명개수 VARCHAR (32))"},
             //System              
             {"HeatingSystem_Form", "CREATE TABLE IF NOT EXISTS HeatingSystem_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),존 VARCHAR (32),공조기 VARCHAR (32),설치위치 VARCHAR (32),공급환수온도 VARCHAR (32),복합설비유무 VARCHAR (32),주요설비 VARCHAR (32),보조설비1 VARCHAR (32),보조설비2 VARCHAR (32),보일러종류 VARCHAR (32),보일러대수 VARCHAR (32),태양열번호 VARCHAR (32),모듈개수 VARCHAR (32),모듈방위 VARCHAR (32),모듈기울기 VARCHAR (32),외기히트펌프번호 VARCHAR (32),외기히트펌프공급방식 VARCHAR (32),외기히트펌프제어방식 VARCHAR (32),외기히트펌프대수 VARCHAR (32),지열히트펌프번호 VARCHAR (32),지열히트펌프공급방식 VARCHAR (32),지열히트펌프제어방식 VARCHAR (32),지열히트펌프대수 VARCHAR (32),지하수히트펌프번호 VARCHAR (32),지하수히트펌프공급방식 VARCHAR (32),지하수히트펌프제어방식 VARCHAR (32),지하수히트펌프대수 VARCHAR (32),흡수식온수기번호 VARCHAR (32),흡수식온수기대수 VARCHAR (32),지역난방번호 VARCHAR (32),펌프유무 VARCHAR (32),펌프방식 VARCHAR (32),펌프1종류 VARCHAR (32),펌프2종류 VARCHAR (32),펌프1밸브 VARCHAR (32),펌프2밸브 VARCHAR (32),펌프1제어 VARCHAR (32),펌프2제어 VARCHAR (32),펌프1대수 VARCHAR (32),펌프2대수 VARCHAR (32),펌프1유량 VARCHAR (32),펌프2유량 VARCHAR (32),펌프1양정 VARCHAR (32),펌프2양정 VARCHAR (32),공급설비1종류 VARCHAR (32),공급설비2종류 VARCHAR (32),축열유무 VARCHAR (32),축열펌프유무 VARCHAR (32),축열펌프 VARCHAR (32),축열용량 VARCHAR (32),배관관경 VARCHAR (32),배관보온두께 VARCHAR (32),보온열전도율 VARCHAR (32),배관보온재 VARCHAR (32),노출배관길이 VARCHAR (32),연료전지번호 VARCHAR (32),연료전지대수 VARCHAR (32),연료전지설치유형 VARCHAR (32),연료전지생산유형 VARCHAR (32))"},
             {"Heating_ce_Form", "CREATE TABLE IF NOT EXISTS Heating_ce_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32),프로젝트유형 VARCHAR (32),난방시스템 VARCHAR (32),공급설비종류 VARCHAR (32),공급설비 VARCHAR (32),설치위치 VARCHAR (32),가동시간 VARCHAR (32),부하율 VARCHAR (32))"},
             {"DHWSystem_Form", "CREATE TABLE IF NOT EXISTS DHWSystem_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),존 VARCHAR (32),설치위치 VARCHAR (32),공급환수온도 VARCHAR (32),복합설비유무 VARCHAR (32),주요설비 VARCHAR (32),보조설비1 VARCHAR (32),보조설비2 VARCHAR (32),보일러종류 VARCHAR (32),보일러대수 VARCHAR (32),태양열번호 VARCHAR (32),모듈개수 VARCHAR (32),모듈방위 VARCHAR (32),모듈기울기 VARCHAR (32),지역난방번호 VARCHAR (32),펌프유무 VARCHAR (32),펌프방식 VARCHAR (32),펌프1종류 VARCHAR (32),펌프2종류 VARCHAR (32),펌프1밸브 VARCHAR (32),펌프2밸브 VARCHAR (32),펌프1제어 VARCHAR (32),펌프2제어 VARCHAR (32),펌프1대수 VARCHAR (32),펌프2대수 VARCHAR (32),펌프1유량 VARCHAR (32),펌프2유량 VARCHAR (32),펌프1양정 VARCHAR (32),펌프2양정 VARCHAR (32),축열유무 VARCHAR (32),축열펌프유무 VARCHAR (32),축열펌프 VARCHAR (32),축열용량 VARCHAR (32),축열유형 VARCHAR (32),배관관경 VARCHAR (32),배관보온두께 VARCHAR (32),보온열전도율 VARCHAR (32),배관보온재 VARCHAR (32),노출배관길이 VARCHAR (32),히트펌프번호 VARCHAR (32),히트펌프제어방식 VARCHAR (32),히트펌프대수 VARCHAR (32),연료전지번호 VARCHAR (32),연료전지대수 VARCHAR (32),연료전지설치유형 VARCHAR (32),연료전지생산유형 VARCHAR (32))"},
             {"AHUSystem_Form", "CREATE TABLE IF NOT EXISTS AHUSystem_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),유형 VARCHAR (32),시스템번호 VARCHAR (32),설치위치 VARCHAR (32),풍량제어 VARCHAR (32),누기시험방법 VARCHAR (32),누기등급1 VARCHAR (32),누기등급2 VARCHAR (32),공조기단열두께 VARCHAR (32),TAB실시유무 VARCHAR (32),덕트누기수준 VARCHAR (32),OA덕트길이 VARCHAR (32),EA덕트길이 VARCHAR (32),SA덕트길이 VARCHAR (32),RA덕트길이 VARCHAR (32),덕트단열두께 VARCHAR (32),덕트관경 VARCHAR (32),덕트단열재 VARCHAR (32),덕트단열재열전도율 VARCHAR (32),예열예냉유형 VARCHAR (32),프리히터제어유형 VARCHAR (32),프리히터용량 VARCHAR (32),토양유형 VARCHAR (32),지중깊이 VARCHAR (32),쿨튜브관경 VARCHAR (32),쿨튜브두께 VARCHAR (32),쿨튜브길이 VARCHAR (32),쿨튜브재질 VARCHAR (32))"},
+            {"AHUZoneVent_Form", "CREATE TABLE IF NOT EXISTS AHUZoneVent_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,설비 VARCHAR (32),존 VARCHAR (32),급기량 VARCHAR (32),배기량 VARCHAR (32),인접존 VARCHAR (32),인접존배기량 VARCHAR (32))"},
             //냉방설비 프로젝트유형 컬럼 추가해야 함             
             {"Cooling_ce_Form", "CREATE TABLE IF NOT EXISTS Cooling_ce_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32), 프로젝트유형 VARCHAR (32), 냉방시스템 VARCHAR (32),공급설비종류 VARCHAR (32),공급설비 VARCHAR (32), 가동시간 VARCHAR (32), 용량 VARCHAR (32), 소비전력 VARCHAR (32), 부하율 VARCHAR (32))"},
             {"User_AirCooler", "CREATE TABLE IF NOT EXISTS User_AirCooler (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),DB유형 VARCHAR (32),명칭 VARCHAR (32),냉방출력 VARCHAR (32),냉방소비전력 VARCHAR (32),EER VARCHAR (32),압축기 VARCHAR (32),연료 VARCHAR (32),대기전력 VARCHAR (32),대수 VARCHAR (32),설치 VARCHAR (32), 부하측공급형식 VARCHAR (32), 증발기 VARCHAR (32), 냉수입구온도 VARCHAR (32), 냉수출구온도 VARCHAR (32), 송풍기전력 VARCHAR (32))"},
@@ -192,6 +193,10 @@ namespace main
 
         public bool openDB(string projPath)
         {
+            // 프로젝트마다 물리적으로 다른 sqlite 파일이라, 이전 프로젝트에서 검증된 테이블 캐시가 그대로 남으면
+            // 새로 여는 프로젝트의 컬럼 누락 여부를 건너뛰게 됨 — 프로젝트를 열 때마다 초기화
+            columnCheckedTables.Clear();
+
             foreach (var dbname in dbnames)
             {
                 SecureSQLite.OpenDB(dbname.Value, (int)dbname.Key);
@@ -400,6 +405,10 @@ namespace main
 
             return fileSize;
         }
+        // createTable()이 setValue() 등을 통해 같은 세션 안에서 같은 테이블에 대해 반복 호출되므로,
+        // 컬럼 비교(AddMissingColumns)는 테이블당 한 번만 수행하도록 기록
+        private HashSet<string> columnCheckedTables = new HashSet<string>();
+
         public void createTable(type dbType, string name, string exec)
         {
             if (exec != "")
@@ -410,7 +419,62 @@ namespace main
                 {
                     SecureSQLite.ExecuteSQL((int)dbType, exec);
                 }
+                else
+                {
+                    string cacheKey = dbType + ":" + name;
+                    if (!columnCheckedTables.Contains(cacheKey))
+                    {
+                        // 테이블은 이미 있지만 스키마 정의(exec)에 컬럼이 나중에 추가된 경우 — CREATE TABLE IF NOT EXISTS는
+                        // 이미 존재하는 테이블엔 아무 효과가 없어서, 기존 프로젝트 파일들은 새 컬럼을 영영 못 받는 문제가 있었음.
+                        // 여기서 실제 컬럼과 스키마 정의를 비교해 빠진 컬럼만 ALTER TABLE로 추가(삭제/이름변경은 하지 않음 — 항상 안전한 쪽만).
+                        AddMissingColumns(dbType, name, exec);
+                        columnCheckedTables.Add(cacheKey);
+                    }
+                }
+            }
+        }
 
+        // exec(CREATE TABLE 문)에 정의된 컬럼 중, 실제 테이블엔 없는 컬럼만 찾아서 ALTER TABLE ADD COLUMN으로 추가
+        private void AddMissingColumns(type dbType, string table, string exec)
+        {
+            try
+            {
+                int open = exec.IndexOf('(');
+                int close = exec.LastIndexOf(')');
+                if (open < 0 || close < 0 || close <= open)
+                {
+                    return;
+                }
+                string[] defs = exec.Substring(open + 1, close - open - 1).Split(',');
+
+                string[][] info = JsonConvert.DeserializeObject<string[][]>(QuerySQL((int)dbType, "PRAGMA table_info(" + table + ")"));
+                HashSet<string> existing = new HashSet<string>();
+                foreach (string[] row in info)
+                {
+                    existing.Add(row[1]); // PRAGMA table_info: cid,name,type,notnull,dflt_value,pk
+                }
+
+                foreach (string def in defs)
+                {
+                    string trimmed = def.Trim();
+                    int sp = trimmed.IndexOf(' ');
+                    if (sp < 0)
+                    {
+                        continue;
+                    }
+                    string colName = trimmed.Substring(0, sp).Trim();
+                    string colType = trimmed.Substring(sp + 1).Trim();
+
+                    if (colName == "ID" || existing.Contains(colName))
+                    {
+                        continue;
+                    }
+                    SecureSQLite.ExecuteSQL((int)dbType, "ALTER TABLE " + table + " ADD COLUMN " + colName + " " + colType);
+                }
+            }
+            catch (Exception)
+            {
+                // 스키마 파싱/조회 실패 시에도 앱 실행 자체는 막지 않음(initTable/initTables와 동일한 방어 방식)
             }
         }
 
