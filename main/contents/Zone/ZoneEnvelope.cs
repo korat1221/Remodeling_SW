@@ -89,7 +89,7 @@ namespace main.contents
                     SlabCwirk_comboBox.Items.Add(SQL_index_Slab[i][0]);
                 }
             }
-            label10.Text = "Wh/(m"+Program.UTIL.Subscript(2, true) +"K)";
+            label10.Text = "Wh/(m" + Program.UTIL.Subscript(2, true) + "K)";
         }
 
 
@@ -122,7 +122,7 @@ namespace main.contents
                 if (CwirkDB.Length > 0)
                 {
                     Ceiling_index = CeilingCwirk_comboBox.SelectedItem.ToString();
-                    CwirkA = Convert.ToDouble(CwirkDB[0][0]);
+                    CwirkA = Program.UTIL.ToDoubleOrZero(CwirkDB[0][0]);
                     Cwirk_Ceiling = Calc_Cwirk_Construction(Area_Ceiling, CwirkA);
                     Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
                 }
@@ -138,7 +138,7 @@ namespace main.contents
                 if (CwirkDB.Length > 0)
                 {
                     Wall_index = WallCwirk_comboBox.SelectedItem.ToString();
-                    CwirkA = Convert.ToDouble(CwirkDB[0][0]);
+                    CwirkA = Program.UTIL.ToDoubleOrZero(CwirkDB[0][0]);
                     Cwirk_Wall = Calc_Cwirk_Construction(Area_Wall, CwirkA);
                     Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
                 }
@@ -154,7 +154,7 @@ namespace main.contents
                 if (CwirkDB.Length > 0)
                 {
                     InWall_index = InWallCwirk_comboBox.SelectedItem.ToString();
-                    CwirkA = Convert.ToDouble(CwirkDB[0][0]);
+                    CwirkA = Program.UTIL.ToDoubleOrZero(CwirkDB[0][0]);
                     Cwirk_InWall = Calc_Cwirk_Construction(Area_InWall, CwirkA);
                     Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
                 }
@@ -170,7 +170,7 @@ namespace main.contents
                 if (CwirkDB.Length > 0)
                 {
                     Slab_index = SlabCwirk_comboBox.SelectedItem.ToString();
-                    CwirkA = Convert.ToDouble(CwirkDB[0][0]);
+                    CwirkA = Program.UTIL.ToDoubleOrZero(CwirkDB[0][0]);
                     Cwirk_Slab = Calc_Cwirk_Construction(Area_Slab, CwirkA);
                     Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
                 }
@@ -206,7 +206,7 @@ namespace main.contents
                     if (ZoneE[i][1] == ConstructionType[k])
                     {
                         Construction_Count[k] = Construction_Count[k] + 1;
-                        Construction_AreaSum[k] += Convert.ToDouble(ZoneE[i][3]);
+                        Construction_AreaSum[k] += Program.UTIL.ToDoubleOrZero(ZoneE[i][3]);
                     }
                 }
             }
@@ -218,38 +218,38 @@ namespace main.contents
                 {
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "커튼월창유효열관류율", "번호='" + ZoneE[i][5] + "'");
                     if (Value.Length > 0)
-                    { Construction_UeffSum[0] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
+                    { Construction_UeffSum[0] += (Program.UTIL.ToDoubleOrZero(Value[0][0]) * Program.UTIL.ToDoubleOrZero(ZoneE[i][3])); }
 
                 }
                 else if (ZoneE[i][1] == "외벽")
                 {
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "유효열관류율", "번호='" + ZoneE[i][5] + "'");
                     if (Value.Length > 0)
-                    { Construction_UeffSum[1] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
+                    { Construction_UeffSum[1] += (Program.UTIL.ToDoubleOrZero(Value[0][0]) * Program.UTIL.ToDoubleOrZero(ZoneE[i][3])); }
                 }
                 else if (ZoneE[i][1] == "지붕")
                 {
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "유효열관류율", "번호='" + ZoneE[i][5] + "'");
                     if (Value.Length > 0)
-                    { Construction_UeffSum[2] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
+                    { Construction_UeffSum[2] += (Program.UTIL.ToDoubleOrZero(Value[0][0]) * Program.UTIL.ToDoubleOrZero(ZoneE[i][3])); }
                 }
                 else if (ZoneE[i][1] == "최하층바닥")
                 {
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "유효열관류율", "번호='" + ZoneE[i][5] + "'");
                     if (Value.Length > 0)
-                    { Construction_UeffSum[3] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
+                    { Construction_UeffSum[3] += (Program.UTIL.ToDoubleOrZero(Value[0][0]) * Program.UTIL.ToDoubleOrZero(ZoneE[i][3])); }
                 }
                 else if (ZoneE[i][1] == "창호")
                 {
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "창호유효열관류율", "번호='" + ZoneE[i][5] + "'");
                     if (Value.Length > 0)
-                    { Construction_UeffSum[4] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
+                    { Construction_UeffSum[4] += (Program.UTIL.ToDoubleOrZero(Value[0][0]) * Program.UTIL.ToDoubleOrZero(ZoneE[i][3])); }
                 }
                 else if (ZoneE[i][1] == "외부출입문")
                 {
                     string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "문유효열관류율", "번호='" + ZoneE[i][5] + "'");
                     if (Value.Length > 0)
-                    { Construction_UeffSum[5] += (Convert.ToDouble(Value[0][0]) * Convert.ToDouble(ZoneE[i][3])); }
+                    { Construction_UeffSum[5] += (Program.UTIL.ToDoubleOrZero(Value[0][0]) * Program.UTIL.ToDoubleOrZero(ZoneE[i][3])); }
                 }
                 else { }
             }
@@ -357,8 +357,8 @@ namespace main.contents
 
                     if (Value.Length > 0)
                     {
-                        String 면적 = string.Format("{0:F2}", Convert.ToDouble(ZoneE_Select[n][2]));
-                        String Ueff = string.Format("{0:F2}", Convert.ToDouble(Value[0][0]));
+                        String 면적 = string.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(ZoneE_Select[n][2]));
+                        String Ueff = string.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(Value[0][0]));
                         String g = "";
                         int nRow = dataGridView2.Rows.Add();
                         dataGridView2.Rows[nRow].Cells[0].Value = (n + 1).ToString();
@@ -370,25 +370,25 @@ namespace main.contents
                         dataGridView2.Rows[nRow].Cells[6].Value = Ueff;
                         if (선택구조체 == "커튼월창")
                         {
-                            g = string.Format("{0:F2}", Convert.ToDouble(Value[0][1]));
+                            g = string.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(Value[0][1]));
                         }
                         else if (선택구조체 == "창호")
                         {
                             string[][] gValue = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "태양열취득률", "번호='" + Value[0][1] + "'");
                             if (gValue.Length > 0)
                             {
-                                g = string.Format("{0:F2}", Convert.ToDouble(gValue[0][0]));
+                                g = string.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(gValue[0][0]));
                             }
                         }
                         else if (선택구조체 == "외벽" || 선택구조체 == "지붕" || 선택구조체 == "외부출입문")
                         {
-                            g = string.Format("{0:F2}", Convert.ToDouble(Value[0][1]));
+                            g = string.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(Value[0][1]));
                         }
                         dataGridView2.Rows[nRow].Cells[7].Value = g;
                     }
                     else
                     {
-                        String 면적 = string.Format("{0:F2}", Convert.ToDouble(ZoneE_Select[n][2]));
+                        String 면적 = string.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(ZoneE_Select[n][2]));
                         String Ueff = "";
                         String g = "";
                         int nRow = dataGridView2.Rows.Add();
@@ -469,12 +469,26 @@ namespace main.contents
             }
         }
 
-        //존의 외부,내부,출입문 존 검토 
+        //존의 외부,내부,출입문 존 검토
         String Calc_ZoneType()
         {
             String 존유형;
 
-            if (Construction_Count[5] > 0)
+            // 외부출입문이 아니라 커튼월창의 일부(출입문부분)로 출입문이 있는 경우도 출입문존으로 취급.
+            // 3D 모델링 화면(sub3dZoneInfo.cs)에서 세그먼트별로 직접 고르는 값이라, 존에 실제로 놓인
+            // 세그먼트 기준의 ZoneEnvelope_3D.커튼월부위가 맞음(ConstructionCW.출입문적용유무는 구조체
+            // 자체의 옵션 존재 여부일 뿐 이 존에 실제 설치됐는지와 무관해서 부적합).
+            bool hasCurtainWallDoor = false;
+            for (int i = 0; i < ZoneE.Length; i++)
+            {
+                if (ZoneE[i][1] == "커튼월창" && ZoneE[i][2] == "출입문부분")
+                {
+                    hasCurtainWallDoor = true;
+                    break;
+                }
+            }
+
+            if (Construction_Count[5] > 0 || hasCurtainWallDoor)
             {
                 존유형 = "출입문존";
             }
@@ -611,39 +625,39 @@ namespace main.contents
 
                 if (Value[0][4] != "")
                 {
-                    Cwirk_Ceiling = Convert.ToDouble(Value[0][4]);
+                    Cwirk_Ceiling = Program.UTIL.ToDoubleOrZero(Value[0][4]);
                 }
                 if (Value[0][5] != "")
                 {
-                    Cwirk_Wall = Convert.ToDouble(Value[0][5]);
+                    Cwirk_Wall = Program.UTIL.ToDoubleOrZero(Value[0][5]);
                 }
                 if (Value[0][6] != "")
                 {
-                    Cwirk_InWall = Convert.ToDouble(Value[0][6]);
+                    Cwirk_InWall = Program.UTIL.ToDoubleOrZero(Value[0][6]);
                 }
                 if (Value[0][7] != "")
                 {
-                    Cwirk_Slab = Convert.ToDouble(Value[0][7]);
+                    Cwirk_Slab = Program.UTIL.ToDoubleOrZero(Value[0][7]);
                 }
                 if (Value[0][8] != "")
                 {
-                    Area_Ceiling = Convert.ToDouble(Value[0][8]);
+                    Area_Ceiling = Program.UTIL.ToDoubleOrZero(Value[0][8]);
                 }
                 if (Value[0][9] != "")
                 {
-                    Area_Wall = Convert.ToDouble(Value[0][9]);
+                    Area_Wall = Program.UTIL.ToDoubleOrZero(Value[0][9]);
                 }
                 if (Value[0][10] != "")
                 {
-                    Area_InWall = Convert.ToDouble(Value[0][10]);
+                    Area_InWall = Program.UTIL.ToDoubleOrZero(Value[0][10]);
                 }
                 if (Value[0][11] != "")
                 {
-                    Area_Slab = Convert.ToDouble(Value[0][11]);
+                    Area_Slab = Program.UTIL.ToDoubleOrZero(Value[0][11]);
                 }
                 if (Value[0][12] != "")
                 {
-                    Cwirk_total = Convert.ToDouble(Value[0][12]);
+                    Cwirk_total = Program.UTIL.ToDoubleOrZero(Value[0][12]);
                 }
                 Calc_Cwirk_all();
                 Cwirk_textBox.Text = Cwirk_total.ToString();
@@ -667,7 +681,103 @@ namespace main.contents
                 Calc_A(ZoneNum);
                 ZoneType = Calc_ZoneType();
                 Check_radioButton(ZoneType);
+                Show_ZoneN50();
             }
+        }
+
+        // "존별 표준값 적용" 방식일 때만 이 존의 n50을 계산해서 보여줌 — 실측/기밀 시공 여부별 방식은 표시 안 함
+        void Show_ZoneN50()
+        {
+            string[][] Building = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "기밀측정여부,기밀보고서,기밀적용방식", "");
+            bool showN50 = false;
+            double n50Value = 0;
+
+            if (Building.Length > 0 && Building[0][0] != "기밀 테스트 실시" && Building[0][2] == "존별")
+            {
+                showN50 = true;
+
+                string[][] UseProfile = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "용도프로필", "존번호 = '" + ZoneNum + "'");
+                string usage = UseProfile.Length > 0 ? UseProfile[0][0] : "";
+                bool isResidential = usage == "단독주택" || usage == "공동주택";
+
+                string criteria = Building[0][1] == "있음" ? "기밀설계보고서" : "표준값";
+
+                string where = isResidential
+                    ? "주거여부 = '주거' And 기준유형 = '" + criteria + "'"
+                    : "주거여부 = '비주거' And 존유형 = '" + ZoneType + "' And 기준유형 = '" + criteria + "'";
+                string[][] StdValue = Program.DB.getValue(DB.type.BaseDB_HCneed, "기밀_존별", "n50,q50", where);
+
+                if (StdValue.Length > 0)
+                {
+                    double n50Std = Program.UTIL.ToDoubleOrZero(StdValue[0][0]);
+                    double q50Std = Program.UTIL.ToDoubleOrZero(StdValue[0][1]);
+
+                    string[][] VolumeValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순체적", "존번호 = '" + ZoneNum + "'");
+                    double volume = VolumeValue.Length > 0 && VolumeValue[0][0] != "" ? Program.UTIL.ToDoubleOrZero(VolumeValue[0][0]) : 0;
+
+                    if (volume <= 1500)
+                    {
+                        n50Value = n50Std;
+                    }
+                    else if (volume > 0)
+                    {
+                        // q50 → n50 환산: n50 = q50 × 직접노출외피면적 / 순체적 (Cal_HCneed.cs의 Zone_n50()과 동일한 물리식)
+                        n50Value = q50Std * Calc_AreaDirect() / volume;
+                    }
+                }
+            }
+
+            label12.Visible = showN50;
+            label11.Visible = showN50;
+            textBox1.Visible = showN50;
+            if (showN50)
+            {
+                textBox1.Text = n50Value.ToString("0.00");
+            }
+
+            // 저장 버튼과 무관하게 항상 최신 계산값을 반영 — Cal_HCneed.cs가 이 값을 그대로 읽어다 씀.
+            // 존별 방식이 아닐 땐 0으로 같이 저장해서 이전 설정의 값이 남아있지 않게 함
+            Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,n50", "'" + ZoneNum + "','" + n50Value + "'", "존번호");
+            Program.DB.saveProject();
+        }
+
+        // 직접외기 노출 외피면적 합계 — Cal_HCneed.cs의 Zone_n50()과 동일한 필터링(직접외기만 합산)
+        double Calc_AreaDirect()
+        {
+            double areaDirect = 0;
+            string[][] Elements = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "외피유형,면적,구조체번호", "존 = '" + ZoneNum + "'");
+            foreach (string[] element in Elements)
+            {
+                string type = element[0];
+                double area = Program.UTIL.ToDoubleOrZero(element[1]);
+                string structNum = element[2];
+
+                if (type == "커튼월창")
+                {
+                    areaDirect += area;
+                }
+                else if (type == "외벽")
+                {
+                    string[][] v = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall", "직접간접", "번호='" + structNum + "'");
+                    if (v.Length > 0 && v[0][0] == "직접외기") { areaDirect += area; }
+                }
+                else if (type == "지붕")
+                {
+                    string[][] v = Program.DB.getValue(DB.type.ProjDB, "ConstructionRoof", "직접간접", "번호='" + structNum + "'");
+                    if (v.Length > 0 && v[0][0] == "직접외기") { areaDirect += area; }
+                }
+                else if (type == "창호")
+                {
+                    string[][] v = Program.DB.querySQL(DB.type.ProjDB, "select a.직접간접 FROM ConstructionWindow AS a INNER JOIN SubWindow AS b ON a.번호 = b.상위창호번호 where b.번호 = '" + structNum + "'");
+                    if (v.Length > 0 && v[0][0] == "직접외기") { areaDirect += area; }
+                }
+                else if (type == "외부출입문")
+                {
+                    string[][] v = Program.DB.getValue(DB.type.ProjDB, "ConstructionDoor", "직접간접", "번호='" + structNum + "'");
+                    if (v.Length > 0 && v[0][0] == "직접외기") { areaDirect += area; }
+                }
+            }
+            return areaDirect;
         }
         private void Load_OtherFormData()
         {
@@ -679,8 +789,8 @@ namespace main.contents
                 {
                     ZoneName = Value[0][0];
                     ZoneName_textBox.Text = ZoneName;
-                    NetArea = Convert.ToDouble(Value[0][1]);
-                    height = Convert.ToDouble(Value[0][2]);
+                    NetArea = Program.UTIL.ToDoubleOrZero(Value[0][1]);
+                    height = Program.UTIL.ToDoubleOrZero(Value[0][2]);
                 }
             }
             catch
@@ -712,7 +822,7 @@ namespace main.contents
                 if (CwirkDB.Length > 0)
                 {
                     Ceiling_index = CeilingCwirk_comboBox.SelectedItem.ToString();
-                    CwirkA = Convert.ToDouble(CwirkDB[0][0]);
+                    CwirkA = Program.UTIL.ToDoubleOrZero(CwirkDB[0][0]);
                     Cwirk_Ceiling = Calc_Cwirk_Construction(Area_Ceiling, CwirkA);
                     Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
                 }
@@ -725,7 +835,7 @@ namespace main.contents
                 if (CwirkDB.Length > 0)
                 {
                     Wall_index = WallCwirk_comboBox.SelectedItem.ToString();
-                    CwirkA = Convert.ToDouble(CwirkDB[0][0]);
+                    CwirkA = Program.UTIL.ToDoubleOrZero(CwirkDB[0][0]);
                     Cwirk_Wall = Calc_Cwirk_Construction(Area_Wall, CwirkA);
                     Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
                 }
@@ -738,7 +848,7 @@ namespace main.contents
                 if (CwirkDB.Length > 0)
                 {
                     InWall_index = InWallCwirk_comboBox.SelectedItem.ToString();
-                    CwirkA = Convert.ToDouble(CwirkDB[0][0]);
+                    CwirkA = Program.UTIL.ToDoubleOrZero(CwirkDB[0][0]);
                     Cwirk_InWall = Calc_Cwirk_Construction(Area_InWall, CwirkA);
                     Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
                 }
@@ -750,7 +860,7 @@ namespace main.contents
                 if (CwirkDB.Length > 0)
                 {
                     Slab_index = SlabCwirk_comboBox.SelectedItem.ToString();
-                    CwirkA = Convert.ToDouble(CwirkDB[0][0]);
+                    CwirkA = Program.UTIL.ToDoubleOrZero(CwirkDB[0][0]);
                     Cwirk_Slab = Calc_Cwirk_Construction(Area_Slab, CwirkA);
                     Calc_Cwirk(Cwirk_Ceiling, Cwirk_Wall, Cwirk_InWall, Cwirk_Slab);
                 }
@@ -772,5 +882,6 @@ namespace main.contents
                 MessageBox.Show("The folder path does not exist.");
             }
         }
+
     }
 }
