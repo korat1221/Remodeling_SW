@@ -1,4 +1,4 @@
-﻿using main.contents;
+using main.contents;
 using System.Collections;
 using static System.ComponentModel.Design.ObjectSelectorEditor;
 
@@ -18,13 +18,15 @@ namespace main
         #region 요구량
         public void Calc_Qb_Rule(string 검토유형)
         {
-            CALC.Zone_Arrange();
+            CALC.Zone_Init();
+
+            // 웜업 패스: LoadData + 검토유형 override까지 끝낸 뒤 Zone_bztu()로 b_ztu 등 자기완결적
+            // 값을 확정 — override로 바뀐 값까지 반영해야 다른 존이 읽는 b_ztu가 본계산과 일치함
             for (int k = 0; k < CALC.zone.Count; k++)
             {
                 Zone zone1 = (Zone)CALC.zone[k];
                 ZoneLight zonelight1 = (ZoneLight)CALC.zonelight[k];
                 CALC.Zone_LoadData(zone1, zonelight1);
-
                 switch (검토유형)
                 {
                     case "외벽":
@@ -62,7 +64,15 @@ namespace main
                         //Load_Rule_All(zone1);
                         break;
                 }
-                CALC.Zone_Calc(zone1, zonelight1);
+                zone1.Zone_bztu();
+                CALC.Zone_Warmup_Gain(zone1, zonelight1);
+            }
+
+            for (int k = 0; k < CALC.zone.Count; k++)
+            {
+                Zone zone1 = (Zone)CALC.zone[k];
+                ZoneLight zonelight1 = (ZoneLight)CALC.zonelight[k];
+                CALC.Zone_Calc(zone1, zonelight1); // LoadData+override+일사·내부발열 자기몫은 이미 웜업에서 끝남
             }
         }
         private void Load_Rule_Wall(Zone zone1)
@@ -75,8 +85,8 @@ namespace main
                 int i = -1;
                 while (++i < ZoneW.Length)
                 {
-                    double U = Math.Min(Convert.ToDouble(ZoneW[i][3]), Convert.ToDouble(ZoneW[i][8]));
-                    Wall wall = new Wall(ZoneW[i][0], ZoneW[i][2], Convert.ToDouble(ZoneW[i][1]), U, Convert.ToDouble(ZoneW[i][4]), ZoneW[i][5], ZoneW[i][6], ZoneW[i][7]);
+                    double U = Math.Min(Program.UTIL.ToDoubleOrZero(ZoneW[i][3]), Program.UTIL.ToDoubleOrZero(ZoneW[i][8]));
+                    Wall wall = new Wall(ZoneW[i][0], ZoneW[i][2], Program.UTIL.ToDoubleOrZero(ZoneW[i][1]), U, Program.UTIL.ToDoubleOrZero(ZoneW[i][4]), ZoneW[i][5], ZoneW[i][6], ZoneW[i][7]);
                     zone1.zoneWall.Add(wall);
                 }
             }
@@ -86,7 +96,7 @@ namespace main
                 int i = -1;
                 while (++i < ZoneG.Length)
                 {
-                    double U = Math.Min(Convert.ToDouble(ZoneG[i][3]), Convert.ToDouble(ZoneG[i][5]));
+                    double U = Math.Min(Program.UTIL.ToDoubleOrZero(ZoneG[i][3]), Program.UTIL.ToDoubleOrZero(ZoneG[i][5]));
                     double fx_f = 1;
                     if (U >= 3)
                     { fx_f = 0.35; }
@@ -95,9 +105,8 @@ namespace main
                     else if (U > 0.3)
                     { fx_f = 0.65; }
                     else { fx_f = 0.75; }
-                    break;
 
-                    GWall gwall = new GWall(ZoneG[i][0], ZoneG[i][2], Convert.ToDouble(ZoneG[i][1]), U, fx_f);
+                    GWall gwall = new GWall(ZoneG[i][0], ZoneG[i][2], Program.UTIL.ToDoubleOrZero(ZoneG[i][1]), U, fx_f);
                     zone1.zoneGWall.Add(gwall);
                 }
             }
@@ -111,8 +120,8 @@ namespace main
                 int i = -1;
                 while (++i < ZoneR.Length)
                 {
-                    double U = Math.Min(Convert.ToDouble(ZoneR[i][3]), Convert.ToDouble(ZoneR[i][8]));
-                    Roof roof = new Roof(ZoneR[i][0], ZoneR[i][2], Convert.ToDouble(ZoneR[i][1]), U, Convert.ToDouble(ZoneR[i][4]), ZoneR[i][5], ZoneR[i][6], ZoneR[i][7]);
+                    double U = Math.Min(Program.UTIL.ToDoubleOrZero(ZoneR[i][3]), Program.UTIL.ToDoubleOrZero(ZoneR[i][8]));
+                    Roof roof = new Roof(ZoneR[i][0], ZoneR[i][2], Program.UTIL.ToDoubleOrZero(ZoneR[i][1]), U, Program.UTIL.ToDoubleOrZero(ZoneR[i][4]), ZoneR[i][5], ZoneR[i][6], ZoneR[i][7]);
                     zone1.zoneRoof.Add(roof);
                 }
             }
@@ -126,7 +135,7 @@ namespace main
                 int i = -1;
                 while (++i < ZoneF.Length)
                 {
-                    double U = Math.Min(Convert.ToDouble(ZoneF[i][3]), Convert.ToDouble(ZoneF[i][6]));
+                    double U = Math.Min(Program.UTIL.ToDoubleOrZero(ZoneF[i][3]), Program.UTIL.ToDoubleOrZero(ZoneF[i][6]));
                     double fx_f = 1;
                     switch (ZoneF[i][5].ToString())
                     {
@@ -164,7 +173,7 @@ namespace main
                                 break;
                             }
                     }
-                    Floor floor = new Floor(ZoneF[i][0], ZoneF[i][2], Convert.ToDouble(ZoneF[i][1]), U, ZoneF[i][5], fx_f);
+                    Floor floor = new Floor(ZoneF[i][0], ZoneF[i][2], Program.UTIL.ToDoubleOrZero(ZoneF[i][1]), U, ZoneF[i][5], fx_f);
                     zone1.zoneFloor.Add(floor);
                 }
             }
@@ -178,19 +187,19 @@ namespace main
                 int i = -1;
                 while (++i < ZoneWin.Length)
                 {
-                    double U = Math.Min(Convert.ToDouble(ZoneWin[i][3]), Convert.ToDouble(ZoneWin[i][5]));
+                    double U = Math.Min(Program.UTIL.ToDoubleOrZero(ZoneWin[i][3]), Program.UTIL.ToDoubleOrZero(ZoneWin[i][5]));
                     String[][] ZoneWin_P = Program.DB.getValue(DB.type.ProjDB, "ConstructionWindow", "직접간접,태양열취득률,빛투과율", "번호='" + ZoneWin[i][7] + "'");
                     string[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "번호='" + ZoneWin[i][0] + "'");
                     if (ZoneWin_P.Length > 0)
                     {
                         if (Blind.Length > 0)
                         {
-                            Window win = new Window(ZoneWin[i][0], ZoneWin[i][7], ZoneWin[i][2], Convert.ToDouble(ZoneWin[i][1]), U, Convert.ToDouble(ZoneWin[i][4]), ZoneWin_P[0][0], Convert.ToDouble(ZoneWin[i][6]), Convert.ToDouble(ZoneWin_P[0][1]), Convert.ToDouble(ZoneWin_P[0][2]), Convert.ToDouble(Blind[0][0]), Convert.ToDouble(Blind[0][1]), ZoneWin[i][8], ZoneWin[i][9]);
+                            Window win = new Window(ZoneWin[i][0], ZoneWin[i][7], ZoneWin[i][2], Program.UTIL.ToDoubleOrZero(ZoneWin[i][1]), U, Program.UTIL.ToDoubleOrZero(ZoneWin[i][4]), ZoneWin_P[0][0], Program.UTIL.ToDoubleOrZero(ZoneWin[i][6]), Program.UTIL.ToDoubleOrZero(ZoneWin_P[0][1]), Program.UTIL.ToDoubleOrZero(ZoneWin_P[0][2]), Program.UTIL.ToDoubleOrZero(Blind[0][0]), Program.UTIL.ToDoubleOrZero(Blind[0][1]), ZoneWin[i][8], ZoneWin[i][9]);
                             zone1.zoneWin.Add(win);
                         }
                         else
                         {
-                            Window win = new Window(ZoneWin[i][0], ZoneWin[i][7], ZoneWin[i][2], Convert.ToDouble(ZoneWin[i][1]), U, Convert.ToDouble(ZoneWin[i][4]), ZoneWin_P[0][0], Convert.ToDouble(ZoneWin[i][6]), Convert.ToDouble(ZoneWin_P[0][1]), Convert.ToDouble(ZoneWin_P[0][2]), 0, 0, ZoneWin[i][8], ZoneWin[i][9]);
+                            Window win = new Window(ZoneWin[i][0], ZoneWin[i][7], ZoneWin[i][2], Program.UTIL.ToDoubleOrZero(ZoneWin[i][1]), U, Program.UTIL.ToDoubleOrZero(ZoneWin[i][4]), ZoneWin_P[0][0], Program.UTIL.ToDoubleOrZero(ZoneWin[i][6]), Program.UTIL.ToDoubleOrZero(ZoneWin_P[0][1]), Program.UTIL.ToDoubleOrZero(ZoneWin_P[0][2]), 0, 0, ZoneWin[i][8], ZoneWin[i][9]);
                             zone1.zoneWin.Add(win);
                         }
                     }
@@ -213,16 +222,16 @@ namespace main
                         string[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "번호='" + ZoneCW[i][3] + "'");
                         if (CW_g.Length > 0)
                         {
-                            double U = Math.Min(Convert.ToDouble(CW_g[0][0]), Convert.ToDouble(CW_g[0][5]));
+                            double U = Math.Min(Program.UTIL.ToDoubleOrZero(CW_g[0][0]), Program.UTIL.ToDoubleOrZero(CW_g[0][5]));
                             if (Blind.Length > 0)
 
                             {
-                                CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], Convert.ToDouble(ZoneCW[i][1]), U, Convert.ToDouble(CW_g[0][1]), Convert.ToDouble(CW_g[0][2]), Convert.ToDouble(Blind[0][0]), Convert.ToDouble(CW_g[0][3]), Convert.ToDouble(Blind[0][1]), 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[0][4]), ZoneCW[i][4], ZoneCW[i][5], "유리부분");
+                                CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], Program.UTIL.ToDoubleOrZero(ZoneCW[i][1]), U, Program.UTIL.ToDoubleOrZero(CW_g[0][1]), Program.UTIL.ToDoubleOrZero(CW_g[0][2]), Program.UTIL.ToDoubleOrZero(Blind[0][0]), Program.UTIL.ToDoubleOrZero(CW_g[0][3]), Program.UTIL.ToDoubleOrZero(Blind[0][1]), 0, 0, 0, 0, 0, 0, 0, 0, Program.UTIL.ToDoubleOrZero(ZoneCW[i][1]), Program.UTIL.ToDoubleOrZero(CW_g[0][4]), ZoneCW[i][4], ZoneCW[i][5], "유리부분");
                                 zone1.zoneCW.Add(cw);
                             }
                             else
                             {
-                                CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], Convert.ToDouble(ZoneCW[i][1]), U, Convert.ToDouble(CW_g[0][1]), Convert.ToDouble(CW_g[0][2]), 0, Convert.ToDouble(CW_g[0][3]), 0, 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[0][4]), ZoneCW[i][4], ZoneCW[i][5], "유리부분");
+                                CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], Program.UTIL.ToDoubleOrZero(ZoneCW[i][1]), U, Program.UTIL.ToDoubleOrZero(CW_g[0][1]), Program.UTIL.ToDoubleOrZero(CW_g[0][2]), 0, Program.UTIL.ToDoubleOrZero(CW_g[0][3]), 0, 0, 0, 0, 0, 0, 0, 0, 0, Program.UTIL.ToDoubleOrZero(ZoneCW[i][1]), Program.UTIL.ToDoubleOrZero(CW_g[0][4]), ZoneCW[i][4], ZoneCW[i][5], "유리부분");
                                 zone1.zoneCW.Add(cw);
                             }
                         }
@@ -233,8 +242,8 @@ namespace main
                         String[][] CW_p = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "법규패널부분열관류율,패널흡수율,설치열교가산치,패널부분열관류율", "번호 = '" + ZoneCW[i][3] + "'");
                         if (CW_p.Length > 0)
                         {
-                            double U = Math.Min(Convert.ToDouble(CW_p[0][0]), Convert.ToDouble(CW_p[0][3]));
-                            CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]),U, Convert.ToDouble(CW_p[0][1]), 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_p[0][2]), ZoneCW[i][4], ZoneCW[i][5], "패널부분");
+                            double U = Math.Min(Program.UTIL.ToDoubleOrZero(CW_p[0][0]), Program.UTIL.ToDoubleOrZero(CW_p[0][3]));
+                            CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0, 0, 0, 0, Program.UTIL.ToDoubleOrZero(ZoneCW[i][1]),U, Program.UTIL.ToDoubleOrZero(CW_p[0][1]), 0, 0, 0, 0, 0, Program.UTIL.ToDoubleOrZero(ZoneCW[i][1]), Program.UTIL.ToDoubleOrZero(CW_p[0][2]), ZoneCW[i][4], ZoneCW[i][5], "패널부분");
                             zone1.zoneCW.Add(cw);
                         }
                     }
@@ -243,8 +252,8 @@ namespace main
                         String[][] CW_d = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "법규출입문부분열관류율,출입문부분유리면적비,출입문태양열취득률,출입문빛투과율,설치열교가산치,출입문부분열관류율", "번호 = '" + ZoneCW[i][3] + "'");
                         if (CW_d.Length > 0)
                         {
-                            double U = Math.Min(Convert.ToDouble(CW_d[0][0]), Convert.ToDouble(CW_d[0][5]));
-                            CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), U, Convert.ToDouble(CW_d[0][1]), Convert.ToDouble(CW_d[0][2]), Convert.ToDouble(CW_d[0][3]), Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_d[0][4]), ZoneCW[i][4], ZoneCW[i][5], "출입문부분");
+                            double U = Math.Min(Program.UTIL.ToDoubleOrZero(CW_d[0][0]), Program.UTIL.ToDoubleOrZero(CW_d[0][5]));
+                            CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Program.UTIL.ToDoubleOrZero(ZoneCW[i][1]), U, Program.UTIL.ToDoubleOrZero(CW_d[0][1]), Program.UTIL.ToDoubleOrZero(CW_d[0][2]), Program.UTIL.ToDoubleOrZero(CW_d[0][3]), Program.UTIL.ToDoubleOrZero(ZoneCW[i][1]), Program.UTIL.ToDoubleOrZero(CW_d[0][4]), ZoneCW[i][4], ZoneCW[i][5], "출입문부분");
                             zone1.zoneCW.Add(cw);
                         }
                     }
@@ -260,8 +269,8 @@ namespace main
                 int i = -1;
                 while (++i < ZoneD.Length)
                 {
-                    double U = Math.Min(Convert.ToDouble(ZoneD[i][3]), Convert.ToDouble(ZoneD[i][8]));
-                    Door door = new Door(ZoneD[i][0], ZoneD[i][2], Convert.ToDouble(ZoneD[i][1]), U, Convert.ToDouble(ZoneD[i][4]), ZoneD[i][5], ZoneD[i][6], ZoneD[i][7]);
+                    double U = Math.Min(Program.UTIL.ToDoubleOrZero(ZoneD[i][3]), Program.UTIL.ToDoubleOrZero(ZoneD[i][8]));
+                    Door door = new Door(ZoneD[i][0], ZoneD[i][2], Program.UTIL.ToDoubleOrZero(ZoneD[i][1]), U, Program.UTIL.ToDoubleOrZero(ZoneD[i][4]), ZoneD[i][5], ZoneD[i][6], ZoneD[i][7]);
                     zone1.zoneDoor.Add(door);
                 }
             }
@@ -295,53 +304,52 @@ namespace main
                 //이미 열회수기 or 공조기 적용된 경우
                 if (ZoneG[0][1] == "열회수기")
                 {
-                    zone1.Vmech_SUP_we = Convert.ToDouble(ZoneG[0][2]);
-                    zone1.Vmech_ETA_we = Convert.ToDouble(ZoneG[0][2]);
-                    zone1.Vmech_SUP_wd = Convert.ToDouble(ZoneG[0][3]);
-                    zone1.Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][3]);
+                    zone1.Vmech_SUP = Program.UTIL.ToDoubleOrZero(ZoneG[0][3]);
+                    zone1.Vmech_ETA = Program.UTIL.ToDoubleOrZero(ZoneG[0][3]);
                     zone1.SelectHRV = ZoneG[0][4];
                     string[][] value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "온도교환효율_난방,온도교환효율_냉방,습도교환효율_난방,습도교환효율_냉방", "번호='" + zone1.SelectHRV + "'");
                     if (value.Length > 0)
                     {
-                        zone1.eta_V_mech[0] = Convert.ToDouble(value[0][0]) / 100;
-                        zone1.eta_V_mech[1] = Convert.ToDouble(value[0][1]) / 100;
-                        zone1.eta_χV_mech[0] = Convert.ToDouble(value[0][2]) / 100;
-                        zone1.eta_χV_mech[1] = Convert.ToDouble(value[0][3]) / 100;
+                        zone1.eta_V_mech[0] = Program.UTIL.ToDoubleOrZero(value[0][0]) / 100;
+                        zone1.eta_V_mech[1] = Program.UTIL.ToDoubleOrZero(value[0][1]) / 100;
+                        zone1.eta_χV_mech[0] = Program.UTIL.ToDoubleOrZero(value[0][2]) / 100;
+                        zone1.eta_χV_mech[1] = Program.UTIL.ToDoubleOrZero(value[0][3]) / 100;
                     }
 
                 }
                 else if (ZoneG[0][1] == "공조기")
                 {
-                    zone1.Vmech_SUP_we = Convert.ToDouble(ZoneG[0][2]);
-                    zone1.Vmech_ETA_we = Convert.ToDouble(ZoneG[0][2]);
-                    zone1.Vmech_SUP_wd = Convert.ToDouble(ZoneG[0][3]);
-                    zone1.Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][3]);
+                    zone1.Vmech_SUP = Program.UTIL.ToDoubleOrZero(ZoneG[0][3]);
+                    zone1.Vmech_ETA = Program.UTIL.ToDoubleOrZero(ZoneG[0][3]);
                     zone1.SelectHRV = ZoneG[0][4];
                     string[][] value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "온도교환효율_난방,온도교환효율_냉방,습도교환효율_난방,습도교환효율_냉방", "번호='" + zone1.SelectHRV + "'");
                     if (value.Length > 0)
                     {
-                        zone1.eta_V_mech[0] = Convert.ToDouble(value[0][0]) / 100;
-                        zone1.eta_V_mech[1] = Convert.ToDouble(value[0][1]) / 100;
-                        zone1.eta_χV_mech[0] = Convert.ToDouble(value[0][2]) / 100;
-                        zone1.eta_χV_mech[1] = Convert.ToDouble(value[0][3]) / 100;
+                        zone1.eta_V_mech[0] = Program.UTIL.ToDoubleOrZero(value[0][0]) / 100;
+                        zone1.eta_V_mech[1] = Program.UTIL.ToDoubleOrZero(value[0][1]) / 100;
+                        zone1.eta_χV_mech[0] = Program.UTIL.ToDoubleOrZero(value[0][2]) / 100;
+                        zone1.eta_χV_mech[1] = Program.UTIL.ToDoubleOrZero(value[0][3]) / 100;
                     }
 
                 }
+                else if (ZoneG[0][1] == "배기환기(3종)")
+                {
+                    zone1.Vmech_SUP = 0; //배기환기(3종)는 급기 자체가 없음, Cal_HCneed.cs와 동일
+                    zone1.Vmech_ETA = Program.UTIL.ToDoubleOrZero(ZoneG[0][3]); //이용일환기량 기준(Cal_HCneed.cs와 동일)
+                }
                 else
                 {
-                    zone1.Vmech_SUP_wd = 0;
-                    zone1.Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][2]); ; //배기환기는 다 비이용일환기량으로 함 
-                    zone1.Vmech_SUP_we = 0;
-                    zone1.Vmech_ETA_we = Convert.ToDouble(ZoneG[0][2]);
+                    // 환기방식 UI 콤보박스엔 열회수기/공조기/배기환기(3종) 세 개뿐이라 이 분기는
+                    // 정상 경로로는 도달 불가능(레거시 데이터 등 예외 상황) — 환기 없음으로 안전 처리
+                    zone1.Vmech_SUP = 0;
+                    zone1.Vmech_ETA = 0;
                 }
 
             }
             else
             {
-                zone1.Vmech_SUP_we = Convert.ToDouble(ZoneG[0][2]);
-                zone1.Vmech_ETA_we = Convert.ToDouble(ZoneG[0][2]);
-                zone1.Vmech_SUP_wd = Convert.ToDouble(ZoneG[0][3]);
-                zone1.Vmech_ETA_wd = Convert.ToDouble(ZoneG[0][3]);
+                zone1.Vmech_SUP = Program.UTIL.ToDoubleOrZero(ZoneG[0][3]);
+                zone1.Vmech_ETA = Program.UTIL.ToDoubleOrZero(ZoneG[0][3]);
                 zone1.eta_V_mech[0] = 0.88; //온도효율 난방
                 zone1.eta_V_mech[1] = 0.72; //온도효율 냉방
                 zone1.eta_χV_mech[0] = 0.40; //습기효율 난방
@@ -349,6 +357,10 @@ namespace main
                 zone1.SelectHRV = "열회수기_법규";
                 //EPI 기준 1점  온도_난방 :88%, 온도_냉방 = 72%, 유효전열_난방 =74%, 유효전열_냉방 =57%
             }
+            // 인접존환기는 "이 존에 다른 열회수기를 달아본다"는 가상 시나리오와 무관한 실제 배치값이라
+            // 실측치를 섞어 쓰면 가상+실제가 뒤섞여 일관성이 깨짐 — 깔끔하게 0으로 처리
+            zone1.V_SUP_z = 0;
+            zone1.V_ETA_z = 0;
         }
         private void Load_Rule_Light(ZoneLight zonelight1)
         {
@@ -358,25 +370,25 @@ namespace main
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "기준조도,조명방식,공간계수", "번호='" + zonelight1.ZoneNum + "'");
             if (Value.Length > 0)
             {
-                Em = Convert.ToDouble(Value[0][0]);
+                Em = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                 Method = Value[0][1];
-                K = Convert.ToDouble(Value[0][2]);
+                K = Program.UTIL.ToDoubleOrZero(Value[0][2]);
             }
 
             Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "용도프로필,순바닥면적", "존번호='" + zonelight1.ZoneNum + "'");
             if (Value.Length > 0)
             {
-                A = Convert.ToDouble(Value[0][1]);
+                A = Program.UTIL.ToDoubleOrZero(Value[0][1]);
                 string[][] ValueB = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "이용영역계수", "용도명 = '" + Value[0][0] + "'");
                 if (ValueB.Length > 0)
                 {
-                    KA = Convert.ToDouble(ValueB[0][0]);
+                    KA = Program.UTIL.ToDoubleOrZero(ValueB[0][0]);
                 }
             }
             Value = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_럭스당조명밀도", "값,UFF", "조명방식='" + Method + "' AND K = '" + K + "'");
             if (Value.Length > 0)
             {
-                Pj_lx = Convert.ToDouble(Value[0][0]);
+                Pj_lx = Program.UTIL.ToDoubleOrZero(Value[0][0]);
             }
             zonelight1.Pj = 8; //에절계 조명부문 1번 1점
             //zonelight1.Pj = Em * KA * LightFL * (0.8 / 0.67) * Pj_lx;
@@ -395,7 +407,7 @@ namespace main
                 int i = -1;
                 while (++i < ZoneW.Length)
                 {
-                    Wall wall = new Wall(ZoneW[i][0], ZoneW[i][2], Convert.ToDouble(ZoneW[i][1]), Convert.ToDouble(ZoneW[i][3]), Convert.ToDouble(ZoneW[i][4]), ZoneW[i][5], ZoneW[i][6], ZoneW[i][7]);
+                    Wall wall = new Wall(ZoneW[i][0], ZoneW[i][2], Program.UTIL.ToDoubleOrZero(ZoneW[i][1]), Program.UTIL.ToDoubleOrZero(ZoneW[i][3]), Program.UTIL.ToDoubleOrZero(ZoneW[i][4]), ZoneW[i][5], ZoneW[i][6], ZoneW[i][7]);
                     zone1.zoneWall.Add(wall);
                 }
             }
@@ -406,16 +418,16 @@ namespace main
                 while (++i < ZoneG.Length)
                 {
                     double fx_f = 1;
-                    if (Convert.ToDouble(ZoneG[0][3]) >= 3)
+                    if (Program.UTIL.ToDoubleOrZero(ZoneG[0][3]) >= 3)
                     { fx_f = 0.35; }
-                    else if (Convert.ToDouble(ZoneG[0][3]) >= 1)
+                    else if (Program.UTIL.ToDoubleOrZero(ZoneG[0][3]) >= 1)
                     { fx_f = 0.55; }
-                    else if (Convert.ToDouble(ZoneG[0][3]) > 0.3)
+                    else if (Program.UTIL.ToDoubleOrZero(ZoneG[0][3]) > 0.3)
                     { fx_f = 0.65; }
                     else { fx_f = 0.75; }
                     break;
 
-                    GWall gwall = new GWall(ZoneG[i][0], ZoneG[i][2], Convert.ToDouble(ZoneG[i][1]), Convert.ToDouble(ZoneG[i][3]), fx_f);
+                    GWall gwall = new GWall(ZoneG[i][0], ZoneG[i][2], Program.UTIL.ToDoubleOrZero(ZoneG[i][1]), Program.UTIL.ToDoubleOrZero(ZoneG[i][3]), fx_f);
                     zone1.zoneGWall.Add(gwall);
                 }
             }
@@ -428,7 +440,7 @@ namespace main
                 int i = -1;
                 while (++i < ZoneR.Length)
                 {
-                    Roof roof = new Roof(ZoneR[i][0], ZoneR[i][2], Convert.ToDouble(ZoneR[i][1]), Convert.ToDouble(ZoneR[i][3]), Convert.ToDouble(ZoneR[i][4]), ZoneR[i][5], ZoneR[i][6], ZoneR[i][7]);
+                    Roof roof = new Roof(ZoneR[i][0], ZoneR[i][2], Program.UTIL.ToDoubleOrZero(ZoneR[i][1]), Program.UTIL.ToDoubleOrZero(ZoneR[i][3]), Program.UTIL.ToDoubleOrZero(ZoneR[i][4]), ZoneR[i][5], ZoneR[i][6], ZoneR[i][7]);
                     zone1.zoneRoof.Add(roof);
                 }
             }
@@ -446,39 +458,39 @@ namespace main
                     {
                         case "지면위":
                             {
-                                if (Convert.ToDouble(ZoneF[0][3]) >= 3)
+                                if (Program.UTIL.ToDoubleOrZero(ZoneF[0][3]) >= 3)
                                 { fx_f = 0.3; }
-                                else if (Convert.ToDouble(ZoneF[0][3]) >= 1)
+                                else if (Program.UTIL.ToDoubleOrZero(ZoneF[0][3]) >= 1)
                                 { fx_f = 0.55; }
-                                else if (Convert.ToDouble(ZoneF[0][3]) > 0.3)
+                                else if (Program.UTIL.ToDoubleOrZero(ZoneF[0][3]) > 0.3)
                                 { fx_f = 0.7; }
                                 else { fx_f = 0.8; }
                                 break;
                             }
                         case "단열지하":
                             {
-                                if (Convert.ToDouble(ZoneF[0][3]) >= 3)
+                                if (Program.UTIL.ToDoubleOrZero(ZoneF[0][3]) >= 3)
                                 { fx_f = 0.2; }
-                                else if (Convert.ToDouble(ZoneF[0][3]) >= 1)
+                                else if (Program.UTIL.ToDoubleOrZero(ZoneF[0][3]) >= 1)
                                 { fx_f = 0.45; }
-                                else if (Convert.ToDouble(ZoneF[0][3]) > 0.3)
+                                else if (Program.UTIL.ToDoubleOrZero(ZoneF[0][3]) > 0.3)
                                 { fx_f = 0.55; }
                                 else { fx_f = 0.7; }
                                 break;
                             }
                         case "비단열지하":
                             {
-                                if (Convert.ToDouble(ZoneF[0][3]) >= 3)
+                                if (Program.UTIL.ToDoubleOrZero(ZoneF[0][3]) >= 3)
                                 { fx_f = 0.45; }
-                                else if (Convert.ToDouble(ZoneF[0][3]) >= 1)
+                                else if (Program.UTIL.ToDoubleOrZero(ZoneF[0][3]) >= 1)
                                 { fx_f = 0.75; }
-                                else if (Convert.ToDouble(ZoneF[0][3]) > 0.3)
+                                else if (Program.UTIL.ToDoubleOrZero(ZoneF[0][3]) > 0.3)
                                 { fx_f = 0.8; }
                                 else { fx_f = 0.85; }
                                 break;
                             }
                     }
-                    Floor floor = new Floor(ZoneF[i][0], ZoneF[i][2], Convert.ToDouble(ZoneF[i][1]), Convert.ToDouble(ZoneF[i][3]), ZoneF[i][5], fx_f);
+                    Floor floor = new Floor(ZoneF[i][0], ZoneF[i][2], Program.UTIL.ToDoubleOrZero(ZoneF[i][1]), Program.UTIL.ToDoubleOrZero(ZoneF[i][3]), ZoneF[i][5], fx_f);
                     zone1.zoneFloor.Add(floor);
                 }
             }
@@ -497,12 +509,12 @@ namespace main
                     {
                         if (Blind.Length > 0)
                         {
-                            Window win = new Window(ZoneWin[i][0], ZoneWin[i][7], ZoneWin[i][2], Convert.ToDouble(ZoneWin[i][1]), Convert.ToDouble(ZoneWin[i][3]), Convert.ToDouble(ZoneWin[i][4]), ZoneWin_P[0][0], Convert.ToDouble(ZoneWin[i][6]), Convert.ToDouble(ZoneWin_P[0][1]), Convert.ToDouble(ZoneWin_P[0][2]), Convert.ToDouble(Blind[0][0]), Convert.ToDouble(Blind[0][1]), ZoneWin[i][8], ZoneWin[i][9]);
+                            Window win = new Window(ZoneWin[i][0], ZoneWin[i][7], ZoneWin[i][2], Program.UTIL.ToDoubleOrZero(ZoneWin[i][1]), Program.UTIL.ToDoubleOrZero(ZoneWin[i][3]), Program.UTIL.ToDoubleOrZero(ZoneWin[i][4]), ZoneWin_P[0][0], Program.UTIL.ToDoubleOrZero(ZoneWin[i][6]), Program.UTIL.ToDoubleOrZero(ZoneWin_P[0][1]), Program.UTIL.ToDoubleOrZero(ZoneWin_P[0][2]), Program.UTIL.ToDoubleOrZero(Blind[0][0]), Program.UTIL.ToDoubleOrZero(Blind[0][1]), ZoneWin[i][8], ZoneWin[i][9]);
                             zone1.zoneWin.Add(win);
                         }
                         else
                         {
-                            Window win = new Window(ZoneWin[i][0], ZoneWin[i][7], ZoneWin[i][2], Convert.ToDouble(ZoneWin[i][1]), Convert.ToDouble(ZoneWin[i][3]), Convert.ToDouble(ZoneWin[i][4]), ZoneWin_P[0][0], Convert.ToDouble(ZoneWin[i][6]), Convert.ToDouble(ZoneWin_P[0][1]), Convert.ToDouble(ZoneWin_P[0][2]), 0, 0, ZoneWin[i][8], ZoneWin[i][9]);
+                            Window win = new Window(ZoneWin[i][0], ZoneWin[i][7], ZoneWin[i][2], Program.UTIL.ToDoubleOrZero(ZoneWin[i][1]), Program.UTIL.ToDoubleOrZero(ZoneWin[i][3]), Program.UTIL.ToDoubleOrZero(ZoneWin[i][4]), ZoneWin_P[0][0], Program.UTIL.ToDoubleOrZero(ZoneWin[i][6]), Program.UTIL.ToDoubleOrZero(ZoneWin_P[0][1]), Program.UTIL.ToDoubleOrZero(ZoneWin_P[0][2]), 0, 0, ZoneWin[i][8], ZoneWin[i][9]);
                             zone1.zoneWin.Add(win);
                         }
                     }
@@ -527,12 +539,12 @@ namespace main
                             if (Blind.Length > 0)
 
                             {
-                                CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[0][0]), Convert.ToDouble(CW_g[0][1]), Convert.ToDouble(CW_g[0][2]), Convert.ToDouble(Blind[0][0]), Convert.ToDouble(CW_g[0][3]), Convert.ToDouble(Blind[0][1]), 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[0][4]), ZoneCW[i][4], ZoneCW[i][5], "유리부분");
+                                CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], Program.UTIL.ToDoubleOrZero(ZoneCW[i][1]), Program.UTIL.ToDoubleOrZero(CW_g[0][0]), Program.UTIL.ToDoubleOrZero(CW_g[0][1]), Program.UTIL.ToDoubleOrZero(CW_g[0][2]), Program.UTIL.ToDoubleOrZero(Blind[0][0]), Program.UTIL.ToDoubleOrZero(CW_g[0][3]), Program.UTIL.ToDoubleOrZero(Blind[0][1]), 0, 0, 0, 0, 0, 0, 0, 0, Program.UTIL.ToDoubleOrZero(ZoneCW[i][1]), Program.UTIL.ToDoubleOrZero(CW_g[0][4]), ZoneCW[i][4], ZoneCW[i][5], "유리부분");
                                 zone1.zoneCW.Add(cw);
                             }
                             else
                             {
-                                CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[0][0]), Convert.ToDouble(CW_g[0][1]), Convert.ToDouble(CW_g[0][2]), 0, Convert.ToDouble(CW_g[0][3]), 0, 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_g[0][4]), ZoneCW[i][4], ZoneCW[i][5], "유리부분");
+                                CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], Program.UTIL.ToDoubleOrZero(ZoneCW[i][1]), Program.UTIL.ToDoubleOrZero(CW_g[0][0]), Program.UTIL.ToDoubleOrZero(CW_g[0][1]), Program.UTIL.ToDoubleOrZero(CW_g[0][2]), 0, Program.UTIL.ToDoubleOrZero(CW_g[0][3]), 0, 0, 0, 0, 0, 0, 0, 0, 0, Program.UTIL.ToDoubleOrZero(ZoneCW[i][1]), Program.UTIL.ToDoubleOrZero(CW_g[0][4]), ZoneCW[i][4], ZoneCW[i][5], "유리부분");
                                 zone1.zoneCW.Add(cw);
                             }
                         }
@@ -543,7 +555,7 @@ namespace main
                         String[][] CW_p = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "법규패널부분열관류율,패널흡수율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
                         if (CW_p.Length > 0)
                         {
-                            CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_p[0][0]), Convert.ToDouble(CW_p[0][1]), 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_p[0][2]), ZoneCW[i][4], ZoneCW[i][5], "패널부분");
+                            CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0, 0, 0, 0, Program.UTIL.ToDoubleOrZero(ZoneCW[i][1]), Program.UTIL.ToDoubleOrZero(CW_p[0][0]), Program.UTIL.ToDoubleOrZero(CW_p[0][1]), 0, 0, 0, 0, 0, Program.UTIL.ToDoubleOrZero(ZoneCW[i][1]), Program.UTIL.ToDoubleOrZero(CW_p[0][2]), ZoneCW[i][4], ZoneCW[i][5], "패널부분");
                             zone1.zoneCW.Add(cw);
                         }
                     }
@@ -552,7 +564,7 @@ namespace main
                         String[][] CW_d = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "법규출입문부분열관류율,출입문부분유리면적비,출입문태양열취득률,출입문빛투과율,설치열교가산치", "번호 = '" + ZoneCW[i][3] + "'");
                         if (CW_d.Length > 0)
                         {
-                            CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_d[0][0]), Convert.ToDouble(CW_d[0][1]), Convert.ToDouble(CW_d[0][2]), Convert.ToDouble(CW_d[0][3]), Convert.ToDouble(ZoneCW[i][1]), Convert.ToDouble(CW_d[0][4]), ZoneCW[i][4], ZoneCW[i][5], "출입문부분");
+                            CW cw = new CW(ZoneCW[i][0], ZoneCW[i][3], 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Program.UTIL.ToDoubleOrZero(ZoneCW[i][1]), Program.UTIL.ToDoubleOrZero(CW_d[0][0]), Program.UTIL.ToDoubleOrZero(CW_d[0][1]), Program.UTIL.ToDoubleOrZero(CW_d[0][2]), Program.UTIL.ToDoubleOrZero(CW_d[0][3]), Program.UTIL.ToDoubleOrZero(ZoneCW[i][1]), Program.UTIL.ToDoubleOrZero(CW_d[0][4]), ZoneCW[i][4], ZoneCW[i][5], "출입문부분");
                             zone1.zoneCW.Add(cw);
                         }
                     }
@@ -568,7 +580,7 @@ namespace main
                 int i = -1;
                 while (++i < ZoneD.Length)
                 {
-                    Door door = new Door(ZoneD[i][0], ZoneD[i][2], Convert.ToDouble(ZoneD[i][1]), Convert.ToDouble(ZoneD[i][3]), Convert.ToDouble(ZoneD[i][4]), ZoneD[i][5], ZoneD[i][6], ZoneD[i][7]);
+                    Door door = new Door(ZoneD[i][0], ZoneD[i][2], Program.UTIL.ToDoubleOrZero(ZoneD[i][1]), Program.UTIL.ToDoubleOrZero(ZoneD[i][3]), Program.UTIL.ToDoubleOrZero(ZoneD[i][4]), ZoneD[i][5], ZoneD[i][6], ZoneD[i][7]);
                     zone1.zoneDoor.Add(door);
                 }
             }
@@ -604,13 +616,13 @@ namespace main
                 string[][] Final2 = Program.DB.querySQL(DB.type.ProjDB, "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 = '전기' and 월 = '" + (mth + 1).ToString() + "월'");
                 if (Final2.Length > 0)
                 {
-                    final1.Qbase_elec[mth] = Convert.ToDouble(Final2[0][0]);
+                    final1.Qbase_elec[mth] = Program.UTIL.ToDoubleOrZero(Final2[0][0]);
                 }
 
                 Final2 = Program.DB.querySQL(DB.type.ProjDB, "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 != '전기' and 월 = '" + (mth + 1).ToString() + "월'");
                 if (Final2.Length > 0)
                 {
-                    final1.Qbase_gas[mth] = Convert.ToDouble(Final2[0][0]);
+                    final1.Qbase_gas[mth] = Program.UTIL.ToDoubleOrZero(Final2[0][0]);
                 }
             }
 
@@ -744,12 +756,12 @@ namespace main
                     String Combi = Value[0][1];
                     Heating1.Carrier = Value[0][2];
                     String Type = Value[0][3];
-                    double Power = Convert.ToDouble(Value[0][4]) * Convert.ToDouble(Heating1.BoilerNum_split[n]);
+                    double Power = Program.UTIL.ToDoubleOrZero(Value[0][4]) * Program.UTIL.ToDoubleOrZero(Heating1.BoilerNum_split[n]);
                     double eta_Pn = Rule/ 100;
                     double eta_Pint = Rule / 100;
-                    double W = Convert.ToDouble(Value[0][7]);
-                    double W_0 = Convert.ToDouble(Value[0][8]);
-                    double count = Convert.ToDouble(Heating1.BoilerNum_split[n]);
+                    double W = Program.UTIL.ToDoubleOrZero(Value[0][7]);
+                    double W_0 = Program.UTIL.ToDoubleOrZero(Value[0][8]);
+                    double count = Program.UTIL.ToDoubleOrZero(Heating1.BoilerNum_split[n]);
                     Heating1.Calc_Qh_gen_Boiler(Num, Combi, Type, Power, eta_Pn, eta_Pint, W, W_0, count);
                 }
             }
@@ -764,10 +776,10 @@ namespace main
                 {
                     String Num = Value[0][0];
                     Heating1.Carrier = Value[0][1];
-                    double Power = Convert.ToDouble(Value[0][2]) * Convert.ToDouble(Heating1.ABSNum_split[n]);
+                    double Power = Program.UTIL.ToDoubleOrZero(Value[0][2]) * Program.UTIL.ToDoubleOrZero(Heating1.ABSNum_split[n]);
                     double cop = Optimal;
-                    double W_0 = Convert.ToDouble(Value[0][4]);
-                    double count = Convert.ToDouble(Heating1.ABSNum_split[n]);
+                    double W_0 = Program.UTIL.ToDoubleOrZero(Value[0][4]);
+                    double count = Program.UTIL.ToDoubleOrZero(Heating1.ABSNum_split[n]);
                     Heating1.Calc_Qh_ABS(Num, Power, cop, W_0, count);
                 }
             }
@@ -793,13 +805,13 @@ namespace main
                     Num = airHP[0][0];
                     Heating1.Carrier = airHP[0][1];
                     SupplyType = airHP[0][2];
-                    Pi_nom = Convert.ToDouble(airHP[0][3]) * Convert.ToDouble(Heating1.AirHPNum_split[n]); ; //정격용량
+                    Pi_nom = Program.UTIL.ToDoubleOrZero(airHP[0][3]) * Program.UTIL.ToDoubleOrZero(Heating1.AirHPNum_split[n]); ; //정격용량
                     COP_nom = Rule_nom; //정격COP
                     W_nom = Pi_nom / COP_nom;
-                    Pi_15 = Convert.ToDouble(airHP[0][6]) * Convert.ToDouble(Heating1.AirHPNum_split[n]); //정격용량
+                    Pi_15 = Program.UTIL.ToDoubleOrZero(airHP[0][6]) * Program.UTIL.ToDoubleOrZero(Heating1.AirHPNum_split[n]); //정격용량
                     COP_15 = Rule_15; //정격COP
                     W_15 = Pi_15 / COP_15;
-                    W_0 = Convert.ToDouble(airHP[0][9]);
+                    W_0 = Program.UTIL.ToDoubleOrZero(airHP[0][9]);
                     Heating1.Calc_Q_Air_HP(Num, SupplyType, Pi_nom, COP_nom, W_nom, Pi_15, COP_15, W_15,W_0);
                 }
             }
@@ -919,7 +931,7 @@ namespace main
 
             if(kkk.Length > 0)
             {
-                Rule = Convert.ToDouble(kkk[0][0]);
+                Rule = Program.UTIL.ToDoubleOrZero(kkk[0][0]);
             }
             Cooling1.Cal_feerCorr();
             Cooling1.Cal_fhr_PL();
@@ -929,7 +941,7 @@ namespace main
             string[][] value = Program.DB.getValue(DB.type.BaseDB_Cooling, "저장제어운영계수", "운영계수", " 항목= '" + Cooling1.Sto_Tank + "' And 종류 = '" + Cooling1.Sto_Type + "' And 번호='" + Cooling1.ArtNumber + "'");
             if (value.Length > 0)
             {
-                Cooling1.fSP = Convert.ToDouble(value[0][0]);
+                Cooling1.fSP = Program.UTIL.ToDoubleOrZero(value[0][0]);
             }
             else Cooling1.fSP = 1;
 
@@ -993,12 +1005,12 @@ namespace main
                     String Combi = Value[0][1];
                     dhw1.Carrier = Value[0][2];
                     String Type = Value[0][3];
-                    double Power = Convert.ToDouble(Value[0][4]);
+                    double Power = Program.UTIL.ToDoubleOrZero(Value[0][4]);
                     double eta_Pn = Rule;
                     double eta_Pint = Rule;
-                    double W = Convert.ToDouble(Value[0][7]);
-                    double W_0 = Convert.ToDouble(Value[0][8]);
-                    double count = Convert.ToDouble(dhw1.BoilerNum_split[n]);
+                    double W = Program.UTIL.ToDoubleOrZero(Value[0][7]);
+                    double W_0 = Program.UTIL.ToDoubleOrZero(Value[0][8]);
+                    double count = Program.UTIL.ToDoubleOrZero(dhw1.BoilerNum_split[n]);
                     dhw1.Calc_Qh_gen_Boiler(Num, Combi, Type, Power, eta_Pn, eta_Pint, W, W_0, count);
                 }
             }
@@ -1012,10 +1024,10 @@ namespace main
                 string[][] value = Program.DB.getValue(DB.type.ProjDB, "User_DHWHP", "급탕정격용량,급탕정격COP", "번호='" + dhw1.SelectHP_split[0] + "'");
                 if (value.Length > 0)
                 {
-                    Pi_gen_combi_corr = Convert.ToDouble(value[0][0]);
-                    Pi_gen_sng_corr = Convert.ToDouble(value[0][0]);
-                    COPw_sng_corr = Convert.ToDouble(value[0][1]);
-                    COPw_combi_corr = Convert.ToDouble(value[0][1]);
+                    Pi_gen_combi_corr = Program.UTIL.ToDoubleOrZero(value[0][0]);
+                    Pi_gen_sng_corr = Program.UTIL.ToDoubleOrZero(value[0][0]);
+                    COPw_sng_corr = Program.UTIL.ToDoubleOrZero(value[0][1]);
+                    COPw_combi_corr = Program.UTIL.ToDoubleOrZero(value[0][1]);
                     dhw1.Carrier = "전기";
                     dhw1.Calc_HP(Pi_gen_combi_corr, Pi_gen_sng_corr, COPw_sng_corr, COPw_combi_corr);
                 }
