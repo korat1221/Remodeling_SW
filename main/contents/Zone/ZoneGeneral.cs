@@ -17,6 +17,8 @@ namespace main.contents
         public double theta_i_h_set, theta_i_c_set, Em, VA, VA_we;
         public double OccupancyDensity, OccupancyDensity_Low, OccupancyDensity_Medium, OccupancyDensity_High;
         public String OccupancyDensity_index, EquipIHG_index;
+        public String HumidC_index, HumidH_index;
+        public double HumidC, HumidH; //냉방/난방 설정 절대습도 단위 : g/kg'
         public String ZoneName, BuildingCategory, BuildingUse, Usage, StartTime, EndTime;
         string SelectHRV; string 증축여부;
         static string Layer;
@@ -50,8 +52,19 @@ namespace main.contents
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, EndTime_comboBox, "존일반", "이용일 시작 및 종료시간", "");
             //주간 이용일수 콤보박스 
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, WeekUseDay_comboBox, "존일반", "주간이용일", "4");
-            //기기밀도 콤보박스 
+            //기기밀도 콤보박스
             Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, EquipIHG_comboBox, "존일반", "밀도", "1");
+
+            //냉방/난방 설정 습도등급 콤보박스 (EN 16798-1:2017 표B.16)
+            HumidC_comboBox.Items.Clear();
+            HumidC_comboBox.Items.Add("항온항습");
+            HumidC_comboBox.Items.Add("습도고려");
+            HumidC_comboBox.Items.Add("습도고려안함");
+
+            HumidH_comboBox.Items.Clear();
+            HumidH_comboBox.Items.Add("항온항습");
+            HumidH_comboBox.Items.Add("습도고려");
+            HumidH_comboBox.Items.Add("습도고려안함");
 
 
             Heating_checkBox.Checked = true;
@@ -350,8 +363,8 @@ namespace main.contents
                 string[][] res = Program.DB.getValue(DB.type.BaseDB_HCneed, "주간이용일수", "일수", "이용일수" + " = '" + WeekUseDay_comboBox.SelectedItem.ToString() + "' ");
                 if (res.Length > 0)
                 {
-                    WeekUseDay = Convert.ToDouble(res[0][0].ToString());
-                    AnnualUseDay = Convert.ToDouble(Program.UTIL.GetValue2_BySelectComboBox(WeekUseDay_comboBox, "이용일수", "주간일수", "월='연간'", "이용일수"));
+                    WeekUseDay = Program.UTIL.ToDoubleOrZero(res[0][0].ToString());
+                    AnnualUseDay = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue2_BySelectComboBox(WeekUseDay_comboBox, "이용일수", "주간일수", "월='연간'", "이용일수"));
                     AnnualUseDay_textBox.Text = AnnualUseDay.ToString();
                     Program.UTIL.textBox_doubleComa(AnnualUseDay_textBox, true, 0);
                 }
@@ -373,22 +386,22 @@ namespace main.contents
             DataRowView? Usage_item = Usage_comboBox.SelectedItem as DataRowView;
             if (Usage_item != null)
             {
-                DHWneed_1p = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "급탕요구량"));
-                OccupancyDensity_Low = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "재실밀도낮음"));
-                OccupancyDensity_Medium = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "재실밀도보통"));
-                OccupancyDensity_High = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "재실밀도높음"));
-                PersonIHG_Low = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "인체발열낮음"));
-                PersonIHG_Medium = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "인체발열보통"));
-                PersonIHG_High = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "인체발열높음"));
-                EquipIHG_Low = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "기기발열낮음"));
-                EquipIHG_Medium = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "기기발열보통"));
-                EquipIHG_High = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "기기발열높음"));
-                EquipIHG_Time = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "기기일일이용시간"));
-                theta_i_h_set = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "난방설정온도"));
-                theta_i_c_set = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "냉방설정온도"));
-                Em = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "조도"));
-                VA = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "이용일최소외기도입량"));
-                VA_we = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "비이용일최소외기도입량"));
+                DHWneed_1p = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "급탕요구량"));
+                OccupancyDensity_Low = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "재실밀도낮음"));
+                OccupancyDensity_Medium = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "재실밀도보통"));
+                OccupancyDensity_High = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "재실밀도높음"));
+                PersonIHG_Low = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "인체발열낮음"));
+                PersonIHG_Medium = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "인체발열보통"));
+                PersonIHG_High = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "인체발열높음"));
+                EquipIHG_Low = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "기기발열낮음"));
+                EquipIHG_Medium = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "기기발열보통"));
+                EquipIHG_High = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "기기발열높음"));
+                EquipIHG_Time = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "기기일일이용시간"));
+                theta_i_h_set = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "난방설정온도"));
+                theta_i_c_set = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "냉방설정온도"));
+                Em = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "조도"));
+                VA = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "이용일최소외기도입량"));
+                VA_we = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "비이용일최소외기도입량"));
                 DHWneed_Cal(DHWneed_1p, PersonNum);
                 OccupancyDensity_Cal(PersonNum, NetArea);
                 PersonIHG_Cal(PersonIHG, UseTime);
@@ -504,6 +517,52 @@ namespace main.contents
             }
         }
 
+        private void HumidC_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (HumidC_comboBox.SelectedItem != null)
+            {
+                HumidC_index = HumidC_comboBox.SelectedItem.ToString();
+                HumidC_Cal();
+            }
+        }
+
+        private void HumidH_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (HumidH_comboBox.SelectedItem != null)
+            {
+                HumidH_index = HumidH_comboBox.SelectedItem.ToString();
+                HumidH_Cal();
+            }
+        }
+
+        //냉방 설정 습도등급 선택에 따라 실내 냉방 설정 절대습도 산정 (BaseDB_HCneed.습도설정, EN 16798-1:2017 표B.16 근거, 단위 : g/kg')
+        private void HumidC_Cal()
+        {
+            if (HumidC_index != null)
+            {
+                string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "습도설정", "냉방설정습도", "등급='" + HumidC_index + "'");
+                if (value.Length > 0)
+                {
+                    HumidC = Program.UTIL.ToDoubleOrZero(value[0][0]);
+                    HumidC_textBox.Text = string.Format("{0:F1}", HumidC);
+                }
+            }
+        }
+
+        //난방 설정 습도등급 선택에 따라 실내 난방 설정 절대습도 산정 (BaseDB_HCneed.습도설정, EN 16798-1:2017 표B.16 근거, 단위 : g/kg')
+        private void HumidH_Cal()
+        {
+            if (HumidH_index != null)
+            {
+                string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "습도설정", "난방설정습도", "등급='" + HumidH_index + "'");
+                if (value.Length > 0)
+                {
+                    HumidH = Program.UTIL.ToDoubleOrZero(value[0][0]);
+                    HumidH_textBox.Text = string.Format("{0:F1}", HumidH);
+                }
+            }
+        }
+
         //용도프로필 선택에 따라 급탕 계산
         private void DHWneed_Cal(double DHWneed_1p, double PersonNum)
         {
@@ -566,8 +625,8 @@ namespace main.contents
         private void PersonIHG_Cal(double PersonIHG, double UseTime)
         {
 
-            double 일일이용시간 = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "일일이용시간"));
-            double 사람일일이용시간 = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "사람일일이용시간"));
+            double 일일이용시간 = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "일일이용시간"));
+            double 사람일일이용시간 = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "사람일일이용시간"));
 
             PersonIHG_1day = PersonIHG * UseTime * 사람일일이용시간 / 일일이용시간;
             PersonIHG_textBox.Text = string.Format("{0:F1}", PersonIHG_1day);
@@ -595,8 +654,8 @@ namespace main.contents
                         EquipIHG = EquipIHG_High;
                         break;
                 }
-                double 일일이용시간 = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "일일이용시간"));
-                double 기기일일이용시간 = Convert.ToDouble(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "기기일일이용시간"));
+                double 일일이용시간 = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "일일이용시간"));
+                double 기기일일이용시간 = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "기기일일이용시간"));
                 EquipIHG_1day = EquipIHG * UseTime * 기기일일이용시간 / 일일이용시간;
 
                 EquipIHG_textBox.Text = EquipIHG_1day.ToString();
@@ -777,13 +836,13 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,프로젝트유형,존이름,실제어방식,냉난방유무,환기유무,환기방식," +
                 "용도프로필,천장고,시작시간,종료시간,주이용일,재실자수,기기발열수준," +
                 "일일급탕요구량,냉난방시간,사용시간,공조시간,연이용일수,재실밀도,재실수준,일일인체발열,면적당인체발열,일일기기발열,면적당기기발열," +
-                "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적,선택열회수기,기존존,증축여부",
+                "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적,선택열회수기,기존존,증축여부,냉방습도,난방습도",
             "'" + ZoneNum + "','" + 프로젝트유형[0][0] + "','" + ZoneName + "','" + RoomControl + "','" + HCType + "','" + Ventilation_checkBox.Checked.ToString() + "','" + AHUType + "','"
             + Usage + "','" + CeilingHeight.ToString() + "','" + StartTime + "','" + EndTime + "','" + WeekUseDay.ToString() + "','" + PersonNum + "','" + EquipIHG_index + "','"
             + DHWneed.ToString() + "','" + HCTime.ToString() + "','" + UseTime.ToString() + "','" + AHUTime.ToString() + "','" + AnnualUseDay.ToString() + "','"
             + OccupancyDensity.ToString() + "','" + OccupancyDensity_index + "','" + PersonIHG_1day.ToString() + "','" + PersonIHG.ToString() + "','" + EquipIHG_1day.ToString() + "','" + EquipIHG.ToString() + "','"
             + NetVolume.ToString() + "','" + VentilationRate.ToString() + "','" + Volume_wd.ToString() + "','" + Volume_we.ToString() + "','"
-            + NetArea.ToString() + "','" + SelectHRV + "','" + SelectPreZone_nonsplit + "','" + 증축여부 + "'", "존번호");
+            + NetArea.ToString() + "','" + SelectHRV + "','" + SelectPreZone_nonsplit + "','" + 증축여부 + "','" + HumidC_index + "','" + HumidH_index + "'", "존번호");
 
             Program.DB.saveProject();            
         }
@@ -805,6 +864,10 @@ namespace main.contents
 
             //WeekUseDay_comboBox.SelectedIndex = 3;
             EquipIHG_comboBox.SelectedIndex = 0;
+
+            HumidC = 0; HumidH = 0;
+            HumidC_comboBox.SelectedIndex = 2; //기본값 : 습도고려안함
+            HumidH_comboBox.SelectedIndex = 2; //기본값 : 습도고려안함
 
             CeilingHeight_textBox.Text = "";
             PersonNum_textBox.Text = "";
@@ -852,7 +915,7 @@ namespace main.contents
             String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,실제어방식,냉난방유무,환기유무,환기방식,선택열회수기," +
                 "용도프로필,천장고,시작시간,종료시간,주이용일,재실자수,기기발열수준," +
                 "일일급탕요구량,냉난방시간,사용시간,공조시간,연이용일수,재실밀도,재실수준,일일인체발열,면적당인체발열,일일기기발열,면적당기기발열," +
-                "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적", "존번호 = '" + ZoneNum + "'");
+                "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적,냉방습도,난방습도", "존번호 = '" + ZoneNum + "'");
             if (Value.Length > 0)
             {
                 ZoneName = Value[0][0];
@@ -904,13 +967,23 @@ namespace main.contents
                 }
                 if (Value[0][28] != "")
                 {
-                    NetArea = Convert.ToDouble(Value[0][28]);
+                    NetArea = Program.UTIL.ToDoubleOrZero(Value[0][28]);
                     NetArea_textBox.Text = NetArea.ToString();
                     Program.UTIL.textBox_doubleComa(NetArea_textBox, true, 2);
                 }
+                if (Value[0][29] != "")
+                {
+                    HumidC_index = Value[0][29];
+                    HumidC_comboBox.SelectedItem = HumidC_index;
+                }
+                if (Value[0][30] != "")
+                {
+                    HumidH_index = Value[0][30];
+                    HumidH_comboBox.SelectedItem = HumidH_index;
+                }
                 if (Value[0][7] != "")
                 {
-                    CeilingHeight = Convert.ToDouble(Value[0][7]);
+                    CeilingHeight = Program.UTIL.ToDoubleOrZero(Value[0][7]);
                     CeilingHeight_textBox.Text = CeilingHeight.ToString();
                     Program.UTIL.textBox_doubleComa(CeilingHeight_textBox, true, 2);
                 }
@@ -926,12 +999,12 @@ namespace main.contents
                 }
                 if (Value[0][10] != "")
                 {
-                    WeekUseDay = Convert.ToDouble(Value[0][10]);
+                    WeekUseDay = Program.UTIL.ToDoubleOrZero(Value[0][10]);
                     WeekUseDay_comboBox.SelectedItem = "주 " + WeekUseDay.ToString() + ".0 일 근무";
                 }
                 if (Value[0][11] != "")
                 {
-                    PersonNum = Convert.ToDouble(Value[0][11]);
+                    PersonNum = Program.UTIL.ToDoubleOrZero(Value[0][11]);
                     PersonNum_textBox.Text = PersonNum.ToString();
                     Program.UTIL.textBox_doubleComa(PersonNum_textBox, true, 0);
                 }
@@ -942,36 +1015,36 @@ namespace main.contents
                 }
                 if (Value[0][13] != "")
                 {
-                    DHWneed = Convert.ToDouble(Value[0][13]);
+                    DHWneed = Program.UTIL.ToDoubleOrZero(Value[0][13]);
                     DHWneed_textBox.Text = DHWneed.ToString();
                     Program.UTIL.textBox_doubleComa(DHWneed_textBox, true, 1);
                     DHWneed_image_Label.Text = string.Format("{0:F1}", (DHWneed)) + "kWh/d";
                 }
                 if (Value[0][14] != "")
                 {
-                    HCTime = Convert.ToDouble(Value[0][14]);
+                    HCTime = Program.UTIL.ToDoubleOrZero(Value[0][14]);
                     HCTime_textBox.Text = HCTime.ToString();
                     Program.UTIL.textBox_doubleComa(HCTime_textBox, true, 0);
                 }
                 if (Value[0][15] != "")
                 {
-                    UseTime = Convert.ToDouble(Value[0][15]);
+                    UseTime = Program.UTIL.ToDoubleOrZero(Value[0][15]);
                     UseTime_textBox.Text = UseTime.ToString();
                     Program.UTIL.textBox_doubleComa(UseTime_textBox, true, 0);
                 }
                 if (Value[0][16] != "")
                 {
-                    AHUTime = Convert.ToDouble(Value[0][16]);
+                    AHUTime = Program.UTIL.ToDoubleOrZero(Value[0][16]);
                 }
                 if (Value[0][17] != "")
                 {
-                    AnnualUseDay = Convert.ToDouble(Value[0][17]);
+                    AnnualUseDay = Program.UTIL.ToDoubleOrZero(Value[0][17]);
                     AnnualUseDay_textBox.Text = AnnualUseDay.ToString();
                     Program.UTIL.textBox_doubleComa(AnnualUseDay_textBox, true, 0);
                 }
                 if (Value[0][18] != "")
                 {
-                    OccupancyDensity = Convert.ToDouble(Value[0][18]);
+                    OccupancyDensity = Program.UTIL.ToDoubleOrZero(Value[0][18]);
                     OccupancyDensity_textBox.Text = OccupancyDensity.ToString();
                     Program.UTIL.textBox_doubleComa(OccupancyDensity_textBox, true, 1);
                 }
@@ -982,35 +1055,35 @@ namespace main.contents
                 }
                 if (Value[0][20] != "")
                 {
-                    PersonIHG_1day = Convert.ToDouble(Value[0][20]);
-                    PersonIHG = Convert.ToDouble(Value[0][21]);
+                    PersonIHG_1day = Program.UTIL.ToDoubleOrZero(Value[0][20]);
+                    PersonIHG = Program.UTIL.ToDoubleOrZero(Value[0][21]);
                     PersonIHG_textBox.Text = PersonIHG_1day.ToString();
                     Program.UTIL.textBox_doubleComa(PersonIHG_textBox, true, 1);
                     PersonIHG_image_Label.Text = string.Format("{0:F0}", PersonIHG_1day) + "Wh/m2d";
                 }
                 if (Value[0][22] != "")
                 {
-                    EquipIHG_1day = Convert.ToDouble(Value[0][22]);
-                    EquipIHG = Convert.ToDouble(Value[0][22]);
+                    EquipIHG_1day = Program.UTIL.ToDoubleOrZero(Value[0][22]);
+                    EquipIHG = Program.UTIL.ToDoubleOrZero(Value[0][22]);
                     EquipIHG_textBox.Text = EquipIHG_1day.ToString();
                     Program.UTIL.textBox_doubleComa(EquipIHG_textBox, true, 1);
                     EquipIHG_image_Label.Text = string.Format("{0:F0}", EquipIHG_1day) + "Wh/m2d";
                 }
                 if (Value[0][24] != "")
                 {
-                    NetVolume = Convert.ToDouble(Value[0][24]);
+                    NetVolume = Program.UTIL.ToDoubleOrZero(Value[0][24]);
                     NetVolume_textBox.Text = NetVolume.ToString();
                     Program.UTIL.textBox_doubleComa(NetVolume_textBox, true, 1);
                 }
                 if (Value[0][25] != "")
                 {
-                    VentilationRate = Convert.ToDouble(Value[0][25]);
+                    VentilationRate = Program.UTIL.ToDoubleOrZero(Value[0][25]);
                     VentilationRate_textBox.Text = VentilationRate.ToString();
                     Program.UTIL.textBox_doubleComa(VentilationRate_textBox, true, 1);
                 }
                 if (Value[0][26] != "")
                 {
-                    Volume_wd = Convert.ToDouble(Value[0][26]);
+                    Volume_wd = Program.UTIL.ToDoubleOrZero(Value[0][26]);
                     Volume_wd_textBox.Text = Volume_wd.ToString();
                     Program.UTIL.textBox_doubleComa(Volume_wd_textBox, true, 1);
                     SA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + "m3/h";
@@ -1018,7 +1091,7 @@ namespace main.contents
                 }
                 if (Value[0][27] != "")
                 {
-                    Volume_we = Convert.ToDouble(Value[0][27]);
+                    Volume_we = Program.UTIL.ToDoubleOrZero(Value[0][27]);
                 }
             }
             Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "기존존,증축여부", "존번호 = '" + ZoneNum + "'");
@@ -1206,7 +1279,7 @@ namespace main.contents
                                         {
                                             if (Material[0][0] != "콘크리트")
                                             {
-                                                Wall_d += Convert.ToDouble(Wall_Value[0][2 * k + 6]) / 1000;
+                                                Wall_d += Program.UTIL.ToDoubleOrZero(Wall_Value[0][2 * k + 6]) / 1000;
                                             }
                                             else
                                             {
@@ -1222,20 +1295,20 @@ namespace main.contents
                             }
                             else
                             {
-                                Wall_d = 0.075 + Convert.ToDouble(Wall_Value[0][2]) / 1000; //내단열로 가정함
+                                Wall_d = 0.075 + Program.UTIL.ToDoubleOrZero(Wall_Value[0][2]) / 1000; //내단열로 가정함
                             }
                         }
                         else
                         {
 
-                            // Wall_d = 0.015 + Convert.ToDouble(Wall[j][2]) / 2;
-                            Wall_d = 0.015 + Convert.ToDouble(Wall_Value[0][2]) / 1000;
+                            // Wall_d = 0.015 + Program.UTIL.ToDoubleOrZero(Wall[j][2]) / 2;
+                            Wall_d = 0.015 + Program.UTIL.ToDoubleOrZero(Wall_Value[0][2]) / 1000;
                         }
 
                         double value;
                         if (double.TryParse(Wall[j][0], out value))
                         {
-                            Wall_A = Wall_d * Convert.ToDouble(Wall[j][0]);
+                            Wall_A = Wall_d * Program.UTIL.ToDoubleOrZero(Wall[j][0]);
                             Area_WallInWall += Wall_A;
                         }
                         else
@@ -1243,7 +1316,7 @@ namespace main.contents
                             string[][] floor = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", "바닥면적", "존번호='" + ZoneNum + "'");
                             if (floor.Length > 0)
                             {
-                                NetArea = Convert.ToDouble(floor[0][0]) * 0.85;
+                                NetArea = Program.UTIL.ToDoubleOrZero(floor[0][0]) * 0.85;
                                 goto _goto;
                             }
                         }
@@ -1257,12 +1330,12 @@ namespace main.contents
                     {
                         double InWall_d, InWall_A;
                         InWall_d = 0.05;
-                        InWall_A = InWall_d * Convert.ToDouble(InWall[j][0]);
+                        InWall_A = InWall_d * Program.UTIL.ToDoubleOrZero(InWall[j][0]);
                         Area_WallInWall += InWall_A;
                     }
                 }
 
-                NetArea = Convert.ToDouble(General_3D[0][2]) - Area_WallInWall;
+                NetArea = Program.UTIL.ToDoubleOrZero(General_3D[0][2]) - Area_WallInWall;
 
             _goto:
                 NetArea_textBox.Text = string.Format("{0:F2}", NetArea);
@@ -1286,7 +1359,7 @@ namespace main.contents
                     {
                         if (Envelope_3D[i][0] == ConstructionType[k])
                         {
-                            Construction_AreaSum[k] += Convert.ToDouble(Envelope_3D[i][1]);
+                            Construction_AreaSum[k] += Program.UTIL.ToDoubleOrZero(Envelope_3D[i][1]);
                         }
                     }
                 }
