@@ -2522,7 +2522,7 @@ namespace main.contents
                 }
                 if (User_Value[0][2] != null&& User_Value[0][2]!="")
                 {
-                    PipeIns_Lamda = Convert.ToDouble(User_Value[0][2].ToString());
+                    PipeIns_Lamda = Program.UTIL.ToDoubleOrZero(User_Value[0][2].ToString());
                     lamda_textBox.Text = User_Value[0][2].ToString();
                 }
                
@@ -4408,7 +4408,7 @@ namespace main.contents
             if (result == DialogResult.OK)
             {
                 PipeIns = InsDB_form.Select[1];
-                PipeIns_Lamda = Convert.ToDouble(InsDB_form.Select[4]);
+                PipeIns_Lamda = Program.UTIL.ToDoubleOrZero(InsDB_form.Select[4]);
             }
             insul_textBox.Text = PipeIns;
             lamda_textBox.Text = PipeIns_Lamda.ToString("0.000");
