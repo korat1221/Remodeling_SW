@@ -1,29 +1,32 @@
-﻿using System.Collections;
+using System;
+using System.Collections;
 
 namespace main
 {
     internal class AHU
     {
         public String AHUNum, AHUOptions;
-        double[] theta_e = new double[12], RelativeHumidity = new double[12], X_e = new double[12];
-        double[] theta_e_min = new double[12], theta_e_max = new double[12], theta_e_std = new double[12];
-        double X_i_max, X_i_min;
-        public double[] X_iset = new double[12];
+        double[] theta_e = new double[12], X_e = new double[12];
+        double[] theta_e_hr = new double[8760], X_e_hr = new double[8760];
         //덕트
         double OALength, EALength, SALength, RALength, DuctDiameter, DuctInsulationThickness, DuctInsulationConductivity;
         //공조기장비일람표
         string AHU_Type, AHU_HRVType;
-        double[] AHU_eta_temp = new double[2], AHU_eta_all = new double[2], AHU_eta_humidity = new double[2];
-        double AHU_Cooling_Power, AHU_Cooling_in_drytemp, AHU_Cooling_in_webtemp, AHU_Cooling_out_drytemp, AHU_Cooling_out_webtemp, AHU_Heating_Power, AHU_Heating_in_temp, AHU_Heating_out_temp;
-        string AHU_HU_Type, AHU_HU_Control,AHU_HU_HULevel;
-        double AHU_HU_Volume;
-        double AHU_SA_Volume, AHU_EA_Volume, AHU_SA_Pressure, AHU_EA_Pressure, AHU_SA_FanPower, AHU_EA_FanPower, AHU_SA_FanEta, AHU_EA_FanEta;
-        string AHU_MotorControl;
+        double[] eta_temp = new double[2], eta_all = new double[2], eta_humi = new double[2];
+        double Phi_c_coil, theta_c_coil_in, theta_c_coil_in_web, theta_c_coil_out, theta_c_coil_out_web, Phi_h_coil, theta_h_coil_in, theta_h_coil_out;
+        double chi_c_coil_in, chi_c_coil_out; // χc,coil,in / χc,coil,out — 스펙상 입력값
+        string HU_Type, HU_Control,HU_HULevel;
+        double HU_Volume;
+        double AHU_SA_Volume, AHU_EA_Volume, SA_Pressure, EA_Pressure, SA_FanPower, EA_FanPower;
+        double eta_fan; // η_fan — 팬 유효 효율(급배기 공용, User_AHU/User_HRV의 "팬효율" 컬럼)
+        double chi_fan; // χ — 팬제어계수(Annex C.5-4, MotorControl 기준 조회)
+        string MotorControl;
         //공조기일반정보
         public string AHULocation;
         string AHULeakageLevel, AHUVolumeControl, DuctLeakageLevel;
         double AHUInsulationThickness;
         public double flea_du, flea_ahu, fins_ahu;
+        double f_flow_ctrl; // f_flow,ctrl — 공조기 제어계수(Annex C.5-3, AHUVolumeControl 기준 조회)
         //예열예냉
         public double theta_defrost;
         public double[] dtheta_prh = new double[12];
@@ -31,57 +34,82 @@ namespace main
         double CooltubeDiameter, CooltubeLength, GroundDepth, CooltubeThicknessh;
         double PrehPower;
         public double fdefrost_ctrl;
+        double dP_preh; // ΔP_preh — 예열기 유형에 따른 압력차(Annex C.5-2, PrehPrecOptions 기준 조회) [Pa]
         //존정보
         public ArrayList SelectZone_split = new ArrayList();
-        public double Vmin_tot, ANF_tot, Qc_a_tot, Qh_a_tot, tvmech_avg;
-        public double[] dvmechmth_avg = new double[12];
+        public double Vmin_tot, ANF_tot, Qc_a_tot, Qh_a_tot;
+        public double[] tvmech_avg = new double[2];
+        public double[,] dvmechmth_avg = new double[2, 12];
         public double[,] Qb_mth_tot = new double[2, 12];
-        public double[] theta_iset_avg = new double[2], Qmax_tot = new double[2];
+        public double[] QDHU_mth_tot = new double[12]; //존 제습에너지요구량 합산 (기술서 3.3.1 VAV 냉방풍량식 분자용)
+        public double[] theta_i_set = new double[2], Qmax_tot = new double[2];
+        public double X_i_max, X_i_min;
+        public double[] X_i_set = new double[2];
+        public double[,] X_i = new double[2,12]; // χi,c — 월별 실내 절대습도(Part2, ZoneDHU.x_int_a 월평균 가중)
         //계산 :  난방/냉방,월
-        public double[,] theta_vmech = new double[2, 12], Vvmech = new double[2, 12], Vvmech_leak = new double[2, 12];
+        public double[,] theta_vmech = new double[2, 12], Vvmech = new double[2, 12];
 
-        public double[] Q_gnd = new double[12]; // 쿨튜브 
+        public double[] Q_gnd = new double[12]; // 쿨튜브
         public double[] Wpreh_k = new double[12]; //프리히팅
-        public double[] theta_SA_prh = new double[12]; // 쿨튜브 or 프리히팅 
+        public double[] theta_SA_prh = new double[12]; // 쿨튜브 or 프리히팅
 
         public double[,] dtheta_du_OA = new double[2, 12], theta_OA_du = new double[2, 12], Q_loss_OA_du = new double[2, 12]; //OA 덕트 열손실
         public double[,] dtheta_du_RA = new double[2, 12], theta_RA_du = new double[2, 12], Q_loss_RA_du = new double[2, 12]; //RA 덕트 열손실
         public double[,] dtheta_du_EA = new double[2, 12], Q_loss_EA_du = new double[2, 12];//EA 덕트 열손실
         public double[,] dtheta_du_SA = new double[2, 12], theta_SA_du = new double[2, 12], Q_loss_SA_du = new double[2, 12]; //SA 덕트 열손실
         public double[,] theta_sur_nc = new double[2, 12];
-        public double[] Hduct_OA = new double[12], Hduct_EA = new double[12];
-        public double[] Hduct_SA = new double[12], Hduct_RA = new double[12];
+        public double[,] Hduct_OA = new double[2, 12], Hduct_EA = new double[2, 12];
+        public double[,] Hduct_SA = new double[2, 12], Hduct_RA = new double[2, 12];
         double Fx;
 
         public double[,] dtheta_hr = new double[2, 12], theta_SA_hr = new double[2, 12], theta_EA_hr = new double[2, 12]; //열회수기
         public double[,] dtheta_rca = new double[2, 12], theta_SA_rca = new double[2,12]; //재순환
 
         public double[,] Qv_b = new double[2, 12]; public double[] Qhu_b = new double[12];
-        public double[] X_SA_prh = new double[12], X_SA_hr = new double[12], X_SA_rca = new double[12];
+        public double[,] Q_ce = new double[2, 12]; // 8.1/8.2 공조 공급 열손실
+        public double[,] Qstar_b = new double[2, 12]; // 8.1/8.2 공조 에너지요구량 (Qh*,b/Qc*,b)
+        public double[] X_SA_prh = new double[12], X_SA_rca = new double[12];
+        public double[,] X_SA_hr = new double[2, 12];
+        public double[] X_vmech = new double[12]; // χv,mech — 3.2.3/3.3.2 급기 절대습도
 
         public double[] Ev_gen_fan_SA = new double[12], Ev_gen_fan_EA = new double[12], fpl_HU = new double[12], W_HU_aux = new double[12], Wv_aux_preh = new double[12];
+
+
+        double ca = 0.000279; // 공기비열 [kWh/(kg·K)]
+        double rhoA = 1.204; // 공기밀도 [kg/m3]
+        double rw = 0.680; // 증발잠열 [kWh/kg]
+
 
         public AHU(String AHUNum)
         {
             this.AHUNum = AHUNum;
-            string[][] Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
-            if (Location.Length > 0)
+        }
+        public void Load_Climate()
+        {
+            string[][] loc = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
+            if (loc.Length == 0) { return; }
+            string location = loc[0][0];
+
+            string[][] hourlyT = Program.DB.getValue(DB.type.BaseDB_RESystem, "시간별기후데이터", "건구온도", "지역='" + location + "' ORDER BY 월, 일, 시;");
+            string[][] hourlyRH = Program.DB.getValue(DB.type.BaseDB_RESystem, "시간별기후데이터", "상대습도", "지역='" + location + "' ORDER BY 월, 일, 시;");
+            for (int t = 0; t < hourlyT.Length; t++)
             {
-                for (int mth = 1; mth < 13; mth++)
+                double T = Program.UTIL.ToDoubleOrZero(hourlyT[t][0]);
+                double RH = Program.UTIL.ToDoubleOrZero(hourlyRH[t][0]) / 100;
+                theta_e_hr[t] = T;
+                X_e_hr[t] = 0.622 * (611.2 * Math.Pow(Math.E, 17.62 * T / (243.12 + T)) * RH) / (101325 - (611.2 * Math.Pow(Math.E, 17.62 * T / (243.12 + T))) * RH);
+            }
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                string[][] monthAvg = Program.DB.getValue(DB.type.BaseDB_RESystem, "시간별기후데이터", "AVG(건구온도),AVG(상대습도)", "지역='" + location + "' AND 월=" + (mth + 1));
+                if (monthAvg.Length > 0)
                 {
-                    string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_온도습도", "온도,상대습도,최소온도,최대온도,표준편차", "지역명 ='" + Location[0][0] + "'And 기간 = '" + mth + "월'");
-                    if (Value.Length > 0)
-                    {
-                        theta_e[mth - 1] = Convert.ToDouble(Value[0][0]);
-                        RelativeHumidity[mth - 1] = Convert.ToDouble(Value[0][1]);
-                        X_e[mth - 1] = 0.622 * (611.2 * Math.Pow(Math.E, 17.62 * theta_e[mth -1] / (243.12 + theta_e[mth - 1])) * RelativeHumidity[mth - 1]) / (101325 - (611.2 * Math.Pow(Math.E, 17.62 * theta_e[mth - 1] / (243.12 + theta_e[mth - 1]))) * RelativeHumidity[mth - 1]);
-                        theta_e_min[mth - 1] = Convert.ToDouble(Value[0][2]);
-                        theta_e_max[mth - 1] = Convert.ToDouble(Value[0][3]);
-                        theta_e_std[mth - 1] = Convert.ToDouble(Value[0][4]);
-                    }
+                    theta_e[mth] = Program.UTIL.ToDoubleOrZero(monthAvg[0][0]);
+                    double rh = Program.UTIL.ToDoubleOrZero(monthAvg[0][1]) / 100;
+                    X_e[mth] = 0.622 * (611.2 * Math.Pow(Math.E, 17.62 * theta_e[mth] / (243.12 + theta_e[mth])) * rh) / (101325 - (611.2 * Math.Pow(Math.E, 17.62 * theta_e[mth] / (243.12 + theta_e[mth]))) * rh);
                 }
             }
-           
         }
         public void Load_ZoneData(string ProjNum)
         {
@@ -102,51 +130,102 @@ namespace main
 
           for (int n = 0; n < SelectZone_split.Count; n++)
                 {
-                    string[][] ZoneValue = Program.DB.getValue(ProjNum, "ZoneGeneral_form", "용도프로필,이용일환기량,순바닥면적,공조시간", "존번호='" + SelectZone_split[n] + "'");
+                    string[][] ZoneValue = Program.DB.getValue(ProjNum, "ZoneGeneral_form", "용도프로필,이용일환기량,순바닥면적,공조시간,냉방습도,난방습도", "존번호='" + SelectZone_split[n] + "'");
                     if (ZoneValue.Length > 0)
                     {
-                        Vmin_tot += Convert.ToDouble(ZoneValue[0][1]);
-                        ANF_tot += Convert.ToDouble(ZoneValue[0][2]);
+                        Vmin_tot += Program.UTIL.ToDoubleOrZero(ZoneValue[0][1]);
+                        ANF_tot += Program.UTIL.ToDoubleOrZero(ZoneValue[0][2]);
                         Zone zone = Program.CALC.getZone(SelectZone_split[n].ToString());
                         Qh_a_tot += zone.Qb_a[0];
                         Qc_a_tot += zone.Qb_a[1];
-                        Qmax_tot[0] += zone.Q_max[0];
-                        Qmax_tot[1] += zone.Q_max[1];
-                        tvmech_avg += Convert.ToDouble(ZoneValue[0][3]) * zone.Qb_a[1];
+                        Qmax_tot[0] += zone.Q_max[0] /1000;
+                        Qmax_tot[1] += zone.Q_max[1] /1000;
+                        tvmech_avg[0] += Program.UTIL.ToDoubleOrZero(ZoneValue[0][3]) * zone.Qb_a[0];
+                        tvmech_avg[1] += Program.UTIL.ToDoubleOrZero(ZoneValue[0][3]) * zone.Qb_a[1];
                         for (int mth = 0; mth < 12; mth++)
                     {
                         Qb_mth_tot[0, mth] += zone.Qb_mth[0, mth];
                         Qb_mth_tot[1, mth] += zone.Qb_mth[1, mth];
-                        dvmechmth_avg[mth] += zone.dwd_mth[mth] * zone.Qb_a[1];
+                        QDHU_mth_tot[mth] += zone.Q_DHU_tot[mth];
+                        dvmechmth_avg[0, mth] += zone.dwd_mth[mth] * zone.Qb_a[0];
+                        dvmechmth_avg[1, mth] += zone.dwd_mth[mth] * zone.Qb_a[1];
                     }
                         string[][] Usage = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "난방설정온도,냉방설정온도,공조운전시부재율,공조냉방부분운전계수", "용도명='" + ZoneValue[0][0] + "'");
                         if (Usage.Length > 0)
                         {
-                            theta_iset_avg[0] += Convert.ToDouble(Usage[0][0]) * zone.Qb_a[0];
-                            theta_iset_avg[1] += Convert.ToDouble(Usage[0][1]) * zone.Qb_a[1];
+                            theta_i_set[0] += Program.UTIL.ToDoubleOrZero(Usage[0][0]) * zone.Qb_a[0];
+                            theta_i_set[1] += Program.UTIL.ToDoubleOrZero(Usage[0][1]) * zone.Qb_a[1];
+                        }
+                        string[][] HumidC = Program.DB.getValue(DB.type.BaseDB_HCneed, "습도설정", "냉방설정습도", "등급='" + ZoneValue[0][4] + "'");
+                        if (HumidC.Length > 0)
+                        {
+                            X_i_max += Program.UTIL.ToDoubleOrZero(HumidC[0][0]) / 1000 * zone.Qb_a[1];
+                        }
+                        string[][] HumidH = Program.DB.getValue(DB.type.BaseDB_HCneed, "습도설정", "난방설정습도", "등급='" + ZoneValue[0][5] + "'");
+                        if (HumidH.Length > 0)
+                        {
+                            X_i_min += Program.UTIL.ToDoubleOrZero(HumidH[0][0]) / 1000 * zone.Qb_a[0];
+                        }
+
+                        // χi,c(월별 실내 절대습도) — ZoneDHU에서 미리 집계한 값(냉방/제습 트랙)을 존 가중평균
+                        ZoneDHU zoneDHU = Program.CALC.getZoneDHU(SelectZone_split[n].ToString());
+                        if (zoneDHU != null)
+                        {
+                            for (int mth = 0; mth < 12; mth++)
+                            {
+                                X_i[0,mth] += zoneDHU.X_i[0, mth] * zone.Qb_a[0];
+                                X_i[1,mth] += zoneDHU.X_i[1, mth] * zone.Qb_a[1];
+
+                            }
                         }
                     }
                 }
-                theta_iset_avg[0] = theta_iset_avg[0] / Qh_a_tot;
-                theta_iset_avg[1] = theta_iset_avg[1] / Qc_a_tot;
-                tvmech_avg = tvmech_avg / Qc_a_tot;
+                theta_i_set[0] = Qh_a_tot > 0 ? theta_i_set[0] / Qh_a_tot : 0;
+                theta_i_set[1] = Qc_a_tot > 0 ? theta_i_set[1] / Qc_a_tot : 0;
+                tvmech_avg[0] = Qh_a_tot > 0 ? tvmech_avg[0] / Qh_a_tot : 0;
+                tvmech_avg[1] = Qc_a_tot > 0 ? tvmech_avg[1] / Qc_a_tot : 0;
+                X_i_max = Qc_a_tot > 0 ? X_i_max / Qc_a_tot : 0;
+                X_i_min = Qh_a_tot > 0 ? X_i_min / Qh_a_tot : 0;
+                X_i_set[1] = X_i_max;
+                X_i_set[0] = X_i_min;
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    dvmechmth_avg[mth] = dvmechmth_avg[mth] / Qc_a_tot;
+                    dvmechmth_avg[0, mth] = Qh_a_tot > 0 ? dvmechmth_avg[0, mth] / Qh_a_tot : 0;
+                    dvmechmth_avg[1, mth] = Qc_a_tot > 0 ? dvmechmth_avg[1, mth] / Qc_a_tot : 0;
+                    X_i[0,mth] = Qh_a_tot > 0 ? X_i[0,mth] / Qh_a_tot : 0;
+                    X_i[1, mth] = Qc_a_tot > 0 ? X_i[1, mth] / Qc_a_tot : 0;
+            }
+
+
+        }
+        // AHUZoneVent_Form 기준, 이 설비(AHUNum)에 연결된 모든 존의 급기량/배기량 합계로 실제
+        // 운전풍량을 산정 — 카탈로그 정격값 대신 실측 배분량 사용. 이 폼 입력은 이제 필수이므로
+        // 데이터가 없을 때의 폴백은 두지 않음.
+        private void Load_ZoneVentVolume(string ProjNum)
+        {
+            double saSum = 0, eaSum = 0;
+            for (int n = 0; n < SelectZone_split.Count; n++)
+            {
+                string[][] Value = Program.DB.getValue(ProjNum, "AHUZoneVent_Form", "급기량,배기량", "설비 = '" + AHUNum + "' And 존 = '" + SelectZone_split[n] + "'");
+                if (Value.Length > 0)
+                {
+                    saSum += Program.UTIL.ToDoubleOrZero(Value[0][0]);
+                    eaSum += Program.UTIL.ToDoubleOrZero(Value[0][1]);
                 }
-            
-           
+            }
+            AHU_SA_Volume = saSum;
+            AHU_EA_Volume = eaSum;
         }
         public void Load_GeneralData(string ProjNum)
         {
             string[][] Value = Program.DB.getValue(ProjNum, "AHUSystem_form", "유형,설치위치,누기등급2,풍량제어,공조기단열두께,덕트누기수준", "번호='" + AHUNum + "'");
             if (Value.Length > 0)
             {
-                
+
                 AHULocation = Value[0][1];
                 AHULeakageLevel = Value[0][2];
                 AHUVolumeControl = Value[0][3];
-                AHUInsulationThickness = Convert.ToDouble(Value[0][4]);
+                AHUInsulationThickness = Program.UTIL.ToDoubleOrZero(Value[0][4]);
                 DuctLeakageLevel = Value[0][5];
 
                 if (AHULocation == "단열외피 내부") { Fx = 0.1; }
@@ -156,24 +235,29 @@ namespace main
                 {
                     for (int hc = 0; hc < 2; hc++)
                     {
-                        theta_sur_nc[hc, mth] = theta_iset_avg[hc] - Fx * (theta_iset_avg[hc] - theta_e[mth]);
+                        theta_sur_nc[hc, mth] = theta_i_set[hc] - Fx * (theta_i_set[hc] - theta_e[mth]);
                     }
                 }
 
                 string[][] Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "덕트누기계수", "계수", "건물유형='" + DuctLeakageLevel + "'");
                 if (Value2.Length > 0)
                 {
-                    flea_du = Convert.ToDouble(Value2[0][0]);
+                    flea_du = Program.UTIL.ToDoubleOrZero(Value2[0][0]);
                 }
                 Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "공조기누기계수", "계수", "누기율등급='" + AHULeakageLevel + "'");
                 if (Value2.Length > 0)
                 {
-                    flea_ahu = Convert.ToDouble(Value2[0][0]);
+                    flea_ahu = Program.UTIL.ToDoubleOrZero(Value2[0][0]);
                 }
                 Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "공조기단열계수", "계수", "단열두께 ='" + AHUInsulationThickness.ToString() + "'");
                 if (Value2.Length > 0)
                 {
-                    fins_ahu = Convert.ToDouble(Value2[0][0]);
+                    fins_ahu = Program.UTIL.ToDoubleOrZero(Value2[0][0]);
+                }
+                Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "풍량제어계수", "계수", "제어유형1='" + AHUVolumeControl + "'");
+                if (Value2.Length > 0)
+                {
+                    f_flow_ctrl = Program.UTIL.ToDoubleOrZero(Value2[0][0]);
                 }
             }
 
@@ -181,131 +265,87 @@ namespace main
         }
         public void Load_AHUData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(ProjNum, "User_AHU", "공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기제어유형,가습기습도수준,가습기용량,급기풍량,배기풍량,급기정압,배기정압,급기팬동력,배기팬동력,모터제어", "번호 = '" + AHUNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "User_AHU", "공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기제어유형,가습기습도수준,가습기용량,급기풍량,배기풍량,급기정압,배기정압,급기팬동력,배기팬동력,모터제어,팬효율", "번호 = '" + AHUNum + "'");
             if (Value.Length > 0)
             {
                 AHU_Type = Value[0][0];
                 AHU_HRVType = Value[0][1];
-                AHU_eta_temp[1] = Convert.ToDouble(Value[0][2]);
-                AHU_eta_temp[0] = Convert.ToDouble(Value[0][3]);
-                AHU_eta_all[1] = Convert.ToDouble(Value[0][4]);
-                AHU_eta_all[0] = Convert.ToDouble(Value[0][5]);
-                AHU_eta_humidity[1] = Convert.ToDouble(Value[0][6]);
-                AHU_eta_humidity[0] = Convert.ToDouble(Value[0][7]);
-                AHU_Cooling_Power = Convert.ToDouble(Value[0][8]);
-                AHU_Cooling_in_drytemp = Convert.ToDouble(Value[0][9]);
-                AHU_Cooling_in_webtemp = Convert.ToDouble(Value[0][10]);
-                AHU_Cooling_out_drytemp = Convert.ToDouble(Value[0][11]);
-                AHU_Cooling_out_webtemp = Convert.ToDouble(Value[0][12]);
-                AHU_Heating_Power = Convert.ToDouble(Value[0][13]);
-                AHU_Heating_in_temp = Convert.ToDouble(Value[0][14]);
-                AHU_Heating_out_temp = Convert.ToDouble(Value[0][15]);
+                eta_temp[1] = Program.UTIL.ToDoubleOrZero(Value[0][2]) / 100;
+                eta_temp[0] = Program.UTIL.ToDoubleOrZero(Value[0][3]) / 100;
+                eta_all[1] = Program.UTIL.ToDoubleOrZero(Value[0][4]) / 100;
+                eta_all[0] = Program.UTIL.ToDoubleOrZero(Value[0][5]) / 100;
+                eta_humi[1] = Program.UTIL.ToDoubleOrZero(Value[0][6]) / 100;
+                eta_humi[0] = Program.UTIL.ToDoubleOrZero(Value[0][7]) / 100;
+                Phi_c_coil = Program.UTIL.ToDoubleOrZero(Value[0][8]);
+                theta_c_coil_in = Program.UTIL.ToDoubleOrZero(Value[0][9]);
+                theta_c_coil_in_web = Program.UTIL.ToDoubleOrZero(Value[0][10]);
+                theta_c_coil_out = Program.UTIL.ToDoubleOrZero(Value[0][11]);
+                theta_c_coil_out_web = Program.UTIL.ToDoubleOrZero(Value[0][12]);
+                Phi_h_coil = Program.UTIL.ToDoubleOrZero(Value[0][13]);
+                theta_h_coil_in = Program.UTIL.ToDoubleOrZero(Value[0][14]);
+                theta_h_coil_out = Program.UTIL.ToDoubleOrZero(Value[0][15]);
 
-                AHU_HU_Type = Value[0][16];
-                AHU_HU_Control = Value[0][17];
-                AHU_HU_HULevel = Value[0][18];
-                if (Value[0][19] != null && Value[0][19] != "")
-                {
-                    AHU_HU_Volume = Convert.ToDouble(Value[0][19]);
-                }
-                else AHU_HU_Volume = 0;
+                HU_Type = Value[0][16];
+                HU_Control = Value[0][17];
+                HU_HULevel = Value[0][18];
+                HU_Volume = Program.UTIL.ToDoubleOrZero(Value[0][19]);
 
-                AHU_SA_Volume = Convert.ToDouble(Value[0][20]);
-                AHU_EA_Volume = Convert.ToDouble(Value[0][21]);
-                AHU_SA_Pressure = Convert.ToDouble(Value[0][22]);
-                AHU_EA_Pressure = Convert.ToDouble(Value[0][23]);
-                AHU_SA_FanPower = Convert.ToDouble(Value[0][24]);
-                AHU_EA_FanPower = Convert.ToDouble(Value[0][25]);
-                AHU_SA_FanEta = AHU_SA_Volume / 3600 * AHU_SA_Pressure / AHU_SA_FanPower /1000 ;
-                AHU_EA_FanEta = AHU_EA_Volume / 3600 * AHU_EA_Pressure / AHU_EA_FanPower /1000;
-                AHU_MotorControl = Value[0][26];
+                Load_ZoneVentVolume(ProjNum);
+                SA_Pressure = Program.UTIL.ToDoubleOrZero(Value[0][22]);
+                EA_Pressure = Program.UTIL.ToDoubleOrZero(Value[0][23]);
+                SA_FanPower = Program.UTIL.ToDoubleOrZero(Value[0][24]);
+                EA_FanPower = Program.UTIL.ToDoubleOrZero(Value[0][25]);
+                MotorControl = Value[0][26];
+                eta_fan = Program.UTIL.ToDoubleOrZero(Value[0][27]);
             }
             string[][] Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "결빙방지온도", "결빙방지온도", "열회수기유형='" + AHU_HRVType+ "' And 건물유형 ='비주거건물'");
             if (Value2.Length > 0)
-            { theta_defrost = Convert.ToDouble(Value2[0][0]); }
-
-            Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "실내설정습도", "제습기준습도", "구분='" + AHU_HU_HULevel + "'");
+            { theta_defrost = Program.UTIL.ToDoubleOrZero(Value2[0][0]); }
+            Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "팬모터제어계수", "계수", "제어유형='" + MotorControl + "'");
             if (Value2.Length > 0)
-            { X_i_max = Convert.ToDouble(Value2[0][0])/1000; }
-            Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "실내설정습도", "가습기준습도", "구분='" + AHU_HU_HULevel + "'");
-            if (Value2.Length > 0)
-            { X_i_min = Convert.ToDouble(Value2[0][0]) / 1000; }
-            for(int mth = 0; mth < 12; mth++)
-            {
-                if (X_i_min >= X_e[mth])
-                { X_iset[mth] = X_i_min; }
-                else if (X_i_max <= X_e[mth])
-                { X_iset[mth] = X_i_max; }
-                else { X_iset[mth] = X_e[mth]; }
-            }
+            { chi_fan = Program.UTIL.ToDoubleOrZero(Value2[0][0]); }
         }
         public void Load_HRVData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(ProjNum, "User_HRV", "열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,팬풍량,팬동력,모터제어", "번호 = '" + AHUNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "User_HRV", "열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,팬풍량,팬동력,모터제어,팬효율", "번호 = '" + AHUNum + "'");
             if (Value.Length > 0)
             {
                 AHU_HRVType = Value[0][0];
-                AHU_eta_temp[1] = Convert.ToDouble(Value[0][1]);
-                AHU_eta_temp[0] = Convert.ToDouble(Value[0][2]);
-                AHU_eta_all[1] = Convert.ToDouble(Value[0][3]);
-                AHU_eta_all[0] = Convert.ToDouble(Value[0][4]);
-                AHU_eta_humidity[1] = Convert.ToDouble(Value[0][5]);
-                AHU_eta_humidity[0] = Convert.ToDouble(Value[0][6]);
-                AHU_SA_Volume = Convert.ToDouble(Value[0][7]);
-                AHU_EA_Volume = Convert.ToDouble(Value[0][7]);
-                AHU_SA_FanPower = Convert.ToDouble(Value[0][8]) / 2 / 1000;
-                AHU_EA_FanPower = Convert.ToDouble(Value[0][8]) / 2 / 1000;
-                AHU_SA_FanEta = 0.35;
-                AHU_EA_FanEta = 0.35;
-                AHU_MotorControl = Value[0][9];
+                eta_temp[1] = Program.UTIL.ToDoubleOrZero(Value[0][1]) / 100;
+                eta_temp[0] = Program.UTIL.ToDoubleOrZero(Value[0][2]) / 100;
+                eta_all[1] = Program.UTIL.ToDoubleOrZero(Value[0][3]) / 100;
+                eta_all[0] = Program.UTIL.ToDoubleOrZero(Value[0][4]) / 100;
+                eta_humi[1] = Program.UTIL.ToDoubleOrZero(Value[0][5]) / 100;
+                eta_humi[0] = Program.UTIL.ToDoubleOrZero(Value[0][6]) / 100;
+                Load_ZoneVentVolume(ProjNum);
+                SA_FanPower = Program.UTIL.ToDoubleOrZero(Value[0][8]) / 2 / 1000;
+                EA_FanPower = Program.UTIL.ToDoubleOrZero(Value[0][8]) / 2 / 1000;
+                MotorControl = Value[0][9];
+                eta_fan = Program.UTIL.ToDoubleOrZero(Value[0][10]);
             }
             string[][] Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "결빙방지온도", "결빙방지온도", "열회수기유형='" + AHU_HRVType + "' And 건물유형 ='비주거건물'");
             if (Value2.Length > 0)
-            { theta_defrost = Convert.ToDouble(Value2[0][0]); }
-
-            Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "실내설정습도", "제습기준습도", "구분='습도고려안함'");
+            { theta_defrost = Program.UTIL.ToDoubleOrZero(Value2[0][0]); }
+            Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "팬모터제어계수", "계수", "제어유형='" + MotorControl + "'");
             if (Value2.Length > 0)
-            { X_i_max = Convert.ToDouble(Value2[0][0]) / 1000; }
-            Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "실내설정습도", "가습기준습도", "구분='습도고려안함'");
-            if (Value2.Length > 0)
-            { X_i_min = Convert.ToDouble(Value2[0][0]) / 1000; }
-            for (int mth = 0; mth < 12; mth++)
-            {
-                if (X_i_min >= X_e[mth])
-                { X_iset[mth] = X_i_min; }
-                else if (X_i_max <= X_e[mth])
-                { X_iset[mth] = X_i_max; }
-                else { X_iset[mth] = X_e[mth]; }
-            }
+            { chi_fan = Program.UTIL.ToDoubleOrZero(Value2[0][0]); }
         }
-       
+
         public void Load_DuctData(string ProjNum)
         {
             string[][] Value = Program.DB.getValue(ProjNum, "AHUSystem_form", "OA덕트길이,EA덕트길이,SA덕트길이,RA덕트길이,덕트단열두께,덕트관경,덕트단열재,덕트단열재열전도율", "번호='" + AHUNum + "'");
             if (Value.Length > 0)
             {
-                if (Value[0][0]!= "")
-                { OALength = Convert.ToDouble(Value[0][0]); }
-                else { OALength = 0; }
-
-                if (Value[0][1] != "")
-                { EALength = Convert.ToDouble(Value[0][1]); }
-                else { EALength = 0; }
-
-                if (Value[0][2] != "")
-                { SALength = Convert.ToDouble(Value[0][2]); }
-                else { SALength = 0; }
-
-                if (Value[0][3] != "")
-                { RALength = Convert.ToDouble(Value[0][3]); }
-                else { RALength = 0; }
-
-                DuctInsulationThickness = Convert.ToDouble(Value[0][4]);
-                DuctDiameter = Convert.ToDouble(Value[0][5]);
-                DuctInsulationConductivity = Convert.ToDouble(Value[0][7]);
+                OALength = Program.UTIL.ToDoubleOrZero(Value[0][0]);
+                EALength = Program.UTIL.ToDoubleOrZero(Value[0][1]);
+                SALength = Program.UTIL.ToDoubleOrZero(Value[0][2]);
+                RALength = Program.UTIL.ToDoubleOrZero(Value[0][3]);
+                DuctInsulationThickness = Program.UTIL.ToDoubleOrZero(Value[0][4]);
+                DuctDiameter = Program.UTIL.ToDoubleOrZero(Value[0][5]);
+                DuctInsulationConductivity = Program.UTIL.ToDoubleOrZero(Value[0][7]);
             }
         }
-        public void Load_PrehPrecData(string ProjNum)
+        public void Load_PrehData(string ProjNum)
         {
             string[][] Value = Program.DB.getValue(ProjNum, "AHUSystem_form", "예열예냉유형,프리히터제어유형,프리히터용량,토양유형,지중깊이,쿨튜브관경,쿨튜브두께,쿨튜브길이,쿨튜브재질", "번호='" + AHUNum + "'");
             if(Value.Length > 0)
@@ -314,46 +354,349 @@ namespace main
                 if (Value[0][0] == "프리히터")
                 {
                     PrehControlOptions = Value[0][1];
-                    PrehPower = Convert.ToDouble(Value[0][2]);
+                    PrehPower = Program.UTIL.ToDoubleOrZero(Value[0][2]);
                     string[][] Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "예열기제어계수", "계수", "제어유형='" + PrehControlOptions + "'");
                     if (Value2.Length > 0)
                     {
-                        fdefrost_ctrl = Convert.ToDouble(Value2[0][0]);
-                    }                    
+                        fdefrost_ctrl = Program.UTIL.ToDoubleOrZero(Value2[0][0]);
+                    }
                 }
-                else if (Value[0][0] == "쿨튜브")
-                {                    
-                    GroundOptions = Value[0][3]; //토양유형
-                    GroundDepth = Convert.ToDouble(Value[0][4]); //지중깊이
-                    CooltubeDiameter = Convert.ToDouble(Value[0][5])/2; //쿨튜브 반지름
-                    CooltubeThicknessh = Convert.ToDouble(Value[0][6]); //쿨튜브두께
-                    CooltubeLength = Convert.ToDouble(Value[0][7]); //쿨튜브길이
-                    CooltubeMaterial = Value[0][8]; //쿨튜브재질
+                string[][] Value3 = Program.DB.getValue(DB.type.BaseDB_AHU, "예열기압력손실차", "압력손실차", "유형='" + PrehPrecOptions + "'");
+                if (Value3.Length > 0)
+                {
+                    dP_preh = Program.UTIL.ToDoubleOrZero(Value3[0][0]);
+                }
+            }
+        }
+       
+
+        public void Cal_SASet()
+        {
+            // 3.1.1 급기 난방/냉방 출력 [kW] — ΔT[K]·ca[kWh/(kg·K)]·ρa[kg/m3]·V[m3/h] = kWh/h = kW
+            double phi_h_coil = (theta_h_coil_out - theta_h_coil_in) * ca * rhoA * AHU_SA_Volume;
+            double phi_c_coil = (theta_c_coil_in - theta_c_coil_out) * ca * rhoA * AHU_SA_Volume;
+
+            // 3.1.2 냉·난방 기준 급기온도
+            double theta_h_SA_ref = theta_i_set[0] + phi_h_coil / (ca * rhoA * AHU_SA_Volume);
+            double theta_c_SA_ref = theta_i_set[1] - phi_c_coil / (ca * rhoA * AHU_SA_Volume);
+
+            // 3.1.3 냉방 기준 급기습도 — χi,c,set - [Vmax·ρa·rw·(χc,coil,in-χc,coil,out)] / [Vmax·ρa·rw]
+            double X_c_SA_ref = X_i_set[1] - (AHU_SA_Volume * rhoA * rw * (chi_c_coil_in - chi_c_coil_out)) / (AHU_SA_Volume * rhoA * rw);
+
+            bool isVAV = AHUOptions == "공조기" && AHU_Type == "변풍량";
+            bool isCAV = AHUOptions == "공조기" && !isVAV;
+
+            if (isCAV) // 3.2.1 정풍량 급기풍량
+            {
+                // ② 난방 순급기풍량(CAV), ⑫ 냉방 순급기풍량(CAV)
+                double vh_mech_cav = Math.Max(Vmin_tot, Qmax_tot[0]  / (ca * rhoA * (theta_h_SA_ref - theta_i_set[0])));
+                double vc_mech_cav = Math.Max(Vmin_tot, Qmax_tot[1]  / (ca * rhoA * (theta_i_set[1] - theta_c_SA_ref) + rhoA * rw * (X_i_set[1] - X_c_SA_ref)));
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    // ① 난방 급기풍량, ⑪ 냉방 급기풍량 — 누기계수 반영
+                    Vvmech[0, mth] = vh_mech_cav * flea_ahu * flea_du;
+                    Vvmech[1, mth] = vc_mech_cav * flea_ahu * flea_du;
+
+                    // 3.2.2 정풍량 급기온도 — 고정풍량 기준으로 월별 부하에 맞춰 급기온도가 변함
+                    if (Vvmech[0, mth] > 0)
+                    { theta_vmech[0, mth] = Qb_mth_tot[0, mth] / (ca * rhoA * Vvmech[0, mth] * tvmech_avg[0] * dvmechmth_avg[0, mth]) + theta_i_set[0]; }
+
+                    if (Vvmech[1, mth] > 0)
+                    { theta_vmech[1, mth] = theta_i_set[1] - Qb_mth_tot[1, mth] / (ca * rhoA * Vvmech[1, mth] * tvmech_avg[1] * dvmechmth_avg[1, mth]); }
+
+                    // 3.2.3 정풍량 급기습도 — χv,mech = χi,c − QDHU,b,mth/(Vv,mech·ρa·rw·tv,mech)
+                    if (Vvmech[1, mth] > 0)
+                    { X_vmech[mth] = X_i[1, mth] - QDHU_mth_tot[mth] / (Vvmech[1, mth] * rhoA * rw * tvmech_avg[1] * dvmechmth_avg[1, mth]); }
+                }
+            }
+            else if (isVAV) // 3.3.1 변풍량 급기풍량
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    // ② 난방 순급기풍량(VAV), ⑬ 냉방 순급기풍량(VAV)
+                    double v_vh_mech_vav = Math.Max(Vmin_tot, Qb_mth_tot[0, mth] / (ca * rhoA * (theta_h_SA_ref - theta_i_set[0]) * tvmech_avg[0] * dvmechmth_avg[0, mth]));
+                    double v_vc_mech_vav = Math.Max(Vmin_tot, (Qb_mth_tot[1, mth] + QDHU_mth_tot[mth]) / ((ca * rhoA * (theta_i_set[1] - theta_c_SA_ref) + rhoA * rw * (X_i_set[1] - X_c_SA_ref)) * tvmech_avg[1] * dvmechmth_avg[1, mth]));
+                    // ① 난방 급기풍량, ⑫ 냉방 급기풍량 — 누기계수 반영
+                    Vvmech[0, mth] = v_vh_mech_vav * flea_ahu * flea_du;
+                    Vvmech[1, mth] = v_vc_mech_vav * flea_ahu * flea_du;
+                }
+                // 3.3.2 변풍량 급기온도 및 습도 — θv,h,mech=θh,SA,ref, θv,c,mech=θc,SA,ref, χv,c,mech=χc,SA,ref
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    theta_vmech[0, mth] = theta_h_SA_ref;
+                    theta_vmech[1, mth] = theta_c_SA_ref;
+                    X_vmech[mth] = X_c_SA_ref;
+                }
+            }
+            else // 열회수기 — 급기풍량은 실제 급기설정풍량(AHU_SA_Volume) 고정 (스펙 미기재, 코일 없어 부하기반 산정 불가)
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    Vvmech[0, mth] = AHU_SA_Volume * flea_ahu * flea_du;
+                    Vvmech[1, mth] = AHU_SA_Volume * flea_ahu * flea_du;
+                }
+            }
+        }
+        public void Cal_Duct()
+        {
+            for (int hc = 0; hc < 2; hc++)
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    Hduct_OA[hc, mth] = Hduct_k(OALength, Vmin_tot, theta_e[mth]);
+                    Hduct_EA[hc, mth] = Hduct_k(EALength, Vmin_tot, theta_e[mth]);
+                    Hduct_RA[hc, mth] = Hduct_k(RALength, Vvmech[hc, mth], theta_e[mth]);
+                    Hduct_SA[hc, mth] = Hduct_k(SALength, Vvmech[hc, mth], theta_e[mth]);
+                }
+            }
+        }
+       
+        public double Hduct_k(double L_du, double V_ck, double theta_e)
+        {
+            // 4.1 구간별(OA/EA/RA/SA) 덕트 열전달계수 H_du,k [W/K] — EN 16798-5-1:2017 <식 C.5>
+            double d_du = DuctDiameter / 1000;
+            double d_insul = d_du + DuctInsulationThickness / 1000;
+
+            if (L_du <= 0 || V_ck <= 0) { return 0; }
+
+            // ⑥ 덕트 내부풍속 [m/s] — 관 단면적(π/4·d_du²) 기준
+            double V_du = (V_ck / 3600) / (Math.PI / 4 * Math.Pow(d_du, 2));
+
+            // ④ 관내측 표면열전달율 [W/(m2·K)]
+            double h_i = (4.13 + 0.23 * (theta_e/ 100) - 0.0077 * Math.Pow(theta_e / 100, 2)) * Math.Pow(V_du, 0.75) / Math.Pow(d_du, 0.25);
+
+            // ⑩⑪ 관외측 표면열전달율 — h_c=5, h_e=h_c·π·d_insul (기술서 원문)
+            double h_c = 5;
+            double h_e = h_c * Math.PI * d_insul;
+
+            // ③ 덕트 열저항 [(m2·K)/W]
+            double R_du = 1 / h_i + (1 / (2 * Math.PI)) * (1 / DuctInsulationConductivity) * Math.Log(d_insul / d_du) + 1 / h_e;
+
+            // ② 덕트 열관류율, ⑫ 덕트설치면적, ① 덕트 열전달계수
+            double U_du = 1 / R_du;
+            double A_du = 2 * Math.PI * d_insul * L_du;
+            return U_du * A_du;
+        }
+
+        // ⑮ 구간별 덕트 온도차
+        public double dtheta_du_k(double theta_vk, double theta_surnc, double H_duct, double V_vk)
+        {
+            double dtheta_du = (theta_vk - theta_surnc) * (1 - Math.Exp(-H_duct / (rhoA * ca * V_vk)));
+            return dtheta_du;
+        }
+        // ㉕ 구간별 덕트 열손실
+        public double Qls_du_k(double V_vk, double dtheta_du, double t_vmech)
+        {
+            double Qls_du = rhoA * ca * V_vk * dtheta_du * t_vmech;
+            return Qls_du;
+        }
+
+        public void Cal_DuctLoss_OA()
+        {
+            for (int hc = 0; hc < 2; hc++)
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+
+                    dtheta_du_OA[hc, mth] = dtheta_du_k(theta_e[mth], theta_sur_nc[hc, mth], Hduct_OA[hc, mth], Vmin_tot);
+
+                    // ⑭ 덕트 출구 온도
+                    theta_OA_du[hc, mth] = theta_e[mth] + dtheta_du_OA[hc, mth];
+
+                    Q_loss_OA_du[hc, mth] = Qls_du_k(Vmin_tot, dtheta_du_OA[hc, mth], tvmech_avg[hc] * dvmechmth_avg[hc, mth]);
+                }
+            }
+        }
+
+
+        public void Cal_Preheating()
+        {
+            for (int mth = 0; mth < 12; mth++)
+            {
+                double theta_OA_preh = theta_OA_du[0, mth];
+
+                if (PrehPrecOptions == "프리히터")
+                {
+                    int hourStart = ZoneDHU.MonthStartHour[mth];
+                    int hourEnd = mth < 11 ? ZoneDHU.MonthStartHour[mth + 1] : 8760;
+                    double sum = 0;
+                    int count = 0;
+                    for (int h = hourStart; h < hourEnd; h++)
+                    {
+                        if (theta_e_hr[h] < theta_defrost)
+                        {
+                            sum += theta_e_hr[h];
+                            count++;
+                        }
+                    }
+
+                    if (count > 0)
+                    {
+                        // ④ 예열기 가동시 월평균 온도
+                        double theta_e_preh_mth = sum / count;
+
+                        // ② 예열기 상승온도
+                        dtheta_prh[mth] = theta_defrost - theta_e_preh_mth;
+                    }
+                    else
+                    {
+                        dtheta_prh[mth] = 0;
+                    }
                 }
                 else
                 {
-
+                    dtheta_prh[mth] = 0;
                 }
-            }            
+
+                // ① 예열기 출구 온도
+                theta_SA_prh[mth] = theta_OA_preh + dtheta_prh[mth];
+            }
         }
-        public void Cal_Coil()
+       
+        public void Cal_DuctLoss_RA()
         {
-            double 냉각코일_입구_상대습도 = (AHU_Cooling_in_webtemp + 5.809 - 0.697 * AHU_Cooling_in_drytemp) / ((0.058 + 0.003 * AHU_Cooling_in_drytemp) * 100);
-            double 냉각코일_출구_상대습도 = (AHU_Cooling_out_webtemp + 5.809 - 0.697 * AHU_Cooling_out_drytemp) / ((0.058 + 0.003 * AHU_Cooling_out_drytemp) * 100);
+            for (int hc = 0; hc < 2; hc++)
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    dtheta_du_RA[hc, mth] = dtheta_du_k(theta_i_set[hc], theta_sur_nc[hc, mth], Hduct_RA[hc, mth], Vvmech[hc, mth]);
 
-            double 냉각코일_입구_절대습도 = 0.622 * (611.2 * Math.Pow(Math.E, 17.62 * AHU_Cooling_in_drytemp / (243.12 + AHU_Cooling_in_drytemp))) * 냉각코일_입구_상대습도 / (101325 - (611.2 * Math.Pow(Math.E, 17.62 * AHU_Cooling_in_drytemp / (243.12 + AHU_Cooling_in_drytemp))) * 냉각코일_입구_상대습도);
-            double 냉각코일_입구_엔탈피 = 1.006 * AHU_Cooling_in_drytemp + 냉각코일_입구_절대습도 * (2500 + 1.86 * AHU_Cooling_in_drytemp);
+                    // ⑭ 덕트 출구 온도
+                    theta_RA_du[hc, mth] = theta_i_set[hc] + dtheta_du_RA[hc, mth];
 
-            double 냉각코일_출구_절대습도 = 0.622 * (611.2 * Math.Pow(Math.E, 17.62 * AHU_Cooling_out_drytemp / (243.12 + AHU_Cooling_out_drytemp))) * 냉각코일_출구_상대습도 / (101325 - (611.2 * Math.Pow(Math.E, 17.62 * AHU_Cooling_out_drytemp / (243.12 + AHU_Cooling_out_drytemp))) * 냉각코일_출구_상대습도);
-            double 냉각코일_출구_엔탈피 = 1.006 * AHU_Cooling_out_drytemp + 냉각코일_출구_절대습도 * (2500 + 1.86 * AHU_Cooling_out_drytemp);
+                    Q_loss_RA_du[hc, mth] = Qls_du_k(Vvmech[hc, mth], dtheta_du_RA[hc, mth], tvmech_avg[hc] * dvmechmth_avg[hc, mth]);
+                }
+            }
+        }
+        public void Cal_HeatRecovery()
+        {
+            for (int hc = 0; hc < 2; hc++)
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    // ③ 열회수 후 온도차
+                    dtheta_hr[hc, mth] = (eta_temp[hc] - (flea_ahu - 1) - fins_ahu) * (theta_RA_du[hc, mth] - theta_SA_prh[mth]);
 
-            double 계산된_냉방출력 = (냉각코일_입구_엔탈피 - 냉각코일_출구_엔탈피) * 1.204 * AHU_SA_Volume / 3600;
-            double 계산된_난방출력 = (AHU_Heating_out_temp - AHU_Heating_in_temp) * 0.34 * AHU_SA_Volume / 3600;
+                    // ① 열회수 후 급기 온도
+                    theta_SA_hr[hc, mth] = theta_SA_prh[mth] + dtheta_hr[hc, mth];
 
+                    // ② 열회수 후 배기 온도
+                    theta_EA_hr[hc, mth] = theta_RA_du[hc, mth] - dtheta_hr[hc, mth];
+
+                    // ⑨ 열회수 후 급기 습도 — χRA=χi,h/c,set(X_i_set[hc]), ηhr=습도교환효율(보정 없음)
+                    X_SA_hr[hc, mth] = X_e[mth] + eta_humi[hc] * (X_i_set[hc] - X_e[mth]);
+                }
+            }
+        }
+        public void Cal_DuctLoss_EA()
+        {
+            for (int hc = 0; hc < 2; hc++)
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    dtheta_du_EA[hc, mth] = dtheta_du_k(theta_EA_hr[hc, mth], theta_sur_nc[hc, mth], Hduct_EA[hc, mth], Vmin_tot);
+
+                    Q_loss_EA_du[hc, mth] = Qls_du_k(Vmin_tot, dtheta_du_EA[hc, mth], tvmech_avg[hc] * dvmechmth_avg[hc, mth]);
+                }
+            }
+        }
+        public void Cal_DuctLoss_SA()
+        {
+            for (int hc = 0; hc < 2; hc++)
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    dtheta_du_SA[hc, mth] = dtheta_du_k(theta_vmech[hc, mth], theta_sur_nc[hc, mth], Hduct_SA[hc, mth], Vvmech[hc, mth]);
+
+                    // ⑭ 덕트 출구 온도
+                    theta_SA_du[hc, mth] = theta_vmech[hc, mth] + dtheta_du_SA[hc, mth];
+
+                    Q_loss_SA_du[hc, mth] = Qls_du_k(Vvmech[hc, mth], dtheta_du_SA[hc, mth], tvmech_avg[hc] * dvmechmth_avg[hc, mth]);
+                }
+            }
+        }
+        public void Cal_Qv_b()
+        {
+            // Qvh,b/Qvc,b(공조 순 냉난방 에너지요구량, Part 2 참조) — Cal_HCneed.cs의 존 열수지 계산이
+            // 이미 AHU.theta_SA_hr(덕트/예열/열회수 보정된 급기온도)를 반영해서 만든 값이라 그대로 씀
+            for (int hc = 0; hc < 2; hc++)
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    Qv_b[hc, mth] = Qb_mth_tot[hc, mth];
+                }
+            }
+        }
+        public void Cal_CoilLoss()
+        {
+            for (int mth = 0; mth < 12; mth++)
+            {
+                // 8.1 ④⑤ 공조 난방 공급 열손실 — 코일 공급 열손실 계수 0.9
+                Q_ce[0, mth] = (1 - 0.9) * Qv_b[0, mth];
+
+                // 8.2 ⑨⑩ 공조 냉방 공급 열손실 — 코일 공급 열손실 계수 1(냉방은 0으로 산정)
+                Q_ce[1, mth] = (1 - 1) * Qv_b[1, mth];
+            }
+        }
+        public void Cal_Qstar_b()
+        {
+            for (int hc = 0; hc < 2; hc++)
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    // 덕트열전달량 — 단열외피 내부: EA 구간만, 그 외(단열외피 외부/외기): SA 구간만
+                    double Q_d = AHULocation == "단열외피 내부" ? Q_loss_EA_du[hc, mth] : Q_loss_SA_du[hc, mth];
+
+                    // 8.1 Qh*,b = Qvh,b+Qvh,d+Qvh,ce / 8.2 Qc*,b = Qvc,b+Qvc,d+Qvc,ce+Q_DHU
+                    Qstar_b[hc, mth] = Qv_b[hc, mth] + Q_d + Q_ce[hc, mth] + (hc == 1 ? QDHU_mth_tot[mth] : 0);
+                }
+            }
+        }
+        public void Cal_HU()
+        {
+
+        }
+        public void Cal_W()
+        {
+            for (int mth = 0; mth < 12; mth++)
+            {
+                // Wv,d 자체엔 hc 구분이 없어서, 그 달 급기풍량이 더 큰 쪽(hc)을 대표값으로 씀
+                int hc = Vvmech[1, mth] >= Vvmech[0, mth] ? 1 : 0;
+
+                // ⑦t_v,op,d·⑪d_wd — 공조기 가동시간[h]×월별 이용일수[d] (다른 월별 계산과 동일하게 tvmech_avg×dvmechmth_avg로 산정)
+                double t_v_op_d = tvmech_avg[hc] * dvmechmth_avg[hc, mth];
+
+                // ⑥V_j,d — 급기(SUP): 그 달 대표 hc의 실제 급기풍량, 배기(ETA): 최소외기도입량(열회수 후 실외로 배기되는 신선외기 상당분)
+                double V_SUP_d = Vvmech[hc, mth];
+                double V_ETA_d = Vmin_tot;
+
+                // ②SPI — 풍량 당 팬 소비전력
+                double SPI_SUP = AHU_SA_Volume > 0 ? SA_FanPower / AHU_SA_Volume : 0;
+                double SPI_ETA = AHU_EA_Volume > 0 ? EA_FanPower / AHU_EA_Volume : 0;
+
+                // ⑧2.78e-7·ΔP_preh/η_fan — η_fan 미입력(0)이면 보정 없이 SPI만 적용
+                double dP_term = eta_fan > 0 ? 2.78e-7 * dP_preh / eta_fan : 0;
+
+                // ①Wv,d = V_j,d·(SPI+2.78e-7·ΔP_preh/η_fan)·f_flow,ctrl^χ·d_wd·t_v,op,d , j=SUP(급기),ETA(배기)
+                Ev_gen_fan_SA[mth] = V_SUP_d * (SPI_SUP + dP_term) * Math.Pow(f_flow_ctrl, chi_fan) * t_v_op_d;
+                Ev_gen_fan_EA[mth] = V_ETA_d * (SPI_ETA + dP_term) * Math.Pow(f_flow_ctrl, chi_fan) * t_v_op_d;
+            }
         }
 
         public void Cal_CoolTube()
         {
+
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_form", "예열예냉유형,프리히터제어유형,프리히터용량,토양유형,지중깊이,쿨튜브관경,쿨튜브두께,쿨튜브길이,쿨튜브재질", "번호='" + AHUNum + "' and 예열예냉유형 ='쿨튜브'");
+            if (Value.Length > 0)
+            {
+                GroundOptions = Value[0][3]; //토양유형
+                GroundDepth = Program.UTIL.ToDoubleOrZero(Value[0][4]); //지중깊이
+                CooltubeDiameter = Program.UTIL.ToDoubleOrZero(Value[0][5]) / 2; //쿨튜브 반지름
+                CooltubeThicknessh = Program.UTIL.ToDoubleOrZero(Value[0][6]); //쿨튜브두께
+                CooltubeLength = Program.UTIL.ToDoubleOrZero(Value[0][7]); //쿨튜브길이
+                CooltubeMaterial = Value[0][8]; //쿨튜브재질
+            }
+
             if (PrehPrecOptions == "쿨튜브")
             {
                 double[] dmth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
@@ -371,32 +714,32 @@ namespace main
 
                 string[][] ground = Program.DB.getValue(DB.type.BaseDB_AHU, "토양특성", "열전도율,밀도,비열", "토양유형='" + GroundOptions + "'");
 
-                double Gound_conductivity = Convert.ToDouble(ground[0][0].ToString()); //토양열전도율
-                double Ground_density = Convert.ToDouble(ground[0][1].ToString());  //토양밀도
-                double Ground_C = Convert.ToDouble(ground[0][2].ToString()); //토양비열
+                double Gound_conductivity = Program.UTIL.ToDoubleOrZero(ground[0][0].ToString()); //토양열전도율
+                double Ground_density = Program.UTIL.ToDoubleOrZero(ground[0][1].ToString());  //토양밀도
+                double Ground_C = Program.UTIL.ToDoubleOrZero(ground[0][2].ToString()); //토양비열
 
                 double Ground_factor = GroundDepth * Math.Sqrt(Math.PI * Ground_density * Ground_C / (Gound_conductivity * 8760 * 3600));
                 double ft = Math.PI * (2 * tan[11] / 8760 + 1);
 
                 string[][] tube = Program.DB.getValue(DB.type.BaseDB_AHU, "쿨튜브열전도율", "열전도율", "재질 ='" + CooltubeMaterial + "'");
-                double CooltubeConductivity = Convert.ToDouble(tube[0][0].ToString()); //쿨튜브열전도율
+                double CooltubeConductivity = Program.UTIL.ToDoubleOrZero(tube[0][0].ToString()); //쿨튜브열전도율
 
                 double Vdu = Vmin_tot / 3600 / (Math.PI * Math.Pow(CooltubeDiameter / 1000, 2));
                 double As = 2 * Math.PI * CooltubeDiameter / 1000 * CooltubeLength; //쿨튜브 외표 면적
                 double[] theta_gnd = new double[12], hi = new double[12], Udu = new double[12];
                 double[] Pp_oa_gnd = new double[12], X_gnd = new double[12], XOA_gnd = new double[12], dX_gnd = new double[12];
-                
+
                 for (int mth = 0; mth < 12; mth++)
                 {
                     //지중온도 = 연평균온도+(월중최대온도-연평균온도)x지중특성값xcos(2pix연중 매달 시간-지중특성값 - 특성겂)
                     theta_gnd[mth] = theta_e_mn_an + (theta_e_max_an - theta_e_mn_an) * Math.Pow(Math.E, -Ground_factor) * Math.Cos(2 * Math.PI * tan[mth] / 8760 - Ground_factor - ft);
                     hi[mth] = (4.13 + 0.23 * theta_e[mth] / 100 - 0.0077 * Math.Pow((theta_e[mth] / 100), 2)) * Math.Pow(Vdu, 0.75) / Math.Pow(2 * (CooltubeDiameter - CooltubeThicknessh), 0.25);
-                    
+
                     Udu[mth] = 1 / (1 / (2 * Math.PI) * 1 / CooltubeConductivity * Math.Log((CooltubeDiameter / 1000) / ((CooltubeDiameter - CooltubeThicknessh) / 1000)) + 1 / hi[mth]);
 
                     dtheta_prh[mth] = (theta_gnd[mth] - theta_e[mth]) * (1 - Math.Pow(Math.E, -(Udu[mth] * As / (Vmin_tot * 0.34)))); //지중열교환후 온도차
 
-                    theta_SA_prh[mth] = theta_e[mth] + dtheta_prh[mth]; //열교환후 온도 
+                    theta_SA_prh[mth] = theta_e[mth] + dtheta_prh[mth]; //열교환후 온도
 
                     Pp_oa_gnd[mth] = 611.2 * Math.Pow(Math.E, 17.62 * theta_SA_prh[mth] / (243.12 + theta_SA_prh[mth])); //열교환후 수증기압
                     X_gnd[mth] = 0.622 * Pp_oa_gnd[mth] / (101325 - Pp_oa_gnd[mth]); // 열교환후 온도에 대해 100%포화상태로 가정한 절대습도(kg/kg')
@@ -405,11 +748,11 @@ namespace main
                     dX_gnd[mth] = X_e[mth] - XOA_gnd[mth]; //열교환후 절대습도차
                     X_SA_prh[mth] = X_e[mth] + dX_gnd[mth]; //가습없이 제습으로만 작동함
 
-                    Q_gnd[mth] = 0.34 * Vmin_tot * dtheta_prh[mth] * tvmech_avg * dvmechmth_avg[mth] / 1000; //예열기를 통한 열획득량, 예냉기를 통한 열손실량
+                    Q_gnd[mth] = 0.34 * Vmin_tot * dtheta_prh[mth] * tvmech_avg[1] * dvmechmth_avg[1, mth] / 1000; //예열기를 통한 열획득량, 예냉기를 통한 열손실량 (기존 냉방가중치 그대로 유지)
                 }
-            
+
             }
-            else 
+            else
             {
                 for (int mth = 0; mth < 12; mth++)
                 {
@@ -419,584 +762,6 @@ namespace main
                 }
             }
 
-        }
-        public void Cal_Preheating()
-        {
-            //theta_e_min : 최소온도, theta_e_max: 최대온도, theta_e_std: 표준편차
-
-            int totnum = Math.Max(0,(int)Math.Ceiling(theta_defrost - theta_e_min.Min()));
-            int[] tem = new int[totnum];
-            for(int i=0; i<tem.Length ; i++)
-            {
-                tem[i] = (int)theta_e_min.Min() + i ; 
-            }
-            
-            double[,] Bin = new double[tem.Length, 12];
-
-            for (int mth = 0; mth < 12; mth++)
-            {
-                for (int k = 0; k < tem.Length -1; k++)
-                {
-                    double theta_1 = tem[k];
-                    double theta_2 = tem[k+1];
-                    if (theta_defrost < theta_e_min[mth])
-                    {
-                        Bin[k, mth] = 0;
-                    }
-                    else //NORM.DIST (해당온도+1, 평균온도, 표준편차)-NORM.DIST (해당온도, 평균온도, 표준편차) x 가동시간 x (결빙방지온도 - 해당온도)
-                    {
-                        Bin[k, mth] = Math.Max(0, (NORM_DIST(theta_2, theta_e[mth], theta_e_std[mth]) - NORM_DIST(theta_1, theta_e[mth], theta_e_std[mth])) * dvmechmth_avg[mth] * tvmech_avg * (theta_defrost - theta_1));
-                    }
-                }
-            }
-            double Ppreh_default = 0.34 * Vmin_tot * (theta_defrost - (theta_e_min.Min()));
-            double[] Gpreh_t_mth = new double[12];
-            double[] top_preh_mth = new double[12];
-            double[] dtheta_pre_max_k = new double[12];
-            if (PrehPrecOptions == "프리히터")
-            {
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    for (int k = 0; k < Convert.ToInt32(theta_defrost) - Convert.ToInt32(theta_e_min.Min()) + 1; k++)
-                    {
-                        Gpreh_t_mth[mth] += Bin[k, mth]; //결빙방지 난방도시
-                    }
-                    
-                    top_preh_mth[mth] = Math.Max(NORM_DIST(theta_defrost, theta_e[mth], theta_e_std[mth]) * tvmech_avg * dvmechmth_avg[mth], 0);//결빙방지 가동시간
-
-                    dtheta_pre_max_k[mth] = Gpreh_t_mth[mth] / top_preh_mth[mth]; //월최대상승온도
-
-                    if (double.IsNaN(dtheta_pre_max_k[mth])) { dtheta_pre_max_k[mth] = 0; } 
-
-                    dtheta_prh[mth] = Math.Min(dtheta_pre_max_k[mth], PrehPower / Ppreh_default * dtheta_pre_max_k[mth]); //프리히터고려 월평균상승온도
-                    theta_SA_prh[mth] = theta_e[mth] + dtheta_prh[mth]; //프리히터반영 외기온도
-                    Wpreh_k[mth] = 0.34 * Vmin_tot * dtheta_prh[mth] * top_preh_mth[mth] / 1000 * fdefrost_ctrl; 
-                }
-            }
-
-        }
-        private double NORM_DIST(double X, double M, double sigma)
-        {
-            double zValue = (X - M) / sigma;
-            const double b1 = 0.319381530;
-            const double b2 = -0.356563782;
-            const double b3 = 1.781477937;
-            const double b4 = -1.821255978;
-            const double b5 = 1.330274429;
-            const double p = 0.2316419;
-            const double c = 0.39894228;
-
-            if (zValue >= 0.0)
-            {
-                double t = 1.0 / (1.0 + p * zValue);
-                return (1.0 - c * Math.Exp(-zValue * zValue / 2.0) * t * (t * (t * (t * (t * b5 + b4) + b3) + b2) + b1));
-            }
-            else
-            {
-                double t = 1.0 / (1.0 - p * zValue);
-                return (c * Math.Exp(-zValue * zValue / 2.0) * t * (t * (t * (t * (t * b5 + b4) + b3) + b2) + b1));
-            }
-        }
-        public void Cal_Duct()
-        {
-            //덕트열전달계수 계산 
-            double Duct_R = Math.Log(((DuctDiameter / 2 + DuctInsulationThickness) / 1000) / (DuctDiameter / 2 / 1000), Math.E) / 2 / Math.PI / DuctInsulationConductivity; //덕트열저항
-            double He = 5 + 0.15 * 5.67 / 100000000 * 4 * 1000; //외표면열전달율
-            double Re = 1 / (He * 2 * Math.PI * (DuctDiameter / 2 + DuctInsulationThickness) / 1000); //외표면열전달저항
-            double v = AHU_SA_Volume / Math.Pow(Math.PI * (DuctDiameter / 2 / 1000), 2) / 3600;
-
-            double[] Ri = new double[12], Uduct = new double[12];
-
-            for (int mth = 0; mth < 12; mth++)
-            {
-                Ri[mth] = 1 / ((4.13 + 0.23 * theta_e[mth] / 100 - 0.0077 * Math.Pow((theta_e[mth] / 100), 2)) * Math.Pow(v, 0.75) / Math.Pow((DuctDiameter / 1000), 0.25)); //내표면열전달저항
-                Uduct[mth] = 1 / (Duct_R + Re + Ri[mth]);
-                Hduct_OA[mth] = OALength * Uduct[mth] * 2 * Math.PI * DuctDiameter / 2 / 1000;
-                Hduct_EA[mth] = EALength * Uduct[mth] * 2 * Math.PI * DuctDiameter / 2 / 1000;
-                Hduct_SA[mth] = SALength * Uduct[mth] * 2 * Math.PI * DuctDiameter / 2 / 1000;
-                Hduct_RA[mth] = RALength * Uduct[mth] * 2 * Math.PI * DuctDiameter / 2 / 1000;
-            }
-        }
-        public void Cal_DuctLoss_OA()
-        {
-            //단열외피안
-            if(AHULocation == "단열외피 내부") //OA덕트 열손실 발생됨
-            {
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    for (int hc = 0; hc < 2; hc++)
-                    {
-                        if (Hduct_OA[mth] > 0)
-                        {
-
-                            if (hc == 0)//난방시
-                            {
-                                dtheta_du_OA[hc, mth] = Math.Max(0, (theta_sur_nc[hc, mth] - theta_SA_prh[mth]) * (1 - Math.Pow(Math.E, -(Hduct_OA[mth]) / (0.34 * Vmin_tot)))); //실내온도-덕트온도: 실내 열손실을 덕트에 반영함
-                            }
-                            else if (hc == 1)//냉방시
-                            {
-                                dtheta_du_OA[hc, mth] = Math.Max(0, (theta_sur_nc[hc, mth]- theta_SA_prh[mth]) * (1 - Math.Pow(Math.E, -(Hduct_OA[mth]) / (0.34 * Vmin_tot)))); //실내온도-덕트온도: 덕트 열획득에 의한 손실을 반영함
-                            }
-
-                            if (Qb_mth_tot[hc, mth] == 0)
-                            {
-                                Q_loss_OA_du[hc, mth] = 0;
-                            }
-                            else
-                            {
-                                Q_loss_OA_du[hc, mth] = Math.Max(0, 0.34 * Vmin_tot * dtheta_du_OA[0, mth] * tvmech_avg * dvmechmth_avg[mth] / 1000);
-                            }
-                             
-                        }
-                        theta_OA_du[hc, mth] = theta_SA_prh[mth] + dtheta_du_OA[hc, mth];
-                    }
-                }
-            }
-            else //외기 및 단열외피 밖 //OA덕트 열손실 없음, 단 온도는 바뀜
-            {
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    for (int hc = 0; hc < 2; hc++)
-                    {
-                        if (Hduct_OA[mth] > 0)
-                        {
-                            dtheta_du_OA[hc, mth] = 0;
-                            Q_loss_OA_du[hc, mth] = 0;
-                        }
-                        theta_OA_du[hc, mth] = theta_SA_prh[mth] + dtheta_du_OA[hc, mth];
-                    }
-                }
-            }
-        }
-        public void Cal_DuctLoss_RA()
-        {
-            for (int mth = 0; mth < 12; mth++)
-            {
-                for (int hc = 0; hc < 2; hc++)
-                {
-                    if (Hduct_RA[mth] > 0)
-                    {
-                        dtheta_du_RA[hc, mth] = (theta_sur_nc[0, mth] - theta_iset_avg[hc]) * (1 - Math.Pow(Math.E, -(Hduct_RA[mth]) / (0.34 * Vmin_tot)));
-                    }
-                    theta_RA_du[hc, mth] = (1 / flea_du * (theta_iset_avg[hc]) + (flea_du - 1) / flea_du * theta_sur_nc[0, mth]) + dtheta_du_RA[0, mth];
-                }
-            }
-        }
-
-        public void Cal_DuctLoss_RA_loss()
-        {
-            if (AHULocation == "단열외피 내부")
-            {
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    for (int hc = 0; hc < 2; hc++)
-                    {
-                        if (Hduct_RA[mth] > 0)
-                        {
-                            dtheta_du_RA[hc, mth] = 0;
-                            Q_loss_RA_du[hc, mth] = 0;
-                        }
-                        theta_RA_du[hc, mth] = (1 / flea_du * (theta_iset_avg[hc]) + (flea_du - 1) / flea_du * theta_sur_nc[0, mth]) + dtheta_du_RA[0, mth];
-                    }
-                }
-            }
-            else //단열외피 밖, 외기
-            {
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    for (int hc = 0; hc < 2; hc++)
-                    {
-                        if (Hduct_RA[mth] > 0)
-                        {
-                            if (hc == 0) //난방시
-                            {
-                                dtheta_du_RA[hc, mth] = Math.Max(0, (theta_iset_avg[hc] - theta_sur_nc[0, mth]) * (1 - Math.Pow(Math.E, -(Hduct_RA[mth]) / (0.34 * Vvmech[hc,mth])))); //덕트온도-설치실온도
-                                theta_RA_du[hc, mth] = (1 / flea_du * (theta_iset_avg[hc]) + (flea_du - 1) / flea_du * theta_sur_nc[0, mth]) + dtheta_du_RA[0, mth];
-                                if (Qb_mth_tot[hc, mth] == 0)
-                                {
-                                    Q_loss_RA_du[hc, mth] = 0;
-                                }
-                                else //덕트온도 - 설치실온도
-                                {
-                                    Q_loss_RA_du[hc, mth] = Math.Max(0, 0.34 * (Vvmech[hc, mth] * dtheta_du_RA[hc, mth] + (Vvmech_leak[hc, mth] - Vvmech[hc, mth]) * (theta_RA_du[hc, mth]-theta_sur_nc[hc, mth])) * tvmech_avg * dvmechmth_avg[mth] / 1000);
-                                }
-                            }
-                            else if (hc == 1) //냉방시
-                            {
-                                dtheta_du_RA[hc, mth] = Math.Max(0, (theta_sur_nc[0, mth] - theta_iset_avg[hc]) * (1 - Math.Pow(Math.E, -(Hduct_RA[mth]) / (0.34 * Vvmech[hc,mth])))); //설치실온도-덕트온도
-                                theta_RA_du[hc, mth] = (1 / flea_du * (theta_iset_avg[hc]) + (flea_du - 1) / flea_du * theta_sur_nc[0, mth]) + dtheta_du_RA[0, mth];
-                                if (Qb_mth_tot[hc, mth] == 0)
-                                {
-                                    Q_loss_RA_du[hc, mth] = 0;
-                                }
-                                else
-                                {
-                                    Q_loss_RA_du[hc, mth] = Math.Max(0, 0.34 * (Vvmech[hc, mth] * dtheta_du_RA[hc, mth] + (Vvmech_leak[hc, mth] - Vvmech[hc, mth]) * (theta_sur_nc[hc, mth] - theta_RA_du[hc, mth])) * tvmech_avg * dvmechmth_avg[mth] / 1000);
-                                }
-
-                            }
-                            
-                        }
-                    }
-                }
-            }
-        }
-
-        public void Cal_HeatRecovery()
-        {
-            for(int mth = 0; mth < 12; mth++)
-            {
-                for(int hc =0; hc < 2; hc++)
-                {
-                    dtheta_hr[hc, mth] = (AHU_eta_temp[hc]/100 - (flea_du - 1) - fins_ahu) * (theta_RA_du[hc, mth] - theta_OA_du[hc, mth]);
-                    theta_SA_hr[hc, mth] = theta_OA_du[hc, mth] + dtheta_hr[hc, mth];
-                    theta_EA_hr[hc, mth] = theta_RA_du[hc, mth] - dtheta_hr[hc, mth];
-                    X_SA_hr[mth] = X_SA_prh[mth] + (AHU_eta_humidity[0]/100 - (flea_ahu - 1) - fins_ahu) * (X_iset[mth] - X_SA_prh[mth]);
-                }
-            }            
-        }
-
-        public void Cal_DuctLoss_EA()
-        {
-            //단열외피안
-            if (AHULocation == "단열외피 내부") //OA덕트 열손실 발생됨
-            {
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    for (int hc = 0; hc < 2; hc++)
-                    {
-                        if (Hduct_OA[mth] > 0)
-                        {
-
-                            if (hc == 0)//난방시
-                            {
-                                dtheta_du_EA[hc, mth] = Math.Max(0, (theta_sur_nc[hc, mth] - theta_EA_hr[hc, mth]) * (1 - Math.Pow(Math.E, -(Hduct_EA[mth]) / (0.34 * Vmin_tot)))); //실내온도-덕트온도: 실내 열손실을 덕트에 반영함
-                            }
-                            else if (hc == 1)//냉방시
-                            {
-                                dtheta_du_EA[hc, mth] = Math.Max(0, (theta_EA_hr[hc, mth] - theta_sur_nc[hc, mth]) * (1 - Math.Pow(Math.E, -(Hduct_EA[mth]) / (0.34 * Vmin_tot)))); //덕트온도-실내온도: 실내열획득을 덕트에 반영함
-                            }
-
-                            if (Qb_mth_tot[hc, mth] == 0)
-                            {
-                                Q_loss_EA_du[hc, mth] = 0;
-                            }
-                            else
-                            {
-                                Q_loss_EA_du[hc, mth] = Math.Max(0, 0.34 * Vmin_tot * dtheta_du_EA[hc, mth] * tvmech_avg * dvmechmth_avg[mth] / 1000);
-                            }
-                        }
-                    }
-                }
-            }
-            else //외기 및 단열외피 밖 //OA덕트 열손실 없음, 단 온도는 바뀜
-            {
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    for (int hc = 0; hc < 2; hc++)
-                    {
-                        if (Hduct_OA[mth] > 0)
-                        {
-                            dtheta_du_EA[hc, mth] = 0;
-                            Q_loss_EA_du[0, mth] = 0;
-                        }
-                    }
-                }
-            }
-        }
-        public void Cal_SA_set()
-        {
-            if (AHUOptions == "공조기")
-            {
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    theta_vmech[1, mth] = theta_iset_avg[1] - ((AHU_Cooling_in_drytemp - AHU_Cooling_out_drytemp) * 0.34 * AHU_SA_Volume / 1000) * 1000 / (0.34 * AHU_SA_Volume);
-                    theta_vmech[0, mth] = theta_iset_avg[0] + ((AHU_Heating_out_temp - AHU_Heating_in_temp) * 0.34 * AHU_SA_Volume / 1000)*1000/(0.34 * AHU_SA_Volume) ;
-
-                }
-
-                if (AHU_Type == "변풍량")
-                {
-                    for (int mth = 0; mth < 12; mth++)
-                    {
-                        Vvmech[0, mth] = Math.Min(AHU_SA_Volume, Math.Max(Vmin_tot, Qb_mth_tot[0, mth] * 1000 / (0.34 * (theta_vmech[0, mth] - theta_iset_avg[0]) * tvmech_avg * dvmechmth_avg[mth])));
-                        Vvmech[1, mth] = Math.Min(AHU_SA_Volume, Math.Max(Vmin_tot, Qb_mth_tot[1, mth] * 1000 / (0.34 * (theta_iset_avg[1] - theta_vmech[1, mth]) * tvmech_avg * dvmechmth_avg[mth])));
-                    }
-
-                }
-                else
-                {
-                    for (int mth = 0; mth < 12; mth++)
-                    {
-                        Vvmech[0, mth] = Math.Min(AHU_SA_Volume, Math.Max(Vmin_tot, Qmax_tot[0] / (0.34 * (theta_vmech[0, mth] - theta_iset_avg[0]))));
-                        if(Vvmech_leak[0, mth] == 0)
-                        {
-                            theta_vmech[0, mth] = theta_iset_avg[0];
-                        }
-                        else
-                        {
-                            theta_vmech[0, mth] = theta_iset_avg[0] + Qb_mth_tot[0, mth] / (0.34 * Vvmech_leak[0, mth] * tvmech_avg * dvmechmth_avg[mth] / 1000);
-                        }
-                                              
-                        Vvmech[1, mth] = Math.Min(AHU_SA_Volume, Math.Max(Vmin_tot, Qmax_tot[1] / (0.34 * (theta_iset_avg[1] - theta_vmech[1, mth]))));
-                        if (Vvmech_leak[1, mth] == 0)
-                        {
-                            theta_vmech[1, mth] = theta_iset_avg[1];
-                        }
-                        else
-                        {
-                            theta_vmech[1, mth] = theta_iset_avg[1] - Qb_mth_tot[1, mth] / (0.34 * Vvmech_leak[1, mth] * tvmech_avg * dvmechmth_avg[mth] / 1000);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    Vvmech[0, mth] = Vmin_tot;
-                    Vvmech[1, mth] = Vmin_tot;
-                }
-            }
-
-            for (int mth = 0; mth < 12; mth++)
-            {
-                Vvmech_leak[0, mth] = Vvmech[0, mth] * flea_ahu * flea_du;
-                Vvmech_leak[1, mth] = Vvmech[1, mth] * flea_ahu * flea_du;
-            }
-
-        }
-        public void Cal_RCA()
-        {
-            for (int mth = 0; mth < 12; mth++)
-            {
-                for (int hc = 0; hc < 2; hc++)
-                {
-                    dtheta_rca[hc, mth] = (Vvmech_leak[hc, mth] - Vmin_tot) / Vvmech_leak[hc, mth] * (theta_RA_du[hc, mth] - theta_SA_hr[hc, mth]);
-                    theta_SA_rca[hc, mth] = dtheta_rca[hc, mth] + theta_SA_hr[hc, mth];                   
-                }
-                X_SA_rca[mth] = X_SA_hr[mth] + (Vvmech_leak[0, mth] - Vmin_tot) / Vvmech_leak[0, mth] * (X_iset[mth] - X_SA_hr[mth]);
-            }
-        }
-        public void Cal_DuctLoss_SA()
-        {
-             //단열외피 내부
-            if (AHULocation == "단열외피 내부")
-            {
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    for (int hc = 0; hc < 2; hc++)
-                    {
-                        if (AHUOptions == "열회수기")
-                        {
-                            if (Hduct_SA[mth] > 0)
-                            { 
-                                dtheta_du_SA[hc, mth] = 0;
-                                Q_loss_SA_du[hc, mth] = 0;
-                            }
-                        }
-                        else //공조기인 경우
-                        {
-                            if (Hduct_SA[mth] > 0)
-                            {
-                                if (hc == 0) //난방인 경우
-                                {
-                                    Math.Max(0, dtheta_du_SA[hc, mth] = (theta_vmech[hc, mth] - theta_sur_nc[hc, mth]) * (1 - Math.Pow(Math.E, -(Hduct_SA[mth]) / (0.34 * Vvmech_leak[hc, mth])))); //덕트온도-설치실온도
-                                }
-                                else if (hc == 1) //냉방인 경우
-                                {
-                                    Math.Max(0, dtheta_du_SA[hc, mth] = (theta_sur_nc[hc, mth] - theta_vmech[hc, mth]) * (1 - Math.Pow(Math.E, -(Hduct_SA[mth]) / (0.34 * Vvmech_leak[hc, mth])))); //실내온도-덕트온도
-                                }
-                            }
-                            theta_SA_du[hc, mth] = theta_vmech[hc, mth] + dtheta_du_SA[hc, mth];
-
-                            if (Qb_mth_tot[hc, mth] == 0)
-                            {
-                                Q_loss_SA_du[hc, mth] = 0;
-                            }
-                            else
-                            {
-                                Q_loss_SA_du[hc, mth] = Math.Max(0, 0.34 * (Vvmech[hc, mth] * dtheta_du_SA[hc, mth] + (Vvmech_leak[hc, mth] - Vvmech[hc, mth]) * (theta_sur_nc[hc, mth] - theta_SA_du[hc, mth])) * tvmech_avg * dvmechmth_avg[mth] / 1000);
-                            }
-                        }
-                    }
-
-                }
-                Cal_DuctLoss_RA_loss();
-            }
-
-            else //단열외피 밖, 외기
-            {
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    for (int hc = 0; hc < 2; hc++)
-                    {
-                        if (Hduct_SA[mth] > 0)
-                        {
-                            if (hc == 0) //난방시
-                            {
-                                if (AHUOptions == "열회수기")
-                                {
-                                    dtheta_du_SA[hc, mth] = Math.Max(0, (theta_SA_rca[hc, mth] - theta_sur_nc[hc, mth]) * (1 - Math.Pow(Math.E, -(Hduct_SA[mth]) / (0.34 * Vvmech_leak[hc, mth])))); //덕트온도-실외온도
-                                }
-                                else
-                                {
-                                    dtheta_du_SA[hc, mth] = Math.Max(0, (theta_vmech[hc, mth] - theta_sur_nc[hc, mth]) * (1 - Math.Pow(Math.E, -(Hduct_SA[mth]) / (0.34 * Vvmech_leak[hc, mth])))); //덕트온도-실외온도
-                                }
-                                
-                                theta_SA_du[hc, mth] = theta_SA_rca[hc, mth] + dtheta_du_SA[hc, mth];
-                                if (Qb_mth_tot[hc, mth] == 0)
-                                {
-                                    Q_loss_SA_du[hc, mth] = 0;
-                                }
-                                else
-                                {
-                                    Q_loss_SA_du[hc, mth] = Math.Max(0, 0.34 * (Vvmech[hc, mth] * dtheta_du_SA[hc, mth] + (Vvmech_leak[hc, mth] - Vvmech[hc, mth]) * (theta_SA_du[hc, mth]-theta_sur_nc[hc, mth])) * tvmech_avg * dvmechmth_avg[mth] / 1000);
-                                }
-
-                            }
-                            else if (hc == 1)//냉방시
-                            {
-                                if(AHUOptions == "열회수기")
-                                {
-                                    dtheta_du_SA[hc, mth] = Math.Max(0, (theta_sur_nc[hc, mth] - theta_SA_rca[hc, mth]) * (1 - Math.Pow(Math.E, -(Hduct_SA[mth]) / (0.34 * Vvmech_leak[hc, mth])))); //설치실온도-덕트온도
-                                }
-                                else //공조기
-                                {
-                                    dtheta_du_SA[hc, mth] = Math.Max(0, (theta_sur_nc[hc, mth] - theta_vmech[hc, mth]) * (1 - Math.Pow(Math.E, -(Hduct_SA[mth]) / (0.34 * Vvmech_leak[hc, mth])))); //설치실온도-덕트온도
-                                }
-                                    
-                                theta_SA_du[hc, mth] = theta_SA_rca[hc, mth] + dtheta_du_SA[hc, mth];
-                                if (Qb_mth_tot[hc, mth] == 0)
-                                {
-                                    Q_loss_SA_du[hc, mth] = 0;
-                                }
-                                else
-                                {
-                                    Q_loss_SA_du[hc, mth] = Math.Max(0, 0.34 * (Vvmech[hc, mth] * dtheta_du_SA[hc, mth] + (Vvmech_leak[hc, mth] - Vvmech[hc, mth]) * (theta_sur_nc[hc, mth] - theta_SA_du[hc, mth])) * tvmech_avg * dvmechmth_avg[mth] / 1000);
-                                }
-                            } 
-                           
-                        }
-                    }
-                }
-
-                Cal_DuctLoss_RA_loss();
-            }
-        }
-        public void Cal_Qv_b() 
-        { 
-            for(int mth =0; mth<12; mth++)  
-            {
-                if (Qb_mth_tot[0, mth] == 0) //난방
-                {
-                    Qv_b[0, mth] = 0;
-                }
-                else
-                {
-                    Qv_b[0, mth] = Qb_mth_tot[0,mth] - Math.Max(0,Q_gnd[mth]) - Wpreh_k[mth] + Q_loss_OA_du[0,mth] + Q_loss_EA_du[0, mth] + Q_loss_SA_du[0, mth];
-                }
-                if (Qb_mth_tot[1, mth] == 0) //냉방, 제습은 따로 반영함
-                {
-                    Qv_b[1, mth] = 0;
-                }
-                else
-                {
-                    Qv_b[1, mth] = Qb_mth_tot[1, mth] + Math.Min(0,Q_gnd[mth]) - Wpreh_k[mth] + Q_loss_OA_du[1, mth] + Q_loss_EA_du[1, mth] + Q_loss_SA_du[1, mth];
-                }
-            }
-        }
-
-        public void Cal_HU()
-        {
-            for(int mth = 0; mth < 12; mth++)
-            {
-                if (AHU_HU_Type =="스팀형")
-                {
-                    Qhu_b[mth] = Math.Max(0, Vvmech_leak[0, mth] * 1.204 *0.68* (X_i_min - X_SA_rca[mth]) * tvmech_avg * dvmechmth_avg[mth]);
-                }
-                else
-                {
-                    Qhu_b[mth] = Math.Max(0, Vvmech_leak[0, mth] * 1.204 * (X_i_min - X_SA_rca[mth]) * tvmech_avg * dvmechmth_avg[mth]); ;
-                }
-            }            
-        }
-
-        public void Cal_W()
-        {
-            double dp_defrost=0, fflow_ctrl=0, x =0, Pel_HU_des=0;
-            string[][] Value = Program.DB.getValue(DB.type.BaseDB_AHU, "예열기압력손실차", "압력손실차", "유형 ='"+PrehPrecOptions+"'");
-            if(Value.Length >0)
-            {
-                dp_defrost = Convert.ToDouble(Value[0][0]);
-            }
-            Value = Program.DB.getValue(DB.type.BaseDB_AHU, "풍량제어계수", "계수", "제어유형1 ='" + AHUVolumeControl + "'");
-            if (Value.Length > 0)
-            {
-                fflow_ctrl = Convert.ToDouble(Value[0][0]);
-            }
-            Value = Program.DB.getValue(DB.type.BaseDB_AHU, "모터드라이브제어계수", "계수", "제어유형 ='" + AHU_MotorControl + "'");
-            if (Value.Length > 0)
-            {
-               x = Convert.ToDouble(Value[0][0]);
-            }
-            Value = Program.DB.getValue(DB.type.BaseDB_AHU, "가습기", "소비전력", "가습기유형 ='" + AHU_HU_Type + "'");
-            if (Value.Length > 0)
-            {
-                Pel_HU_des = Convert.ToDouble(Value[0][0]);
-            }
-                        
-            for (int mth =0; mth < 12;mth++)
-            {
-                //팬보조에너지
-                if(AHUOptions =="공조기")
-                {
-                    if (Qb_mth_tot[1, mth] > Qb_mth_tot[0, mth])
-                    {
-                        Ev_gen_fan_SA[mth] = tvmech_avg * dvmechmth_avg[mth] * Vvmech_leak[1, mth] * (AHU_SA_FanPower / AHU_SA_Volume + 2.78 * Math.Pow(10 , -7) * dp_defrost / AHU_SA_FanEta) * Math.Pow(fflow_ctrl, x);
-                        Ev_gen_fan_EA[mth] = tvmech_avg * dvmechmth_avg[mth] * Vvmech_leak[1, mth] * (AHU_EA_FanPower / AHU_EA_Volume + 2.78 * Math.Pow(10 , -7) * dp_defrost / AHU_EA_FanEta) * Math.Pow(fflow_ctrl, x);
-                    }
-                    else
-                    {
-                        Ev_gen_fan_SA[mth] = tvmech_avg * dvmechmth_avg[mth] * Vvmech_leak[0, mth] * (AHU_SA_FanPower / AHU_SA_Volume + 2.78 * Math.Pow(10, -7) * dp_defrost / AHU_SA_FanEta) * Math.Pow(fflow_ctrl, x);
-                        Ev_gen_fan_EA[mth] = tvmech_avg * dvmechmth_avg[mth] * Vvmech_leak[0, mth] * (AHU_EA_FanPower / AHU_EA_Volume + 2.78 * Math.Pow(10, -7) * dp_defrost / AHU_EA_FanEta) * Math.Pow(fflow_ctrl, x);
-                    }
-                }
-                else
-                {
-                    Ev_gen_fan_SA[mth] = tvmech_avg * dvmechmth_avg[mth] * Math.Max(Vvmech_leak[0, mth], Vvmech_leak[1, mth]) * (AHU_SA_FanPower / AHU_SA_Volume + 2.78 * Math.Pow(10, -7) * dp_defrost / AHU_SA_FanEta) * Math.Pow(fflow_ctrl, x);
-                    Ev_gen_fan_EA[mth] = tvmech_avg * dvmechmth_avg[mth] * Math.Max(Vvmech_leak[0, mth], Vvmech_leak[1, mth]) * (AHU_EA_FanPower / AHU_EA_Volume + 2.78 * Math.Pow(10, -7) * dp_defrost / AHU_EA_FanEta) * Math.Pow(fflow_ctrl, x);
-                }
-                
-
-                //가습기 보조에너지
-                if (X_i_min > X_SA_rca[mth])
-                {
-                    if (AHU_HU_Control == "on/off제어")
-                    {
-                        fpl_HU[mth] = Vvmech_leak[0,mth]* 1.204 * (X_i_min - X_SA_rca[mth]) / AHU_HU_Volume;
-                    }else if(AHU_HU_Control =="인버터제어")
-                    {
-                        fpl_HU[mth] = Vvmech_leak[0, mth] * 1.204 * (X_i_min - X_SA_rca[mth]) / Math.Pow(AHU_HU_Volume,2.5);
-                    }
-                    else
-                    {
-                        fpl_HU[mth] = 1; 
-                    }
-                }
-                else { fpl_HU[mth] = 1; }
-
-                if (Qhu_b[mth] > 0)
-                {
-                    if (X_i_min > X_SA_rca[mth])
-                    { W_HU_aux[mth] = Vvmech_leak[0, mth] * tvmech_avg * dvmechmth_avg[mth] * Pel_HU_des * fpl_HU[mth] / 1000; }
-                    else { W_HU_aux[mth] = 0; }
-                } 
-                else { W_HU_aux[mth] = 0; }
-                   
-                //예열기보조에너지    
-                Wv_aux_preh[mth] = Wpreh_k[mth];
-            }
         }
 }
 }
