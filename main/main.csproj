@@ -48,6 +48,8 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.117" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.117" />
+    <!-- 전이적으로 딸려오던 4.7.0에 Critical 취약점(CVE-2021-24112, GHSA-rxg9-xrhp-64gj)이 있어 직접 참조로 고정 -->
+    <PackageReference Include="System.Drawing.Common" Version="8.0.29" />
   </ItemGroup>
 
   <ItemGroup>
