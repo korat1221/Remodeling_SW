@@ -100,11 +100,20 @@ namespace main.contents
             prepower_label = new Label();
             label12 = new Label();
             label46 = new Label();
-            PrehControlOptions_comboBox = new CustomComboBox();
             PrehPower_textBox = new TextBox();
             label47 = new Label();
             label48 = new Label();
-            label49 = new Label();
+            PrehTHInfo_groupBox = new GroupBox();
+            label50 = new Label();
+            PumpPower_textBox = new TextBox();
+            label51 = new Label();
+            label52 = new Label();
+            CoilPower_textBox = new TextBox();
+            label53 = new Label();
+            label54 = new Label();
+            label55 = new Label();
+            coilpower_label = new Label();
+            label56 = new Label();
             Duct_tabPage = new TabPage();
             OASALength_label = new Label();
             EARALength_label = new Label();
@@ -157,6 +166,7 @@ namespace main.contents
             CooltubeInfo_groupBox.SuspendLayout();
             GroundInfo_groupBox.SuspendLayout();
             PrehInfo_groupBox.SuspendLayout();
+            PrehTHInfo_groupBox.SuspendLayout();
             Duct_tabPage.SuspendLayout();
             AHU_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)HRV_dataGridView).BeginInit();
@@ -656,6 +666,7 @@ namespace main.contents
             PrehPrec_tabPage.Controls.Add(CooltubeInfo_groupBox);
             PrehPrec_tabPage.Controls.Add(GroundInfo_groupBox);
             PrehPrec_tabPage.Controls.Add(PrehInfo_groupBox);
+            PrehPrec_tabPage.Controls.Add(PrehTHInfo_groupBox);
             PrehPrec_tabPage.Location = new Point(4, 25);
             PrehPrec_tabPage.Name = "PrehPrec_tabPage";
             PrehPrec_tabPage.Padding = new Padding(3);
@@ -923,50 +934,48 @@ namespace main.contents
             PrehInfo_groupBox.Controls.Add(prepower_label);
             PrehInfo_groupBox.Controls.Add(label12);
             PrehInfo_groupBox.Controls.Add(label46);
-            PrehInfo_groupBox.Controls.Add(PrehControlOptions_comboBox);
             PrehInfo_groupBox.Controls.Add(PrehPower_textBox);
             PrehInfo_groupBox.Controls.Add(label47);
             PrehInfo_groupBox.Controls.Add(label48);
-            PrehInfo_groupBox.Controls.Add(label49);
             PrehInfo_groupBox.Location = new Point(312, 40);
             PrehInfo_groupBox.Name = "PrehInfo_groupBox";
             PrehInfo_groupBox.Size = new Size(285, 169);
             PrehInfo_groupBox.TabIndex = 219;
             PrehInfo_groupBox.TabStop = false;
             PrehInfo_groupBox.Visible = false;
-            // 
+            //
             // label27
-            // 
+            //
             label27.AutoSize = true;
             label27.Font = new Font("나눔바른고딕", 9.75F);
             label27.ForeColor = SystemColors.ControlText;
-            label27.Location = new Point(224, 101);
+            label27.Location = new Point(224, 69);
             label27.Name = "label27";
             label27.Size = new Size(20, 15);
             label27.TabIndex = 222;
             label27.Text = "W";
-            // 
+            //
             // prepower_label
-            // 
+            //
             prepower_label.AutoSize = true;
             prepower_label.Font = new Font("나눔바른고딕", 9.75F);
-            prepower_label.Location = new Point(141, 103);
+            prepower_label.Location = new Point(141, 71);
             prepower_label.Name = "prepower_label";
             prepower_label.Size = new Size(0, 15);
             prepower_label.TabIndex = 221;
-            // 
+            //
             // label12
-            // 
+            //
             label12.AutoSize = true;
             label12.Font = new Font("나눔바른고딕", 9.75F);
-            label12.Location = new Point(27, 105);
+            label12.Location = new Point(27, 73);
             label12.Name = "label12";
             label12.Size = new Size(79, 15);
             label12.TabIndex = 220;
             label12.Text = "권장설치용량";
-            // 
+            //
             // label46
-            // 
+            //
             label46.AutoSize = true;
             label46.BackColor = Color.White;
             label46.Font = new Font("나눔바른고딕", 9.75F);
@@ -974,62 +983,167 @@ namespace main.contents
             label46.Name = "label46";
             label46.Size = new Size(79, 15);
             label46.TabIndex = 219;
-            label46.Text = "프리히터정보";
-            // 
-            // PrehControlOptions_comboBox
-            // 
-            PrehControlOptions_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            PrehControlOptions_comboBox.Font = new Font("나눔바른고딕", 9.75F);
-            PrehControlOptions_comboBox.FormattingEnabled = true;
-            PrehControlOptions_comboBox.Location = new Point(102, 33);
-            PrehControlOptions_comboBox.Name = "PrehControlOptions_comboBox";
-            PrehControlOptions_comboBox.Size = new Size(120, 23);
-            PrehControlOptions_comboBox.TabIndex = 216;
-            PrehControlOptions_comboBox.SelectedIndexChanged += PrehControlOptions_comboBox_SelectedIndexChanged;
-            // 
+            label46.Text = "전기예열기정보";
+            //
             // PrehPower_textBox
-            // 
+            //
             PrehPower_textBox.BackColor = SystemColors.Window;
             PrehPower_textBox.BorderStyle = BorderStyle.FixedSingle;
             PrehPower_textBox.Font = new Font("나눔바른고딕", 9.75F);
-            PrehPower_textBox.Location = new Point(102, 64);
+            PrehPower_textBox.Location = new Point(102, 33);
             PrehPower_textBox.Name = "PrehPower_textBox";
             PrehPower_textBox.Size = new Size(120, 22);
             PrehPower_textBox.TabIndex = 215;
             PrehPower_textBox.TextAlign = HorizontalAlignment.Center;
             PrehPower_textBox.TextChanged += PrehPower_textBox_TextChanged;
-            // 
+            //
             // label47
-            // 
+            //
             label47.AutoSize = true;
             label47.Font = new Font("나눔바른고딕", 9.75F);
             label47.ForeColor = SystemColors.ControlText;
-            label47.Location = new Point(224, 68);
+            label47.Location = new Point(224, 37);
             label47.Name = "label47";
             label47.Size = new Size(20, 15);
             label47.TabIndex = 214;
             label47.Text = "W";
-            // 
+            //
             // label48
-            // 
+            //
             label48.AutoSize = true;
             label48.Font = new Font("나눔바른고딕", 9.75F);
-            label48.Location = new Point(27, 69);
+            label48.Location = new Point(27, 37);
             label48.Name = "label48";
             label48.Size = new Size(31, 15);
             label48.TabIndex = 197;
-            label48.Text = "용량";
-            // 
-            // label49
-            // 
-            label49.AutoSize = true;
-            label49.Font = new Font("나눔바른고딕", 9.75F);
-            label49.Location = new Point(27, 37);
-            label49.Name = "label49";
-            label49.Size = new Size(55, 15);
-            label49.TabIndex = 202;
-            label49.Text = "제어유형";
-            // 
+            label48.Text = "코일출력";
+            //
+            // PrehTHInfo_groupBox
+            //
+            PrehTHInfo_groupBox.Controls.Add(label50);
+            PrehTHInfo_groupBox.Controls.Add(label51);
+            PrehTHInfo_groupBox.Controls.Add(PumpPower_textBox);
+            PrehTHInfo_groupBox.Controls.Add(label52);
+            PrehTHInfo_groupBox.Controls.Add(label53);
+            PrehTHInfo_groupBox.Controls.Add(CoilPower_textBox);
+            PrehTHInfo_groupBox.Controls.Add(label54);
+            PrehTHInfo_groupBox.Controls.Add(label55);
+            PrehTHInfo_groupBox.Controls.Add(coilpower_label);
+            PrehTHInfo_groupBox.Controls.Add(label56);
+            PrehTHInfo_groupBox.Location = new Point(312, 40);
+            PrehTHInfo_groupBox.Name = "PrehTHInfo_groupBox";
+            PrehTHInfo_groupBox.Size = new Size(285, 169);
+            PrehTHInfo_groupBox.TabIndex = 223;
+            PrehTHInfo_groupBox.TabStop = false;
+            PrehTHInfo_groupBox.Visible = false;
+            //
+            // label50
+            //
+            label50.AutoSize = true;
+            label50.BackColor = Color.White;
+            label50.Font = new Font("나눔바른고딕", 9.75F);
+            label50.Location = new Point(17, 0);
+            label50.Name = "label50";
+            label50.Size = new Size(93, 15);
+            label50.TabIndex = 224;
+            label50.Text = "온수예열기정보";
+            //
+            // label51
+            //
+            label51.AutoSize = true;
+            label51.Font = new Font("나눔바른고딕", 9.75F);
+            label51.Location = new Point(27, 37);
+            label51.Name = "label51";
+            label51.Size = new Size(55, 15);
+            label51.TabIndex = 225;
+            label51.Text = "펌프출력";
+            //
+            // PumpPower_textBox
+            //
+            PumpPower_textBox.BackColor = SystemColors.Window;
+            PumpPower_textBox.BorderStyle = BorderStyle.FixedSingle;
+            PumpPower_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            PumpPower_textBox.Location = new Point(102, 33);
+            PumpPower_textBox.Name = "PumpPower_textBox";
+            PumpPower_textBox.Size = new Size(120, 22);
+            PumpPower_textBox.TabIndex = 226;
+            PumpPower_textBox.TextAlign = HorizontalAlignment.Center;
+            PumpPower_textBox.TextChanged += PumpPower_textBox_TextChanged;
+            //
+            // label52
+            //
+            label52.AutoSize = true;
+            label52.Font = new Font("나눔바른고딕", 9.75F);
+            label52.ForeColor = SystemColors.ControlText;
+            label52.Location = new Point(224, 37);
+            label52.Name = "label52";
+            label52.Size = new Size(24, 15);
+            label52.TabIndex = 227;
+            label52.Text = "kW";
+            //
+            // label53
+            //
+            label53.AutoSize = true;
+            label53.Font = new Font("나눔바른고딕", 9.75F);
+            label53.Location = new Point(27, 69);
+            label53.Name = "label53";
+            label53.Size = new Size(55, 15);
+            label53.TabIndex = 228;
+            label53.Text = "코일출력";
+            //
+            // CoilPower_textBox
+            //
+            CoilPower_textBox.BackColor = SystemColors.Window;
+            CoilPower_textBox.BorderStyle = BorderStyle.FixedSingle;
+            CoilPower_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            CoilPower_textBox.Location = new Point(102, 64);
+            CoilPower_textBox.Name = "CoilPower_textBox";
+            CoilPower_textBox.Size = new Size(120, 22);
+            CoilPower_textBox.TabIndex = 229;
+            CoilPower_textBox.TextAlign = HorizontalAlignment.Center;
+            CoilPower_textBox.TextChanged += CoilPower_textBox_TextChanged;
+            //
+            // label54
+            //
+            label54.AutoSize = true;
+            label54.Font = new Font("나눔바른고딕", 9.75F);
+            label54.ForeColor = SystemColors.ControlText;
+            label54.Location = new Point(224, 68);
+            label54.Name = "label54";
+            label54.Size = new Size(24, 15);
+            label54.TabIndex = 230;
+            label54.Text = "kW";
+            //
+            // label55
+            //
+            label55.AutoSize = true;
+            label55.Font = new Font("나눔바른고딕", 9.75F);
+            label55.Location = new Point(27, 101);
+            label55.Name = "label55";
+            label55.Size = new Size(79, 15);
+            label55.TabIndex = 231;
+            label55.Text = "권장설치용량";
+            //
+            // coilpower_label
+            //
+            coilpower_label.AutoSize = true;
+            coilpower_label.Font = new Font("나눔바른고딕", 9.75F);
+            coilpower_label.Location = new Point(141, 101);
+            coilpower_label.Name = "coilpower_label";
+            coilpower_label.Size = new Size(0, 15);
+            coilpower_label.TabIndex = 232;
+            //
+            // label56
+            //
+            label56.AutoSize = true;
+            label56.Font = new Font("나눔바른고딕", 9.75F);
+            label56.ForeColor = SystemColors.ControlText;
+            label56.Location = new Point(224, 101);
+            label56.Name = "label56";
+            label56.Size = new Size(24, 15);
+            label56.TabIndex = 233;
+            label56.Text = "kW";
+            //
             // Duct_tabPage
             // 
             Duct_tabPage.Controls.Add(OASALength_label);
@@ -1560,6 +1674,8 @@ namespace main.contents
             GroundInfo_groupBox.PerformLayout();
             PrehInfo_groupBox.ResumeLayout(false);
             PrehInfo_groupBox.PerformLayout();
+            PrehTHInfo_groupBox.ResumeLayout(false);
+            PrehTHInfo_groupBox.PerformLayout();
             Duct_tabPage.ResumeLayout(false);
             Duct_tabPage.PerformLayout();
             AHU_tabPage.ResumeLayout(false);
@@ -1620,11 +1736,20 @@ namespace main.contents
         private Label label38;
         private GroupBox PrehInfo_groupBox;
         private Label label46;
-        private CustomComboBox PrehControlOptions_comboBox;
         public TextBox textBox1;
         private Label label47;
         private Label label48;
-        private Label label49;
+        private GroupBox PrehTHInfo_groupBox;
+        private Label label50;
+        private Label label51;
+        public TextBox PumpPower_textBox;
+        private Label label52;
+        private Label label53;
+        public TextBox CoilPower_textBox;
+        private Label label54;
+        private Label label55;
+        private Label coilpower_label;
+        private Label label56;
         private TabPage Duct_tabPage;
         private Label label40;
         private Label label41;

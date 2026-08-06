@@ -772,7 +772,9 @@ namespace main
             AHU1.Cal_CoilLoss();
             AHU1.Cal_Qstar_b();
             AHU1.Cal_HU();
-            AHU1.Cal_W();
+            AHU1.Cal_Wfan();
+            AHU1.Cal_Wpreh();
+            AHU1.Cal_Wpreh_th();
         }
         public static void HRV_PostCalc(AHU HRV1)
         {
@@ -784,7 +786,9 @@ namespace main
             HRV1.Cal_HeatRecovery();
             HRV1.Cal_DuctLoss_EA();
             HRV1.Cal_DuctLoss_SA();//RA덕트 열손실량을 포함하여 계산함
-            HRV1.Cal_W();
+            HRV1.Cal_Wfan();
+            HRV1.Cal_Wpreh();
+            HRV1.Cal_Wpreh_th();
         }
         private static void AHUSystem_PostSave(AHU AHU1)
         {

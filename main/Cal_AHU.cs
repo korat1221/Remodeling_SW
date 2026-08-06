@@ -11,14 +11,16 @@ namespace main
         //덕트
         double OALength, EALength, SALength, RALength, DuctDiameter, DuctInsulationThickness, DuctInsulationConductivity;
         //공조기장비일람표
-        string AHU_Type, AHU_HRVType;
+        string AHUType, HRVType;
         double[] eta_temp = new double[2], eta_all = new double[2], eta_humi = new double[2];
         double Phi_c_coil, theta_c_coil_in, theta_c_coil_in_web, theta_c_coil_out, theta_c_coil_out_web, Phi_h_coil, theta_h_coil_in, theta_h_coil_out;
         double chi_c_coil_in, chi_c_coil_out; // χc,coil,in / χc,coil,out — 스펙상 입력값
         string HU_Type, HU_Control,HU_HULevel;
         double HU_Volume;
-        double AHU_SA_Volume, AHU_EA_Volume, SA_Pressure, EA_Pressure, SA_FanPower, EA_FanPower;
-        double eta_fan; // η_fan — 팬 유효 효율(급배기 공용, User_AHU/User_HRV의 "팬효율" 컬럼)
+        double Volume_SA_ztot, Volume_RA_ztot, FanPower_SA, FanPower_EA;
+        // double Pressure_SA, Pressure_EA; // 계산식 미사용(장비일람표에서도 숨김 처리)
+        double Volume_SA, Volume_EA;
+        // double eta_fan; // η_fan — dP_preh가 항상 0이라 dP_term에서 무의미해짐(장비일람표 모터유형/팬효율도 숨김 처리)
         double chi_fan; // χ — 팬제어계수(Annex C.5-4, MotorControl 기준 조회)
         string MotorControl;
         //공조기일반정보
@@ -30,11 +32,10 @@ namespace main
         //예열예냉
         public double theta_defrost;
         public double[] dtheta_prh = new double[12];
-        string PrehPrecOptions, GroundOptions, CooltubeMaterial, PrehControlOptions;
+        string PrehPrecOptions, GroundOptions, CooltubeMaterial;
         double CooltubeDiameter, CooltubeLength, GroundDepth, CooltubeThicknessh;
         double PrehPower;
-        public double fdefrost_ctrl;
-        double dP_preh; // ΔP_preh — 예열기 유형에 따른 압력차(Annex C.5-2, PrehPrecOptions 기준 조회) [Pa]
+        double Preh_Ppump, Preh_Pcoil; // 온수예열기 펌프 정격출력[kW], 코일 정격출력[kW] — AHUSystem_form "온수예열기펌프출력,온수예열기코일출력" 컬럼(kW 단위 입력)
         //존정보
         public ArrayList SelectZone_split = new ArrayList();
         public double Vmin_tot, ANF_tot, Qc_a_tot, Qh_a_tot;
@@ -78,6 +79,7 @@ namespace main
         double ca = 0.000279; // 공기비열 [kWh/(kg·K)]
         double rhoA = 1.204; // 공기밀도 [kg/m3]
         double rw = 0.680; // 증발잠열 [kWh/kg]
+        static readonly int[] MonthStartHour = { 0, 744, 1416, 2160, 2880, 3624, 4344, 5088, 5832, 6552, 7296, 8016 }; // i월이 시작되는 연중 시간 인덱스(0부터)
 
 
         public AHU(String AHUNum)
@@ -213,8 +215,8 @@ namespace main
                     eaSum += Program.UTIL.ToDoubleOrZero(Value[0][1]);
                 }
             }
-            AHU_SA_Volume = saSum;
-            AHU_EA_Volume = eaSum;
+            Volume_SA_ztot = saSum;
+            Volume_RA_ztot = eaSum;
         }
         public void Load_GeneralData(string ProjNum)
         {
@@ -268,8 +270,8 @@ namespace main
             string[][] Value = Program.DB.getValue(ProjNum, "User_AHU", "공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기제어유형,가습기습도수준,가습기용량,급기풍량,배기풍량,급기정압,배기정압,급기팬동력,배기팬동력,모터제어,팬효율", "번호 = '" + AHUNum + "'");
             if (Value.Length > 0)
             {
-                AHU_Type = Value[0][0];
-                AHU_HRVType = Value[0][1];
+                AHUType = Value[0][0];
+                HRVType = Value[0][1];
                 eta_temp[1] = Program.UTIL.ToDoubleOrZero(Value[0][2]) / 100;
                 eta_temp[0] = Program.UTIL.ToDoubleOrZero(Value[0][3]) / 100;
                 eta_all[1] = Program.UTIL.ToDoubleOrZero(Value[0][4]) / 100;
@@ -290,15 +292,18 @@ namespace main
                 HU_HULevel = Value[0][18];
                 HU_Volume = Program.UTIL.ToDoubleOrZero(Value[0][19]);
 
+                Volume_SA = Program.UTIL.ToDoubleOrZero(Value[0][20]);
+                Volume_EA = Program.UTIL.ToDoubleOrZero(Value[0][21]);
+
                 Load_ZoneVentVolume(ProjNum);
-                SA_Pressure = Program.UTIL.ToDoubleOrZero(Value[0][22]);
-                EA_Pressure = Program.UTIL.ToDoubleOrZero(Value[0][23]);
-                SA_FanPower = Program.UTIL.ToDoubleOrZero(Value[0][24]);
-                EA_FanPower = Program.UTIL.ToDoubleOrZero(Value[0][25]);
+                // Pressure_SA = Program.UTIL.ToDoubleOrZero(Value[0][22]); // 급기정압 — 계산식 미사용(장비일람표에서도 숨김 처리)
+                // Pressure_EA = Program.UTIL.ToDoubleOrZero(Value[0][23]); // 배기정압 — 계산식 미사용(장비일람표에서도 숨김 처리)
+                FanPower_SA = Program.UTIL.ToDoubleOrZero(Value[0][24]);
+                FanPower_EA = Program.UTIL.ToDoubleOrZero(Value[0][25]);
                 MotorControl = Value[0][26];
-                eta_fan = Program.UTIL.ToDoubleOrZero(Value[0][27]);
+                // eta_fan = Program.UTIL.ToDoubleOrZero(Value[0][27]); // dP_term에서 무의미해짐(장비일람표에서도 숨김 처리)
             }
-            string[][] Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "결빙방지온도", "결빙방지온도", "열회수기유형='" + AHU_HRVType+ "' And 건물유형 ='비주거건물'");
+            string[][] Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "결빙방지온도", "결빙방지온도", "열회수기유형='" + HRVType+ "' And 건물유형 ='비주거건물'");
             if (Value2.Length > 0)
             { theta_defrost = Program.UTIL.ToDoubleOrZero(Value2[0][0]); }
             Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "팬모터제어계수", "계수", "제어유형='" + MotorControl + "'");
@@ -310,20 +315,22 @@ namespace main
             string[][] Value = Program.DB.getValue(ProjNum, "User_HRV", "열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,팬풍량,팬동력,모터제어,팬효율", "번호 = '" + AHUNum + "'");
             if (Value.Length > 0)
             {
-                AHU_HRVType = Value[0][0];
+                HRVType = Value[0][0];
                 eta_temp[1] = Program.UTIL.ToDoubleOrZero(Value[0][1]) / 100;
                 eta_temp[0] = Program.UTIL.ToDoubleOrZero(Value[0][2]) / 100;
                 eta_all[1] = Program.UTIL.ToDoubleOrZero(Value[0][3]) / 100;
                 eta_all[0] = Program.UTIL.ToDoubleOrZero(Value[0][4]) / 100;
                 eta_humi[1] = Program.UTIL.ToDoubleOrZero(Value[0][5]) / 100;
                 eta_humi[0] = Program.UTIL.ToDoubleOrZero(Value[0][6]) / 100;
+                Volume_SA = Program.UTIL.ToDoubleOrZero(Value[0][7]);
+                Volume_EA = Program.UTIL.ToDoubleOrZero(Value[0][7]);
                 Load_ZoneVentVolume(ProjNum);
-                SA_FanPower = Program.UTIL.ToDoubleOrZero(Value[0][8]) / 2 / 1000;
-                EA_FanPower = Program.UTIL.ToDoubleOrZero(Value[0][8]) / 2 / 1000;
+                FanPower_SA = Program.UTIL.ToDoubleOrZero(Value[0][8]) / 2 / 1000;
+                FanPower_EA = Program.UTIL.ToDoubleOrZero(Value[0][8]) / 2 / 1000;
                 MotorControl = Value[0][9];
-                eta_fan = Program.UTIL.ToDoubleOrZero(Value[0][10]);
+                // eta_fan = Program.UTIL.ToDoubleOrZero(Value[0][10]); // dP_term에서 무의미해짐(장비일람표에서도 숨김 처리)
             }
-            string[][] Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "결빙방지온도", "결빙방지온도", "열회수기유형='" + AHU_HRVType + "' And 건물유형 ='비주거건물'");
+            string[][] Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "결빙방지온도", "결빙방지온도", "열회수기유형='" + HRVType + "' And 건물유형 ='비주거건물'");
             if (Value2.Length > 0)
             { theta_defrost = Program.UTIL.ToDoubleOrZero(Value2[0][0]); }
             Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "팬모터제어계수", "계수", "제어유형='" + MotorControl + "'");
@@ -347,24 +354,22 @@ namespace main
         }
         public void Load_PrehData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(ProjNum, "AHUSystem_form", "예열예냉유형,프리히터제어유형,프리히터용량,토양유형,지중깊이,쿨튜브관경,쿨튜브두께,쿨튜브길이,쿨튜브재질", "번호='" + AHUNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "AHUSystem_form", "예열예냉유형,프리히터용량", "번호='" + AHUNum + "'");
             if(Value.Length > 0)
             {
                 PrehPrecOptions = Value[0][0];
-                if (Value[0][0] == "프리히터")
+                if (Value[0][0] == "전기예열기")
                 {
-                    PrehControlOptions = Value[0][1];
-                    PrehPower = Program.UTIL.ToDoubleOrZero(Value[0][2]);
-                    string[][] Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "예열기제어계수", "계수", "제어유형='" + PrehControlOptions + "'");
-                    if (Value2.Length > 0)
-                    {
-                        fdefrost_ctrl = Program.UTIL.ToDoubleOrZero(Value2[0][0]);
-                    }
+                    PrehPower = Program.UTIL.ToDoubleOrZero(Value[0][1]);
                 }
-                string[][] Value3 = Program.DB.getValue(DB.type.BaseDB_AHU, "예열기압력손실차", "압력손실차", "유형='" + PrehPrecOptions + "'");
-                if (Value3.Length > 0)
+                else if (Value[0][0] == "온수예열기")
                 {
-                    dP_preh = Program.UTIL.ToDoubleOrZero(Value3[0][0]);
+                    string[][] Value4 = Program.DB.getValue(ProjNum, "AHUSystem_form", "온수예열기펌프출력,온수예열기코일출력", "번호='" + AHUNum + "'");
+                    if (Value4.Length > 0)
+                    {
+                        Preh_Ppump = Program.UTIL.ToDoubleOrZero(Value4[0][0]);
+                        Preh_Pcoil = Program.UTIL.ToDoubleOrZero(Value4[0][1]);
+                    }
                 }
             }
         }
@@ -373,17 +378,17 @@ namespace main
         public void Cal_SASet()
         {
             // 3.1.1 급기 난방/냉방 출력 [kW] — ΔT[K]·ca[kWh/(kg·K)]·ρa[kg/m3]·V[m3/h] = kWh/h = kW
-            double phi_h_coil = (theta_h_coil_out - theta_h_coil_in) * ca * rhoA * AHU_SA_Volume;
-            double phi_c_coil = (theta_c_coil_in - theta_c_coil_out) * ca * rhoA * AHU_SA_Volume;
+            double phi_h_coil = (theta_h_coil_out - theta_h_coil_in) * ca * rhoA * Volume_SA_ztot;
+            double phi_c_coil = (theta_c_coil_in - theta_c_coil_out) * ca * rhoA * Volume_SA_ztot;
 
             // 3.1.2 냉·난방 기준 급기온도
-            double theta_h_SA_ref = theta_i_set[0] + phi_h_coil / (ca * rhoA * AHU_SA_Volume);
-            double theta_c_SA_ref = theta_i_set[1] - phi_c_coil / (ca * rhoA * AHU_SA_Volume);
+            double theta_h_SA_ref = theta_i_set[0] + phi_h_coil / (ca * rhoA * Volume_SA_ztot);
+            double theta_c_SA_ref = theta_i_set[1] - phi_c_coil / (ca * rhoA * Volume_SA_ztot);
 
             // 3.1.3 냉방 기준 급기습도 — χi,c,set - [Vmax·ρa·rw·(χc,coil,in-χc,coil,out)] / [Vmax·ρa·rw]
-            double X_c_SA_ref = X_i_set[1] - (AHU_SA_Volume * rhoA * rw * (chi_c_coil_in - chi_c_coil_out)) / (AHU_SA_Volume * rhoA * rw);
+            double X_c_SA_ref = X_i_set[1] - (Volume_SA_ztot * rhoA * rw * (chi_c_coil_in - chi_c_coil_out)) / (Volume_SA_ztot * rhoA * rw);
 
-            bool isVAV = AHUOptions == "공조기" && AHU_Type == "변풍량";
+            bool isVAV = AHUOptions == "공조기" && AHUType == "변풍량";
             bool isCAV = AHUOptions == "공조기" && !isVAV;
 
             if (isCAV) // 3.2.1 정풍량 급기풍량
@@ -432,8 +437,8 @@ namespace main
             {
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    Vvmech[0, mth] = AHU_SA_Volume * flea_ahu * flea_du;
-                    Vvmech[1, mth] = AHU_SA_Volume * flea_ahu * flea_du;
+                    Vvmech[0, mth] = Volume_SA_ztot * flea_ahu * flea_du;
+                    Vvmech[1, mth] = Volume_SA_ztot * flea_ahu * flea_du;
                 }
             }
         }
@@ -515,10 +520,10 @@ namespace main
             {
                 double theta_OA_preh = theta_OA_du[0, mth];
 
-                if (PrehPrecOptions == "프리히터")
+                if (PrehPrecOptions == "전기예열기" || PrehPrecOptions == "온수예열기")
                 {
-                    int hourStart = ZoneDHU.MonthStartHour[mth];
-                    int hourEnd = mth < 11 ? ZoneDHU.MonthStartHour[mth + 1] : 8760;
+                    int hourStart = MonthStartHour[mth];
+                    int hourEnd = mth < 11 ? MonthStartHour[mth + 1] : 8760;
                     double sum = 0;
                     int count = 0;
                     for (int h = hourStart; h < hourEnd; h++)
@@ -656,7 +661,7 @@ namespace main
         {
 
         }
-        public void Cal_W()
+        public void Cal_Wfan()
         {
             for (int mth = 0; mth < 12; mth++)
             {
@@ -668,18 +673,89 @@ namespace main
 
                 // ⑥V_j,d — 급기(SUP): 그 달 대표 hc의 실제 급기풍량, 배기(ETA): 최소외기도입량(열회수 후 실외로 배기되는 신선외기 상당분)
                 double V_SUP_d = Vvmech[hc, mth];
-                double V_ETA_d = Vmin_tot;
+                double V_ETA_d = Vvmech[hc, mth];
 
                 // ②SPI — 풍량 당 팬 소비전력
-                double SPI_SUP = AHU_SA_Volume > 0 ? SA_FanPower / AHU_SA_Volume : 0;
-                double SPI_ETA = AHU_EA_Volume > 0 ? EA_FanPower / AHU_EA_Volume : 0;
+                double SPI_SUP = Volume_SA > 0 ? FanPower_SA / Volume_SA : 0;
+                double SPI_ETA = Volume_EA > 0 ? FanPower_EA / Volume_EA : 0;
 
-                // ⑧2.78e-7·ΔP_preh/η_fan — η_fan 미입력(0)이면 보정 없이 SPI만 적용
-                double dP_term = eta_fan > 0 ? 2.78e-7 * dP_preh / eta_fan : 0;
+                // ⑧2.78e-7·ΔP_preh/η_fan — dP_preh가 항상 0이라 η_fan 값과 무관하게 0으로 고정됨
+                // double dP_term = eta_fan > 0 ? 2.78e-7 * dP_preh / eta_fan : 0;
+                double dP_term = 0;
 
                 // ①Wv,d = V_j,d·(SPI+2.78e-7·ΔP_preh/η_fan)·f_flow,ctrl^χ·d_wd·t_v,op,d , j=SUP(급기),ETA(배기)
                 Ev_gen_fan_SA[mth] = V_SUP_d * (SPI_SUP + dP_term) * Math.Pow(f_flow_ctrl, chi_fan) * t_v_op_d;
                 Ev_gen_fan_EA[mth] = V_ETA_d * (SPI_ETA + dP_term) * Math.Pow(f_flow_ctrl, chi_fan) * t_v_op_d;
+            }
+        }
+        public void Cal_Wpreh()
+        {
+            if (PrehPrecOptions != "전기예열기") { return; }
+
+            double[] dmth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+            // ◯8 θe,preh = θODA,fp − Φpreh/(ρa·ca·qv,ODA) — 정격용량(Φpreh)으로 θODA,fp까지 데울 수 있는 최저 외기온도. PrehPower는 W 입력이라 /1000
+            double theta_e_preh = Vmin_tot > 0 ? theta_defrost - (PrehPower / 1000) / (rhoA * ca * Vmin_tot) : theta_defrost;
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                double Wv_preh_el_all = 0;
+                int hourStart = MonthStartHour[mth];
+                int hourEnd = mth < 11 ? MonthStartHour[mth + 1] : 8760;
+                for (int h = hourStart; h < hourEnd; h++)
+                {
+                    // ◯7 θe,preh ≤ θe,i < θODA,fp 구간만 반영 — θe,i < θe,preh(극저온, 정격용량 초과)는 계산범위에서 제외
+                    if (theta_e_hr[h] < theta_defrost && theta_e_hr[h] >= theta_e_preh)
+                    {
+                        // ◯2 Σρa·ca·Vv,min·(θODA,fp−θe,i) — 시간별 1h치 누적
+                        Wv_preh_el_all += rhoA * ca * Vmin_tot * (theta_defrost - theta_e_hr[h]);
+                    }
+                }
+
+                // ⑱f_day = d_wd/d_mth — 이 AHU 담당 존들의 난방 가중평균 이용일수(dvmechmth_avg[0,mth]) / 월 전체일수
+                double f_day = dvmechmth_avg[0, mth] / dmth[mth];
+
+                // ◯1 Wv,preh,el = Wv,preh,el,all · f_day
+                Wv_aux_preh[mth] = Wv_preh_el_all * f_day;
+            }
+        }
+        public void Cal_Wpreh_th()
+        {
+            if (PrehPrecOptions != "온수예열기") { return; }
+
+            double[] dmth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+            // θe,preh,th = θODA,fp − Ph,coil/(ρa·ca·qv,ODA) — ◯8과 동일 논리, Ph,coil(코일 정격출력)로 산정한 코일측 한계온도
+            double theta_e_preh_th = Vmin_tot > 0 ? theta_defrost - Preh_Pcoil / (rhoA * ca * Vmin_tot) : theta_defrost;
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                double Qpreh_th = 0, t_ci_preh_th = 0;
+                int hourStart = MonthStartHour[mth];
+                int hourEnd = mth < 11 ? MonthStartHour[mth + 1] : 8760;
+                for (int h = hourStart; h < hourEnd; h++)
+                {
+                    // θe,preh,th ≤ θe,i < θODA,fp 구간만 반영 — 그 이하(코일 정격용량 초과)는 계산범위에서 제외
+                    if (theta_e_hr[h] < theta_defrost && theta_e_hr[h] >= theta_e_preh_th)
+                    {
+                        // ◯24 Σρa·ca·qv,ODA·(θODA,fp−θe,i) — 온수예열기 필요열량
+                        Qpreh_th += rhoA * ca * Vmin_tot * (theta_defrost - theta_e_hr[h]);
+                        // ◯30 온수예열기 가동시간
+                        t_ci_preh_th += 1;
+                    }
+                }
+
+                // ◯23 β = Qpreh,th / (t_op,day · Ph,coil) — t_op,day는 tvmech_avg[0](난방모드 1일 공조가동시간) 재사용
+                double beta = (tvmech_avg[0] > 0 && Preh_Pcoil > 0) ? Qpreh_th / (tvmech_avg[0] * Preh_Pcoil) : 0;
+
+                // ◯22 Wv,preh,th,all = Ppump · β · t_ci,preh,th
+                double Wv_preh_th_all = Preh_Ppump * beta * t_ci_preh_th;
+
+                // ⑱f_day = d_wd/d_mth
+                double f_day = dvmechmth_avg[0, mth] / dmth[mth];
+
+                // ◯21 Wv,preh,th = Wv,preh,th,all · f_day
+                Wv_aux_preh[mth] = Wv_preh_th_all * f_day;
             }
         }
 

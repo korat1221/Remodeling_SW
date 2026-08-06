@@ -3848,11 +3848,15 @@ namespace main.contents
             AHU_dataGridView.Columns.Add("A25", "송풍기.풍량.배기.[CMH]");
             AHU_dataGridView.Columns.Add("A26", "송풍기.정압.급기.[Pa]");
             AHU_dataGridView.Columns.Add("A27", "송풍기.정압.배기.[Pa]");
+            AHU_dataGridView.Columns["A26"].Visible = false; // 계산에 미사용(Cal_AHU.cs Pressure_SA 참조 없음)
+            AHU_dataGridView.Columns["A27"].Visible = false; // 계산에 미사용(Cal_AHU.cs Pressure_EA 참조 없음)
             AHU_dataGridView.Columns.Add("A28", "송풍기.팬동력.급기.[kW]");
             AHU_dataGridView.Columns.Add("A29", "송풍기.팬동력.배기.[kW]");
             AHU_dataGridView.Columns.Add("A30", "송풍기.모터제어");
             AHU_dataGridView.Columns.Add("A31", "송풍기.모터유형");
             AHU_dataGridView.Columns.Add("A32", "송풍기.팬효율");
+            AHU_dataGridView.Columns["A31"].Visible = false; // 계산에 미사용(dP_preh가 항상 0이라 η_fan이 dP_term에서 무의미)
+            AHU_dataGridView.Columns["A32"].Visible = false; // 계산에 미사용(위와 동일 사유)
             AHU_dataGridView.Columns[0].Width = 40;
             AHU_dataGridView.Columns[1].Width = 60;
             AHU_dataGridView.Columns[2].Width = 60;
@@ -4062,18 +4066,19 @@ namespace main.contents
                         AHU_dataGridView.Rows[e.RowIndex].Cells[11].Value = Humidity_eta.ToString("0.0");
                     }
                 }
-                if (e.ColumnIndex == 31)
-                {
-                    if (AHU_dataGridView.Rows[e.RowIndex].Cells[31].Value != null)
-                    {
-                        string 모터유형 = AHU_dataGridView.Rows[e.RowIndex].Cells[31].Value.ToString();
-                        string[][] 팬효율Value = Program.DB.getValue(DB.type.BaseDB_AHU, "팬효율", "효율", "유형='" + 모터유형 + "'");
-                        if (팬효율Value.Length > 0)
-                        {
-                            AHU_dataGridView.Rows[e.RowIndex].Cells[32].Value = 팬효율Value[0][0];
-                        }
-                    }
-                }
+                // 모터유형/팬효율(A31,A32) 숨김 처리 — dP_preh가 항상 0이라 η_fan이 dP_term에서 무의미해짐
+                //if (e.ColumnIndex == 31)
+                //{
+                //    if (AHU_dataGridView.Rows[e.RowIndex].Cells[31].Value != null)
+                //    {
+                //        string 모터유형 = AHU_dataGridView.Rows[e.RowIndex].Cells[31].Value.ToString();
+                //        string[][] 팬효율Value = Program.DB.getValue(DB.type.BaseDB_AHU, "팬효율", "효율", "유형='" + 모터유형 + "'");
+                //        if (팬효율Value.Length > 0)
+                //        {
+                //            AHU_dataGridView.Rows[e.RowIndex].Cells[32].Value = 팬효율Value[0][0];
+                //        }
+                //    }
+                //}
             }
         }
         private double Calc_HumidityEta_Heating(double temp_eta, double all_eta)
@@ -4158,14 +4163,14 @@ namespace main.contents
                  + Value[22]
                  + "'", "번호");
                 Program.DB.setValue(DB.type.ProjDB, "User_AHU", "번호," +
-                   "급기풍량,배기풍량,급기정압,배기정압,급기팬동력,배기팬동력,모터제어",
+                   "급기풍량,배기풍량,급기팬동력,배기팬동력,모터제어",
                "'" + Value[0] + "','"
-                + Value[23] + "','" + Value[24] + "','" + Value[25] + "','"
-                + Value[26] + "','" + Value[27] + "','" + Value[28] + "','"
-                + Value[29]
+                + Value[23] + "','" + Value[24] + "','"
+                + Value[27] + "','" + Value[28] + "','" + Value[29]
                 + "'", "번호");
-                Program.DB.setValue(DB.type.ProjDB, "User_AHU", "번호,팬모터유형,팬효율",
-                "'" + Value[0] + "','" + Value[30] + "','" + Value[31] + "'", "번호");
+                // 팬모터유형,팬효율 저장 제거 — dP_preh가 항상 0이라 η_fan이 dP_term에서 무의미해짐(장비일람표에서도 숨김 처리)
+                //Program.DB.setValue(DB.type.ProjDB, "User_AHU", "번호,팬모터유형,팬효율",
+                //"'" + Value[0] + "','" + Value[30] + "','" + Value[31] + "'", "번호");
             }
             Program.DB.saveProject();
 
@@ -4173,7 +4178,8 @@ namespace main.contents
         private void Load_AHU()
         {
             AHU_dataGridView.Rows.Clear();
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "번호,명칭,설치유형,공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기제어유형,가습기습도수준,가습기용량,급기풍량,배기풍량,급기정압,배기정압,급기팬동력,배기팬동력,모터제어,팬모터유형,팬효율", "");
+            // 급기정압,배기정압 로드 제거 — 계산식 미사용(장비일람표에서도 숨김 처리)
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "번호,명칭,설치유형,공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기제어유형,가습기습도수준,가습기용량,급기풍량,배기풍량,급기팬동력,배기팬동력,모터제어,팬모터유형,팬효율", "");
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
@@ -4221,8 +4227,11 @@ namespace main.contents
                     팬효율모터유형Combo.Items.Add("EC_후곡형");
                     AHU_dataGridView.Rows[nRow].Cells[31] = 팬효율모터유형Combo;
 
-                    for (int i = 0; i < 32; i++)
+                    // A26,A27(급기정압,배기정압) 컬럼이 로드 대상에서 빠져서 인덱스가 여기서부터 2칸씩 밀림
+                    for (int i = 0; i < 25; i++)
                     { AHU_dataGridView.Rows[nRow].Cells[i + 1].Value = Value[n][i]; }
+                    for (int i = 25; i < 30; i++)
+                    { AHU_dataGridView.Rows[nRow].Cells[i + 3].Value = Value[n][i]; }
 
                 }
             }
@@ -4255,9 +4264,12 @@ namespace main.contents
             HRV_dataGridView.Columns.Add("A10", "회수 효율.절대습도.난방.[%]");
             HRV_dataGridView.Columns.Add("A11", "팬.풍량.[CMH]");
             HRV_dataGridView.Columns.Add("A12", "팬.정압.[Pa]");
+            HRV_dataGridView.Columns["A12"].Visible = false; // 계산에 미사용(Cal_AHU.cs 정압 참조 없음)
             HRV_dataGridView.Columns.Add("A13", "팬.모터제어");
             HRV_dataGridView.Columns.Add("A14", "팬.모터유형");
             HRV_dataGridView.Columns.Add("A15", "팬.팬효율");
+            HRV_dataGridView.Columns["A14"].Visible = false; // 계산에 미사용(dP_preh가 항상 0이라 η_fan이 dP_term에서 무의미)
+            HRV_dataGridView.Columns["A15"].Visible = false; // 계산에 미사용(위와 동일 사유)
             HRV_dataGridView.Columns.Add("A16", "소비전력.[W]");
             HRV_dataGridView.Columns[0].Width = 40;
         }
@@ -4405,13 +4417,14 @@ namespace main.contents
                  + Value[9]
                  + "'", "번호");
                 Program.DB.setValue(DB.type.ProjDB, "User_HRV", "번호," +
-                   "팬풍량,팬정압,모터제어,팬동력",
+                   "팬풍량,모터제어,팬동력",
                "'" + Value[0] + "','"
-                + Value[10] + "','" + Value[11] + "','" + Value[12] + "','"
+                + Value[10] + "','" + Value[12] + "','"
                 + Value[15]
                 + "'", "번호");
-                Program.DB.setValue(DB.type.ProjDB, "User_HRV", "번호,팬모터유형,팬효율",
-                "'" + Value[0] + "','" + Value[13] + "','" + Value[14] + "'", "번호");
+                // 팬모터유형,팬효율 저장 제거 — dP_preh가 항상 0이라 η_fan이 dP_term에서 무의미해짐(장비일람표에서도 숨김 처리)
+                //Program.DB.setValue(DB.type.ProjDB, "User_HRV", "번호,팬모터유형,팬효율",
+                //"'" + Value[0] + "','" + Value[13] + "','" + Value[14] + "'", "번호");
             }
             Program.DB.saveProject();
         }
@@ -4456,25 +4469,27 @@ namespace main.contents
                         }
                     }
                 }
-                if (e.ColumnIndex == 14)
-                {
-                    if (HRV_dataGridView.Rows[e.RowIndex].Cells[14].Value != null)
-                    {
-                        string 모터유형 = HRV_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString();
-                        string[][] 팬효율Value = Program.DB.getValue(DB.type.BaseDB_AHU, "팬효율", "효율", "유형='" + 모터유형 + "'");
-                        if (팬효율Value.Length > 0)
-                        {
-                            HRV_dataGridView.Rows[e.RowIndex].Cells[15].Value = 팬효율Value[0][0];
-                        }
-                    }
-                }
+                // 모터유형/팬효율(A14,A15) 숨김 처리 — dP_preh가 항상 0이라 η_fan이 dP_term에서 무의미해짐
+                //if (e.ColumnIndex == 14)
+                //{
+                //    if (HRV_dataGridView.Rows[e.RowIndex].Cells[14].Value != null)
+                //    {
+                //        string 모터유형 = HRV_dataGridView.Rows[e.RowIndex].Cells[14].Value.ToString();
+                //        string[][] 팬효율Value = Program.DB.getValue(DB.type.BaseDB_AHU, "팬효율", "효율", "유형='" + 모터유형 + "'");
+                //        if (팬효율Value.Length > 0)
+                //        {
+                //            HRV_dataGridView.Rows[e.RowIndex].Cells[15].Value = 팬효율Value[0][0];
+                //        }
+                //    }
+                //}
             }
         }
 
         private void Load_HRV()
         {
             HRV_dataGridView.Rows.Clear();
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "번호,명칭,설치유형,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,팬풍량,팬정압,모터제어,팬동력,팬모터유형,팬효율", "");
+            // 팬정압 로드 제거 — 계산식 미사용(장비일람표에서도 숨김 처리)
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_HRV", "번호,명칭,설치유형,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,팬풍량,모터제어,팬동력,팬모터유형,팬효율", "");
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
@@ -4503,12 +4518,14 @@ namespace main.contents
                     팬효율모터유형Combo.Items.Add("EC_후곡형");
                     HRV_dataGridView.Rows[nRow].Cells[14] = 팬효율모터유형Combo;
 
-                    for (int i = 0; i < 13; i++)
+                    // A12(팬정압) 컬럼이 로드 대상에서 빠져서 인덱스가 여기서부터 1칸씩 밀림
+                    for (int i = 0; i < 11; i++)
                     { HRV_dataGridView.Rows[nRow].Cells[i + 1].Value = Value[n][i]; }
+                    HRV_dataGridView.Rows[nRow].Cells[13].Value = Value[n][11]; // 모터제어
                     // 소비전력(팬동력)은 팬효율.모터유형/팬효율 컬럼(14,15) 뒤로 밀려 마지막 컬럼(16)에 있음
-                    HRV_dataGridView.Rows[nRow].Cells[16].Value = Value[n][13];
-                    HRV_dataGridView.Rows[nRow].Cells[14].Value = Value[n][14];
-                    HRV_dataGridView.Rows[nRow].Cells[15].Value = Value[n][15];
+                    HRV_dataGridView.Rows[nRow].Cells[16].Value = Value[n][12];
+                    HRV_dataGridView.Rows[nRow].Cells[14].Value = Value[n][13];
+                    HRV_dataGridView.Rows[nRow].Cells[15].Value = Value[n][14];
 
                 }
             }

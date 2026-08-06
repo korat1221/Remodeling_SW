@@ -226,40 +226,37 @@ namespace main.contents.Result
                     Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "예열예냉유형", "번호 = '" + Num + "'");
                     string pretype = Value[0][0].ToString();
                     PreData[0].Add(new { idx = i, val = pretype });  // 예열예냉유형
-                    if (pretype == "프리히터")
+                    if (pretype == "전기예열기")
                     {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "프리히터제어유형,프리히터용량", "번호 = '" + Num + "'");
-                        PreData[1].Add(new { idx = i, val = Value[0][0].ToString() });  //제어유형
-                        PreData[2].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][1].ToString(), 0) }); //용량
-                        
-                        PreData[3].Add(new { idx = i, val = "-" });  //토양유형
-                        PreData[4].Add(new { idx = i, val = "-" });  //지중깊이
-                        PreData[5].Add(new { idx = i, val = "-" });  //재질
-                        PreData[6].Add(new { idx = i, val = "-" });  //길이
-                        PreData[7].Add(new { idx = i, val = "-" });   //관경
+                        Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "프리히터용량", "번호 = '" + Num + "'");
+                        PreData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][0].ToString(), 0) }); //용량
+
+                        PreData[2].Add(new { idx = i, val = "-" });  //토양유형
+                        PreData[3].Add(new { idx = i, val = "-" });  //지중깊이
+                        PreData[4].Add(new { idx = i, val = "-" });  //재질
+                        PreData[5].Add(new { idx = i, val = "-" });  //길이
+                        PreData[6].Add(new { idx = i, val = "-" });   //관경
                     }
                     else if(pretype == "쿨튜브")
                     {
                         Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "토양유형,지중깊이,쿨튜브재질,쿨튜브길이,쿨튜브관경", "번호 = '" + Num + "'");
-                        PreData[1].Add(new { idx = i, val = "-" });  //제어유형
-                        PreData[2].Add(new { idx = i, val = "-" });   //용량
+                        PreData[1].Add(new { idx = i, val = "-" });   //용량
 
-                        PreData[3].Add(new { idx = i, val = Value[0][0].ToString() });  //토양유형
-                        PreData[4].Add(new { idx = i, val = Value[0][1].ToString() });  //지중깊이
-                        PreData[5].Add(new { idx = i, val = Value[0][2].ToString() });  //재질
-                        PreData[6].Add(new { idx = i, val = Value[0][3].ToString() });  //길이
-                        PreData[7].Add(new { idx = i, val = Value[0][4].ToString() });   //관경
+                        PreData[2].Add(new { idx = i, val = Value[0][0].ToString() });  //토양유형
+                        PreData[3].Add(new { idx = i, val = Value[0][1].ToString() });  //지중깊이
+                        PreData[4].Add(new { idx = i, val = Value[0][2].ToString() });  //재질
+                        PreData[5].Add(new { idx = i, val = Value[0][3].ToString() });  //길이
+                        PreData[6].Add(new { idx = i, val = Value[0][4].ToString() });   //관경
                     }
                     else
                     {
-                        PreData[1].Add(new { idx = i, val = "-" });  //제어유형
-                        PreData[2].Add(new { idx = i, val = "-" });   //용량
+                        PreData[1].Add(new { idx = i, val = "-" });   //용량
 
-                        PreData[3].Add(new { idx = i, val = "-" });  //토양유형
-                        PreData[4].Add(new { idx = i, val = "-" }); //지중깊이
-                        PreData[5].Add(new { idx = i, val = "-" });  //재질
-                        PreData[6].Add(new { idx = i, val = "-" }); //길이
-                        PreData[7].Add(new { idx = i, val = "-" });   //관경
+                        PreData[2].Add(new { idx = i, val = "-" });  //토양유형
+                        PreData[3].Add(new { idx = i, val = "-" }); //지중깊이
+                        PreData[4].Add(new { idx = i, val = "-" });  //재질
+                        PreData[5].Add(new { idx = i, val = "-" }); //길이
+                        PreData[6].Add(new { idx = i, val = "-" });   //관경
                     }
 
                     //존난방,냉방,제습요구량
@@ -385,13 +382,12 @@ namespace main.contents.Result
                     data.Add(new { cname = "hum_power", data = AhuData[23] });
 
                     data.Add(new { cname = "pre_type", data = PreData[0] });
-                    data.Add(new { cname = "pre_control", data = PreData[1] });
-                    data.Add(new { cname = "pre_power", data = PreData[2] });
-                    data.Add(new { cname = "pre_groundtype", data = PreData[3] });
-                    data.Add(new { cname = "pre_depth", data = PreData[4] });
-                    data.Add(new { cname = "pre_material", data = PreData[5] });
-                    data.Add(new { cname = "pre_length", data = PreData[6] });
-                    data.Add(new { cname = "pre_diameter", data = PreData[7] });
+                    data.Add(new { cname = "pre_power", data = PreData[1] });
+                    data.Add(new { cname = "pre_groundtype", data = PreData[2] });
+                    data.Add(new { cname = "pre_depth", data = PreData[3] });
+                    data.Add(new { cname = "pre_material", data = PreData[4] });
+                    data.Add(new { cname = "pre_length", data = PreData[5] });
+                    data.Add(new { cname = "pre_diameter", data = PreData[6] });
 
                     data.Add(new { cname = "zone_hndmth", data = MthData[0] });
                     data.Add(new { cname = "zone_cndmth", data = MthData[1] });

@@ -23,8 +23,9 @@ namespace main.contents
         double SALength, RALength, DuctInsulationThickness, DuctDiameter;
         ArrayList SelectZone_split = new ArrayList();
         String TABOptions, PipeIns; double PipeIns_Ramda;
-        string PrehPrecOptions, PrehControlOptions, GroundOptions, CooltubeMaterial;
+        string PrehPrecOptions, GroundOptions, CooltubeMaterial;
         double PrehPower, GroundDepth, CooltubeDiameter, CooltubeThickness, CooltubeLength;
+        double Preh_PumpPower, Preh_CoilPower;
         double AnnualCoolingNeed, AnnualHeatingNeed;
         double CoolingLoad, HeatingLoad;
         double 계산된_냉방출력, 계산된_난방출력;
@@ -86,7 +87,8 @@ namespace main.contents
             //예열/예냉유형 콤보박스
             PrehPrecOptions_comboBox.Items.Clear();
             PrehPrecOptions_comboBox.Items.Add("없음");
-            PrehPrecOptions_comboBox.Items.Add("프리히터");
+            PrehPrecOptions_comboBox.Items.Add("전기예열기");
+            PrehPrecOptions_comboBox.Items.Add("온수예열기");
 
             //토양유형 콤보박스
             GroundOptions_comboBox.Items.Clear();
@@ -102,11 +104,6 @@ namespace main.contents
             CooltubeMaterial_comboBox.Items.Add("PE");
             CooltubeMaterial_comboBox.Items.Add("PVC");
             CooltubeMaterial_comboBox.Items.Add("철근콘크리트");
-
-            //프리히터제어 콤보박스
-            PrehControlOptions_comboBox.Items.Clear();
-            PrehControlOptions_comboBox.Items.Add("on/off제어");
-            PrehControlOptions_comboBox.Items.Add("인버터제어");
 
             //덕트단열재 설정
             PipeIns_Ramda = 0.035;
@@ -685,23 +682,34 @@ namespace main.contents
                 GroundInfo_groupBox.BringToFront();
                 CooltubeInfo_groupBox.Visible = true;
                 PrehInfo_groupBox.Visible = false;
+                PrehTHInfo_groupBox.Visible = false;
             }
-            else if (PrehPrecOptions == "프리히터")
+            else if (PrehPrecOptions == "전기예열기")
             {
                 PrehInfo_groupBox.Visible = true;
                 PrehInfo_groupBox.BringToFront();
                 GroundInfo_groupBox.Visible = false;
                 CooltubeInfo_groupBox.Visible = false;
+                PrehTHInfo_groupBox.Visible = false;
                 int a = preheating_power();
                 prepower_label.Text = Program.UTIL.doubleComa(a.ToString(), 0);
             }
-
-
+            else if (PrehPrecOptions == "온수예열기")
+            {
+                PrehTHInfo_groupBox.Visible = true;
+                PrehTHInfo_groupBox.BringToFront();
+                GroundInfo_groupBox.Visible = false;
+                CooltubeInfo_groupBox.Visible = false;
+                PrehInfo_groupBox.Visible = false;
+                double a_kw = preheating_power() / 1000.0;
+                coilpower_label.Text = Program.UTIL.doubleComa(a_kw.ToString(), 1);
+            }
             else
             {
                 GroundInfo_groupBox.Visible = false;
                 CooltubeInfo_groupBox.Visible = false;
                 PrehInfo_groupBox.Visible = false;
+                PrehTHInfo_groupBox.Visible = false;
             }
         }
 
@@ -744,18 +752,6 @@ namespace main.contents
             return (int)Ppreh_default;
         }
 
-        private void PrehControlOptions_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (AHUOptions_comboBox.SelectedItem != null)
-            {
-                PrehControlOptions = PrehControlOptions_comboBox.SelectedItem.ToString();
-            }
-            else
-            {
-                PrehControlOptions = null;
-            }
-        }
-
         private void PrehPower_textBox_TextChanged(object sender, EventArgs e)
         {
             if (PrehPower_textBox.Text != null && PrehPower_textBox.Text != "")
@@ -765,6 +761,30 @@ namespace main.contents
             else
             {
                 PrehPower = 0;
+            }
+        }
+
+        private void PumpPower_textBox_TextChanged(object sender, EventArgs e)
+        {
+            if (PumpPower_textBox.Text != null && PumpPower_textBox.Text != "")
+            {
+                Preh_PumpPower = Program.UTIL.ToDoubleOrZero(PumpPower_textBox.Text.ToString());
+            }
+            else
+            {
+                Preh_PumpPower = 0;
+            }
+        }
+
+        private void CoilPower_textBox_TextChanged(object sender, EventArgs e)
+        {
+            if (CoilPower_textBox.Text != null && CoilPower_textBox.Text != "")
+            {
+                Preh_CoilPower = Program.UTIL.ToDoubleOrZero(CoilPower_textBox.Text.ToString());
+            }
+            else
+            {
+                Preh_CoilPower = 0;
             }
         }
 
@@ -888,7 +908,7 @@ namespace main.contents
 
         private void LoadPrehPrecImage() // 3.예열/예냉 그림넣기
         {
-            if (PrehPrecOptions == "프리히터")
+            if (PrehPrecOptions == "전기예열기")
             {
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", "항목유형 = '예열예냉' And 설비유형='" + PrehPrecOptions + "'");
                 PrehPrecpictureBox.Visible = true;
@@ -1089,12 +1109,17 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,유형", "'" + Num_textBox.Text + "','" + AHUOptions + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,설치위치,풍량제어,누기시험방법,누기등급1,누기등급2,공조기단열두께,TAB실시유무", "'" + Num_textBox.Text + "','" + AHULocation + "','" + AHUVolumeControl + "','" + AHULeakageTestMethod + "','" + AHULeakageLevel1 + "','" + AHULeakageLevel2 + "','" + AHUInsulationThickness.ToString() + "','" + TABOptions + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,덕트누기수준,OA덕트길이,EA덕트길이,SA덕트길이,RA덕트길이,덕트단열두께,덕트관경,덕트단열재,덕트단열재열전도율", "'" + Num_textBox.Text + "','" + DuctLeakageLevel + "','" + OALength.ToString() + "','" + EALength.ToString() + "','" + SALength.ToString() + "','" + RALength.ToString() + "','" + DuctInsulationThickness.ToString() + "','" + DuctDiameter.ToString() + "','" + PipeIns + "','" + PipeIns_Ramda.ToString() + "'", "번호");
-            if (PrehPrecOptions != "프리히터")
+            if (PrehPrecOptions != "전기예열기")
             {
-                PrehControlOptions = "";
                 PrehPower = 0;
             }
-            Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,예열예냉유형,프리히터제어유형,프리히터용량", "'" + Num_textBox.Text + "','" + PrehPrecOptions + "','" + PrehControlOptions + "','" + PrehPower + "'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,예열예냉유형,프리히터용량", "'" + Num_textBox.Text + "','" + PrehPrecOptions + "','" + PrehPower + "'", "번호");
+            if (PrehPrecOptions != "온수예열기")
+            {
+                Preh_PumpPower = 0;
+                Preh_CoilPower = 0;
+            }
+            Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,온수예열기펌프출력,온수예열기코일출력", "'" + Num_textBox.Text + "','" + Preh_PumpPower + "','" + Preh_CoilPower + "'", "번호");
             if (PrehPrecOptions != "쿨튜브")
             {
                 GroundOptions = "";
@@ -1152,8 +1177,9 @@ namespace main.contents
             SALength = 0; RALength = 0; DuctInsulationThickness = 0; DuctDiameter = 0;
             SelectZone_split.Clear();
             TABOptions = null; PipeIns = null; PipeIns_Ramda = 0;
-            PrehPrecOptions = null; PrehControlOptions = null; GroundOptions = null; CooltubeMaterial = null;
+            PrehPrecOptions = null; GroundOptions = null; CooltubeMaterial = null;
             PrehPower = 0; GroundDepth = 0; CooltubeDiameter = 0; CooltubeThickness = 0; CooltubeLength = 0;
+            Preh_PumpPower = 0; Preh_CoilPower = 0;
             AnnualCoolingNeed = 0; AnnualHeatingNeed = 0;
             CoolingLoad = 0; HeatingLoad = 0;
             계산된_냉방출력 = 0; 계산된_난방출력 = 0;
@@ -1177,7 +1203,6 @@ namespace main.contents
             PrehPrecOptions_comboBox.SelectedItem = null;
             GroundOptions_comboBox.SelectedItem = null;
             CooltubeMaterial_comboBox.SelectedItem = null;
-            PrehControlOptions_comboBox.SelectedItem = null;
 
             OASALength_textBox.Text = null;
             EARALength_textBox.Text = null;
@@ -1186,6 +1211,8 @@ namespace main.contents
             PipeIns_textBox.Text = null;
             PipeIns_Ramda_textBox.Text = null;
             PrehPower_textBox.Text = null;
+            PumpPower_textBox.Text = null;
+            CoilPower_textBox.Text = null;
             GroundDepth_textBox.Text = null;
             CooltubeDiameter_textBox.Text = null;
             CooltubeThickness_textBox.Text = null;
@@ -1303,17 +1330,29 @@ namespace main.contents
                 PrehPrecOptions_comboBox.SelectedItem = Value[0][0];
             }
 
-            Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "프리히터제어유형,프리히터용량", "번호 = '" + ID + "'");
+            Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "프리히터용량", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
-                PrehControlOptions_comboBox.SelectedItem = Value[0][0];
-
-                PrehPower_textBox.Text = Value[0][1];
-                PrehPower = Program.UTIL.ToDoubleOrZero(Value[0][1]);
+                PrehPower_textBox.Text = Value[0][0];
+                PrehPower = Program.UTIL.ToDoubleOrZero(Value[0][0]);
             }
             else
             {
                 PrehInfo_groupBox.Visible = false;
+            }
+
+            Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "온수예열기펌프출력,온수예열기코일출력", "번호 = '" + ID + "'");
+            if (Value.Length > 0)
+            {
+                Preh_PumpPower = Program.UTIL.ToDoubleOrZero(Value[0][0]);
+                PumpPower_textBox.Text = Preh_PumpPower.ToString();
+
+                Preh_CoilPower = Program.UTIL.ToDoubleOrZero(Value[0][1]);
+                CoilPower_textBox.Text = Preh_CoilPower.ToString();
+            }
+            else
+            {
+                PrehTHInfo_groupBox.Visible = false;
             }
 
             Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "토양유형,지중깊이,쿨튜브관경,쿨튜브두께,쿨튜브길이,쿨튜브재질", "번호 = '" + ID + "'");
