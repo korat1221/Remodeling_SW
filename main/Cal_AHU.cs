@@ -15,8 +15,9 @@ namespace main
         double[] eta_temp = new double[2], eta_all = new double[2], eta_humi = new double[2];
         double Phi_c_coil, theta_c_coil_in, theta_c_coil_in_web, theta_c_coil_out, theta_c_coil_out_web, Phi_h_coil, theta_h_coil_in, theta_h_coil_out;
         double chi_c_coil_in, chi_c_coil_out; // χc,coil,in / χc,coil,out — 스펙상 입력값
-        string HU_Type, HU_Control,HU_HULevel;
+        string HU_Type, HU_Control;
         double HU_Volume;
+        double Phr_rot_max; // 회전형 열회수기 로터모터 최대출력[kW] — n_rot/n_rot,max는 항상 1로 간주(가변속 로터 미지원)
         double Volume_SA_ztot, Volume_RA_ztot, FanPower_SA, FanPower_EA;
         // double Pressure_SA, Pressure_EA; // 계산식 미사용(장비일람표에서도 숨김 처리)
         double Volume_SA, Volume_EA;
@@ -51,7 +52,6 @@ namespace main
         public double[,] theta_vmech = new double[2, 12], Vvmech = new double[2, 12];
 
         public double[] Q_gnd = new double[12]; // 쿨튜브
-        public double[] Wpreh_k = new double[12]; //프리히팅
         public double[] theta_SA_prh = new double[12]; // 쿨튜브 or 프리히팅
 
         public double[,] dtheta_du_OA = new double[2, 12], theta_OA_du = new double[2, 12], Q_loss_OA_du = new double[2, 12]; //OA 덕트 열손실
@@ -64,16 +64,15 @@ namespace main
         double Fx;
 
         public double[,] dtheta_hr = new double[2, 12], theta_SA_hr = new double[2, 12], theta_EA_hr = new double[2, 12]; //열회수기
-        public double[,] dtheta_rca = new double[2, 12], theta_SA_rca = new double[2,12]; //재순환
 
-        public double[,] Qv_b = new double[2, 12]; public double[] Qhu_b = new double[12];
+        public double[,] Qv_b = new double[2, 12];
         public double[,] Q_ce = new double[2, 12]; // 8.1/8.2 공조 공급 열손실
         public double[,] Qstar_b = new double[2, 12]; // 8.1/8.2 공조 에너지요구량 (Qh*,b/Qc*,b)
-        public double[] X_SA_prh = new double[12], X_SA_rca = new double[12];
+        public double[] X_SA_prh = new double[12];
         public double[,] X_SA_hr = new double[2, 12];
         public double[] X_vmech = new double[12]; // χv,mech — 3.2.3/3.3.2 급기 절대습도
 
-        public double[] Ev_gen_fan_SA = new double[12], Ev_gen_fan_EA = new double[12], fpl_HU = new double[12], W_HU_aux = new double[12], Wv_aux_preh = new double[12];
+        public double[] Ev_gen_fan_SA = new double[12], Ev_gen_fan_EA = new double[12], fpl_HU = new double[12], W_HU_aux = new double[12], Wv_aux_preh = new double[12], Wv_aux_ctrl = new double[12], Wv_aux_hr = new double[12], W_tot = new double[12];
 
 
         double ca = 0.000279; // 공기비열 [kWh/(kg·K)]
@@ -104,13 +103,20 @@ namespace main
 
             for (int mth = 0; mth < 12; mth++)
             {
-                string[][] monthAvg = Program.DB.getValue(DB.type.BaseDB_RESystem, "시간별기후데이터", "AVG(건구온도),AVG(상대습도)", "지역='" + location + "' AND 월=" + (mth + 1));
+                string[][] monthAvg = Program.DB.getValue(DB.type.BaseDB_RESystem, "시간별기후데이터", "AVG(건구온도)", "지역='" + location + "' AND 월=" + (mth + 1));
                 if (monthAvg.Length > 0)
                 {
                     theta_e[mth] = Program.UTIL.ToDoubleOrZero(monthAvg[0][0]);
-                    double rh = Program.UTIL.ToDoubleOrZero(monthAvg[0][1]) / 100;
-                    X_e[mth] = 0.622 * (611.2 * Math.Pow(Math.E, 17.62 * theta_e[mth] / (243.12 + theta_e[mth])) * rh) / (101325 - (611.2 * Math.Pow(Math.E, 17.62 * theta_e[mth] / (243.12 + theta_e[mth]))) * rh);
                 }
+
+                int hStart = MonthStartHour[mth];
+                int hEnd = mth < 11 ? MonthStartHour[mth + 1] : 8760;
+                double X_sum = 0;
+                for (int h = hStart; h < hEnd; h++)
+                {
+                    X_sum += X_e_hr[h];
+                }
+                X_e[mth] = X_sum / (hEnd - hStart);
             }
         }
         public void Load_ZoneData(string ProjNum)
@@ -230,8 +236,8 @@ namespace main
                 AHUInsulationThickness = Program.UTIL.ToDoubleOrZero(Value[0][4]);
                 DuctLeakageLevel = Value[0][5];
 
-                if (AHULocation == "단열외피 내부") { Fx = 0.1; }
-                else if (AHULocation == "단열외피 외부") { Fx = 0.4; }
+                if (AHULocation == "단열외피 내부") { Fx = 0; }
+                else if (AHULocation == "단열외피 외부") { Fx = 0.8; }
                 else { Fx = 1; }
                 for (int mth = 0; mth < 12; mth++)
                 {
@@ -267,7 +273,7 @@ namespace main
         }
         public void Load_AHUData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(ProjNum, "User_AHU", "공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기제어유형,가습기습도수준,가습기용량,급기풍량,배기풍량,급기정압,배기정압,급기팬동력,배기팬동력,모터제어,팬효율", "번호 = '" + AHUNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "User_AHU", "공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기제어유형,가습기용량,급기풍량,배기풍량,급기정압,배기정압,급기팬동력,배기팬동력,모터제어,팬효율,회전형모터소비전력", "번호 = '" + AHUNum + "'");
             if (Value.Length > 0)
             {
                 AHUType = Value[0][0];
@@ -283,25 +289,34 @@ namespace main
                 theta_c_coil_in_web = Program.UTIL.ToDoubleOrZero(Value[0][10]);
                 theta_c_coil_out = Program.UTIL.ToDoubleOrZero(Value[0][11]);
                 theta_c_coil_out_web = Program.UTIL.ToDoubleOrZero(Value[0][12]);
+
+                // χc,coil,in/out — 스펙에 변환식 없어서 예전 코드 방식 재사용: 습구온도(Sprung 근사식)→상대습도→절대습도
+                double RH_c_coil_in = (theta_c_coil_in_web + 5.809 - 0.697 * theta_c_coil_in) / ((0.058 + 0.003 * theta_c_coil_in) * 100);
+                chi_c_coil_in = 0.622 * (611.2 * Math.Pow(Math.E, 17.62 * theta_c_coil_in / (243.12 + theta_c_coil_in))) * RH_c_coil_in / (101325 - (611.2 * Math.Pow(Math.E, 17.62 * theta_c_coil_in / (243.12 + theta_c_coil_in))) * RH_c_coil_in);
+
+                double RH_c_coil_out = (theta_c_coil_out_web + 5.809 - 0.697 * theta_c_coil_out) / ((0.058 + 0.003 * theta_c_coil_out) * 100);
+                chi_c_coil_out = 0.622 * (611.2 * Math.Pow(Math.E, 17.62 * theta_c_coil_out / (243.12 + theta_c_coil_out))) * RH_c_coil_out / (101325 - (611.2 * Math.Pow(Math.E, 17.62 * theta_c_coil_out / (243.12 + theta_c_coil_out))) * RH_c_coil_out);
+
                 Phi_h_coil = Program.UTIL.ToDoubleOrZero(Value[0][13]);
                 theta_h_coil_in = Program.UTIL.ToDoubleOrZero(Value[0][14]);
                 theta_h_coil_out = Program.UTIL.ToDoubleOrZero(Value[0][15]);
 
                 HU_Type = Value[0][16];
                 HU_Control = Value[0][17];
-                HU_HULevel = Value[0][18];
-                HU_Volume = Program.UTIL.ToDoubleOrZero(Value[0][19]);
+                HU_Volume = Program.UTIL.ToDoubleOrZero(Value[0][18]);
 
-                Volume_SA = Program.UTIL.ToDoubleOrZero(Value[0][20]);
-                Volume_EA = Program.UTIL.ToDoubleOrZero(Value[0][21]);
+                Volume_SA = Program.UTIL.ToDoubleOrZero(Value[0][19]);
+                Volume_EA = Program.UTIL.ToDoubleOrZero(Value[0][20]);
 
                 Load_ZoneVentVolume(ProjNum);
-                // Pressure_SA = Program.UTIL.ToDoubleOrZero(Value[0][22]); // 급기정압 — 계산식 미사용(장비일람표에서도 숨김 처리)
-                // Pressure_EA = Program.UTIL.ToDoubleOrZero(Value[0][23]); // 배기정압 — 계산식 미사용(장비일람표에서도 숨김 처리)
-                FanPower_SA = Program.UTIL.ToDoubleOrZero(Value[0][24]);
-                FanPower_EA = Program.UTIL.ToDoubleOrZero(Value[0][25]);
-                MotorControl = Value[0][26];
-                // eta_fan = Program.UTIL.ToDoubleOrZero(Value[0][27]); // dP_term에서 무의미해짐(장비일람표에서도 숨김 처리)
+                // Pressure_SA = Program.UTIL.ToDoubleOrZero(Value[0][21]); // 급기정압 — 계산식 미사용(장비일람표에서도 숨김 처리)
+                // Pressure_EA = Program.UTIL.ToDoubleOrZero(Value[0][22]); // 배기정압 — 계산식 미사용(장비일람표에서도 숨김 처리)
+                FanPower_SA = Program.UTIL.ToDoubleOrZero(Value[0][23]);
+                FanPower_EA = Program.UTIL.ToDoubleOrZero(Value[0][24]);
+                MotorControl = Value[0][25];
+                // eta_fan = Program.UTIL.ToDoubleOrZero(Value[0][26]); // dP_term에서 무의미해짐(장비일람표에서도 숨김 처리)
+
+                Phr_rot_max = Program.UTIL.ToDoubleOrZero(Value[0][27]);
             }
             string[][] Value2 = Program.DB.getValue(DB.type.BaseDB_AHU, "결빙방지온도", "결빙방지온도", "열회수기유형='" + HRVType+ "' And 건물유형 ='비주거건물'");
             if (Value2.Length > 0)
@@ -620,18 +635,7 @@ namespace main
                 }
             }
         }
-        public void Cal_Qv_b()
-        {
-            // Qvh,b/Qvc,b(공조 순 냉난방 에너지요구량, Part 2 참조) — Cal_HCneed.cs의 존 열수지 계산이
-            // 이미 AHU.theta_SA_hr(덕트/예열/열회수 보정된 급기온도)를 반영해서 만든 값이라 그대로 씀
-            for (int hc = 0; hc < 2; hc++)
-            {
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    Qv_b[hc, mth] = Qb_mth_tot[hc, mth];
-                }
-            }
-        }
+       
         public void Cal_CoilLoss()
         {
             for (int mth = 0; mth < 12; mth++)
@@ -657,10 +661,20 @@ namespace main
                 }
             }
         }
-        public void Cal_HU()
-        {
 
+        public void Cal_Qv_b()
+        {
+            // Qvh,b/Qvc,b(공조 순 냉난방 에너지요구량, Part 2 참조) — Cal_HCneed.cs의 존 열수지 계산이
+            // 이미 AHU.theta_SA_hr(덕트/예열/열회수 보정된 급기온도)를 반영해서 만든 값이라 그대로 씀
+            for (int hc = 0; hc < 2; hc++)
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    Qv_b[hc, mth] = Qb_mth_tot[hc, mth];
+                }
+            }
         }
+
         public void Cal_Wfan()
         {
             for (int mth = 0; mth < 12; mth++)
@@ -745,8 +759,9 @@ namespace main
                     }
                 }
 
-                // ◯23 β = Qpreh,th / (t_op,day · Ph,coil) — t_op,day는 tvmech_avg[0](난방모드 1일 공조가동시간) 재사용
-                double beta = (tvmech_avg[0] > 0 && Preh_Pcoil > 0) ? Qpreh_th / (tvmech_avg[0] * Preh_Pcoil) : 0;
+                // ◯23 β = Qpreh,th / (t_ci,preh,th · Ph,coil) — 기술서 원문은 분모가 t_op,day(1일 공조가동시간, 고정값)인데,
+                // 그러면 β가 1을 초과하고 Wv,preh,th,all이 펌프 정격출력×가동시간(물리적 상한)을 넘어설 수 있어 t_ci,preh,th로 대체함
+                double beta = (t_ci_preh_th > 0 && Preh_Pcoil > 0) ? Qpreh_th / (t_ci_preh_th * Preh_Pcoil) : 0;
 
                 // ◯22 Wv,preh,th,all = Ppump · β · t_ci,preh,th
                 double Wv_preh_th_all = Preh_Ppump * beta * t_ci_preh_th;
@@ -758,7 +773,67 @@ namespace main
                 Wv_aux_preh[mth] = Wv_preh_th_all * f_day;
             }
         }
+        public void Cal_W_HU()
+        {
+            double[] dmth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
+            // ◯3 Pel,HU — 가습기유형별 표준값(Annex C.5-6, kWh/m3). "없음"/"스팀형"은 DB값이 0이라 별도 분기 불필요
+            double Pel_HU = 0;
+            string[][] Value = Program.DB.getValue(DB.type.BaseDB_AHU, "가습기", "소비전력", "가습기유형='" + HU_Type + "'");
+            if (Value.Length > 0) { Pel_HU = Program.UTIL.ToDoubleOrZero(Value[0][0]); }
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                // ◯4 fpl,HU — xSUP,HU=X_i_set[0](난방 실내설정습도), xSUP,C=X_SA_hr[0,mth](가습기 통과 전, 난방모드 열회수 후 급기습도)
+                double ratio = HU_Volume > 0 ? Math.Max(0, Vmin_tot * rhoA * (X_i_set[0] - X_SA_hr[0, mth])) / HU_Volume : 0;
+                double fpl_HU_mth = HU_Control == "인버터제어" ? Math.Pow(ratio, 2.5) : HU_Control == "on/off제어" ? ratio : 1;
+                fpl_HU[mth] = fpl_HU_mth;
+
+                // ◯10 tci = dmth·24
+                double tci = dmth[mth] * 24;
+
+                // ◯1 WHU,aux = qv,ODA·Pel,HU·fpl,HU·tci
+                W_HU_aux[mth] = Vmin_tot * Pel_HU * fpl_HU_mth * tci;
+            }
+        }
+        public void Cal_W_ctrl()
+        {
+            double[] dmth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+            // ◯2 ΣPel,v,ctrl — 제어기 소비전력 표준값(Annex C.5-7)
+            double Pel_ctrl = 0;
+            string[][] Value = Program.DB.getValue(DB.type.BaseDB_AHU, "제어기소비전력", "소비전력", "구분='제어기'");
+            if (Value.Length > 0) { Pel_ctrl = Program.UTIL.ToDoubleOrZero(Value[0][0]); }
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                // ◯3 fop,ctrl = 1, ◯4 tci = dmth·24 → ◯1 Wv,aux,ctrl = ΣPel,v,ctrl·fop,ctrl·tci
+                Wv_aux_ctrl[mth] = Pel_ctrl * 1 * (dmth[mth] * 24);
+            }
+        }
+        public void Cal_W_hr()
+        {
+            bool isRotary = HRVType == "일반회전형" || HRVType == "흡수식회전형" || HRVType == "흡착식회전형";
+            if (!isRotary) { return; } // ◯2 회전형 모터가 아니면 0(배열 기본값)
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                // ◯4 tci — Cal_Wfan과 동일하게 실제 팬 가동시간으로 산정(결빙방지 조건과 무관하게 상시 회전)
+                int hc = Vvmech[1, mth] >= Vvmech[0, mth] ? 1 : 0;
+                double tci = tvmech_avg[hc] * dvmechmth_avg[hc, mth];
+
+                // ◯2 Wv,aux,hr,all = Phr,rot,max·tci·(n_rot/n_rot,max) — n_rot/n_rot,max는 항상 1로 간주
+                Wv_aux_hr[mth] = Phr_rot_max * tci;
+            }
+        }
+        public void Cal_Waux_tot()
+        {
+            // 6. 총합산 — 팬(급기·배기)+예열기(전기/온수)+가습기+제어기+회전형 열회수기 모터
+            for (int mth = 0; mth < 12; mth++)
+            {
+                W_tot[mth] = Ev_gen_fan_SA[mth] + Ev_gen_fan_EA[mth] + Wv_aux_preh[mth] + W_HU_aux[mth] + Wv_aux_ctrl[mth] + Wv_aux_hr[mth];
+            }
+        }
         public void Cal_CoolTube()
         {
 

@@ -1075,7 +1075,7 @@ namespace main
             }
             ahu1.SelectZone_split.Clear();
 
-            string[][] value = Program.DB.getValue(ProjNum, "ZoneGeneral_Form", "존번호", "선택열회수기 = '" + ahu1.AHUNum + "'");
+            string[][] value = Program.DB.getValue(ProjNum, "ZoneGeneral_Form", "존번호", "선택열회수기 = '" + ahu1.AHUNum + "' and 환기유무='True'");
             string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,기존존", "");
             if (value.Length > 0 && PostZone.Length > 0)
             {
@@ -1170,7 +1170,7 @@ namespace main
             {
                 for (int n = 0; n < ahu1.SelectZone_split.Count; n++)
                 {
-                    string[][] ZoneValue = Program.DB.getValue(ProjNum, "ZoneGeneral_form", "용도프로필,이용일환기량,순바닥면적,공조시간,주이용일", "존번호='" + ahu1.SelectZone_split[n] + "'");
+                    string[][] ZoneValue = Program.DB.getValue(ProjNum, "ZoneGeneral_form", "용도프로필,이용일환기량,순바닥면적,공조시간,주이용일,냉방습도,난방습도", "존번호='" + ahu1.SelectZone_split[n] + "'");
                     if (ZoneValue.Length > 0)
                     {
                         ahu1.Vmin_tot += Program.UTIL.ToDoubleOrZero(ZoneValue[0][1]);
@@ -1178,6 +1178,17 @@ namespace main
                         Zone zone = Program.CALC.getZone(ahu1.SelectZone_split[n].ToString());
                         ahu1.Qh_a_tot += zone.Qb_a[0];
                         ahu1.Qc_a_tot += zone.Qb_a[1];
+
+                        string[][] HumidC = Program.DB.getValue(DB.type.BaseDB_HCneed, "습도설정", "냉방설정습도", "등급='" + ZoneValue[0][5] + "'");
+                        if (HumidC.Length > 0)
+                        {
+                            ahu1.X_i_max += Program.UTIL.ToDoubleOrZero(HumidC[0][0]) / 1000 * zone.Qb_a[1];
+                        }
+                        string[][] HumidH = Program.DB.getValue(DB.type.BaseDB_HCneed, "습도설정", "난방설정습도", "등급='" + ZoneValue[0][6] + "'");
+                        if (HumidH.Length > 0)
+                        {
+                            ahu1.X_i_min += Program.UTIL.ToDoubleOrZero(HumidH[0][0]) / 1000 * zone.Qb_a[0];
+                        }
                         ahu1.tvmech_avg[0] += Program.UTIL.ToDoubleOrZero(ZoneValue[0][3]) * zone.Qb_a[0];
                         ahu1.tvmech_avg[1] += Program.UTIL.ToDoubleOrZero(ZoneValue[0][3]) * zone.Qb_a[1];
                         for (int mth = 0; mth < 12; mth++)
@@ -1209,6 +1220,10 @@ namespace main
                 ahu1.theta_i_set[1] = ahu1.Qc_a_tot > 0 ? ahu1.theta_i_set[1] / ahu1.Qc_a_tot : 0;
                 ahu1.tvmech_avg[0] = ahu1.Qh_a_tot > 0 ? ahu1.tvmech_avg[0] / ahu1.Qh_a_tot : 0;
                 ahu1.tvmech_avg[1] = ahu1.Qc_a_tot > 0 ? ahu1.tvmech_avg[1] / ahu1.Qc_a_tot : 0;
+                ahu1.X_i_max = ahu1.Qc_a_tot > 0 ? ahu1.X_i_max / ahu1.Qc_a_tot : 0;
+                ahu1.X_i_min = ahu1.Qh_a_tot > 0 ? ahu1.X_i_min / ahu1.Qh_a_tot : 0;
+                ahu1.X_i_set[1] = ahu1.X_i_max;
+                ahu1.X_i_set[0] = ahu1.X_i_min;
                 for (int mth = 0; mth < 12; mth++)
                 {
                     ahu1.dvmechmth_avg[0, mth] = ahu1.Qh_a_tot > 0 ? ahu1.dvmechmth_avg[0, mth] / ahu1.Qh_a_tot : 0;
