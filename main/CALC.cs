@@ -771,10 +771,13 @@ namespace main
             AHU1.Cal_Qv_b();
             AHU1.Cal_CoilLoss();
             AHU1.Cal_Qstar_b();
-            AHU1.Cal_HU();
             AHU1.Cal_Wfan();
             AHU1.Cal_Wpreh();
             AHU1.Cal_Wpreh_th();
+            AHU1.Cal_W_HU();
+            AHU1.Cal_W_ctrl();
+            AHU1.Cal_W_hr();
+            AHU1.Cal_Waux_tot();
         }
         public static void HRV_PostCalc(AHU HRV1)
         {
@@ -789,6 +792,8 @@ namespace main
             HRV1.Cal_Wfan();
             HRV1.Cal_Wpreh();
             HRV1.Cal_Wpreh_th();
+            HRV1.Cal_W_ctrl();
+            HRV1.Cal_Waux_tot();
         }
         private static void AHUSystem_PostSave(AHU AHU1)
         {
@@ -804,22 +809,22 @@ namespace main
                     MTH = (mth + 1).ToString() + "월";
                     Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Result", "프로젝트번호,프로젝트유형,번호," +
                              "난방_냉방,월," +
-                             "공조요구량,가습요구량,급기팬보조에너지,배기팬보조에너지,가습보조에너지,프리히팅보조에너지," +
+                             "공조요구량,급기팬보조에너지,배기팬보조에너지,가습보조에너지,프리히팅보조에너지,제어보조에너지,로터모터보조에너지," +
                              "theta_vmech,Vvmech," +
-                             "theta_SA_prh,theta_OA_du,theta_RA_du,theta_SA_hr,theta_SA_rca,theta_SA_du,X_iset," +
-                             "X_SA_prh,X_SA_hr,X_SA_rca," +
+                             "theta_SA_prh,theta_OA_du,theta_RA_du,theta_SA_hr,theta_SA_du,X_iset," +
+                             "X_SA_prh,X_SA_hr," +
                              "Vmin_tot,Qb_mth_tot,Qmax_tot,theta_iset_avg,dvmech_avg,tvmech_avg," +
-                             "Q_gnd,Q_prh,Q_loss_OA_du,Q_loss_EA_du,Q_loss_SA_du," +
-                             "dtheta_prh,dtheta_du_OA,dtheta_du_RA,dtheta_hr,dtheta_rca,dtheta_du_EA,dtheta_du_SA," +
+                             "Q_gnd,Q_loss_OA_du,Q_loss_EA_du,Q_loss_SA_du," +
+                             "dtheta_prh,dtheta_du_OA,dtheta_du_RA,dtheta_hr,dtheta_du_EA,dtheta_du_SA," +
                              "flea_du,flea_ahu,fins_ahu,theta_defrost,theta_sur_nc,Hduct_OA,Hduct_RA,Hduct_EA,Hduct_SA",
                              "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + AHU1.AHUNum + "','" + 난방냉방 + "','" + MTH + "','" +
-                             AHU1.Qv_b[hc, mth] + "','" + AHU1.Qhu_b[mth] + "','" + AHU1.Ev_gen_fan_SA[mth] + "','" + AHU1.Ev_gen_fan_EA[mth] + "','" + AHU1.W_HU_aux[mth] + "','" + AHU1.Wv_aux_preh[mth] + "','" +
+                             AHU1.Qv_b[hc, mth] + "','" + AHU1.Ev_gen_fan_SA[mth] + "','" + AHU1.Ev_gen_fan_EA[mth] + "','" + AHU1.W_HU_aux[mth] + "','" + AHU1.Wv_aux_preh[mth] + "','" + AHU1.Wv_aux_ctrl[mth] + "','" + AHU1.Wv_aux_hr[mth] + "','" +
                              AHU1.theta_vmech[hc, mth] + "','" + AHU1.Vvmech[hc, mth] + "','" +
-                             AHU1.theta_SA_prh[mth] + "','" + AHU1.theta_OA_du[hc, mth] + "','" + AHU1.theta_RA_du[hc, mth] + "','" + AHU1.theta_SA_hr[hc, mth] + "','" + AHU1.theta_SA_rca[hc, mth] + "','" + AHU1.theta_SA_du[hc, mth] + "','" + (hc == 0 ? AHU1.X_i_min : AHU1.X_i_max) + "','" +
-                             AHU1.X_SA_prh[mth] + "','" + AHU1.X_SA_hr[hc, mth] + "','" + AHU1.X_SA_rca[mth] + "','" +
+                             AHU1.theta_SA_prh[mth] + "','" + AHU1.theta_OA_du[hc, mth] + "','" + AHU1.theta_RA_du[hc, mth] + "','" + AHU1.theta_SA_hr[hc, mth] + "','" + AHU1.theta_SA_du[hc, mth] + "','" + (hc == 0 ? AHU1.X_i_min : AHU1.X_i_max) + "','" +
+                             AHU1.X_SA_prh[mth] + "','" + AHU1.X_SA_hr[hc, mth] + "','" +
                              AHU1.Vmin_tot + "','" + AHU1.Qb_mth_tot[hc, mth] + "','" + AHU1.Qmax_tot[hc] + "','" + AHU1.theta_i_set[hc] + "','" + AHU1.dvmechmth_avg[hc, mth] + "','" + AHU1.tvmech_avg[hc] + "','" +
-                             AHU1.Q_gnd[mth] + "','" + AHU1.Wpreh_k[mth] + "','" + AHU1.Q_loss_OA_du[hc, mth] + "','" + AHU1.Q_loss_EA_du[hc, mth] + "','" + (AHU1.Q_loss_SA_du[hc, mth] + AHU1.Q_loss_RA_du[hc, mth]) + "','" +
-                             AHU1.dtheta_prh[mth] + "','" + AHU1.dtheta_du_OA[hc, mth] + "','" + AHU1.dtheta_du_RA[hc, mth] + "','" + AHU1.dtheta_hr[hc, mth] + "','" + AHU1.dtheta_rca[hc, mth] + "','" + AHU1.dtheta_du_EA[hc, mth] + "','" + AHU1.dtheta_du_SA[hc, mth] + "','" +
+                             AHU1.Q_gnd[mth] + "','" + AHU1.Q_loss_OA_du[hc, mth] + "','" + AHU1.Q_loss_EA_du[hc, mth] + "','" + (AHU1.Q_loss_SA_du[hc, mth] + AHU1.Q_loss_RA_du[hc, mth]) + "','" +
+                             AHU1.dtheta_prh[mth] + "','" + AHU1.dtheta_du_OA[hc, mth] + "','" + AHU1.dtheta_du_RA[hc, mth] + "','" + AHU1.dtheta_hr[hc, mth] + "','" + AHU1.dtheta_du_EA[hc, mth] + "','" + AHU1.dtheta_du_SA[hc, mth] + "','" +
                              AHU1.flea_du + "','" + AHU1.flea_ahu + "','" + AHU1.fins_ahu + "','" + AHU1.theta_defrost + "','" + AHU1.theta_sur_nc[hc, mth] + "','" + AHU1.Hduct_OA[hc, mth] + "','" + AHU1.Hduct_RA[hc, mth] + "','" + AHU1.Hduct_EA[hc, mth] + "','" + AHU1.Hduct_SA[hc, mth]
                               + "'", "번호,난방_냉방,월");
                 }
@@ -837,22 +842,22 @@ namespace main
                     MTH = (mth + 1).ToString() + "월";
                     Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Result", "프로젝트번호,프로젝트유형,번호," +
                              "난방_냉방,월," +
-                             "공조요구량,가습요구량,급기팬보조에너지,배기팬보조에너지,가습보조에너지,프리히팅보조에너지," +
+                             "공조요구량,급기팬보조에너지,배기팬보조에너지,가습보조에너지,프리히팅보조에너지,제어보조에너지,로터모터보조에너지," +
                              "theta_vmech,Vvmech," +
-                             "theta_SA_prh,theta_OA_du,theta_RA_du,theta_SA_hr,theta_SA_rca,theta_SA_du,X_iset," +
-                             "X_SA_prh,X_SA_hr,X_SA_rca," +
+                             "theta_SA_prh,theta_OA_du,theta_RA_du,theta_SA_hr,theta_SA_du,X_iset," +
+                             "X_SA_prh,X_SA_hr," +
                              "Vmin_tot,Qb_mth_tot,Qmax_tot,theta_iset_avg,dvmech_avg,tvmech_avg," +
-                             "Q_gnd,Q_prh,Q_loss_OA_du,Q_loss_EA_du,Q_loss_SA_du," +
-                             "dtheta_prh,dtheta_du_OA,dtheta_du_RA,dtheta_hr,dtheta_rca,dtheta_du_EA,dtheta_du_SA," +
+                             "Q_gnd,Q_loss_OA_du,Q_loss_EA_du,Q_loss_SA_du," +
+                             "dtheta_prh,dtheta_du_OA,dtheta_du_RA,dtheta_hr,dtheta_du_EA,dtheta_du_SA," +
                              "flea_du,flea_ahu,fins_ahu,theta_defrost,theta_sur_nc,Hduct_OA,Hduct_RA,Hduct_EA,Hduct_SA",
                              "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + HRV1.AHUNum + "','" + 난방냉방 + "','" + MTH + "','" +
-                             HRV1.Qv_b[hc, mth] + "','" + HRV1.Qhu_b[mth] + "','" + HRV1.Ev_gen_fan_SA[mth] + "','" + HRV1.Ev_gen_fan_EA[mth] + "','" + HRV1.W_HU_aux[mth] + "','" + HRV1.Wv_aux_preh[mth] + "','" +
+                             HRV1.Qv_b[hc, mth] + "','" + HRV1.Ev_gen_fan_SA[mth] + "','" + HRV1.Ev_gen_fan_EA[mth] + "','" + HRV1.W_HU_aux[mth] + "','" + HRV1.Wv_aux_preh[mth] + "','" + HRV1.Wv_aux_ctrl[mth] + "','" + HRV1.Wv_aux_hr[mth] + "','" +
                              HRV1.theta_vmech[hc, mth] + "','" + HRV1.Vvmech[hc, mth] + "','" +
-                             HRV1.theta_SA_prh[mth] + "','" + HRV1.theta_OA_du[hc, mth] + "','" + HRV1.theta_RA_du[hc, mth] + "','" + HRV1.theta_SA_hr[hc, mth] + "','" + HRV1.theta_SA_rca[hc, mth] + "','" + HRV1.theta_SA_du[hc, mth] + "','" + (hc == 0 ? HRV1.X_i_min : HRV1.X_i_max) + "','" +
-                             HRV1.X_SA_prh[mth] + "','" + HRV1.X_SA_hr[hc, mth] + "','" + HRV1.X_SA_rca[mth] + "','" +
+                             HRV1.theta_SA_prh[mth] + "','" + HRV1.theta_OA_du[hc, mth] + "','" + HRV1.theta_RA_du[hc, mth] + "','" + HRV1.theta_SA_hr[hc, mth] + "','" + HRV1.theta_SA_du[hc, mth] + "','" + (hc == 0 ? HRV1.X_i_min : HRV1.X_i_max) + "','" +
+                             HRV1.X_SA_prh[mth] + "','" + HRV1.X_SA_hr[hc, mth] + "','" +
                              HRV1.Vmin_tot + "','" + HRV1.Qb_mth_tot[hc, mth] + "','" + HRV1.Qmax_tot[hc] + "','" + HRV1.theta_i_set[hc] + "','" + HRV1.dvmechmth_avg[hc, mth] + "','" + HRV1.tvmech_avg[hc] + "','" +
-                             HRV1.Q_gnd[mth] + "','" + HRV1.Wpreh_k[mth] + "','" + HRV1.Q_loss_OA_du[hc, mth] + "','" + HRV1.Q_loss_EA_du[hc, mth] + "','" + (HRV1.Q_loss_SA_du[hc, mth] + HRV1.Q_loss_RA_du[hc, mth]) + "','" +
-                             HRV1.dtheta_prh[mth] + "','" + HRV1.dtheta_du_OA[hc, mth] + "','" + HRV1.dtheta_du_RA[hc, mth] + "','" + HRV1.dtheta_hr[hc, mth] + "','" + HRV1.dtheta_rca[hc, mth] + "','" + HRV1.dtheta_du_EA[hc, mth] + "','" + HRV1.dtheta_du_SA[hc, mth] + "','" +
+                             HRV1.Q_gnd[mth] + "','" + HRV1.Q_loss_OA_du[hc, mth] + "','" + HRV1.Q_loss_EA_du[hc, mth] + "','" + (HRV1.Q_loss_SA_du[hc, mth] + HRV1.Q_loss_RA_du[hc, mth]) + "','" +
+                             HRV1.dtheta_prh[mth] + "','" + HRV1.dtheta_du_OA[hc, mth] + "','" + HRV1.dtheta_du_RA[hc, mth] + "','" + HRV1.dtheta_hr[hc, mth] + "','" + HRV1.dtheta_du_EA[hc, mth] + "','" + HRV1.dtheta_du_SA[hc, mth] + "','" +
                              HRV1.flea_du + "','" + HRV1.flea_ahu + "','" + HRV1.fins_ahu + "','" + HRV1.theta_defrost + "','" + HRV1.theta_sur_nc[hc, mth] + "','" + HRV1.Hduct_OA[hc, mth] + "','" + HRV1.Hduct_RA[hc, mth] + "','" + HRV1.Hduct_EA[hc, mth] + "','" + HRV1.Hduct_SA[hc, mth]
                               + "'", "번호,난방_냉방,월");
                 }

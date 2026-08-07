@@ -241,7 +241,7 @@ namespace main
                     for (int mth = 0; mth < 12; mth++)
                     {
                         if (AHU1 != null)
-                        { Qvf_elec[mth] += AHU1.Ev_gen_fan_SA[mth] + AHU1.Ev_gen_fan_EA[mth] + AHU1.W_HU_aux[mth] + AHU1.Wv_aux_preh[mth]; }
+                        { Qvf_elec[mth] += AHU1.W_tot[mth]; }
                     }
                 }
             }
