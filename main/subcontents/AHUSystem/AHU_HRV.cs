@@ -82,11 +82,14 @@ namespace main.subcontents.AHUSystem
             HRV_dataGridView.Columns.Add("A19", "난방코일.출구온도.[℃_DB]");
             HRV_dataGridView.Columns.Add("A20", "가습기.유형");
             HRV_dataGridView.Columns.Add("A21", "가습기.습도수준");
+            HRV_dataGridView.Columns["A21"].Visible = false; // 계산에 미사용(가습 에너지소요량 공식에 습도수준 항목 없음)
             HRV_dataGridView.Columns.Add("A22", "가습기.용량.[kg/h]");
             HRV_dataGridView.Columns.Add("A23", "송풍기.풍량.급기.[CMH]");
             HRV_dataGridView.Columns.Add("A24", "송풍기.풍량.배기.[CMH]");
             HRV_dataGridView.Columns.Add("A25", "송풍기.정압.급기.[Pa]");
             HRV_dataGridView.Columns.Add("A26", "송풍기.정압.배기.[Pa]");
+            HRV_dataGridView.Columns["A25"].Visible = false; // 계산에 미사용(Cal_AHU.cs Pressure_SA 참조 없음)
+            HRV_dataGridView.Columns["A26"].Visible = false; // 계산에 미사용(Cal_AHU.cs Pressure_EA 참조 없음)
             HRV_dataGridView.Columns.Add("A27", "송풍기.팬동력.급기.[kW]");
             HRV_dataGridView.Columns.Add("A28", "송풍기.팬동력.배기.[kW]");
             HRV_dataGridView.Columns.Add("A29", "송풍기.모터제어");
@@ -154,6 +157,7 @@ namespace main.subcontents.AHUSystem
             HRV_dataGridView.Columns.Add("A7", "열회수.습도교환효율.난방.[%]");
             HRV_dataGridView.Columns.Add("A8", "팬.풍량.[CMH]");
             HRV_dataGridView.Columns.Add("A9", "팬.정압.[Pa]");
+            HRV_dataGridView.Columns["A9"].Visible = false; // 계산에 미사용(Cal_AHU.cs 정압 참조 없음)
             HRV_dataGridView.Columns.Add("A10", "팬.모터제어");
             HRV_dataGridView.Columns.Add("A11", "소비전력.[W]");
 

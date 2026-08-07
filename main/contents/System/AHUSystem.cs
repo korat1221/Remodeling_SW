@@ -30,7 +30,6 @@ namespace main.contents
         double CoolingLoad, HeatingLoad;
         double 계산된_냉방출력, 계산된_난방출력;
         string HRVType, CoilType;
-        double maxhumid, minhumid;
 
 
         string[][] 프로젝트유형;
@@ -118,8 +117,6 @@ namespace main.contents
             ccoilpictureBox.Parent = MainpictureBox;
             HumidifierpictureBox.Parent = MainpictureBox;
             VAVpictureBox.Parent = MainpictureBox;
-            //maxhumid_label.Parent = ImagePanel;
-            //minhumid_label.Parent = ImagePanel;
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
         {
@@ -396,11 +393,6 @@ namespace main.contents
                         LoadLocationImage();
                         LoadMainImage();
                         LoadPrehPrecImage();
-                        humincheck();
-                        maxhumid_label.Visible = true;
-                        minhumid_label.Visible = true;
-                        maxhumid_label.Text = "최대습도: " + maxhumid + " g/kg'";
-                        minhumid_label.Text = "최소습도: " + minhumid + " g/kg'";
                     }
 
                 }
@@ -419,11 +411,6 @@ namespace main.contents
                         LoadMainImage();
                         LoadLocationImage();
                         LoadPrehPrecImage();
-                        humincheck();
-                        maxhumid_label.Visible = true;
-                        minhumid_label.Visible = true;
-                        maxhumid_label.Text = "최대습도: " + maxhumid + " g/kg'";
-                        minhumid_label.Text = "최소습도: " + minhumid + " g/kg'";
                     }
                 }
             }
@@ -455,11 +442,14 @@ namespace main.contents
             HRV_dataGridView.Columns.Add("A17", "난방코일.출구온도.[℃_DB]");
             HRV_dataGridView.Columns.Add("A18", "가습기.유형");
             HRV_dataGridView.Columns.Add("A19", "가습기.습도수준");
+            HRV_dataGridView.Columns["A19"].Visible = false; // 계산에 미사용(가습 에너지소요량 공식에 습도수준 항목 없음)
             HRV_dataGridView.Columns.Add("A20", "가습기.용량.[kg/h]");
             HRV_dataGridView.Columns.Add("A21", "송풍기.풍량.급기.[CMH]");
             HRV_dataGridView.Columns.Add("A22", "송풍기.풍량.배기.[CMH]");
             HRV_dataGridView.Columns.Add("A23", "송풍기.정압.급기.[Pa]");
             HRV_dataGridView.Columns.Add("A24", "송풍기.정압.배기.[Pa]");
+            HRV_dataGridView.Columns["A23"].Visible = false; // 계산에 미사용(Cal_AHU.cs Pressure_SA 참조 없음)
+            HRV_dataGridView.Columns["A24"].Visible = false; // 계산에 미사용(Cal_AHU.cs Pressure_EA 참조 없음)
             HRV_dataGridView.Columns.Add("A25", "송풍기.팬동력.급기.[kW]");
             HRV_dataGridView.Columns.Add("A26", "송풍기.팬동력.배기.[kW]");
             HRV_dataGridView.Columns.Add("A27", "송풍기.모터제어");
@@ -502,6 +492,7 @@ namespace main.contents
             HRV_dataGridView.Columns.Add("A6", "열회수.습도교환효율.난방.[%]");
             HRV_dataGridView.Columns.Add("A7", "팬.풍량.[CMH]");
             HRV_dataGridView.Columns.Add("A8", "팬.정압.[Pa]");
+            HRV_dataGridView.Columns["A8"].Visible = false; // 계산에 미사용(Cal_AHU.cs 정압 참조 없음)
             HRV_dataGridView.Columns.Add("A9", "팬.모터제어");
             HRV_dataGridView.Columns.Add("A10", "소비전력.[W]");
 
@@ -1386,12 +1377,6 @@ namespace main.contents
                 CooltubeInfo_groupBox.Visible = false;
             }
 
-            humincheck();
-            maxhumid_label.Visible = true;
-            minhumid_label.Visible = true;
-            maxhumid_label.Text = "최대습도: " + maxhumid + " g/kg'";
-            minhumid_label.Text = "최소습도: " + minhumid + " g/kg'";
-
         }
 
         #endregion
@@ -1404,48 +1389,6 @@ namespace main.contents
         }
 
         #endregion
-        void humincheck()
-        {
-            if (AHUOptions == "열회수기")
-            {
-                maxhumid = 14.75;// 26도70% EN16798-5식 이용 (단위g/kg')
-                minhumid = 1.44;// 20도10% EN16798-5식 이용 (단위g/kg')
-            }
-            else if (AHUOptions == "공조기")
-            {
-                string[][] check = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "가습기습도수준", "번호 = '" + Num + "'");
-
-                string type = check[0][0].ToString();
-                if (type == "" || type == null)
-                {
-                    MessageBox.Show("먼저 장비일람표 공조기에 습도수준을 입력하세요.");
-                }
-                else
-                {
-                    switch (type) //DIN V 18599-3:2018 표11 (단위g/kg')
-                    {
-                        case "항온항습":
-                            maxhumid = 8.20; // 22도50% EN16798-5식 이용 (단위g/kg')
-                            minhumid = 8.20; // 22도50% EN16798-5식 이용 (단위g/kg')
-                            break;
-                        case "습도고려":
-                            maxhumid = 12.60;// 26도60% EN16798-5식 이용(단위g/kg')
-                            minhumid = 5.78;// 20도 40% EN16798-5식 이용(단위g/kg')
-                            break;
-                        case "고려안함":
-                            maxhumid = 14.75;// 26도70% EN16798-5식 이용 (단위g/kg')
-                            minhumid = 1.44;// 20도10% EN16798-5식 이용 (단위g/kg')
-                            break;
-                        default:
-                            maxhumid = 14.75;// 26도70% EN16798-5식 이용 (단위g/kg')
-                            minhumid = 1.44;// 20도10% EN16798-5식 이용 (단위g/kg')
-                            break;
-
-                    }
-                }
-
-            }
-        }
         void none_AHU_HRV_check()
         {
             string[][] check = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "번호", "");

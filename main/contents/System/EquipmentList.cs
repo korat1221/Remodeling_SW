@@ -3826,6 +3826,7 @@ namespace main.contents
             AHU_dataGridView.Columns.Add(공조방식Combo);
 
             AHU_dataGridView.Columns.Add("A5", "열회수기.유형");
+            AHU_dataGridView.Columns.Add("A33", "열회수기.로터소비전력.[kW]"); // 열회수기.유형(A5) 바로 뒤 실제 위치에 삽입
             AHU_dataGridView.Columns.Add("A6", "회수 효율.온도.냉방.[%]");
             AHU_dataGridView.Columns.Add("A7", "회수 효율.온도.난방.[%]");
             AHU_dataGridView.Columns.Add("A8", "회수 효율.유효전열.냉방.[%]");
@@ -3843,6 +3844,7 @@ namespace main.contents
             AHU_dataGridView.Columns.Add("A20", "가습기.유형");
             AHU_dataGridView.Columns.Add("A21", "가습기.제어유형");
             AHU_dataGridView.Columns.Add("A22", "가습기.습도수준");
+            AHU_dataGridView.Columns["A22"].Visible = false; // 계산에 미사용(가습 에너지소요량 공식에 습도수준 항목 없음)
             AHU_dataGridView.Columns.Add("A23", "가습기.용량.[kg/h]");
             AHU_dataGridView.Columns.Add("A24", "송풍기.풍량.급기.[CMH]");
             AHU_dataGridView.Columns.Add("A25", "송풍기.풍량.배기.[CMH]");
@@ -3863,47 +3865,58 @@ namespace main.contents
             AHU_dataGridView.Columns[3].Width = 60;
             AHU_dataGridView.Columns[4].Width = 80;
             AHU_dataGridView.Columns[5].Width = 100;
-            AHU_dataGridView.Columns[6].Width = 40;
+            AHU_dataGridView.Columns[6].Width = 80;
             AHU_dataGridView.Columns[7].Width = 40;
             AHU_dataGridView.Columns[8].Width = 40;
             AHU_dataGridView.Columns[9].Width = 40;
             AHU_dataGridView.Columns[10].Width = 40;
             AHU_dataGridView.Columns[11].Width = 40;
             AHU_dataGridView.Columns[12].Width = 40;
-            AHU_dataGridView.Columns[13].Width = 55;
+            AHU_dataGridView.Columns[13].Width = 40;
             AHU_dataGridView.Columns[14].Width = 55;
             AHU_dataGridView.Columns[15].Width = 55;
             AHU_dataGridView.Columns[16].Width = 55;
-            AHU_dataGridView.Columns[17].Width = 40;
-            AHU_dataGridView.Columns[18].Width = 55;
+            AHU_dataGridView.Columns[17].Width = 55;
+            AHU_dataGridView.Columns[18].Width = 40;
             AHU_dataGridView.Columns[19].Width = 55;
-            AHU_dataGridView.Columns[20].Width = 100;
-            AHU_dataGridView.Columns[21].Width = 80;
+            AHU_dataGridView.Columns[20].Width = 55;
+            AHU_dataGridView.Columns[21].Width = 100;
             AHU_dataGridView.Columns[22].Width = 80;
-            AHU_dataGridView.Columns[23].Width = 45;
-            AHU_dataGridView.Columns[24].Width = 50;
+            AHU_dataGridView.Columns[23].Width = 80;
+            AHU_dataGridView.Columns[24].Width = 45;
             AHU_dataGridView.Columns[25].Width = 50;
-            AHU_dataGridView.Columns[26].Width = 40;
+            AHU_dataGridView.Columns[26].Width = 50;
             AHU_dataGridView.Columns[27].Width = 40;
             AHU_dataGridView.Columns[28].Width = 40;
             AHU_dataGridView.Columns[29].Width = 40;
-            AHU_dataGridView.Columns[30].Width = 100;
+            AHU_dataGridView.Columns[30].Width = 40;
             AHU_dataGridView.Columns[31].Width = 100;
-            AHU_dataGridView.Columns[32].Width = 80;
+            AHU_dataGridView.Columns[32].Width = 100;
+            AHU_dataGridView.Columns[33].Width = 80;
         }
         private bool AHU_dataGridView_RowHandle(DataGridViewCell cell, int column, int row)
         {
-            if (column == 10)
-            {
-                cell.Style.BackColor = Color.FromArgb(255, 255, 255);
-                return true;
-            }
             if (column == 11)
             {
                 cell.Style.BackColor = Color.FromArgb(255, 255, 255);
                 return true;
             }
+            if (column == 12)
+            {
+                cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                return true;
+            }
             else return false;
+        }
+        private void AHU_UpdateRotorMotorReadOnly(int rowIndex)
+        {
+            string hrvType = AHU_dataGridView.Rows[rowIndex].Cells[5].Value?.ToString();
+            bool isRotary = hrvType == "일반회전형" || hrvType == "흡수식회전형" || hrvType == "흡착식회전형";
+            if (!isRotary)
+            {
+                AHU_dataGridView.Rows[rowIndex].Cells[6].Value = "";
+            }
+            AHU_dataGridView.Rows[rowIndex].Cells[6].ReadOnly = !isRotary;
         }
         private void UserAHU_Add_button_Click(global::System.Object sender, global::System.EventArgs e)
         {
@@ -3924,26 +3937,21 @@ namespace main.contents
             가습기유형Combo.Items.Add("접촉형");
             가습기유형Combo.Items.Add("회전분사형");
             가습기유형Combo.Items.Add("고압분사형");
+            가습기유형Combo.Items.Add("하이브리드분사형");
             가습기유형Combo.Items.Add("스팀형");
-            AHU_dataGridView.Rows[nRow].Cells[20] = 가습기유형Combo;
+            AHU_dataGridView.Rows[nRow].Cells[21] = 가습기유형Combo;
 
             DataGridViewComboBoxCell 가습기제어유형Combo = new DataGridViewComboBoxCell();
             가습기제어유형Combo.Items.Add("on/off제어");
             가습기제어유형Combo.Items.Add("인버터제어");
-            AHU_dataGridView.Rows[nRow].Cells[21] = 가습기제어유형Combo;
-
-            DataGridViewComboBoxCell 습도수준Combo = new DataGridViewComboBoxCell();
-            습도수준Combo.Items.Add("항온항습");
-            습도수준Combo.Items.Add("습도고려");
-            습도수준Combo.Items.Add("고려안함");
-            AHU_dataGridView.Rows[nRow].Cells[22] = 습도수준Combo;
+            AHU_dataGridView.Rows[nRow].Cells[22] = 가습기제어유형Combo;
 
             DataGridViewComboBoxCell 송풍기모터제어Combo = new DataGridViewComboBoxCell();
             송풍기모터제어Combo.Items.Add("on/off제어");
             송풍기모터제어Combo.Items.Add("2단제어");
             송풍기모터제어Combo.Items.Add("3단제어");
             송풍기모터제어Combo.Items.Add("인버터제어");
-            AHU_dataGridView.Rows[nRow].Cells[30] = 송풍기모터제어Combo;
+            AHU_dataGridView.Rows[nRow].Cells[31] = 송풍기모터제어Combo;
 
             DataGridViewComboBoxCell 팬효율모터유형Combo = new DataGridViewComboBoxCell();
             팬효율모터유형Combo.Items.Add("AC");
@@ -3951,8 +3959,9 @@ namespace main.contents
             팬효율모터유형Combo.Items.Add("DC_후곡형");
             팬효율모터유형Combo.Items.Add("EC_전곡형");
             팬효율모터유형Combo.Items.Add("EC_후곡형");
-            AHU_dataGridView.Rows[nRow].Cells[31] = 팬효율모터유형Combo;
+            AHU_dataGridView.Rows[nRow].Cells[32] = 팬효율모터유형Combo;
 
+            AHU_UpdateRotorMotorReadOnly(nRow);
         }
 
         private void AHU_Remove_button_Click(global::System.Object sender, global::System.EventArgs e)
@@ -3979,27 +3988,22 @@ namespace main.contents
             가습기유형Combo.Items.Add("접촉형");
             가습기유형Combo.Items.Add("회전분사형");
             가습기유형Combo.Items.Add("고압분사형");
+            가습기유형Combo.Items.Add("하이브리드분사형");
             가습기유형Combo.Items.Add("스팀형");
-            AHU_dataGridView.Rows[nRow].Cells[20] = 가습기유형Combo;
+            AHU_dataGridView.Rows[nRow].Cells[21] = 가습기유형Combo;
 
 
             DataGridViewComboBoxCell 가습기제어유형Combo = new DataGridViewComboBoxCell();
             가습기제어유형Combo.Items.Add("on/off제어");
             가습기제어유형Combo.Items.Add("인버터제어");
-            AHU_dataGridView.Rows[nRow].Cells[21] = 가습기제어유형Combo;
-
-            DataGridViewComboBoxCell 습도수준Combo = new DataGridViewComboBoxCell();
-            습도수준Combo.Items.Add("항온항습");
-            습도수준Combo.Items.Add("습도고려");
-            습도수준Combo.Items.Add("고려안함");
-            AHU_dataGridView.Rows[nRow].Cells[22] = 습도수준Combo;
+            AHU_dataGridView.Rows[nRow].Cells[22] = 가습기제어유형Combo;
 
             DataGridViewComboBoxCell 송풍기모터제어Combo = new DataGridViewComboBoxCell();
             송풍기모터제어Combo.Items.Add("on/off제어");
             송풍기모터제어Combo.Items.Add("2단제어");
             송풍기모터제어Combo.Items.Add("3단제어");
             송풍기모터제어Combo.Items.Add("인버터제어");
-            AHU_dataGridView.Rows[nRow].Cells[30] = 송풍기모터제어Combo;
+            AHU_dataGridView.Rows[nRow].Cells[31] = 송풍기모터제어Combo;
 
             DataGridViewComboBoxCell 팬효율모터유형Combo = new DataGridViewComboBoxCell();
             팬효율모터유형Combo.Items.Add("AC");
@@ -4007,9 +4011,9 @@ namespace main.contents
             팬효율모터유형Combo.Items.Add("DC_후곡형");
             팬효율모터유형Combo.Items.Add("EC_전곡형");
             팬효율모터유형Combo.Items.Add("EC_후곡형");
-            AHU_dataGridView.Rows[nRow].Cells[31] = 팬효율모터유형Combo;
+            AHU_dataGridView.Rows[nRow].Cells[32] = 팬효율모터유형Combo;
 
-            for (int k = 2; k < 33; k++)
+            for (int k = 2; k < 34; k++)
             {
                 if (AHU_dataGridView.Rows[AHU_SelectRow].Cells[k].Value != null)
                 {
@@ -4020,6 +4024,7 @@ namespace main.contents
             {
                 AHU_dataGridView.Rows[nRow].Cells[2].Value = AHU_dataGridView.Rows[AHU_SelectRow].Cells[2].Value.ToString() + "_복사";
             }
+            AHU_UpdateRotorMotorReadOnly(nRow);
         }
 
 
@@ -4046,15 +4051,9 @@ namespace main.contents
             double temp_eta, all_eta, Humidity_eta;
             if (e.RowIndex >= 0)
             {
-                if (e.ColumnIndex == 6 || e.ColumnIndex == 8)
+                if (e.ColumnIndex == 5)
                 {
-                    if (AHU_dataGridView.Rows[e.RowIndex].Cells[6].Value != null && AHU_dataGridView.Rows[e.RowIndex].Cells[8].Value != null)
-                    {
-                        temp_eta = Program.UTIL.dataGridView_doubleComa(AHU_dataGridView, e.RowIndex, 6, 0);
-                        all_eta = Program.UTIL.dataGridView_doubleComa(AHU_dataGridView, e.RowIndex, 8, 0);
-                        Humidity_eta = Calc_HumidityEta_Cooling(temp_eta, all_eta);
-                        AHU_dataGridView.Rows[e.RowIndex].Cells[10].Value = Humidity_eta.ToString("0.0");
-                    }
+                    AHU_UpdateRotorMotorReadOnly(e.RowIndex);
                 }
                 if (e.ColumnIndex == 7 || e.ColumnIndex == 9)
                 {
@@ -4062,20 +4061,30 @@ namespace main.contents
                     {
                         temp_eta = Program.UTIL.dataGridView_doubleComa(AHU_dataGridView, e.RowIndex, 7, 0);
                         all_eta = Program.UTIL.dataGridView_doubleComa(AHU_dataGridView, e.RowIndex, 9, 0);
-                        Humidity_eta = Calc_HumidityEta_Heating(temp_eta, all_eta);
+                        Humidity_eta = Calc_HumidityEta_Cooling(temp_eta, all_eta);
                         AHU_dataGridView.Rows[e.RowIndex].Cells[11].Value = Humidity_eta.ToString("0.0");
                     }
                 }
+                if (e.ColumnIndex == 8 || e.ColumnIndex == 10)
+                {
+                    if (AHU_dataGridView.Rows[e.RowIndex].Cells[8].Value != null && AHU_dataGridView.Rows[e.RowIndex].Cells[10].Value != null)
+                    {
+                        temp_eta = Program.UTIL.dataGridView_doubleComa(AHU_dataGridView, e.RowIndex, 8, 0);
+                        all_eta = Program.UTIL.dataGridView_doubleComa(AHU_dataGridView, e.RowIndex, 10, 0);
+                        Humidity_eta = Calc_HumidityEta_Heating(temp_eta, all_eta);
+                        AHU_dataGridView.Rows[e.RowIndex].Cells[12].Value = Humidity_eta.ToString("0.0");
+                    }
+                }
                 // 모터유형/팬효율(A31,A32) 숨김 처리 — dP_preh가 항상 0이라 η_fan이 dP_term에서 무의미해짐
-                //if (e.ColumnIndex == 31)
+                //if (e.ColumnIndex == 32)
                 //{
-                //    if (AHU_dataGridView.Rows[e.RowIndex].Cells[31].Value != null)
+                //    if (AHU_dataGridView.Rows[e.RowIndex].Cells[32].Value != null)
                 //    {
-                //        string 모터유형 = AHU_dataGridView.Rows[e.RowIndex].Cells[31].Value.ToString();
+                //        string 모터유형 = AHU_dataGridView.Rows[e.RowIndex].Cells[32].Value.ToString();
                 //        string[][] 팬효율Value = Program.DB.getValue(DB.type.BaseDB_AHU, "팬효율", "효율", "유형='" + 모터유형 + "'");
                 //        if (팬효율Value.Length > 0)
                 //        {
-                //            AHU_dataGridView.Rows[e.RowIndex].Cells[32].Value = 팬효율Value[0][0];
+                //            AHU_dataGridView.Rows[e.RowIndex].Cells[33].Value = 팬효율Value[0][0];
                 //        }
                 //    }
                 //}
@@ -4119,8 +4128,8 @@ namespace main.contents
 
             for (int k = 0; k < AHU_dataGridView.RowCount; k++)
             {
-                String[] Value = new String[32];
-                for (int i = 1; i < 33; i++)
+                String[] Value = new String[33];
+                for (int i = 1; i < 34; i++)
                 {
                     if (AHU_dataGridView.Rows[k].Cells[i].Value != null)
                     {
@@ -4145,32 +4154,34 @@ namespace main.contents
                 Program.DB.setValue(DB.type.ProjDB, "User_AHU", "번호," +
                     "열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방",
                 "'" + Value[0] + "','"
-                 + Value[4] + "','" + Value[5] + "','" + Value[6] + "','"
-                 + Value[7] + "','" + Value[8] + "','" + Value[9] + "','"
-                 + Value[10]
+                 + Value[4] + "','" + Value[6] + "','" + Value[7] + "','"
+                 + Value[8] + "','" + Value[9] + "','" + Value[10] + "','"
+                 + Value[11]
                  + "'", "번호");
                 Program.DB.setValue(DB.type.ProjDB, "User_AHU", "번호," +
                     "냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도",
                 "'" + Value[0] + "','"
-                 + Value[11] + "','" + Value[12] + "','" + Value[13] + "','"
-                 + Value[14] + "','" + Value[15] + "','" + Value[16] + "','" + Value[17] + "','"
-                 + Value[18]
+                 + Value[12] + "','" + Value[13] + "','" + Value[14] + "','"
+                 + Value[15] + "','" + Value[16] + "','" + Value[17] + "','" + Value[18] + "','"
+                 + Value[19]
                  + "'", "번호");
                 Program.DB.setValue(DB.type.ProjDB, "User_AHU", "번호," +
-                    "가습기유형,가습기제어유형,가습기습도수준,가습기용량",
+                    "가습기유형,가습기제어유형,가습기용량",
                 "'" + Value[0] + "','"
-                 + Value[19] + "','" + Value[20] + "','" + Value[21] + "','"
-                 + Value[22]
+                 + Value[20] + "','" + Value[21] + "','"
+                 + Value[23]
                  + "'", "번호");
                 Program.DB.setValue(DB.type.ProjDB, "User_AHU", "번호," +
                    "급기풍량,배기풍량,급기팬동력,배기팬동력,모터제어",
                "'" + Value[0] + "','"
-                + Value[23] + "','" + Value[24] + "','"
-                + Value[27] + "','" + Value[28] + "','" + Value[29]
+                + Value[24] + "','" + Value[25] + "','"
+                + Value[28] + "','" + Value[29] + "','" + Value[30]
                 + "'", "번호");
                 // 팬모터유형,팬효율 저장 제거 — dP_preh가 항상 0이라 η_fan이 dP_term에서 무의미해짐(장비일람표에서도 숨김 처리)
                 //Program.DB.setValue(DB.type.ProjDB, "User_AHU", "번호,팬모터유형,팬효율",
-                //"'" + Value[0] + "','" + Value[30] + "','" + Value[31] + "'", "번호");
+                //"'" + Value[0] + "','" + Value[31] + "','" + Value[32] + "'", "번호");
+                Program.DB.setValue(DB.type.ProjDB, "User_AHU", "번호,회전형모터소비전력",
+                "'" + Value[0] + "','" + Value[5] + "'", "번호");
             }
             Program.DB.saveProject();
 
@@ -4178,8 +4189,8 @@ namespace main.contents
         private void Load_AHU()
         {
             AHU_dataGridView.Rows.Clear();
-            // 급기정압,배기정압 로드 제거 — 계산식 미사용(장비일람표에서도 숨김 처리)
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "번호,명칭,설치유형,공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기제어유형,가습기습도수준,가습기용량,급기풍량,배기풍량,급기팬동력,배기팬동력,모터제어,팬모터유형,팬효율", "");
+            // 급기정압,배기정압,가습기습도수준 로드 제거 — 계산식 미사용(장비일람표에서도 숨김 처리)
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "번호,명칭,설치유형,공조방식,열회수유형,온도교환효율_냉방,온도교환효율_난방,전열교환효율_냉방,전열교환효율_난방,습도교환효율_냉방,습도교환효율_난방,냉각코일출력,냉각코일_입구_건구온도,냉각코일_입구_습구온도,냉각코일_출구_건구온도,냉각코일_출구_습구온도,난방코일출력,난방코일_입구온도,난방코일_출구온도,가습기유형,가습기제어유형,가습기용량,급기풍량,배기풍량,급기팬동력,배기팬동력,모터제어,팬모터유형,팬효율,회전형모터소비전력", "");
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
@@ -4198,26 +4209,21 @@ namespace main.contents
                     가습기유형Combo.Items.Add("접촉형");
                     가습기유형Combo.Items.Add("회전분사형");
                     가습기유형Combo.Items.Add("고압분사형");
+                    가습기유형Combo.Items.Add("하이브리드분사형");
                     가습기유형Combo.Items.Add("스팀형");
-                    AHU_dataGridView.Rows[nRow].Cells[20] = 가습기유형Combo;
+                    AHU_dataGridView.Rows[nRow].Cells[21] = 가습기유형Combo;
 
                     DataGridViewComboBoxCell 가습기제어유형Combo = new DataGridViewComboBoxCell();
                     가습기제어유형Combo.Items.Add("on/off제어");
                     가습기제어유형Combo.Items.Add("인버터제어");
-                    AHU_dataGridView.Rows[nRow].Cells[21] = 가습기제어유형Combo;
-
-                    DataGridViewComboBoxCell 습도수준Combo = new DataGridViewComboBoxCell();
-                    습도수준Combo.Items.Add("항온항습");
-                    습도수준Combo.Items.Add("습도고려");
-                    습도수준Combo.Items.Add("고려안함");
-                    AHU_dataGridView.Rows[nRow].Cells[22] = 습도수준Combo;
+                    AHU_dataGridView.Rows[nRow].Cells[22] = 가습기제어유형Combo;
 
                     DataGridViewComboBoxCell 송풍기모터제어Combo = new DataGridViewComboBoxCell();
                     송풍기모터제어Combo.Items.Add("on/off제어");
                     송풍기모터제어Combo.Items.Add("2단제어");
                     송풍기모터제어Combo.Items.Add("3단제어");
                     송풍기모터제어Combo.Items.Add("인버터제어");
-                    AHU_dataGridView.Rows[nRow].Cells[30] = 송풍기모터제어Combo;
+                    AHU_dataGridView.Rows[nRow].Cells[31] = 송풍기모터제어Combo;
 
                     DataGridViewComboBoxCell 팬효율모터유형Combo = new DataGridViewComboBoxCell();
                     팬효율모터유형Combo.Items.Add("AC");
@@ -4225,14 +4231,23 @@ namespace main.contents
                     팬효율모터유형Combo.Items.Add("DC_후곡형");
                     팬효율모터유형Combo.Items.Add("EC_전곡형");
                     팬효율모터유형Combo.Items.Add("EC_후곡형");
-                    AHU_dataGridView.Rows[nRow].Cells[31] = 팬효율모터유형Combo;
+                    AHU_dataGridView.Rows[nRow].Cells[32] = 팬효율모터유형Combo;
 
-                    // A26,A27(급기정압,배기정압) 컬럼이 로드 대상에서 빠져서 인덱스가 여기서부터 2칸씩 밀림
-                    for (int i = 0; i < 25; i++)
+                    // 번호,명칭,설치유형,공조방식,열회수유형(Value 0~4) → Cells[1~5]
+                    for (int i = 0; i < 5; i++)
                     { AHU_dataGridView.Rows[nRow].Cells[i + 1].Value = Value[n][i]; }
-                    for (int i = 25; i < 30; i++)
+                    // 온도/전열/습도교환효율~가습기제어유형(Value 5~20) → Cells[7~22], 로터모터소비전력(A33)이 Cells[6]을 차지해 밀림
+                    for (int i = 5; i < 21; i++)
+                    { AHU_dataGridView.Rows[nRow].Cells[i + 2].Value = Value[n][i]; }
+                    // A22(가습기습도수준)가 로드 대상에서 빠져서 여기서부터 한 칸 더 밀림
+                    for (int i = 21; i < 24; i++)
                     { AHU_dataGridView.Rows[nRow].Cells[i + 3].Value = Value[n][i]; }
-
+                    // A26,A27(급기정압,배기정압)이 로드 대상에서 빠져서 한 칸 더 밀림(급기팬동력~팬효율)
+                    for (int i = 24; i < 29; i++)
+                    { AHU_dataGridView.Rows[nRow].Cells[i + 5].Value = Value[n][i]; }
+                    // 회전형모터소비전력은 열회수기유형(A5) 옆 Cells[6]에 위치
+                    AHU_dataGridView.Rows[nRow].Cells[6].Value = Value[n][29];
+                    AHU_UpdateRotorMotorReadOnly(nRow);
                 }
             }
         }
