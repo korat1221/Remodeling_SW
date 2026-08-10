@@ -259,7 +259,7 @@ namespace main
                         double percent = Cal_AHUneed_percent(ahu, zone);
                         for (int mth = 0; mth < 12; mth++)
                         {
-                            Cal_Zone_data_(zone,ahu, Value_ce, n, Qhb_mth, theta_ih, th, dop_mth, Qh_a, th_op_day, theta_i_h_set, percent * ahu.Qv_b[0,mth], mth);
+                            Cal_Zone_data_(zone,ahu, Value_ce, n, Qhb_mth, theta_ih, th, dop_mth, Qh_a, th_op_day, theta_i_h_set, percent * ahu.Qstar_b[0,mth], mth);
                         }
                     }
                     else
@@ -279,7 +279,7 @@ namespace main
                                         double percent = Cal_AHUneed_percent(ahu, zone);
                                         for (int mth = 0; mth < 12; mth++)
                                         {
-                                            Cal_Zone_data_(zone, ahu, Value_ce, n, Qhb_mth, theta_ih, th, dop_mth, Qh_a, th_op_day, theta_i_h_set, percent * ahu.Qv_b[0, mth], mth);
+                                            Cal_Zone_data_(zone, ahu, Value_ce, n, Qhb_mth, theta_ih, th, dop_mth, Qh_a, th_op_day, theta_i_h_set, percent * ahu.Qstar_b[0, mth], mth);
                                         }
                                     }
                                 }

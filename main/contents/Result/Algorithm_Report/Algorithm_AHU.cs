@@ -169,12 +169,15 @@ namespace main.contents.Result
                         AhuData[16].Add(new { idx = i, val = "-" }); // 난방출구온도
                         AhuData[17].Add(new { idx = i, val = "-" }); // 냉방출구온도
 
-                        AhuData[18].Add(new { idx = i, val = "고려안함" }); // 습도유형
-                        AhuData[19].Add(new { idx = i, val = "14.75" }); // 최대습도
-                        AhuData[20].Add(new { idx = i, val = "1.44" }); // 최소습도
-                        AhuData[21].Add(new { idx = i, val = "-" }); // 가습기유형
-                        AhuData[22].Add(new { idx = i, val = "-" }); // 가습기제어유형
-                        AhuData[23].Add(new { idx = i, val = "-" }); // 가습기용량
+                        Value2 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "X_iset", "번호 = '" + Num + "' And 난방_냉방 = '냉방' And 월 = '1월'");
+                        double maxhumid = Value2.Length > 0 ? Program.UTIL.ToDoubleOrZero(Value2[0][0]) * 1000 : 0; // 실내 설정습도(계산값, kg/kg'→g/kg')
+                        Value2 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "X_iset", "번호 = '" + Num + "' And 난방_냉방 = '난방' And 월 = '1월'");
+                        double minhumid = Value2.Length > 0 ? Program.UTIL.ToDoubleOrZero(Value2[0][0]) * 1000 : 0;
+                        AhuData[18].Add(new { idx = i, val = Program.UTIL.doubleComa(maxhumid.ToString(), 2) }); // 최대습도
+                        AhuData[19].Add(new { idx = i, val = Program.UTIL.doubleComa(minhumid.ToString(), 2) }); // 최소습도
+                        AhuData[20].Add(new { idx = i, val = "-" }); // 가습기유형
+                        AhuData[21].Add(new { idx = i, val = "-" }); // 가습기제어유형
+                        AhuData[22].Add(new { idx = i, val = "-" }); // 가습기용량
                     }
                     else
                     {
@@ -192,35 +195,16 @@ namespace main.contents.Result
                             }
                             else AhuData[12+k].Add(new { idx = i, val = "-" });
                         }
-                        Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "가습기습도수준,가습기유형,가습기제어유형,가습기용량", "번호 = '" + Num + "'");
-                        string type = Value[0][0].ToString();
-                        double maxhumid, minhumid;
-                        switch (type) //DIN V 18599-3:2018 표11 (단위g/kg')
-                        {
-                            case "항온항습":
-                                maxhumid = 8.20; // 22도50% EN16798-5식 이용 (단위g/kg')
-                                minhumid = 8.20; // 22도50% EN16798-5식 이용 (단위g/kg')
-                                break;
-                            case "습도고려":
-                                maxhumid = 12.60;// 26도60% EN16798-5식 이용(단위g/kg')
-                                minhumid = 5.78;// 20도 40% EN16798-5식 이용(단위g/kg')
-                                break;
-                            case "고려안함":
-                                maxhumid = 14.75;// 26도70% EN16798-5식 이용 (단위g/kg')
-                                minhumid = 1.44;// 20도10% EN16798-5식 이용 (단위g/kg')
-                                break;
-                            default:
-                                maxhumid = 14.75;// 26도70% EN16798-5식 이용 (단위g/kg')
-                                minhumid = 1.44;// 20도10% EN16798-5식 이용 (단위g/kg')
-                                break;
-
-                        }
-                        AhuData[18].Add(new { idx = i, val = type }); // 습도유형
-                        AhuData[19].Add(new { idx = i, val = Program.UTIL.doubleComa(maxhumid.ToString(), 2) }); // 최대습도
-                        AhuData[20].Add(new { idx = i, val = Program.UTIL.doubleComa(minhumid.ToString(), 2) }); // 최소습도
-                        AhuData[21].Add(new { idx = i, val = Value[0][1].ToString() }); // 가습기유형
-                        AhuData[22].Add(new { idx = i, val = Value[0][2].ToString() });  // 가습기제어유형
-                        AhuData[23].Add(new { idx = i, val = Value[0][3].ToString() });  // 가습기용량
+                        Value = Program.DB.getValue(DB.type.ProjDB, "User_AHU", "가습기유형,가습기제어유형,가습기용량", "번호 = '" + Num + "'");
+                        Value2 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "X_iset", "번호 = '" + Num + "' And 난방_냉방 = '냉방' And 월 = '1월'");
+                        double maxhumid = Value2.Length > 0 ? Program.UTIL.ToDoubleOrZero(Value2[0][0]) * 1000 : 0; // 실내 설정습도(계산값, kg/kg'→g/kg')
+                        Value2 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "X_iset", "번호 = '" + Num + "' And 난방_냉방 = '난방' And 월 = '1월'");
+                        double minhumid = Value2.Length > 0 ? Program.UTIL.ToDoubleOrZero(Value2[0][0]) * 1000 : 0;
+                        AhuData[18].Add(new { idx = i, val = Program.UTIL.doubleComa(maxhumid.ToString(), 2) }); // 최대습도
+                        AhuData[19].Add(new { idx = i, val = Program.UTIL.doubleComa(minhumid.ToString(), 2) }); // 최소습도
+                        AhuData[20].Add(new { idx = i, val = Value[0][0].ToString() }); // 가습기유형
+                        AhuData[21].Add(new { idx = i, val = Value[0][1].ToString() });  // 가습기제어유형
+                        AhuData[22].Add(new { idx = i, val = Value[0][2].ToString() });  // 가습기용량
                     }
 
                     Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "예열예냉유형", "번호 = '" + Num + "'");
@@ -374,12 +358,11 @@ namespace main.contents.Result
                     data.Add(new { cname = "coil_heatout", data = AhuData[16] });
                     data.Add(new { cname = "coil_coolout", data = AhuData[17] });
 
-                    data.Add(new { cname = "ahu_humtype", data = AhuData[18] });
-                    data.Add(new { cname = "ahu_hummax", data = AhuData[19] });
-                    data.Add(new { cname = "ahu_hummin", data = AhuData[20] });
-                    data.Add(new { cname = "hum_type", data = AhuData[21] });
-                    data.Add(new { cname = "hum_control", data = AhuData[22] });
-                    data.Add(new { cname = "hum_power", data = AhuData[23] });
+                    data.Add(new { cname = "ahu_hummax", data = AhuData[18] });
+                    data.Add(new { cname = "ahu_hummin", data = AhuData[19] });
+                    data.Add(new { cname = "hum_type", data = AhuData[20] });
+                    data.Add(new { cname = "hum_control", data = AhuData[21] });
+                    data.Add(new { cname = "hum_power", data = AhuData[22] });
 
                     data.Add(new { cname = "pre_type", data = PreData[0] });
                     data.Add(new { cname = "pre_power", data = PreData[1] });

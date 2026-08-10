@@ -61,8 +61,6 @@ namespace main.contents
             label14 = new Label();
             Num_textBox = new TextBox();
             ImagePanel = new Panel();
-            minhumid_label = new Label();
-            maxhumid_label = new Label();
             ccoilpictureBox = new PictureBox();
             VAVpictureBox = new PictureBox();
             HumidifierpictureBox = new PictureBox();
@@ -522,8 +520,6 @@ namespace main.contents
             // ImagePanel
             // 
             ImagePanel.BackColor = Color.White;
-            ImagePanel.Controls.Add(minhumid_label);
-            ImagePanel.Controls.Add(maxhumid_label);
             ImagePanel.Controls.Add(ccoilpictureBox);
             ImagePanel.Controls.Add(VAVpictureBox);
             ImagePanel.Controls.Add(HumidifierpictureBox);
@@ -537,29 +533,7 @@ namespace main.contents
             ImagePanel.Size = new Size(990, 365);
             ImagePanel.TabIndex = 146;
             ImagePanel.Paint += ImagePanel_Paint;
-            // 
-            // minhumid_label
-            // 
-            minhumid_label.AutoSize = true;
-            minhumid_label.Font = new Font("나눔바른고딕", 9.75F);
-            minhumid_label.Location = new Point(851, 38);
-            minhumid_label.Name = "minhumid_label";
-            minhumid_label.Size = new Size(55, 15);
-            minhumid_label.TabIndex = 227;
-            minhumid_label.Text = "최소습도";
-            minhumid_label.Visible = false;
-            // 
-            // maxhumid_label
-            // 
-            maxhumid_label.AutoSize = true;
-            maxhumid_label.Font = new Font("나눔바른고딕", 9.75F);
-            maxhumid_label.Location = new Point(851, 16);
-            maxhumid_label.Name = "maxhumid_label";
-            maxhumid_label.Size = new Size(55, 15);
-            maxhumid_label.TabIndex = 226;
-            maxhumid_label.Text = "최대습도";
-            maxhumid_label.Visible = false;
-            // 
+            //
             // ccoilpictureBox
             // 
             ccoilpictureBox.BackColor = Color.Transparent;
@@ -1805,8 +1779,6 @@ namespace main.contents
         private Label label42;
         private Label label22;
         private Label label7;
-        private Label minhumid_label;
-        private Label maxhumid_label;
         private Label label27;
         private Label prepower_label;
         private Label label12;

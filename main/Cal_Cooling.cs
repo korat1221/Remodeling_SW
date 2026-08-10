@@ -1044,9 +1044,9 @@ namespace main
                     {
                         Zone zone = Program.CALC.getZone(v2[k][1]);
                         double percent = Cal_AHUneed_percent(ahu, zone);
-                        QC_nd_ahu[i] += percent * ahu.Qb_mth_tot[1, i] * Program.UTIL.ToDoubleOrZero(v2[k][0]); //공급설비 부하율을 반영한 요구량 산정
-                        dwd_ahu[i] += ahu.dvmechmth_avg[1, i] * percent * ahu.Qb_mth_tot[1, i] * Program.UTIL.ToDoubleOrZero(v2[k][0]); // 요구량 가중하여 산정함
-                        theta_ahu[i] += ahu.theta_i_set[1] * percent * ahu.Qb_mth_tot[1, i] * Program.UTIL.ToDoubleOrZero(v2[k][0]); ; //요구량 가중하여 산정함
+                        QC_nd_ahu[i] += percent * ahu.Qstar_b[1, i] * Program.UTIL.ToDoubleOrZero(v2[k][0]); //공급설비 부하율을 반영한 요구량 산정
+                        dwd_ahu[i] += ahu.dvmechmth_avg[1, i] * percent * ahu.Qstar_b[1, i] * Program.UTIL.ToDoubleOrZero(v2[k][0]); // 요구량 가중하여 산정함
+                        theta_ahu[i] += ahu.theta_i_set[1] * percent * ahu.Qstar_b[1, i] * Program.UTIL.ToDoubleOrZero(v2[k][0]); ; //요구량 가중하여 산정함
                     }
                 }
                 dwd_ahu[i] = dwd_ahu[i] / QC_nd_ahu[i];
