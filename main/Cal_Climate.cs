@@ -34,20 +34,31 @@ namespace main
             for (int i = 0; i < days_per_year; i++)
             {
                 int n_day = i + 1; // 스펙상 n_day는 1~365 — R_dc 계산식에 값 자체가 쓰임
-                double R_dc = 360.0 / days_per_year * n_day; // 지구 궤도 편차[°], 8
-                delta[i] = Cal_delta(R_dc);
+                double R_dc = 360.0 / days_per_year * n_day; // 지구 궤도 편차[°], ◯8
+
+                double r1 = DegToRad(R_dc), r2 = DegToRad(2 * R_dc), r3 = DegToRad(3 * R_dc);
+                delta[i] = 0.33281 // δ, 태양 적위[°], ◯7, ISO 52010-1 <식 1>
+                     - 22.984 * Math.Cos(r1) - 0.3499 * Math.Cos(r2) - 0.1398 * Math.Cos(r3)
+                     + 3.7872 * Math.Sin(r1) + 0.03205 * Math.Sin(r2) + 0.07187 * Math.Sin(r3); // ISO 원문 0.07187 — 기술서(KIAEBS) 0.7187은 오타
             }
 
-            double t_schift = TZ - lambda_w / 15; // 지연시간차[h], 13
+            double t_schift = TZ - lambda_w / 15; // 지연시간차[h], ◯13
 
             for (int i = 0; i < hours_per_year; i++)
             {
                 int n_hour = i + 1; // 스펙상 n_hour는 1~8760 — t_sol 계산식에 값 자체가 쓰임
                 int n_day = i / 24 + 1;
-                double t_eq = Cal_t_eq(n_day);       // 균시차[h], 12
-                double t_sol = n_hour - t_eq / 60 - t_schift; // 태양시, 11
 
-                double w = 180.0 / 12 * (12.5 - t_sol); // 태양시각[°], 10
+                double t_eq; // 균시차[h], ◯12, ISO 52010-1 <식 3>~<식 7>
+                if (n_day < 21) t_eq = 2.6 + 0.44 * n_day;
+                else if (n_day < 136) t_eq = 5.2 + 9 * Math.Cos((n_day - 43) * 0.0357);
+                else if (n_day < 241) t_eq = 1.4 - 5 * Math.Cos((n_day - 135) * 0.0449);
+                else if (n_day < 336) t_eq = -6.3 - 10 * Math.Cos((n_day - 306) * 0.036); // 기술서 원문 360 → 306 오타 보정(균시차 최소값 시점 11/3과 일치)
+                else t_eq = 0.45 * (n_day - 359);
+
+                double t_sol = n_hour - t_eq / 60 - t_schift; // 태양시, ◯11
+
+                double w = 180.0 / 12 * (12.5 - t_sol); // 태양시각[°], ◯10
                 if (w > 180) w = w - 360;
                 if (w < -180) w = w + 360;
                 omega[i] = w;
@@ -55,62 +66,24 @@ namespace main
         }
 
         // 2.2.2 임의 경사면과 태양위치 — 대지 전역값(태양 고도각·천정각·공기질량) — ISO 52010-1
-        public void Cal_SunPosition()
+        public void Cal_SolarPosition()
         {
             for (int i = 0; i < hours_per_year; i++)
             {
                 int n_day = i / 24 + 1;
-                alpha_sol[i] = Cal_alpha_sol(delta[n_day - 1], phi_w, omega[i]); // 태양 고도각, ◯18
-                theta_z[i] = 90 - alpha_sol[i]; // 천정각, ◯17
-                m[i] = Cal_m(alpha_sol[i]);     // 공기 질량, ◯22
+
+                double alpha = RadToDeg(Math.Asin( // αsol, 태양 고도각[°], ◯18, ISO 52010-1 <식 11>
+                      Math.Sin(DegToRad(delta[n_day - 1])) * Math.Sin(DegToRad(phi_w))
+                    + Math.Cos(DegToRad(delta[n_day - 1])) * Math.Cos(DegToRad(phi_w)) * Math.Cos(DegToRad(omega[i]))));
+                if (alpha < 0.0001) alpha = 0;
+                alpha_sol[i] = alpha;
+
+                theta_z[i] = 90 - alpha; // 천정각[°], ◯17
+
+                m[i] = alpha >= 10 // 공기 질량[-], ◯22, ISO 52010-1 <식 20>~<식 21>
+                    ? 1 / Math.Sin(DegToRad(alpha))
+                    : 1 / (Math.Sin(DegToRad(alpha)) + 0.15 * Math.Pow(alpha + 3.885, -1.253));
             }
-        }
-
-        static double Cal_delta(double R_dc) // δ, ISO 52010-1 <식 1>
-        {
-            double delta = 0;
-
-            double r1 = DegToRad(R_dc);
-            double r2 = DegToRad(2 * R_dc);
-            double r3 = DegToRad(3 * R_dc);
-
-            delta = 0.33281
-                 - 22.984 * Math.Cos(r1) - 0.3499 * Math.Cos(r2) - 0.1398 * Math.Cos(r3)
-                 + 3.7872 * Math.Sin(r1) + 0.03205 * Math.Sin(r2) + 0.07187 * Math.Sin(r3); // ISO 원문 0.07187 — 기술서(KIAEBS) 0.7187은 오타
-
-            return delta;
-        }
-
-        static double Cal_t_eq(int n_day) // t_eq, ISO 52010-1 <식 3>~<식 7>
-        {
-            double t_eq = 0;
-            if (n_day < 21) t_eq = 2.6 + 0.44 * n_day;
-            else if (n_day < 136) t_eq = 5.2 + 9 * Math.Cos((n_day - 43) * 0.0357);
-            else if (n_day < 241) t_eq = 1.4 - 5 * Math.Cos((n_day - 135) * 0.0449);
-            else if (n_day < 336) t_eq = -6.3 - 10 * Math.Cos((n_day - 306) * 0.036); // 기술서 원문 360 → 306 오타 보정(균시차 최소값 시점 11/3과 일치)
-            else t_eq = 0.45 * (n_day - 359);
-
-            return t_eq;
-        }
-
-        static double Cal_alpha_sol(double delta, double phi_w, double omega) // αsol, ISO 52010-1 <식 11>
-        {
-            double alpha_sol = RadToDeg(Math.Asin(
-                  Math.Sin(DegToRad(delta)) * Math.Sin(DegToRad(phi_w))
-                + Math.Cos(DegToRad(delta)) * Math.Cos(DegToRad(phi_w)) * Math.Cos(DegToRad(omega))));
-
-            if (alpha_sol < 0.0001) alpha_sol = 0;
-
-            return alpha_sol;
-        }
-
-        static double Cal_m(double alpha_sol) // m, ISO 52010-1 <식 20>~<식 21>
-        {
-            double m;
-            if (alpha_sol >= 10) m = 1 / Math.Sin(DegToRad(alpha_sol));
-            else m = 1 / (Math.Sin(DegToRad(alpha_sol)) + 0.15 * Math.Pow(alpha_sol + 3.885, -1.253));
-
-            return m;
         }
 
         // 임의 경사면(벽·지붕)마다 βic·γic가 달라져 배열로 소유하지 않고, 표면별로 호출해 쓰는 스칼라 계산
