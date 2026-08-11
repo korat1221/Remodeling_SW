@@ -23,6 +23,22 @@ namespace main
         public double[] b = new double[hours_per_year];         // b, 천정각 보정계수[-]
         public double[] I_ext = new double[days_per_year];      // Iext, 대기권 태양일사량[W/m2] — n_day 기준
 
+        public double[] F1 = new double[hours_per_year]; // F1, 천공에서 태양 주변부 밝기계수[-]
+        public double[] F2 = new double[hours_per_year]; // F2, 지평선 밝기계수[-]
+
+        // f11,f12,f13,f21,f22,f23 — 청명도 매개변수(ε) 구간별, ISO 52010-1 <표 8> / Annex J-1 <표 2>
+        static readonly double[,] BrightnessCoeff =
+        {
+            { -0.008,  0.588, -0.062, -0.060,  0.072, -0.022 }, // ε < 1.065
+            {  0.130,  0.683, -0.151, -0.019,  0.066, -0.029 }, // 1.065 ≤ ε < 1.230
+            {  0.330,  0.487, -0.221,  0.055, -0.064, -0.026 }, // 1.230 ≤ ε < 1.500
+            {  0.568,  0.187, -0.295,  0.109, -0.152, -0.014 }, // 1.500 ≤ ε < 1.950
+            {  0.873, -0.392, -0.362,  0.226, -0.462,  0.001 }, // 1.950 ≤ ε < 2.800
+            {  1.132, -1.237, -0.412,  0.288, -0.823,  0.056 }, // 2.800 ≤ ε < 4.500
+            {  1.060, -1.600, -0.359,  0.264, -1.127,  0.131 }, // 4.500 ≤ ε < 6.200
+            {  0.678, -0.327, -0.250,  0.156, -1.377,  0.251 }, // ε ≥ 6.200
+        };
+
         public double lambda_w; // λw, 대지 경도[°] — 관측소 좌표가 아닌 대지 고유 입력값
         public double phi_w;    // φw, 대지 위도[°] — 관측소 좌표가 아닌 대지 고유 입력값
 
@@ -139,6 +155,30 @@ namespace main
             }
         }
 
+        // 2.2.4 임의 경사면 산란일사량 — 대지 전역값(밝기계수) — ISO 52010-1
+        public void Cal_BrightnessCoeff()
+        {
+            for (int i = 0; i < hours_per_year; i++)
+            {
+                int idx; // 청명도 매개변수(ε) 구간 인덱스, BrightnessCoeff 행 번호
+                if (epsilon[i] < 1.065) idx = 0;
+                else if (epsilon[i] < 1.230) idx = 1;
+                else if (epsilon[i] < 1.500) idx = 2;
+                else if (epsilon[i] < 1.950) idx = 3;
+                else if (epsilon[i] < 2.800) idx = 4;
+                else if (epsilon[i] < 4.500) idx = 5;
+                else if (epsilon[i] < 6.200) idx = 6;
+                else idx = 7;
+
+                double f11 = BrightnessCoeff[idx, 0], f12 = BrightnessCoeff[idx, 1], f13 = BrightnessCoeff[idx, 2];
+                double f21 = BrightnessCoeff[idx, 3], f22 = BrightnessCoeff[idx, 4], f23 = BrightnessCoeff[idx, 5];
+                double theta_z_rad = DegToRad(theta_z[i]);
+
+                F1[i] = Math.Max(0, f11 + f12 * Delta_sky[i] + f13 * theta_z_rad); // 천공에서 태양 주변부 밝기계수, ◯44, ISO 52010-1 <식 32>
+                F2[i] = f21 + f22 * Delta_sky[i] + f23 * theta_z_rad;              // 지평선 밝기계수, ◯49, ISO 52010-1 <식 33>
+            }
+        }
+
         // 임의 경사면(벽·지붕)마다 βic·γic가 달라져 배열로 소유하지 않고, 표면별로 호출해 쓰는 계산
         // i는 시간 인덱스(0~8759) — 외피 정보가 아니라 이미 있는 시간별 필드에서 값 하나를 짚는 용도
         double Cal_beta_sol_ic(double beta_ic, int i) // βsol,ic, ISO 52010-1 <식 19>
@@ -188,6 +228,15 @@ namespace main
         double Cal_Idir(double theta_sol_ic, int i) // Idir, 임의 경사면 직달일사량[W/m2], ◯37, ISO 52010-1 <식 26>
         {
             return Math.Max(0, Gsol_b[i] * Math.Cos(DegToRad(theta_sol_ic)));
+        }
+
+        double Cal_Idif(double beta_ic, double gamma_ic, int i) // Idif, 임의 경사면 산란일사량[W/m2], ◯43, ISO 52010-1 <식 34>
+        {
+            double a = Cal_a(Cal_theta_sol_ic(beta_ic, gamma_ic, i));
+
+            return Gsol_d[i] * ((1 - F1[i]) * (1 + Math.Cos(DegToRad(beta_ic))) / 2
+                              + F1[i] * a / b[i]
+                              + F2[i] * Math.Sin(DegToRad(beta_ic)));
         }
 
         static double DegToRad(double deg) => deg * Math.PI / 180;
