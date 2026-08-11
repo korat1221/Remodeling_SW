@@ -26,15 +26,6 @@ namespace main
         public double lambda_w; // λw, 대지 경도[°] — 관측소 좌표가 아닌 대지 고유 입력값
         public double phi_w;    // φw, 대지 위도[°] — 관측소 좌표가 아닌 대지 고유 입력값
 
-        public void LoadData_SiteCoord()
-        {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "경도,위도", "");
-            if (Value.Length > 0)
-            {
-                lambda_w = Program.UTIL.ToDoubleOrZero(Value[0][0]);
-                phi_w = Program.UTIL.ToDoubleOrZero(Value[0][1]);
-            }
-        }
 
         // Gsol,d·Gsol,b 시간별 원자료 로드 — 기존 16개 지역 선택(BuildingGeneral.지역)이 KIAEBS 31개 목록의 부분집합이라 이름으로 그대로 연결
         public void LoadData_Weather()
@@ -49,6 +40,12 @@ namespace main
             {
                 Gsol_d[i] = Program.UTIL.ToDoubleOrZero(rows[i][0]);
                 Gsol_b[i] = Program.UTIL.ToDoubleOrZero(rows[i][1]);
+            }
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "경도,위도", "");
+            if (Value.Length > 0)
+            {
+                lambda_w = Program.UTIL.ToDoubleOrZero(Value[0][0]);
+                phi_w = Program.UTIL.ToDoubleOrZero(Value[0][1]);
             }
         }
 
@@ -113,39 +110,40 @@ namespace main
         // 2.2.3 천공지수와 임의 경사면 직달일사량 — 대지 전역값(청명도·하늘밝기·천정각보정) — ISO 52010-1
         public void Cal_SkyClearness()
         {
-            const double K = 1.014;     // 청명도 계산식의 상수[-], ◯30
-            const double Gsol_c = 1370; // 태양상수[W/m2], ◯41
+            const double K = 1.014;     // 청명도 계산식의 상수[-], 30
+            const double Gsol_c = 1370; // 태양상수[W/m2], 41
 
             for (int i = 0; i < days_per_year; i++)
             {
                 int n_day = i + 1;
-                I_ext[i] = Gsol_c * (1 + 0.033 * Math.Cos(DegToRad(360.0 / days_per_year * n_day))); // Iext, ◯40, ISO 52010-1 <식 27>
+                I_ext[i] = Gsol_c * (1 + 0.033 * Math.Cos(DegToRad(360.0 / days_per_year * n_day))); // Iext, 40, ISO 52010-1 <식 27>
             }
 
             for (int i = 0; i < hours_per_year; i++)
             {
                 int n_day = i / 24 + 1;
 
-                b[i] = Math.Max(Math.Cos(DegToRad(85)), Math.Cos(DegToRad(theta_z[i]))); // 천정각 보정계수, ◯31, ISO 52010-1 <식 29>
+                b[i] = Math.Max(Math.Cos(DegToRad(85)), Math.Cos(DegToRad(theta_z[i]))); // 천정각 보정계수, 31, ISO 52010-1 <식 29>
 
                 if (Gsol_d[i] == 0)
                 {
-                    epsilon[i] = 999; // ◯28
+                    epsilon[i] = 999; // 28
                 }
                 else
                 {
                     double k3 = K * Math.Pow(DegToRad(alpha_sol[i]), 3);
-                    epsilon[i] = ((Gsol_d[i] + Gsol_b[i]) / Gsol_d[i] + k3) / (1 + k3); // 청명도 매개변수, ◯28, ISO 52010-1 <식 30>
+                    epsilon[i] = ((Gsol_d[i] + Gsol_b[i]) / Gsol_d[i] + k3) / (1 + k3); // 청명도 매개변수, 28, ISO 52010-1 <식 30>
                 }
 
-                Delta_sky[i] = m[i] * Gsol_d[i] / I_ext[n_day - 1]; // 하늘 밝기 매개변수, ◯35, ISO 52010-1 <식 31>
+                Delta_sky[i] = m[i] * Gsol_d[i] / I_ext[n_day - 1]; // 하늘 밝기 매개변수, 35, ISO 52010-1 <식 31>
             }
         }
 
-        // 임의 경사면(벽·지붕)마다 βic·γic가 달라져 배열로 소유하지 않고, 표면별로 호출해 쓰는 스칼라 계산
-        static double Cal_beta_sol_ic(double beta_ic, double theta_z) // βsol,ic, ISO 52010-1 <식 19>
+        // 임의 경사면(벽·지붕)마다 βic·γic가 달라져 배열로 소유하지 않고, 표면별로 호출해 쓰는 계산
+        // i는 시간 인덱스(0~8759) — 외피 정보가 아니라 이미 있는 시간별 필드에서 값 하나를 짚는 용도
+        double Cal_beta_sol_ic(double beta_ic, int i) // βsol,ic, ISO 52010-1 <식 19>
         {
-            double diff = beta_ic - theta_z;
+            double diff = beta_ic - theta_z[i];
             double beta_sol_ic;
             if (diff > 180) beta_sol_ic = diff - 360;
             else if (diff < -180) beta_sol_ic = diff + 360;
@@ -154,9 +152,9 @@ namespace main
             return beta_sol_ic;
         }
 
-        static double Cal_gamma_sol_ic(double gamma_ic, double omega) // γsol,ic, ISO 52010-1 <식 18>
+        double Cal_gamma_sol_ic(double gamma_ic, int i) // γsol,ic, ISO 52010-1 <식 18>
         {
-            double diff = omega - gamma_ic;
+            double diff = omega[i] - gamma_ic;
             double gamma_sol_ic;
             if (diff > 180) gamma_sol_ic = diff - 360;
             else if (diff < -180) gamma_sol_ic = diff + 360;
@@ -165,9 +163,10 @@ namespace main
             return gamma_sol_ic;
         }
 
-        static double Cal_theta_sol_ic(double beta_ic, double gamma_ic, double delta, double phi_w, double omega) // θsol,ic, ISO 52010-1 <식 17>
+        double Cal_theta_sol_ic(double beta_ic, double gamma_ic, int i) // θsol,ic, ISO 52010-1 <식 17>
         {
-            double d = DegToRad(delta), p = DegToRad(phi_w), b = DegToRad(beta_ic), g = DegToRad(gamma_ic), w = DegToRad(omega);
+            int n_day = i / 24 + 1;
+            double d = DegToRad(delta[n_day - 1]), p = DegToRad(phi_w), b = DegToRad(beta_ic), g = DegToRad(gamma_ic), w = DegToRad(omega[i]);
 
             double cos_theta_sol_ic =
                   Math.Sin(d) * Math.Sin(p) * Math.Cos(b)
@@ -181,14 +180,14 @@ namespace main
             return theta_sol_ic;
         }
 
-        static double Cal_a(double theta_sol_ic) // a, 입사각 보정계수, ◯33, ISO 52010-1 <식 28> — 기술서(KIAEBS)는 cos(αsol)로 오기재, ISO 원문은 cos(θsol,ic)
+        double Cal_a(double theta_sol_ic) // a, 입사각 보정계수, ◯33, ISO 52010-1 <식 28> — 기술서(KIAEBS)는 cos(αsol)로 오기재, ISO 원문은 cos(θsol,ic)
         {
             return Math.Max(0, Math.Cos(DegToRad(theta_sol_ic)));
         }
 
-        static double Cal_Idir(double Gsol_b, double theta_sol_ic) // Idir, 임의 경사면 직달일사량[W/m2], ◯37, ISO 52010-1 <식 26>
+        double Cal_Idir(double theta_sol_ic, int i) // Idir, 임의 경사면 직달일사량[W/m2], ◯37, ISO 52010-1 <식 26>
         {
-            return Math.Max(0, Gsol_b * Math.Cos(DegToRad(theta_sol_ic)));
+            return Math.Max(0, Gsol_b[i] * Math.Cos(DegToRad(theta_sol_ic)));
         }
 
         static double DegToRad(double deg) => deg * Math.PI / 180;
