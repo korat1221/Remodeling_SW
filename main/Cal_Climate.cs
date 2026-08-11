@@ -11,14 +11,20 @@ namespace main
         public double[] delta = new double[days_per_year];  // δ, 태양 적위[°] — n_day(1~365) 기준
         public double[] omega = new double[hours_per_year]; // ω, 태양시각[°] — n_hour(1~8760) 기준
 
-        public double lambda_w; // λw, 대지 경도[°] — 관측소 좌표가 아닌 대지 고유 입력값
+        public double[] theta_z = new double[hours_per_year];   // θz, 천정각[°]
+        public double[] alpha_sol = new double[hours_per_year]; // αsol, 태양 고도각[°]
+        public double[] m = new double[hours_per_year];         // m, 공기 질량[-]
 
-        public void LoadData_Lambda()
+        public double lambda_w; // λw, 대지 경도[°] — 관측소 좌표가 아닌 대지 고유 입력값
+        public double phi_w;    // φw, 대지 위도[°] — 관측소 좌표가 아닌 대지 고유 입력값
+
+        public void LoadData_SiteCoord()
         {
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "경도", "");
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "경도,위도", "");
             if (Value.Length > 0)
             {
                 lambda_w = Program.UTIL.ToDoubleOrZero(Value[0][0]);
+                phi_w = Program.UTIL.ToDoubleOrZero(Value[0][1]);
             }
         }
 
@@ -45,6 +51,18 @@ namespace main
                 if (w > 180) w = w - 360;
                 if (w < -180) w = w + 360;
                 omega[i] = w;
+            }
+        }
+
+        // 2.2.2 임의 경사면과 태양위치 — 대지 전역값(태양 고도각·천정각·공기질량) — ISO 52010-1
+        public void Cal_SunPosition()
+        {
+            for (int i = 0; i < hours_per_year; i++)
+            {
+                int n_day = i / 24 + 1;
+                alpha_sol[i] = Cal_alpha_sol(delta[n_day - 1], phi_w, omega[i]); // 태양 고도각, ◯18
+                theta_z[i] = 90 - alpha_sol[i]; // 천정각, ◯17
+                m[i] = Cal_m(alpha_sol[i]);     // 공기 질량, ◯22
             }
         }
 
@@ -75,6 +93,66 @@ namespace main
             return t_eq;
         }
 
+        static double Cal_alpha_sol(double delta, double phi_w, double omega) // αsol, ISO 52010-1 <식 11>
+        {
+            double alpha_sol = RadToDeg(Math.Asin(
+                  Math.Sin(DegToRad(delta)) * Math.Sin(DegToRad(phi_w))
+                + Math.Cos(DegToRad(delta)) * Math.Cos(DegToRad(phi_w)) * Math.Cos(DegToRad(omega))));
+
+            if (alpha_sol < 0.0001) alpha_sol = 0;
+
+            return alpha_sol;
+        }
+
+        static double Cal_m(double alpha_sol) // m, ISO 52010-1 <식 20>~<식 21>
+        {
+            double m;
+            if (alpha_sol >= 10) m = 1 / Math.Sin(DegToRad(alpha_sol));
+            else m = 1 / (Math.Sin(DegToRad(alpha_sol)) + 0.15 * Math.Pow(alpha_sol + 3.885, -1.253));
+
+            return m;
+        }
+
+        // 임의 경사면(벽·지붕)마다 βic·γic가 달라져 배열로 소유하지 않고, 표면별로 호출해 쓰는 스칼라 계산
+        static double Cal_beta_sol_ic(double beta_ic, double theta_z) // βsol,ic, ISO 52010-1 <식 19>
+        {
+            double diff = beta_ic - theta_z;
+            double beta_sol_ic;
+            if (diff > 180) beta_sol_ic = diff - 360;
+            else if (diff < -180) beta_sol_ic = diff + 360;
+            else beta_sol_ic = diff;
+
+            return beta_sol_ic;
+        }
+
+        static double Cal_gamma_sol_ic(double gamma_ic, double omega) // γsol,ic, ISO 52010-1 <식 18>
+        {
+            double diff = omega - gamma_ic;
+            double gamma_sol_ic;
+            if (diff > 180) gamma_sol_ic = diff - 360;
+            else if (diff < -180) gamma_sol_ic = diff + 360;
+            else gamma_sol_ic = diff;
+
+            return gamma_sol_ic;
+        }
+
+        static double Cal_theta_sol_ic(double beta_ic, double gamma_ic, double delta, double phi_w, double omega) // θsol,ic, ISO 52010-1 <식 17>
+        {
+            double d = DegToRad(delta), p = DegToRad(phi_w), b = DegToRad(beta_ic), g = DegToRad(gamma_ic), w = DegToRad(omega);
+
+            double cos_theta_sol_ic =
+                  Math.Sin(d) * Math.Sin(p) * Math.Cos(b)
+                - Math.Sin(d) * Math.Cos(p) * Math.Sin(b) * Math.Cos(g)
+                + Math.Cos(d) * Math.Cos(p) * Math.Cos(b) * Math.Cos(w)
+                + Math.Cos(d) * Math.Sin(p) * Math.Sin(b) * Math.Cos(g) * Math.Cos(w)
+                + Math.Cos(d) * Math.Sin(b) * Math.Sin(g) * Math.Sin(w);
+
+            double theta_sol_ic = RadToDeg(Math.Acos(cos_theta_sol_ic));
+
+            return theta_sol_ic;
+        }
+
         static double DegToRad(double deg) => deg * Math.PI / 180;
+        static double RadToDeg(double rad) => rad * 180 / Math.PI;
     }
 }
