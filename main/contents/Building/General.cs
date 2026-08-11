@@ -504,6 +504,16 @@ namespace main.contents
             if (BuildingLocation_textBox.Text != null) { BuildingLocation = BuildingLocation_textBox.Text.ToString(); }
             else { }
         }
+
+        private void Lat_textBox_TextChanged(object sender, EventArgs e)
+        {
+            Latitude = Program.UTIL.ToDoubleOrZero(Lat_textBox.Text);
+        }
+
+        private void Lon_textBox_TextChanged(object sender, EventArgs e)
+        {
+            Longitude = Program.UTIL.ToDoubleOrZero(Lon_textBox.Text);
+        }
         public void GrossArea_textBox_TextChanged(object sender, EventArgs e)
         {
             GrossArea = Program.UTIL.textBox_doubleComa(GrossArea_textBox, false, 2);
@@ -583,18 +593,6 @@ namespace main.contents
             {
                 n50 = form.n50;
                 n50_textBox.Text = form.n50.ToString("0.0");
-            }
-        }
-
-        private void SiteCoord_button_Click(object sender, EventArgs e)
-        {
-            SiteCoord_info form = new SiteCoord_info(Latitude, Longitude);
-            DialogResult result = form.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                Latitude = form.Latitude;
-                Longitude = form.Longitude;
-                SiteCoord_textBox.Text = "위도 " + Latitude.ToString("0.00") + "° / 경도 " + Longitude.ToString("0.00") + "°";
             }
         }
 
@@ -738,7 +736,8 @@ namespace main.contents
 
             Latitude = 0;
             Longitude = 0;
-            SiteCoord_textBox.Text = null;
+            Lat_textBox.Text = null;
+            Lon_textBox.Text = null;
 
             GrossArea = 0;
             GrossArea_textBox.Text = null;
@@ -820,10 +819,8 @@ namespace main.contents
 
                 Latitude = Program.UTIL.ToDoubleOrZero(Value[0][28]);
                 Longitude = Program.UTIL.ToDoubleOrZero(Value[0][29]);
-                if (Latitude != 0 || Longitude != 0)
-                {
-                    SiteCoord_textBox.Text = "위도 " + Latitude.ToString("0.00") + "° / 경도 " + Longitude.ToString("0.00") + "°";
-                }
+                if (Latitude != 0) Lat_textBox.Text = Latitude.ToString("0.00");
+                if (Longitude != 0) Lon_textBox.Text = Longitude.ToString("0.00");
 
                 Climate_comboBox.SelectedItem = Value[0][8];
                 Climate = Value[0][9];

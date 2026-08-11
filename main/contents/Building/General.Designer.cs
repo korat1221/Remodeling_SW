@@ -43,9 +43,10 @@ namespace main.contents
             label4 = new Label();
             panel1 = new Panel();
             climate_infobutton = new Button();
-            SiteCoord_button = new Button();
-            SiteCoord_label = new Label();
-            SiteCoord_textBox = new TextBox();
+            Lat_label = new Label();
+            Lat_textBox = new TextBox();
+            Lon_label = new Label();
+            Lon_textBox = new TextBox();
             BuildingLocation_textBox = new TextBox();
             BuildingName_textBox = new TextBox();
             ByRawClimate_textBox = new TextBox();
@@ -254,9 +255,10 @@ namespace main.contents
             // 
             panel1.BackColor = Color.White;
             panel1.Controls.Add(climate_infobutton);
-            panel1.Controls.Add(SiteCoord_button);
-            panel1.Controls.Add(SiteCoord_label);
-            panel1.Controls.Add(SiteCoord_textBox);
+            panel1.Controls.Add(Lat_label);
+            panel1.Controls.Add(Lat_textBox);
+            panel1.Controls.Add(Lon_label);
+            panel1.Controls.Add(Lon_textBox);
             panel1.Controls.Add(BuildingLocation_textBox);
             panel1.Controls.Add(BuildingName_textBox);
             panel1.Controls.Add(ByRawClimate_textBox);
@@ -289,42 +291,51 @@ namespace main.contents
             climate_infobutton.UseVisualStyleBackColor = false;
             climate_infobutton.Click += climate_infobutton_Click;
             //
-            // SiteCoord_button
+            // Lat_label
             //
-            SiteCoord_button.BackColor = SystemColors.ControlLight;
-            SiteCoord_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            SiteCoord_button.FlatStyle = FlatStyle.System;
-            SiteCoord_button.Font = new Font("Microsoft Sans Serif", 9.75F);
-            SiteCoord_button.Location = new Point(419, 84);
-            SiteCoord_button.Margin = new Padding(0);
-            SiteCoord_button.Name = "SiteCoord_button";
-            SiteCoord_button.Size = new Size(23, 23);
-            SiteCoord_button.TabIndex = 130;
-            SiteCoord_button.Text = "+";
-            SiteCoord_button.UseVisualStyleBackColor = false;
-            SiteCoord_button.Click += SiteCoord_button_Click;
+            Lat_label.AutoSize = true;
+            Lat_label.Font = new Font("나눔바른고딕", 9.75F);
+            Lat_label.Location = new Point(20, 138);
+            Lat_label.Name = "Lat_label";
+            Lat_label.Size = new Size(28, 15);
+            Lat_label.TabIndex = 130;
+            Lat_label.Text = "위도";
             //
-            // SiteCoord_label
+            // Lat_textBox
             //
-            SiteCoord_label.AutoSize = true;
-            SiteCoord_label.Font = new Font("나눔바른고딕", 9.75F);
-            SiteCoord_label.Location = new Point(20, 138);
-            SiteCoord_label.Name = "SiteCoord_label";
-            SiteCoord_label.Size = new Size(58, 15);
-            SiteCoord_label.TabIndex = 131;
-            SiteCoord_label.Text = "대지좌표";
+            Lat_textBox.BackColor = Color.White;
+            Lat_textBox.BorderStyle = BorderStyle.FixedSingle;
+            Lat_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            Lat_textBox.ForeColor = SystemColors.ControlText;
+            Lat_textBox.Location = new Point(60, 135);
+            Lat_textBox.Name = "Lat_textBox";
+            Lat_textBox.Size = new Size(80, 22);
+            Lat_textBox.TabIndex = 131;
+            Lat_textBox.TextAlign = HorizontalAlignment.Center;
+            Lat_textBox.TextChanged += Lat_textBox_TextChanged;
             //
-            // SiteCoord_textBox
+            // Lon_label
             //
-            SiteCoord_textBox.BorderStyle = BorderStyle.FixedSingle;
-            SiteCoord_textBox.Enabled = false;
-            SiteCoord_textBox.Font = new Font("나눔바른고딕", 9.75F);
-            SiteCoord_textBox.ForeColor = SystemColors.ControlDark;
-            SiteCoord_textBox.Location = new Point(94, 135);
-            SiteCoord_textBox.Name = "SiteCoord_textBox";
-            SiteCoord_textBox.Size = new Size(320, 22);
-            SiteCoord_textBox.TabIndex = 132;
-            SiteCoord_textBox.TextAlign = HorizontalAlignment.Center;
+            Lon_label.AutoSize = true;
+            Lon_label.Font = new Font("나눔바른고딕", 9.75F);
+            Lon_label.Location = new Point(160, 138);
+            Lon_label.Name = "Lon_label";
+            Lon_label.Size = new Size(28, 15);
+            Lon_label.TabIndex = 132;
+            Lon_label.Text = "경도";
+            //
+            // Lon_textBox
+            //
+            Lon_textBox.BackColor = Color.White;
+            Lon_textBox.BorderStyle = BorderStyle.FixedSingle;
+            Lon_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            Lon_textBox.ForeColor = SystemColors.ControlText;
+            Lon_textBox.Location = new Point(200, 135);
+            Lon_textBox.Name = "Lon_textBox";
+            Lon_textBox.Size = new Size(80, 22);
+            Lon_textBox.TabIndex = 133;
+            Lon_textBox.TextAlign = HorizontalAlignment.Center;
+            Lon_textBox.TextChanged += Lon_textBox_TextChanged;
             //
             // BuildingLocation_textBox
             // 
@@ -1417,9 +1428,10 @@ namespace main.contents
         private Label ElecWiring_label;
         private Label Pipe_label;
         private TextBox BuildingLocation_textBox;
-        private Button SiteCoord_button;
-        private Label SiteCoord_label;
-        private TextBox SiteCoord_textBox;
+        private Label Lat_label;
+        private TextBox Lat_textBox;
+        private Label Lon_label;
+        private TextBox Lon_textBox;
         private TextBox BuildingName_textBox;
         private Label label30;
         private TextBox GrossArea_textBox;
