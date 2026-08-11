@@ -7,6 +7,7 @@ namespace main.contents
     {
         String ProjectName, ProjectType, ProjectNum;
         String BuildingCategory, BuildingUse, BuildingName, BuildingLocation, Climate, BylawClimate;
+        double Latitude, Longitude; // λw, φw — ISO 52010-1 태양시각 계산용 대지 고유 좌표(관측소 좌표와 별개)
         double Year, Month;
         double ConstrucitonDate, BylawDate;
         double GrossArea, BuildingArea;
@@ -585,6 +586,18 @@ namespace main.contents
             }
         }
 
+        private void SiteCoord_button_Click(object sender, EventArgs e)
+        {
+            SiteCoord_info form = new SiteCoord_info(Latitude, Longitude);
+            DialogResult result = form.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Latitude = form.Latitude;
+                Longitude = form.Longitude;
+                SiteCoord_textBox.Text = "위도 " + Latitude.ToString("0.00") + "° / 경도 " + Longitude.ToString("0.00") + "°";
+            }
+        }
+
         public bool ValidateAndSave(bool isManualSave = false)
         {
             try
@@ -672,14 +685,14 @@ namespace main.contents
 
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
             Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,프로젝트명,프로젝트유형,프로젝트유형번호,기존프로젝트," +
-                "건물대상,건물용도,건물명,주소,지역인덱스,지역,지역구분," +
+                "건물대상,건물용도,건물명,주소,위도,경도,지역인덱스,지역,지역구분," +
                 "준공연도,준공월," +
                 "준공시기,법규시기," +
                 "연면적,건축면적," +
                 "지상층수,지하층수," +
                 "작성자,작성자주소,작성자회사,작성연도,작성월,작성시기",
             "'" + 번호[0][0] + "','" + ProjectName + "','" + ProjectType + "','" + ProjectTypeNum + "','" + OldProject + "','" +
-            BuildingCategory + "','" + BuildingUse + "','" + BuildingName + "','" + BuildingLocation + "','" + Climate_comboBox.SelectedItem.ToString() + "','" + Climate + "','" + BylawClimate + "','" +
+            BuildingCategory + "','" + BuildingUse + "','" + BuildingName + "','" + BuildingLocation + "','" + Latitude + "','" + Longitude + "','" + Climate_comboBox.SelectedItem.ToString() + "','" + Climate + "','" + BylawClimate + "','" +
             Year + "','" + Month + "','" +
             ConstrucitonDate.ToString() + "','" + BylawDate.ToString() + "','" +
             GrossArea.ToString() + "','" + BuildingArea.ToString() + "','" +
@@ -723,6 +736,10 @@ namespace main.contents
             BuildingLocation = null;
             BuildingLocation_textBox.Text = null;
 
+            Latitude = 0;
+            Longitude = 0;
+            SiteCoord_textBox.Text = null;
+
             GrossArea = 0;
             GrossArea_textBox.Text = null;
             BuildingArea = 0;
@@ -754,7 +771,7 @@ namespace main.contents
             "준공시기,법규시기," +
             "연면적,건축면적," +
             "지상층수,지하층수," +
-            "작성자,작성자주소,작성자회사,작성연도,작성월,작성시기,기존프로젝트", "");
+            "작성자,작성자주소,작성자회사,작성연도,작성월,작성시기,기존프로젝트,위도,경도", "");
             if (Value1.Length > 0)
             {
                 ProjectName = Value1[0][1];
@@ -800,6 +817,13 @@ namespace main.contents
 
                 BuildingLocation = Value[0][7];
                 BuildingLocation_textBox.Text = BuildingLocation;
+
+                Latitude = Program.UTIL.ToDoubleOrZero(Value[0][28]);
+                Longitude = Program.UTIL.ToDoubleOrZero(Value[0][29]);
+                if (Latitude != 0 || Longitude != 0)
+                {
+                    SiteCoord_textBox.Text = "위도 " + Latitude.ToString("0.00") + "° / 경도 " + Longitude.ToString("0.00") + "°";
+                }
 
                 Climate_comboBox.SelectedItem = Value[0][8];
                 Climate = Value[0][9];

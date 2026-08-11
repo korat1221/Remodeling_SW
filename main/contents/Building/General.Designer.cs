@@ -43,6 +43,9 @@ namespace main.contents
             label4 = new Label();
             panel1 = new Panel();
             climate_infobutton = new Button();
+            SiteCoord_button = new Button();
+            SiteCoord_label = new Label();
+            SiteCoord_textBox = new TextBox();
             BuildingLocation_textBox = new TextBox();
             BuildingName_textBox = new TextBox();
             ByRawClimate_textBox = new TextBox();
@@ -251,6 +254,9 @@ namespace main.contents
             // 
             panel1.BackColor = Color.White;
             panel1.Controls.Add(climate_infobutton);
+            panel1.Controls.Add(SiteCoord_button);
+            panel1.Controls.Add(SiteCoord_label);
+            panel1.Controls.Add(SiteCoord_textBox);
             panel1.Controls.Add(BuildingLocation_textBox);
             panel1.Controls.Add(BuildingName_textBox);
             panel1.Controls.Add(ByRawClimate_textBox);
@@ -282,7 +288,44 @@ namespace main.contents
             climate_infobutton.Text = "!";
             climate_infobutton.UseVisualStyleBackColor = false;
             climate_infobutton.Click += climate_infobutton_Click;
-            // 
+            //
+            // SiteCoord_button
+            //
+            SiteCoord_button.BackColor = SystemColors.ControlLight;
+            SiteCoord_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            SiteCoord_button.FlatStyle = FlatStyle.System;
+            SiteCoord_button.Font = new Font("Microsoft Sans Serif", 9.75F);
+            SiteCoord_button.Location = new Point(419, 84);
+            SiteCoord_button.Margin = new Padding(0);
+            SiteCoord_button.Name = "SiteCoord_button";
+            SiteCoord_button.Size = new Size(23, 23);
+            SiteCoord_button.TabIndex = 130;
+            SiteCoord_button.Text = "+";
+            SiteCoord_button.UseVisualStyleBackColor = false;
+            SiteCoord_button.Click += SiteCoord_button_Click;
+            //
+            // SiteCoord_label
+            //
+            SiteCoord_label.AutoSize = true;
+            SiteCoord_label.Font = new Font("나눔바른고딕", 9.75F);
+            SiteCoord_label.Location = new Point(20, 138);
+            SiteCoord_label.Name = "SiteCoord_label";
+            SiteCoord_label.Size = new Size(58, 15);
+            SiteCoord_label.TabIndex = 131;
+            SiteCoord_label.Text = "대지좌표";
+            //
+            // SiteCoord_textBox
+            //
+            SiteCoord_textBox.BorderStyle = BorderStyle.FixedSingle;
+            SiteCoord_textBox.Enabled = false;
+            SiteCoord_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            SiteCoord_textBox.ForeColor = SystemColors.ControlDark;
+            SiteCoord_textBox.Location = new Point(94, 135);
+            SiteCoord_textBox.Name = "SiteCoord_textBox";
+            SiteCoord_textBox.Size = new Size(320, 22);
+            SiteCoord_textBox.TabIndex = 132;
+            SiteCoord_textBox.TextAlign = HorizontalAlignment.Center;
+            //
             // BuildingLocation_textBox
             // 
             BuildingLocation_textBox.BackColor = Color.White;
@@ -1374,6 +1417,9 @@ namespace main.contents
         private Label ElecWiring_label;
         private Label Pipe_label;
         private TextBox BuildingLocation_textBox;
+        private Button SiteCoord_button;
+        private Label SiteCoord_label;
+        private TextBox SiteCoord_textBox;
         private TextBox BuildingName_textBox;
         private Label label30;
         private TextBox GrossArea_textBox;
