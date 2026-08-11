@@ -76,7 +76,7 @@ namespace main
 
             delta = 0.33281
                  - 22.984 * Math.Cos(r1) - 0.3499 * Math.Cos(r2) - 0.1398 * Math.Cos(r3)
-                 + 3.7872 * Math.Sin(r1) + 0.03205 * Math.Sin(r2) + 0.7187 * Math.Sin(r3);
+                 + 3.7872 * Math.Sin(r1) + 0.03205 * Math.Sin(r2) + 0.07187 * Math.Sin(r3); // ISO 원문 0.07187 — 기술서(KIAEBS) 0.7187은 오타
 
             return delta;
         }
