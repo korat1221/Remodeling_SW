@@ -170,10 +170,12 @@ namespace main.subcontents.CoolingSystem
             Pump_dataGridView.Columns.Add("A8", "동력.[W]");
             Pump_dataGridView.Columns.Add("A9", "양정.[m]");
 
-            Pump_dataGridView.Columns[6].Visible = false;
             Pump_dataGridView.Columns[5].Visible = false;
+            Pump_dataGridView.Columns[6].Visible = false;
             Pump_dataGridView.Columns[7].Visible = false;
             Pump_dataGridView.Columns[9].Visible = false;
+
+            Pump_dataGridView.Columns[0].Width = 40;
         }
 
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)

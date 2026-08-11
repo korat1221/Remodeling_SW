@@ -114,7 +114,7 @@ namespace main.subcontents.CoolingSystem
             label4.Name = "label4";
             label4.Size = new Size(140, 15);
             label4.TabIndex = 103;
-            label4.Text = "실외기12kW 장비일람표";
+            label4.Text = "실외기 장비일람표";
             // 
             // Icon_pictureBox
             // 

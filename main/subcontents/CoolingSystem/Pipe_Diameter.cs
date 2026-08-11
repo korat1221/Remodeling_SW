@@ -13,11 +13,13 @@ namespace main.subcontents.CoolingSystem
     public partial class Pipe_Diameter : Form
     {
         public double _tempDiffer, _ceNumber;
-        public Pipe_Diameter()
+        string type; //온수, 냉수
+        public Pipe_Diameter(string _type)
         {
             InitializeComponent();
             this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
-
+            type= _type;
+            label1.Text = type + " 온도차";
         }
 
         private void Save_button_Click(object sender, EventArgs e)
@@ -34,7 +36,7 @@ namespace main.subcontents.CoolingSystem
         {
             if (!double.TryParse(tempDiffer_textBox.Text?.ToString(), out _tempDiffer))
             {
-                MessageBox.Show("냉수 온도차를 입력해 주세요");
+                MessageBox.Show(type + " 온도차를 입력해 주세요");
                 return false;
             }
             if (!double.TryParse(ceNumber_textBox.Text?.ToString(), out _ceNumber))

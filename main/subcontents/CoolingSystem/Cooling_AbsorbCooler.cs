@@ -15,13 +15,11 @@ namespace main.subcontents.CoolingSystem
     {
         List<int> SelectRow = new List<int>();
         List<string> SelectCG_split = new List<string>();
-        List<string> SelectCGN_split = new List<string>();
-
         string SystemNum;
-        public string SelectCG, SelectCGN;
+        public string SelectCG;
 
 
-        public Cooling_AbsorbCooler(string _Num, string _SelectCG_nonsplit, string _SelectCGN_nonsplit)
+        public Cooling_AbsorbCooler(string _Num, string _SelectCG_nonsplit)
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '장비일람표'");
@@ -33,7 +31,7 @@ namespace main.subcontents.CoolingSystem
 
             if (_SelectCG_nonsplit != null)
             {
-                Load_SaveValue(_SelectCG_nonsplit, _SelectCGN_nonsplit);
+                Load_SaveValue(_SelectCG_nonsplit);
             }
 
         }
@@ -41,21 +39,20 @@ namespace main.subcontents.CoolingSystem
         {
             TableMake();
 
-            string[][] DefaultDB_Value = Program.DB.getValue(DB.type.ProjDB, "User_ABS", " 번호,명칭,냉방용량,통합성능,냉방성능,대기전력,냉수입구온도,냉수출구온도,연료,설치", "");
+            string[][] DefaultDB_Value = Program.DB.getValue(DB.type.ProjDB, "User_ABS", " 번호,명칭,냉방용량,냉방성능,대기전력,냉수입구온도,냉수출구온도,연료,설치", "");
             for (int i = 0; i < DefaultDB_Value.Length; i++)
             {
                 int nRow = AbsorbCooler_dataGridView.Rows.Add();
 
-                AbsorbCooler_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[i][0];//번호
-                AbsorbCooler_dataGridView.Rows[nRow].Cells[3].Value = DefaultDB_Value[i][1]; //명칭
-                AbsorbCooler_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][2]));//냉방출력
-                AbsorbCooler_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][3]));//통합성능
-                AbsorbCooler_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][4])); //EER
-                AbsorbCooler_dataGridView.Rows[nRow].Cells[7].Value = DefaultDB_Value[i][5]; //대기전력1
-                AbsorbCooler_dataGridView.Rows[nRow].Cells[10].Value = DefaultDB_Value[i][6]; //냉수입구온도
-                AbsorbCooler_dataGridView.Rows[nRow].Cells[11].Value = DefaultDB_Value[i][7]; //냉수출구온도
-                AbsorbCooler_dataGridView.Rows[nRow].Cells[8].Value = DefaultDB_Value[i][8]; //연료
-                AbsorbCooler_dataGridView.Rows[nRow].Cells[9].Value = DefaultDB_Value[i][9]; //설치       
+                AbsorbCooler_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[i][0];//번호
+                AbsorbCooler_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[i][1]; //명칭
+                AbsorbCooler_dataGridView.Rows[nRow].Cells[3].Value = string.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][2]));//냉방출력
+                AbsorbCooler_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][3])); //COP
+                AbsorbCooler_dataGridView.Rows[nRow].Cells[5].Value = DefaultDB_Value[i][4]; //대기전력1
+                AbsorbCooler_dataGridView.Rows[nRow].Cells[6].Value = DefaultDB_Value[i][5]; //냉수입구온도
+                AbsorbCooler_dataGridView.Rows[nRow].Cells[7].Value = DefaultDB_Value[i][6]; //냉수출구온도
+                AbsorbCooler_dataGridView.Rows[nRow].Cells[8].Value = DefaultDB_Value[i][7]; //연료
+                AbsorbCooler_dataGridView.Rows[nRow].Cells[9].Value = DefaultDB_Value[i][8]; //설치       
             }
         }
         private void TableMake()
@@ -67,28 +64,20 @@ namespace main.subcontents.CoolingSystem
             checkBoxColumn.Name = "check";
             AbsorbCooler_dataGridView.Columns.Add(checkBoxColumn);
 
-            AbsorbCooler_dataGridView.Columns.Add("A1", "설치대수");
-            AbsorbCooler_dataGridView.Columns.Add("A2", "번호");
-            AbsorbCooler_dataGridView.Columns.Add("A3", "명칭");
-            AbsorbCooler_dataGridView.Columns.Add("A4", "냉방성능.출력.[kW]");
-            AbsorbCooler_dataGridView.Columns.Add("A5", "냉방성능.통합성능.[W/W]");
-            AbsorbCooler_dataGridView.Columns.Add("A6", "냉방성능.냉방성능.[W/W]");
-            AbsorbCooler_dataGridView.Columns.Add("A7", "대기전력.[W]");
-            AbsorbCooler_dataGridView.Columns.Add("A8", "냉수온도.입구.[℃]");
-            AbsorbCooler_dataGridView.Columns.Add("A9", "냉수온도.출구.[℃]");
-            AbsorbCooler_dataGridView.Columns.Add("A10", "연료");
-            AbsorbCooler_dataGridView.Columns.Add("A11", "설치");
+            AbsorbCooler_dataGridView.Columns.Add("A1", "번호");
+            AbsorbCooler_dataGridView.Columns.Add("A2", "명칭");
+            AbsorbCooler_dataGridView.Columns.Add("A3", "냉방성능.출력.[kW]");
+            AbsorbCooler_dataGridView.Columns.Add("A4", "냉방성능.COP.[W/W]");
+            AbsorbCooler_dataGridView.Columns.Add("A5", "대기전력.[W]");
+            AbsorbCooler_dataGridView.Columns.Add("A6", "냉수온도.입구.[℃]");
+            AbsorbCooler_dataGridView.Columns.Add("A7", "냉수온도.출구.[℃]");
+            AbsorbCooler_dataGridView.Columns.Add("A8", "연료");
+            AbsorbCooler_dataGridView.Columns.Add("A9", "설치");
         }
 
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
-            if (column == 1)
-            {
-                cell.Style.BackColor = Color.FromArgb(255, 248, 206);
-                return true;
-            }
-
-            else if (row % 2 == 1)
+            if (row % 2 == 1)
             {
                 cell.Style.BackColor = SystemColors.InactiveBorder;
                 cell.Style.ForeColor = Color.Black;
@@ -116,11 +105,6 @@ namespace main.subcontents.CoolingSystem
                 {
                     row.DefaultCellStyle.SelectionBackColor = SystemColors.GradientInactiveCaption;
                     SelectRow.Add(row.Index);
-                    if (row.Cells[1].Value == null)
-                    {
-                        MessageBox.Show("설치대수를 입력해주세요.", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return false;
-                    }
                 }
             }
             return true;
@@ -136,14 +120,12 @@ namespace main.subcontents.CoolingSystem
             {
                 if (k == SelectRow.Count - 1)
                 {
-                    this.SelectCGN += Program.UTIL.dataGridView_doubleComa(AbsorbCooler_dataGridView, Convert.ToInt32(SelectRow[k]), 1, 0).ToString();
-                    this.SelectCG += AbsorbCooler_dataGridView.Rows[Convert.ToInt32(SelectRow[k])].Cells[2].Value.ToString();
+                    this.SelectCG += AbsorbCooler_dataGridView.Rows[Convert.ToInt32(SelectRow[k])].Cells[1].Value.ToString();
 
                 }
                 else
                 {
-                    this.SelectCGN += Program.UTIL.dataGridView_doubleComa(AbsorbCooler_dataGridView, Convert.ToInt32(SelectRow[k]), 1, 0).ToString() + "+";
-                    this.SelectCG += AbsorbCooler_dataGridView.Rows[Convert.ToInt32(SelectRow[k])].Cells[2].Value.ToString() + "+";
+                    this.SelectCG += AbsorbCooler_dataGridView.Rows[Convert.ToInt32(SelectRow[k])].Cells[1].Value.ToString() + "+";
                 }
             }
 
@@ -155,33 +137,24 @@ namespace main.subcontents.CoolingSystem
         {
             SelectRow.Clear();
             SelectCG_split.Clear();
-            SelectCGN_split.Clear();
-
             this.SelectCG = null;
-            this.SelectCGN = null;
-
+            
             for (int n = 0; n < AbsorbCooler_dataGridView.Rows.Count; n++)
             {
                 AbsorbCooler_dataGridView.Rows[n].Cells[0].Value = false;
-                AbsorbCooler_dataGridView.Rows[n].Cells[1].Value = null;
             }
         }
 
-        private void Load_SaveValue(string _SelectCG_nonsplit, string _SelectCGN_nonsplit)
+        private void Load_SaveValue(string _SelectCG_nonsplit)
         {
             reset();
             string[] token = _SelectCG_nonsplit.Split('+');
-            string[] value = _SelectCGN_nonsplit.Split("+");
-
+            
             foreach (var item in token)
             {
                 SelectCG_split.Add(item.ToString());
             }
-            foreach (var val in value)
-            {
-                SelectCGN_split.Add(val.ToString());
-            }
-
+          
             for (int k = 0; k < SelectCG_split.Count; k++)
             {
                 for (int n = 0; n < AbsorbCooler_dataGridView.Rows.Count; n++)
@@ -189,11 +162,9 @@ namespace main.subcontents.CoolingSystem
                     if (AbsorbCooler_dataGridView.Rows[n].Cells[2].Value.ToString() == SelectCG_split[k].ToString())
                     {
                         AbsorbCooler_dataGridView.Rows[n].Cells[0].Value = true;
-                        AbsorbCooler_dataGridView.Rows[n].Cells[1].Value = value[k];
                     }
                 }
             }
         }
-
     }
 }
