@@ -5,33 +5,35 @@ namespace main
     internal class Cal_Climate
     {
         const double TZ = 9; // 표준시간대[h] — KIAEBS S-19 고정값(◯14)
-        const int DAYS_PER_YEAR = 365;
-        const int HOURS_PER_YEAR = 8760;
+        const int days_per_year = 365;
+        const int hours_per_year = 8760;
 
-        public double[] delta = new double[DAYS_PER_YEAR];  // δ, 태양 적위[°] — n_day(1~365) 기준
-        public double[] omega = new double[HOURS_PER_YEAR]; // ω, 태양시각[°] — n_hour(1~8760) 기준
+        public double[] delta = new double[days_per_year];  // δ, 태양 적위[°] — n_day(1~365) 기준
+        public double[] omega = new double[hours_per_year]; // ω, 태양시각[°] — n_hour(1~8760) 기준
 
         // 2.2.1 태양시각(ω) — ISO 52010-1
         public void Cal_SolarTime(double lambda_w) // λw, 대지 경도[°] — 관측소 좌표가 아닌 대지 고유 입력값
         {
-            for (int n_day = 1; n_day <= DAYS_PER_YEAR; n_day++)
+            for (int i = 0; i < days_per_year; i++)
             {
-                double R_dc = 360.0 / DAYS_PER_YEAR * n_day; // 지구 궤도 편차[°], ◯8
-                delta[n_day - 1] = SolarDeclination(R_dc);
+                int n_day = i + 1; // 스펙상 n_day는 1~365 — R_dc 계산식에 값 자체가 쓰임
+                double R_dc = 360.0 / days_per_year * n_day; // 지구 궤도 편차[°], ◯8
+                delta[i] = SolarDeclination(R_dc);
             }
 
             double t_schift = TZ - lambda_w / 15; // 지연시간차[h], ◯13
 
-            for (int n_hour = 1; n_hour <= HOURS_PER_YEAR; n_hour++)
+            for (int i = 0; i < hours_per_year; i++)
             {
-                int n_day = (n_hour - 1) / 24 + 1;
+                int n_hour = i + 1; // 스펙상 n_hour는 1~8760 — t_sol 계산식에 값 자체가 쓰임
+                int n_day = i / 24 + 1;
                 double t_eq = EquationOfTime(n_day);       // 균시차[h], ◯12
                 double t_sol = n_hour - t_eq / 60 - t_schift; // 태양시, ◯11
 
                 double w = 180.0 / 12 * (12.5 - t_sol); // 태양시각[°], ◯10
                 if (w > 180) w -= 360;
                 if (w < -180) w += 360;
-                omega[n_hour - 1] = w;
+                omega[i] = w;
             }
         }
 
