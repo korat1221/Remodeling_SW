@@ -11,7 +11,16 @@ namespace main
         public double[] delta = new double[days_per_year];  // δ, 태양 적위[°] — n_day(1~365) 기준
         public double[] omega = new double[hours_per_year]; // ω, 태양시각[°] — n_hour(1~8760) 기준
 
-        public double lambda_w; // λw, 대지 경도[°] — 관측소 좌표가 아닌 대지 고유 입력값, 호출 전에 세팅
+        public double lambda_w; // λw, 대지 경도[°] — 관측소 좌표가 아닌 대지 고유 입력값
+
+        public void LoadData_Lambda()
+        {
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "경도", "");
+            if (Value.Length > 0)
+            {
+                lambda_w = Program.UTIL.ToDoubleOrZero(Value[0][0]);
+            }
+        }
 
         // 2.2.1 태양시각(ω) — ISO 52010-1
         public void Cal_SolarTime()
