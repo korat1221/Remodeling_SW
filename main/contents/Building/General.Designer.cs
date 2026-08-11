@@ -295,7 +295,7 @@ namespace main.contents
             //
             Lat_label.AutoSize = true;
             Lat_label.Font = new Font("나눔바른고딕", 9.75F);
-            Lat_label.Location = new Point(20, 138);
+            Lat_label.Location = new Point(20, 142);
             Lat_label.Name = "Lat_label";
             Lat_label.Size = new Size(28, 15);
             Lat_label.TabIndex = 130;
@@ -307,9 +307,9 @@ namespace main.contents
             Lat_textBox.BorderStyle = BorderStyle.FixedSingle;
             Lat_textBox.Font = new Font("나눔바른고딕", 9.75F);
             Lat_textBox.ForeColor = SystemColors.ControlText;
-            Lat_textBox.Location = new Point(60, 135);
+            Lat_textBox.Location = new Point(60, 140);
             Lat_textBox.Name = "Lat_textBox";
-            Lat_textBox.Size = new Size(80, 22);
+            Lat_textBox.Size = new Size(80, 16);
             Lat_textBox.TabIndex = 131;
             Lat_textBox.TextAlign = HorizontalAlignment.Center;
             Lat_textBox.TextChanged += Lat_textBox_TextChanged;
@@ -318,7 +318,7 @@ namespace main.contents
             //
             Lon_label.AutoSize = true;
             Lon_label.Font = new Font("나눔바른고딕", 9.75F);
-            Lon_label.Location = new Point(160, 138);
+            Lon_label.Location = new Point(160, 142);
             Lon_label.Name = "Lon_label";
             Lon_label.Size = new Size(28, 15);
             Lon_label.TabIndex = 132;
@@ -330,9 +330,9 @@ namespace main.contents
             Lon_textBox.BorderStyle = BorderStyle.FixedSingle;
             Lon_textBox.Font = new Font("나눔바른고딕", 9.75F);
             Lon_textBox.ForeColor = SystemColors.ControlText;
-            Lon_textBox.Location = new Point(200, 135);
+            Lon_textBox.Location = new Point(200, 140);
             Lon_textBox.Name = "Lon_textBox";
-            Lon_textBox.Size = new Size(80, 22);
+            Lon_textBox.Size = new Size(80, 16);
             Lon_textBox.TabIndex = 133;
             Lon_textBox.TextAlign = HorizontalAlignment.Center;
             Lon_textBox.TextChanged += Lon_textBox_TextChanged;
