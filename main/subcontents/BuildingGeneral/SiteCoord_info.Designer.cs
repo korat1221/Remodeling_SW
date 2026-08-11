@@ -122,7 +122,6 @@ partial class SiteCoord_info
         // AddressSearch_button
         //
         AddressSearch_button.BackColor = SystemColors.ControlLight;
-        AddressSearch_button.Enabled = false;
         AddressSearch_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
         AddressSearch_button.FlatStyle = FlatStyle.System;
         AddressSearch_button.Font = new Font("나눔바른고딕", 9.75F);
@@ -132,11 +131,11 @@ partial class SiteCoord_info
         AddressSearch_button.TabIndex = 7;
         AddressSearch_button.Text = "주소로 찾기";
         AddressSearch_button.UseVisualStyleBackColor = false;
+        AddressSearch_button.Click += AddressSearch_button_Click;
         //
         // MapSelect_button
         //
         MapSelect_button.BackColor = SystemColors.ControlLight;
-        MapSelect_button.Enabled = false;
         MapSelect_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
         MapSelect_button.FlatStyle = FlatStyle.System;
         MapSelect_button.Font = new Font("나눔바른고딕", 9.75F);
@@ -146,6 +145,7 @@ partial class SiteCoord_info
         MapSelect_button.TabIndex = 8;
         MapSelect_button.Text = "지도에서 선택";
         MapSelect_button.UseVisualStyleBackColor = false;
+        MapSelect_button.Click += MapSelect_button_Click;
         //
         // Save_button
         //
