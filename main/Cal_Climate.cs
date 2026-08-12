@@ -27,17 +27,22 @@ namespace main
         public double[] F2 = new double[hours_per_year]; // F2, 지평선 밝기계수[-]
 
         // f11,f12,f13,f21,f22,f23 — 청명도 매개변수(ε) 구간별, ISO 52010-1 <표 8> / Annex J-1 <표 2>
-        static readonly double[,] BrightnessCoeff =
+        // basedb_resystem.sqlite의 청명도밝기계수 테이블에서 로드(인덱스 1~8 순서, 8행 상한은 사실상 무한대인 9999)
+        double[] BrightnessLimit = new double[8]; // 인덱스별 ε 상한
+        double[,] BrightnessCoeff = new double[8, 6]; // 인덱스별 f11~f23
+
+        public void LoadData_BrightnessCoeff()
         {
-            { -0.008,  0.588, -0.062, -0.060,  0.072, -0.022 }, // ε < 1.065
-            {  0.130,  0.683, -0.151, -0.019,  0.066, -0.029 }, // 1.065 ≤ ε < 1.230
-            {  0.330,  0.487, -0.221,  0.055, -0.064, -0.026 }, // 1.230 ≤ ε < 1.500
-            {  0.568,  0.187, -0.295,  0.109, -0.152, -0.014 }, // 1.500 ≤ ε < 1.950
-            {  0.873, -0.392, -0.362,  0.226, -0.462,  0.001 }, // 1.950 ≤ ε < 2.800
-            {  1.132, -1.237, -0.412,  0.288, -0.823,  0.056 }, // 2.800 ≤ ε < 4.500
-            {  1.060, -1.600, -0.359,  0.264, -1.127,  0.131 }, // 4.500 ≤ ε < 6.200
-            {  0.678, -0.327, -0.250,  0.156, -1.377,  0.251 }, // ε ≥ 6.200
-        };
+            string[][] rows = Program.DB.getValue(DB.type.BaseDB_RESystem, "청명도밝기계수", "상한,f11,f12,f13,f21,f22,f23", "인덱스 >= 1 ORDER BY 인덱스");
+            for (int idx = 0; idx < rows.Length; idx++)
+            {
+                BrightnessLimit[idx] = Program.UTIL.ToDoubleOrZero(rows[idx][0]);
+                for (int col = 0; col < 6; col++)
+                {
+                    BrightnessCoeff[idx, col] = Program.UTIL.ToDoubleOrZero(rows[idx][col + 1]);
+                }
+            }
+        }
 
         public double lambda_w; // λw, 대지 경도[°] — 관측소 좌표가 아닌 대지 고유 입력값
         public double phi_w;    // φw, 대지 위도[°] — 관측소 좌표가 아닌 대지 고유 입력값
@@ -160,15 +165,8 @@ namespace main
         {
             for (int i = 0; i < hours_per_year; i++)
             {
-                int idx; // 청명도 매개변수(ε) 구간 인덱스, BrightnessCoeff 행 번호
-                if (epsilon[i] < 1.065) idx = 0;
-                else if (epsilon[i] < 1.230) idx = 1;
-                else if (epsilon[i] < 1.500) idx = 2;
-                else if (epsilon[i] < 1.950) idx = 3;
-                else if (epsilon[i] < 2.800) idx = 4;
-                else if (epsilon[i] < 4.500) idx = 5;
-                else if (epsilon[i] < 6.200) idx = 6;
-                else idx = 7;
+                int idx = 0; // 청명도 매개변수(ε) 구간 인덱스, BrightnessCoeff 행 번호
+                while (epsilon[i] >= BrightnessLimit[idx]) idx++;
 
                 double f11 = BrightnessCoeff[idx, 0], f12 = BrightnessCoeff[idx, 1], f13 = BrightnessCoeff[idx, 2];
                 double f21 = BrightnessCoeff[idx, 3], f22 = BrightnessCoeff[idx, 4], f23 = BrightnessCoeff[idx, 5];
