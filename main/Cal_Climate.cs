@@ -31,7 +31,8 @@ namespace main
         double[] BrightnessLimit = new double[8]; // 인덱스별 ε 상한
         double[,] BrightnessCoeff = new double[8, 6]; // 인덱스별 f11~f23
 
-        public void LoadData_BrightnessCoeff()
+        // 기준DB 조회(사용자 입력 아님) — LoadData 아님
+        public void BrightnessTable()
         {
             string[][] rows = Program.DB.getValue(DB.type.BaseDB_RESystem, "청명도밝기계수", "상한,f11,f12,f13,f21,f22,f23", "인덱스 >= 1 ORDER BY 인덱스");
             for (int idx = 0; idx < rows.Length; idx++)
@@ -48,8 +49,19 @@ namespace main
         public double phi_w;    // φw, 대지 위도[°] — 관측소 좌표가 아닌 대지 고유 입력값
 
 
-        // Gsol,d·Gsol,b 시간별 원자료 로드 — 기존 16개 지역 선택(BuildingGeneral.지역)이 KIAEBS 31개 목록의 부분집합이라 이름으로 그대로 연결
-        public void LoadData_Weather()
+        public void LoadData_SiteCoord() // 사용자가 건물정보 화면에서 입력한 값
+        {
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "경도,위도", "");
+            if (Value.Length > 0)
+            {
+                lambda_w = Program.UTIL.ToDoubleOrZero(Value[0][0]);
+                phi_w = Program.UTIL.ToDoubleOrZero(Value[0][1]);
+            }
+        }
+
+        // Gsol,d·Gsol,b 시간별 원자료 — 기준DB 조회(사용자 입력 아님) — LoadData 아님
+        // 지역 선택(BuildingGeneral.지역)은 조회할 지역을 고르는 데만 쓰고, 값 자체는 기준DB에서 옴
+        public void Weather()
         {
             string[][] region = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
             if (region.Length == 0) return;
@@ -61,12 +73,6 @@ namespace main
             {
                 Gsol_d[i] = Program.UTIL.ToDoubleOrZero(rows[i][0]);
                 Gsol_b[i] = Program.UTIL.ToDoubleOrZero(rows[i][1]);
-            }
-            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "경도,위도", "");
-            if (Value.Length > 0)
-            {
-                lambda_w = Program.UTIL.ToDoubleOrZero(Value[0][0]);
-                phi_w = Program.UTIL.ToDoubleOrZero(Value[0][1]);
             }
         }
 
