@@ -208,90 +208,36 @@ namespace main
             return gamma_sol_ic;
         }
 
-        double Cal_theta_sol_ic(double beta_ic, double gamma_ic, int i) // θsol,ic, ISO 52010-1 <식 17>
+        // θsol,ic부터 Itot까지 전부 (beta_ic, gamma_ic, i) 매개변수가 동일해 하나로 묶음 — 2.2.2 식17, 2.2.3 식26·28,
+        // 2.2.4 식34, 2.2.5 식35~39. 월별 집계(◯70~72)에서 Idir_tot·Idif_tot이 따로 필요해지면 그때 반환값 다시 정리
+        double Cal_Itot(double beta_ic, double gamma_ic, int i) // Itot, 임의 경사면 총일사량[W/m2]
         {
             int n_day = i / 24 + 1;
-            double d = DegToRad(delta[n_day - 1]), p = DegToRad(phi_w), b = DegToRad(beta_ic), g = DegToRad(gamma_ic), w = DegToRad(omega[i]);
+            double d = DegToRad(delta[n_day - 1]), p = DegToRad(phi_w), be = DegToRad(beta_ic), ga = DegToRad(gamma_ic), w = DegToRad(omega[i]);
 
-            double cos_theta_sol_ic =
-                  Math.Sin(d) * Math.Sin(p) * Math.Cos(b)
-                - Math.Sin(d) * Math.Cos(p) * Math.Sin(b) * Math.Cos(g)
-                + Math.Cos(d) * Math.Cos(p) * Math.Cos(b) * Math.Cos(w)
-                + Math.Cos(d) * Math.Sin(p) * Math.Sin(b) * Math.Cos(g) * Math.Cos(w)
-                + Math.Cos(d) * Math.Sin(b) * Math.Sin(g) * Math.Sin(w);
-
+            double cos_theta_sol_ic = // θsol,ic, ISO 52010-1 <식 17>
+                  Math.Sin(d) * Math.Sin(p) * Math.Cos(be)
+                - Math.Sin(d) * Math.Cos(p) * Math.Sin(be) * Math.Cos(ga)
+                + Math.Cos(d) * Math.Cos(p) * Math.Cos(be) * Math.Cos(w)
+                + Math.Cos(d) * Math.Sin(p) * Math.Sin(be) * Math.Cos(ga) * Math.Cos(w)
+                + Math.Cos(d) * Math.Sin(be) * Math.Sin(ga) * Math.Sin(w);
             double theta_sol_ic = RadToDeg(Math.Acos(cos_theta_sol_ic));
 
-            return theta_sol_ic;
-        }
+            double a = Math.Max(0, Math.Cos(DegToRad(theta_sol_ic))); // 입사각 보정계수, ISO 52010-1 <식 28> — 기술서(KIAEBS)는 cos(αsol)로 오기재, ISO 원문은 cos(θsol,ic)
 
-        double Cal_Idir(double theta_sol_ic, int i) // Idir, 임의 경사면 직달일사량[W/m2], 37, ISO 52010-1 <식 26>
-        {
-            double Idir = Math.Max(0, Gsol_b[i] * Math.Cos(DegToRad(theta_sol_ic)));
-
-            return Idir;
-        }
-
-        double Cal_Idif(double beta_ic, double gamma_ic, int i) // Idif, 임의 경사면 산란일사량[W/m2], 43, ISO 52010-1 <식 34>
-        {
-            double theta_sol_ic = Cal_theta_sol_ic(beta_ic, gamma_ic, i);
-            double a = Math.Max(0, Math.Cos(DegToRad(theta_sol_ic))); // 입사각 보정계수, 33, ISO 52010-1 <식 28> — 기술서(KIAEBS)는 cos(αsol)로 오기재, ISO 원문은 cos(θsol,ic)
-
-            double Idif = Gsol_d[i] * ((1 - F1[i]) * (1 + Math.Cos(DegToRad(beta_ic))) / 2
+            double Idir = Math.Max(0, Gsol_b[i] * Math.Cos(DegToRad(theta_sol_ic))); // 임의 경사면 직달일사량, ISO 52010-1 <식 26>
+            double Idif = Gsol_d[i] * ((1 - F1[i]) * (1 + Math.Cos(DegToRad(beta_ic))) / 2 // 임의 경사면 산란일사량, ISO 52010-1 <식 34>
                                       + F1[i] * a / b[i]
                                       + F2[i] * Math.Sin(DegToRad(beta_ic)));
 
-            return Idif;
-        }
-
-        // 2.2.5 임의 경사면 총일사량 — 표면별, 시간별 (월별 집계 ◯70~72는 실제 표면 루프 연결할 때 캐싱 구조와 같이 처리 예정)
-        double Cal_Idif_grnd(double beta_ic, int i) // Idif,grnd, 임의 경사면 반사 일사량[W/m2], ◯56, ISO 52010-1 <식 35>
-        {
             const double rho_sol_grnd = 0.2; // 지면 반사율[-], 표준값, ISO 52010-1 <표 B.5>
+            double Idif_grnd = (Gsol_d[i] + Gsol_b[i] * Math.Sin(DegToRad(alpha_sol[i]))) * rho_sol_grnd * (1 - Math.Cos(DegToRad(beta_ic))) / 2; // 반사 일사량, ISO 52010-1 <식 35>
+            double Icircum = Gsol_d[i] * F1[i] * a / b[i]; // 태양 주변부 산란 일사량, ISO 52010-1 <식 36>
 
-            double Idif_grnd = (Gsol_d[i] + Gsol_b[i] * Math.Sin(DegToRad(alpha_sol[i]))) * rho_sol_grnd * (1 - Math.Cos(DegToRad(beta_ic))) / 2;
+            double Idir_tot = Idir + Icircum;             // 총직달일사량, ISO 52010-1 <식 37>
+            double Idif_tot = Idif - Icircum + Idif_grnd; // 총산란일사량, ISO 52010-1 <식 38>
 
-            return Idif_grnd;
-        }
-
-        double Cal_Icircum(double beta_ic, double gamma_ic, int i) // Icircum, 태양 주변부 산란 일사량[W/m2], ◯63, ISO 52010-1 <식 36>
-        {
-            double theta_sol_ic = Cal_theta_sol_ic(beta_ic, gamma_ic, i);
-            double a = Math.Max(0, Math.Cos(DegToRad(theta_sol_ic)));
-
-            double Icircum = Gsol_d[i] * F1[i] * a / b[i];
-
-            return Icircum;
-        }
-
-        double Cal_Idir_tot(double beta_ic, double gamma_ic, int i) // Idir,tot, 임의 경사면 총직달일사량[W/m2], ◯68, ISO 52010-1 <식 37>
-        {
-            double theta_sol_ic = Cal_theta_sol_ic(beta_ic, gamma_ic, i);
-            double Idir = Cal_Idir(theta_sol_ic, i);
-            double Icircum = Cal_Icircum(beta_ic, gamma_ic, i);
-
-            double Idir_tot = Idir + Icircum;
-
-            return Idir_tot;
-        }
-
-        double Cal_Idif_tot(double beta_ic, double gamma_ic, int i) // Idif,tot, 임의 경사면 총산란일사량[W/m2], ◯55, ISO 52010-1 <식 38>
-        {
-            double Idif = Cal_Idif(beta_ic, gamma_ic, i);
-            double Icircum = Cal_Icircum(beta_ic, gamma_ic, i);
-            double Idif_grnd = Cal_Idif_grnd(beta_ic, i);
-
-            double Idif_tot = Idif - Icircum + Idif_grnd;
-
-            return Idif_tot;
-        }
-
-        double Cal_Itot(double beta_ic, double gamma_ic, int i) // Itot, 임의 경사면 총일사량[W/m2], ◯54, ISO 52010-1 <식 39>
-        {
-            double Idir_tot = Cal_Idir_tot(beta_ic, gamma_ic, i);
-            double Idif_tot = Cal_Idif_tot(beta_ic, gamma_ic, i);
-
-            double Itot = Idir_tot + Idif_tot;
+            double Itot = Idir_tot + Idif_tot; // ISO 52010-1 <식 39>
 
             return Itot;
         }
