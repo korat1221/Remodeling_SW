@@ -32,19 +32,7 @@ namespace main
         double[,] BrightnessCoeff = new double[8, 6]; // 인덱스별 f11~f23
 
         // 기준DB 조회(사용자 입력 아님) — LoadData 아님
-        public void BrightnessTable()
-        {
-            string[][] rows = Program.DB.getValue(DB.type.BaseDB_RESystem, "청명도밝기계수", "상한,f11,f12,f13,f21,f22,f23", "인덱스 >= 1 ORDER BY 인덱스");
-            for (int idx = 0; idx < rows.Length; idx++)
-            {
-                BrightnessLimit[idx] = Program.UTIL.ToDoubleOrZero(rows[idx][0]);
-                for (int col = 0; col < 6; col++)
-                {
-                    BrightnessCoeff[idx, col] = Program.UTIL.ToDoubleOrZero(rows[idx][col + 1]);
-                }
-            }
-        }
-
+       
         public double lambda_w; // λw, 대지 경도[°] — 관측소 좌표가 아닌 대지 고유 입력값
         public double phi_w;    // φw, 대지 위도[°] — 관측소 좌표가 아닌 대지 고유 입력값
 
@@ -169,6 +157,16 @@ namespace main
         // 2.2.4 임의 경사면 산란일사량 — 대지 전역값(밝기계수) — ISO 52010-1
         public void Cal_BrightnessCoeff()
         {
+            string[][] rows = Program.DB.getValue(DB.type.BaseDB_RESystem, "청명도밝기계수", "상한,f11,f12,f13,f21,f22,f23", "인덱스 >= 1 ORDER BY 인덱스");
+            for (int idx = 0; idx < rows.Length; idx++)
+            {
+                BrightnessLimit[idx] = Program.UTIL.ToDoubleOrZero(rows[idx][0]);
+                for (int col = 0; col < 6; col++)
+                {
+                    BrightnessCoeff[idx, col] = Program.UTIL.ToDoubleOrZero(rows[idx][col + 1]);
+                }
+            }
+
             for (int i = 0; i < hours_per_year; i++)
             {
                 int idx = 0; // 청명도 매개변수(ε) 구간 인덱스, BrightnessCoeff 행 번호
