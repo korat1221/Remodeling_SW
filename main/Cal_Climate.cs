@@ -173,8 +173,8 @@ namespace main
                 double f21 = BrightnessCoeff[idx, 3], f22 = BrightnessCoeff[idx, 4], f23 = BrightnessCoeff[idx, 5];
                 double theta_z_rad = DegToRad(theta_z[i]);
 
-                F1[i] = Math.Max(0, f11 + f12 * Delta_sky[i] + f13 * theta_z_rad); // 천공에서 태양 주변부 밝기계수, ◯44, ISO 52010-1 <식 32>
-                F2[i] = f21 + f22 * Delta_sky[i] + f23 * theta_z_rad;              // 지평선 밝기계수, ◯49, ISO 52010-1 <식 33>
+                F1[i] = Math.Max(0, f11 + f12 * Delta_sky[i] + f13 * theta_z_rad); // 천공에서 태양 주변부 밝기계수, 44, ISO 52010-1 <식 32>
+                F2[i] = f21 + f22 * Delta_sky[i] + f23 * theta_z_rad;              // 지평선 밝기계수, 49, ISO 52010-1 <식 33>
             }
         }
 
@@ -219,19 +219,61 @@ namespace main
             return theta_sol_ic;
         }
 
-        double Cal_Idir(double theta_sol_ic, int i) // Idir, 임의 경사면 직달일사량[W/m2], ◯37, ISO 52010-1 <식 26>
+        double Cal_Idir(double theta_sol_ic, int i) // Idir, 임의 경사면 직달일사량[W/m2], 37, ISO 52010-1 <식 26>
         {
             return Math.Max(0, Gsol_b[i] * Math.Cos(DegToRad(theta_sol_ic)));
         }
 
-        double Cal_Idif(double beta_ic, double gamma_ic, int i) // Idif, 임의 경사면 산란일사량[W/m2], ◯43, ISO 52010-1 <식 34>
+        double Cal_Idif(double beta_ic, double gamma_ic, int i) // Idif, 임의 경사면 산란일사량[W/m2], 43, ISO 52010-1 <식 34>
         {
             double theta_sol_ic = Cal_theta_sol_ic(beta_ic, gamma_ic, i);
-            double a = Math.Max(0, Math.Cos(DegToRad(theta_sol_ic))); // 입사각 보정계수, ◯33, ISO 52010-1 <식 28> — 기술서(KIAEBS)는 cos(αsol)로 오기재, ISO 원문은 cos(θsol,ic)
+            double a = Math.Max(0, Math.Cos(DegToRad(theta_sol_ic))); // 입사각 보정계수, 33, ISO 52010-1 <식 28> — 기술서(KIAEBS)는 cos(αsol)로 오기재, ISO 원문은 cos(θsol,ic)
 
             return Gsol_d[i] * ((1 - F1[i]) * (1 + Math.Cos(DegToRad(beta_ic))) / 2
                               + F1[i] * a / b[i]
                               + F2[i] * Math.Sin(DegToRad(beta_ic)));
+        }
+
+        // 2.2.5 임의 경사면 총일사량 — 표면별, 시간별 (월별 집계 ◯70~72는 실제 표면 루프 연결할 때 캐싱 구조와 같이 처리 예정)
+        double Cal_Idif_grnd(double beta_ic, int i) // Idif,grnd, 임의 경사면 반사 일사량[W/m2], ◯56, ISO 52010-1 <식 35>
+        {
+            const double rho_sol_grnd = 0.2; // 지면 반사율[-], 표준값, ISO 52010-1 <표 B.5>
+
+            return (Gsol_d[i] + Gsol_b[i] * Math.Sin(DegToRad(alpha_sol[i]))) * rho_sol_grnd * (1 - Math.Cos(DegToRad(beta_ic))) / 2;
+        }
+
+        double Cal_Icircum(double beta_ic, double gamma_ic, int i) // Icircum, 태양 주변부 산란 일사량[W/m2], ◯63, ISO 52010-1 <식 36>
+        {
+            double theta_sol_ic = Cal_theta_sol_ic(beta_ic, gamma_ic, i);
+            double a = Math.Max(0, Math.Cos(DegToRad(theta_sol_ic)));
+
+            return Gsol_d[i] * F1[i] * a / b[i];
+        }
+
+        double Cal_Idir_tot(double beta_ic, double gamma_ic, int i) // Idir,tot, 임의 경사면 총직달일사량[W/m2], ◯68, ISO 52010-1 <식 37>
+        {
+            double theta_sol_ic = Cal_theta_sol_ic(beta_ic, gamma_ic, i);
+            double Idir = Cal_Idir(theta_sol_ic, i);
+            double Icircum = Cal_Icircum(beta_ic, gamma_ic, i);
+
+            return Idir + Icircum;
+        }
+
+        double Cal_Idif_tot(double beta_ic, double gamma_ic, int i) // Idif,tot, 임의 경사면 총산란일사량[W/m2], ◯55, ISO 52010-1 <식 38>
+        {
+            double Idif = Cal_Idif(beta_ic, gamma_ic, i);
+            double Icircum = Cal_Icircum(beta_ic, gamma_ic, i);
+            double Idif_grnd = Cal_Idif_grnd(beta_ic, i);
+
+            return Idif - Icircum + Idif_grnd;
+        }
+
+        double Cal_Itot(double beta_ic, double gamma_ic, int i) // Itot, 임의 경사면 총일사량[W/m2], ◯54, ISO 52010-1 <식 39>
+        {
+            double Idir_tot = Cal_Idir_tot(beta_ic, gamma_ic, i);
+            double Idif_tot = Cal_Idif_tot(beta_ic, gamma_ic, i);
+
+            return Idir_tot + Idif_tot;
         }
 
         static double DegToRad(double deg) => deg * Math.PI / 180;
