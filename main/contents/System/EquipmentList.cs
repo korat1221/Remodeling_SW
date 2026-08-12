@@ -347,16 +347,19 @@ namespace main.contents
                     TypeCombo.Items.Clear();
                     TypeCombo.Items.Add("콘덴싱가스보일러");
                     TypeCombo.Items.Add("일반가스보일러");
+                    TypeCombo.Items.Add("순간온수기");
                     break;
                 case "LNG":
                     TypeCombo.Items.Clear();
                     TypeCombo.Items.Add("콘덴싱가스보일러");
                     TypeCombo.Items.Add("일반가스보일러");
+                    TypeCombo.Items.Add("순간온수기");
                     break;
                 case "기름":
                     TypeCombo.Items.Clear();
                     TypeCombo.Items.Add("콘덴싱기름보일러");
                     TypeCombo.Items.Add("일반기름보일러");
+                    TypeCombo.Items.Add("순간온수기");
                     break;
                 case "펠릿":
                     TypeCombo.Items.Clear();
