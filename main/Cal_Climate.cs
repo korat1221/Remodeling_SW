@@ -37,6 +37,8 @@ namespace main
         public double phi_w;    // φw, 대지 위도[°] — 관측소 좌표가 아닌 대지 고유 입력값
 
 
+        #region 대지 전역값 계산
+
         // Gsol,d·Gsol,b 시간별 원자료 — 기준DB 조회(사용자 입력 아님) — LoadData 아님
         // 지역 선택(BuildingGeneral.지역)은 조회할 지역을 고르는 데만 쓰고, 값 자체는 기준DB에서 옴
         public void LoadData_Weather()
@@ -178,6 +180,10 @@ namespace main
             }
         }
 
+        #endregion
+
+        #region 표면별 값 계산
+
         // 임의 경사면(벽·지붕)마다 βic·γic가 달라져 배열로 소유하지 않고, 표면별로 호출해 쓰는 계산
         // i는 시간 인덱스(0~8759) — 외피 정보가 아니라 이미 있는 시간별 필드에서 값 하나를 짚는 용도
         double Cal_beta_sol_ic(double beta_ic, int i) // βsol,ic, ISO 52010-1 <식 19>
@@ -275,6 +281,8 @@ namespace main
 
             return Idir_tot + Idif_tot;
         }
+
+        #endregion
 
         static double DegToRad(double deg) => deg * Math.PI / 180;
         static double RadToDeg(double rad) => rad * 180 / Math.PI;
