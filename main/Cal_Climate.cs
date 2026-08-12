@@ -37,7 +37,9 @@ namespace main
         public double phi_w;    // φw, 대지 위도[°] — 관측소 좌표가 아닌 대지 고유 입력값
 
 
-        public void LoadData_SiteCoord() // 사용자가 건물정보 화면에서 입력한 값
+        // Gsol,d·Gsol,b 시간별 원자료 — 기준DB 조회(사용자 입력 아님) — LoadData 아님
+        // 지역 선택(BuildingGeneral.지역)은 조회할 지역을 고르는 데만 쓰고, 값 자체는 기준DB에서 옴
+        public void LoadData_Weather()
         {
             string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "경도,위도", "");
             if (Value.Length > 0)
@@ -45,12 +47,7 @@ namespace main
                 lambda_w = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                 phi_w = Program.UTIL.ToDoubleOrZero(Value[0][1]);
             }
-        }
 
-        // Gsol,d·Gsol,b 시간별 원자료 — 기준DB 조회(사용자 입력 아님) — LoadData 아님
-        // 지역 선택(BuildingGeneral.지역)은 조회할 지역을 고르는 데만 쓰고, 값 자체는 기준DB에서 옴
-        public void Weather()
-        {
             string[][] region = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
             if (region.Length == 0) return;
 
@@ -222,11 +219,6 @@ namespace main
             return theta_sol_ic;
         }
 
-        double Cal_a(double theta_sol_ic) // a, 입사각 보정계수, ◯33, ISO 52010-1 <식 28> — 기술서(KIAEBS)는 cos(αsol)로 오기재, ISO 원문은 cos(θsol,ic)
-        {
-            return Math.Max(0, Math.Cos(DegToRad(theta_sol_ic)));
-        }
-
         double Cal_Idir(double theta_sol_ic, int i) // Idir, 임의 경사면 직달일사량[W/m2], ◯37, ISO 52010-1 <식 26>
         {
             return Math.Max(0, Gsol_b[i] * Math.Cos(DegToRad(theta_sol_ic)));
@@ -234,7 +226,8 @@ namespace main
 
         double Cal_Idif(double beta_ic, double gamma_ic, int i) // Idif, 임의 경사면 산란일사량[W/m2], ◯43, ISO 52010-1 <식 34>
         {
-            double a = Cal_a(Cal_theta_sol_ic(beta_ic, gamma_ic, i));
+            double theta_sol_ic = Cal_theta_sol_ic(beta_ic, gamma_ic, i);
+            double a = Math.Max(0, Math.Cos(DegToRad(theta_sol_ic))); // 입사각 보정계수, ◯33, ISO 52010-1 <식 28> — 기술서(KIAEBS)는 cos(αsol)로 오기재, ISO 원문은 cos(θsol,ic)
 
             return Gsol_d[i] * ((1 - F1[i]) * (1 + Math.Cos(DegToRad(beta_ic))) / 2
                               + F1[i] * a / b[i]
