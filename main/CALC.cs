@@ -20,6 +20,8 @@ namespace main
 
         public static bool Run_Zone()
         {
+            Itot.Clear(); // 이전 계산(다른 프로젝트·다른 지역)의 캐시가 새 계산에 새어들지 않도록 매 계산 시작 시 비움
+
             Program.DB.deleteTable(DB.type.ProjDB, "Zone_LightResult");
             Program.DB.initTable(DB.type.ProjDB, "Zone_LightResult");
 
@@ -1796,6 +1798,7 @@ namespace main
         public static Dictionary<string, DHW> DHWs = new Dictionary<string, DHW>();
         public static Dictionary<string, Final> Finals = new Dictionary<string, Final>();
         public static Dictionary<string[], RESystem> RESystems = new Dictionary<string[], RESystem>();
+        public static Dictionary<(int beta, int gamma), double[]> Itot = new Dictionary<(int, int), double[]>(); // (βic,γic) 1° 반올림 키로 캐싱한 임의 경사면 총일사량 1년치[W/m2] — 같은 방향 표면 재계산 방지
         public static string[] ElementAlt = { "조닝", "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀+열회수기", "난방", "냉방", "급탕", "조명", "공조", "태양광","풍력", "기밀" }; //기밀은 요소기술별 합계 계산 시 제외되어야 하므로 마지막 순서여야 함 
       //  public static string[] RuleAlt = { "기밀", "기밀+열회수기" };
         public static string[] RuleAlt = { "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀", "기밀+열회수기", "조명", "보일러", "냉난방EHP", "냉방EHP", "공냉식냉동기", "수냉식냉동기", "냉난방GHP", "흡수식냉온수기", "태양광" };
@@ -1806,6 +1809,23 @@ namespace main
                 return Zones[zoneNum];
             }
             else return null;
+        }
+
+        // Itot 딕셔너리에 없는 (βic,γic)만 climate로 8760시간 계산해서 채우고, 있으면 그대로 반환
+        public static double[] Cal_Itot(Cal_Climate climate, double beta_ic, double gamma_ic)
+        {
+            (int beta, int gamma) key = ((int)Math.Round(beta_ic), (int)Math.Round(gamma_ic));
+
+            if (Itot.TryGetValue(key, out double[] result)) return result;
+
+            result = new double[8760];
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = climate.Cal_Itot(beta_ic, gamma_ic, i);
+            }
+            Itot[key] = result;
+
+            return result;
         }
         public ZoneDHU getZoneDHU(string zoneNum)
         {

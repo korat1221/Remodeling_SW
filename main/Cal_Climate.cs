@@ -210,7 +210,8 @@ namespace main
 
         // θsol,ic부터 Itot까지 전부 (beta_ic, gamma_ic, i) 매개변수가 동일해 하나로 묶음 — 2.2.2 식17, 2.2.3 식26·28,
         // 2.2.4 식34, 2.2.5 식35~39. 월별 집계(◯70~72)에서 Idir_tot·Idif_tot이 따로 필요해지면 그때 반환값 다시 정리
-        double Cal_Itot(double beta_ic, double gamma_ic, int i) // Itot, 임의 경사면 총일사량[W/m2]
+        // 표면 하나·시간 하나짜리 순수 계산 — 캐싱은 CALC.cs의 Itot 딕셔너리·Cal_Itot 헬퍼에서 처리
+        public double Cal_Itot(double beta_ic, double gamma_ic, int i) // Itot, 임의 경사면 총일사량[W/m2]
         {
             int n_day = i / 24 + 1;
             double d = DegToRad(delta[n_day - 1]), p = DegToRad(phi_w), be = DegToRad(beta_ic), ga = DegToRad(gamma_ic), w = DegToRad(omega[i]);
