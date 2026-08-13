@@ -123,6 +123,7 @@
             MainSystem_label = new Label();
             MainSystem_comboBox = new CustomComboBox();
             Qhs_tabPage = new TabPage();
+            stotype_label = new Label();
             label4 = new Label();
             StorageType_comboBox = new CustomComboBox();
             StoragePump_dataGridView = new DataGridView();
@@ -1271,6 +1272,7 @@
             // Qhs_tabPage
             // 
             Qhs_tabPage.BackColor = Color.White;
+            Qhs_tabPage.Controls.Add(stotype_label);
             Qhs_tabPage.Controls.Add(label4);
             Qhs_tabPage.Controls.Add(StorageType_comboBox);
             Qhs_tabPage.Controls.Add(StoragePump_dataGridView);
@@ -1290,6 +1292,17 @@
             Qhs_tabPage.Size = new Size(992, 275);
             Qhs_tabPage.TabIndex = 2;
             Qhs_tabPage.Text = "저장";
+            // 
+            // stotype_label
+            // 
+            stotype_label.AutoSize = true;
+            stotype_label.Font = new Font("나눔바른고딕", 9.75F);
+            stotype_label.Location = new Point(608, 67);
+            stotype_label.Name = "stotype_label";
+            stotype_label.Size = new Size(0, 15);
+            stotype_label.TabIndex = 189;
+            stotype_label.TextAlign = ContentAlignment.MiddleLeft;
+            stotype_label.Visible = false;
             // 
             // label4
             // 
@@ -2204,5 +2217,6 @@
         private Label theta_w_flw_label;
         private Label label15;
         private CustomComboBox PipeType_ComboBox;
+        private Label stotype_label;
     }
 }

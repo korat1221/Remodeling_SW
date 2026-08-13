@@ -1717,6 +1717,28 @@ namespace main.contents
             {
                 StorageType = null;
             }
+            switch (StorageType)
+            {
+                case ("2단 구분 축열탱크"):
+                    stotype_label.Visible = true;
+                    stotype_label.Text = "태양열 + 생산설비로 공급되는 축열탱크";
+                    break;
+                case ("전기 직접식"):
+                    stotype_label.Visible = true;
+                    stotype_label.Text = "저탕조가 있는 전기(순간)온수기인 경우";
+                    break;
+                case ("가스 직접식"):
+                    stotype_label.Visible = true;
+                    stotype_label.Text = "저탕조가 있는 가스(순간)온수기인 경우";
+                    break;
+                case ("간접식"):
+                    stotype_label.Visible = true;
+                    stotype_label.Text = "생산설비 주변에 축열탱크가 설치되어 있는 경우";
+                    break;
+                default:
+                    stotype_label.Visible = false;
+                    break;
+            }
         }
         private void Create_StoragePump_Table()
         {

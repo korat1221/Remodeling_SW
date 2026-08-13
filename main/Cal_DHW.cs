@@ -35,7 +35,7 @@ namespace main
         public double[] dmth = new double[12] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         public double[] Qw_d = new double[12], Qw_s = new double[12], Qw_gen = new double[12], Qw_outg = new double[12], Qw_f = new double[12];
         public double[] Ww_d = new double[12], Ww_s = new double[12], Ww_g = new double[12];
-        public double Qs_po_day;
+        public double QP0_s_day;
         public double[] Qw_gen_day = new double[12], Qw_gen_p0_day = new double[12], eta_pn_w = new double[12];
         public String Carrier;
         public ArrayList SelectSolar_split = new ArrayList(); public ArrayList SolarNum_split = new ArrayList(); public ArrayList SolarDirection_split = new ArrayList(); ArrayList SolarDegree_split = new ArrayList();
@@ -573,23 +573,23 @@ namespace main
             double[] thetai = new double[12];
             if (Vs > 0)
             {
-                if (StorageType == "2단 구분 축열탱크")
+                if (StorageType == "2단 구분 축열탱크") //태양열+보조열원이용 온수탱크
                 {
                    
                 }
-                else if (StorageType == "전기 직접식")
+                else if (StorageType == "전기 직접식") //저탕조가 있는 전기(순간)온수기
                 {
-                    Qs_po_day = 0.29 + 0.019 * Math.Pow(Vs, 0.8);
+                    QP0_s_day = 0.29 + 0.019 * Math.Pow(Vs, 0.8);
                 }
-                else if(StorageType =="가스 직접식")
+                else if(StorageType =="가스 직접식") //저탕조가 있는 가스(순간)온수기
                 {
-                    Qs_po_day = 2.0 + 0.033 * Math.Pow(Vs, 1.1);
+                    QP0_s_day = 2.0 + 0.033 * Math.Pow(Vs, 1.1);
                 }
                 else
                 {
                     if (Vs > 1000)
-                    { Qs_po_day = 0.5 + 0.39 * Math.Pow(Vs, 0.35); }
-                    else { Qs_po_day = 0.8 + 0.02 * Math.Pow(Vs, 0.77); }
+                    { QP0_s_day = 0.5 + 0.39 * Math.Pow(Vs, 0.35); }
+                    else { QP0_s_day = 0.8 + 0.02 * Math.Pow(Vs, 0.77); }
                 }
             }
             for (int mth = 0; mth < 12; mth++)
@@ -606,7 +606,7 @@ namespace main
                 {
                     thetai[mth] = theta_ih_avg[mth];
                 }
-                Qw_s[mth] = (50 - thetai[mth]) / 45 * dop_mth_avg[mth] * Qs_po_day;
+                Qw_s[mth] = (50 - thetai[mth]) / 45 * dop_mth_avg[mth] * QP0_s_day;
                 if (double.IsNaN(Qw_s[mth])) { Qw_s[mth] = 0; }
                 Qw_outg[mth] = Qwb_mth_sum[mth] + Qw_d[mth] + Qw_s[mth];
             }

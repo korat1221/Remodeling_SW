@@ -1454,6 +1454,7 @@ namespace main
                         DHW1.Qw_sol[mth]
                          + "'", "번호,월"); ;
             }
+            Program.DB.saveProject();
         }
         #endregion
 
