@@ -979,7 +979,7 @@ namespace main
                     DHW dhw1 = new DHW(DHWNum[i][0]);
                     CALC.DHWs[DHWNum[i][0]] = dhw1;
                     CALC.DHW_LoadData(dhw1, ProjNum);
-                    dhw1.Calc_Qd();
+                    dhw1.LoadCalc_Qd();
                     dhw1.Calc_Qs(ProjNum);
                     dhw1.LoadCalc_Pump(ProjNum);
                     dhw1.LoadCalc_Solar(ProjNum);

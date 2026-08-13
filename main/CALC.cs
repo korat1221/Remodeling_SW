@@ -1413,7 +1413,7 @@ namespace main
         }
         public static void DHW_Calc(DHW DHW1, string ProjNum)
         {
-            DHW1.Calc_Qd();
+            DHW1.LoadCalc_Qd();
             DHW1.Calc_Qs(ProjNum);
             DHW1.LoadCalc_Pump(ProjNum);
             DHW1.LoadCalc_Solar(ProjNum);
