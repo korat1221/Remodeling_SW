@@ -97,7 +97,21 @@ namespace main.subcontents.BuildingGeneral
             double[] south = new double[12], north = new double[12], west = new double[12], east = new double[12], hori = new double[12];
 
 
-            string[] 방위 = new string[] { "동", "서", "남", "북", "수평" };
+            string[] dirWord = { "수평", "남", "동", "서", "북" };
+            int[] dirDegree = { 0, 90, 90, 90, 90 };
+            double[][] dirItot = new double[dirWord.Length][];
+            for (int d = 0; d < dirWord.Length; d++)
+            {
+                int direction = CALC.ConvertDirectionWord(dirWord[d]);
+                CALC.Run_Climate_RESystem(dirDegree[d], direction);
+                dirItot[d] = CALC.Itot_mth.GetValueOrDefault((dirDegree[d], direction));
+            }
+            double[] horiItot = dirItot[0];
+            double[] southItot = dirItot[1];
+            double[] eastItot = dirItot[2];
+            double[] westItot = dirItot[3];
+            double[] northItot = dirItot[4];
+
             for (int i = 0; i < 12; i++)
             {
                 string mth = (i + 1).ToString() + "월";
@@ -110,36 +124,11 @@ namespace main.subcontents.BuildingGeneral
                 double lnRatio = Math.Log(Pa / 611.2);
                 humi[i] = (243.12 * lnRatio) / (17.62 - lnRatio);
 
-                foreach (string k in 방위)
-                {
-                    if (k == "수평")
-                    {
-                        Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 = '" + local + "' And 기간 = '" + mth + "' And 방향 = '" + k + "' And 각도 = '0˚'");
-                        hori[i] = Program.UTIL.ToDoubleOrZero(Value[0][0].ToString()) * 24 * month[i] / 1000;
-                    }
-                    else
-                    {
-                        Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 = '" + local + "' And 기간 = '" + mth + "' And 방향 = '" + k + "' And 각도 = '90˚'");
-                        switch (k)
-                        {
-                            case "남":
-                                south[i] = Program.UTIL.ToDoubleOrZero(Value[0][0].ToString()) * 24 * month[i] / 1000;
-                                break;
-                            case "동":
-                                east[i] = Program.UTIL.ToDoubleOrZero(Value[0][0].ToString()) * 24 * month[i] / 1000;
-                                break;
-                            case "서":
-                                west[i] = Program.UTIL.ToDoubleOrZero(Value[0][0].ToString()) * 24 * month[i] / 1000;
-                                break;
-                            case "북":
-                                north[i] = Program.UTIL.ToDoubleOrZero(Value[0][0].ToString()) * 24 * month[i] / 1000;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-
+                hori[i] = (horiItot != null ? horiItot[i] : 0) * 24 * month[i] / 1000;
+                south[i] = (southItot != null ? southItot[i] : 0) * 24 * month[i] / 1000;
+                east[i] = (eastItot != null ? eastItot[i] : 0) * 24 * month[i] / 1000;
+                west[i] = (westItot != null ? westItot[i] : 0) * 24 * month[i] / 1000;
+                north[i] = (northItot != null ? northItot[i] : 0) * 24 * month[i] / 1000;
             }
 
 

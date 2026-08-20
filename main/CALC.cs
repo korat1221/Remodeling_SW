@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Security.Policy;
 
 namespace main
 {
@@ -12,7 +13,7 @@ namespace main
 
         // (기울기,방위각)을 1도 반올림한 키로 묶은 표면별 월평균 일사량[W/m2] 캐시(시간 평균, QSopCalc/QStrCalc가 ×24×dmth로 직접 월 누적을 만듦) — Run_Climate_Envelope()가 채움
         public static Dictionary<(int Degree, int Direction), double[]> Itot_mth = new Dictionary<(int, int), double[]>();
-        private static string lastSite = ""; // 마지막으로 대지계산(Run_Climate_Site)·표면캐시(Run_Climate_Envelope)를 실행했을 때의 지역/위도/경도 — 둘 다 이 값으로 재계산 스킵 여부를 판단함
+        private static string lastSite = ""; // 지역이 바뀌면 Climate뿐 아니라 Itot_mth도 여기서 같이 무효화함
 
         public CALC()
         {
@@ -24,8 +25,7 @@ namespace main
         }
         public static bool Run_Climate()
         {
-            if (!Run_Climate_Site()) return false; // 지역/위도/경도 없으면 Climate가 안 채워지니, 표면 캐시도 아예 안 돌림
-
+            if (!Run_Climate_Site()) return false;
             Run_Climate_Envelope();
 
             return true;
@@ -40,16 +40,18 @@ namespace main
             double lat = Program.UTIL.ToDoubleOrZero(rows[0][1]);
             double lon = Program.UTIL.ToDoubleOrZero(rows[0][2]);
             if (region == "" || lat == 0 || lon == 0) return false;
-
-            if (region + "_" + lat + "_" + lon != lastSite)
+            string site = region + "_" + lat + "_" + lon;
+            if (site != lastSite)
             {
                 Climate.LoadData_Weather();
                 Climate.Cal_SolarTime();
                 Climate.Cal_SolarPosition();
                 Climate.Cal_SkyClearness();
                 Climate.Cal_BrightnessCoeff();
+                Itot_mth.Clear(); // 예전 지역 기준으로 캐시된 표면별 일사량은 여기서 같이 버림
             }
 
+            lastSite = site;
             return true;
         }
 
@@ -65,15 +67,36 @@ namespace main
             return (int)Math.Round(Direction);
         }
 
+        // 한 (기울기,방위각) 키의 8760시간을 훑어 월평균 W/m²로 접는다 — Run_Climate_Envelope()와
+        // Run_Climate_RESystem() 양쪽에서 씀.
+        private static double[] Cal_ItotMonthly(int Degree, int Direction)
+        {
+            double[] dmth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+            double[] monthly = new double[12];
+            int hour = 0; // 0~8759시간을 1월부터 순서대로 훑는 절대 시간 인덱스
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                for (int d = 0; d < dmth[mth]; d++)
+                {
+                    for (int h = 0; h < 24; h++)
+                    {
+                        monthly[mth] += Climate.Cal_Itot(Degree, Direction, hour);
+                        hour = hour + 1;
+                    }
+                }
+                int hoursInMonth = (int)dmth[mth] * 24; // 이 달의 시간 개수
+                monthly[mth] = monthly[mth] / hoursInMonth; // 이 시점까지는 누적합 — 시간수로 나눠 평균으로 바꿈
+            }
+
+            return monthly;
+        }
+
         // 표면별(β,γ) Itot 월별 캐시 — ZoneEnvelope_3D의 (기울기,방위각) 조합이나 지역/위도/경도가
         // 마지막으로 채웠을 때와 같으면 재계산 없이 스킵. Run_Climate()를 통해 계산 버튼/화면저장마다
         // 불리지만, 실제 8760시간 재계산은 3D 형상이나 대지가 바뀌었을 때만 일어남.
         private static void Run_Climate_Envelope()
         {
-            string[][] site3d = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역,위도,경도", "");
-            if (site3d.Length == 0) return;
-            string site = site3d[0][0] + "_" + site3d[0][1] + "_" + site3d[0][2];
-
             string[][] rows = Program.DB.querySQL(DB.type.ProjDB, "SELECT DISTINCT 기울기,방위각 FROM ZoneEnvelope_3D");
 
             HashSet<(int Degree, int Direction)> currentKeys = new HashSet<(int, int)>();
@@ -84,38 +107,47 @@ namespace main
                 currentKeys.Add((Degree, Direction));
             }
 
-            if (site == lastSite && currentKeys.SetEquals(Itot_mth.Keys)) return;
-
-            double[] dmth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+            if (currentKeys.SetEquals(Itot_mth.Keys)) return; // 지역이 바뀌었으면 Run_Climate_Site()가 이미 Itot_mth를 비워놓음
 
             Itot_mth.Clear();
 
             var keys = currentKeys.ToArray();
             for (int k = 0; k < keys.Length; k++)
             {
-                double[] monthly = new double[12];
-                int hour = 0; // 그 표면의 0~8759시간을 1월부터 순서대로 훑는 절대 시간 인덱스
-
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    for (int d = 0; d < dmth[mth]; d++)
-                    {
-                        for (int h = 0; h < 24; h++)
-                        {
-                            monthly[mth] += Climate.Cal_Itot(keys[k].Degree, keys[k].Direction, hour);
-                            hour = hour + 1;
-                        }
-                    }
-                    int hoursInMonth = (int)dmth[mth] * 24; // 이 달의 시간 개수
-                    monthly[mth] = monthly[mth] / hoursInMonth; // 이 시점까지는 누적합 — 시간수로 나눠 평균으로 바꿈
-                }
-
-                Itot_mth[keys[k]] = monthly;
+                Itot_mth[keys[k]] = Cal_ItotMonthly(keys[k].Degree, keys[k].Direction);
             }
-
-            lastSite = site;
         }
 
+        // SolarTherm_Form 등 설비 화면은 ZoneEnvelope_3D와 무관하게 방위를 9방위 단어(남/동/서/북/
+        // 남동/남서/북동/북서/수평)로 저장함 — 각도가 아니므로 ConvertDirectionAngle()이 아니라
+        // 이 단어→γic 변환을 거침. Run_Climate_RESystem()이 캐시 채운 뒤 호출부가 Itot_mth를 직접
+        // 조회할 때도 같은 키를 만들어야 해서 공개 메서드로 뺌.
+        public static int ConvertDirectionWord(string Direction)
+        {
+            int Direction_angle = 0; //수평
+            if (Direction == "남") Direction_angle = 0;
+            if (Direction == "남동") Direction_angle = 45;
+            if (Direction == "동") Direction_angle = 90;
+            if (Direction == "북동") Direction_angle = 135;
+            if (Direction == "북") Direction_angle = 180;
+            if (Direction == "북서") Direction_angle = -135;
+            if (Direction == "서") Direction_angle = -90;
+            if (Direction == "남서") Direction_angle = -45;
+            return Direction_angle;
+        }
+
+        // (Degree,Direction) 키가 Itot_mth에 없으면 계산해서 채워둠 — 값 자체는 호출부가
+        // CALC.Itot_mth.GetValueOrDefault((Degree, CALC.ConvertDirectionWord(Direction)))로 직접 조회.
+        public static void Run_Climate_RESystem(int Degree, int Direction_angle)
+        {
+            if (!Run_Climate_Site()) return;
+
+            if (!Itot_mth.ContainsKey((Degree, Direction_angle)))
+            {
+                Itot_mth[(Degree, Direction_angle)] = Cal_ItotMonthly(Degree, Direction_angle);
+            }
+
+        }
         public static bool Run_Zone()
         {
             Program.DB.deleteTable(DB.type.ProjDB, "Zone_LightResult");

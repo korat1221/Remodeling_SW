@@ -268,7 +268,7 @@ namespace main.contents
             {
                 string s = "", s2 = "";
                 string[][] Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
-                string[][] res1; string[][] res2;
+                string[][] res1;
                 for (int mth = 1; mth < 12; mth++)
                 {
                     res1 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_차양가동계수_" + ControlType2, "계수", "지역명= '" + Location[0][0] + "' And 방향 ='" + Direction + "' And 기간 = '" + mth.ToString() + "월'");
@@ -285,13 +285,15 @@ namespace main.contents
                     webView21.Visible = false;
                 }
 
+                int winDegree = (int)Program.UTIL.ToDoubleOrZero(Slope);
+                int winDirection = CALC.ConvertDirectionWord(Direction);
+                CALC.Run_Climate_RESystem(winDegree, winDirection);
+                double[] winItot = CALC.Itot_mth.GetValueOrDefault((winDegree, winDirection));
                 for (int mth = 0; mth < 11; mth++)
                 {
-                    res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 일사량 From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='" + Direction + "' And 각도='" + Slope + "˚'And 기간 ='" + (mth + 1) + "월'");
-                    s2 += Program.UTIL.ToDoubleOrZero(res2[0][0]) + ",";
+                    s2 += (winItot != null ? winItot[mth] : 0) + ",";
                 }
-                res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT 일사량 From 기후데이터_전일사량 Where 지역명 ='" + Location[0][0] + "' AND 방향='" + Direction + "' And 각도='" + Slope + "˚'And 기간 ='" + (12) + "월'");
-                s2 += Program.UTIL.ToDoubleOrZero(res2[0][0]);
+                s2 += winItot != null ? winItot[11] : 0;
                 string unit = "kWh/m" + Program.UTIL.Subscript(2, true) + "·mth";
                 runScript("drawChart4([{type:\"line\",label:\"차양가동율\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100,tension: 0.4},{type:\"bar\",label:\"일사량(" + unit + ")\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:300,barPercentage:0.7}])");
 

@@ -189,7 +189,7 @@ namespace main.contents
             }
 
             //차양정보 불러오기
-            String[][] BlindValue = Program.DB.querySQL(DB.type.ProjDB, "select a.제품명,a.종류,a.설치,a.투과수준,a.색깔,a.외부반사율,a.내부반사율,a.투과율,a.흡수율,a.제어방식1,a.제어방식2 FROM ConstructionBlind AS  a INNER JOIN ZoneEnvelope_3D AS b ON a.번호 = b.차양적용 where b.아이디 = '" + rec[0][9] + "'");
+            String[][] BlindValue = Program.DB.querySQL(DB.type.ProjDB, "select a.제품명,a.종류,a.설치,a.투과수준,a.색깔,a.외부반사율,a.내부반사율,a.투과율,a.흡수율,a.제어방식1,a.제어방식2,b.방위,b.기울기 FROM ConstructionBlind AS  a INNER JOIN ZoneEnvelope_3D AS b ON a.번호 = b.차양적용 where b.아이디 = '" + rec[0][9] + "'");
 
             if (BlindValue.Length > 0 && BlindValue[0][0] != "")
             {
@@ -201,7 +201,7 @@ namespace main.contents
                 BlindTrans_textBox.Text = BlindValue[0][3];
                 BlindColor_textBox.Text = BlindValue[0][4];
                 BlindControl_textBox.Text = BlindValue[0][9];
-                LoadGraph(BlindValue[0][10], BlindValue[0][11]);
+                LoadGraph(BlindValue[0][10], BlindValue[0][11], BlindValue[0][12]);
 
                 String[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "아이디 = '" + rec[0][9] + "'");
                 if (Blind.Length > 0)
@@ -217,7 +217,7 @@ namespace main.contents
             tabPageOrder();
         }
 
-        private void LoadGraph(String ControlType2, String Direction)
+        private void LoadGraph(String ControlType2, String Direction, string Slope)
         {
             try
             {
@@ -243,11 +243,13 @@ namespace main.contents
 
 
 
-                string[][] res2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "SELECT AVG(일사량) FROM 기후데이터_전일사량 WHERE 지역명 = '" + Location[0][0] + "' AND 기간 LIKE '%월' GROUP BY 기간 ORDER BY 기간*1 ASC");
-
-                for (int k = 0; k < res2.Length; k++)
+                int cwDegree = (int)Program.UTIL.ToDoubleOrZero(Slope);
+                int cwDirection = CALC.ConvertDirectionWord(Direction);
+                CALC.Run_Climate_RESystem(cwDegree, cwDirection);
+                double[] cwItot = CALC.Itot_mth.GetValueOrDefault((cwDegree, cwDirection));
+                for (int mth = 0; mth < 12; mth++)
                 {
-                    s2 += Program.UTIL.ToDoubleOrZero(res2[k][0]) + ",";
+                    s2 += (cwItot != null ? cwItot[mth] : 0) + ",";
                 }
 
                 runScript("drawChart3([{type:\"line\",data:[" + s + "],borderColor:\"#91D050\",backgroundColor:\"#91D050\",min:0,max:100},{type:\"bar\",data:[" + s2 + "],borderColor:\"#000\",backgroundColor:\"#F2F2F2\",min:0,max:150}])");

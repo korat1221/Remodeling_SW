@@ -71,7 +71,7 @@ namespace main
                 //지역, 프로젝트 조건?
                 string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
 
-                string[][] var = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_위도", "위도", "지역 = '" + ValueA[0][0] + "'");
+                string[][] var = Program.DB.getValue(DB.type.BaseDB_RESystem, "시간별기후데이터", "위도", "지역 = '" + ValueA[0][0] + "' LIMIT 1");
                 위도 = Program.UTIL.ToDoubleOrZero(var[0][0]);
 
                 //지역,방향,각도(경사)에 따른 월별 설치면직달일사세기 (기후데이터_직달일사량)

@@ -107,10 +107,13 @@ namespace main.contents
             string[][] val = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
             지역 = val[0][0];
 
+            int solarDegree = (int)Program.UTIL.ToDoubleOrZero(slope.Replace("˚", ""));
+            int solarDirection = CALC.ConvertDirectionWord(direction);
+            CALC.Run_Climate_RESystem(solarDegree, solarDirection);
+            double[] solarItot = CALC.Itot_mth.GetValueOrDefault((solarDegree, solarDirection));
             for (int mth = 0; mth < 12; mth++)
             {
-                string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역 + "' AND 방향 ='" + direction + "' AND  각도 = '" + slope + "' and 기간 ='" + (mth + 1).ToString() + "월'");
-                sol[mth] = Program.UTIL.ToDoubleOrZero(token[0][0]) * 0.024 * dmth[mth];
+                sol[mth] = (solarItot != null ? solarItot[mth] : 0) * 0.024 * dmth[mth];
             }
 
             if (installsystem == "난방")

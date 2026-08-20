@@ -652,15 +652,23 @@ namespace main
             string[][] Solarvalue;
             double Ac;
 
+            int solarDegree = (int)Program.UTIL.ToDoubleOrZero(degree.Replace("˚", ""));
+            int solarDirection = CALC.ConvertDirectionWord(direction);
+            CALC.Run_Climate_RESystem(solarDegree, solarDirection);
+            double[] solarItot = CALC.Itot_mth.GetValueOrDefault((solarDegree, solarDirection));
+
+            double solarItotMax = 0;
             for (int mth = 0; mth < 12; mth++)
             {
-                string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "'and 방향='" + direction + "' and 각도 ='" + degree + "' and 기간 ='" + (mth + 1) + "월'");
-                qsol_HN_d = Program.UTIL.ToDoubleOrZero(value[0][0]);
+                if (solarItot != null && solarItot[mth] > solarItotMax) solarItotMax = solarItot[mth];
+            }
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                qsol_HN_d = solarItot != null ? solarItot[mth] : 0;
                 qsol_HN_mth[mth] = qsol_HN_d * dmth[mth] * 24 / 1000;
 
-                string[][] value2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select Max(일사량) from 기후데이터_전일사량 where 지역명 = '" + 지역[0][0] + "' and 방향 = '" + direction + "' and 각도 = '" + degree + "'");
-
-                Ac = Qw_outg[mth] * 2 * 1.03 * 1.03 / Program.UTIL.ToDoubleOrZero(value2[0][0]) / 24 * 1000;
+                Ac = Qw_outg[mth] * 2 * 1.03 * 1.03 / solarItotMax / 24 * 1000;
                 if (solar.M_Area() * solar.M_Count() / Ac < 1)
                 {
                     dtheta_korr = Math.Min(-20 + 20 * solar.M_Area() * solar.M_Count() / Ac, 0);
@@ -669,7 +677,7 @@ namespace main
                 {
                     dtheta_korr = Math.Min(-14 + 14 * solar.M_Area() * solar.M_Count() / Ac, 0);
                 }
-                value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_태양열", "온도차", "지역명 ='" + 지역[0][0] + "' and 방위='" + direction+ "' and 기간 ='" + (mth + 1) + "월'");
+                string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_태양열", "온도차", "지역명 ='" + 지역[0][0] + "' and 방위='" + direction+ "' and 기간 ='" + (mth + 1) + "월'");
                 eta[mth] = solar.eta() * solar._50() - solar.K1() * Program.UTIL.ToDoubleOrZero(value[0][0]) / qsol_HN_d - solar.K2() * Program.UTIL.ToDoubleOrZero(value[0][0]) * Program.UTIL.ToDoubleOrZero(value[0][0]) / qsol_HN_d;
                 if (eta[mth] < 0) { eta[mth] = solar.eta(); }
                 qsol_mth[mth] = eta[mth] * qsol_HN_mth[mth];
