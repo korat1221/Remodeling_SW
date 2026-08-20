@@ -840,7 +840,7 @@ namespace main
                             else { Cooling1.Cal_CS(ProjNum); }
                         }
                     }
-                    else if (검토유형 == "냉난방EHP" && (Cooling1.CG == "실외기12kW" || Cooling1.CG == "공냉식냉동기"))
+                    else if (검토유형 == "냉난방EHP" && (Cooling1.CG == "실외기" || Cooling1.CG == "공냉식냉동기"))
                     {
                         if (Cooling1.SelectCG.Count > 0)
                         {
@@ -855,7 +855,7 @@ namespace main
                         }
 
                     }
-                    else if (검토유형 == "냉방EHP" && (Cooling1.CG == "실외기12kW" || Cooling1.CG == "공냉식냉동기"))
+                    else if (검토유형 == "냉방EHP" && (Cooling1.CG == "실외기" || Cooling1.CG == "공냉식냉동기"))
                     {
                         if (Cooling1.SelectCG.Count > 0)
                         {
@@ -927,10 +927,12 @@ namespace main
                     DHW dhw1 = new DHW(DHWNum[i][0]);
                     CALC.DHWs[DHWNum[i][0]] = dhw1;
                     CALC.DHW_LoadData(dhw1, ProjNum);
-                    dhw1.Calc_Qd(ProjNum);
-                    dhw1.Calc_Qh_s(ProjNum);
+                    dhw1.LoadCalc_Qd();
+                    dhw1.Calc_Qs(ProjNum);
+                    dhw1.LoadCalc_Pump(ProjNum);
                     dhw1.LoadCalc_Solar(ProjNum);
                     dhw1.LoadCalc_FC(ProjNum);
+                    dhw1.LoadCalc_DH(ProjNum);
 
                     if (검토유형 != "보일러")
                     { dhw1.LoadCalc_Boiler(ProjNum); }

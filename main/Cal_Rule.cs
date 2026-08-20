@@ -979,10 +979,12 @@ namespace main
                     DHW dhw1 = new DHW(DHWNum[i][0]);
                     CALC.DHWs[DHWNum[i][0]] = dhw1;
                     CALC.DHW_LoadData(dhw1, ProjNum);
-                    dhw1.Calc_Qd(ProjNum);
-                    dhw1.Calc_Qh_s(ProjNum);
+                    dhw1.LoadCalc_Qd();
+                    dhw1.Calc_Qs(ProjNum);
+                    dhw1.LoadCalc_Pump(ProjNum);
                     dhw1.LoadCalc_Solar(ProjNum);
                     dhw1.LoadCalc_FC(ProjNum);
+                    dhw1.LoadCalc_DH(ProjNum);
 
                     if (검토유형 != "보일러")
                     { dhw1.LoadCalc_Boiler(ProjNum); }

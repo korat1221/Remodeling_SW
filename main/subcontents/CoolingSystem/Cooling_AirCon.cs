@@ -21,11 +21,9 @@ namespace main.subcontents.CoolingSystem
     {
         List<int> SelectRow = new List<int>();
         List<string> SelectCG_split = new List<string>();
-        List<string> SelectCGN_split = new List<string>();
-
+       
         string SystemNum;
-        public string SelectCG, SelectCGN;
-
+        public string SelectCG;
         public Cooling_AirCon(string _Num, string _SelectCG_nonsplit, string _SelectCGN_nonsplit)
 
         {
@@ -39,11 +37,10 @@ namespace main.subcontents.CoolingSystem
 
             if (_SelectCG_nonsplit != null)
             {
-                Load_SaveValue(_SelectCG_nonsplit, _SelectCGN_nonsplit);
+                Load_SaveValue(_SelectCG_nonsplit);
             }
 
         }
-
         private void load_table_DB() 
         {
             TableMake();
@@ -55,18 +52,17 @@ namespace main.subcontents.CoolingSystem
                 //{
                     AirCon_dataGridView.Rows.Add();
                     int nRow = AirCon_dataGridView.Rows.Count - 1;
-                    AirCon_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[i][0];
-                    AirCon_dataGridView.Rows[nRow].Cells[3].Value = DefaultDB_Value[i][1];
-                    AirCon_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][2]));
-                    AirCon_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][3]));
-                    AirCon_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][4]));
-                    AirCon_dataGridView.Rows[nRow].Cells[7].Value = DefaultDB_Value[i][5];
-                    AirCon_dataGridView.Rows[nRow].Cells[8].Value = DefaultDB_Value[i][6];
+                    AirCon_dataGridView.Rows[nRow].Cells[1].Value = DefaultDB_Value[i][0];
+                    AirCon_dataGridView.Rows[nRow].Cells[2].Value = DefaultDB_Value[i][1];
+                    AirCon_dataGridView.Rows[nRow].Cells[3].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][2]));
+                    AirCon_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][3]));
+                    AirCon_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(DefaultDB_Value[i][4]));
+                    AirCon_dataGridView.Rows[nRow].Cells[6].Value = DefaultDB_Value[i][5];
+                    AirCon_dataGridView.Rows[nRow].Cells[7].Value = DefaultDB_Value[i][6];
                 //}
                
             }
         }
-
         private void TableMake()
         {
             new StackedHeaderDecorator(AirCon_dataGridView, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
@@ -76,34 +72,29 @@ namespace main.subcontents.CoolingSystem
             checkBoxColumn.Name = "check";
             AirCon_dataGridView.Columns.Add(checkBoxColumn);
 
-            AirCon_dataGridView.Columns.Add("A1", "설치대수");
-            AirCon_dataGridView.Columns.Add("A2", "번호");
-            AirCon_dataGridView.Columns.Add("A3", "명칭");
-            AirCon_dataGridView.Columns.Add("A4", "냉방성능.출력[kW]");
-            AirCon_dataGridView.Columns.Add("A5", "냉방성능.소비전력[kW]");
-            AirCon_dataGridView.Columns.Add("A6", "냉방성능.EER[W/W]");
-            AirCon_dataGridView.Columns.Add("A7", "대기전력[W]");
-            AirCon_dataGridView.Columns.Add("A8", "연료");
+            AirCon_dataGridView.Columns.Add("A1", "번호");
+            AirCon_dataGridView.Columns.Add("A2", "명칭");
+            AirCon_dataGridView.Columns.Add("A3", "냉방성능.출력[kW]");
+            AirCon_dataGridView.Columns.Add("A4", "냉방성능.소비전력[kW]");
+            AirCon_dataGridView.Columns.Add("A5", "냉방성능.EER[W/W]");
+            AirCon_dataGridView.Columns.Add("A6", "대기전력[W]");
+            AirCon_dataGridView.Columns.Add("A7", "연료");
 
-          
+            AirCon_dataGridView.Columns[0].Width = 40;
+            AirCon_dataGridView.Columns[1].Width = 100;
+            AirCon_dataGridView.Columns[2].Width = 150;
         }
-
         private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
-            if (column == 1) // 추가
-            {
-                cell.Style.BackColor = Color.FromArgb(255, 248, 206);
-                return true;
-            }
-            else  if (row % 2 == 1)
-            {
+             if (row % 2 == 1)
+             {
                 cell.Style.BackColor = SystemColors.InactiveBorder;
                 cell.Style.ForeColor = Color.Black;
                 cell.Style.SelectionBackColor = SystemColors.InactiveBorder;
                 cell.Style.SelectionForeColor = Color.Black;
                 
                 return true;
-            }
+             }
             else
             {
                 cell.Style.BackColor = Color.FromArgb(255, 255, 255);
@@ -124,11 +115,6 @@ namespace main.subcontents.CoolingSystem
                 {
                     row.DefaultCellStyle.SelectionBackColor = SystemColors.GradientInactiveCaption;
                     SelectRow.Add(row.Index);
-                    if (row.Cells[1].Value == null)
-                    {
-                        MessageBox.Show("설치대수를 입력해주세요.", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return false;
-                    }
                 }
             }
             return true;
@@ -145,14 +131,12 @@ namespace main.subcontents.CoolingSystem
             {
                 if(k == SelectRow.Count - 1)
                 {
-                    this.SelectCGN += Program.UTIL.dataGridView_doubleComa(AirCon_dataGridView, Convert.ToInt32(SelectRow[k]), 1, 0).ToString();
-                    this.SelectCG += AirCon_dataGridView.Rows[Convert.ToInt32(SelectRow[k])].Cells[2].Value.ToString();
+                    this.SelectCG += AirCon_dataGridView.Rows[Convert.ToInt32(SelectRow[k])].Cells[1].Value.ToString();
 
                 }
                 else
                 {
-                    this.SelectCGN += Program.UTIL.dataGridView_doubleComa(AirCon_dataGridView, Convert.ToInt32(SelectRow[k]), 1, 0).ToString() + "+";
-                    this.SelectCG += AirCon_dataGridView.Rows[Convert.ToInt32(SelectRow[k])].Cells[2].Value.ToString() + "+";
+                    this.SelectCG += AirCon_dataGridView.Rows[Convert.ToInt32(SelectRow[k])].Cells[1].Value.ToString() + "+";
                 }
             }
             this.DialogResult = DialogResult.OK;
@@ -162,33 +146,27 @@ namespace main.subcontents.CoolingSystem
         {
             SelectRow.Clear();
             SelectCG_split.Clear ();
-            SelectCGN_split.Clear();
-
+            
             this.SelectCG = null;
-            this.SelectCGN = null;
+            
 
             for (int n = 0; n < AirCon_dataGridView.Rows.Count; n++)
             {
                 AirCon_dataGridView.Rows[n].Cells[0].Value = false;
-                AirCon_dataGridView.Rows[n].Cells[1].Value = null; //수정
             }
         }
-
-        private void Load_SaveValue(string _SelectCG_nonsplit, string _SelectCGN_nonsplit)
+        private void Load_SaveValue(string _SelectCG_nonsplit)
         {
             reset();
             string[] token = _SelectCG_nonsplit.Split('+');
-            string[] value = _SelectCGN_nonsplit.Split("+");
+            
             SelectCG_split.Clear();
-            SelectCGN_split.Clear();
+            
             foreach (var item in token)
             {
                 SelectCG_split.Add(item.ToString());
             }
-            foreach (var val in value)
-            {
-                SelectCGN_split.Add(val.ToString()); //수정함
-            }
+            
 
             for (int k = 0; k < SelectCG_split.Count; k++)
             {
@@ -197,7 +175,6 @@ namespace main.subcontents.CoolingSystem
                     if (AirCon_dataGridView.Rows[n].Cells[2].Value.ToString() == SelectCG_split[k]) //수정
                     {
                         AirCon_dataGridView.Rows[n].Cells[0].Value = true;
-                        AirCon_dataGridView.Rows[n].Cells[1].Value = value[k];
                     }
                 }
             }

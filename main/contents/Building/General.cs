@@ -196,19 +196,15 @@ namespace main.contents
                     {
                         BuildingUse_comboBox.Items.Add(V2[a][0]);
                     }
-                    if (BuildingCategory_comboBox.SelectedItem.ToString() == "기타유형")
-                    {
-                        BuildingUse_comboBox.SelectedIndex = 0;
-                        BuildingUse_label.Visible = false;
-                        BuildingUse_comboBox.Visible = false;
-                    }
-                    else
-                    {
-                        BuildingUse_comboBox.SelectedIndex = 0;
-                        BuildingUse_label.Visible = true;
-                        BuildingUse_comboBox.Visible = true;
-                    }
-
+                    //if (BuildingCategory_comboBox.SelectedItem.ToString() == "기타유형")
+                    //{
+                    //    BuildingUse_comboBox.SelectedIndex = 0;
+                    //    BuildingUse_label.Visible = false;
+                    //    BuildingUse_comboBox.Visible = false;
+                    //}
+                    BuildingUse_comboBox.SelectedIndex = 0;
+                    BuildingUse_label.Visible = true;
+                    BuildingUse_comboBox.Visible = true;
                 }
             }
         }

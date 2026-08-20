@@ -36,13 +36,15 @@
             ceNumber_textBox = new TextBox();
             tempDiffer_textBox = new TextBox();
             panel1 = new Panel();
+            panel2 = new Panel();
             panel1.SuspendLayout();
+            panel2.SuspendLayout();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(47, 34);
+            label1.Location = new Point(34, 38);
             label1.Name = "label1";
             label1.Size = new Size(71, 15);
             label1.TabIndex = 0;
@@ -51,7 +53,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(47, 61);
+            label2.Location = new Point(34, 65);
             label2.Name = "label2";
             label2.Size = new Size(83, 15);
             label2.TabIndex = 1;
@@ -59,9 +61,9 @@
             // 
             // Save_button
             // 
-            Save_button.Location = new Point(130, 3);
+            Save_button.Location = new Point(130, 4);
             Save_button.Name = "Save_button";
-            Save_button.Size = new Size(121, 23);
+            Save_button.Size = new Size(87, 23);
             Save_button.TabIndex = 4;
             Save_button.Text = "Save";
             Save_button.UseVisualStyleBackColor = true;
@@ -70,7 +72,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(253, 34);
+            label3.Location = new Point(240, 38);
             label3.Name = "label3";
             label3.Size = new Size(14, 15);
             label3.TabIndex = 5;
@@ -79,7 +81,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(253, 63);
+            label4.Location = new Point(240, 67);
             label4.Name = "label4";
             label4.Size = new Size(19, 15);
             label4.TabIndex = 6;
@@ -87,7 +89,7 @@
             // 
             // ceNumber_textBox
             // 
-            ceNumber_textBox.Location = new Point(131, 58);
+            ceNumber_textBox.Location = new Point(118, 62);
             ceNumber_textBox.Name = "ceNumber_textBox";
             ceNumber_textBox.Size = new Size(121, 23);
             ceNumber_textBox.TabIndex = 7;
@@ -95,7 +97,7 @@
             // 
             // tempDiffer_textBox
             // 
-            tempDiffer_textBox.Location = new Point(131, 30);
+            tempDiffer_textBox.Location = new Point(118, 34);
             tempDiffer_textBox.Name = "tempDiffer_textBox";
             tempDiffer_textBox.Size = new Size(121, 23);
             tempDiffer_textBox.TabIndex = 8;
@@ -103,7 +105,7 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.AliceBlue;
+            panel1.BackColor = SystemColors.ActiveCaption;
             panel1.Controls.Add(Save_button);
             panel1.Dock = DockStyle.Bottom;
             panel1.Location = new Point(0, 138);
@@ -111,23 +113,34 @@
             panel1.Size = new Size(281, 31);
             panel1.TabIndex = 9;
             // 
+            // panel2
+            // 
+            panel2.BackColor = Color.AliceBlue;
+            panel2.Controls.Add(tempDiffer_textBox);
+            panel2.Controls.Add(ceNumber_textBox);
+            panel2.Controls.Add(label4);
+            panel2.Controls.Add(label3);
+            panel2.Controls.Add(label2);
+            panel2.Controls.Add(label1);
+            panel2.Dock = DockStyle.Fill;
+            panel2.Location = new Point(0, 0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(281, 169);
+            panel2.TabIndex = 10;
+            // 
             // Pipe_Diameter
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(281, 169);
             Controls.Add(panel1);
-            Controls.Add(tempDiffer_textBox);
-            Controls.Add(ceNumber_textBox);
-            Controls.Add(label4);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(label1);
+            Controls.Add(panel2);
             Name = "Pipe_Diameter";
             Text = "Pipe_Diameter";
             panel1.ResumeLayout(false);
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -140,5 +153,6 @@
         private TextBox ceNumber_textBox;
         private TextBox tempDiffer_textBox;
         private Panel panel1;
+        private Panel panel2;
     }
 }

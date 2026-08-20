@@ -1,4 +1,4 @@
-using main    ;
+﻿using main    ;
 using main.subcontents;
 using Microsoft.Web.WebView2.Core;
 using Newtonsoft.Json.Linq;
@@ -42,7 +42,7 @@ namespace main
         public int Number_f, ZoneNumber_f, AhuNumber_f; //설비개수, 존개수
         public string Carrier; ///연료
 
-        enum _TYPE {실외기12kW,공냉식냉동기,수냉식냉동기,지열히트펌프,흡수식냉동기,지하수히트펌프};
+        enum _TYPE {실외기,공냉식냉동기,수냉식냉동기,지열히트펌프,흡수식냉동기,지하수히트펌프};
         
         //냉각탑
         List<CoolTop> CT_Sum = new List<CoolTop>();
@@ -53,11 +53,15 @@ namespace main
 
         //기후데이터 작성
         public double[] OutdoorTemperature = new double[12], Humidity = new double[12], WetTemperature = new double[12];
+        double[] theta_e = new double[12];
         string[] mth = new string[12];
         
         //냉방존
         public List<Zone> ZoneNameList = new List<Zone>(); public List<string> PreZoneNameList = new List<string>();
         public double[] QC_nd_z = new double[12], dwd_z = new double[12], theta_z = new double[12], tmth_z = new double[12], BC_z = new double[12];
+        
+        public double[] QH_nd_z = new double[12]; //난방기간 및 비난방기간 체크를 위해 추가함
+
         public double[] tC_op_z = new double[12], PL_Rate_z = new double[12], fC_PL_z = new double[12];
         public double top_z, Qc_max_z, QC_p_z, Beta_grenz_z, QC_a_z, A_z; //QC_p_z 공조기와 파워나누기, top_c_z는 공조기 가동시간임
         string SCZoneType_z;
@@ -76,19 +80,17 @@ namespace main
 
 
         //분배/저장열손실         
-       public double nc_ce_sens, nc_ce, nc_d, nc_s, fSP;
+       public double nc_ce_sens, nc_ce, nc_d, nc_s, fSP; //분배열손실 체크
         public string Sto_Tank, Sto_Type;
        
 
         //냉방부분부하계산 및 최종 계산 결과값
         public double Theta_Around, ThetaC_gen_hr_req_in, ThetaC_gen_req_out, Theta_cond, Theta_evad, Anf, top;
         public double[] tC_op = new double[12], feer_corr = new double[12], EER_c = new double[12], SEER_c = new double[12], Theta_IC = new double[12], tmth = new double[12], fC_PL = new double[12], fC_hr = new double[12];
+        
         public double[] QC_nd = new double[12], QC_ce = new double[12], QC_d = new double[12], QC_s = new double[12], QC_out = new double[12], QC_f = new double[12];
         public double QCa_nd, QCa_ce, QCa_d, QCa_s, QCa_out, QCa_f, QCa_p, QCa_CO2; //정의 필요
         public double[] W_ce = new double[12], W_d = new double[12], W_s = new double[12], W_g = new double[12],  W = new double[12]; //정의 필요
-
-
-
 
 
         //펌프정의
@@ -110,10 +112,7 @@ namespace main
         public Cal_Cooling(String _CoolingNum)
         {
             this.CoolingNum = _CoolingNum;
-
-            
         }
-       
         private void Split(string nonSplit, List<string> type)
         {
             type.Clear();
@@ -127,7 +126,6 @@ namespace main
                 }
             }
         }
-      
         public void Generator_Check(string ProjNum)
         {
             string[][] DefaultValue = Program.DB.getValue(ProjNum, "CoolingSystem_form",
@@ -137,13 +135,6 @@ namespace main
                 CoolingName = DefaultValue[0][0]; //명칭
                 CG = DefaultValue[0][1];
                 CSource = DefaultValue[0][2]; //열원설비
-
-               
-                SelectAhu_nonsplit = DefaultValue[0][4];
-                if (SelectAhu_nonsplit != "" && SelectAhu_nonsplit != null)
-                {
-                    Split(SelectAhu_nonsplit, SelectAhu);
-                }
                 SelectCG_nonsplit = DefaultValue[0][5]; //냉방유닛
                 SelectCGC_nonsplit = DefaultValue[0][6]; //제어유형
                 SelectCGE_nonsplit = DefaultValue[0][7]; //외기냉방시스템
@@ -192,13 +183,7 @@ namespace main
                     else SelectSPump2_nonsplit = null;
                 }
 
-                if (CG == nameof(_TYPE.공냉식냉동기))
-                {
-                    string[][] 공냉식 = Program.DB.getValue(ProjNum, "CoolingSystem_form", "압축기", "번호 = '" + CoolingNum + "'");
-                    SelectCGComp_nonsplit = 공냉식[0][0];
-                    Split(SelectCGComp_nonsplit, SelectCGComp);
-                }
-                else if (CG == nameof(_TYPE.수냉식냉동기) || CG == nameof(_TYPE.흡수식냉동기))
+                if (CG == nameof(_TYPE.수냉식냉동기) || CG == nameof(_TYPE.흡수식냉동기))
                 {
                     string[][] 냉각탑 = Program.DB.getValue(ProjNum, "CoolingSystem_form", "냉각탑,냉각탑개수", "번호 = '" + CoolingNum + "'");
                     SelectCT_nonsplit = 냉각탑[0][0];
@@ -253,14 +238,21 @@ namespace main
         }
         public void Load_CoolingZone(string ProjNum)
         {
+            SelectZone.Clear();
+            SelectAhu.Clear();
             string[][] DefaultValue = Program.DB.getValue(ProjNum, "CoolingSystem_form",
-              "공급존", "번호 = '" + CoolingNum + "'");
+              "공급존,공급AHU", "번호 = '" + CoolingNum + "'");
             if (DefaultValue.Length > 0)
             {
-                SelectZone_nonsplit = DefaultValue[0][0];
-                if (SelectZone_nonsplit != "" && SelectZone_nonsplit != null)
+                if (DefaultValue[0][0] != "" && DefaultValue[0][0] != null)
                 {
+                    SelectZone_nonsplit = DefaultValue[0][0];
                     Split(SelectZone_nonsplit, SelectZone);
+                }
+                if (DefaultValue[0][1] != "" && DefaultValue[0][1] != null)
+                {
+                    SelectAhu_nonsplit = DefaultValue[0][1];
+                    Split(SelectAhu_nonsplit, SelectAhu);
                 }
             }
         }
@@ -319,7 +311,8 @@ namespace main
             return _pump;
         }
 
-        #region Cooling_Generator()
+       
+        #region 냉방 생산설비
         public void Cooling_Generator(string ProjNum)
         {
             Split(SelectCG_nonsplit, SelectCG);   //냉방유닛
@@ -378,7 +371,7 @@ namespace main
             CoolingGeneratorMake CGM = new CoolingGeneratorMake();
             switch (CG)
             {
-                case nameof(_TYPE.실외기12kW):
+                case nameof(_TYPE.실외기):
                     string[][] DefaultValue = Program.DB.getValue(ProjNum, "User_AirHP", "냉방정격용량,냉방정격COP,대기전력,연료,설치,냉방정격소비전력", "번호 = '" + _SelectCG + "'");
                     CGM._install = DefaultValue[0][4];
                     CGM._power = Program.UTIL.ToDoubleOrZero(DefaultValue[0][0]);
@@ -398,27 +391,7 @@ namespace main
                     CGM._cout = "직팽식";
                     break;
                 case nameof(_TYPE.공냉식냉동기):
-                    //2024년 7월 24일 주석 처리함
-                    //string[][] 공냉식1 = Program.DB.getValue(ProjNum, "User_AirHP", "냉방정격용량,냉방정격COP,대기전력,연료,설치,냉방정격소비전력", "번호 = '" + _SelectCG + "'");
-                    //if(공냉식1.Length > 0)
-                    //{
-                    //    CGM._install = 공냉식1[0][4];
-                    //    CGM._power = Program.UTIL.ToDoubleOrZero(공냉식1[0][0]);
-                    //    if (CGM._install == "기존")
-                    //    {
-                    //        CGM._eer = Program.UTIL.ToDoubleOrZero(공냉식1[0][1]) * 0.9;
-                    //    }
-                    //    else CGM._eer = Program.UTIL.ToDoubleOrZero(공냉식1[0][1]);
-                    //    CGM._pctrl = Program.UTIL.ToDoubleOrZero(공냉식1[0][2]);
-                    //    CGM._cwin = 0;
-                    //    CGM._cwout = 0;
-                    //    CGM._fuel = 공냉식1[0][3];
-                    //    CGM._cout = "직팽식";
-                    //    CGM._w_aircon = Program.UTIL.ToDoubleOrZero(공냉식1[0][5]);
-                    //}
-                    //else
-                    //{
-                        string[][] 공냉식2 = Program.DB.getValue(ProjNum, "User_AirCooler", "냉방출력,EER,대기전력,연료,설치,부하측공급형식,송풍기전력", "번호 = '" + _SelectCG + "'");
+                    string[][] 공냉식2 = Program.DB.getValue(ProjNum, "User_AirCooler", "냉방출력,EER,대기전력,연료,설치,부하측공급형식,송풍기전력", "번호 = '" + _SelectCG + "'");
                     if(공냉식2.Length >0)
                     {
                         CGM._install = 공냉식2[0][4];
@@ -446,9 +419,7 @@ namespace main
                             CGM._cout = "수방식";
                         }
                         CGM.fanpower = Program.UTIL.ToDoubleOrZero(공냉식2[0][6]); //송풍기전력[kW]
-                    }
-                        
-                    //}         
+                    }     
                     break;
                 case nameof(_TYPE.수냉식냉동기):
                     string[][] 수냉식 = Program.DB.getValue(ProjNum, "User_WaterCooler", "냉방출력,EER,대기전력,냉수입구온도,냉수출구온도,압축기,연료,설치", "번호 = '" + _SelectCG + "'");
@@ -624,28 +595,29 @@ namespace main
             else SCZoneType_ahu = null;
         }
 
-        #region  존계산
-        public void Cal_Zone(string ProjNum) // 여러존 정보작성
+        #region  존계산[공급/분배/저장]
+        public void Cal_Zone(string ProjNum) //공급/분배/저장열손실 계산
         {
             if (ZoneNameList.Count > 0)
             {
-                Cal_ZoneSum(ProjNum);
-                Cal_CED_Z();
-                Cal_S_Z();
+                Cal_ZoneSum(ProjNum); //존요구량 계산
+                Cal_CE_Z(); //공급열손실
+                Cal_D(); //분배열손실
+                Cal_S_Z(); //저장열손실
                 Cal_Oper_Z();
                 Cal_fPL("Z");
             }
-            
             else
             {
                 QC_a_z = 0;
                 for (int i = 0; i < 12; i++)
                 {
                     QC_nd_z[i] = 0;
+                    QH_nd_z[i] = 0;
                     dwd_z[i] = 0;
                     theta_z[i] = 0;
                     QC_ce_z[i] = 0;
-                    QC_d_z[i] = 0;
+                    //QC_d_z[i] = 0;
                     QC_s_z[i] = 0;
                     QC_out_z[i] = 0;
                     tC_op_z[i] = 0;
@@ -679,7 +651,6 @@ namespace main
             }
             return split;
         }
-
 
         public void Cal_ZoneAhu(string ProjNum) //최대부하,평균일일시간,총면적
         {
@@ -725,8 +696,6 @@ namespace main
                             }
                         }
                     }
-
-                    
                 }
                 foreach (Zone value in ZoneNameList)
                 {
@@ -734,7 +703,6 @@ namespace main
                     top_z += value.th_op_d * value.Q_max[1] / 1000;
                     A_z += value.zoneArea;
                 }
-                
                 top_z = top_z / Qc_max_z; //가동시간을 최대부하가중
             }
             else
@@ -766,7 +734,6 @@ namespace main
                 A_ahu = 0;
             }
         }
-
 
         public void Cal_ZoneSum(string ProjNum) //연간냉방에너지요구량,월이용일수,월실내온도,월냉방에너지요구량
         {
@@ -801,6 +768,7 @@ namespace main
                         load_sum += Program.UTIL.ToDoubleOrZero(v2[k][0]);
                     }
                     QC_nd_z[i] += value.Qb_mth[1, i] * load_sum; //공급설비 부하율을 반영한 요구량 산정
+                    QH_nd_z[i] += value.Qb_mth[0, i];
                     dwd_z[i] += value.dwd_mth[i] * value.Qb_mth[1, i] * load_sum; // 요구량 가중하여 산정함
                     theta_z[i] += value.theta_i[1, i] * value.Qb_mth[1, i] * load_sum; //요구량 가중하여 산정함
                     pre = pre + 1; 
@@ -812,23 +780,22 @@ namespace main
                 }
                 else
                 {
-                    dwd_z[i] = dwd_z[i] / QC_nd_z[i];
-                    theta_z[i] = theta_z[i] / QC_nd_z[i];
+                    dwd_z[i] = dwd_z[i] / QC_nd_z[i]; //이용일수
+                    theta_z[i] = theta_z[i] / QC_nd_z[i]; //실온도
                 }
                 QC_a_z += QC_nd_z[i];
             }
             QC_a_z = QC_a_z;
         }
 
-        public void Cal_CED_Z()
+        public void Cal_CE_Z()
         {
-
             if (Cout == "직팽식")
             {
                 string[][] value = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce,nc_d", " 공급온도 = '" + Cout + "' And 공급유형 = '냉방존'");
                 nc_ce_sens = Program.UTIL.ToDoubleOrZero(value[0][0]);
                 nc_ce = Program.UTIL.ToDoubleOrZero(value[0][1]);
-                nc_d = Program.UTIL.ToDoubleOrZero(value[0][2]);
+                //nc_d = Program.UTIL.ToDoubleOrZero(value[0][2]);
             }
             else
             {
@@ -836,19 +803,19 @@ namespace main
                 {
                     nc_ce_sens = 0.87;
                     nc_ce = 1;
-                    nc_d = 0.9;
+                    //nc_d = 0.9;
                 }
                 else if (CWout < 14)
                 {
                     nc_ce_sens = 0.87 + (1 - 0.87) / (14 - 6) * (CWout - 6);
                     nc_ce = 1;
-                    nc_d = 0.9 + (1 - 0.9) / (14 - 6) * (CWout - 6);
+                    //nc_d = 0.9 + (1 - 0.9) / (14 - 6) * (CWout - 6);
                 }
                 else
                 {
                     nc_ce_sens = 1;
                     nc_ce = 1;
-                    nc_d = 1;
+                    //nc_d = 1;
                 }
 
             }
@@ -856,10 +823,89 @@ namespace main
             for (int i = 0; i < 12; i++)
             {
                 QC_ce_z[i] = ((1 - nc_ce_sens) + (1 - nc_ce)) * QC_nd_z[i];
-                QC_d_z[i] = (1 - nc_d) * QC_nd_z[i];
+                //QC_d_z[i] = (1 - nc_d) * QC_nd_z[i];
             }
         }
+        public void Cal_D()
+        {
+            for (int i = 0; i < 12; i++)
+            {
+                QC_d[i] = 0;
+            }
 
+            if (Cout == "직팽식"&&Sto_Tank!="축열탱크없음")
+            {
+                for (int i = 0; i < 12; i++)
+                {
+                   QC_d[i] =0;
+                }
+            }
+            else
+            {
+                double[] Qcd_V = new double[12], Qcd_S = new double[12], Qcd_A = new double[12];
+                string[][] Ddata = Program.DB.getValue(DB.type.ProjDB, "Distribution_Form", "배관유형,배관길이,선형열관류율,설치위치", "번호 = '" + CoolingNum + "'");
+                string[][] SelectCG = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Form", "냉방유닛,배관길이,선형열관류율,설치위치", "번호 = '" + CoolingNum + "'");
+                
+                for (int i = 0; i < Ddata.Length; i++)
+                {
+                    string Dtype = Ddata[i][0];
+                    double Qcb = 0;
+
+                    if (double.TryParse(Ddata[i][1], out double PipeL) && double.TryParse(Ddata[i][2], out double Lamda))
+                    {
+                        switch (Dtype)
+                        {
+                            case "주배관":
+                                for (int mth = 0; mth < 12; mth++)
+                                {
+                                    double[] theta_wi = new double[12];
+                                    if (Ddata[i][3] == "비난방공간")//비난방공간, 난방기간이면 20과 실외온도 평균, 비난방기간이면 22와 실외온도 평균
+                                    {
+                                        if (QH_nd_z[mth] > 0) theta_wi[mth] = 0.5 * (20 + theta_e[mth]);
+                                        else theta_wi[mth] = 0.5 * (22 + theta_e[mth]);
+                                    }
+                                    else if (Ddata[i][3] == "실외공간")//실외공간
+                                    {
+                                        theta_wi[mth] = theta_e[mth];
+                                    }
+                                    else//난방기간이면 20, 비난방기간이면 22
+                                    {
+                                        if (QH_nd_z[mth] > 0) theta_wi[mth] = 20;
+                                        else theta_wi[mth] = 22;
+                                    }
+                                    Qcd_V[mth] = Math.Max(0.001 * Lamda * (0.5 * (CWin-CWout) - theta_wi[mth]) * tC_op[mth], 0);
+                                }
+                                break;
+                            case "수직배관":
+                                for (int mth = 0; mth < 12; mth++)
+                                {
+                                    double[] theta_wi = new double[12];
+                                    if (QH_nd_z[mth] > 0) theta_wi[mth] = 20;
+                                    else theta_wi[mth] = 22;
+                                    Qcd_S[mth] = Math.Max(0.001 * Lamda * (0.5 * (CWin - CWout) - theta_wi[mth]) * tC_op[mth], 0);
+                                }
+                                break;
+                            case "분기관":
+                                for (int mth = 0; mth < 12; mth++)
+                                {
+                                    double[] theta_wi = new double[12];
+                                    if (QH_nd_z[mth] > 0) theta_wi[mth] = 20;
+                                    else theta_wi[mth] = 22;
+                                    Qcd_A[mth] = Math.Max(0.001 * Lamda * (0.5 * (CWin - CWout) - theta_wi[mth]) * tC_op[mth], 0);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        for (int mth = 0; mth < 12; mth++)
+                        {
+                            QC_d[mth] = Qcd_V[mth] + Qcd_S[mth] + Qcd_A[mth];
+                            if (double.IsNaN(QC_d[mth])) { QC_d[mth] = 0; }
+                        }
+                    }
+                }
+            }
+        }
         public void Cal_S_Z()
         {
             string[][] value = Program.DB.getValue_SameCheck(DB.type.BaseDB_Cooling, "저장제어운영계수", "이용계수", " 항목= '" + Sto_Tank + "' And 종류 = '" + Sto_Type + "'");
@@ -870,7 +916,7 @@ namespace main
                 for (int i = 0; i < 12; i++)
                 {
                     QC_s_z[i] = (1 - nc_s) * QC_nd_z[i];
-                    QC_out_z[i] = QC_nd_z[i] + QC_ce_z[i] + QC_d_z[i] + QC_s_z[i];
+                    QC_out_z[i] = QC_nd_z[i] + QC_ce_z[i] + QC_d[i] + QC_s_z[i];
                 }
             }
             else
@@ -878,11 +924,10 @@ namespace main
                 for (int i = 0; i < 12; i++)
                 {
                     QC_s_z[i] = 0;
-                    QC_out_z[i] = QC_nd_z[i] + QC_ce_z[i] + QC_d_z[i] + QC_s_z[i];
+                    QC_out_z[i] = QC_nd_z[i] + QC_ce_z[i] + QC_d[i] + QC_s_z[i];
                 }
             }
         }
-
         public void Cal_Oper_Z() //냉방존 계산
         {
             //냉방존 부하율 검토
@@ -894,7 +939,7 @@ namespace main
             }
             else Beta_grenz_z = 0.3;
 
-            if (CG == "실외기12kW")
+            if (CG == "실외기")
             {
                 Cal_BC_z();
             }
@@ -916,11 +961,8 @@ namespace main
                     else tC_op_z[i] = tmth_z[i]; //냉방작동시간 작성
                 }
             }
-            
-
         }
-
-        public void Cal_BC_z() //냉방존 계산
+        public void Cal_BC_z() //냉방존 계산, Csource가 있어야함, 부하율계산
         {
             double[] 외기 = new double[12];
             string[][] 지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
@@ -980,7 +1022,6 @@ namespace main
                 else BC_z[i] = 0.1;
             }
         }
-
         #endregion
 
         #region //공조존 계산
@@ -989,7 +1030,8 @@ namespace main
             if (AhuNameList.Count > 0)
             {
                 Cal_AhuSum(ProjNum);
-                Cal_CED_Ahu();
+                Cal_CE_Ahu();
+                Cal_D();
                 Cal_S_Ahu();
                 Cal_Oper_Ahu(); //작동시간
                 Cal_fPL("Ahu");
@@ -1003,7 +1045,7 @@ namespace main
                     dwd_ahu[i] = 0;
                     theta_ahu[i] = 0;
                     QC_ce_ahu[i] = 0;
-                    QC_d_ahu[i] = 0;
+                    //QC_d_ahu[i] = 0;
                     QC_s_ahu[i] = 0;
                     QC_out_ahu[i] = 0;
                     tC_op_ahu[i] = 0;
@@ -1044,7 +1086,7 @@ namespace main
                     {
                         Zone zone = Program.CALC.getZone(v2[k][1]);
                         double percent = Cal_AHUneed_percent(ahu, zone);
-                        QC_nd_ahu[i] += percent * ahu.Qstar_b[1, i] * Program.UTIL.ToDoubleOrZero(v2[k][0]); //공급설비 부하율을 반영한 요구량 산정
+                        QC_nd_ahu[i] += percent * ahu.Qb_mth_tot[1, i] * Program.UTIL.ToDoubleOrZero(v2[k][0]); //공급설비 부하율을 반영한 요구량 산정
                         dwd_ahu[i] += ahu.dvmechmth_avg[1, i] * percent * ahu.Qstar_b[1, i] * Program.UTIL.ToDoubleOrZero(v2[k][0]); // 요구량 가중하여 산정함
                         theta_ahu[i] += ahu.theta_i_set[1] * percent * ahu.Qstar_b[1, i] * Program.UTIL.ToDoubleOrZero(v2[k][0]); ; //요구량 가중하여 산정함
                     }
@@ -1086,29 +1128,28 @@ namespace main
             percent = zone.Qb_a[0] / sum;
             return percent;
         }
-
-        public void Cal_CED_Ahu() 
+        public void Cal_CE_Ahu() 
         {
             if (Cout == "직팽식")
             {
-                string[][] value = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce,nc_d", " 공급온도 = '" + Cout + "' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
+                string[][] value = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce", " 공급온도 = '" + Cout + "' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
                 nc_ce_sens = Program.UTIL.ToDoubleOrZero(value[0][0]);
                 nc_ce = Program.UTIL.ToDoubleOrZero(value[0][1]);
-                nc_d = Program.UTIL.ToDoubleOrZero(value[0][2]);
+               
             }
             else
             {
                 if (CWout <= 6)
                 {
-                    string[][] value = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce,nc_d", " 공급온도 = '6' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
+                    string[][] value = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce", " 공급온도 = '6' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
                     nc_ce_sens = Program.UTIL.ToDoubleOrZero(value[0][0]);
                     nc_ce = Program.UTIL.ToDoubleOrZero(value[0][1]);
-                    nc_d = Program.UTIL.ToDoubleOrZero(value[0][2]);
+                    
                 }
                 else if (CWout <= 14)
                 {
-                    string[][] value1 = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce,nc_d", " 공급온도 = '6' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
-                    string[][] value2 = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce,nc_d", " 공급온도 = '14' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
+                    string[][] value1 = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce", " 공급온도 = '6' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
+                    string[][] value2 = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce", " 공급온도 = '14' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
 
                     double x0, x1, x, y0, y1;
                     x0 = 6;
@@ -1119,14 +1160,12 @@ namespace main
                     y0 = Program.UTIL.ToDoubleOrZero(value1[0][1].ToString());
                     y1 = Program.UTIL.ToDoubleOrZero(value2[0][1].ToString());
                     nc_ce = y0 + (y1 - y0) * (CWout - x0) / (x1 - x0);
-                    y0 = Program.UTIL.ToDoubleOrZero(value1[0][2].ToString());
-                    y1 = Program.UTIL.ToDoubleOrZero(value2[0][2].ToString());
-                    nc_d = y0 + (y1 - y0) * (CWout - x0) / (x1 - x0);
+                    
                 }
                 else if (CWout <= 16)
                 {
-                    string[][] value1 = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce,nc_d", " 공급온도 = '14' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
-                    string[][] value2 = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce,nc_d", " 공급온도 = '16' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
+                    string[][] value1 = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce", " 공급온도 = '14' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
+                    string[][] value2 = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce", " 공급온도 = '16' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
 
                     double x0, x1, x, y0, y1;
                     x0 = 14;
@@ -1137,14 +1176,11 @@ namespace main
                     y0 = Program.UTIL.ToDoubleOrZero(value1[0][1].ToString());
                     y1 = Program.UTIL.ToDoubleOrZero(value2[0][1].ToString());
                     nc_ce = y0 + (y1 - y0) * (CWout - x0) / (x1 - x0);
-                    y0 = Program.UTIL.ToDoubleOrZero(value1[0][2].ToString());
-                    y1 = Program.UTIL.ToDoubleOrZero(value2[0][2].ToString());
-                    nc_d = y0 + (y1 - y0) * (CWout - x0) / (x1 - x0);
                 }
                 else if (CWout <= 20)
                 {
-                    string[][] value1 = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce,nc_d", " 공급온도 = '16' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
-                    string[][] value2 = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce,nc_d", " 공급온도 = '20' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
+                    string[][] value1 = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce", " 공급온도 = '16' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
+                    string[][] value2 = Program.DB.getValue(DB.type.BaseDB_Cooling, "공급분배손실계수", "nc_ce_sens,nc_ce", " 공급온도 = '20' And AHU설치위치 = '" + Install_ahu + "' And 공급유형 = 'AHU'");
 
                     double x0, x1, x, y0, y1;
                     x0 = 16;
@@ -1155,30 +1191,26 @@ namespace main
                     y0 = Program.UTIL.ToDoubleOrZero(value1[0][1].ToString());
                     y1 = Program.UTIL.ToDoubleOrZero(value2[0][1].ToString());
                     nc_ce = y0 + (y1 - y0) * (CWout - x0) / (x1 - x0);
-                    y0 = Program.UTIL.ToDoubleOrZero(value1[0][2].ToString());
-                    y1 = Program.UTIL.ToDoubleOrZero(value2[0][2].ToString());
-                    nc_d = y0 + (y1 - y0) * (CWout - x0) / (x1 - x0);
+                   
                 }
                 else
                 {
                     nc_ce_sens = 1;
                     nc_ce = 1;
-                    nc_d = 1;
                 }
             }
 
             for (int i = 0; i < 12; i++)
             {
                 QC_ce_ahu[i] = ((1 - nc_ce_sens) + (1 - nc_ce)) * QC_nd_ahu[i];
-                QC_d_ahu[i] = (1 - nc_d) * QC_nd_ahu[i];
             }
         }
-        
+     
         public void Cal_S_Ahu()//완료
         {
             string check;
 
-            if (CG == "실외기12kW")
+            if (CG == "실외기")
             {
                 check = SCZoneType_ahu;
             }
@@ -1195,7 +1227,7 @@ namespace main
                 for (int i = 0; i < 12; i++)
                 {
                     QC_s_ahu[i] = (1 - nc_s) * QC_nd_ahu[i];
-                    QC_out_ahu[i] = QC_nd_ahu[i] + QC_ce_ahu[i] + QC_d_ahu[i] + QC_s_ahu[i];
+                    QC_out_ahu[i] = QC_nd_ahu[i] + QC_ce_ahu[i] + QC_d[i] + QC_s_ahu[i];
                 }
                 
             }
@@ -1205,7 +1237,7 @@ namespace main
                 for (int i = 0; i < 12; i++)
                 {
                     QC_s_ahu[i] = 0;
-                    QC_out_ahu[i] = QC_nd_ahu[i] + QC_ce_ahu[i] + QC_d_ahu[i] + QC_s_ahu[i];
+                    QC_out_ahu[i] = QC_nd_ahu[i] + QC_ce_ahu[i] + QC_d[i] + QC_s_ahu[i];
                 }
             }
         }
@@ -1220,7 +1252,7 @@ namespace main
             }
             else Beta_grenz_ahu = 0.3;
 
-            if (CG == "실외기12kW")
+            if (CG == "실외기")
             {
                 Cal_BC_ahu();
             }
@@ -1243,7 +1275,6 @@ namespace main
                 }
             }
         }
-
         public void Cal_BC_ahu() //냉방존 부하율 계산
         {
             double[] 외기 = new double[12];
@@ -1304,22 +1335,20 @@ namespace main
                 else BC_ahu[i] = 0.1;
             }
         }
-
-
         #endregion
 
         public void Find_Climate()//기후데이터
         {
             double Ref = 0.95;
-            double[] 외기온도 = new double[12];
+            //double[] 외기온도 = new double[12];
             double[] 수직지열온도 = { 4.4, 3.9, 6.5, 10.6, 15.1, 18.7, 20.8, 21, 19.2, 15.6, 10.6, 5 };
             string[][] 지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
             string[][] OutdoorClimate = Program.DB.getValue(DB.type.BaseDB_HCneed, " 기후데이터_온도습도", "온도,상대습도,기간", "지역명 = '" + 지역[0][0] + "'"); //기후데이터 저장
             for (int i = 0; i < OutdoorTemperature.Length; i++)
             {
-                외기온도[i] = Program.UTIL.ToDoubleOrZero(OutdoorClimate[i][0]);
+                theta_e[i] = Program.UTIL.ToDoubleOrZero(OutdoorClimate[i][0]);
                 Humidity[i] = Program.UTIL.ToDoubleOrZero(OutdoorClimate[i][1]);
-                WetTemperature[i] = -5.809 + 0.058 * Ref * 100 + 0.697 * 외기온도[i] + 0.003 * Ref * 외기온도[i] * 100;
+                WetTemperature[i] = -5.809 + 0.058 * Ref * 100 + 0.697 * theta_e[i] + 0.003 * Ref * theta_e[i] * 100;
                 mth[i] = OutdoorClimate[i][2];
             }
             string[][] v = Program.DB.getValue(DB.type.BaseDB_Cooling, "냉동기설치위치", "상승온도차", "위치 = '" + CSource + "'");
@@ -1336,9 +1365,9 @@ namespace main
                 }
                 else if (CG == nameof(_TYPE.지하수히트펌프))
                 {
-                    OutdoorTemperature[j] = 0.134 * 외기온도[j] + 9.32;
+                    OutdoorTemperature[j] = 0.134 * theta_e[j] + 9.32;
                 }
-                else OutdoorTemperature[j] = 외기온도[j] + Theta_Around;
+                else OutdoorTemperature[j] = theta_e[j] + Theta_Around;
             } 
         }
 
@@ -1355,7 +1384,7 @@ namespace main
             }           
             else if (Type == "Z" && CG != nameof(_TYPE.흡수식냉동기))
             {
-                if (CG == "실외기12kW")
+                if (CG == "실외기")
                 {
                     공급유형 = SCZoneType_z;
                 }
@@ -1391,7 +1420,7 @@ namespace main
             }
             else if(Type == "Ahu" && CG != nameof(_TYPE.흡수식냉동기))
             {
-                if (CG == "실외기12kW")
+                if (CG == "실외기")
                 {
                     공급유형 = SCZoneType_ahu;
                 }
@@ -1443,7 +1472,7 @@ namespace main
             {
                 QC_nd[i] = QC_nd_z[i] + QC_nd_ahu[i];
                 QC_ce[i] = QC_ce_z[i] + QC_ce_ahu[i];
-                QC_d[i] = QC_d_z[i] + QC_d_ahu[i];
+                //QC_d[i] = QC_d_z[i] + QC_d_ahu[i];
                 QC_s[i] = QC_s_z[i] + QC_s_ahu[i];
                 QC_out[i] = QC_out_z[i] + QC_out_ahu[i];
                                 
@@ -1554,7 +1583,6 @@ namespace main
                         news.RE_RESystem_Type = CG;
                         news.RE_TotalE = QC_out;
                         news.RE_CoolingE = QC_out;
-
                         string[] sy = new string[4];
                         sy[0] = news.Num();
                         sy[1] = "생산";
@@ -1658,7 +1686,7 @@ namespace main
 
             switch (CG)
             {
-                case "실외기12kW":
+                case "실외기":
                     
                     for(int i =0; i < 12; i++)
                     {
@@ -1757,7 +1785,7 @@ namespace main
             double a0 = 0, a1 = 0, a2 = 0; 
             double[] twathr_in = new double[12];//수냉식 적용시 사용됨
             
-            if (CG == "실외기12kW" || CG == "공냉식냉동기")
+            if (CG == "실외기" || CG == "공냉식냉동기")
             {
                 if (Comp_f == "스크류" || Comp_f == "터보")
                 {
@@ -1909,7 +1937,7 @@ namespace main
         public void Cal_MultiFactor()
         {
             string 공급유형;
-            if (CG == nameof(_TYPE.실외기12kW))
+            if (CG == nameof(_TYPE.실외기))
             {
                 int a = ZoneNumber_f + AhuNumber_f;
                 if (a > 1)
@@ -1959,7 +1987,7 @@ namespace main
                 //    }
                 //}
 
-                if (CG != nameof(_TYPE.실외기12kW))
+                if (CG != nameof(_TYPE.실외기))
                 {
                     sum += ce._ceElec; //소비전력
                 }
