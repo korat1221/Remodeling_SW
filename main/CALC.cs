@@ -1500,6 +1500,7 @@ namespace main
         {
             DHW1.Load_Zonedata(ProjNum);
             DHW1.Load_DHWGeneral(ProjNum);
+            DHW1.Load_DistributionData(ProjNum);
             DHW1.Load_Boiler_general(ProjNum);
             DHW1.Load_Solar_general(ProjNum);
             DHW1.Load_FC_general(ProjNum);
@@ -1507,12 +1508,12 @@ namespace main
             DHW1.Load_DH_general(ProjNum);
             DHW1.Load_PumpData(ProjNum);
             DHW1.Load_StorageData(ProjNum);
-            DHW1.Load_PipeData(ProjNum);
         }
         public static void DHW_Calc(DHW DHW1, string ProjNum)
         {
-            DHW1.Calc_Qd(ProjNum);
-            DHW1.Calc_Qh_s(ProjNum);
+            DHW1.LoadCalc_Qd();
+            DHW1.Calc_Qs(ProjNum);
+            DHW1.LoadCalc_Pump(ProjNum);
             DHW1.LoadCalc_Solar(ProjNum);
             DHW1.LoadCalc_FC(ProjNum);
             DHW1.LoadCalc_Boiler(ProjNum);
@@ -1551,6 +1552,7 @@ namespace main
                         DHW1.Qw_sol[mth]
                          + "'", "번호,월"); ;
             }
+            Program.DB.saveProject();
         }
         #endregion
 
