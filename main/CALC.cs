@@ -8,6 +8,11 @@ namespace main
         public static ArrayList zone = new ArrayList();
         public static ArrayList zonelight = new ArrayList();
         public static ArrayList zoneDHU = new ArrayList();
+        public static Cal_Climate Climate = new Cal_Climate(); // 프로젝트당 하나만 생성 — 지역/위도/경도가 바뀌면 Run_Climate()가 이 인스턴스 배열을 덮어씀
+
+        // (기울기,방위각)을 1도 반올림한 키로 묶은 표면별 월평균 일사량[W/m2] 캐시(시간 평균, QSopCalc/QStrCalc가 ×24×dmth로 직접 월 누적을 만듦) — Run_Climate_Envelope()가 채움
+        public static Dictionary<(int Degree, int Direction), double[]> Itot_mth = new Dictionary<(int, int), double[]>();
+        private static string lastSite = ""; // 마지막으로 대지계산(Run_Climate_Site)·표면캐시(Run_Climate_Envelope)를 실행했을 때의 지역/위도/경도 — 둘 다 이 값으로 재계산 스킵 여부를 판단함
 
         public CALC()
         {
@@ -17,11 +22,102 @@ namespace main
             _calculations["요소기술계산"] = new Func<bool>(AltCalc);
 
         }
+        public static bool Run_Climate()
+        {
+            if (!Run_Climate_Site()) return false; // 지역/위도/경도 없으면 Climate가 안 채워지니, 표면 캐시도 아예 안 돌림
+
+            Run_Climate_Envelope();
+
+            return true;
+        }
+
+        public static bool Run_Climate_Site()
+        {
+            string[][] rows = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역,위도,경도", "");
+            if (rows.Length == 0) return false;
+
+            string region = rows[0][0];
+            double lat = Program.UTIL.ToDoubleOrZero(rows[0][1]);
+            double lon = Program.UTIL.ToDoubleOrZero(rows[0][2]);
+            if (region == "" || lat == 0 || lon == 0) return false;
+
+            if (region + "_" + lat + "_" + lon != lastSite)
+            {
+                Climate.LoadData_Weather();
+                Climate.Cal_SolarTime();
+                Climate.Cal_SolarPosition();
+                Climate.Cal_SkyClearness();
+                Climate.Cal_BrightnessCoeff();
+            }
+
+            return true;
+        }
+
+        // 3D 익스포터(Zoning.js _asAzimuth)가 내는 값(북=90,동=180,남=270,서=0/360, 로컬 좌표축 기준)을
+        // Cal_Itot()이 기대하는 γic(ISO 52010-1, 남=0,동=+90,북=180,서=-90)로 변환. 3D 쪽은 안 건드리고
+        // DB엔 원본 그대로 저장 — 이 변환은 여기(Itot_mth 키 생성)와 Cal_HCneed.cs의 Direction_angle()
+        // 양쪽에서 동일하게 적용해야 캐시 키가 서로 맞음.
+        public static int ConvertDirectionAngle(double rawDirection)
+        {
+            double Direction = 270 - rawDirection;
+            if (Direction > 180) Direction = Direction - 360;
+            if (Direction < -180) Direction = Direction + 360;
+            return (int)Math.Round(Direction);
+        }
+
+        // 표면별(β,γ) Itot 월별 캐시 — ZoneEnvelope_3D의 (기울기,방위각) 조합이나 지역/위도/경도가
+        // 마지막으로 채웠을 때와 같으면 재계산 없이 스킵. Run_Climate()를 통해 계산 버튼/화면저장마다
+        // 불리지만, 실제 8760시간 재계산은 3D 형상이나 대지가 바뀌었을 때만 일어남.
+        private static void Run_Climate_Envelope()
+        {
+            string[][] site3d = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역,위도,경도", "");
+            if (site3d.Length == 0) return;
+            string site = site3d[0][0] + "_" + site3d[0][1] + "_" + site3d[0][2];
+
+            string[][] rows = Program.DB.querySQL(DB.type.ProjDB, "SELECT DISTINCT 기울기,방위각 FROM ZoneEnvelope_3D");
+
+            HashSet<(int Degree, int Direction)> currentKeys = new HashSet<(int, int)>();
+            for (int i = 0; i < rows.Length; i++)
+            {
+                int Degree = (int)Math.Round(Program.UTIL.ToDoubleOrZero(rows[i][0]));
+                int Direction = ConvertDirectionAngle(Program.UTIL.ToDoubleOrZero(rows[i][1]));
+                currentKeys.Add((Degree, Direction));
+            }
+
+            if (site == lastSite && currentKeys.SetEquals(Itot_mth.Keys)) return;
+
+            double[] dmth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+            Itot_mth.Clear();
+
+            var keys = currentKeys.ToArray();
+            for (int k = 0; k < keys.Length; k++)
+            {
+                double[] monthly = new double[12];
+                int hour = 0; // 그 표면의 0~8759시간을 1월부터 순서대로 훑는 절대 시간 인덱스
+
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    for (int d = 0; d < dmth[mth]; d++)
+                    {
+                        for (int h = 0; h < 24; h++)
+                        {
+                            monthly[mth] += Climate.Cal_Itot(keys[k].Degree, keys[k].Direction, hour);
+                            hour = hour + 1;
+                        }
+                    }
+                    int hoursInMonth = (int)dmth[mth] * 24; // 이 달의 시간 개수
+                    monthly[mth] = monthly[mth] / hoursInMonth; // 이 시점까지는 누적합 — 시간수로 나눠 평균으로 바꿈
+                }
+
+                Itot_mth[keys[k]] = monthly;
+            }
+
+            lastSite = site;
+        }
 
         public static bool Run_Zone()
         {
-            Itot.Clear(); // 이전 계산(다른 프로젝트·다른 지역)의 캐시가 새 계산에 새어들지 않도록 매 계산 시작 시 비움
-
             Program.DB.deleteTable(DB.type.ProjDB, "Zone_LightResult");
             Program.DB.initTable(DB.type.ProjDB, "Zone_LightResult");
 
@@ -1797,8 +1893,7 @@ namespace main
         public static Dictionary<string, AHU> AHUs = new Dictionary<string, AHU>();
         public static Dictionary<string, DHW> DHWs = new Dictionary<string, DHW>();
         public static Dictionary<string, Final> Finals = new Dictionary<string, Final>();
-        public static Dictionary<string[], RESystem> RESystems = new Dictionary<string[], RESystem>();
-        public static Dictionary<(int beta, int gamma), double[]> Itot = new Dictionary<(int, int), double[]>(); // (βic,γic) 1° 반올림 키로 캐싱한 임의 경사면 총일사량 1년치[W/m2] — 같은 방향 표면 재계산 방지
+        public static Dictionary<string[], RESystem> RESystems = new Dictionary<string[], RESystem>();        
         public static string[] ElementAlt = { "조닝", "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀+열회수기", "난방", "냉방", "급탕", "조명", "공조", "태양광","풍력", "기밀" }; //기밀은 요소기술별 합계 계산 시 제외되어야 하므로 마지막 순서여야 함 
       //  public static string[] RuleAlt = { "기밀", "기밀+열회수기" };
         public static string[] RuleAlt = { "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀", "기밀+열회수기", "조명", "보일러", "냉난방EHP", "냉방EHP", "공냉식냉동기", "수냉식냉동기", "냉난방GHP", "흡수식냉온수기", "태양광" };
@@ -1811,22 +1906,6 @@ namespace main
             else return null;
         }
 
-        // Itot 딕셔너리에 없는 (βic,γic)만 climate로 8760시간 계산해서 채우고, 있으면 그대로 반환
-        public static double[] Cal_Itot(Cal_Climate climate, double beta_ic, double gamma_ic)
-        {
-            (int beta, int gamma) key = ((int)Math.Round(beta_ic), (int)Math.Round(gamma_ic));
-
-            if (Itot.TryGetValue(key, out double[] result)) return result;
-
-            result = new double[8760];
-            for (int i = 0; i < result.Length; i++)
-            {
-                result[i] = climate.Cal_Itot(beta_ic, gamma_ic, i);
-            }
-            Itot[key] = result;
-
-            return result;
-        }
         public ZoneDHU getZoneDHU(string zoneNum)
         {
             if (ZoneDHUs.ContainsKey(zoneNum))
@@ -1894,6 +1973,8 @@ namespace main
 
         public static bool run(string[] calculations)
         {
+            Run_Climate();
+
             foreach (string calc in calculations)
             {
                 _calculations[calc].DynamicInvoke();

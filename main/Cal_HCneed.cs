@@ -1409,25 +1409,28 @@ namespace main
                 while (++i < zoneWall.Count)
                 {
                     Wall zonewall = (Wall)zoneWall[i];
-                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + Location[0][0] + "' AND 방향 ='" + zonewall.Direction() + "' AND  각도 = '" + zonewall.Degree() + "˚" + "'");
+                    int wall_Degree = (int)Math.Round(Program.UTIL.ToDoubleOrZero(zonewall.Degree()));
+                    int wall_Direction = zonewall.Direction_angle();
+                    double[] wall_itot = CALC.Itot_mth.GetValueOrDefault((wall_Degree, wall_Direction));
                     string[][] token2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_부하", "일사량", "지역명 ='" + Location[0][0] + "' AND 방향 ='" + zonewall.Direction() + "'");
-                    if (token.Length > 0 && token2.Length > 0)
+                    if (zonewall.DiIndi() != "간접외기") //직접외기 벽만 일사 계산
                     {
                         for (int mth = 0; mth <= 11; mth++)
                         {
-                            zoneWalls_Is[i, mth] = Program.UTIL.ToDoubleOrZero(token[mth][0]);
                             QSopCalc qsopcalc = new QSopCalc();
                             QS_rad qs_rad = new QS_rad();
                             QTCalc qtcalc = new QTCalc();
-                            if (zonewall.DiIndi() == "간접외기")
-                            {   //직접외기 벽만 일사 계산      
 
-                            }
-                            else
+                            zoneWalls_Qrad[i, mth] = qs_rad.Calc(zonewall.Ueff(), zonewall.Area(), 0.5, dmth[mth]);
+
+                            if (wall_itot != null) // 요구량 — Itot_mth에 이 (기울기,방위각) 캐시가 있을 때만
                             {
-
+                                zoneWalls_Is[i, mth] = wall_itot[mth];
                                 zoneWalls_Qssource[i, mth] = qsopcalc.Calc(zonewall.Ueff(), zonewall.Area(), zonewall.α(), zoneWalls_Is[i, mth], dmth[mth]);
-                                zoneWalls_Qrad[i, mth] = qs_rad.Calc(zonewall.Ueff(), zonewall.Area(), 0.5, dmth[mth]);
+                            }
+
+                            if (token2.Length > 0) // 부하 — 요구량과 별개로 독립 판단
+                            {
                                 if (0.5 * 4.5 * 10 >= zonewall.α() * Program.UTIL.ToDoubleOrZero(token2[0][0]))
                                 {
                                     zoneWalls_Qssink_Cmax[i] = qsopcalc.Calc_max(zonewall.Ueff(), zonewall.Area(), zonewall.α(), Program.UTIL.ToDoubleOrZero(token2[0][0]), 0.5);
@@ -1436,8 +1439,8 @@ namespace main
                                 {
                                     zoneWalls_Qssource_Cmax[i] = qsopcalc.Calc_max(zonewall.Ueff(), zonewall.Area(), zonewall.α(), Program.UTIL.ToDoubleOrZero(token2[0][0]), 0.5);
                                 }
-
                             }
+
                             QSopsource_Wall[mth] += zoneWalls_Qssource[i, mth];
                             QS_rad_Wall[mth] += zoneWalls_Qrad[i, mth];
 
@@ -1462,25 +1465,28 @@ namespace main
                 while (++i < zoneRoof.Count)
                 {
                     Roof zoneroof = (Roof)zoneRoof[i];
-                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + Location[0][0] + "' AND 방향 ='" + zoneroof.Direction() + "' AND  각도 = '" + zoneroof.Degree() + "˚" + "'");
+                    int roof_Degree = (int)Math.Round(Program.UTIL.ToDoubleOrZero(zoneroof.Degree()));
+                    int roof_Direction = zoneroof.Direction_angle();
+                    double[] roof_itot = CALC.Itot_mth.GetValueOrDefault((roof_Degree, roof_Direction));
                     string[][] token2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_부하", "일사량", "지역명 ='" + Location[0][0] + "' AND 방향 ='" + zoneroof.Direction() + "'");
-                    if (token.Length > 0 && token2.Length > 0)
+                    if (zoneroof.DiIndi() != "간접외기") //직접외기 지붕만 일사 계산
                     {
                         for (int mth = 0; mth <= 11; mth++)
                         {
-                            zoneRoofs_Is[i, mth] = Program.UTIL.ToDoubleOrZero(token[mth][0]);
                             QSopCalc qsopcalc = new QSopCalc();
                             QS_rad qs_rad = new QS_rad();
                             QTCalc qtcalc = new QTCalc();
-                            if (zoneroof.DiIndi() == "간접외기")
-                            {   //직접외기 지붕만 일사 계산
 
-                            }
-                            else
+                            zoneRoofs_Qrad[i, mth] = qs_rad.Calc(zoneroof.Ueff(), zoneroof.Area(), 1, dmth[mth]);
+
+                            if (roof_itot != null) // 요구량
                             {
-
+                                zoneRoofs_Is[i, mth] = roof_itot[mth];
                                 zoneRoofs_Qssource[i, mth] = qsopcalc.Calc(zoneroof.Ueff(), zoneroof.Area(), zoneroof.α(), zoneRoofs_Is[i, mth], dmth[mth]);
-                                zoneRoofs_Qrad[i, mth] = qs_rad.Calc(zoneroof.Ueff(), zoneroof.Area(), 1, dmth[mth]);
+                            }
+
+                            if (token2.Length > 0) // 부하
+                            {
                                 if (1 * 4.5 * 10 >= zoneroof.α() * Program.UTIL.ToDoubleOrZero(token2[0][0]))
                                 {
                                     zoneRoofs_Qssink_Cmax[i] = qsopcalc.Calc_max(zoneroof.Ueff(), zoneroof.Area(), zoneroof.α(), Program.UTIL.ToDoubleOrZero(token2[0][0]), 1);
@@ -1489,8 +1495,8 @@ namespace main
                                 {
                                     zoneRoofs_Qssource_Cmax[i] = qsopcalc.Calc_max(zoneroof.Ueff(), zoneroof.Area(), zoneroof.α(), Program.UTIL.ToDoubleOrZero(token2[0][0]), 1);
                                 }
-
                             }
+
                             QSopsource_Roof[mth] += zoneRoofs_Qssource[i, mth];
                             QS_rad_Roof[mth] += zoneRoofs_Qrad[i, mth];
 
@@ -1515,25 +1521,28 @@ namespace main
                 while (++i < zoneDoor.Count)
                 {
                     Door zonedoor = (Door)zoneDoor[i];
-                    string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + Location[0][0] + "'  AND 방향 ='" + zonedoor.Direction() + "' AND  각도 = '" + zonedoor.Degree() + "˚" + "'");
+                    int door_Degree = (int)Math.Round(Program.UTIL.ToDoubleOrZero(zonedoor.Degree()));
+                    int door_Direction = zonedoor.Direction_angle();
+                    double[] door_itot = CALC.Itot_mth.GetValueOrDefault((door_Degree, door_Direction));
                     string[][] token2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_부하", "일사량", "지역명 ='" + Location[0][0] + "' AND 방향 ='" + zonedoor.Direction() + "'");
-                    if (token.Length > 0 && token2.Length > 0)
+                    if (zonedoor.DiIndi() != "간접외기") //직접외기 벽만 일사 계산
                     {
                         for (int mth = 0; mth < 12; mth++)
                         {
-                            zoneDoors_Is[i, mth] = Program.UTIL.ToDoubleOrZero(token[mth][0]);
                             QSopCalc qsopcalc = new QSopCalc();
                             QS_rad qs_rad = new QS_rad();
                             QTCalc qtcalc = new QTCalc();
-                            if (zonedoor.DiIndi() == "간접외기")
-                            {   //직접외기 벽만 일사 계산    
 
-                            }
-                            else
+                            zoneDoors_Qrad[i, mth] = qs_rad.Calc(zonedoor.Ueff(), zonedoor.Area(), 0.5, dmth[mth]);
+
+                            if (door_itot != null) // 요구량
                             {
-
+                                zoneDoors_Is[i, mth] = door_itot[mth];
                                 zoneDoors_Qssource[i, mth] = qsopcalc.Calc(zonedoor.Ueff(), zonedoor.Area(), zonedoor.α(), zoneDoors_Is[i, mth], dmth[mth]);
-                                zoneDoors_Qrad[i, mth] = qs_rad.Calc(zonedoor.Ueff(), zonedoor.Area(), 0.5, dmth[mth]);
+                            }
+
+                            if (token2.Length > 0) // 부하
+                            {
                                 if (0.5 * 4.5 * 10 >= zonedoor.α() * Program.UTIL.ToDoubleOrZero(token2[0][0]))
                                 {
                                     zoneDoors_Qssink_Cmax[i] = qsopcalc.Calc_max(zonedoor.Ueff(), zonedoor.Area(), zonedoor.α(), Program.UTIL.ToDoubleOrZero(token2[0][0]), 0.5);
@@ -1542,8 +1551,8 @@ namespace main
                                 {
                                     zoneDoors_Qssource_Cmax[i] = qsopcalc.Calc_max(zonedoor.Ueff(), zonedoor.Area(), zonedoor.α(), Program.UTIL.ToDoubleOrZero(token2[0][0]), 0.5);
                                 }
-
                             }
+
                             QSopsource_Door[mth] += zoneDoors_Qssource[i, mth];
                             QS_rad_Door[mth] += zoneDoors_Qrad[i, mth];
                             //   Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_Envelope_Result SET QSsink='" + zoneDoors_Qssink[i, mth].ToString() + "', QSsource ='" + zoneDoors_Qssource[i, mth].ToString() + "' where 외피번호 = '" + zonedoor.Num() + "'AND 난방_냉방 ='" + HC + "'  AND 비이용일_이용일 ='" + WEWD + "' AND 월 ='" + (mth + 1).ToString() + "월'");
@@ -1567,20 +1576,26 @@ namespace main
                     CW zonecw = (CW)zoneCW[i];
                     if (zonecw.CWType() == "패널부분")
                     {
-                        string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + Location[0][0] + "'  AND 방향 ='" + zonecw.Direction() + "' AND  각도 = '" + zonecw.Degree() + "˚" + "'");
+                        int cwp_Degree = (int)Math.Round(Program.UTIL.ToDoubleOrZero(zonecw.Degree()));
+                        int cwp_Direction = zonecw.Direction_angle();
+                        double[] cwp_itot = CALC.Itot_mth.GetValueOrDefault((cwp_Degree, cwp_Direction));
                         string[][] token2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_부하", "일사량", "지역명 ='" + Location[0][0] + "' AND 방향 ='" + zonecw.Direction() + "'");
-                        if (token.Length > 0 && token2.Length > 0)
+                        for (int mth = 0; mth <= 11; mth++)
                         {
-                            for (int mth = 0; mth <= 11; mth++)
+                            QSopCalc qsopcalc = new QSopCalc();
+                            QS_rad qs_rad = new QS_rad();
+                            QTCalc qtcalc = new QTCalc();
+
+                            zoneCWs_Qrad[i, mth] = qs_rad.Calc(zonecw.Uvalue_p(), zonecw.Area_p(), 0.5, dmth[mth]);
+
+                            if (cwp_itot != null) // 요구량
                             {
-                                zoneCWs_Is[i, mth] = Program.UTIL.ToDoubleOrZero(token[mth][0]);
-                                QSopCalc qsopcalc = new QSopCalc();
-                                QS_rad qs_rad = new QS_rad();
-                                QTCalc qtcalc = new QTCalc();
-
+                                zoneCWs_Is[i, mth] = cwp_itot[mth];
                                 zoneCWs_Qssource[i, mth] = qsopcalc.Calc(zonecw.Uvalue_p(), zonecw.Area_p(), zonecw.α_p(), zoneCWs_Is[i, mth], dmth[mth]);
-                                zoneCWs_Qrad[i, mth] = qs_rad.Calc(zonecw.Uvalue_p(), zonecw.Area_p(), 0.5, dmth[mth]);
+                            }
 
+                            if (token2.Length > 0) // 부하
+                            {
                                 if (0.5 * 4.5 * 10 >= zonecw.α_p() * Program.UTIL.ToDoubleOrZero(token2[0][0]))
                                 {
                                     zoneCWs_Qssink_Cmax[i] = qsopcalc.Calc_max(zonecw.Uvalue_p(), zonecw.Area_p(), zonecw.α_p(), Program.UTIL.ToDoubleOrZero(token2[0][0]), 0.5);
@@ -1589,13 +1604,13 @@ namespace main
                                 {
                                     zoneCWs_Qssource_Cmax[i] = qsopcalc.Calc_max(zonecw.Uvalue_p(), zonecw.Area_p(), zonecw.α_p(), Program.UTIL.ToDoubleOrZero(token2[0][0]), 0.5);
                                 }
-                                QSopsource_CW_p[mth] += zoneCWs_Qssource[i, mth];
-                                QS_rad_CW_p[mth] += zoneCWs_Qrad[i, mth];
-
-                                //   Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_Envelope_Result SET QSsink='" + zoneCWs_Qssink[i, mth].ToString() + "', QSsource ='" + zoneCWs_Qssource[i, mth].ToString() + "' where 외피번호 = '" + zonecw.Num() + "'AND 난방_냉방 ='" + HC + "'  AND 비이용일_이용일 ='" + WEWD + "' AND 월 ='" + (mth + 1).ToString() + "월' AND 커튼월유형 ='패널부분'");
                             }
+                            QSopsource_CW_p[mth] += zoneCWs_Qssource[i, mth];
+                            QS_rad_CW_p[mth] += zoneCWs_Qrad[i, mth];
 
+                            //   Program.DB.querySQL(DB.type.ProjDB, "UPDATE Zone_Envelope_Result SET QSsink='" + zoneCWs_Qssink[i, mth].ToString() + "', QSsource ='" + zoneCWs_Qssource[i, mth].ToString() + "' where 외피번호 = '" + zonecw.Num() + "'AND 난방_냉방 ='" + HC + "'  AND 비이용일_이용일 ='" + WEWD + "' AND 월 ='" + (mth + 1).ToString() + "월' AND 커튼월유형 ='패널부분'");
                         }
+
                         QSopsink_tot_Cmax += zoneCWs_Qssink_Cmax[i];
                         QSopsource_tot_Cmax += zoneCWs_Qssource_Cmax[i];
                     }
@@ -1633,15 +1648,21 @@ namespace main
             while (++i < zoneWin.Count)
             {
                 Window zonewin = (Window)zoneWin[i];
-                string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + Location[0][0] + "' AND 방향 ='" + zonewin.Direction() + "' AND  각도 = '" + zonewin.Degree() + "˚" + "'");
+                int win_Degree = (int)Math.Round(Program.UTIL.ToDoubleOrZero(zonewin.Degree()));
+                int win_Direction = zonewin.Direction_angle();
+                double[] win_itot = CALC.Itot_mth.GetValueOrDefault((win_Degree, win_Direction));
                 string[][] token2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_부하", "일사량", "지역명 ='" + Location[0][0] + "' AND 방향 ='" + zonewin.Direction() + "'");
-                if (token.Length > 0 && token2.Length > 0)
+
+                if (win_itot != null) // 요구량
                 {
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        zoneWins_Is[i, mth] = Program.UTIL.ToDoubleOrZero(token[mth][0]);
-                        zoneWins_Is_max[i] = Program.UTIL.ToDoubleOrZero(token2[0][0]);
+                        zoneWins_Is[i, mth] = win_itot[mth];
                     }
+                }
+                if (token2.Length > 0) // 부하 — 요구량과 별개로 독립 판단
+                {
+                    zoneWins_Is_max[i] = Program.UTIL.ToDoubleOrZero(token2[0][0]);
                 }
             }
 
@@ -1751,15 +1772,21 @@ namespace main
             while (++i < zoneCW.Count)
             {
                 CW zonecw = (CW)zoneCW[i];
-                string[][] token = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + Location[0][0] + "' AND 방향 ='" + zonecw.Direction() + "' AND  각도 = '" + zonecw.Degree() + "˚" + "'");
+                int cwg_Degree = (int)Math.Round(Program.UTIL.ToDoubleOrZero(zonecw.Degree()));
+                int cwg_Direction = zonecw.Direction_angle();
+                double[] cwg_itot = CALC.Itot_mth.GetValueOrDefault((cwg_Degree, cwg_Direction));
                 string[][] token2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_부하", "일사량", "지역명 ='" + Location[0][0] + "' AND 방향 ='" + zonecw.Direction() + "'");
-                if (token.Length > 0 && token2.Length > 0)
+
+                if (cwg_itot != null) // 요구량
                 {
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        zoneCWs_Is[i, mth] = Program.UTIL.ToDoubleOrZero(token[mth][0]);
-                        zoneCWs_Is_max[i] = Program.UTIL.ToDoubleOrZero(token2[0][0]);
+                        zoneCWs_Is[i, mth] = cwg_itot[mth];
                     }
+                }
+                if (token2.Length > 0) // 부하 — 요구량과 별개로 독립 판단
+                {
+                    zoneCWs_Is_max[i] = Program.UTIL.ToDoubleOrZero(token2[0][0]);
                 }
             }
 
@@ -2889,6 +2916,11 @@ namespace main
         {
             return wall_Degree;
         }
+        public int Direction_angle() // ZoneEnvelope_3D.방위각을 번호로 그때그때 조회, CALC.ConvertDirectionAngle()로 γic 변환까지 — 생성자를 거치는 모든 곳(Cal_Alt/Optimal/Rule 포함)을 고칠 필요 없음
+        {
+            string[][] rows = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "방위각", "번호 = '" + wall_Num + "'");
+            return rows.Length > 0 ? CALC.ConvertDirectionAngle(Program.UTIL.ToDoubleOrZero(rows[0][0])) : 0;
+        }
 
     }
 
@@ -2948,6 +2980,11 @@ namespace main
         public String Degree()
         {
             return Roof_Degree;
+        }
+        public int Direction_angle() // ZoneEnvelope_3D.방위각을 번호로 그때그때 조회, CALC.ConvertDirectionAngle()로 γic 변환까지
+        {
+            string[][] rows = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "방위각", "번호 = '" + Roof_Num + "'");
+            return rows.Length > 0 ? CALC.ConvertDirectionAngle(Program.UTIL.ToDoubleOrZero(rows[0][0])) : 0;
         }
     }
 
@@ -3047,6 +3084,11 @@ namespace main
         public String Degree()
         {
             return Window_Degree;
+        }
+        public int Direction_angle() // ZoneEnvelope_3D.방위각을 번호로 그때그때 조회, CALC.ConvertDirectionAngle()로 γic 변환까지
+        {
+            string[][] rows = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "방위각", "번호 = '" + Window_Num + "'");
+            return rows.Length > 0 ? CALC.ConvertDirectionAngle(Program.UTIL.ToDoubleOrZero(rows[0][0])) : 0;
         }
     }
 
@@ -3186,6 +3228,11 @@ namespace main
         {
             return CW_Degree;
         }
+        public int Direction_angle() // ZoneEnvelope_3D.방위각을 번호로 그때그때 조회, CALC.ConvertDirectionAngle()로 γic 변환까지
+        {
+            string[][] rows = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "방위각", "번호 = '" + CW_Num + "'");
+            return rows.Length > 0 ? CALC.ConvertDirectionAngle(Program.UTIL.ToDoubleOrZero(rows[0][0])) : 0;
+        }
         public String CWType()
         {
             return CW_CWType;
@@ -3249,6 +3296,11 @@ namespace main
         public String Degree()
         {
             return Door_Degree;
+        }
+        public int Direction_angle() // ZoneEnvelope_3D.방위각을 번호로 그때그때 조회, CALC.ConvertDirectionAngle()로 γic 변환까지
+        {
+            string[][] rows = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "방위각", "번호 = '" + Door_Num + "'");
+            return rows.Length > 0 ? CALC.ConvertDirectionAngle(Program.UTIL.ToDoubleOrZero(rows[0][0])) : 0;
         }
 
     }

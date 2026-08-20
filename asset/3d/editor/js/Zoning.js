@@ -24,6 +24,9 @@ Zoning.prototype = {
         let _asSlope = (x, y, z) => {
             return (Math.acos(y / Math.sqrt(x * x + y * y + z * z)) * 180) / Math.PI;
         };
+        let _asAzimuth = (x, y, z) => {
+            return (Math.atan2(z, x) * 180 / Math.PI) + 180;
+        };
         let _asCardinal = (x, y, z) => {
             let _slope = _asSlope(x, y, z);
 
@@ -240,7 +243,7 @@ Zoning.prototype = {
                     if (T.getArea() > 0) {
                         let _nom = T.getNormal(new Vector3());
                         let _cardinal = _asCardinal(_nom.x, _nom.y, _nom.z);
-                        walls.push({ cardi: _cardinal, type: _getWallType(_cardinal), slope: _asSlope(_nom.x, _nom.y, _nom.z), edges:[], links:[], pos: _pos, normal: new Vector3(_nom.x, _nom.y, _nom.z) });
+                        walls.push({ cardi: _cardinal, azimuth: _asAzimuth(_nom.x, _nom.y, _nom.z), type: _getWallType(_cardinal), slope: _asSlope(_nom.x, _nom.y, _nom.z), edges:[], links:[], pos: _pos, normal: new Vector3(_nom.x, _nom.y, _nom.z) });
                     }
                     i += 9;
                 }
@@ -716,7 +719,7 @@ Zoning.prototype = {
                 let po = walls[i];
 
                 if (_isInterscect(pos, po.pos)) {
-                    return { cardi: po.cardi, slope: po.slope, pidx : i };
+                    return { cardi: po.cardi, azimuth: po.azimuth, slope: po.slope, pidx : i };
                 }
             }
             return null;
@@ -1343,7 +1346,7 @@ Zoning.prototype = {
         
                                 let edge = _asEdges(arr[k].raw);
 
-                                el.userData.walls.push({ cardi: el2.cardi, type: el2.type, slope: el2.slope, pos: arr[k].graph, splitted:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, width:arr[k].width, height:arr[k].height});
+                                el.userData.walls.push({ cardi: el2.cardi, azimuth: el2.azimuth, type: el2.type, slope: el2.slope, pos: arr[k].graph, splitted:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, width:arr[k].width, height:arr[k].height});
                             }
                         }
                     }
@@ -1430,6 +1433,7 @@ Zoning.prototype = {
                         let o = _getCardinal(el2.pos, el.userData.walls);
                         if (o) {
                             el2.cardi = o.cardi;
+                            el2.azimuth = o.azimuth;
                             el2.slope = o.slope;
                             el2.pidx = o.pidx;
                         }

@@ -46,11 +46,9 @@ namespace main.contents
             Lat_label = new Label();
             Lat_textBox = new TextBox();
             Lon_label = new Label();
-            Lon_textBox = new TextBox();
             BuildingLocation_textBox = new TextBox();
             BuildingName_textBox = new TextBox();
             ByRawClimate_textBox = new TextBox();
-            BuildingUse_comboBox = new CustomComboBox();
             BuildingUse_label = new Label();
             Climate_comboBox = new CustomComboBox();
             label6 = new Label();
@@ -133,6 +131,8 @@ namespace main.contents
             Icon_pictureBox = new PictureBox();
             label22 = new Label();
             info = new Button();
+            BuildingUse_comboBox = new CustomComboBox();
+            Lon_textBox = new TextBox();
             Panel10.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
@@ -272,7 +272,7 @@ namespace main.contents
             panel1.Controls.Add(label14);
             panel1.Location = new Point(494, 113);
             panel1.Name = "panel1";
-            panel1.Size = new Size(503, 158);
+            panel1.Size = new Size(503, 178);
             panel1.TabIndex = 98;
             panel1.Paint += panel1_Paint;
             // 
@@ -290,53 +290,40 @@ namespace main.contents
             climate_infobutton.Text = "!";
             climate_infobutton.UseVisualStyleBackColor = false;
             climate_infobutton.Click += climate_infobutton_Click;
-            //
+            // 
             // Lat_label
-            //
+            // 
             Lat_label.AutoSize = true;
             Lat_label.Font = new Font("나눔바른고딕", 9.75F);
-            Lat_label.Location = new Point(20, 142);
+            Lat_label.Location = new Point(20, 150);
             Lat_label.Name = "Lat_label";
-            Lat_label.Size = new Size(28, 15);
+            Lat_label.Size = new Size(31, 15);
             Lat_label.TabIndex = 130;
             Lat_label.Text = "위도";
-            //
+            // 
             // Lat_textBox
-            //
+            // 
             Lat_textBox.BackColor = Color.White;
             Lat_textBox.BorderStyle = BorderStyle.FixedSingle;
             Lat_textBox.Font = new Font("나눔바른고딕", 9.75F);
             Lat_textBox.ForeColor = SystemColors.ControlText;
-            Lat_textBox.Location = new Point(60, 140);
+            Lat_textBox.Location = new Point(94, 146);
             Lat_textBox.Name = "Lat_textBox";
-            Lat_textBox.Size = new Size(80, 16);
+            Lat_textBox.Size = new Size(120, 22);
             Lat_textBox.TabIndex = 131;
             Lat_textBox.TextAlign = HorizontalAlignment.Center;
             Lat_textBox.TextChanged += Lat_textBox_TextChanged;
-            //
+            // 
             // Lon_label
-            //
+            // 
             Lon_label.AutoSize = true;
             Lon_label.Font = new Font("나눔바른고딕", 9.75F);
-            Lon_label.Location = new Point(160, 142);
+            Lon_label.Location = new Point(220, 150);
             Lon_label.Name = "Lon_label";
-            Lon_label.Size = new Size(28, 15);
+            Lon_label.Size = new Size(31, 15);
             Lon_label.TabIndex = 132;
             Lon_label.Text = "경도";
-            //
-            // Lon_textBox
-            //
-            Lon_textBox.BackColor = Color.White;
-            Lon_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Lon_textBox.Font = new Font("나눔바른고딕", 9.75F);
-            Lon_textBox.ForeColor = SystemColors.ControlText;
-            Lon_textBox.Location = new Point(200, 140);
-            Lon_textBox.Name = "Lon_textBox";
-            Lon_textBox.Size = new Size(80, 16);
-            Lon_textBox.TabIndex = 133;
-            Lon_textBox.TextAlign = HorizontalAlignment.Center;
-            Lon_textBox.TextChanged += Lon_textBox_TextChanged;
-            //
+            // 
             // BuildingLocation_textBox
             // 
             BuildingLocation_textBox.BackColor = Color.White;
@@ -370,22 +357,11 @@ namespace main.contents
             ByRawClimate_textBox.Enabled = false;
             ByRawClimate_textBox.Font = new Font("Microsoft Sans Serif", 9.75F);
             ByRawClimate_textBox.ForeColor = SystemColors.ControlDark;
-            ByRawClimate_textBox.Location = new Point(335, 124);
+            ByRawClimate_textBox.Location = new Point(294, 119);
             ByRawClimate_textBox.Name = "ByRawClimate_textBox";
-            ByRawClimate_textBox.Size = new Size(116, 15);
+            ByRawClimate_textBox.Size = new Size(120, 15);
             ByRawClimate_textBox.TabIndex = 127;
             ByRawClimate_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // BuildingUse_comboBox
-            // 
-            BuildingUse_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            BuildingUse_comboBox.Font = new Font("나눔바른고딕", 9.75F);
-            BuildingUse_comboBox.FormattingEnabled = true;
-            BuildingUse_comboBox.Location = new Point(294, 19);
-            BuildingUse_comboBox.Name = "BuildingUse_comboBox";
-            BuildingUse_comboBox.Size = new Size(120, 23);
-            BuildingUse_comboBox.TabIndex = 125;
-            BuildingUse_comboBox.SelectedIndexChanged += BuildingUse_comboBox_SelectedIndexChanged;
             // 
             // BuildingUse_label
             // 
@@ -472,7 +448,7 @@ namespace main.contents
             panel2.Controls.Add(label17);
             panel2.Location = new Point(7, 113);
             panel2.Name = "panel2";
-            panel2.Size = new Size(489, 158);
+            panel2.Size = new Size(489, 178);
             panel2.TabIndex = 99;
             panel2.Paint += panel2_Paint;
             // 
@@ -1354,6 +1330,30 @@ namespace main.contents
             info.UseVisualStyleBackColor = false;
             info.Click += info_Click;
             // 
+            // BuildingUse_comboBox
+            // 
+            BuildingUse_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            BuildingUse_comboBox.Font = new Font("나눔바른고딕", 9.75F);
+            BuildingUse_comboBox.FormattingEnabled = true;
+            BuildingUse_comboBox.Location = new Point(294, 19);
+            BuildingUse_comboBox.Name = "BuildingUse_comboBox";
+            BuildingUse_comboBox.Size = new Size(120, 23);
+            BuildingUse_comboBox.TabIndex = 125;
+            BuildingUse_comboBox.SelectedIndexChanged += BuildingUse_comboBox_SelectedIndexChanged;
+            // 
+            // Lon_textBox
+            // 
+            Lon_textBox.BackColor = Color.White;
+            Lon_textBox.BorderStyle = BorderStyle.FixedSingle;
+            Lon_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            Lon_textBox.ForeColor = SystemColors.ControlText;
+            Lon_textBox.Location = new Point(294, 146);
+            Lon_textBox.Name = "Lon_textBox";
+            Lon_textBox.Size = new Size(120, 22);
+            Lon_textBox.TabIndex = 133;
+            Lon_textBox.TextAlign = HorizontalAlignment.Center;
+            Lon_textBox.TextChanged += Lon_textBox_TextChanged;
+            // 
             // General
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1431,7 +1431,6 @@ namespace main.contents
         private Label Lat_label;
         private TextBox Lat_textBox;
         private Label Lon_label;
-        private TextBox Lon_textBox;
         private TextBox BuildingName_textBox;
         private Label label30;
         private TextBox GrossArea_textBox;
@@ -1470,7 +1469,6 @@ namespace main.contents
         private Label label40;
         private CustomComboBox Climate_comboBox;
         private CustomComboBox BuildingCategory_comboBox;
-        private CustomComboBox BuildingUse_comboBox;
         private CustomComboBox Month_comboBox;
         private CustomComboBox Year_comboBox;
         private CustomComboBox ReviewMonth_comboBox;
@@ -1506,5 +1504,7 @@ namespace main.contents
         private Panel Panel10;
         private Button info;
         private Button climate_infobutton;
+        private TextBox Lon_textBox;
+        private CustomComboBox BuildingUse_comboBox;
     }
 }

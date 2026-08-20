@@ -715,6 +715,8 @@ namespace main.contents
                 AirtightMethod + "'", "프로젝트번호");
 
             Program.DB.saveProject();
+
+            CALC.Run_Climate();
         }
 
         private void reset()
