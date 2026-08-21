@@ -26,8 +26,6 @@ namespace main
         public double VA_wd;
         public string SelectHRV;
         public double[,] x_int_a = new double[2, 8760];
-        public double[] Q_DHU_mth = new double[12];
-        public double[] Q_HU_mth = new double[12];
         public double[,] X_i = new double[2, 12];
         public double rho_a = 1.204;
         public int idx;
@@ -35,6 +33,9 @@ namespace main
         public double G_int;
         public double G_abs;
         public double[] G_stor = new double[2];
+        public double[] Q_DHU_mth = new double[12];
+        public double[] Q_HU_mth = new double[12];
+        public double Q_DHU_max = 0; // 제습 첨두부하 — 시간별 최댓값 기반 계산 미구현, 자리만 마련(0 고정)
 
         public ZoneDHU(String zoneNum)
         {

@@ -1107,17 +1107,19 @@ namespace main
                         ahu1.Vmin_tot += Program.UTIL.ToDoubleOrZero(ZoneValue[0][1]);
                         ahu1.ANF_tot += Program.UTIL.ToDoubleOrZero(ZoneValue[0][2]);
                         Zone zone = Program.CALC.getZone(ahu1.SelectZone_split[n].ToString());
+                        ZoneDHU zoneDHU = Program.CALC.getZoneDHU(ahu1.SelectZone_split[n].ToString());
                         ahu1.Qh_a_tot += zone.Qb_a[0];
                         ahu1.Qc_a_tot += zone.Qb_a[1];
                         ahu1.Qmax_tot[0] += zone.Q_max[0] / 1000;
                         ahu1.Qmax_tot[1] += zone.Q_max[1] / 1000;
+                        if (zoneDHU != null) { ahu1.QDHU_max_tot += zoneDHU.Q_DHU_max; }
                         ahu1.tvmech_avg[0] += Program.UTIL.ToDoubleOrZero(ZoneValue[0][3]) * zone.Qb_a[0];
                         ahu1.tvmech_avg[1] += Program.UTIL.ToDoubleOrZero(ZoneValue[0][3]) * zone.Qb_a[1];
                         for (int mth = 0; mth < 12; mth++)
                         {
                             ahu1.Qb_mth_tot[0, mth] += zone.Qb_mth[0, mth];
                             ahu1.Qb_mth_tot[1, mth] += zone.Qb_mth[1, mth];
-                            ahu1.QDHU_mth_tot[mth] += zone.Q_DHU_tot[mth];
+                            if (zoneDHU != null) { ahu1.QDHU_mth_tot[mth] += zoneDHU.Q_DHU_mth[mth]; }
                             ahu1.dvmechmth_avg[0, mth] += zone.dwd_mth[mth] * zone.Qb_a[0];
                             ahu1.dvmechmth_avg[1, mth] += zone.dwd_mth[mth] * zone.Qb_a[1];
                         }
@@ -1139,7 +1141,6 @@ namespace main
                         }
 
                         // χi,c(월별 실내 절대습도) — ZoneDHU에서 미리 집계한 값(냉방/제습 트랙)을 존 가중평균
-                        ZoneDHU zoneDHU = Program.CALC.getZoneDHU(ahu1.SelectZone_split[n].ToString());
                         if (zoneDHU != null)
                         {
                             for (int mth = 0; mth < 12; mth++)

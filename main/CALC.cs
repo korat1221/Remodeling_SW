@@ -755,7 +755,6 @@ namespace main
             zone1.ZoneQV();
             zone1.ZoneQSop();
             zone1.ZoneQStr_CW_finalize();
-            zone1.ZoneQ_DHU();
             zone1.ZoneQI_finalize();
             zone1.Zonetao();
             zone1.ZoneGamma1();
@@ -824,7 +823,6 @@ namespace main
                          "QStr_Win,QStr_CW," +
                          "QVsink_tot,QV_inf_sink,QV_win_sink,QV_z_sink,QV_mech_sink," +
                          "QVsource_tot,QV_inf_source,QV_win_source,QV_z_source,QV_mech_source," +
-                         "Q_DHU_win,Q_DHU_mech,Q_DHU_tot," +
                          "QI_tot,QI_L," +
                          "QI_P,QI_fac,QI_Humidity," +
                          "Qsink,Qsource,gamma,a,eta," +
@@ -846,7 +844,6 @@ namespace main
                           zone1.QStr_Win[hc, mth].ToString() + "','" + zone1.QStr_CW[hc, mth].ToString() + "','" +
                           zone1.QVsink_tot[hc, mth].ToString() + "','" + zone1.QV_inf_sink[hc, mth].ToString() + "','" + zone1.QV_win_sink[hc, mth].ToString() + "','" + zone1.QV_z_sink[hc, mth].ToString() + "','" + zone1.QV_mech_sink[hc, mth].ToString() + "','" +
                           zone1.QVsink_tot[hc, mth].ToString() + "','" + zone1.QV_inf_sink[hc, mth].ToString() + "','" + zone1.QV_win_sink[hc, mth].ToString() + "','" + zone1.QV_z_sink[hc, mth].ToString() + "','" + zone1.QV_mech_sink[hc, mth].ToString() + "','" +
-                          zone1.Q_DHU_win[mth].ToString() + "','" + zone1.Q_DHU_mech[mth].ToString() + "','" + zone1.Q_DHU_tot[mth].ToString() + "','" +
                           zone1.QI_tot[hc, mth].ToString() + "','" + zone1.QI_L[hc, mth].ToString() + "','" +
                           zone1.QI_P[mth].ToString() + "','" + zone1.QI_fac[mth].ToString() + "','" + zone1.QI_Humidity[mth].ToString() + "','" +
                           zone1.Qsink[hc, mth].ToString() + "','" + zone1.Qsource[hc, mth].ToString() + "','" + zone1.gamma[hc, mth].ToString() + "','" + zone1.a[hc, mth].ToString() + "','" + zone1.eta[hc, mth].ToString() + "','" +
@@ -939,7 +936,7 @@ namespace main
                     MTH = (mth + 1).ToString() + "월";
                     Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Result", "프로젝트번호,프로젝트유형,번호," +
                              "난방_냉방,월," +
-                             "공조요구량,급기팬보조에너지,배기팬보조에너지,가습보조에너지,프리히팅보조에너지,제어보조에너지,로터모터보조에너지," +
+                             "순공조요구량,공조요구량,공조소요량,급기팬보조에너지,배기팬보조에너지,가습보조에너지,프리히팅보조에너지,제어보조에너지,로터모터보조에너지," +
                              "theta_vmech,Vvmech," +
                              "theta_SA_prh,theta_OA_du,theta_RA_du,theta_SA_hr,theta_SA_du,X_iset," +
                              "X_SA_prh,X_SA_hr," +
@@ -948,7 +945,7 @@ namespace main
                              "dtheta_prh,dtheta_du_OA,dtheta_du_RA,dtheta_hr,dtheta_du_EA,dtheta_du_SA," +
                              "flea_du,flea_ahu,fins_ahu,theta_defrost,theta_sur_nc,Hduct_OA,Hduct_RA,Hduct_EA,Hduct_SA",
                              "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + AHU1.AHUNum + "','" + 난방냉방 + "','" + MTH + "','" +
-                             AHU1.Qv_b[hc, mth] + "','" + AHU1.Ev_gen_fan_SA[mth] + "','" + AHU1.Ev_gen_fan_EA[mth] + "','" + AHU1.W_HU_aux[mth] + "','" + AHU1.Wv_aux_preh[mth] + "','" + AHU1.Wv_aux_ctrl[mth] + "','" + AHU1.Wv_aux_hr[mth] + "','" +
+                             AHU1.Qv_b[hc, mth] + "','" + AHU1.Qstar_b[hc, mth] + "','" + AHU1.Qv_f[hc, mth] + "','" + AHU1.Ev_gen_fan_SA[mth] + "','" + AHU1.Ev_gen_fan_EA[mth] + "','" + AHU1.W_HU_aux[mth] + "','" + AHU1.Wv_aux_preh[mth] + "','" + AHU1.Wv_aux_ctrl[mth] + "','" + AHU1.Wv_aux_hr[mth] + "','" +
                              AHU1.theta_vmech[hc, mth] + "','" + AHU1.Vvmech[hc, mth] + "','" +
                              AHU1.theta_SA_prh[mth] + "','" + AHU1.theta_OA_du[hc, mth] + "','" + AHU1.theta_RA_du[hc, mth] + "','" + AHU1.theta_SA_hr[hc, mth] + "','" + AHU1.theta_SA_du[hc, mth] + "','" + (hc == 0 ? AHU1.X_i_min : AHU1.X_i_max) + "','" +
                              AHU1.X_SA_prh[mth] + "','" + AHU1.X_SA_hr[hc, mth] + "','" +
@@ -972,7 +969,7 @@ namespace main
                     MTH = (mth + 1).ToString() + "월";
                     Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Result", "프로젝트번호,프로젝트유형,번호," +
                              "난방_냉방,월," +
-                             "공조요구량,급기팬보조에너지,배기팬보조에너지,가습보조에너지,프리히팅보조에너지,제어보조에너지,로터모터보조에너지," +
+                             "순공조요구량,공조요구량,공조소요량,급기팬보조에너지,배기팬보조에너지,가습보조에너지,프리히팅보조에너지,제어보조에너지,로터모터보조에너지," +
                              "theta_vmech,Vvmech," +
                              "theta_SA_prh,theta_OA_du,theta_RA_du,theta_SA_hr,theta_SA_du,X_iset," +
                              "X_SA_prh,X_SA_hr," +
@@ -981,7 +978,7 @@ namespace main
                              "dtheta_prh,dtheta_du_OA,dtheta_du_RA,dtheta_hr,dtheta_du_EA,dtheta_du_SA," +
                              "flea_du,flea_ahu,fins_ahu,theta_defrost,theta_sur_nc,Hduct_OA,Hduct_RA,Hduct_EA,Hduct_SA",
                              "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + HRV1.AHUNum + "','" + 난방냉방 + "','" + MTH + "','" +
-                             HRV1.Qv_b[hc, mth] + "','" + HRV1.Ev_gen_fan_SA[mth] + "','" + HRV1.Ev_gen_fan_EA[mth] + "','" + HRV1.W_HU_aux[mth] + "','" + HRV1.Wv_aux_preh[mth] + "','" + HRV1.Wv_aux_ctrl[mth] + "','" + HRV1.Wv_aux_hr[mth] + "','" +
+                             HRV1.Qv_b[hc, mth] + "','" + HRV1.Qstar_b[hc, mth] + "','" + HRV1.Qv_f[hc, mth] + "','" + HRV1.Ev_gen_fan_SA[mth] + "','" + HRV1.Ev_gen_fan_EA[mth] + "','" + HRV1.W_HU_aux[mth] + "','" + HRV1.Wv_aux_preh[mth] + "','" + HRV1.Wv_aux_ctrl[mth] + "','" + HRV1.Wv_aux_hr[mth] + "','" +
                              HRV1.theta_vmech[hc, mth] + "','" + HRV1.Vvmech[hc, mth] + "','" +
                              HRV1.theta_SA_prh[mth] + "','" + HRV1.theta_OA_du[hc, mth] + "','" + HRV1.theta_RA_du[hc, mth] + "','" + HRV1.theta_SA_hr[hc, mth] + "','" + HRV1.theta_SA_du[hc, mth] + "','" + (hc == 0 ? HRV1.X_i_min : HRV1.X_i_max) + "','" +
                              HRV1.X_SA_prh[mth] + "','" + HRV1.X_SA_hr[hc, mth] + "','" +

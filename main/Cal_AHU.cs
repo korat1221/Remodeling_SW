@@ -44,6 +44,7 @@ namespace main
         public double[,] dvmechmth_avg = new double[2, 12];
         public double[,] Qb_mth_tot = new double[2, 12];
         public double[] QDHU_mth_tot = new double[12]; //존 제습에너지요구량 합산 (기술서 3.3.1 VAV 냉방풍량식 분자용)
+        public double QDHU_max_tot; //존 제습 첨두부하 합산 (기술서 3.2.1 CAV 냉방풍량식 분자용)
         public double[] theta_i_set = new double[2], Qmax_tot = new double[2];
         public double X_i_max, X_i_min;
         public double[] X_i_set = new double[2];
@@ -68,6 +69,7 @@ namespace main
         public double[,] Qv_b = new double[2, 12];
         public double[,] Q_ce = new double[2, 12]; // 8.1/8.2 공조 공급 열손실
         public double[,] Qstar_b = new double[2, 12]; // 8.1/8.2 공조 에너지요구량 (Qh*,b/Qc*,b)
+        public double[,] Qv_f = new double[2, 12]; // 공조소요량 = Qstar_b + W_tot — 레포트 저장 전용, 계산엔 안 쓰임
         public double[] X_SA_prh = new double[12];
         public double[,] X_SA_hr = new double[2, 12];
         public double[] X_vmech = new double[12]; // χv,mech — 3.2.3/3.3.2 급기 절대습도
@@ -136,58 +138,59 @@ namespace main
                 }
             }
 
-          for (int n = 0; n < SelectZone_split.Count; n++)
+            for (int n = 0; n < SelectZone_split.Count; n++)
+            {
+                string[][] ZoneValue = Program.DB.getValue(ProjNum, "ZoneGeneral_form", "용도프로필,이용일환기량,순바닥면적,공조시간,냉방습도,난방습도", "존번호='" + SelectZone_split[n] + "'");
+                if (ZoneValue.Length > 0)
                 {
-                    string[][] ZoneValue = Program.DB.getValue(ProjNum, "ZoneGeneral_form", "용도프로필,이용일환기량,순바닥면적,공조시간,냉방습도,난방습도", "존번호='" + SelectZone_split[n] + "'");
-                    if (ZoneValue.Length > 0)
-                    {
-                        Vmin_tot += Program.UTIL.ToDoubleOrZero(ZoneValue[0][1]);
-                        ANF_tot += Program.UTIL.ToDoubleOrZero(ZoneValue[0][2]);
-                        Zone zone = Program.CALC.getZone(SelectZone_split[n].ToString());
-                        Qh_a_tot += zone.Qb_a[0];
-                        Qc_a_tot += zone.Qb_a[1];
-                        Qmax_tot[0] += zone.Q_max[0] /1000;
-                        Qmax_tot[1] += zone.Q_max[1] /1000;
-                        tvmech_avg[0] += Program.UTIL.ToDoubleOrZero(ZoneValue[0][3]) * zone.Qb_a[0];
-                        tvmech_avg[1] += Program.UTIL.ToDoubleOrZero(ZoneValue[0][3]) * zone.Qb_a[1];
-                        for (int mth = 0; mth < 12; mth++)
+                    Vmin_tot += Program.UTIL.ToDoubleOrZero(ZoneValue[0][1]);
+                    ANF_tot += Program.UTIL.ToDoubleOrZero(ZoneValue[0][2]);
+                    Zone zone = Program.CALC.getZone(SelectZone_split[n].ToString());
+                    ZoneDHU zoneDHU = Program.CALC.getZoneDHU(SelectZone_split[n].ToString());
+                    Qh_a_tot += zone.Qb_a[0];
+                    Qc_a_tot += zone.Qb_a[1];
+                    Qmax_tot[0] += zone.Q_max[0] / 1000;
+                    Qmax_tot[1] += zone.Q_max[1] / 1000;
+                    if (zoneDHU != null) { QDHU_max_tot += zoneDHU.Q_DHU_max; }
+                    tvmech_avg[0] += Program.UTIL.ToDoubleOrZero(ZoneValue[0][3]) * zone.Qb_a[0];
+                    tvmech_avg[1] += Program.UTIL.ToDoubleOrZero(ZoneValue[0][3]) * zone.Qb_a[1];
+                    for (int mth = 0; mth < 12; mth++)
                     {
                         Qb_mth_tot[0, mth] += zone.Qb_mth[0, mth];
                         Qb_mth_tot[1, mth] += zone.Qb_mth[1, mth];
-                        QDHU_mth_tot[mth] += zone.Q_DHU_tot[mth];
+                        if (zoneDHU != null) { QDHU_mth_tot[mth] += zoneDHU.Q_DHU_mth[mth]; }
                         dvmechmth_avg[0, mth] += zone.dwd_mth[mth] * zone.Qb_a[0];
                         dvmechmth_avg[1, mth] += zone.dwd_mth[mth] * zone.Qb_a[1];
                     }
-                        string[][] Usage = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "난방설정온도,냉방설정온도,공조운전시부재율,공조냉방부분운전계수", "용도명='" + ZoneValue[0][0] + "'");
-                        if (Usage.Length > 0)
-                        {
-                            theta_i_set[0] += Program.UTIL.ToDoubleOrZero(Usage[0][0]) * zone.Qb_a[0];
-                            theta_i_set[1] += Program.UTIL.ToDoubleOrZero(Usage[0][1]) * zone.Qb_a[1];
-                        }
-                        string[][] HumidC = Program.DB.getValue(DB.type.BaseDB_HCneed, "습도설정", "냉방설정습도", "등급='" + ZoneValue[0][4] + "'");
-                        if (HumidC.Length > 0)
-                        {
-                            X_i_max += Program.UTIL.ToDoubleOrZero(HumidC[0][0]) / 1000 * zone.Qb_a[1];
-                        }
-                        string[][] HumidH = Program.DB.getValue(DB.type.BaseDB_HCneed, "습도설정", "난방설정습도", "등급='" + ZoneValue[0][5] + "'");
-                        if (HumidH.Length > 0)
-                        {
-                            X_i_min += Program.UTIL.ToDoubleOrZero(HumidH[0][0]) / 1000 * zone.Qb_a[0];
-                        }
+                    string[][] Usage = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "난방설정온도,냉방설정온도,공조운전시부재율,공조냉방부분운전계수", "용도명='" + ZoneValue[0][0] + "'");
+                    if (Usage.Length > 0)
+                    {
+                        theta_i_set[0] += Program.UTIL.ToDoubleOrZero(Usage[0][0]) * zone.Qb_a[0];
+                        theta_i_set[1] += Program.UTIL.ToDoubleOrZero(Usage[0][1]) * zone.Qb_a[1];
+                    }
+                    string[][] HumidC = Program.DB.getValue(DB.type.BaseDB_HCneed, "습도설정", "냉방설정습도", "등급='" + ZoneValue[0][4] + "'");
+                    if (HumidC.Length > 0)
+                    {
+                        X_i_max += Program.UTIL.ToDoubleOrZero(HumidC[0][0]) / 1000 * zone.Qb_a[1];
+                    }
+                    string[][] HumidH = Program.DB.getValue(DB.type.BaseDB_HCneed, "습도설정", "난방설정습도", "등급='" + ZoneValue[0][5] + "'");
+                    if (HumidH.Length > 0)
+                    {
+                        X_i_min += Program.UTIL.ToDoubleOrZero(HumidH[0][0]) / 1000 * zone.Qb_a[0];
+                    }
 
-                        // χi,c(월별 실내 절대습도) — ZoneDHU에서 미리 집계한 값(냉방/제습 트랙)을 존 가중평균
-                        ZoneDHU zoneDHU = Program.CALC.getZoneDHU(SelectZone_split[n].ToString());
-                        if (zoneDHU != null)
+                    // χi,c(월별 실내 절대습도) — ZoneDHU에서 미리 집계한 값(냉방/제습 트랙)을 존 가중평균
+                    if (zoneDHU != null)
+                    {
+                        for (int mth = 0; mth < 12; mth++)
                         {
-                            for (int mth = 0; mth < 12; mth++)
-                            {
-                                X_i[0,mth] += zoneDHU.X_i[0, mth] * zone.Qb_a[0];
-                                X_i[1,mth] += zoneDHU.X_i[1, mth] * zone.Qb_a[1];
+                            X_i[0, mth] += zoneDHU.X_i[0, mth] * zone.Qb_a[0];
+                            X_i[1, mth] += zoneDHU.X_i[1, mth] * zone.Qb_a[1];
 
-                            }
                         }
                     }
                 }
+            }
                 theta_i_set[0] = Qh_a_tot > 0 ? theta_i_set[0] / Qh_a_tot : 0;
                 theta_i_set[1] = Qc_a_tot > 0 ? theta_i_set[1] / Qc_a_tot : 0;
                 tvmech_avg[0] = Qh_a_tot > 0 ? tvmech_avg[0] / Qh_a_tot : 0;
@@ -202,7 +205,7 @@ namespace main
                     dvmechmth_avg[1, mth] = Qc_a_tot > 0 ? dvmechmth_avg[1, mth] / Qc_a_tot : 0;
                     X_i[0,mth] = Qh_a_tot > 0 ? X_i[0,mth] / Qh_a_tot : 0;
                     X_i[1, mth] = Qc_a_tot > 0 ? X_i[1, mth] / Qc_a_tot : 0;
-            }
+                }
 
 
         }
@@ -410,7 +413,7 @@ namespace main
             {
                 // ② 난방 순급기풍량(CAV), ⑫ 냉방 순급기풍량(CAV)
                 double vh_mech_cav = Math.Max(Vmin_tot, Qmax_tot[0]  / (ca * rhoA * (theta_h_SA_ref - theta_i_set[0])));
-                double vc_mech_cav = Math.Max(Vmin_tot, Qmax_tot[1]  / (ca * rhoA * (theta_i_set[1] - theta_c_SA_ref) + rhoA * rw * (X_i_set[1] - X_c_SA_ref)));
+                double vc_mech_cav = Math.Max(Vmin_tot, (Qmax_tot[1] + QDHU_max_tot) / (ca * rhoA * (theta_i_set[1] - theta_c_SA_ref) + rhoA * rw * (X_i_set[1] - X_c_SA_ref)));
                 for (int mth = 0; mth < 12; mth++)
                 {
                     // ① 난방 급기풍량, ⑪ 냉방 급기풍량 — 누기계수 반영
@@ -832,6 +835,8 @@ namespace main
             for (int mth = 0; mth < 12; mth++)
             {
                 W_tot[mth] = Ev_gen_fan_SA[mth] + Ev_gen_fan_EA[mth] + Wv_aux_preh[mth] + W_HU_aux[mth] + Wv_aux_ctrl[mth] + Wv_aux_hr[mth];
+                Qv_f[0, mth] = Qstar_b[0, mth] + W_tot[mth];
+                Qv_f[1, mth] = Qstar_b[1, mth] + W_tot[mth];
             }
         }
         public void Cal_CoolTube()
@@ -914,5 +919,5 @@ namespace main
             }
 
         }
-}
+    }
 }

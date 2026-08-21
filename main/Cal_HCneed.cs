@@ -71,7 +71,7 @@ namespace main
         //
         public double[,] Qsink = new double[2, 12], Qsource = new double[2, 12], gamma = new double[2, 12], a = new double[2, 12], eta = new double[2, 12];
 
-        public double[] Q_DHU_win = new double[12]; public double[] Q_DHU_mech = new double[12]; public double[] Q_DHU_tot = new double[12]; public double Q_DHU_max;
+       
 
         public double[,] Qb_mth = new double[2, 12]; public double[] Qb_a = new double[2];
         public double[] b_ztu = new double[2];
@@ -2012,52 +2012,6 @@ namespace main
         }
 
 
-        public void ZoneQ_DHU()
-        {
-            double[,] X_t = new double[24, 12]; //월별 시간별 절대습도
-            double[] dX_mth = new double[12]; //월별 실내외 습도차 누적
-
-            double[,] X_mech = new double[24, 12]; //기계환기 후 급기 습도
-            double[] dX_mech = new double[12]; //기계환기 급기와 실내 습도 차이 누적
-
-
-
-            for (int mth = 1; mth < 13; mth++)
-            {
-                for (int h = 1; h < 25; h++)
-                {
-                    string[][] T_Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_시간별_외기온도", "온도", "지역명 ='" + Location[0][0] + "' And 시간 = '" + h + "' And 기간 ='" + mth + "월'");
-                    string[][] X_Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_시간별_상대습도", "습도", "지역명 ='" + Location[0][0] + "' And 시간 = '" + h + "' And 기간 ='" + mth + "월'");
-                    if (T_Value.Length > 0 && X_Value.Length > 0)
-                    {
-                        X_t[h - 1, mth - 1] = 611.2 * Math.Exp(17.62 * Program.UTIL.ToDoubleOrZero(T_Value[0][0]) / (243.12 + Program.UTIL.ToDoubleOrZero(T_Value[0][0]))) / 461.51 / (273.15 + Program.UTIL.ToDoubleOrZero(T_Value[0][0])) / 1.2 * Program.UTIL.ToDoubleOrZero(X_Value[0][0]);
-                        X_mech[h - 1, mth - 1] = X_t[h - 1, mth - 1] + eta_χV_mech[1] * (xi_c_set - X_t[h - 1, mth - 1]);
-                    }
-                }
-            }
-            for (int mth = 1; mth < 13; mth++)
-            {
-                for (int h = 1; h < 25; h++)
-                {
-                    if (X_t[h - 1, mth - 1] >= xi_c_set)
-                    {
-                        dX_mth[mth - 1] += (X_t[h - 1, mth - 1] - xi_c_set);
-                    }
-                    if (X_mech[h - 1, mth - 1] >= xi_c_set)
-                    {
-                        dX_mech[mth - 1] += (X_mech[h - 1, mth - 1] - xi_c_set);
-                    }
-                }
-            }
-
-            for (int mth = 0; mth < 12; mth++)
-            {
-                Q_DHU_win[mth] = dX_mth[mth] * (ninf + nwin) * (zoneArea * zoneHeight) * 2501 * 1.2 / 3600 * 1000 * dmth[mth] / 1000;
-                Q_DHU_mech[mth] = dX_mech[mth] * nmech * (zoneArea * zoneHeight) * 2501 * 1.2 / 3600 * 1000 * dmth[mth] / 1000;
-                Q_DHU_tot[mth] = Q_DHU_win[mth] + Q_DHU_mech[mth];
-            }
-            Q_DHU_max = (X_e_max - xi_c_set) * (0.1 + n50 * e) * zoneArea * zoneHeight * 1204 * 0.68;
-        }
 
         public void ZoneQI_L() //조명내부발열 계산
         {
@@ -2707,7 +2661,7 @@ namespace main
             Qsource_max = QTsource_tot_Cmax + QVsource_tot_Cmax + QSopsource_tot_Cmax + QStr_tot_Cmax + (qI_p * zoneArea + qI_fac * zoneArea) / t_c_op_d + Peope_Num * H_summer * twd_d * 2260 / 3600 / twd_d;
             Qsink_max = QTsink_tot_Cmax + QVsink_tot_Cmax + QSopsink_tot_Cmax;
 
-            Q_max[1] = 0.8 * (Qsource_max - Qsink_max) * (1 + 0.3 * Math.Exp(-tao_max / 120)) - Cwirk_A * zoneArea / 60 * (dtheta_i_NA - 2) + Cwirk_A * zoneArea / 40 * (12 / t_c_op_d - 1) + Q_DHU_max;
+            Q_max[1] = 0.8 * (Qsource_max - Qsink_max) * (1 + 0.3 * Math.Exp(-tao_max / 120)) - Cwirk_A * zoneArea / 60 * (dtheta_i_NA - 2) + Cwirk_A * zoneArea / 40 * (12 / t_c_op_d - 1);
 
             double[,] beta_h = new double[2, 12]; double[,] beta_c = new double[2, 12]; double[,] t_mth = new double[2, 12]; double[,] th_mth = new double[2, 12]; double[,] tc_mth = new double[2, 12]; //wewd,mth
 
