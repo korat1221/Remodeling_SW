@@ -55,14 +55,13 @@ namespace main
                         
             지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
             건물유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "건물용도", "");
-            외기온도 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_온도습도", "기간,온도", "지역명 ='" + 지역[0][0] + "'");
-            int i = -1;
+            외기온도 = Program.DB.getValue(DB.type.BaseDB_RESystem, "시간별기후데이터", "AVG(건구온도)", "지역 ='" + 지역[0][0] + "' GROUP BY 월 ORDER BY 월");
             if (외기온도.Length > 0)
             {
-                while (++i < 12)
+                for (int mth = 0; mth < 12; mth++)
                 {
-                    theta_e[i] = Program.UTIL.ToDoubleOrZero(외기온도[i][1]);
-                    theta_u[i] = theta_ih_avg[i] - 0.8 * (theta_ih_avg[i] - theta_e[i]);
+                    theta_e[mth] = Program.UTIL.ToDoubleOrZero(외기온도[mth][0]);
+                    theta_u[mth] = theta_ih_avg[mth] - 0.8 * (theta_ih_avg[mth] - theta_e[mth]);
                 }
             }
         }

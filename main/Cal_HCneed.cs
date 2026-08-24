@@ -162,14 +162,12 @@ namespace main
 
             //외기온도 데이터 불러오기 
             Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
-            string[][] OTemp = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_온도습도", "기간,온도", "지역명 ='" + Location[0][0] + "'");
-            int m = -1;
+            string[][] OTemp = Program.DB.getValue(DB.type.BaseDB_RESystem, "시간별기후데이터", "AVG(건구온도)", "지역 ='" + Location[0][0] + "' GROUP BY 월 ORDER BY 월");
             if (OTemp.Length > 0)
             {
-
-                while (++m < 12)
+                for (int mth = 0; mth < 12; mth++)
                 {
-                    theta_e[m] = Program.UTIL.ToDoubleOrZero(OTemp[m][1]); //실외온도(냉난방 공통)
+                    theta_e[mth] = Program.UTIL.ToDoubleOrZero(OTemp[mth][0]); //실외온도(냉난방 공통)
                 }
             }
             //부하 관련 데이터 불러오기 

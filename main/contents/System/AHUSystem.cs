@@ -714,10 +714,10 @@ namespace main.contents
             double Volume = 0, theta_defrost = 0;
             if (Location.Length > 0)
             {
-                for (int mth = 1; mth < 13; mth++)
+                string[][] 기후 = Program.DB.getValue(DB.type.BaseDB_RESystem, "시간별기후데이터", "MIN(건구온도)", "지역 ='" + Location[0][0] + "' GROUP BY 월 ORDER BY 월");
+                for (int mth = 0; mth < 12; mth++)
                 {
-                    string[][] 기후 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_온도습도", "최소온도", "지역명 ='" + Location[0][0] + "'And 기간 = '" + mth + "월'");
-                    theta_e_min[mth - 1] = Program.UTIL.ToDoubleOrZero(기후[0][0].ToString());
+                    theta_e_min[mth] = Program.UTIL.ToDoubleOrZero(기후[mth][0].ToString());
                 }
             }
 

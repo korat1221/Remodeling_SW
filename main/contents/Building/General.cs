@@ -412,6 +412,17 @@ namespace main.contents
                     Climate = Value[0][0];
                     BylawClimate = Value[0][1];
                     ByRawClimate_textBox.Text = BylawClimate;
+
+                    // 위도/경도는 지역 기본값을 채워주되, 사용자가 이미 값을 입력했으면 그대로 둠(사용자 입력값 우선)
+                    if (Lat_textBox.Text == "" || Lon_textBox.Text == "")
+                    {
+                        string[][] LatLon = Program.DB.getValue(DB.type.BaseDB_RESystem, "시간별기후데이터", "위도,경도", "지역 = '" + Climate + "' LIMIT 1");
+                        if (LatLon.Length > 0)
+                        {
+                            if (Lat_textBox.Text == "") Lat_textBox.Text = Program.UTIL.ToDoubleOrZero(LatLon[0][0]).ToString("0.00");
+                            if (Lon_textBox.Text == "") Lon_textBox.Text = Program.UTIL.ToDoubleOrZero(LatLon[0][1]).ToString("0.00");
+                        }
+                    }
                 }
             }
         }

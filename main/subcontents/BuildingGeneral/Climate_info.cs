@@ -112,12 +112,11 @@ namespace main.subcontents.BuildingGeneral
             double[] westItot = dirItot[3];
             double[] northItot = dirItot[4];
 
+            string[][] Value = Program.DB.getValue(DB.type.BaseDB_RESystem, "시간별기후데이터", "AVG(건구온도),AVG(상대습도)", "지역 = '" + local + "' GROUP BY 월 ORDER BY 월");
             for (int i = 0; i < 12; i++)
             {
-                string mth = (i + 1).ToString() + "월";
-                string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_온도습도", "온도,상대습도", "지역명 = '" + local + "' And 기간 = '" + mth + "'");
-                temp[i] = Program.UTIL.ToDoubleOrZero(Value[0][0].ToString());
-                humi[i] = Program.UTIL.ToDoubleOrZero(Value[0][1].ToString());
+                temp[i] = Program.UTIL.ToDoubleOrZero(Value[i][0].ToString());
+                humi[i] = Program.UTIL.ToDoubleOrZero(Value[i][1].ToString()) / 100; // 시간별기후데이터는 %, 기존 소수 규칙 유지
 
                 double Pa = 611.2 * Math.Pow(Math.E, 17.62 * temp[i] / (243.12 + temp[i])); //현재온도 포화수증기압
                 Pa = Pa * humi[i];

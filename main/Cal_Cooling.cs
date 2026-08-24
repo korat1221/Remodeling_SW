@@ -966,7 +966,7 @@ namespace main
         {
             double[] 외기 = new double[12];
             string[][] 지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
-            string[][] OutTemp = Program.DB.getValue(DB.type.BaseDB_HCneed, " 기후데이터_온도습도", "온도", "지역명 = '" + 지역[0][0] + "'"); //기후데이터 저장
+            string[][] OutTemp = Program.DB.getValue(DB.type.BaseDB_RESystem, "시간별기후데이터", "AVG(건구온도)", "지역 = '" + 지역[0][0] + "' GROUP BY 월 ORDER BY 월");
             string[][] check = Program.DB.getValue(DB.type.BaseDB_Cooling, "냉동기설치위치", "상승온도차", "위치 = '" + CSource + "'");
             for (int i = 0; i < 12; i++)
             {
@@ -1279,7 +1279,7 @@ namespace main
         {
             double[] 외기 = new double[12];
             string[][] 지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
-            string[][] OutTemp = Program.DB.getValue(DB.type.BaseDB_HCneed, " 기후데이터_온도습도", "온도", "지역명 = '" + 지역[0][0] + "'"); //기후데이터 저장
+            string[][] OutTemp = Program.DB.getValue(DB.type.BaseDB_RESystem, "시간별기후데이터", "AVG(건구온도)", "지역 = '" + 지역[0][0] + "' GROUP BY 월 ORDER BY 월");
             string[][] check = Program.DB.getValue(DB.type.BaseDB_Cooling, "냉동기설치위치", "상승온도차", "위치 = '" + CSource + "'");
             for (int i = 0; i < 12; i++)
             {
@@ -1343,13 +1343,13 @@ namespace main
             //double[] 외기온도 = new double[12];
             double[] 수직지열온도 = { 4.4, 3.9, 6.5, 10.6, 15.1, 18.7, 20.8, 21, 19.2, 15.6, 10.6, 5 };
             string[][] 지역 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
-            string[][] OutdoorClimate = Program.DB.getValue(DB.type.BaseDB_HCneed, " 기후데이터_온도습도", "온도,상대습도,기간", "지역명 = '" + 지역[0][0] + "'"); //기후데이터 저장
+            string[][] OutdoorClimate = Program.DB.getValue(DB.type.BaseDB_RESystem, "시간별기후데이터", "AVG(건구온도),AVG(상대습도)", "지역 = '" + 지역[0][0] + "' GROUP BY 월 ORDER BY 월");
             for (int i = 0; i < OutdoorTemperature.Length; i++)
             {
                 theta_e[i] = Program.UTIL.ToDoubleOrZero(OutdoorClimate[i][0]);
-                Humidity[i] = Program.UTIL.ToDoubleOrZero(OutdoorClimate[i][1]);
+                Humidity[i] = Program.UTIL.ToDoubleOrZero(OutdoorClimate[i][1]) / 100; // 시간별기후데이터는 %, 기존 소수 규칙 유지
                 WetTemperature[i] = -5.809 + 0.058 * Ref * 100 + 0.697 * theta_e[i] + 0.003 * Ref * theta_e[i] * 100;
-                mth[i] = OutdoorClimate[i][2];
+                mth[i] = (i + 1) + "월";
             }
             string[][] v = Program.DB.getValue(DB.type.BaseDB_Cooling, "냉동기설치위치", "상승온도차", "위치 = '" + CSource + "'");
             if (v.Length > 0)
