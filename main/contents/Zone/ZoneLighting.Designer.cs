@@ -65,11 +65,11 @@ namespace main.contents
             Direction_label = new Label();
             Aca_label = new Label();
             panel3 = new Panel();
-            subtype = new Label();
+            Subtype = new Label();
             areaunit1 = new Label();
-            roofButton = new RadioButton();
+            RoofButton = new RadioButton();
             Acam2_label = new Label();
-            facadeButton = new RadioButton();
+            FacadeButton = new RadioButton();
             direction_textBox = new TextBox();
             NaturalDB_button = new Button();
             Aca_textBox = new TextBox();
@@ -592,11 +592,11 @@ namespace main.contents
             // panel3
             // 
             panel3.BackColor = Color.White;
-            panel3.Controls.Add(subtype);
+            panel3.Controls.Add(Subtype);
             panel3.Controls.Add(areaunit1);
-            panel3.Controls.Add(roofButton);
+            panel3.Controls.Add(RoofButton);
             panel3.Controls.Add(Acam2_label);
-            panel3.Controls.Add(facadeButton);
+            panel3.Controls.Add(FacadeButton);
             panel3.Controls.Add(direction_textBox);
             panel3.Controls.Add(Direction_label);
             panel3.Controls.Add(NaturalDB_button);
@@ -612,14 +612,14 @@ namespace main.contents
             // 
             // subtype
             // 
-            subtype.AutoSize = true;
-            subtype.Font = new Font("나눔바른고딕", 9.75F);
-            subtype.ForeColor = SystemColors.ButtonShadow;
-            subtype.Location = new Point(353, 39);
-            subtype.Name = "subtype";
-            subtype.Size = new Size(70, 15);
-            subtype.TabIndex = 220;
-            subtype.Text = "일반 파사드";
+            Subtype.AutoSize = true;
+            Subtype.Font = new Font("나눔바른고딕", 9.75F);
+            Subtype.ForeColor = SystemColors.ButtonShadow;
+            Subtype.Location = new Point(353, 39);
+            Subtype.Name = "subtype";
+            Subtype.Size = new Size(70, 15);
+            Subtype.TabIndex = 220;
+            Subtype.Text = "일반 파사드";
             // 
             // areaunit1
             // 
@@ -634,14 +634,14 @@ namespace main.contents
             // 
             // roofButton
             // 
-            roofButton.AutoSize = true;
-            roofButton.Enabled = false;
-            roofButton.Location = new Point(275, 36);
-            roofButton.Name = "roofButton";
-            roofButton.Size = new Size(49, 19);
-            roofButton.TabIndex = 127;
-            roofButton.Text = "천창";
-            roofButton.UseVisualStyleBackColor = true;
+            RoofButton.AutoSize = true;
+            RoofButton.Enabled = false;
+            RoofButton.Location = new Point(275, 36);
+            RoofButton.Name = "roofButton";
+            RoofButton.Size = new Size(49, 19);
+            RoofButton.TabIndex = 127;
+            RoofButton.Text = "천창";
+            RoofButton.UseVisualStyleBackColor = true;
             // 
             // Acam2_label
             // 
@@ -655,14 +655,14 @@ namespace main.contents
             // 
             // facadeButton
             // 
-            facadeButton.AutoSize = true;
-            facadeButton.Enabled = false;
-            facadeButton.Location = new Point(204, 36);
-            facadeButton.Name = "facadeButton";
-            facadeButton.Size = new Size(61, 19);
-            facadeButton.TabIndex = 126;
-            facadeButton.Text = "파사드";
-            facadeButton.UseVisualStyleBackColor = true;
+            FacadeButton.AutoSize = true;
+            FacadeButton.Enabled = false;
+            FacadeButton.Location = new Point(204, 36);
+            FacadeButton.Name = "facadeButton";
+            FacadeButton.Size = new Size(61, 19);
+            FacadeButton.TabIndex = 126;
+            FacadeButton.Text = "파사드";
+            FacadeButton.UseVisualStyleBackColor = true;
             // 
             // direction_textBox
             // 
@@ -1842,8 +1842,8 @@ namespace main.contents
         private TextBox Window_Tao_textBox;
         private Label Window_glass_label;
         private TextBox Window_glass_textBox;
-        private RadioButton facadeButton;
-        private RadioButton roofButton;
+        private RadioButton FacadeButton;
+        private RadioButton RoofButton;
         private Label label4;
         private TabPage 조명정보;
         private TextBox L8_textBox;
@@ -1879,7 +1879,7 @@ namespace main.contents
         private Label label18;
         private Label label19;
         private Label label20;
-        private Label subtype;
+        private Label Subtype;
         private PictureBox Main_pictureBox3;
         private PictureBox Main_pictureBox2;
         private Button infoLighting;
