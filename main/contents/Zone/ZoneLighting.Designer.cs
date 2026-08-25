@@ -321,7 +321,7 @@ namespace main.contents
             lightHeight_textBox.Size = new Size(120, 22);
             lightHeight_textBox.TabIndex = 217;
             lightHeight_textBox.TextAlign = HorizontalAlignment.Center;
-            lightHeight_textBox.Leave += lightHeight_textBox_Leave;
+            lightHeight_textBox.TextChanged += lightHeight_textBox_TextChanged;
             // 
             // label16
             // 

@@ -4,6 +4,7 @@ using main.subcontents.ZoneLighting;
 using System;
 using System.Collections.Generic;
 using System.Security.Policy;
+using System.Windows.Forms;
 
 namespace main.contents
 {
@@ -218,19 +219,16 @@ namespace main.contents
                 }
             }
         }
-        private void lightHeight_textBox_Leave(object sender, EventArgs e)
+        private void lightHeight_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (double.TryParse(lightHeight_textBox.Text, out double result))
+            if (String.IsNullOrEmpty(lightHeight_textBox.Text) == false)
             {
                 LightInstallHeight = Program.UTIL.ToDoubleOrZero(lightHeight_textBox.Text);
                 LightMethod_comboBox_SelectedIndexChanged(sender, e);
                 Calc_AD();
             }
-            else
-            {
-                MessageBox.Show("유효한 숫자를 입력하세요.");
-            }
         }
+      
 
         private void ControlType_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -367,11 +365,6 @@ namespace main.contents
         {
             try
             {
-                if (double.TryParse(lightHeight_textBox.Text, out double result))
-                {
-                    LightInstallHeight = result;
-                }
-
                 hm = LightInstallHeight - hTa; //조명과 작업면 사이의 거리
                 K = Lr * Wr / (hm * (Lr + Wr));
                 double[] data = { 0.6, 0.8, 1, 1.25, 1.5, 2, 2.5, 3, 4, 5 };
@@ -1099,7 +1092,7 @@ namespace main.contents
 
         private void Save(bool isManualSave = false) //공간계수 대신 조명설치 높이값을 저장함
         {
-            Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,너비,길이,순바닥면적,상인방높이,작업면높이,공간계수,기준조도," +
+            Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,너비,길이,순바닥면적,상인방높이,작업면높이,조명설치높이,기준조도," +
                 "조명방식,제어방식,디밍유형,조명밀도,조명예상전력," +
                 "대기전력,재실계수,조도제어계수," +
                 "조명번호, 등기구명칭, 램프유형, 컨버터_안정기, 광효율, 조명계수,조명개수," +
@@ -1201,7 +1194,6 @@ namespace main.contents
 
         private void reset()
         {
-            Num_textBox.Text = "";
             ZoneName_textBox.Text = "";
             FL_textBox.Text = "";
             Pj_textbox.Text = "";
@@ -1258,18 +1250,13 @@ namespace main.contents
             reset();
             side_active();
 
-
             Load_OtherFormData();
 
 
-            Num_textBox.Text = ID;
-
             String[][] Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,조명방식,제어방식,디밍유형,조명밀도,대기전력,재실계수,조도제어계수,광효율",
             "번호 = '" + ZoneNum + "'");
-            if (Load.Length > 0)
+            if (ZoneNum != null && Load.Length > 0)
             {
-                Num_textBox.Text = Load[0][0];
-
                 Method = Load[0][1];
                 LightMethod_comboBox.SelectedItem = Method;
 
@@ -1384,7 +1371,7 @@ namespace main.contents
 
             }
 
-            Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "조명번호, 등기구명칭, 램프유형, 컨버터_안정기, 광속, 소비전력, 조명계수, 표준광속, 표준소비전력,사용자광속, 사용자소비전력,조명예상전력,공간계수,광효율",
+            Load = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "조명번호, 등기구명칭, 램프유형, 컨버터_안정기, 광속, 소비전력, 조명계수, 표준광속, 표준소비전력,사용자광속, 사용자소비전력,조명예상전력,조명설치높이,광효율",
             "번호 = '" + ZoneNum + "'");
             if (Load.Length > 0)
             {
@@ -1416,20 +1403,16 @@ namespace main.contents
                 }
 
                 Pn = Program.UTIL.ToDoubleOrZero(Load[0][11]);
-                hm = Program.UTIL.ToDoubleOrZero(Load[0][12]); //조명설치높이 반영함-공간계수
-
-                if (hm > 0)
+                LightInstallHeight = Program.UTIL.ToDoubleOrZero(Load[0][12]); //조명설치높이 반영함-공간계수
+                lightHeight_textBox.Text = LightInstallHeight.ToString();
+                string[][] Img = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_램프분류이미지", "이미지", "조명분류 = '" + Method + "'");
+                if (Img.Length > 0)
                 {
-                    lightHeight_textBox.Text = hm.ToString();
-                    string[][] Img = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_램프분류이미지", "이미지", "조명분류 = '" + Method + "'");
-                    if (Img.Length > 0)
-                    {
-                        Ltype_pictureBox.Size = new System.Drawing.Size(60, 120);
-                        Ltype_pictureBox.Location = new Point(250, 13);
-                        Ltype_pictureBox.Load(Program.gPath + Img[0][0]);
-                        Ltype_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    Ltype_pictureBox.Size = new System.Drawing.Size(60, 120);
+                    Ltype_pictureBox.Location = new Point(250, 13);
+                    Ltype_pictureBox.Load(Program.gPath + Img[0][0]);
+                    Ltype_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
 
-                    }
                 }
             }
 
@@ -1461,81 +1444,83 @@ namespace main.contents
 
         private void Load_OtherFormData()
         {
-            //존이름 불러오기
-            String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,천장고,용도프로필,순바닥면적", "존번호 = '" + ZoneNum + "'");
-            if (Value.Length > 0)
+            try
             {
-                ZoneName = Value[0][0];
-                ZoneName_textBox.Text = ZoneName;
-                if (Value[0][1] != "")
+                String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,천장고,용도프로필,순바닥면적", "존번호 = '" + ZoneNum + "'");
+                if (Value.Length > 0)
                 {
-                    hR = Program.UTIL.ToDoubleOrZero(Value[0][1]);
-                }
+                    ZoneName = Value[0][0];
+                    ZoneName_textBox.Text = ZoneName;
+                    if (Value[0][1] != "")
+                    {
+                        hR = Program.UTIL.ToDoubleOrZero(Value[0][1]);
+                        LightInstallHeight = hR;
+                        lightHeight_textBox.Text = LightInstallHeight.ToString();
+                    }
 
-                Usage = Value[0][2];
-                if (Value[0][3] != "")
-                {
-                    A = Program.UTIL.ToDoubleOrZero(Value[0][3]); //순바닥면적
-                    A_textBox.Text = A.ToString();
-                    Program.UTIL.textBox_doubleComa(A_textBox, true, 2);
-                }
+                    Usage = Value[0][2];
+                    if (Value[0][3] != "")
+                    {
+                        A = Program.UTIL.ToDoubleOrZero(Value[0][3]); //순바닥면적
+                        A_textBox.Text = A.ToString();
+                        Program.UTIL.textBox_doubleComa(A_textBox, true, 2);
+                    }
 
 
-                //층정보 불러오기
-                String[][] General_3D = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "층,층고", "존번호 = '" + ZoneNum + "'");
+                    //층정보 불러오기
+                    String[][] General_3D = Program.DB.getValue(DB.type.ProjDB, "Zonegeneral_3D", "층,층고", "존번호 = '" + ZoneNum + "'");
 
-                Layer = General_3D[0][0] + "F";
+                    Layer = General_3D[0][0] + "F";
 
 
-                //Zonelight profile 가져오기 
-                string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "조도,이용영역계수,조명이용시부재율,작업면높이", "용도명 = '" + Usage + "'");
-                if (ValueA[0][0] != "")
-                {
-                    Em = Program.UTIL.ToDoubleOrZero(ValueA[0][0]);
-                }
-                if (ValueA[0][1] != "")
-                {
-                    KA = Program.UTIL.ToDoubleOrZero(ValueA[0][1]);
-                }
-                if (ValueA[0][2] != "")
-                {
-                    FA = Program.UTIL.ToDoubleOrZero(ValueA[0][2]);
-                }
-                if (ValueA[0][3] != "")
-                {
-                    hTa = Program.UTIL.ToDoubleOrZero(ValueA[0][3]);
-                }
+                    //Zonelight profile 가져오기 
+                    string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "조도,이용영역계수,조명이용시부재율,작업면높이", "용도명 = '" + Usage + "'");
+                    if (ValueA[0][0] != "")
+                    {
+                        Em = Program.UTIL.ToDoubleOrZero(ValueA[0][0]);
+                    }
+                    if (ValueA[0][1] != "")
+                    {
+                        KA = Program.UTIL.ToDoubleOrZero(ValueA[0][1]);
+                    }
+                    if (ValueA[0][2] != "")
+                    {
+                        FA = Program.UTIL.ToDoubleOrZero(ValueA[0][2]);
+                    }
+                    if (ValueA[0][3] != "")
+                    {
+                        hTa = Program.UTIL.ToDoubleOrZero(ValueA[0][3]);
+                    }
 
-                Check_MainDirection();
-                if (NaturalType == "파사드")
-                {
-                    Calc_Facade_Data();
-                    subtype.Text = "일반 파사드";
+                    Check_MainDirection();
+                    if (NaturalType == "파사드")
+                    {
+                        Calc_Facade_Data();
+                        subtype.Text = "일반 파사드";
+                    }
+                    else if (NaturalType == "천창")
+                    {
+                        Calc_Roof_Data();
+                        subtype.Text = "일반형";
+                    }
+                    else
+                    {
+                        Calc_None_Data();
+                    }
+                    WindowInfo2();
+                    CheckNaturalType();
+                    LightInfo();
+                    Match_Pjlx();
+                    Calc_Pj();
+                    Calc_Fo();
+                    Calc_Fc();
+                    Pci_Value();
+                    //Calc_AD();
                 }
-                else if (NaturalType == "천창")
-                {
-                    Calc_Roof_Data();
-                    subtype.Text = "일반형";
-                }
-                else
-                {
-                    Calc_None_Data();
-                }
-                WindowInfo2();
-                CheckNaturalType();
-                LightInfo();
-                string[][] val = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "공간계수", "번호='" + ZoneNum + "'");
-                if (val.Length > 0)
-                {
-                    LightInstallHeight = Program.UTIL.ToDoubleOrZero(val[0][0].ToString());
-                }
-                Match_Pjlx();
-                Calc_Pj();
-                Calc_Fo();
-                Calc_Fc();
-                Pci_Value();
-                //Calc_AD();
             }
+            catch { }
+            //존이름 불러오기
+
         }
 
         private void Check_MainDirection()
@@ -2197,6 +2182,8 @@ namespace main.contents
                 MessageBox.Show("The folder path does not exist.");
             }
         }
+
+       
     }
 
 }
