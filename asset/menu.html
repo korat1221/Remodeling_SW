@@ -14,13 +14,13 @@
             { "type": "EquipmentList", "text": "장비일람표", "id": "{\"formID\":16}" }
         ],
         [
-            { "type": "CW", "text": "커튼월창", "id": "{\"formID\":30}", "children": [{ "text": "CW01", "id": "{\"formID\":2}" }] },
-            { "type": "Wall", "text": "외벽", "id": "{\"formID\":34}", "children": [{ "text": "WL01", "id": "{\"formID\":3}" }] },
-            { "type": "Roof", "text": "지붕", "id": "{\"formID\":35}", "children": [{ "text": "RF01", "id": "{\"formID\":4}" }] },
-            { "type": "Floor", "text": "최하층바닥", "id": "{\"formID\":36}", "children": [{ "text": "FR01", "id": "{\"formID\":5}" }] },
-            { "type": "Window", "text": "창호", "id": "{\"formID\":29}", "children": [{ "text": "WN01", "id": "{\"formID\":6}" }], "children": [{ "text": "WN01_1", "id": "{\"formID\":31}" }] },
-            { "type": "Door", "text": "외부출입문", "id": "{\"formID\":51}", "children": [{ "text": "DR01", "id": "{\"formID\":7}" }] },
-            { "type": "Blind", "text": "차양", "id": "{\"formID\":50}", "children": [{ "text": "BL01", "id": "{\"formID\":10}" }] },
+            { "type": "CW", "text": "커튼월창", "id": "{\"formID\":30}", "children": [] },
+            { "type": "Wall", "text": "외벽", "id": "{\"formID\":34}", "children": [] },
+            { "type": "Roof", "text": "지붕", "id": "{\"formID\":35}", "children": [] },
+            { "type": "Floor", "text": "최하층바닥", "id": "{\"formID\":36}", "children": [] },
+            { "type": "Window", "text": "창호", "id": "{\"formID\":29}", "children": [] },
+            { "type": "Door", "text": "외부출입문", "id": "{\"formID\":51}", "children": [] },
+            { "type": "Blind", "text": "차양", "id": "{\"formID\":50}", "children": [] },
         ],
         [
             { "type": "Model", "text": "3D 모델", "id": "{\"formID\":8,\"ID\":\"0\",\"dummy\":true}", "children": [{ "text": "열기", "id": "{\"formID\":99999991}" }] },
@@ -31,12 +31,12 @@
 
         ],
         [
-            { "type": "AHUSystem", "text": "공조/열회수기", "id": "{\"formID\":57}", "children": [{ "text": "AHU01", "id": "{\"formID\":17}" }] },
+            { "type": "AHUSystem", "text": "공조/열회수기", "id": "{\"formID\":57}", "children": [] },
         ],
         [
-            { "type": "DHWSystem", "text": "급탕시스템", "id": "{\"formID\":49}", "children": [{ "text": "DHW01", "id": "{\"formID\":18}" }] },
-            { "type": "HeatingSystem", "text": "난방시스템", "id": "{\"formID\":39}", "children": [{ "text": "HS01", "id": "{\"formID\":19}" }] },
-            { "type": "CoolingSystem", "text": "냉방시스템", "id": "{\"formID\":38}", "children": [{ "text": "CW01", "id": "{\"formID\":20}" }] },
+            { "type": "DHWSystem", "text": "급탕시스템", "id": "{\"formID\":49}", "children": [] },
+            { "type": "HeatingSystem", "text": "난방시스템", "id": "{\"formID\":39}", "children": [] },
+            { "type": "CoolingSystem", "text": "냉방시스템", "id": "{\"formID\":38}", "children": [] },
             { "type": "RENSystem", "text": "신재생시스템", "id": "{\"formID\":43}" }
         ],
         [
@@ -45,11 +45,10 @@
             { "type": "AlgorithmReport", "text": "알고리즘 레포트", "id": "{\"formID\":27}" },
         ],
         [
-            { "type": "Remodeling", "text": "리모델링안", "id": "{\"formID\":58}", "children": [{ "text": "Alt01", "id": "{\"formID\":59}" }] }
+            { "type": "Remodeling", "text": "리모델링안", "id": "{\"formID\":58}", "children": [] }
         ],
     ];
     let gDefaultSelect = ["0", "3", "8", "12","17", "16", "56", "59"];
-    let first = true;
 
     function setObjInfo(pid) {
         if (d3Flag) {
@@ -77,9 +76,7 @@
             gTreeData[id] = JSON.parse(tree);
         }
         if (select_id) gDefaultSelect[id] = select_id;
-        if (!first) {
-            load(id, false, subid ? subid : 0);
-        }
+        load(id, false, subid ? subid : 0);
     }
 
     function load(menuID, isMain = false, subsel = 0) {
@@ -118,7 +115,6 @@
         else {
             load(n, true);
         }
-        setTimeout(() => { first = false; }, 5000);
     }
 
 </script>
@@ -127,35 +123,35 @@
     <div id="cont-left" class="split split-horizontal" style="width:400px;padding:4px">
         <div id="cont-menu"
         style="overflow:auto; width:125px;float:left;height:100vh;background-color: #204d70;padding-top: 16px;border-radius: 4px;box-shadow: 2px 2px 2px 2px #eee;color:#fff">
-            <div class="cont-item" onclick="first = false;load(0, true)">
+            <div class="cont-item" onclick="load(0, true)">
                 <div class="cont-icon item0" style="background-image: url('images/1sticon/1.Building.png');"></div>
                 <div class="cont-title">건물 정보</div>
             </div>
-            <div class="cont-item" onclick="first = false;load(1, true)">
+            <div class="cont-item" onclick="load(1, true)">
                 <div class="cont-icon item1" style="background-image: url('images/1sticon/2.Construction.png');"></div>
                 <div class="cont-title">구조체 정보</div>
             </div>
-            <div class="cont-item" onclick="first = false;load(2, true)">
+            <div class="cont-item" onclick="load(2, true)">
                 <div class="cont-icon item2" style="background-image: url('images/1sticon/3.3D.png');"></div>
                 <div class="cont-title">3D 정보</div>
             </div>
-            <div class="cont-item" onclick="first = false;load(3, true)">
+            <div class="cont-item" onclick="load(3, true)">
                 <div class="cont-icon item3" style="background-image: url('images/1sticon/4.Zone.png');"></div>
                 <div class="cont-title">층별 존 정보</div>
             </div>
-            <div class="cont-item" onclick="first = false;load(4, true)">
+            <div class="cont-item" onclick="load(4, true)">
                 <div class="cont-icon item4" style="background-image: url('images/1sticon/5.AHU.png');"></div>
                 <div class="cont-title">공조 정보</div>
             </div>
-            <div class="cont-item" onclick="first = false;load(5, true)">
+            <div class="cont-item" onclick="load(5, true)">
                 <div class="cont-icon item5" style="background-image: url('images/1sticon/5.System.png');"></div>
                 <div class="cont-title">설비 정보</div>
             </div>
-            <div class="cont-item" onclick="first = false;load(6, true)">
+            <div class="cont-item" onclick="load(6, true)">
                 <div class="cont-icon item6" style="background-image: url('images/1sticon/7.Result.png');"></div>
                 <div class="cont-title">결과 정보</div>
             </div>
-            <div class="cont-item" onclick="first = false;load(7, true)">
+            <div class="cont-item" onclick="load(7, true)">
                 <div class="cont-icon item7" style="background-image: url('images/1sticon/8.Remodeling.png');"></div>
                 <div class="cont-title">리모델링안</div>
             </div>            
