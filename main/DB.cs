@@ -298,6 +298,16 @@ namespace main
             if (exec != "")
             {
                 SecureSQLite.ExecuteSQL((int)dbType, exec);
+
+                // 쓴 대상에 맞는 파일로 저장한다 (ProjDB/ProjListDB가 서로 다른 파일이라 구분 필요)
+                if (dbType == type.ProjDB)
+                {
+                    saveProject();
+                }
+                else if (dbType == type.ProjListDB)
+                {
+                    savePListDB();
+                }
             }
         }
         public void executeSQL(string projName, string query)
@@ -479,7 +489,22 @@ namespace main
             }
         }
 
+        // 화면(UI)에서 쓰는 일반 버전 - 쓰고 나서 바로 디스크에 저장까지 한다.
+        // (예전엔 저장을 깜빡해서 반영이 안 되는 버그가 여러 곳 있었음)
         public void setValue(type dbType, string table, string columns, string values, string key_columns)
+        {
+            setValueCore(dbType, table, columns, values, key_columns);
+            saveProject();
+        }
+
+        // 계산(CALC 등)에서 한 번의 계산 중 수백~수천 번 호출될 수 있어서, 매번 저장하면 느려진다.
+        // 그래서 저장 없이 값만 쓰고, 계산이 다 끝난 뒤 한 번만 saveProject()를 부르는 용도.
+        public void setValue_Calc(type dbType, string table, string columns, string values, string key_columns)
+        {
+            setValueCore(dbType, table, columns, values, key_columns);
+        }
+
+        private void setValueCore(type dbType, string table, string columns, string values, string key_columns)
         {
             createTable(dbType, table, tables[table]);
 
@@ -576,6 +601,7 @@ namespace main
 
                         SecureSQLite.ExecuteSQL((int)type.ProjDB, "UPDATE " + table + " SET 번호='" + Num + "' WHERE  ID = " + res1[0][0]);
 
+                        saveProject();
                         return true;
                     }
                 }

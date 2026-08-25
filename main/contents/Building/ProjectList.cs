@@ -548,7 +548,7 @@ namespace main.contents
                         }
                     }
 
-                    Program.DB.saveProject();
+                    Program.DB.savePListDB();
                 }
             }
         }
@@ -566,7 +566,6 @@ namespace main.contents
                     Program.DB.executeSQL(DB.type.ProjListDB, "UPDATE projects SET title= '" + dataGridView1.Rows[k].Cells[3].Value.ToString() + "' WHERE pnum='" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "'");
                 }
             }
-            Program.DB.saveProject();
             MessageBox.Show("생성되었습니다.");
             int k_new = dataGridView1.Rows.Count - 1;
             dataGridView1.Rows[k_new].Cells[0].Value = true;

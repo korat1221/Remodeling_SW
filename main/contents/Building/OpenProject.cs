@@ -187,7 +187,6 @@ namespace main.contents
                 Program.DB.openDB("projects\\" + ProjectList.CurProjID + ".sqlite");
                 Program.DB.initTables(DB.type.ProjDB);
                 Create_Project_GeneralData(k);
-                Program.DB.saveProject();
                 Program.getMenuForm().resetAll();
                 Program.getMenuForm().DoLoadFormDirect(0);
                 Program.UTIL.ReloadModel();

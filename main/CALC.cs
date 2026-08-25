@@ -523,7 +523,7 @@ namespace main
         private static void Save_q50(double[] q50_element)
         {
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
-            Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,출입문q50,창호q50,외벽q50,지붕q50",
+            Program.DB.setValue_Calc(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,출입문q50,창호q50,외벽q50,지붕q50",
                  "'" + 번호[0][0] + "','" + q50_element[0] + "','" + q50_element[1] + "','" + q50_element[2] + "','" + q50_element[3] + "'", "프로젝트번호");
         }
 
@@ -632,7 +632,7 @@ namespace main
         private static void Save_dUtb_2D(double[] dUtb)
         {
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
-            Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,외벽dUtb,지붕dUtb,바닥dUtb",
+            Program.DB.setValue_Calc(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,외벽dUtb,지붕dUtb,바닥dUtb",
                  "'" + 번호[0][0] + "','" + dUtb[0] + "','" + dUtb[1] + "','" + dUtb[2] + "'", "프로젝트번호");
         }
 
@@ -773,7 +773,7 @@ namespace main
             {
                 MTH = (mth + 1).ToString() + "월";
 
-                Program.DB.setValue(DB.type.ProjDB, "Zone_LightResult", "프로젝트번호,프로젝트유형,번호,월," +
+                Program.DB.setValue_Calc(DB.type.ProjDB, "Zone_LightResult", "프로젝트번호,프로젝트유형,번호,월," +
                     "ITr,IRD,ISh_Ish,Ish_In_At,Wi,Ish_GDF,Ish," +
                     "f_τeff_SNA,f_D,f_nearD,f_DCA,f_dclass,f_nearEm_SNA,f_fd_sna,f_fd_sa,f_nearEm_DC,f_fd_c,f_FDS,f_FD," +
                     "as_bs,hs_bs,hg_hw," +
@@ -807,7 +807,7 @@ namespace main
                 {
                     MTH = (mth + 1).ToString() + "월";
 
-                    Program.DB.setValue(DB.type.ProjDB, "Zone_HCneed_Result", "프로젝트번호,프로젝트유형,번호,이름," +
+                    Program.DB.setValue_Calc(DB.type.ProjDB, "Zone_HCneed_Result", "프로젝트번호,프로젝트유형,번호,이름," +
                          "난방_냉방,비이용일_이용일,월," +
                          "HT_tot,HT_InWall,HT_Slab,HT_Wall,HT_Roof,HT_Floor,HT_GWall,HT_Door,HT_Win,HT_CW," +
                          "HT_Di_Wall,HT_Indi_Wall,HT_Di_Roof,HT_Indi_Roof,HT_Di_Win,HT_Indi_Win,HT_Di_Door,HT_Indi_Door," +
@@ -934,7 +934,7 @@ namespace main
 
                     if (hc == 0) { 난방냉방 = "난방"; } else { 난방냉방 = "냉방"; }
                     MTH = (mth + 1).ToString() + "월";
-                    Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                    Program.DB.setValue_Calc(DB.type.ProjDB, "AHUSystem_Result", "프로젝트번호,프로젝트유형,번호," +
                              "난방_냉방,월," +
                              "순공조요구량,공조요구량,공조소요량,급기팬보조에너지,배기팬보조에너지,가습보조에너지,프리히팅보조에너지,제어보조에너지,로터모터보조에너지," +
                              "theta_vmech,Vvmech," +
@@ -967,7 +967,7 @@ namespace main
                 {
                     if (hc == 0) { 난방냉방 = "난방"; } else { 난방냉방 = "냉방"; }
                     MTH = (mth + 1).ToString() + "월";
-                    Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                    Program.DB.setValue_Calc(DB.type.ProjDB, "AHUSystem_Result", "프로젝트번호,프로젝트유형,번호," +
                              "난방_냉방,월," +
                              "순공조요구량,공조요구량,공조소요량,급기팬보조에너지,배기팬보조에너지,가습보조에너지,프리히팅보조에너지,제어보조에너지,로터모터보조에너지," +
                              "theta_vmech,Vvmech," +
@@ -1034,7 +1034,7 @@ namespace main
                             if (HeatingNum[i][0] == ce[a][3])
                             {
 
-                                Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,프로젝트유형,난방시스템,공급설비,부하율",
+                                Program.DB.setValue_Calc(DB.type.ProjDB, "Heating_ce_Form", "존번호,프로젝트유형,난방시스템,공급설비,부하율",
                             "'" + Zone[n][0] + "','" + 프로젝트유형[0][0] + "','"
                             + HeatingNum[i][0] + "','"
                             + ce[a][0] + "','"
@@ -1111,7 +1111,7 @@ namespace main
                         {
                             if(가동비율[a] >0 && 가동비율_tot_Element[k] >0)
                             {
-                                Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form_Element", "존번호,난방시스템,공급설비종류,공급설비,설치위치,가동시간,부하율",
+                                Program.DB.setValue_Calc(DB.type.ProjDB, "Heating_ce_Form_Element", "존번호,난방시스템,공급설비종류,공급설비,설치위치,가동시간,부하율",
                             "'" + Zone[n][0] + "','"
                             + ce[a][3] + "','" + ce[a][1] + "','" + ce[a][0] + "','" + ce[a][4] + "','" + ce[a][2] + "','"
                             + (가동비율[a] / 가동비율_tot_Element[k]) + "'", "존번호,난방시스템,공급설비");
@@ -1192,7 +1192,7 @@ namespace main
             {
 
                 string MTH = (mth + 1).ToString() + "월";
-                Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                Program.DB.setValue_Calc(DB.type.ProjDB, "HeatingSystem_Result", "프로젝트번호,프로젝트유형,번호," +
                          "월," +
                          " Qhb_mth_sum, Qh_max_sum,Qh_a_sum,th_op_day_avg, theta_i_h_set_avg,th_avg,dop_mth_avg," +
                          "thrL,thrL_day,dhrB,fLNA,fLwe," +
@@ -1216,13 +1216,13 @@ namespace main
                           Heating1.Qh_ce[mth] + "','" + Heating1.Qh_d[mth] + "','" + Heating1.Qh_s[mth] + "','" + Heating1.Qh_gen[mth] + "','" + Heating1.Qh_outg[mth] + "','" + Heating1.Qh_f[mth] + "','" +
                           Heating1.Wh_ce[mth] + "','" + Heating1.Wh_d[mth] + "','" + Heating1.Wh_s[mth] + "','" + Heating1.Wh_g[mth] + "','" + Heating1.Carrier
                           + "'", "번호,월"); ;
-                Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                Program.DB.setValue_Calc(DB.type.ProjDB, "HeatingSystem_Result", "프로젝트번호,프로젝트유형,번호," +
                        "월," +
                        "Qh_sol",
                        "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + Heating1.HeatingNum + "','" + MTH + "','" +
                         Heating1.Qh_sol[mth]
                         + "'", "번호,월"); ;
-                Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                Program.DB.setValue_Calc(DB.type.ProjDB, "HeatingSystem_Result", "프로젝트번호,프로젝트유형,번호," +
                       "월," +
                       "Qhb_z,Qh_ce_z,Qh_d_z,Qh_s_z,Qh_outg_z," +
                       "Qhb_ahu,Qh_ce_ahu,Qh_d_ahu,Qh_s_ahu,Qh_outg_ahu",
@@ -1312,7 +1312,7 @@ namespace main
                             if (Num[i][0] == ce[a][3])
                             {
 
-                                Program.DB.setValue(DB.type.ProjDB, "Cooling_ce_Form", "존번호,프로젝트유형,냉방시스템,공급설비,용량,소비전력,부하율",
+                                Program.DB.setValue_Calc(DB.type.ProjDB, "Cooling_ce_Form", "존번호,프로젝트유형,냉방시스템,공급설비,용량,소비전력,부하율",
                             "'" + Zone[n][0] + "','" + 프로젝트유형[0][0] +  "','"
                             + Num[i][0] + "','"
                             + ce[a][0] + "','" + 용량[a] + "','" + 소비전력[a] + "','"
@@ -1389,7 +1389,7 @@ namespace main
                         {
                             if (가동비율[a] > 0 && 가동비율_tot_Element[k] > 0)
                             {
-                                Program.DB.setValue(DB.type.ProjDB, "Cooling_ce_Form_Element", "존번호,냉방시스템,공급설비종류,공급설비,가동시간,용량,소비전력,부하율",
+                                Program.DB.setValue_Calc(DB.type.ProjDB, "Cooling_ce_Form_Element", "존번호,냉방시스템,공급설비종류,공급설비,가동시간,용량,소비전력,부하율",
                             "'" + Zone[n][0] + "','"
                             + ce[a][3] + "','" + ce[a][1] + "','" + ce[a][0] + "','" + ce[a][2] + "','" + ce[a][4] + "','" + ce[a][5] + "','"
                             + (가동비율[a] / 가동비율_tot_Element[k]) + "'", "존번호,냉방시스템,공급설비");
@@ -1430,7 +1430,7 @@ namespace main
             {
                 mth[i] = (i+1).ToString() + "월";
 
-                Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "프로젝트유형,프로젝트번호, 번호, 명칭, 냉방설비, 냉방출력, 냉방성능, 대기전력, 설치대수, Fuel,월,열원설비",
+                Program.DB.setValue_Calc(DB.type.ProjDB, "CoolingSystem_Result", "프로젝트유형,프로젝트번호, 번호, 명칭, 냉방설비, 냉방출력, 냉방성능, 대기전력, 설치대수, Fuel,월,열원설비",
                 "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + cc1.CoolingNum + "','" + cc1.CoolingName + "','" + cc1.CG + "','" + cc1.Power_f + "','" + cc1.EER_f + "','" + cc1.Pctrl_f + "','" + cc1.Number_f + "','" + cc1.Carrier + "','" + mth[i] + "','" + cc1.CSource + "'", "번호,월");
                 if (double.IsNaN(cc1.QCa_nd)) { cc1.QCa_nd = 0; }
                 if (double.IsNaN(cc1.QCa_ce)) { cc1.QCa_ce = 0; }
@@ -1438,7 +1438,7 @@ namespace main
                 if (double.IsNaN(cc1.QCa_s)) { cc1.QCa_s = 0; }
                 if (double.IsNaN(cc1.QCa_out)) { cc1.QCa_out = 0; }
                 if (double.IsNaN(cc1.QCa_f)) { cc1.QCa_f = 0; }
-                Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,QCb_a,QCa_ce,QCa_d,QCa_s,QCa_out,QCa_f,Sto_Tank,Sto_Type",
+                Program.DB.setValue_Calc(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,QCb_a,QCa_ce,QCa_d,QCa_s,QCa_out,QCa_f,Sto_Tank,Sto_Type",
                           "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.QCa_nd + "','" + cc1.QCa_ce + "','" + cc1.QCa_d + "','" + cc1.QCa_s + "','" + cc1.QCa_out + "','" + cc1.QCa_f + "','" + cc1.Sto_Tank + "','" + cc1.Sto_Type + "'", "번호,월");
                 if (double.IsNaN(cc1.QC_f[i])) { cc1.QC_f[i] = 0; }
                 if (double.IsNaN(cc1.SEER_c[i])) { cc1.SEER_c[i] = 0; }
@@ -1448,14 +1448,14 @@ namespace main
                 if (double.IsNaN(cc1.QC_d[i])) { cc1.QC_d[i] = 0; }
                 if (double.IsNaN(cc1.QC_s[i])) { cc1.QC_s[i] = 0; }
                 if (double.IsNaN(cc1.QC_nd[i])) { cc1.QC_nd[i] = 0; }
-                Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,QC_f, SEER_c, EER_c,QC_out,QC_ce,QC_d,QC_s,QC_nd",
+                Program.DB.setValue_Calc(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,QC_f, SEER_c, EER_c,QC_out,QC_ce,QC_d,QC_s,QC_nd",
                            "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.QC_f[i] + "', '" + cc1.SEER_c[i] + "','" + cc1.EER_c[i] + "','" + cc1.QC_out[i] + "','" + cc1.QC_ce[i] + "','" + cc1.QC_d[i] + "','" + cc1.QC_s[i] + "','" + cc1.QC_nd[i] + "'", "번호,월");
                 if (double.IsNaN(cc1.W[i])) { cc1.W[i] = 0; }
                 if (double.IsNaN(cc1.W_ce[i])) { cc1.W_ce[i] = 0; }
                 if (double.IsNaN(cc1.W_d[i])) { cc1.W_d[i] = 0; }
                 if (double.IsNaN(cc1.W_s[i])) { cc1.W_s[i] = 0; }
                 if (double.IsNaN(cc1.W_g[i])) { cc1.W_g[i] = 0; }
-                Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,W,W_g,W_ce,W_d,W_s",
+                Program.DB.setValue_Calc(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,W,W_g,W_ce,W_d,W_s",
                            "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.W[i] + "', '" + cc1.W_g[i] + "','" + cc1.W_ce[i] + "','" + cc1.W_d[i] + "','" + cc1.W_s[i] + "'", "번호,월");
 
 
@@ -1466,7 +1466,7 @@ namespace main
                     if (double.IsNaN(cc1.QC_a_z)) { cc1.QC_a_z = 0; }
                     if (double.IsNaN(cc1.Qc_max_z)) { cc1.Qc_max_z = 0; }
                     if (double.IsNaN(cc1.A_z)) { cc1.A_z = 0; }
-                    Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,개수_z,QCb_a_z,QC_Max_z,공급설비1_z,공급설비2_z,A_z",
+                    Program.DB.setValue_Calc(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,개수_z,QCb_a_z,QC_Max_z,공급설비1_z,공급설비2_z,A_z",
                            "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.ZoneNumber_f + "','" + cc1.QC_a_z + "','" + cc1.Qc_max_z + "','" + cc1.CE1_z + "','" + cc1.CE2_z + "','" + cc1.A_z + "'", "번호,월");
 
                     if (double.IsNaN(cc1.QC_out_z[i])) { cc1.QC_out_z[i] = 0; }
@@ -1474,7 +1474,7 @@ namespace main
                     if (double.IsNaN(cc1.QC_d_z[i])) { cc1.QC_d_z[i] = 0; }
                     if (double.IsNaN(cc1.QC_s_z[i])) { cc1.QC_s_z[i] = 0; }
                     if (double.IsNaN(cc1.QC_nd_z[i])) { cc1.QC_nd_z[i] = 0; }
-                    Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,QC_out_z, QC_ce_z, QC_d_z, QC_s_z, QC_nd_z",
+                    Program.DB.setValue_Calc(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,QC_out_z, QC_ce_z, QC_d_z, QC_s_z, QC_nd_z",
                                "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.QC_out_z[i] + "','" + cc1.QC_ce_z[i] + "','" + cc1.QC_d_z[i] + "','" + cc1.QC_s_z[i] + "','" + cc1.QC_nd_z[i] + "'", "번호,월");
 
                 }
@@ -1484,7 +1484,7 @@ namespace main
                     if (double.IsNaN(cc1.QC_a_ahu)) { cc1.QC_a_ahu = 0; }
                     if (double.IsNaN(cc1.Qc_max_ahu)) { cc1.Qc_max_ahu = 0; }
                     if (double.IsNaN(cc1.A_ahu)) { cc1.A_ahu = 0; }
-                    Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,개수_ahu,QCb_a_ahu,QC_Max_ahu,공급설비1_ahu,공급설비2_ahu,A_ahu",
+                    Program.DB.setValue_Calc(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,개수_ahu,QCb_a_ahu,QC_Max_ahu,공급설비1_ahu,공급설비2_ahu,A_ahu",
                            "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.AhuNumber_f + "','" + cc1.QC_a_ahu + "','" + cc1.Qc_max_ahu + "','" + cc1.CE1_ahu + "','" + cc1.CE2_ahu + "','" + cc1.A_ahu + "'", "번호,월");
 
                     if (double.IsNaN(cc1.QC_out_ahu[i])) { cc1.QC_out_ahu[i] = 0; }
@@ -1492,14 +1492,14 @@ namespace main
                     if (double.IsNaN(cc1.QC_d_ahu[i])) { cc1.QC_d_ahu[i] = 0; }
                     if (double.IsNaN(cc1.QC_s_ahu[i])) { cc1.QC_s_ahu[i] = 0; }
                     if (double.IsNaN(cc1.QC_nd_ahu[i])) { cc1.QC_nd_ahu[i] = 0; }
-                    Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,QC_out_ahu, QC_ce_ahu, QC_d_ahu, QC_s_ahu, QC_nd_ahu",
+                    Program.DB.setValue_Calc(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,QC_out_ahu, QC_ce_ahu, QC_d_ahu, QC_s_ahu, QC_nd_ahu",
                               "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.QC_out_ahu[i] + "','" + cc1.QC_ce_ahu[i] + "','" + cc1.QC_d_ahu[i] + "','" + cc1.QC_s_ahu[i] + "','" + cc1.QC_nd_ahu[i] + "'", "번호,월");
 
                 }
                 if (cc1.CG != "실외기")
                 {
 
-                    Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,압축기종류",
+                    Program.DB.setValue_Calc(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,압축기종류",
                                                "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.Comp_f + "','" + cc1.CWout + "'", "번호,월");
                 }
                 if (cc1.펌프유무 == "펌프 있음") //펌프유무
@@ -1511,13 +1511,13 @@ namespace main
                     if (double.IsNaN(cc1.SP1power)) { cc1.SP1power = 0; }
                     if (double.IsNaN(cc1.SP2power)) { cc1.SP2power = 0; }
                     if (double.IsNaN(cc1.CWout)) { cc1.CWout = 0; }
-                    Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,CSWin,CSWout,P1power,P2power,Pump1Valve,SP1power,SP2power,SPValve,냉수출구온도",
+                    Program.DB.setValue_Calc(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,CSWin,CSWout,P1power,P2power,Pump1Valve,SP1power,SP2power,SPValve,냉수출구온도",
                                                "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.CSWin + "','" + cc1.CSWout + "','" + cc1.P1power + "','" + cc1.P2power + "','" + cc1.PumpControl + "','" + cc1.SP1power + "','" + cc1.SP2power + "','" + cc1.SPumpControl + "','" + cc1.CWout + "'", "번호,월");
                 }
                 if (cc1.CG == "수냉식냉동기" || cc1.CG == "흡수식냉동기")
                 {
                     if (double.IsNaN(cc1.CTPower_f)) { cc1.CTPower_f = 0; }
-                    Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,CTPower",
+                    Program.DB.setValue_Calc(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,CTPower",
                                                "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.CTPower_f + "'", "번호,월");
                 }
             }
@@ -1561,7 +1561,7 @@ namespace main
             {
 
                 MTH = (mth + 1).ToString() + "월";
-                Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                Program.DB.setValue_Calc(DB.type.ProjDB, "DHWSystem_Result", "프로젝트번호,프로젝트유형,번호," +
                          "월," +
                          "Qwb_mth_sum,theta_ih_avg,Qw_a_sum,th_op_day_avg,theta_i_h_set_avg,dop_mth_avg," +
                          "Qw_d,Qw_s,Qw_gen,Qw_outg,Qw_f," +
@@ -1574,7 +1574,7 @@ namespace main
                          DHW1.Qw_gen_day[mth] + "','" + DHW1.Qw_gen_p0_day[mth] + "','" + DHW1.eta_pn_w[mth] + "','" + DHW1.Carrier
                           + "'", "번호,월"); ;
 
-                Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Result", "프로젝트번호,프로젝트유형,번호," +
+                Program.DB.setValue_Calc(DB.type.ProjDB, "DHWSystem_Result", "프로젝트번호,프로젝트유형,번호," +
                         "월," +
                         "Qw_sol",
                         "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + DHW1.DHWNum + "','" + MTH + "','" +
@@ -1639,7 +1639,7 @@ namespace main
             for (int mth = 0; mth <= 11; mth++)
             {
                 MTH = (mth + 1).ToString() + "월";
-                Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
+                Program.DB.setValue_Calc(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
                     "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + MTH + "','" + "전기" + "','" +
                     final1.Qhf_elec[mth] + "','" + final1.Qcf_elec[mth] + "','" + final1.Qwf_elec[mth] + "','" + final1.Qlf_elec[mth] + "','" +
@@ -1661,7 +1661,7 @@ namespace main
                 Qbase_elec_a += final1.Qbase_elec[mth];
             }
             Qf_elec_tot_a = Qhf_elec_a + Qcf_elec_a + Qwf_elec_a + Qlf_elec_a + Qvf_elec_a + Qbase_elec_a - Qreg_elec_a;
-            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
+            Program.DB.setValue_Calc(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
                      "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                      "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + "연간" + "','" + "전기" + "','" +
                      Qhf_elec_a + "','" + Qcf_elec_a + "','" + Qwf_elec_a + "','" + Qlf_elec_a + "','" +
@@ -1677,7 +1677,7 @@ namespace main
                 for (int mth = 0; mth <= 11; mth++)
                 {
                     MTH = (mth + 1).ToString() + "월";
-                    Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
+                    Program.DB.setValue_Calc(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
                         "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                         "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + MTH + "','" + Carrier + "','" +
                         final1.Qhf_gas[mth] + "','" + final1.Qcf_gas[mth] + "','" + final1.Qwf_gas[mth] + "','" + final1.Qlf_gas[mth] + "','" +
@@ -1697,7 +1697,7 @@ namespace main
                 Qbase_gas_a += final1.Qbase_gas[mth];
             }
             Qf_gas_tot_a = Qhf_gas_a + Qcf_gas_a + Qwf_gas_a + Qbase_gas_a;
-            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
+            Program.DB.setValue_Calc(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
                      "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                      "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + "연간" + "','" + Carrier + "','" +
                      Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_gas_a + "','" + Qlf_gas_a + "','" +
@@ -1709,7 +1709,7 @@ namespace main
             for (int mth = 0; mth <= 11; mth++)
             {
                 MTH = (mth + 1).ToString() + "월";
-                Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
+                Program.DB.setValue_Calc(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
                     "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + MTH + "','" + "전체" + "','" +
                     (final1.Qhf_elec[mth]+ final1.Qhf_gas[mth]) + "','" + (final1.Qcf_elec[mth]+final1.Qcf_gas[mth]) + "','" + (final1.Qwf_elec[mth]+final1.Qwf_gas[mth]) + "','" + final1.Qlf_elec[mth] + "','" +
@@ -1717,7 +1717,7 @@ namespace main
                     + "'", "번호,월,연료"); 
             }
 
-            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
+            Program.DB.setValue_Calc(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
                    "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                    "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + "연간" + "','" + "전체" + "','" +
                    (Qhf_elec_a+Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_gas_a) + "','" + Qlf_elec_a + "','" +
@@ -1770,7 +1770,7 @@ namespace main
                 for (int mth = 0; mth <= 11; mth++)
                 {
                     MTH = (mth + 1).ToString() + "월";
-                    Program.DB.setValue(DB.type.ProjDB, "WindPower_Result", "프로젝트번호,프로젝트유형,번호," +
+                    Program.DB.setValue_Calc(DB.type.ProjDB, "WindPower_Result", "프로젝트번호,프로젝트유형,번호," +
                              "월," +
                              "Qfwps",
                              "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + WPNum[i][0] + "','" + MTH  + "','" + WP.Qfwps[mth]
@@ -1848,7 +1848,7 @@ namespace main
 
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    Program.DB.setValue(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호,신재생시스템,신재생시스템유형,생산소비,생산유형,소비연료,월,난방설비,냉방설비,급탕설비,총에너지,난방,냉방,급탕,조명,공조",
+                    Program.DB.setValue_Calc(DB.type.ProjDB, "RESystem_Result", "프로젝트번호,프로젝트유형,번호,신재생시스템,신재생시스템유형,생산소비,생산유형,소비연료,월,난방설비,냉방설비,급탕설비,총에너지,난방,냉방,급탕,조명,공조",
                 "'" + ProjNum + "','" + 프로젝트유형[0][0] + "','" + s.Num() + "','" + s.RESystem_Num() + "','" + s.RESystem_Type() + "','" +
                 s.Production_Consumption() + "','" + s.Production_Type() + "','" + s.Consumption_Carrier() + "','" +
                 (mth + 1) + "월" + "','" + s.Heating_Num() + "','" + s.Cooling_Num() + "','" + s.DHW_Num() + "','" +
@@ -2010,6 +2010,8 @@ namespace main
             {
                 _calculations[calc].DynamicInvoke();
             }
+
+            Program.DB.saveProject();
 
             return true;
         }
