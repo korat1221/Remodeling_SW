@@ -2197,7 +2197,7 @@ namespace main.contents
             {
                 SubDist2pictureBox.Visible = true;
                 SubDist2pictureBox.Visible = true;
-                SubDist2pictureBox.Location = new Point(480, 157);
+                SubDist2pictureBox.Location = new Point(620, 157);
                 SubDist2pictureBox.Size = new System.Drawing.Size(53, 65);
                 SubDist2pictureBox.Load(Program.gPath + image2[0][0]);
                 SubDist2pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -2257,7 +2257,7 @@ namespace main.contents
                 if (stoimage.Length > 0)
                 {
                     StopictureBox.Visible = true;
-                    StopictureBox.Location = new Point(560, 80);
+                    StopictureBox.Location = new Point(490, 80);
                     StopictureBox.Size = new System.Drawing.Size(125, 170);
                     StopictureBox.Load(Program.gPath + stoimage[0][0]);
                     StopictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -2271,7 +2271,7 @@ namespace main.contents
             {
                 string[][] stoimage = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형='분배설비' And 설비유형='펌프'");
                 stopumppictureBox.Visible = true;
-                stopumppictureBox.Location = new Point(540, 148);
+                stopumppictureBox.Location = new Point(470, 148);
                 stopumppictureBox.Size = new System.Drawing.Size(22, 38);
                 stopumppictureBox.Load(Program.gPath + stoimage[0][0]);
                 stopumppictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -2682,13 +2682,12 @@ namespace main.contents
             if (Value.Length > 0)
             {
                 SelectBoiler_nonsplit = Value[0][0];
-                Split_Boiler(SelectBoiler_nonsplit);
-
-                BoilerNum_nonsplit = Value[0][1];
-                Split_BoilerNum(BoilerNum_nonsplit);
-
+              
                 if (SelectBoiler_nonsplit != "" && SelectBoiler_nonsplit != null)
                 {
+                    Split_Boiler(SelectBoiler_nonsplit);
+                    BoilerNum_nonsplit = Value[0][1];
+                    Split_BoilerNum(BoilerNum_nonsplit);
                     HeatS_type = "수방식";
                 }
             }
@@ -2698,19 +2697,19 @@ namespace main.contents
             if (Value.Length > 0)
             {
                 SelectFC_nonsplit = Value[0][0];
-                Split_FC(SelectFC_nonsplit);
-
-                FCNum_nonsplit = Value[0][1];
-                Split_FCNum(FCNum_nonsplit);
-
-                FCElecInstall_nonsplit = Value[0][2];
-                Split_FCElecInstall(FCElecInstall_nonsplit);
-
-                FCElecHeat_nonsplit = Value[0][3];
-                Split_FCElecHeat(FCElecHeat_nonsplit);
-
+               
                 if (SelectFC_nonsplit != "" && SelectFC_nonsplit != null)
                 {
+                    Split_FC(SelectFC_nonsplit);
+
+                    FCNum_nonsplit = Value[0][1];
+                    Split_FCNum(FCNum_nonsplit);
+
+                    FCElecInstall_nonsplit = Value[0][2];
+                    Split_FCElecInstall(FCElecInstall_nonsplit);
+
+                    FCElecHeat_nonsplit = Value[0][3];
+                    Split_FCElecHeat(FCElecHeat_nonsplit);
                     HeatS_type = "수방식";
                 }
             }
@@ -2719,19 +2718,20 @@ namespace main.contents
             if (Value.Length > 0)
             {
                 SelectSolar_nonsplit = Value[0][0];
-                Split_Solar(SelectSolar_nonsplit);
-
-                SolarNum_nonsplit = Value[0][1];
-                Split_SolarNum(SolarNum_nonsplit);
-
-                SolarDirection_nonsplit = Value[0][2];
-                Split_SolarDirection(SolarDirection_nonsplit);
-
-                SolarDegree_nonsplit = Value[0][3];
-                Split_SolarDegree(SolarDegree_nonsplit);
 
                 if (SelectSolar_nonsplit != "" && SelectSolar_nonsplit != null)
                 {
+                    Split_Solar(SelectSolar_nonsplit);
+
+                    SolarNum_nonsplit = Value[0][1];
+                    Split_SolarNum(SolarNum_nonsplit);
+
+                    SolarDirection_nonsplit = Value[0][2];
+                    Split_SolarDirection(SolarDirection_nonsplit);
+
+                    SolarDegree_nonsplit = Value[0][3];
+                    Split_SolarDegree(SolarDegree_nonsplit);
+
                     HeatS_type = "수방식";
                 }
             }
@@ -2739,10 +2739,11 @@ namespace main.contents
             if (Value.Length > 0)
             {
                 SelectDH_nonsplit = Value[0][0];
-                Split_DH(SelectDH_nonsplit);
-
+                
                 if (SelectDH_nonsplit != "" && SelectDH_nonsplit != null)
-                {
+                {    
+                    Split_DH(SelectDH_nonsplit);
+                    
                     HeatS_type = "수방식";
                 }
             }
@@ -2751,13 +2752,16 @@ namespace main.contents
             if (Value.Length > 0)
             {
                 SelectHP_nonsplit = Value[0][0];
-                Split_HP(SelectHP_nonsplit, "히트펌프");
+                if (SelectHP_nonsplit != "" && SelectHP_nonsplit != null)
+                {
+                    Split_HP(SelectHP_nonsplit, "히트펌프");
 
-                HPControl_nonsplit = Value[0][1];
-                Split_HPControl(HPControl_nonsplit);
+                    HPControl_nonsplit = Value[0][1];
+                    Split_HPControl(HPControl_nonsplit);
 
-                HPNum_nonsplit = Value[0][2];
-                Split_HPNum(HPNum_nonsplit);
+                    HPNum_nonsplit = Value[0][2];
+                    Split_HPNum(HPNum_nonsplit);
+                }
             }
 
             Value = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수,펌프1유량,펌프2유량,펌프1양정,펌프2양정", "번호 = '" + ID + "'");

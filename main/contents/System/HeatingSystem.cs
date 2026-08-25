@@ -45,6 +45,23 @@ namespace main.contents
         String[] SystemType = { "보일러", "외기 히트펌프", "지열 히트펌프", "지하수 히트펌프", "태양열 융합 히트펌프", "흡수식온수기", "지역난방", "태양열시스템", "연료전지" };
         String[] ceType = { "실내기", "방열기", "팬코일유닛", "복사난방", "바닥매립형컨백터", "파워팬유닛", "VAV유닛", "CAV유닛" };
 
+
+        //실내자동화유형 : 해당없음, 단독운전, 단독운전(자가적응형기동/정지), 네트워크운전 
+        String[] RoomAut = { "해당없음", "단독운전", "단독운전(자가적응형기동/정지)", "네트워크운전" };
+        String[] CeTypeCategory = { "방열기형", "구조체일체형", "대류형", "공조형", "전기독립형", "대공간형" };
+        //RadType방열기형: 방열기 ->공급온도(60, 42.5, 30, 20) 설치위치 (내벽,창호,외벽) 제어유형(중앙온수온도제어,대표실제어,실별온도제어,P또는PI제어,PI최적화제어)
+        String[] RadType = { "방열기" };
+        //ConType구조체일체형" 습식바닥, 건식바닥, 벽체, 천장 ->제어유형(중앙온수온도제어,대표실제어,실별온도제어,P또는PI제어,PI최적화제어), 설치유형(구조체매립형, 그외)
+        String[] AirType = { "실내기", "팬코일유닛", "바닥매립형컨백터" };
+        //AirType대류형: 실내기, 팬코닐유닛, 바닥매립형컨백터
+        String[] AhuType = { "공조기(on/off제어", "공조기(PI/PID)제어" };
+        //AhuType공조형: 공조기(on/off제어), 공조기(PI/PID제어) ->유형(재열기+실내온도제어, 재열기+cascade 실내온도제어, 재열기+배기온도제어, 실내온도제어)
+        String[] EleTytpe = { "외벽주변", "내벽주변" };
+        //EleType전기독립형: 외벽주변, 내벽주변 -> 유형(실내 제어 연동 P-제어(1K), 중앙 제어 연동 실별 P-제어(1K), 개별기기 P-제어(1K), PI-제어, 축열체 포함형, 축열체 포함형 P-제어(1K), 축열체 포함형 PID-제어
+        String[] HighType = { "바닥", "천장패널", "공조기(일반)", "공조기(제트기류" };
+        //HighType대공간형: 바닥, 천장패널, 공조기(일반), 공조기(제트기류) 
+
+
         //분배열손실항목 추가
         double PipeIns_Ramda;
         String PipeIns, PipeD_SelectMode, HeatS_type; //직팽식인지 확인필요
@@ -395,7 +412,6 @@ namespace main.contents
                 SystemLoacation = null;
             }
         }
-
         private void SLRL_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (SLRL_comboBox.SelectedItem != null)
@@ -407,7 +423,6 @@ namespace main.contents
                 SLRL = null;
             }
         }
-
         private void Complex_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (Complex_comboBox.SelectedItem != null)
@@ -750,6 +765,7 @@ namespace main.contents
 
         private void Load_Boiler_Table()
         {
+            Boiler_dataGridView.Visible = true;
             DataGridViewCheckBoxColumn Boiler_checkBoxColumn = new DataGridViewCheckBoxColumn();
             new StackedHeaderDecorator(Boiler_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
             Boiler_dataGridView.Columns.Clear();
@@ -916,6 +932,7 @@ namespace main.contents
 
         private void Load_Solar_Table()
         {
+            Solar_dataGridView.Visible = true;
             DataGridViewCheckBoxColumn Solar_checkBoxColumn = new DataGridViewCheckBoxColumn();
             new StackedHeaderDecorator(Solar_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
             Solar_dataGridView.Columns.Clear();
@@ -1150,6 +1167,7 @@ namespace main.contents
 
         private void Load_FC_Table()
         {
+            FC_dataGridView.Visible = true;
             DataGridViewCheckBoxColumn FC_checkBoxColumn = new DataGridViewCheckBoxColumn();
             new StackedHeaderDecorator(FC_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
             FC_dataGridView.Columns.Clear();
@@ -1394,6 +1412,7 @@ namespace main.contents
 
         private void Load_AS_Table()
         {
+            AS_dataGridView.Visible = true;
             DataGridViewCheckBoxColumn AS_checkBoxColumn = new DataGridViewCheckBoxColumn();
             new StackedHeaderDecorator(AS_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
             AS_dataGridView.Columns.Clear();
@@ -1553,6 +1572,7 @@ namespace main.contents
 
         private void Load_DH_Table()
         {
+            DH_dataGridView.Visible = true;
             DataGridViewCheckBoxColumn DH_checkBoxColumn = new DataGridViewCheckBoxColumn();
             new StackedHeaderDecorator(DH_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
             DH_dataGridView.Columns.Clear();
@@ -1796,6 +1816,7 @@ namespace main.contents
         }
         private void create_HP_Table()
         {
+            HP_dataGridView.Visible = true;
             DataGridViewCheckBoxColumn HP_checkBoxColumn = new DataGridViewCheckBoxColumn();
             new StackedHeaderDecorator(HP_dataGridView, DataGridViewAutoSizeColumnsMode.Fill);
             HP_dataGridView.Columns.Clear();
@@ -2232,113 +2253,9 @@ namespace main.contents
 
         #endregion
 
-        #region 분배
+        #region 펌프
         /////////////////////////////////////////////////////분배////////////////////////////////////////////////////////////////////
 
-
-        //private void PipeD_comboBox_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    if (PipeD_comboBox.SelectedItem != null && PipeD_comboBox.SelectedItem.ToString() != "")
-        //    {
-        //        string[][] value = Program.DB.getValue(DB.type.BaseDB_Heating, "부피별관경", "외경", "호칭경A='" + PipeD_comboBox.SelectedItem.ToString().Substring(0, PipeD_comboBox.SelectedItem.ToString().Length - 1) + "'");
-        //        if (value.Length > 0)
-        //        {
-        //            PipeD = Program.UTIL.ToDoubleOrZero(value[0][0]);
-        //        }
-        //    }
-        //}
-        //private void PipeInsD_textBox_TextChanged(object sender, EventArgs e)
-        //{
-        //    PipeInsD = Program.UTIL.textBox_doubleComa(PipeInsD_textBox, false, 1);
-        //}
-
-        //private void PipeL_textBox_TextChanged(object sender, EventArgs e)
-        //{
-        //    PipeL = Program.UTIL.textBox_doubleComa(PipeL_textBox, false, 2);
-        //}
-        //private void Calc_Pipe()
-        //{
-        //    ZoneArea = 0;
-        //    double Qmax_sum = 0;
-        //    if (Zone_Area_textBox.Text != null && Zone_Area_textBox.Text != "")
-        //    {
-        //        ZoneArea = Program.UTIL.ToDoubleOrZero(Zone_Area_textBox.Text.ToString());
-        //    }
-        //    if (AHU_Area_textBox.Text != null && AHU_Area_textBox.Text != "")
-        //    {
-        //        ZoneArea += Program.UTIL.ToDoubleOrZero(AHU_Area_textBox.Text.ToString());
-        //    }
-        //    if (Zone_Qmax_textBox.Text != null && Zone_Qmax_textBox.Text != "")
-        //    {
-        //        Qmax_sum = Program.UTIL.ToDoubleOrZero(Zone_Qmax_textBox.Text.ToString());
-        //    }
-        //    if (AHU_Qmax_textBox.Text != null && AHU_Qmax_textBox.Text != "")
-        //    {
-        //        Qmax_sum += Program.UTIL.ToDoubleOrZero(AHU_Qmax_textBox.Text.ToString());
-        //    }
-
-        //    double dtheta = 10;
-        //    string[][] v = Program.DB.getValue(DB.type.BaseDB_Heating, "공급환수온도", "공급온도, 환수온도", "공급환수온도='" + SLRL + "'");
-        //    if (v.Length > 0)
-        //    {
-        //        dtheta = Program.UTIL.ToDoubleOrZero(v[0][0]) - Program.UTIL.ToDoubleOrZero(v[0][1]);
-        //    }
-        //    double Volume = Qmax_sum * 3600 / (4.18 * dtheta) / 60; // Liter/min 
-
-
-        //    PipeD = 21.7;
-        //    PipeInsD = 10;
-        //    if (Volume > 0)
-        //    {
-        //        string[][] P = Program.DB.querySQL(DB.type.BaseDB_Heating, "Select lpm_max, 외경,호칭경A From 부피별관경 Order by 외경 DESC");
-        //        if (P.Length > 0)
-        //        {
-        //            for (int a = 0; a < P.Length; a++)
-        //            {
-        //                if (Program.UTIL.ToDoubleOrZero(P[a][0]) >= Volume)
-        //                {
-        //                    PipeD = Program.UTIL.ToDoubleOrZero(P[a][1]);
-        //                }
-        //            }
-        //        }
-
-        //        P = Program.DB.querySQL(DB.type.BaseDB_Heating, "Select 호칭경A From 부피별관경 Where 외경='" + PipeD + "'");
-        //        if (P.Length > 0)
-        //        {
-        //            PipeD_comboBox.SelectedItem = P[0][0] + "A";
-        //        }
-        //    }
-        //    PipeInsD_textBox.Text = PipeInsD.ToString();
-        //    Program.UTIL.textBox_doubleComa(PipeInsD_textBox, true, 1);
-
-        //    PipeIns_Ramda = 0.035;
-        //    PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
-        //    Program.UTIL.textBox_doubleComa(PipeIns_Ramda_textBox, true, 3);
-
-        //    PipeIns_textBox.Text = "보온단열재";
-        //    PipeIns = "보온단열재";
-        //}
-        //private void PipeIns_button_Click(object sender, EventArgs e)
-        //{
-        //    MaterialDB InsDB_form = new MaterialDB();
-        //    DialogResult result = InsDB_form.ShowDialog();
-        //    if (result == DialogResult.OK)
-        //    {
-        //        PipeIns = InsDB_form.Select[1];
-        //        PipeIns_textBox.Text = PipeIns;
-
-        //        PipeIns_Ramda = Program.UTIL.ToDoubleOrZero(InsDB_form.Select[4]);
-        //        PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
-        //        Program.UTIL.textBox_doubleComa(PipeIns_Ramda_textBox, true, 3);
-        //    }
-        //}
-        //private void PipeIns_textBox_TextChanged(object sender, EventArgs e)
-        //{
-        //    if (PipeIns_textBox.Text != null)
-        //    {
-        //        PipeIns = PipeIns_textBox.Text;
-        //    }
-        //}
         private void PumpUse_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (PumpUse_comboBox.SelectedItem != null)
@@ -2402,7 +2319,6 @@ namespace main.contents
             Dispump();
 
         }
-
         private void PumpHead_button_Click(object sender, EventArgs e)
         {
             PumpCal pumppower_form = new PumpCal();
@@ -2426,7 +2342,6 @@ namespace main.contents
                 ChangeVisble_Pump("");
             }
         }
-
         private void GPumpMethod_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (GPumpMethod_comboBox.SelectedItem != null)
@@ -2441,8 +2356,6 @@ namespace main.contents
             }
 
         }
-
-
         private void ChangeVisble_Pump(String PumpMethod)
         {
             if (PumpMethod == "1차펌프")
@@ -2516,7 +2429,6 @@ namespace main.contents
                 Pump_dataGridView.Rows.Clear();
             }
         }
-
         private void ChangeVisble_GPump(String PumpMethod)
         {
             if (PumpMethod == "1차펌프")
@@ -2612,7 +2524,6 @@ namespace main.contents
                 { Load_Pump_Table(0, Pump1); }
             }
         }
-
         private void Pump2_button_Click(object sender, EventArgs e)
         {
             if (Pump_dataGridView.Rows.Count == 1)
@@ -2631,7 +2542,6 @@ namespace main.contents
                 { Load_Pump_Table(1, Pump2); }
             }
         }
-
         private void GPump1_button_Click(object sender, EventArgs e)
         {
             if (Pump_dataGridView.Rows.Count == 1)
@@ -2650,7 +2560,6 @@ namespace main.contents
                 { Load_Pump_Table(1, GPump1); }
             }
         }
-
         private void Create_Pump_Table()
         {
             Pump_dataGridView.Columns.Clear();
@@ -2677,7 +2586,6 @@ namespace main.contents
             Pump_dataGridView.Visible = true;
 
         }
-
         private void Load_Pump_Table(int nRow, String PumpNum)
         {
 
@@ -2708,7 +2616,6 @@ namespace main.contents
                 }
             }
         }
-
         private void Save_Pump()
         {
             if (Pump_dataGridView.Rows.Count == 0) { return; }
@@ -2824,7 +2731,6 @@ namespace main.contents
                 ce1Type = null;
             }
         }
-
         private void ce2Type_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ce2Type_comboBox.SelectedItem != null)
@@ -2842,7 +2748,6 @@ namespace main.contents
                 ce2Type = null;
             }
         }
-
         private void Create_ce_Table()
         {
             DataGridViewCheckBoxColumn ce_checkBoxColumn = new DataGridViewCheckBoxColumn();
@@ -2923,7 +2828,6 @@ namespace main.contents
                 }
             }
         }
-
         private void ce_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -2942,7 +2846,6 @@ namespace main.contents
                 ce_dataGridView.Rows.Remove(ce_dataGridView.Rows[ce_SelectRow]);
             }
         }
-
         private void Load_ce(string CE)
         {
             String[][] Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,공급설비종류,공급설비,가동시간", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + CE + "'");
@@ -3008,7 +2911,6 @@ namespace main.contents
                 }
             }
         }
-
         private Boolean ce_datagridviewDesign(DataGridViewCell cell, int column, int row)
         {
             if (ce_dataGridView.Rows[row].Cells[2].Value != null && ce_dataGridView.Rows[row].Cells[2].Value.ToString() == "복사난방")
@@ -3049,7 +2951,6 @@ namespace main.contents
             }
             else return false;
         }
-
         private void Save_ce()
         {
             Program.DB.deleteValue(DB.type.ProjDB, "Heating_ce_Form", "난방시스템 = '" + Num + "'");
@@ -3069,7 +2970,6 @@ namespace main.contents
                     공급설비 + "','" + ce_dataGridView.Rows[n].Cells[7].Value + "','" + ce_dataGridView.Rows[n].Cells[8].Value + "'", "");
             }
         }
-
         #endregion
 
         #region 이미지
@@ -3153,7 +3053,7 @@ namespace main.contents
             {
                 SubDist2pictureBox.Visible = true;
                 SubDist2pictureBox.Visible = true;
-                SubDist2pictureBox.Location = new Point(480, 157);
+                SubDist2pictureBox.Location = new Point(620, 157);
                 SubDist2pictureBox.Size = new System.Drawing.Size(53, 65);
                 SubDist2pictureBox.Load(Program.gPath + image2[0][0]);
                 SubDist2pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -3210,7 +3110,7 @@ namespace main.contents
                 if (stoimage.Length > 0)
                 {
                     StopictureBox.Visible = true;
-                    StopictureBox.Location = new Point(560, 80);
+                    StopictureBox.Location = new Point(490, 80);
                     StopictureBox.Size = new System.Drawing.Size(125, 170);
                     StopictureBox.Load(Program.gPath + stoimage[0][0]);
                     StopictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -3224,7 +3124,7 @@ namespace main.contents
             {
                 string[][] stoimage = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", "항목유형='분배설비' And 설비유형='펌프'");
                 stopumppictureBox.Visible = true;
-                stopumppictureBox.Location = new Point(540, 148);
+                stopumppictureBox.Location = new Point(470, 148);
                 stopumppictureBox.Size = new System.Drawing.Size(22, 38);
                 stopumppictureBox.Load(Program.gPath + stoimage[0][0]);
                 stopumppictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -3621,21 +3521,27 @@ namespace main.contents
 
             Boiler_dataGridView.Columns.Clear();
             Boiler_dataGridView.Rows.Clear();
+            Boiler_dataGridView.Visible = false;
 
             HP_dataGridView.Columns.Clear();
             HP_dataGridView.Rows.Clear();
+            HP_dataGridView.Visible = false;
 
             AS_dataGridView.Columns.Clear();
             AS_dataGridView.Rows.Clear();
+            AS_dataGridView.Visible = false;
 
             Solar_dataGridView.Columns.Clear();
             Solar_dataGridView.Rows.Clear();
+            Solar_dataGridView.Visible = false;
 
             FC_dataGridView.Columns.Clear();
             FC_dataGridView.Rows.Clear();
+            FC_dataGridView.Visible = false;
 
             DH_dataGridView.Columns.Clear();
             DH_dataGridView.Rows.Clear();
+            DH_dataGridView.Visible = false;
 
             PumpUse_comboBox.SelectedItem = null;
             PumpMethod_comboBox.SelectedItem = null;
@@ -3737,55 +3643,55 @@ namespace main.contents
             if (Value.Length > 0)
             {
                 SelectBoiler_nonsplit = Value[0][0];
-                Split_Boiler(SelectBoiler_nonsplit);
-
-                BoilerNum_nonsplit = Value[0][1];
-                Split_BoilerNum(BoilerNum_nonsplit);
                 
                 if (SelectBoiler_nonsplit != "" && SelectBoiler_nonsplit != null)
                 {
                     HeatS_type = "수방식";
+                    Split_Boiler(SelectBoiler_nonsplit);
+
+                    BoilerNum_nonsplit = Value[0][1];
+                    Split_BoilerNum(BoilerNum_nonsplit);
+
                 }
             }
             Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "연료전지번호,연료전지대수,연료전지설치유형,연료전지생산유형", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
                 SelectFC_nonsplit = Value[0][0];
-                Split_FC(SelectFC_nonsplit);
-
-                FCNum_nonsplit = Value[0][1];
-                Split_FCNum(FCNum_nonsplit);
-
-                FCElecInstall_nonsplit = Value[0][2];
-                Split_FCElecInstall(FCElecInstall_nonsplit);
-
-                FCElecHeat_nonsplit = Value[0][3];
-                Split_FCElecHeat(FCElecHeat_nonsplit);
                 
                 if (SelectFC_nonsplit != "" && SelectFC_nonsplit != null)
                 {
+                    Split_FC(SelectFC_nonsplit);
+
+                    FCNum_nonsplit = Value[0][1];
+                    Split_FCNum(FCNum_nonsplit);
+
+                    FCElecInstall_nonsplit = Value[0][2];
+                    Split_FCElecInstall(FCElecInstall_nonsplit);
+
+                    FCElecHeat_nonsplit = Value[0][3];
+                    Split_FCElecHeat(FCElecHeat_nonsplit);
                     HeatS_type = "수방식";
                 }
             }
-
 
             Value = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "태양열번호,모듈개수,모듈방위,모듈기울기", "번호 = '" + ID + "'");
             if (Value.Length > 0)
             {
                 SelectSolar_nonsplit = Value[0][0];
-                Split_Solar(SelectSolar_nonsplit);
-
-                SolarNum_nonsplit = Value[0][1];
-                Split_SolarNum(SolarNum_nonsplit);
-
-                SolarDirection_nonsplit = Value[0][2];
-                Split_SolarDirection(SolarDirection_nonsplit);
-
-                SolarDegree_nonsplit = Value[0][3];
-                Split_SolarDegree(SolarDegree_nonsplit);
 
                 if (SelectSolar_nonsplit != "" && SelectSolar_nonsplit != null)
                 {
+                    Split_Solar(SelectSolar_nonsplit);
+
+                    SolarNum_nonsplit = Value[0][1];
+                    Split_SolarNum(SolarNum_nonsplit);
+
+                    SolarDirection_nonsplit = Value[0][2];
+                    Split_SolarDirection(SolarDirection_nonsplit);
+
+                    SolarDegree_nonsplit = Value[0][3];
+                    Split_SolarDegree(SolarDegree_nonsplit);
                     HeatS_type = "수방식";
                 }
             }
@@ -3802,16 +3708,20 @@ namespace main.contents
                     if (Value[0][0 + 4 * i] != "")
                     {
                         SelectHP_nonsplit[i] = Value[0][0 + 4 * i];
-                        Split_HP(SelectHP_nonsplit[i], HeatSource);
+                        
+                        if (SelectHP_nonsplit[i] != "" && SelectHP_nonsplit[i] != null)
+                        {
+                            Split_HP(SelectHP_nonsplit[i], HeatSource);
 
-                        HPSupply_nonsplit[i] = Value[0][1 + 4 * i];
-                        Split_HPSupply(HPSupply_nonsplit[i]);
+                            HPSupply_nonsplit[i] = Value[0][1 + 4 * i];
+                            Split_HPSupply(HPSupply_nonsplit[i]);
 
-                        HPControl_nonsplit[i] = Value[0][2 + 4 * i];
-                        Split_HPControl(HPControl_nonsplit[i]);
+                            HPControl_nonsplit[i] = Value[0][2 + 4 * i];
+                            Split_HPControl(HPControl_nonsplit[i]);
 
-                        HPNum_nonsplit[i] = Value[0][3 + 4 * i];
-                        Split_HPNum(HPNum_nonsplit[i]);
+                            HPNum_nonsplit[i] = Value[0][3 + 4 * i];
+                            Split_HPNum(HPNum_nonsplit[i]);
+                        }
                     }
                 }
 
@@ -3820,12 +3730,13 @@ namespace main.contents
             if (Value.Length > 0)
             {
                 SelectAS_nonsplit = Value[0][0];
-                Split_AS(SelectAS_nonsplit);
-
-                ASNum_nonsplit = Value[0][1];
-                Split_ASNum(ASNum_nonsplit);
                 if (SelectAS_nonsplit != "" && SelectAS_nonsplit != null)
                 {
+                    Split_AS(SelectAS_nonsplit);
+
+                    ASNum_nonsplit = Value[0][1];
+                    Split_ASNum(ASNum_nonsplit);
+
                     HeatS_type = "수방식";
                 }
                 
@@ -3834,10 +3745,11 @@ namespace main.contents
             if (Value.Length > 0)
             {
                 SelectDH_nonsplit = Value[0][0];
-                Split_DH(SelectDH_nonsplit);
 
                 if (SelectDH_nonsplit != "" && SelectDH_nonsplit != null)
                 {
+                    Split_DH(SelectDH_nonsplit);
+
                     HeatS_type = "수방식";
                 }
             }

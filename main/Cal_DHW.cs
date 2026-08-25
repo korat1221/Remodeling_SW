@@ -358,7 +358,6 @@ namespace main
                 StorageType = Value[0][4];
             }
         }
-
         public void LoadCalc_Qd() //수정함 //LoadCalc
         {
             //입력 변수
@@ -525,7 +524,6 @@ namespace main
                 Qw_d[mth] = Qwd_V[mth] + Qwd_S[mth] + Qwd_A[mth];
             }
         }
-
         public void  LoadCalc_Pump(string ProjNum)
         { 
             //펌프
@@ -629,7 +627,6 @@ namespace main
                 }
             }
         }
-
         public void LoadCalc_Solar(string ProjNum)
         {
 
@@ -643,7 +640,6 @@ namespace main
                 }
             }
         }
-
         public void Calc_Solar(DHW_Solar solar, string ProjNum, string direction, string degree)
         {
             double qsol_HN_d, dtheta_korr;
@@ -651,23 +647,15 @@ namespace main
             string[][] Solarvalue;
             double Ac;
 
-            int solarDegree = (int)Program.UTIL.ToDoubleOrZero(degree.Replace("˚", ""));
-            int solarDirection = CALC.ConvertDirectionWord(direction);
-            CALC.Run_Climate_RESystem(solarDegree, solarDirection);
-            double[] solarItot = CALC.Itot_mth.GetValueOrDefault((solarDegree, solarDirection));
-
-            double solarItotMax = 0;
             for (int mth = 0; mth < 12; mth++)
             {
-                if (solarItot != null && solarItot[mth] > solarItotMax) solarItotMax = solarItot[mth];
-            }
-
-            for (int mth = 0; mth < 12; mth++)
-            {
-                qsol_HN_d = solarItot != null ? solarItot[mth] : 0;
+                string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "'and 방향='" + direction + "' and 각도 ='" + degree + "' and 기간 ='" + (mth + 1) + "월'");
+                qsol_HN_d = Program.UTIL.ToDoubleOrZero(value[0][0]);
                 qsol_HN_mth[mth] = qsol_HN_d * dmth[mth] * 24 / 1000;
 
-                Ac = Qw_outg[mth] * 2 * 1.03 * 1.03 / solarItotMax / 24 * 1000;
+                string[][] value2 = Program.DB.querySQL(DB.type.BaseDB_HCneed, "Select Max(일사량) from 기후데이터_전일사량 where 지역명 = '" + 지역[0][0] + "' and 방향 = '" + direction + "' and 각도 = '" + degree + "'");
+
+                Ac = Qw_outg[mth] * 2 * 1.03 * 1.03 / Program.UTIL.ToDoubleOrZero(value2[0][0]) / 24 * 1000;
                 if (solar.M_Area() * solar.M_Count() / Ac < 1)
                 {
                     dtheta_korr = Math.Min(-20 + 20 * solar.M_Area() * solar.M_Count() / Ac, 0);
@@ -676,7 +664,7 @@ namespace main
                 {
                     dtheta_korr = Math.Min(-14 + 14 * solar.M_Area() * solar.M_Count() / Ac, 0);
                 }
-                string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_태양열", "온도차", "지역명 ='" + 지역[0][0] + "' and 방위='" + direction+ "' and 기간 ='" + (mth + 1) + "월'");
+                value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_태양열", "온도차", "지역명 ='" + 지역[0][0] + "' and 방위='" + direction+ "' and 기간 ='" + (mth + 1) + "월'");
                 eta[mth] = solar.eta() * solar._50() - solar.K1() * Program.UTIL.ToDoubleOrZero(value[0][0]) / qsol_HN_d - solar.K2() * Program.UTIL.ToDoubleOrZero(value[0][0]) * Program.UTIL.ToDoubleOrZero(value[0][0]) / qsol_HN_d;
                 if (eta[mth] < 0) { eta[mth] = solar.eta(); }
                 qsol_mth[mth] = eta[mth] * qsol_HN_mth[mth];
@@ -693,7 +681,6 @@ namespace main
             }
             Save_Solar(ProjNum, solar.Num());
         }
-
         private void Save_Solar(string ProjNum, string SolarNum)
         {
             string RESystemNum = null;
@@ -773,7 +760,6 @@ namespace main
             }
 
         }
-
         public void LoadCalc_FC(string ProjNum)
         {
             for (int n = 0; n < SelectFC_split.Count; n++)
@@ -794,7 +780,6 @@ namespace main
                 }
             }
         }
-
         private void Calc_FC(string ProjNum, string FCNum, double Pfc_th, double Pfc_el, double eta_th, double eta_el, double eta_tot, string FCElecInstall, string FCElecHeat, int FC_nea)
         {
             double top = 0;
@@ -971,7 +956,6 @@ namespace main
                 }
             }
         }
-
         public void Calc_Qh_gen_Boiler(String Num, String Combi, String Type, double Power, double eta_Pn, double eta_Pint, double W, double W_0, double count)
         {
             string[][] Value = Program.DB.getValue(DB.type.BaseDB_Heating, "보일러", "온도보정계수K,온도보정계수L,대기상태열손실E,대기상태열손실F,보조설비G_Pn,보조설비H_Pn,보조설비n_Pn,보조설비G_Pint,보조설비H_Pint,보조설비n_Pint", "종류 = '" + Type + "'");
@@ -1062,7 +1046,6 @@ namespace main
                 Qw_f[mth] = Pi_gen_combi_corr * tw_gen_op_sng[mth] / COPw_sng_corr + Pi_gen_combi_corr * tw_gen_op_combi[mth] / COPw_combi_corr;
             }
         }
-
         public void LoadCalc_DH(string ProjNum)
         {
             for (int n = 0; n < SelectDH_split.Count; n++)
@@ -1185,7 +1168,6 @@ namespace main
             return this.Control_pump;
         }
     }
-
     public class DHW_Boiler
     {
         String Num_Boiler; string combi_Boiler; String Carrier_Boiler; String Type_Boiler; double Power_Boiler; double eta_Pn_Boiler; double eta_Pint_Boiler; double W_Boiler; double W_0_Boiler; double count_Boiler;
@@ -1235,7 +1217,6 @@ namespace main
         public double H_pint() { return this.H_pint_Boiler; }
         public double n_pint() { return this.n_pint_Boiler; }
     }
-
     public class DHW_Solar
     {
         String Solar_Num, Solar_Direction, Solar_Degree;

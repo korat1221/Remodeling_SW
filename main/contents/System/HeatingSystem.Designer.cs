@@ -755,7 +755,7 @@ namespace main.contents
             // 
             // HP_tabPage
             // 
-            HP_tabPage.BackColor = Color.White;
+            HP_tabPage.BackColor = Color.Transparent;
             HP_tabPage.Controls.Add(HP_Remove_button);
             HP_tabPage.Controls.Add(HP_dataGridView);
             HP_tabPage.Location = new Point(4, 25);
@@ -764,6 +764,7 @@ namespace main.contents
             HP_tabPage.Size = new Size(978, 127);
             HP_tabPage.TabIndex = 2;
             HP_tabPage.Text = "히트펌프";
+            HP_tabPage.UseVisualStyleBackColor = true;
             // 
             // HP_Remove_button
             // 
@@ -1700,7 +1701,6 @@ namespace main.contents
             PipeIns_textBox.Size = new Size(200, 15);
             PipeIns_textBox.TabIndex = 188;
             PipeIns_textBox.TextAlign = HorizontalAlignment.Center;
-            
             // 
             // PipeIns_Ramda_textBox
             // 
