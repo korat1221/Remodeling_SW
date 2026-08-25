@@ -1604,7 +1604,7 @@ namespace main.contents
                 "존 = '" + ZoneNum + "' AND 방위 = '" + direction + "' And " + SkylightCondition +" And (외피유형 = '창호' or (외피유형 = '커튼월창' And 커튼월부위 <> '패널부분'))");
 
             //구조체번호별로 면적을 더하면서, 그 즉시 지금까지 중 제일 큰 합계인지도 같이 체크한다
-            Dictionary<string, double> GlazingArea = new Dictionary<string, double>();
+            Dictionary<string, double> WinCW_Area = new Dictionary<string, double>();
             double MaxArea = 0;
             string MaxId = null;
             bool MaxIsWindow = true;
@@ -1613,17 +1613,17 @@ namespace main.contents
             {
                 string Id = Glazing[i][3];
                 double Area = Program.UTIL.ToDoubleOrZero(Glazing[i][1]);
-                if (GlazingArea.ContainsKey(Id)) { GlazingArea[Id] += Area; }
-                else { GlazingArea[Id] = Area; }
+                if (WinCW_Area.ContainsKey(Id)) { WinCW_Area[Id] += Area; }
+                else { WinCW_Area[Id] = Area; }
 
-                if (GlazingArea[Id] > MaxArea)
+                if (WinCW_Area[Id] > MaxArea)
                 {
-                    MaxArea = GlazingArea[Id];
+                    MaxArea = WinCW_Area[Id];
                     MaxId = Id;
                     MaxIsWindow = Glazing[i][5] == "창호";
                     MainType_ID = Glazing[i][0];
                     Main_WinCW = Glazing[i][2];
-                    hLi = Program.UTIL.ToDoubleOrZero(Glazing[i][4]);
+                    hLi = Math.Min(hR, Program.UTIL.ToDoubleOrZero(Glazing[i][4]) -100); //100은 중심선으로부터의 슬라브 두께 
                 }
             }
 
