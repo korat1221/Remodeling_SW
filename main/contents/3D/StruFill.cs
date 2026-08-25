@@ -17,6 +17,7 @@ namespace main.contents._3D
         public StruFill(sub3dZoneInfo parent)
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
+            Program.UTIL.IgnoreGridError(this);
 
             pform = parent;
 

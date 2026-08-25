@@ -162,6 +162,7 @@ namespace main
                     {
                         forms[i].TopLevel = false;
                         openForm.splitContainer1.Panel2.Controls.Add(forms[i]);
+                        Program.UTIL.IgnoreGridError(forms[i]);
                     }
 
                     return;

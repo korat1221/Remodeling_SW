@@ -26,6 +26,7 @@ public partial class TB_DB : Form
     public TB_DB(String TBType)
     {
         InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
+        Program.UTIL.IgnoreGridError(this);
         this.TBType = TBType;
         TBType_textBox.Text = TBType;
         load_table_DB();

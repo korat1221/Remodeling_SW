@@ -26,6 +26,20 @@ namespace main
         {
             return double.TryParse(value?.ToString(), out double result) ? result : 0;
         }
+        // 옛날 프로젝트 데이터에 저장된 값이 지금의 콤보박스 목록에 없으면(DB 값 이름 변경, 컬럼 나중 추가 등)
+        // DataGridViewComboBoxCell이 ArgumentException을 던져서 기본 오류 대화상자가 뜬다.
+        // root 안의 모든 DataGridView에 대해 그 예외를 무시하고 넘어가도록 DataError를 걸어준다.
+        public void IgnoreGridError(Control root)
+        {
+            if (root is DataGridView grid)
+            {
+                grid.DataError += (s, e) => { e.ThrowException = false; };
+            }
+            for (int i = 0; i < root.Controls.Count; i++)
+            {
+                IgnoreGridError(root.Controls[i]);
+            }
+        }
         public void trim(string[] arr)
         {
             int i = -1;

@@ -22,6 +22,7 @@ namespace main.subcontents.RESystem_PV
         public PV_BatteryDB()
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
+            Program.UTIL.IgnoreGridError(this);
 
             //이미지 만들기
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '태양광시스템'");

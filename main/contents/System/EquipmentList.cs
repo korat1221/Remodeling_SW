@@ -62,6 +62,7 @@ namespace main.contents
         public EquipmentList()
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
+            this.VisibleChanged += new EventHandler(EquipmentList_VisibleChanged);
             프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");//User_GroundWHP
             Program.DB.initTable(DB.type.ProjDB, "User_Boiler");
             Program.DB.initTable(DB.type.ProjDB, "User_ABS");
@@ -117,8 +118,15 @@ namespace main.contents
             Create_Fan_Table();
             //단위계산
             unit_comboBox.Items.AddRange(new string[] { "열량", "유량", "풍량","" });
+        }
 
-            LoadData();
+        //화면에 실제로 보여질 때만 데이터를 불러온다 (앱 시작하자마자 전부 로드하지 않도록)
+        private void EquipmentList_VisibleChanged(object sender, EventArgs e)
+        {
+            if (main.MainContents.currentForm == main.MainContents.FormID.EquipmentList)
+            {
+                LoadData();
+            }
         }
 
         public void LoadData()

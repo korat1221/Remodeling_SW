@@ -27,6 +27,7 @@ namespace main.subcontents.ConstructionBlind
         {
             this.SelectNum = Num;
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
+            Program.UTIL.IgnoreGridError(this);
             //heatingSystem = system;
             load_table_DB();
             string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '차양정보'");

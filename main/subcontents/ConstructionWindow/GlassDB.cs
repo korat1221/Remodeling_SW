@@ -24,6 +24,7 @@ namespace main.subcontents
         public GlassDB()
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
+            Program.UTIL.IgnoreGridError(this);
             load_table_GlassDB();
 
             //복층/삼중/단창 콤보박스

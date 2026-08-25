@@ -26,6 +26,7 @@ namespace main.subcontents.HeatingSystem
         public Heating_ceZone(String SystemNum, String SelectZone_nonsplit, String CEType)
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
+            Program.UTIL.IgnoreGridError(this);
             this.SystemNum = SystemNum;
             ceType = CEType;
             ceType_textBox.Text = ceType;

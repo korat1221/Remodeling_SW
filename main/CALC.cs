@@ -1496,7 +1496,7 @@ namespace main
                               "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.QC_out_ahu[i] + "','" + cc1.QC_ce_ahu[i] + "','" + cc1.QC_d_ahu[i] + "','" + cc1.QC_s_ahu[i] + "','" + cc1.QC_nd_ahu[i] + "'", "번호,월");
 
                 }
-                if (cc1.CG != "실외기12kW")
+                if (cc1.CG != "실외기")
                 {
 
                     Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,압축기종류",

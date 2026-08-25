@@ -41,6 +41,7 @@ namespace main.contents
         {
             Program.DB.initTables(DB.type.ProjDB);
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
+            Program.UTIL.IgnoreGridError(this);
             create_datagridview1();
             create_datagridview2();
         }

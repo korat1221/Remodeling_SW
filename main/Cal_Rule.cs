@@ -871,7 +871,7 @@ namespace main
                             else { Cooling1.Cal_CS(ProjNum); }
                         }
                     }
-                    else if (검토유형 == "냉난방EHP" && (Cooling1.CG == "실외기12kW" || Cooling1.CG == "공냉식냉동기"))
+                    else if (검토유형 == "냉난방EHP" && (Cooling1.CG == "실외기" || Cooling1.CG == "공냉식냉동기"))
                     {
                         if(Cooling1.SelectCG.Count >0)
                         {
@@ -886,7 +886,7 @@ namespace main
                         }
 
                     }
-                    else if (검토유형 == "냉방EHP" && (Cooling1.CG == "실외기12kW" || Cooling1.CG == "공냉식냉동기"))
+                    else if (검토유형 == "냉방EHP" && (Cooling1.CG == "실외기" || Cooling1.CG == "공냉식냉동기"))
                     {
                         if (Cooling1.SelectCG.Count > 0)
                         {

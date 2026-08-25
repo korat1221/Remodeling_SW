@@ -31,6 +31,7 @@ namespace main.subcontents
         public DoorDB(String DoorNum, String[] Select, string DiIndi)
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
+            Program.UTIL.IgnoreGridError(this);
             Create_Table();
             if (Select[0] != null)
             {
