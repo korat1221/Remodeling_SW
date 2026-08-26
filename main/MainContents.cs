@@ -703,8 +703,8 @@ namespace main
             {
                 if (message.Contains("43"))
                 {
-                    
-                    if (formParam.formID == 53 || formParam.formID == 54 || formParam.formID == 55 || formParam.formID == 69 || formParam.formID == 24 || formParam.formID == 25)
+
+                    if (formParam != null && (formParam.formID == 53 || formParam.formID == 54 || formParam.formID == 55 || formParam.formID == 69 || formParam.formID == 24 || formParam.formID == 25))
                     {
                         Program.UTIL.setObjInfo(ProjectList.CurProjID);
 
