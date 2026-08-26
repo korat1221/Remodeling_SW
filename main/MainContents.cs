@@ -830,6 +830,8 @@ namespace main
             int i = -1;
             while (++i < forms.Length)
             {
+                try
+                {
                 if (i == 29)
                 {
                     List_ConstructionWindow f = (List_ConstructionWindow)forms[i];
@@ -1015,6 +1017,11 @@ namespace main
                     SolarTherm f = (SolarTherm)forms[i];
 
                     f.LoadData("");
+                }
+                }
+                catch (Exception)
+                {
+                    // 화면 하나에서 예외가 나도 나머지 화면들의 트리 메뉴 갱신은 계속 진행되도록 함
                 }
             }
         }

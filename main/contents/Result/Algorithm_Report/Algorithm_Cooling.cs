@@ -101,7 +101,7 @@ namespace main.contents.Result
             while (++i < 번호.Length)
             {
                 string Num = 번호[i][0];
-                items.Add("CoolingReport_new.html"); // 예시 코드: 메인 메뉴 동적 할당
+                items.Add("Algorithm_Cooling.html"); // 예시 코드: 메인 메뉴 동적 할당
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
                 if (Value.Length > 0)
                 {
@@ -195,7 +195,10 @@ namespace main.contents.Result
                     foreach (string k in zonelist)
                     {
                         string[][] zonecheck = Program.DB.querySQL(DB.type.ProjDB, "Select 순바닥면적 From ZoneGeneral_Form Where 존번호 ='" + k + "'");
-                        zoneArea += Program.UTIL.ToDoubleOrZero(zonecheck[0][0].ToString());
+                        if (zonecheck.Length > 0)
+                        {
+                            zoneArea += Program.UTIL.ToDoubleOrZero(zonecheck[0][0].ToString());
+                        }
                     }
                     ZoneData[6].Add(new { idx = i, val = string.Format("{0:F2}", zoneArea) });
                 }
