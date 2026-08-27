@@ -722,129 +722,78 @@ namespace main.contents
         {
             try
             {
-                if (ZoneName == null)
+                // 존 이름조차 없으면 아직 만들다 만 존 → 저장할 것 없음. 화면 전환은 막지 않는다.
+                if (string.IsNullOrEmpty(ZoneNum) || ZoneName == null)
                 {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
+                    if (isManualSave && ZoneName == null)
                     {
                         MessageBox.Show("존 이름을 입력하세요.");
-                        return false;
                     }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else if (Ventilation_checkBox.Checked && AHUType == null)
-                {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        MessageBox.Show("환기방식을 선택하세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else if (Usage == null)
-                {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        MessageBox.Show("용도프로필을 선택하세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else if (CeilingHeight == 0) 
-                {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        MessageBox.Show("천장고를 입력하세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else if (StartTime_comboBox.SelectedItem == null || EndTime_comboBox.SelectedItem == null)
-                {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        MessageBox.Show("사용시간 및 종료시간을 선택하세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else if (WeekUseDay_comboBox == null)
-                {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        MessageBox.Show("사용시간 및 종료시간을 선택하세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else if (PersonNum_textBox.Text == null)
-                {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        MessageBox.Show("재실자수를 입력하세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    Save(isManualSave);
                     return true;
                 }
+
+                // 빠진 항목을 모은다.
+                List<string> missing = new List<string>();
+                if (Ventilation_checkBox.Checked && AHUType == null)
+                {
+                    missing.Add("환기방식");
+                }
+                if (Usage == null)
+                {
+                    missing.Add("용도프로필");
+                }
+                if (CeilingHeight == 0)
+                {
+                    missing.Add("천장고");
+                }
+                if (StartTime_comboBox.SelectedItem == null || EndTime_comboBox.SelectedItem == null)
+                {
+                    missing.Add("사용시간");
+                }
+                if (WeekUseDay_comboBox.SelectedItem == null)
+                {
+                    missing.Add("주이용일");
+                }
+                if (string.IsNullOrEmpty(PersonNum_textBox.Text))
+                {
+                    missing.Add("재실자수");
+                }
+
+                // 안내(막지는 않는다) + 미입력항목 목록을 DB에 함께 저장한다.
+                // DB 저장값은 콤마가 안 들어가도록 '+'로 잇는다.
+                if (missing.Count > 0)
+                {
+                    MessageBox.Show(string.Join(", ", missing) + " 항목이 비어 있습니다.");
+                }
+                Save(string.Join("+", missing), isManualSave);
+                return true;
             }
             catch (Exception ex)
             {
                 // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
                 System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
-                return false;
+                return true;
             }
         }
 
-        private void Save(bool isManualSave = false)
+        private void Save(string missingItems, bool isManualSave = false)
         {
             Save_Image();
-            //존일반정보 폼에 해당하는 정보만 저장 
+            //존일반정보 폼에 해당하는 정보만 저장
             //건물정보, 3D정보는 저장 안함
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,프로젝트유형,존이름,실제어방식,냉난방유무,환기유무,환기방식," +
                 "용도프로필,천장고,시작시간,종료시간,주이용일,재실자수,기기발열수준," +
                 "일일급탕요구량,냉난방시간,사용시간,공조시간,연이용일수,재실밀도,재실수준,일일인체발열,면적당인체발열,일일기기발열,면적당기기발열," +
-                "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적,선택열회수기,기존존,증축여부,냉방습도,난방습도",
+                "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적,선택열회수기,기존존,증축여부,냉방습도,난방습도,미입력항목",
             "'" + ZoneNum + "','" + 프로젝트유형[0][0] + "','" + ZoneName + "','" + RoomControl + "','" + HCType + "','" + Ventilation_checkBox.Checked.ToString() + "','" + AHUType + "','"
             + Usage + "','" + CeilingHeight.ToString() + "','" + StartTime + "','" + EndTime + "','" + WeekUseDay.ToString() + "','" + PersonNum + "','" + EquipIHG_index + "','"
             + DHWneed.ToString() + "','" + HCTime.ToString() + "','" + UseTime.ToString() + "','" + AHUTime.ToString() + "','" + AnnualUseDay.ToString() + "','"
             + OccupancyDensity.ToString() + "','" + OccupancyDensity_index + "','" + PersonIHG_1day.ToString() + "','" + PersonIHG.ToString() + "','" + EquipIHG_1day.ToString() + "','" + EquipIHG.ToString() + "','"
             + NetVolume.ToString() + "','" + VentilationRate.ToString() + "','" + Volume_wd.ToString() + "','" + Volume_we.ToString() + "','"
-            + NetArea.ToString() + "','" + SelectHRV + "','" + SelectPreZone_nonsplit + "','" + 증축여부 + "','" + HumidC_index + "','" + HumidH_index + "'", "존번호");
+            + NetArea.ToString() + "','" + SelectHRV + "','" + SelectPreZone_nonsplit + "','" + 증축여부 + "','" + HumidC_index + "','" + HumidH_index + "','" + missingItems + "'", "존번호");
 
-            Program.DB.saveProject();            
+                        
         }
         private void reset()
         {

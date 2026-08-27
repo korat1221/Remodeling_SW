@@ -126,8 +126,7 @@ namespace main.contents.Alt
                   요소기술[8] + "','" + 리모델링안[8] + "','" +
                   요소기술[9] + "','" + 리모델링안[9]
                   + "'", "번호");
-            Program.DB.saveProject();
-            MessageBox.Show(AltNum + "." + AltName + "이 저장되었습니다.");
+            
             this.DialogResult = DialogResult.OK;
             this.Hide();
             Program.getMenuForm().DoLoadForm(58, OnLoadListProc);

@@ -553,8 +553,6 @@ namespace main.contents
                     return false;
                 }
             }
-            MessageBox.Show("저장되었습니다.");
-
 
             return true;
         }
@@ -994,7 +992,7 @@ namespace main.contents
                     }
                 }
             }
-            Program.DB.saveProject();
+            
 
             return true;
 

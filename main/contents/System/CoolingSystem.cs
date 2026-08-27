@@ -3695,52 +3695,38 @@ namespace main.contents
         {
             try
             {
+                // 명칭 없으면 아직 만들다 만 시스템 → 저장할 것 없음. 화면 전환은 막지 않는다.
                 if (Name_f == null || Name_f.Length == 0)
                 {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
+                    if (isManualSave)
                     {
                         MessageBox.Show("냉방시스템 명칭을 입력하세요");
-                        return false;
                     }
-                    else
-                    {
-                        return true;
-                    }
-
-                }
-                else if (CSource == null || CSource.Length == 0)
-                {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        MessageBox.Show(" 냉방 열원을 선택해 주세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    Save_Image();
-                    Save(isManualSave);
                     return true;
                 }
+
+                // 냉방 열원 안 골랐으면 안내만 하고 저장은 그대로 진행한다.
+                if (CSource == null || CSource.Length == 0)
+                {
+                    MessageBox.Show("냉방 열원을 선택해 주세요.");
+                }
+
+                Save_Image();
+                Save(isManualSave);
+                return true;
             }
             catch (Exception ex)
             {
                 // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
                 System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
-                return false;
+                return true;
             }
         }
         private void Save(bool isManualSave = false)
         {
             if (Save_CG() == true)
             {
-                Program.DB.saveProject();
+                
             }
             else
             {
@@ -4675,7 +4661,7 @@ namespace main.contents
                 Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관길이,배관외경,단열재,열전도율,단열두께,선형열관류율,적용방법",
                    "'" + Num + "','냉방','" + 항목[0] + "', '" + 항목[1] + "','" + 항목[2] + "', '" + 항목[3] + "', '" + 항목[4] + "', '" + 항목[5] + "','" + 항목[6] + "','" + PipeD_SelectMode + "'", "번호,배관유형");
             }
-            Program.DB.saveProject();
+            
         }
         private string GetCellValueOrNull(object value)
         {
@@ -4718,7 +4704,7 @@ namespace main.contents
                 Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','냉방','수직배관', '" + null + "','" + PipeIns + "','" + lamda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
                 Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','냉방','분기관', '" + null + "','" + PipeIns + "','" + lamda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
             }
-            Program.DB.saveProject();
+            
             Load_Pipe_Table();
         }
         private void Pipe_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -4768,7 +4754,7 @@ namespace main.contents
                 else 배관유형 = "분기관";
                 Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,단열재,열전도율", "'" + Num + "','냉방','" + 배관유형 + "','" + PipeIns + "', '" + InsDB_form.Select[4] + "'", "번호,배관유형");
             }
-            Program.DB.saveProject();
+            
             Create_Pipe_Table();
         }
         //탭변경에 따른 분배열손실 패널과 테이블 보여주는 기능

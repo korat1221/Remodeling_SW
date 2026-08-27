@@ -1072,68 +1072,40 @@ namespace main.contents
         {
             try
             {
-                 if (Type != "기존지붕")
+                // 명칭 없으면 아직 만들다 만 구조체 → 저장할 것 없음. 화면 전환은 막지 않는다.
+                if (Name_textBox.Text == "")
                 {
-                    if (TBName == null)
-                    {
-                        DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                        if (res == DialogResult.Yes)
-                        {
-                            MessageBox.Show("열교를 입력하세요.");
-                            return false;
-                        }
-                        else
-                        {
-                            return true;
-                        }
-                    }
-                    else if (Name_textBox.Text == null || Name_textBox.Text.ToString()=="")
-                    {
-                        DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                        if (res == DialogResult.Yes)
-                        {
-                            MessageBox.Show("명칭을 입력하세요.");
-                            return false;
-                        }
-                        else
-                        {
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        Save(isManualSave);
-                        return true;
-                    }
-                }
-                else if (Name_textBox.Text == null || Name_textBox.Text.ToString()=="")
-                {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
+                    if (isManualSave)
                     {
                         MessageBox.Show("명칭을 입력하세요.");
-                        return false;
                     }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    Save(isManualSave);
                     return true;
                 }
+
+                // 빠진 항목을 모은다.
+                List<string> missing = new List<string>();
+                if (Type != "기존지붕" && TBName == null)
+                {
+                    missing.Add("열교");
+                }
+
+                // 안내(막지 않음) + 미입력 목록을 '+'로 이어 DB에 저장한다.
+                if (missing.Count > 0)
+                {
+                    MessageBox.Show(string.Join(", ", missing) + " 항목이 비어 있습니다.");
+                }
+                Save(string.Join("+", missing), isManualSave);
+                return true;
             }
             catch (Exception ex)
             {
                 // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
                 System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
-                return false;
+                return true;
             }
         }
 
-        private void Save(bool isManualSave = false)
+        private void Save(string missingItems, bool isManualSave = false)
         {
             if (TBName_textBox.Text == "열교없음")
             {
@@ -1170,7 +1142,7 @@ namespace main.contents
                 "재료9종류,재료9두께," +
                 "재료10종류,재료10두께," +
                 "흡수율,열관류율,열교가산치,유효열관류율," +
-                "법규열관류율",
+                "법규열관류율,미입력항목",
                 "'" + RoofNum_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + RoofName + "','" + Type + "','" + OldRoof + "','" + UMethod + "','" + DiIndi + "','" + StructureType + "','" + TBType + "','" + TBName + "','" + Color_Envelope + "','" + ISO_KS + "','" + LinearPoint + "','" +
                 A.ToString() + "','" + B.ToString() + "','" + C.ToString() + "','" + PsiKai.ToString() + "','" + PerArea.ToString() + "','" +
                 Rse.ToString() + "','" + Rsi.ToString() + "','" + dtot.ToString() + "','" + Rtot.ToString() + "','" + dins.ToString() + "','" +
@@ -1186,8 +1158,8 @@ namespace main.contents
                 Material[9] + "','" + Material_d[9].ToString() + "','" +
                 α.ToString() + "','" + Uvalue.ToString() + "','" + dU.ToString() + "','" + Ueff.ToString() + "','" +
                 법규U.ToString()
-                 + "'", "번호");
-            Program.DB.saveProject();
+                 + "','" + missingItems + "'", "번호");
+            
            
         }
 

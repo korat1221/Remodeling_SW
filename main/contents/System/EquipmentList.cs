@@ -477,7 +477,7 @@ namespace main.contents
                  + Value[12]
                  + "'", "번호");
             }
-            Program.DB.saveProject();
+            
         }
 
         private void Load_Boiler()
@@ -784,7 +784,7 @@ namespace main.contents
                  + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "','" + Value[16] + "','"
                  + Value[17] + "'", "번호");
             }
-            Program.DB.saveProject();
+            
         }
         private void Load_ABS()
         {
@@ -1009,7 +1009,7 @@ namespace main.contents
 
                  + "'", "번호");
             }
-            Program.DB.saveProject();
+            
         }
 
         private void Load_DH()
@@ -1252,7 +1252,7 @@ namespace main.contents
                 "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "'", "번호");
             }
-            Program.DB.saveProject();
+            
         }
 
         private void Load_PV()
@@ -1426,7 +1426,7 @@ namespace main.contents
                 "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "'", "번호");
             }
-            Program.DB.saveProject();
+            
         }
 
         private void Load_FC()
@@ -1733,7 +1733,7 @@ namespace main.contents
                "'" + Value[0] + "','" +  Value[13] + "'", "번호");
                 }
             }
-            Program.DB.saveProject();
+            
         }
 
         private void Load_WP()
@@ -2083,7 +2083,7 @@ namespace main.contents
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" +
                   Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "','" + Value[16] + "','" + Value[17] + "'", "번호");
             }
-            Program.DB.saveProject();
+            
         }
 
 
@@ -2393,7 +2393,7 @@ namespace main.contents
                  Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "','" + Value[16] + "','" + Value[17] + "','" + Value[18] + "','" + Value[19] + "','" + Value[20]
                  + "','" + Value[21] + "'", "번호");
             }
-            Program.DB.saveProject();
+            
         }
         private void Load_GWHP()
         {
@@ -2661,7 +2661,7 @@ namespace main.contents
                  Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "','" + Value[16] + "','" + Value[17] + "','" + Value[18] + "','" + Value[19] + "','" + Value[20]
                  + "','" + Value[21] + "'", "번호");
             }
-            Program.DB.saveProject();
+            
         }
         private void Load_GroundHP()
         {
@@ -2845,7 +2845,7 @@ namespace main.contents
                  + Pump_dataGridView.Rows[k].Cells[6].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[8].Value.ToString() + "','" + Pump_dataGridView.Rows[k].Cells[9].Value.ToString()
                  + "'", "번호");
             }
-            Program.DB.saveProject();
+            
         }
 
         private void Load_Pump()
@@ -3201,7 +3201,7 @@ namespace main.contents
                 "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','"+ Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','"
                  + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" + Value[11]+ "'", "번호");
             }
-            Program.DB.saveProject();
+            
         }
         private void Load_ce()
         {
@@ -3458,7 +3458,7 @@ namespace main.contents
                  + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','"
                  + Value[11] + "','" + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "'", "번호");
             }
-            Program.DB.saveProject();
+            
         }
         private void Load_AirCooler()
         {
@@ -3665,7 +3665,7 @@ namespace main.contents
                  + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','"
                  + Value[11] + "','" + Value[12] + "','" + Value[13] + "'", "번호");
             }
-            Program.DB.saveProject();
+            
         }
 
 
@@ -3859,7 +3859,7 @@ namespace main.contents
                  + Value[10]
                  + "'", "번호");
             }
-            Program.DB.saveProject();
+            
         }
 
         private void Load_Solar()
@@ -4269,7 +4269,7 @@ namespace main.contents
                 Program.DB.setValue(DB.type.ProjDB, "User_AHU", "번호,회전형모터소비전력",
                 "'" + Value[0] + "','" + Value[5] + "'", "번호");
             }
-            Program.DB.saveProject();
+            
 
         }
         private void Load_AHU()
@@ -4527,7 +4527,7 @@ namespace main.contents
                 //Program.DB.setValue(DB.type.ProjDB, "User_HRV", "번호,팬모터유형,팬효율",
                 //"'" + Value[0] + "','" + Value[13] + "','" + Value[14] + "'", "번호");
             }
-            Program.DB.saveProject();
+            
         }
 
         private void HRV_dataGridView_CellContentClick(global::System.Object sender, global::System.Windows.Forms.DataGridViewCellEventArgs e)
@@ -4834,7 +4834,7 @@ namespace main.contents
                  + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" + Value[11] + "','"
                  + Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "'", "번호");
             }
-            Program.DB.saveProject();
+            
         }
         private void CoolingTop_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -5115,7 +5115,7 @@ namespace main.contents
                  + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "','" + Value[7] + "','" + Value[8] + "','" + Value[9] + "','" + Value[10] + "','" + Value[11] + "','" +
                   Value[12] + "','" + Value[13] + "','" + Value[14] + "','" + Value[15] + "','"+ Value[16] + "','"+ Value[17] + "','"+ Value[18] + "'", "번호");
             }
-            Program.DB.saveProject();
+            
         }
         private void Load_DHWHP()
         {
@@ -5261,7 +5261,7 @@ namespace main.contents
 
                 Program.DB.setValue(DB.type.ProjDB, "User_Fan", "번호,프로젝트유형,명칭,설치유형,풍량,정압,모터제어,소비전력", "'" + Value[0] + "','" + 프로젝트유형[0][0] + "','" + Value[1] + "','" + Value[2] + "','" + Value[3] + "','" + Value[4] + "','" + Value[5] + "','" + Value[6] + "'", "번호");
             }
-            Program.DB.saveProject();
+            
         }
         void Load_Fan()
         {
@@ -5699,8 +5699,9 @@ namespace main.contents
             catch (Exception ex)
             {
                 // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
+                // 저장 중 예외가 나도 화면 전환은 막지 않는다.
                 System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
-                return false;
+                return true;
             }
         }
     }

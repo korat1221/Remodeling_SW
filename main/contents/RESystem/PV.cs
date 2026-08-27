@@ -9,7 +9,7 @@ using System.Windows.Forms.VisualStyles;
 
 namespace main.contents
 {
-    public partial class PV : Form
+    public partial class PV : Form, IConfirmable
     {
 
         bool scriptable = false;
@@ -371,11 +371,25 @@ namespace main.contents
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-            if (Save())
+            ValidateAndSave(true);
+        }
+
+        // 화면 전환 / 프로그램 종료 / 툴바 저장 시 자동 호출된다. 편집 중인 PV가 있으면 저장한다.
+        // Save()가 검증 실패 시 자체 메시지를 띄우고 저장을 건너뛴다. 화면 전환은 막지 않는다(항상 true).
+        public bool ValidateAndSave(bool isManualSave = false)
+        {
+            try
             {
-                Calc();
-                MessageBox.Show("태양광시스템" + "[" + Num + "]을 저장하였습니다.");
+                if (!string.IsNullOrEmpty(Num) && Save())
+                {
+                    Calc();
+                }
             }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+            }
+            return true;
         }
         public static bool OnLoadListProc(Form form)
         {
@@ -435,7 +449,7 @@ namespace main.contents
             }
             Program.DB.setValue(DB.type.ProjDB, "PV_Form", "번호,개수,면적, 방위,기울기,통풍유무,지형물거리,지형물높이,어레이높이,설치,기존PV,fperf", "'" + Num + "','" + val[1] + "','" + val[2] + "'," +
                 "'" + val[3] + "','" + val[4] + "','" + val[5] + "','" + val[6] + "','" + val[7] + "','" + val[8] + "','" + Ins + "','" + beforePV + "','" + fperf + "'", "번호");
-            Program.DB.saveProject();
+            
             return true;
         }
 

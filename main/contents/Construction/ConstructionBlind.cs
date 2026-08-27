@@ -335,30 +335,24 @@ namespace main.contents
         {
             try
             {
-                if (Name_textBox.Text == null || Name_textBox.Text.ToString()=="")
+                // 명칭 없으면 아직 만들다 만 구조체 → 저장할 것 없음. 화면 전환은 막지 않는다.
+                if (Name_textBox.Text == null || Name_textBox.Text.ToString() == "")
                 {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
+                    if (isManualSave)
                     {
                         MessageBox.Show("명칭을 입력하세요.");
-                        return false;
                     }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    Save(isManualSave);
                     return true;
-                }               
+                }
+
+                Save(isManualSave);
+                return true;
             }
             catch (Exception ex)
             {
                 // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
                 System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
-                return false;
+                return true;
             }
         }
 
@@ -371,7 +365,7 @@ namespace main.contents
                             Name_textBox.Text.ToString() + "','" + BlindDBNum + "','" + BlindName + "','" + BlindType + "','" + BlindInstall + "','" + BlindTrans + "','" + BlindColor + "','" +
                             BlindEx.ToString() + "','" + BlindIn.ToString() + "','" + BlindSHGC.ToString() + "','" + BlindAlpha.ToString() + "','" +
                             ControlType + "','" + ControlType2 + "'", "번호");
-            Program.DB.saveProject();
+            
 
         }
 

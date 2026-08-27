@@ -493,77 +493,35 @@ namespace main.contents.Building
             {
                 if (Elec_dataGridView.Rows.Count > 0)
                 {
-                    if (Elec_StartDay_comboBox.Text == null || Elec_StartDay_comboBox.Text.ToString() == "" || Elec_EndDay_comboBox.Text == null || Elec_EndDay_comboBox.Text.ToString() == "")
+                    // 데이터가 있는 연료 중 고지서 사용기간이 비어 있는 것을 모은다.
+                    List<string> missing = new List<string>();
+                    if (Elec_StartDay_comboBox.Text == "" || Elec_EndDay_comboBox.Text == "")
                     {
-                        DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                        if (res == DialogResult.Yes)
-                        {
-                            MessageBox.Show("전기 고지서 기준 사용기간을 입력하세요.");
-                            return false;
-                        }
-                        else
-                        {
-                            return true;
-                        }
+                        missing.Add("전기 사용기간");
                     }
-                    else if (Gas_kWh_dataGridView.Rows.Count > 0)
+                    if (Gas_kWh_dataGridView.Rows.Count > 0 && (Gas_StartDay_comboBox.Text == "" || Gas_EndDay_comboBox.Text == ""))
                     {
-                        if (Gas_StartDay_comboBox.Text == null || Gas_StartDay_comboBox.Text.ToString() == "" || Gas_EndDay_comboBox.Text == null || Gas_EndDay_comboBox.Text.ToString() == "")
-                        {
-                            DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                            if (res == DialogResult.Yes)
-                            {
-                                MessageBox.Show("가스 고지서 기준 사용기간을 입력하세요.");
-                                return false;
-                            }
-                            else
-                            {
-                                return true;
-                            }
-                        }
-                        else if (DH_kWh_dataGridView.Rows.Count > 0)
-                        {
-                            if (DH_StartDay_comboBox.Text == null || DH_StartDay_comboBox.Text.ToString() == "" || DH_EndDay_comboBox.Text == null || DH_EndDay_comboBox.Text.ToString() == "")
-                            {
-                                DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                                if (res == DialogResult.Yes)
-                                {
-                                    MessageBox.Show("지역난방 고지서 기준 사용기간을 입력하세요.");
-                                    return false;
-                                }
-                                else
-                                {
-                                    return true;
-                                }
-                            }
-                            else
-                            {
-                                Save(isManualSave);
-                                return true;
-                            }
-                        }
-                        else
-                        {
-                            Save(isManualSave);
-                            return true;
-                        }
+                        missing.Add("가스 사용기간");
                     }
-                    else
+                    if (DH_kWh_dataGridView.Rows.Count > 0 && (DH_StartDay_comboBox.Text == "" || DH_EndDay_comboBox.Text == ""))
                     {
-                        Save(isManualSave);
-                        return true;
+                        missing.Add("지역난방 사용기간");
                     }
+
+                    // 안내(막지 않음) + 입력된 값은 그대로 저장한다.
+                    if (missing.Count > 0)
+                    {
+                        MessageBox.Show(string.Join(", ", missing) + " 항목이 비어 있습니다.");
+                    }
+                    Save(isManualSave);
                 }
-                else
-                {
-                    return true;
-                }
+                return true;
             }
             catch (Exception ex)
             {
                 // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
                 System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
-                return false;
+                return true;
             }
         }
 
@@ -625,8 +583,6 @@ namespace main.contents.Building
                           + "'", "연료,연도,월,단위");
                 }
             }
-            Program.DB.saveProject();
-            MessageBox.Show("저장 되었습니다.");
         }
 
 

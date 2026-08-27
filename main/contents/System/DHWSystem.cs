@@ -2356,39 +2356,33 @@ namespace main.contents
         {
             try
             {
+                // 명칭 없으면 아직 만들다 만 시스템 → 저장할 것 없음. 화면 전환은 막지 않는다.
                 if (Name == null)
                 {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
+                    if (isManualSave)
                     {
                         MessageBox.Show("급탕시스템 명칭을 입력하세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    Save(isManualSave);
-                    Save_Image();
-                    if (SelectSolar_split.Count > 0)
-                    {
-                        SaveSolar(isManualSave);
-                    }
-                    if (SelectFC_split.Count > 0)
-                    {
-                        SaveFC(isManualSave);
                     }
                     return true;
                 }
+
+                Save(isManualSave);
+                Save_Image();
+                if (SelectSolar_split.Count > 0)
+                {
+                    SaveSolar(isManualSave);
+                }
+                if (SelectFC_split.Count > 0)
+                {
+                    SaveFC(isManualSave);
+                }
+                return true;
             }
             catch (Exception ex)
             {
                 // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
                 System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
-                return false;
+                return true;
             }
         }
         private void Save(bool isManualSave = false)
@@ -2415,7 +2409,7 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Form", "번호,프로젝트유형,배관유형,공급온도,환수온도", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PipeType + "','" + theta_w_flw.ToString() + "','" + theta_w_ret.ToString() + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Form", "번호,프로젝트유형,히트펌프번호,히트펌프제어방식,히트펌프대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectHP_nonsplit + "','" + HPControl_nonsplit + "','" + HPNum_nonsplit + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Form", "번호,프로젝트유형,연료전지번호,연료전지대수,연료전지설치유형,연료전지생산유형", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectFC_nonsplit + "','" + FCNum_nonsplit + "','" + FCElecInstall_nonsplit + "','" + FCElecHeat_nonsplit + "'", "번호");
-            Program.DB.saveProject();
+            
         }
 
 
@@ -2562,7 +2556,7 @@ namespace main.contents
                 }
             }
 
-            Program.DB.saveProject();
+            
         } //새로추가함
 
         public string FC_num()
@@ -2604,7 +2598,7 @@ namespace main.contents
                      "','" + SolarDirection_nonsplit + "', '" + SolarDegree_nonsplit + "'", "번호,태양열번호,설비번호");
             }
 
-            Program.DB.saveProject();
+            
         } //새로추가함
 
         public string solar_num()
@@ -3065,7 +3059,7 @@ namespace main.contents
                 Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관길이,배관외경,단열재,열전도율,단열두께,선형열관류율,적용방법",
                         "'" + Num + "','급탕','" + 항목[0] + "', '" + 항목[1] + "','" + 항목[2] + "', '" + 항목[3] + "', '" + 항목[4] + "', '" + 항목[5] + "','" + 항목[6] + "','" + PipeD_SelectMode + "'", "번호,배관유형");
             }
-            Program.DB.saveProject();
+            
         }
         private string GetCellValueOrNull(object value)
         {
@@ -3108,7 +3102,7 @@ namespace main.contents
                 Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','난방','분기관', '" + null + "','" + PipeIns + "','" + PipeIns_Ramda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
             }
 
-            Program.DB.saveProject();
+            
             Load_Pipe_Table();
 
         }
@@ -3158,7 +3152,7 @@ namespace main.contents
                 else 배관유형 = "분기관";
                 Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,단열재,열전도율", "'" + Num + "','급탕','" + 배관유형 + "','" + PipeIns + "', '" + InsDB_form.Select[4] + "'", "번호,배관유형");
             }
-            Program.DB.saveProject();
+            
             Create_Pipe_Table();
         }
         #endregion

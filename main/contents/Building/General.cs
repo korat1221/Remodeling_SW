@@ -607,35 +607,47 @@ namespace main.contents
         {
             try
             {
-                if (BuildingName == null || BuildingLocation == null || GrossArea == 0 || BuildingArea == 0 || ReviewerName == null)
+                // 빠진 항목을 모은다.
+                List<string> missing = new List<string>();
+                if (BuildingName == null)
                 {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        MessageBox.Show("모든 입력값을 입력하세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
+                    missing.Add("건물명");
                 }
-                else
+                if (BuildingLocation == null)
                 {
-                    Save(isManualSave);
-                    return true;
+                    missing.Add("주소");
                 }
+                if (GrossArea == 0)
+                {
+                    missing.Add("연면적");
+                }
+                if (BuildingArea == 0)
+                {
+                    missing.Add("건축면적");
+                }
+                if (ReviewerName == null)
+                {
+                    missing.Add("작성자");
+                }
+
+                // 안내(막지 않음) + 미입력 목록을 '+'로 이어 DB에 저장한다.
+                if (missing.Count > 0)
+                {
+                    MessageBox.Show(string.Join(", ", missing) + " 항목이 비어 있습니다.");
+                }
+                Save(string.Join("+", missing), isManualSave);
+                return true;
             }
             catch (Exception ex)
             {
                 // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
                 System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
-                return false;
+                return true;
             }
         }
 
 
-        private void Save(bool isManualSave = false)
+        private void Save(string missingItems, bool isManualSave = false)
         {
             string ProjectTypeNum = null;
             switch (ProjectType)
@@ -695,7 +707,7 @@ namespace main.contents
                 "준공시기,법규시기," +
                 "연면적,건축면적," +
                 "지상층수,지하층수," +
-                "작성자,작성자주소,작성자회사,작성연도,작성월,작성시기",
+                "작성자,작성자주소,작성자회사,작성연도,작성월,작성시기,미입력항목",
             "'" + 번호[0][0] + "','" + ProjectName + "','" + ProjectType + "','" + ProjectTypeNum + "','" + OldProject + "','" +
             BuildingCategory + "','" + BuildingUse + "','" + BuildingName + "','" + BuildingLocation + "','" + Latitude + "','" + Longitude + "','" + Climate_comboBox.SelectedItem.ToString() + "','" + Climate + "','" + BylawClimate + "','" +
             Year + "','" + Month + "','" +
@@ -704,7 +716,7 @@ namespace main.contents
             AboveGround + "','" + UnderGround + "','" +
             ReviewerName + "','" + ReviewerLocation + "','" + ReviewerCompany + "','" + ReviewYear + "','" + ReviewMonth + "','" +
             ReviewDate.ToString()
-                 + "'", "프로젝트번호");
+                 + "','" + missingItems + "'", "프로젝트번호");
 
             Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,기밀측정여부,n50," +
                "출입문기밀여부," +
@@ -721,7 +733,7 @@ namespace main.contents
                 AirtightReport + "','" +
                 AirtightMethod + "'", "프로젝트번호");
 
-            Program.DB.saveProject();
+            
 
             CALC.Run_Climate();
         }

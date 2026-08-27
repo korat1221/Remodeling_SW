@@ -981,127 +981,69 @@ namespace main.contents
         {
             try
             {
-                if (LightType == null)
+                if (string.IsNullOrEmpty(Num_textBox.Text))
                 {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        MessageBox.Show("조명 종류를 선택하세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else if (lightHeight_textBox.Text == "" || lightHeight_textBox.Text == null)
-                {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        MessageBox.Show("조명 설치 높이를 입력하세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else if (Renew_checkBox.Checked == true && RenewNum == null)
-                {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        MessageBox.Show("집광채광을 선택하세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else if ((NaturalType == "천창") && (zoneRoofLenght1 == 0 || zoneRoofLenght2 == 0 || zoneRoofLenght3 == 0))
-                {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        MessageBox.Show("천창 상세 길이 정보를 입력하세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-
-                else if ((this.facade == "아트리움") && (facadeW == 0 || facadeL == 0 || facadeH == 0))
-                {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        MessageBox.Show(" 아트리움 상세 길이 정보를 입력하세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else if ((this.facade == "중정") && (facadeW == 0 || facadeL == 0 || facadeH == 0))
-                {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        MessageBox.Show(" 중정 상세 길이 정보를 입력하세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else if (LightType_textBox.Text == "" || LightType_textBox.Text == null)
-                {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        MessageBox.Show(" 조명 종류를 선택해 주세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    Save_Image();
-                    Save(isManualSave);
                     return true;
                 }
+
+                // 빠진 항목을 모은다.
+                List<string> missing = new List<string>();
+                if (LightType == null || LightType_textBox.Text == "")
+                {
+                    missing.Add("조명종류");
+                }
+                if (string.IsNullOrEmpty(lightHeight_textBox.Text))
+                {
+                    missing.Add("조명설치높이");
+                }
+                if (Renew_checkBox.Checked && RenewNum == null)
+                {
+                    missing.Add("집광채광");
+                }
+                if (NaturalType == "천창" && (zoneRoofLenght1 == 0 || zoneRoofLenght2 == 0 || zoneRoofLenght3 == 0))
+                {
+                    missing.Add("천창상세길이");
+                }
+                if (this.facade == "아트리움" && (facadeW == 0 || facadeL == 0 || facadeH == 0))
+                {
+                    missing.Add("아트리움상세길이");
+                }
+                if (this.facade == "중정" && (facadeW == 0 || facadeL == 0 || facadeH == 0))
+                {
+                    missing.Add("중정상세길이");
+                }
+
+                // 안내(막지 않음) + 미입력 목록을 '+'로 이어 DB에 저장한다.
+                if (missing.Count > 0)
+                {
+                    MessageBox.Show(string.Join(", ", missing) + " 항목이 비어 있습니다.");
+                }
+                Save_Image();
+                Save(string.Join("+", missing), isManualSave);
+                return true;
             }
             catch (Exception ex)
             {
                 // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
                 System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
-                return false;
+                return true;
             }
         }
 
 
-        private void Save(bool isManualSave = false) //공간계수 대신 조명설치 높이값을 저장함
+        private void Save(string missingItems, bool isManualSave = false) //공간계수 대신 조명설치 높이값을 저장함
         {
             Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,너비,길이,순바닥면적,상인방높이,작업면높이,조명설치높이,기준조도," +
                 "조명방식,제어방식,디밍유형,조명밀도,조명예상전력," +
                 "대기전력,재실계수,조도제어계수," +
                 "조명번호, 등기구명칭, 램프유형, 컨버터_안정기, 광효율, 조명계수,조명개수," +
-                "집광채광체크,주광길이,주광깊이,주광면적,비주광면적",
+                "집광채광체크,주광길이,주광깊이,주광면적,비주광면적,미입력항목",
                 "'" + Num_textBox.Text + "','" + Wr + "','" + Lr + "','" + A + "','" + hLi + "','" + hTa + "','" + LightInstallHeight + "','" + Em + "','" +
                 Method + "','" + control + "','" + dimming + "','" + Pj.ToString() + "','" + Pn.ToString() + "','" +
                 Pci.ToString() + "','" + Fo.ToString() + "','" + Fc.ToString() + "','" +
                 LightNumber + "','" + LightType + "','" + LightType2 + "','" + LightConverter + "','" + lm_W + "','" + LightFL.ToString() + "','" + N.ToString() + "','" +
                 Renew_checkBox.Checked.ToString() + "','" +
-                bd + "','" + ad + "','" + AD + "','" + unAD + "'", "번호");
+                bd + "','" + ad + "','" + AD + "','" + unAD + "','" + missingItems + "'", "번호");
 
             if (LightNumber.Contains("LP"))
             {
@@ -1160,7 +1102,7 @@ namespace main.contents
                 Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,표준길이1,표준길이2",
                    "'" + ZoneNum + "','" + RenewL1 + "','" + RenewL2 + "'", "번호");
             }
-            Program.DB.saveProject();
+            
         }
 
         private void Save_Image()

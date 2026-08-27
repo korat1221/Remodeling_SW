@@ -524,34 +524,47 @@ namespace main.contents
         {
             try
             {
-                if (CeilingCwirk_comboBox.SelectedItem == null || WallCwirk_comboBox.SelectedItem == null || InWallCwirk_comboBox.SelectedItem == null || SlabCwirk_comboBox.SelectedItem == null)
+                if (string.IsNullOrEmpty(ZoneNum))
                 {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        MessageBox.Show("모든 축열값을 선택하세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    Save(isManualSave);
                     return true;
                 }
+
+                // 빠진 축열 항목을 모은다.
+                List<string> missing = new List<string>();
+                if (CeilingCwirk_comboBox.SelectedItem == null)
+                {
+                    missing.Add("천장축열");
+                }
+                if (WallCwirk_comboBox.SelectedItem == null)
+                {
+                    missing.Add("외벽축열");
+                }
+                if (InWallCwirk_comboBox.SelectedItem == null)
+                {
+                    missing.Add("내벽축열");
+                }
+                if (SlabCwirk_comboBox.SelectedItem == null)
+                {
+                    missing.Add("바닥축열");
+                }
+
+                // 안내(막지 않음) + 미입력 목록을 '+'로 이어 DB에 저장한다.
+                if (missing.Count > 0)
+                {
+                    MessageBox.Show(string.Join(", ", missing) + " 항목이 비어 있습니다.");
+                }
+                Save(string.Join("+", missing), isManualSave);
+                return true;
             }
             catch (Exception ex)
             {
                 // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
                 System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
-                return false;
+                return true;
             }
         }
 
-        private void Save(bool isManualSave = false)
+        private void Save(string missingItems, bool isManualSave = false)
         {
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,프로젝트유형," +
@@ -559,15 +572,15 @@ namespace main.contents
                 "천장축열,외벽축열,내벽축열,바닥축열," +
                 "천장면적,외벽면적,내벽면적,바닥면적," +
                 "존축열성능," +
-                "존기밀타입",
+                "존기밀타입,미입력_외피",
             "'" + ZoneNum + "','" + 프로젝트유형[0][0] + "','"
             + Ceiling_index + "','" + Wall_index + "','" + InWall_index + "','" + Slab_index + "','"
             + Cwirk_Ceiling.ToString() + "','" + Cwirk_Wall.ToString() + "','" + Cwirk_InWall.ToString() + "','" + Cwirk_Slab.ToString() + "','"
             + Area_Ceiling.ToString() + "','" + Area_Wall.ToString() + "','" + Area_InWall.ToString() + "','" + Area_Slab.ToString() + "','"
             + Cwirk_total.ToString() + "','"
-            + ZoneType + "'", "존번호");
+            + ZoneType + "','" + missingItems + "'", "존번호");
 
-            Program.DB.saveProject();
+            
         }
         private void reset()
         {
@@ -738,7 +751,7 @@ namespace main.contents
             // 저장 버튼과 무관하게 항상 최신 계산값을 반영 — Cal_HCneed.cs가 이 값을 그대로 읽어다 씀.
             // 존별 방식이 아닐 땐 0으로 같이 저장해서 이전 설정의 값이 남아있지 않게 함
             Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,n50", "'" + ZoneNum + "','" + n50Value + "'", "존번호");
-            Program.DB.saveProject();
+            
         }
 
         // 직접외기 노출 외피면적 합계 — Cal_HCneed.cs의 Zone_n50()과 동일한 필터링(직접외기만 합산)

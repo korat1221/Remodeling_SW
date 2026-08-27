@@ -8,7 +8,7 @@ using System.Drawing.Drawing2D;
 
 namespace main.contents
 {
-    public partial class WindPower : Form
+    public partial class WindPower : Form, IConfirmable
     {
 
         String[][] 지역;
@@ -236,24 +236,40 @@ namespace main.contents
         #region 세이브
         private void Save_button_Click(object sender, EventArgs e)
         {
-            if (Name_textBox.Text == "")
-            {
-                MessageBox.Show("풍력시스템 명칭을 입력하세요.");
-            }
-            else if (WPNameText.Text == "")
-            {
-                MessageBox.Show("풍력발전 시스템을 선택하세요.");
-            }
-            else if (h2_textBox.Text == "")
-            {
-                MessageBox.Show("설치높이를 입력하세요.");
-            }
-            else
-            {
-                Save();
+            ValidateAndSave(true);
+        }
 
+        // 화면 전환 / 프로그램 종료 / 툴바 저장 시 자동 호출된다. 편집 중인 풍력시스템이 있으면 저장한다.
+        // 필수값이 비어 있으면 안내 메시지만 띄우고 저장을 건너뛴다. 화면 전환은 막지 않는다(항상 true).
+        public bool ValidateAndSave(bool isManualSave = false)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(Num))
+                {
+                    if (Name_textBox.Text == "")
+                    {
+                        MessageBox.Show("풍력시스템 명칭을 입력하세요.");
+                    }
+                    else if (WPNameText.Text == "")
+                    {
+                        MessageBox.Show("풍력발전 시스템을 선택하세요.");
+                    }
+                    else if (h2_textBox.Text == "")
+                    {
+                        MessageBox.Show("설치높이를 입력하세요.");
+                    }
+                    else
+                    {
+                        Save();
+                    }
+                }
             }
-
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+            }
+            return true;
         }
         private void Save()
         {
@@ -272,7 +288,7 @@ namespace main.contents
                    "'" + Num + "','" + 프로젝트유형 + "','" + Name_textBox.Text + "','" + WP + "','" +
                    Condition + "','" + h2 + "','" + Install + "'", "번호");
 
-                Program.DB.saveProject();
+                
 
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
                 if (Value.Length > 0)
@@ -280,9 +296,6 @@ namespace main.contents
                     CALC.WPCalc(Value[0][0]);
                     LoadGraph();
                 }
-
-                MessageBox.Show("풍력시스템" + "[" + Num + "] 정보를 저장하였습니다.");
-
             }
         }
 

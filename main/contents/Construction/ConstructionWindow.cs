@@ -591,7 +591,6 @@ namespace main.contents
                     Program.DB.executeSQL(DB.type.ProjDB, "UPDATE SubWindow SET 창호열관류율  ='" + Sub_Uw[i] + "', 설치열교가산치 = '" + Sub_dUinst[i] + "', 창호유효열관류율 = '" + Sub_Uw_inst[i] + "',법규열관류율='" + 법규U.ToString() + "' WHERE  번호 = '" + Size[i][0] + "'");
                 }
                 Size_textBox.Text = Size.Length.ToString() + "개 치수 적용";
-                Program.DB.saveProject();
             }
         }
 
@@ -1118,135 +1117,57 @@ namespace main.contents
         {
             try
             {
-                if (GlassName == null)
+                // 명칭 없으면 아직 만들다 만 구조체 → 저장할 것 없음. 화면 전환은 막지 않는다.
+                if (Name_textBox.Text == "")
                 {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        MessageBox.Show("유리를 선택하세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else if (InstallName == null)
-                {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-
-                        MessageBox.Show("설치열교를 선택하세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else if (UwMethod == "계산")
-                {
-                    if (FrameName == null)
-                    {
-                        DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                        if (res == DialogResult.Yes)
-                        {
-                            MessageBox.Show("프레임을 선택하세요.");
-                            return false;
-                        }
-                        else
-                        {
-                            return true;
-                        }
-                    }
-                    else if (SpacerName == null)
-                    {
-                        DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                        if (res == DialogResult.Yes)
-                        {
-                            MessageBox.Show("간봉을 선택하세요.");
-                            return false;
-                        }
-                        else
-                        {
-                            return true;
-                        }
-                    }
-                    else if (Sub_Area.Count == 0)
-                    {
-                        DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                        if (res == DialogResult.Yes)
-                        {
-                            MessageBox.Show("창호 사이즈를 입력하세요.");
-                            return false;
-                        }
-                        else
-                        {
-                            return true;
-                        }
-                    }
-                    else if (Name_textBox.Text == null || Name_textBox.Text.ToString()=="")
-                    {
-                        DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                        if (res == DialogResult.Yes)
-                        {
-                            MessageBox.Show("명칭을 입력하세요.");
-                            return false;
-                        }
-                        else
-                        {
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        Save(isManualSave);
-                        return true;
-                    }
-                }
-                else if(Sub_Area.Count ==0)
-                {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
-                    {
-                        MessageBox.Show("창호 사이즈를 입력하세요.");
-                        return false;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else if (Name_textBox.Text == null || Name_textBox.Text.ToString()=="")
-                {
-                    DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                    if (res == DialogResult.Yes)
+                    if (isManualSave)
                     {
                         MessageBox.Show("명칭을 입력하세요.");
-                        return false;
                     }
-                    else
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    Save(isManualSave);
                     return true;
                 }
+
+                // 빠진 항목을 모은다.
+                List<string> missing = new List<string>();
+                if (GlassName == null)
+                {
+                    missing.Add("유리");
+                }
+                if (InstallName == null)
+                {
+                    missing.Add("설치열교");
+                }
+                if (UwMethod == "계산" && FrameName == null)
+                {
+                    missing.Add("프레임");
+                }
+                if (UwMethod == "계산" && SpacerName == null)
+                {
+                    missing.Add("간봉");
+                }
+                if (Sub_Area.Count == 0)
+                {
+                    missing.Add("창호사이즈");
+                }
+
+                // 안내(막지 않음) + 미입력 목록을 '+'로 이어 DB에 저장한다.
+                if (missing.Count > 0)
+                {
+                    MessageBox.Show(string.Join(", ", missing) + " 항목이 비어 있습니다.");
+                }
+                Save(string.Join("+", missing), isManualSave);
+                return true;
             }
             catch (Exception ex)
             {
                 // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
                 System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
-                return false;
+                return true;
             }
         }
 
 
-        private void Save(bool isManualSave = false)
+        private void Save(string missingItems, bool isManualSave = false)
         {
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             #region 법규
@@ -1266,20 +1187,20 @@ namespace main.contents
                   "유리열관류율,태양열취득률,빛투과율,고정유리선형열관류율,개폐유리선형열관류율," +
                   "개폐부프레임열관류율,고정부프레임열관류율,중간바프레임열관류율,개폐부프레임두께,고정부프레임두께,중간바프레임두께," +
                   "상부설치열관류율,측면설치열관류율,하부설치열관류율," +
-                  "창호열관류율,법규열관류율",
+                  "창호열관류율,법규열관류율,미입력항목",
                 "'" + WinNum_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + WindowName + "','" + Type + "','" + OldWindow + "','" + UwMethod + "','" + DiIndi + "','" + FrameType + "','" + SingleDoubleType + "','" + FrameMaterial + "','" + FrameName + "','" + GlassName + "','" + SpacerName + "','" + InstallType + "','" + InstallName + "','" + LE_CL_V + "','" +
                 Ug.ToString() + "','" + g.ToString() + "','" + τD65_SNA.ToString() + "','" + Psi_g_fix.ToString() + "','" + Psi_g_open.ToString() + "','" +
                 Uf_open.ToString() + "','" + Uf_fix.ToString() + "','" + Uf_btw.ToString() + "','" + df_open.ToString() + "','" + df_fix.ToString() + "','" + df_btw.ToString() + "','" +
                 Psi_InstallTop.ToString() + "','" + Psi_InstallSide.ToString() + "','" + Psi_InstallButtom.ToString() + "','" +
                 Uw.ToString() + "','" + 법규U.ToString()
-                + "'", "번호");
+                + "','" + missingItems + "'", "번호");
 
             Size = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호", "상위창호번호 = '" + WinNum + "'");
             if (Size.Length > 0)
             {
                 ImportSize();
             }
-            Program.DB.saveProject();
+            
         }
 
         private void reset()

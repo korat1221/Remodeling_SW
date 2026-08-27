@@ -1037,10 +1037,7 @@ namespace main.contents
         {
             try
             {
-                if (!ValidateZoneVentilationComplete())
-                {
-                    return false;
-                }
+                WarnIncompleteZoneVentilation();
                 Save_Image();
                 Save(isManualSave);
                 none_AHU_HRV_check();
@@ -1050,12 +1047,12 @@ namespace main.contents
             {
                 // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
                 System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
-                return false;
+                return true;
             }
         }
-        // 이 설비에 연결된 모든 존이 AHUZoneVent_Form(존별 급배기량)을 저장했는지 확인 —
-        // 빠진 존이 있으면 경고하고 저장 자체를 막음(AHUZoneVent_Form 입력이 이제 필수라서)
-        private bool ValidateZoneVentilationComplete()
+        // 이 설비에 연결된 존 중 AHUZoneVent_Form(존별 급배기량)이 없는 존이 있으면 안내한다.
+        // (저장은 막지 않는다 — 부분 저장 허용)
+        private void WarnIncompleteZoneVentilation()
         {
             string[][] Zones = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름", "선택열회수기 = '" + Num_textBox.Text + "' and 환기유무='True'");
             ArrayList missing = new ArrayList();
@@ -1069,30 +1066,17 @@ namespace main.contents
             }
             if (missing.Count > 0)
             {
-                // ZoneGeneral.cs의 ValidateAndSave() 패턴과 동일: 먼저 "저장하시겠습니까?"를 묻고,
-                // 예 → 뭐가 빠졌는지 안내 후 저장 막음(false) / 아니오 → 저장 없이 그냥 나가게(true)
-                // 해서, 실수로 들어왔다가 못 나가고 갇히는 상황을 방지함
-                DialogResult res = MessageBox.Show("저장하시겠습니까?", "저장", MessageBoxButtons.YesNo);
-                if (res == DialogResult.Yes)
+                const int maxListed = 10;
+                int shownCount = Math.Min(missing.Count, maxListed);
+                string[] shown = new string[shownCount];
+                missing.CopyTo(0, shown, 0, shownCount);
+                string listText = string.Join("\n", shown);
+                if (missing.Count > maxListed)
                 {
-                    const int maxListed = 10;
-                    int shownCount = Math.Min(missing.Count, maxListed);
-                    string[] shown = new string[shownCount];
-                    missing.CopyTo(0, shown, 0, shownCount);
-                    string listText = string.Join("\n", shown);
-                    if (missing.Count > maxListed)
-                    {
-                        listText += "\n외 " + (missing.Count - maxListed) + "개 존 더";
-                    }
-                    MessageBox.Show("급배기량이 입력되지 않은 존이 " + missing.Count + "개 있습니다:\n" + listText + "\n\n\"+\" 버튼을 눌러 존별 급배기량을 먼저 입력해주세요.");
-                    return false;
+                    listText += "\n외 " + (missing.Count - maxListed) + "개 존 더";
                 }
-                else
-                {
-                    return true;
-                }
+                MessageBox.Show("급배기량이 입력되지 않은 존이 " + missing.Count + "개 있습니다:\n" + listText + "\n\n\"+\" 버튼을 눌러 존별 급배기량을 먼저 입력해주세요.");
             }
-            return true;
         }
         private void Save(bool isManualSave = false)
         {
@@ -1121,7 +1105,7 @@ namespace main.contents
                 CooltubeMaterial = "";
             }
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,토양유형,지중깊이,쿨튜브관경,쿨튜브두께,쿨튜브길이,쿨튜브재질", "'" + Num_textBox.Text + "','" + GroundOptions + "','" + GroundDepth.ToString() + "','" + CooltubeDiameter.ToString() + "','" + CooltubeThickness.ToString() + "','" + CooltubeLength.ToString() + "','" + CooltubeMaterial + "'", "번호");
-            Program.DB.saveProject();
+            
         }
         private void Save_Image()
         {
