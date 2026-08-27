@@ -1,0 +1,10 @@
+main/subcontents/Info/Info_Roof.cs
+main/subcontents/Info/Info_Roof.Designer.cs
+main/subcontents/Info/Info_Roof.resx
+
+# 프로젝트 인스턴스 DB (사용자 프로젝트 데이터라 git 추적 제외)
+asset/projects.sqlite
+asset/projects/*.sqlite
+asset/projects/*.sqlite.bak
+asset/projects/*.json
+asset/projects/*.tree
