@@ -33,7 +33,12 @@ namespace main
         {
             if (root is DataGridView grid)
             {
-                grid.DataError += (s, e) => { e.ThrowException = false; };
+                grid.DataError += (s, e) =>
+                {
+                    e.ThrowException = false;
+                    string formName = grid.FindForm()?.Name ?? "알 수 없음";
+                    MessageBox.Show(formName + " 화면의 '" + grid.Name + "' 표 (행 " + e.RowIndex + ", 열 " + e.ColumnIndex + ")에서 오류가 발생했습니다.\n" + e.Exception.Message, "데이터그리드뷰 오류", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                };
             }
             for (int i = 0; i < root.Controls.Count; i++)
             {
