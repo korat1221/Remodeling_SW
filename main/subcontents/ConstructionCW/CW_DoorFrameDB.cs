@@ -131,7 +131,7 @@ namespace main.subcontents.ConstructionCW
                 UserNum = Program.UTIL.CreateNum("User_CWDoorFrmae", "번호", "UCWD_0");
                 UserNum_textBox.Text = UserNum;
 
-                Program.DB.saveProject();
+                
             }
             else
             {

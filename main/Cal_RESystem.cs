@@ -195,7 +195,7 @@ namespace main
                 for (int a = 0; a < 12; a++)
                 {
                     month[a] = (a + 1).ToString() + "월";
-                    Program.DB.setValue_Calc(DB.type.ProjDB, "PV_Result", "프로젝트번호,프로젝트유형,번호,월,일사량,PV생산량", "'" + 프로젝트번호 + "','" + 프로젝트유형 + "','" + Num + "','" +
+                    Program.DB.setValue(DB.type.ProjDB, "PV_Result", "프로젝트번호,프로젝트유형,번호,월,일사량,PV생산량", "'" + 프로젝트번호 + "','" + 프로젝트유형 + "','" + Num + "','" +
                    month[a] + "','" + Esol[a] + "','" + Qfpvm_kWh[a] + "'", "번호, 월");
                 }
             }
@@ -204,7 +204,7 @@ namespace main
                 for (int a = 0; a < 12; a++)
                 {
                     month[a] = (a + 1).ToString() + "월";
-                    Program.DB.setValue_Calc(DB.type.ProjDB, "PV_Result", "프로젝트번호,프로젝트유형,번호,월,일사량,PV생산량,배터리손실", "'" + 프로젝트번호 + "','" + 프로젝트유형 + "','" + Num + "','" +
+                    Program.DB.setValue(DB.type.ProjDB, "PV_Result", "프로젝트번호,프로젝트유형,번호,월,일사량,PV생산량,배터리손실", "'" + 프로젝트번호 + "','" + 프로젝트유형 + "','" + Num + "','" +
                    month[a] + "','" + Esol[a] + "','" + Qfpvm_kWh[a] + "','" + fBatt[a] +"'", "번호, 월");
                 }
             }

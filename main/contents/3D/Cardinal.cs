@@ -50,7 +50,7 @@ namespace main.contents._3D
                 Program.DB.executeSQL(DB.type.ProjDB, "UPDATE ZoneEnvelope_3D SET 방위='" + asCardinal(asDirection(res[i][1]) + rotation) + "' WHERE ID=" + res[i][0]);
             }
 
-            Program.DB.saveProject();
+            
             MessageBox.Show("주 방위 변경에 따라 모두 일괄 적용하였습니다.");
 
             DialogResult = DialogResult.OK;

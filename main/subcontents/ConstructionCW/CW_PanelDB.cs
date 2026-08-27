@@ -182,7 +182,7 @@ namespace main.subcontents.ConstructionCW
                 Program.DB.setValue(DB.type.ProjDB, "User_Material", "번호,프로젝트유형,DB유형,구분,재료명,종류2,종류1,열전도율,밀도,투습저항계수dry,투습저항계수wet,비열,비고",
                     "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + "단열재" + "','" + UserDBName + "','" + UserDBType1 + "','" + UserDBType2 + "','" + UserDB_Conductivity.ToString() + "','" + UserDB_Density.ToString() + "','" + UserDB_dry.ToString() + "','" + UserDB_wet.ToString() + "','" + UserDB_c.ToString() + "','" + UserDB_Note + "'", "번호");
                 load_table_PanelDB();
-                Program.DB.saveProject();
+                
             }
             else
             {

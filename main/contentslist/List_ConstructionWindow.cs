@@ -252,7 +252,7 @@ namespace main.contentslist
                     Program.DB.CopyValue(DB.type.ProjDB, "ConstructionWindow", "번호 ='" + Copy_WinNum + "'", WinNum);
                     Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  ConstructionWindow" + " SET 창호명칭 = '" + dataGridView1.Rows[k].Cells[3].Value.ToString() + "_복사" + "' WHERE  번호 = '" + WinNum + "'");
                     SubCopy(Copy_WinNum);
-                    Program.DB.saveProject();
+                    
                 }
                 else
                 {

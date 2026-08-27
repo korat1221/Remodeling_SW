@@ -249,7 +249,7 @@ namespace main.subcontents.ConstructionBlind
                 else { Select_Blind[i - 1] = row.Cells[i].Value.ToString(); }
             }
 
-            Program.DB.saveProject();
+            
 
             this.DialogResult = DialogResult.OK;
             this.Close();

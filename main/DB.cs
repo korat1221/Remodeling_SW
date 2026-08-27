@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 
 /* 
@@ -68,13 +69,16 @@ namespace main
         private const int customDB = 12;
         private bool useCaches = false;
         private string projDBPath = "";
+        // 프로젝트 DB에 아직 파일로 저장 안 된 변경이 있는지 표시.
+        // setValue/deleteValue/executeSQL 등은 메모리에만 쓰고 이 플래그만 켠다
+        private bool projDirty = false;
         private Dictionary<type, Dictionary<string, string[][]>> caches = new Dictionary<type, Dictionary<string, string[][]>>();
         private Dictionary<string, Dictionary<string, string[][]>> caches2 = new Dictionary<string, Dictionary<string, string[][]>>();
         private Dictionary<string, string> tables = new Dictionary<string, string>()
         {
             //프로젝트유형 기존:1, 리트로핏:2, 리모델링:3, 신규:4
             //Building 
-            {"BuildingGeneral", "CREATE TABLE IF NOT EXISTS BuildingGeneral (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트명 VARCHAR (32),프로젝트유형 VARCHAR (32),프로젝트유형번호 VARCHAR (32),기존프로젝트 VARCHAR (32),사업성능목표 VARCHAR (32),건물진단실시 VARCHAR (32),건물대상 VARCHAR (32),건물용도 VARCHAR (32),건물명 VARCHAR (32),주소 VARCHAR (32),위도 VARCHAR (32),경도 VARCHAR (32),지역인덱스 VARCHAR (32),지역 VARCHAR (32),지역구분 VARCHAR (32),외벽구조유형 VARCHAR (32),지붕구조유형 VARCHAR (32),준공연도 VARCHAR (32),준공월 VARCHAR (32),준공시기 VARCHAR (32),법규시기 VARCHAR (32),연면적 VARCHAR (32),건축면적 VARCHAR (32),지상층수 VARCHAR (32),지하층수 VARCHAR (32),작성자 VARCHAR (32),작성자주소 VARCHAR (32),작성자회사 VARCHAR (32),작성연도 VARCHAR (32),작성월 VARCHAR (32),작성시기 VARCHAR (32),기밀측정여부 VARCHAR (32),출입문기밀여부 VARCHAR (32),창호기밀여부 VARCHAR (32),배선기밀여부 VARCHAR (32),배관기밀여부 VARCHAR (32),기밀보고서 VARCHAR (32),기밀적용방식 VARCHAR (32),n50 VARCHAR (32),출입문q50 VARCHAR (32),창호q50 VARCHAR (32),외벽q50 VARCHAR (32),지붕q50 VARCHAR (32),외벽dUtb VARCHAR (32),지붕dUtb VARCHAR (32),바닥dUtb VARCHAR (32))"},
+            {"BuildingGeneral", "CREATE TABLE IF NOT EXISTS BuildingGeneral (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트명 VARCHAR (32),프로젝트유형 VARCHAR (32),프로젝트유형번호 VARCHAR (32),기존프로젝트 VARCHAR (32),사업성능목표 VARCHAR (32),건물진단실시 VARCHAR (32),건물대상 VARCHAR (32),건물용도 VARCHAR (32),건물명 VARCHAR (32),주소 VARCHAR (32),위도 VARCHAR (32),경도 VARCHAR (32),지역인덱스 VARCHAR (32),지역 VARCHAR (32),지역구분 VARCHAR (32),외벽구조유형 VARCHAR (32),지붕구조유형 VARCHAR (32),준공연도 VARCHAR (32),준공월 VARCHAR (32),준공시기 VARCHAR (32),법규시기 VARCHAR (32),연면적 VARCHAR (32),건축면적 VARCHAR (32),지상층수 VARCHAR (32),지하층수 VARCHAR (32),작성자 VARCHAR (32),작성자주소 VARCHAR (32),작성자회사 VARCHAR (32),작성연도 VARCHAR (32),작성월 VARCHAR (32),작성시기 VARCHAR (32),기밀측정여부 VARCHAR (32),출입문기밀여부 VARCHAR (32),창호기밀여부 VARCHAR (32),배선기밀여부 VARCHAR (32),배관기밀여부 VARCHAR (32),기밀보고서 VARCHAR (32),기밀적용방식 VARCHAR (32),n50 VARCHAR (32),출입문q50 VARCHAR (32),창호q50 VARCHAR (32),외벽q50 VARCHAR (32),지붕q50 VARCHAR (32),외벽dUtb VARCHAR (32),지붕dUtb VARCHAR (32),바닥dUtb VARCHAR (32),미입력항목 VARCHAR (255))"},
             {"BlowDoorTest", "CREATE TABLE IF NOT EXISTS BlowDoorTest (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),측정위치 VARCHAR (32),CMH VARCHAR (32),ACH VARCHAR (32),Volume VARCHAR (32))"},
             {"BuildingEnergyUse", "CREATE TABLE IF NOT EXISTS BuildingEnergyUse (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트유형 VARCHAR (32),연료 VARCHAR (32),연도 VARCHAR (32),월 VARCHAR (32),단위 VARCHAR (32),에너지사용량 VARCHAR (32),사용시작일 VARCHAR (32),사용종료일 VARCHAR (32))"}, 
             {"User_PV", "CREATE TABLE IF NOT EXISTS User_PV (ID INTEGER PRIMARY KEY AUTOINCREMENT, 번호 VARCHAR (32), 프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),명칭 VARCHAR (32),CELLTYPE VARCHAR (32),길이 VARCHAR (32),높이 VARCHAR (32),정격출력 VARCHAR (32),Kpk VARCHAR (32),설치 VARCHAR (32))"},
@@ -101,12 +105,12 @@ namespace main
             
             //Construction 
             {"ConstructionBlind", "CREATE TABLE IF NOT EXISTS ConstructionBlind (ID INTEGER PRIMARY KEY AUTOINCREMENT, 번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),Type VARCHAR (32),제품번호 VARCHAR (32),제품명 VARCHAR (32),종류 VARCHAR (32),설치 VARCHAR (32),투과수준 VARCHAR (32),색깔 VARCHAR (32),외부반사율 VARCHAR (32),내부반사율 VARCHAR (32),투과율 VARCHAR (32),흡수율 VARCHAR (32),제어방식1 VARCHAR (32),제어방식2 VARCHAR (32))"},
-            {"ConstructionWall", "CREATE TABLE IF NOT EXISTS ConstructionWall (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),Type VARCHAR (32),기존외벽 VARCHAR (32),덧댐커튼월 VARCHAR (32),U적용방법 VARCHAR (32),직접간접 VARCHAR (32),구조유형 VARCHAR (32),열교유형 VARCHAR (32),열교종류 VARCHAR (32),외장재색 VARCHAR (32),표면열전달저항기준 VARCHAR (32),선형점형 VARCHAR (32),A VARCHAR (32),B VARCHAR (32),C VARCHAR (32),PsiKai VARCHAR (32),단위면적당적용 VARCHAR (32),Rse VARCHAR (32),Rsi VARCHAR (32),두께합계 VARCHAR (32),열저항합계 VARCHAR (32),단열재두께 VARCHAR (32),재료1종류 VARCHAR (32),재료1두께 VARCHAR (32),재료2종류 VARCHAR (32),재료2두께 VARCHAR (32),재료3종류 VARCHAR (32),재료3두께 VARCHAR (32),재료4종류 VARCHAR (32),재료4두께 VARCHAR (32),재료5종류 VARCHAR (32),재료5두께 VARCHAR (32),재료6종류 VARCHAR (32),재료6두께 VARCHAR (32),재료7종류 VARCHAR (32),재료7두께 VARCHAR (32),재료8종류 VARCHAR (32),재료8두께 VARCHAR (32),재료9종류 VARCHAR (32),재료9두께 VARCHAR (32),재료10종류 VARCHAR (32),재료10두께 VARCHAR (32),흡수율 VARCHAR (32),열관류율 VARCHAR (32),열교가산치 VARCHAR (32),유효열관류율 VARCHAR (32),법규열관류율 VARCHAR (32))"},
-            {"ConstructionCW", "CREATE TABLE IF NOT EXISTS ConstructionCW (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),Type VARCHAR (32),기존커튼월 VARCHAR (32),Ucw적용방법 VARCHAR (32),직접간접 VARCHAR (32),프레임유형 VARCHAR (32),프레임종류 VARCHAR (32),고정유리종류 VARCHAR (32),개폐유리종류 VARCHAR (32),간봉종류 VARCHAR (32),설치유형 VARCHAR (32),설치종류 VARCHAR (32),LE_CL_V VARCHAR (32),패널적용유무 VARCHAR (32),패널종류 VARCHAR (32),패널유리종류 VARCHAR (32),LE_CL_V_Panel VARCHAR (32),출입문적용유무 VARCHAR (32),출입문프레임유형 VARCHAR (32),출입문프레임종류 VARCHAR (32),출입문유리종류 VARCHAR (32),출입문간봉종류 VARCHAR (32),LE_CL_V_Door VARCHAR (32),고정유리열관류율 VARCHAR (32),개폐유리열관류율 VARCHAR (32),태양열취득률 VARCHAR (32),빛투과율 VARCHAR (32),고정유리선형열관류율 VARCHAR (32),개폐유리선형열관류율 VARCHAR (32),고정프레임열관류율 VARCHAR (32),개폐프레임열관류율 VARCHAR (32),고정프레임두께 VARCHAR (32),개폐프레임두께 VARCHAR (32),패널열관류율 VARCHAR (32),패널유리열관류율 VARCHAR (32),패널열전도율 VARCHAR (32),패널흡수율 VARCHAR (32),패널선형열관류율 VARCHAR (32),패널두께 VARCHAR (32),출입문유리열관류율 VARCHAR (32),출입문태양열취득률 VARCHAR (32),출입문빛투과율 VARCHAR (32),출입문유리선형열관류율 VARCHAR (32),출입문프레임두께 VARCHAR (32),출입문프레임열관류율 VARCHAR (32),상부설치열관류율 VARCHAR (32),측면설치열관류율 VARCHAR (32),하부설치열관류율 VARCHAR (32),사이즈명칭 VARCHAR (32),커튼월면적 VARCHAR (32),너비 VARCHAR (32),높이 VARCHAR (32),고정창유리면적 VARCHAR (32),개폐창유리면적 VARCHAR (32),고정창유리둘레길이 VARCHAR (32),개폐창유리둘레길이 VARCHAR (32),패널면적 VARCHAR (32),패널둘레길이 VARCHAR (32),M_T프레임면적 VARCHAR (32),개폐창프레임면적 VARCHAR (32),출입문프레임면적 VARCHAR (32),출입문유리면적 VARCHAR (32),출입문유리둘레길이 VARCHAR (32),커튼월창열관류율 VARCHAR (32),유리부분열관류율 VARCHAR (32),패널부분열관류율 VARCHAR (32),출입문부분열관류율 VARCHAR (32),설치열교가산치 VARCHAR (32),커튼월창유효열관류율 VARCHAR (32),유리부분유효열관류율 VARCHAR (32),패널부분유효열관류율 VARCHAR (32),출입문부분유효열관류율 VARCHAR (32),유리부분유리면적비 VARCHAR (32),출입문부분유리면적비 VARCHAR (32),법규유리부분열관류율 VARCHAR (32),법규패널부분열관류율 VARCHAR (32),법규출입문부분열관류율 VARCHAR (32))"},
-            {"ConstructionWindow", "CREATE TABLE IF NOT EXISTS ConstructionWindow (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),창호명칭 VARCHAR (32),Type VARCHAR (32),기존창호 VARCHAR (32),Uw적용방법 VARCHAR (32),직접간접 VARCHAR (32),프레임유형 VARCHAR (32),이중단창 VARCHAR (32),프레임재료 VARCHAR (32),프레임종류 VARCHAR (32),유리종류 VARCHAR (32),간봉종류 VARCHAR (32),설치유형 VARCHAR (32),설치종류 VARCHAR (32),LE_CL_V VARCHAR (32),유리열관류율 VARCHAR (32),태양열취득률 VARCHAR (32),빛투과율 VARCHAR (32),고정유리선형열관류율 VARCHAR (32),개폐유리선형열관류율 VARCHAR (32),개폐부프레임열관류율 VARCHAR (32),고정부프레임열관류율 VARCHAR (32),중간바프레임열관류율 VARCHAR (32),개폐부프레임두께 VARCHAR (32),고정부프레임두께 VARCHAR (32),중간바프레임두께 VARCHAR (32),상부설치열관류율 VARCHAR (32),측면설치열관류율 VARCHAR (32),하부설치열관류율 VARCHAR (32),창호열관류율 VARCHAR (32),법규열관류율 VARCHAR (32))"},
-            {"ConstructionFloor", "CREATE TABLE IF NOT EXISTS ConstructionFloor (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),Type VARCHAR (32),기존바닥 VARCHAR (32),기초설치 VARCHAR (32),U적용방법 VARCHAR (32),직접간접 VARCHAR (32),구조유형 VARCHAR (32),열교유형 VARCHAR (32),열교종류 VARCHAR (32),표면열전달저항기준 VARCHAR (32),선형점형 VARCHAR (32),A VARCHAR (32),B VARCHAR (32),C VARCHAR (32),PsiKai VARCHAR (32),단위면적당적용 VARCHAR (32),Rse VARCHAR (32),Rsi VARCHAR (32),두께합계 VARCHAR (32),열저항합계 VARCHAR (32),단열재두께 VARCHAR (32),재료1종류 VARCHAR (32),재료1두께 VARCHAR (32),재료2종류 VARCHAR (32),재료2두께 VARCHAR (32),재료3종류 VARCHAR (32),재료3두께 VARCHAR (32),재료4종류 VARCHAR (32),재료4두께 VARCHAR (32),재료5종류 VARCHAR (32),재료5두께 VARCHAR (32),재료6종류 VARCHAR (32),재료6두께 VARCHAR (32),재료7종류 VARCHAR (32),재료7두께 VARCHAR (32),재료8종류 VARCHAR (32),재료8두께 VARCHAR (32),재료9종류 VARCHAR (32),재료9두께 VARCHAR (32),재료10종류 VARCHAR (32),재료10두께 VARCHAR (32),열관류율 VARCHAR (32),열교가산치 VARCHAR (32),유효열관류율 VARCHAR (32),법규열관류율 VARCHAR (32))"},
-            {"ConstructionRoof", "CREATE TABLE IF NOT EXISTS ConstructionRoof (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),Type VARCHAR (32),기존지붕 VARCHAR (32),U적용방법 VARCHAR (32),직접간접 VARCHAR (32),구조유형 VARCHAR (32),열교유형 VARCHAR (32),열교종류 VARCHAR (32),외장재색 VARCHAR (32),표면열전달저항기준 VARCHAR (32),선형점형 VARCHAR (32),A VARCHAR (32),B VARCHAR (32),C VARCHAR (32),PsiKai VARCHAR (32),단위면적당적용 VARCHAR (32),Rse VARCHAR (32),Rsi VARCHAR (32),두께합계 VARCHAR (32),열저항합계 VARCHAR (32),단열재두께 VARCHAR (32),재료1종류 VARCHAR (32),재료1두께 VARCHAR (32),재료2종류 VARCHAR (32),재료2두께 VARCHAR (32),재료3종류 VARCHAR (32),재료3두께 VARCHAR (32),재료4종류 VARCHAR (32),재료4두께 VARCHAR (32),재료5종류 VARCHAR (32),재료5두께 VARCHAR (32),재료6종류 VARCHAR (32),재료6두께 VARCHAR (32),재료7종류 VARCHAR (32),재료7두께 VARCHAR (32),재료8종류 VARCHAR (32),재료8두께 VARCHAR (32),재료9종류 VARCHAR (32),재료9두께 VARCHAR (32),재료10종류 VARCHAR (32),재료10두께 VARCHAR (32),흡수율 VARCHAR (32),열관류율 VARCHAR (32),열교가산치 VARCHAR (32),유효열관류율 VARCHAR (32),법규열관류율 VARCHAR (32))"},
-            {"ConstructionDoor", "CREATE TABLE IF NOT EXISTS ConstructionDoor (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),Type VARCHAR (32),기존출입문 VARCHAR (32),UD적용방법 VARCHAR (32),직접간접 VARCHAR (32),문짝제품 VARCHAR (32),출입문재질 VARCHAR (32),문틀내부 VARCHAR (32),문짝내부유형 VARCHAR (32),문짝색 VARCHAR (32),흡수율 VARCHAR (32),문짝단열재종류 VARCHAR (32),문짝두께 VARCHAR (32),문열관류율 VARCHAR (32),문틀상부측면열관류율 VARCHAR (32),문틀하부열관류율 VARCHAR (32),문면적 VARCHAR (32),문높이 VARCHAR (32),문길이 VARCHAR (32),유리적용유무 VARCHAR (32),유리가로 VARCHAR (32),유리세로 VARCHAR (32),유리종류 VARCHAR (32),유리면적 VARCHAR (32),유리열관류율 VARCHAR (32),유리반영문열관류율 VARCHAR (32),설치유형 VARCHAR (32),설치유형2 VARCHAR (32),상부선형열관류율 VARCHAR (32),측면부선형열관류율 VARCHAR (32),하부선형열관류율 VARCHAR (32),상부설치길이 VARCHAR (32),측면설치길이 VARCHAR (32),하부설치길이 VARCHAR (32),열교가산치 VARCHAR (32),문유효열관류율 VARCHAR (32),Door유형 VARCHAR (32),제품명 VARCHAR (32),제조사 VARCHAR (32),법규열관류율 VARCHAR (32))"},
+            {"ConstructionWall", "CREATE TABLE IF NOT EXISTS ConstructionWall (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),Type VARCHAR (32),기존외벽 VARCHAR (32),덧댐커튼월 VARCHAR (32),U적용방법 VARCHAR (32),직접간접 VARCHAR (32),구조유형 VARCHAR (32),열교유형 VARCHAR (32),열교종류 VARCHAR (32),외장재색 VARCHAR (32),표면열전달저항기준 VARCHAR (32),선형점형 VARCHAR (32),A VARCHAR (32),B VARCHAR (32),C VARCHAR (32),PsiKai VARCHAR (32),단위면적당적용 VARCHAR (32),Rse VARCHAR (32),Rsi VARCHAR (32),두께합계 VARCHAR (32),열저항합계 VARCHAR (32),단열재두께 VARCHAR (32),재료1종류 VARCHAR (32),재료1두께 VARCHAR (32),재료2종류 VARCHAR (32),재료2두께 VARCHAR (32),재료3종류 VARCHAR (32),재료3두께 VARCHAR (32),재료4종류 VARCHAR (32),재료4두께 VARCHAR (32),재료5종류 VARCHAR (32),재료5두께 VARCHAR (32),재료6종류 VARCHAR (32),재료6두께 VARCHAR (32),재료7종류 VARCHAR (32),재료7두께 VARCHAR (32),재료8종류 VARCHAR (32),재료8두께 VARCHAR (32),재료9종류 VARCHAR (32),재료9두께 VARCHAR (32),재료10종류 VARCHAR (32),재료10두께 VARCHAR (32),흡수율 VARCHAR (32),열관류율 VARCHAR (32),열교가산치 VARCHAR (32),유효열관류율 VARCHAR (32),법규열관류율 VARCHAR (32),미입력항목 VARCHAR (255))"},
+            {"ConstructionCW", "CREATE TABLE IF NOT EXISTS ConstructionCW (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),Type VARCHAR (32),기존커튼월 VARCHAR (32),Ucw적용방법 VARCHAR (32),직접간접 VARCHAR (32),프레임유형 VARCHAR (32),프레임종류 VARCHAR (32),고정유리종류 VARCHAR (32),개폐유리종류 VARCHAR (32),간봉종류 VARCHAR (32),설치유형 VARCHAR (32),설치종류 VARCHAR (32),LE_CL_V VARCHAR (32),패널적용유무 VARCHAR (32),패널종류 VARCHAR (32),패널유리종류 VARCHAR (32),LE_CL_V_Panel VARCHAR (32),출입문적용유무 VARCHAR (32),출입문프레임유형 VARCHAR (32),출입문프레임종류 VARCHAR (32),출입문유리종류 VARCHAR (32),출입문간봉종류 VARCHAR (32),LE_CL_V_Door VARCHAR (32),고정유리열관류율 VARCHAR (32),개폐유리열관류율 VARCHAR (32),태양열취득률 VARCHAR (32),빛투과율 VARCHAR (32),고정유리선형열관류율 VARCHAR (32),개폐유리선형열관류율 VARCHAR (32),고정프레임열관류율 VARCHAR (32),개폐프레임열관류율 VARCHAR (32),고정프레임두께 VARCHAR (32),개폐프레임두께 VARCHAR (32),패널열관류율 VARCHAR (32),패널유리열관류율 VARCHAR (32),패널열전도율 VARCHAR (32),패널흡수율 VARCHAR (32),패널선형열관류율 VARCHAR (32),패널두께 VARCHAR (32),출입문유리열관류율 VARCHAR (32),출입문태양열취득률 VARCHAR (32),출입문빛투과율 VARCHAR (32),출입문유리선형열관류율 VARCHAR (32),출입문프레임두께 VARCHAR (32),출입문프레임열관류율 VARCHAR (32),상부설치열관류율 VARCHAR (32),측면설치열관류율 VARCHAR (32),하부설치열관류율 VARCHAR (32),사이즈명칭 VARCHAR (32),커튼월면적 VARCHAR (32),너비 VARCHAR (32),높이 VARCHAR (32),고정창유리면적 VARCHAR (32),개폐창유리면적 VARCHAR (32),고정창유리둘레길이 VARCHAR (32),개폐창유리둘레길이 VARCHAR (32),패널면적 VARCHAR (32),패널둘레길이 VARCHAR (32),M_T프레임면적 VARCHAR (32),개폐창프레임면적 VARCHAR (32),출입문프레임면적 VARCHAR (32),출입문유리면적 VARCHAR (32),출입문유리둘레길이 VARCHAR (32),커튼월창열관류율 VARCHAR (32),유리부분열관류율 VARCHAR (32),패널부분열관류율 VARCHAR (32),출입문부분열관류율 VARCHAR (32),설치열교가산치 VARCHAR (32),커튼월창유효열관류율 VARCHAR (32),유리부분유효열관류율 VARCHAR (32),패널부분유효열관류율 VARCHAR (32),출입문부분유효열관류율 VARCHAR (32),유리부분유리면적비 VARCHAR (32),출입문부분유리면적비 VARCHAR (32),법규유리부분열관류율 VARCHAR (32),법규패널부분열관류율 VARCHAR (32),법규출입문부분열관류율 VARCHAR (32),미입력항목 VARCHAR (255))"},
+            {"ConstructionWindow", "CREATE TABLE IF NOT EXISTS ConstructionWindow (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),창호명칭 VARCHAR (32),Type VARCHAR (32),기존창호 VARCHAR (32),Uw적용방법 VARCHAR (32),직접간접 VARCHAR (32),프레임유형 VARCHAR (32),이중단창 VARCHAR (32),프레임재료 VARCHAR (32),프레임종류 VARCHAR (32),유리종류 VARCHAR (32),간봉종류 VARCHAR (32),설치유형 VARCHAR (32),설치종류 VARCHAR (32),LE_CL_V VARCHAR (32),유리열관류율 VARCHAR (32),태양열취득률 VARCHAR (32),빛투과율 VARCHAR (32),고정유리선형열관류율 VARCHAR (32),개폐유리선형열관류율 VARCHAR (32),개폐부프레임열관류율 VARCHAR (32),고정부프레임열관류율 VARCHAR (32),중간바프레임열관류율 VARCHAR (32),개폐부프레임두께 VARCHAR (32),고정부프레임두께 VARCHAR (32),중간바프레임두께 VARCHAR (32),상부설치열관류율 VARCHAR (32),측면설치열관류율 VARCHAR (32),하부설치열관류율 VARCHAR (32),창호열관류율 VARCHAR (32),법규열관류율 VARCHAR (32),미입력항목 VARCHAR (255))"},
+            {"ConstructionFloor", "CREATE TABLE IF NOT EXISTS ConstructionFloor (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),Type VARCHAR (32),기존바닥 VARCHAR (32),기초설치 VARCHAR (32),U적용방법 VARCHAR (32),직접간접 VARCHAR (32),구조유형 VARCHAR (32),열교유형 VARCHAR (32),열교종류 VARCHAR (32),표면열전달저항기준 VARCHAR (32),선형점형 VARCHAR (32),A VARCHAR (32),B VARCHAR (32),C VARCHAR (32),PsiKai VARCHAR (32),단위면적당적용 VARCHAR (32),Rse VARCHAR (32),Rsi VARCHAR (32),두께합계 VARCHAR (32),열저항합계 VARCHAR (32),단열재두께 VARCHAR (32),재료1종류 VARCHAR (32),재료1두께 VARCHAR (32),재료2종류 VARCHAR (32),재료2두께 VARCHAR (32),재료3종류 VARCHAR (32),재료3두께 VARCHAR (32),재료4종류 VARCHAR (32),재료4두께 VARCHAR (32),재료5종류 VARCHAR (32),재료5두께 VARCHAR (32),재료6종류 VARCHAR (32),재료6두께 VARCHAR (32),재료7종류 VARCHAR (32),재료7두께 VARCHAR (32),재료8종류 VARCHAR (32),재료8두께 VARCHAR (32),재료9종류 VARCHAR (32),재료9두께 VARCHAR (32),재료10종류 VARCHAR (32),재료10두께 VARCHAR (32),열관류율 VARCHAR (32),열교가산치 VARCHAR (32),유효열관류율 VARCHAR (32),법규열관류율 VARCHAR (32),미입력항목 VARCHAR (255))"},
+            {"ConstructionRoof", "CREATE TABLE IF NOT EXISTS ConstructionRoof (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),Type VARCHAR (32),기존지붕 VARCHAR (32),U적용방법 VARCHAR (32),직접간접 VARCHAR (32),구조유형 VARCHAR (32),열교유형 VARCHAR (32),열교종류 VARCHAR (32),외장재색 VARCHAR (32),표면열전달저항기준 VARCHAR (32),선형점형 VARCHAR (32),A VARCHAR (32),B VARCHAR (32),C VARCHAR (32),PsiKai VARCHAR (32),단위면적당적용 VARCHAR (32),Rse VARCHAR (32),Rsi VARCHAR (32),두께합계 VARCHAR (32),열저항합계 VARCHAR (32),단열재두께 VARCHAR (32),재료1종류 VARCHAR (32),재료1두께 VARCHAR (32),재료2종류 VARCHAR (32),재료2두께 VARCHAR (32),재료3종류 VARCHAR (32),재료3두께 VARCHAR (32),재료4종류 VARCHAR (32),재료4두께 VARCHAR (32),재료5종류 VARCHAR (32),재료5두께 VARCHAR (32),재료6종류 VARCHAR (32),재료6두께 VARCHAR (32),재료7종류 VARCHAR (32),재료7두께 VARCHAR (32),재료8종류 VARCHAR (32),재료8두께 VARCHAR (32),재료9종류 VARCHAR (32),재료9두께 VARCHAR (32),재료10종류 VARCHAR (32),재료10두께 VARCHAR (32),흡수율 VARCHAR (32),열관류율 VARCHAR (32),열교가산치 VARCHAR (32),유효열관류율 VARCHAR (32),법규열관류율 VARCHAR (32),미입력항목 VARCHAR (255))"},
+            {"ConstructionDoor", "CREATE TABLE IF NOT EXISTS ConstructionDoor (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),Type VARCHAR (32),기존출입문 VARCHAR (32),UD적용방법 VARCHAR (32),직접간접 VARCHAR (32),문짝제품 VARCHAR (32),출입문재질 VARCHAR (32),문틀내부 VARCHAR (32),문짝내부유형 VARCHAR (32),문짝색 VARCHAR (32),흡수율 VARCHAR (32),문짝단열재종류 VARCHAR (32),문짝두께 VARCHAR (32),문열관류율 VARCHAR (32),문틀상부측면열관류율 VARCHAR (32),문틀하부열관류율 VARCHAR (32),문면적 VARCHAR (32),문높이 VARCHAR (32),문길이 VARCHAR (32),유리적용유무 VARCHAR (32),유리가로 VARCHAR (32),유리세로 VARCHAR (32),유리종류 VARCHAR (32),유리면적 VARCHAR (32),유리열관류율 VARCHAR (32),유리반영문열관류율 VARCHAR (32),설치유형 VARCHAR (32),설치유형2 VARCHAR (32),상부선형열관류율 VARCHAR (32),측면부선형열관류율 VARCHAR (32),하부선형열관류율 VARCHAR (32),상부설치길이 VARCHAR (32),측면설치길이 VARCHAR (32),하부설치길이 VARCHAR (32),열교가산치 VARCHAR (32),문유효열관류율 VARCHAR (32),Door유형 VARCHAR (32),제품명 VARCHAR (32),제조사 VARCHAR (32),법규열관류율 VARCHAR (32),미입력항목 VARCHAR (255))"},
             {"SubWindow", "CREATE TABLE IF NOT EXISTS SubWindow (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),상위창호번호 VARCHAR (32),창호면적 VARCHAR (32),창호너비 VARCHAR (32),창호높이 VARCHAR (32),고정유리면적 VARCHAR (32),개폐유리면적 VARCHAR (32),개폐프레임면적 VARCHAR (32),고정프레임면적 VARCHAR (32),중간프레임면적 VARCHAR (32),고정유리둘레길이 VARCHAR (32),개폐유리둘레길이 VARCHAR (32),창호열관류율 VARCHAR (32),설치열교가산치 VARCHAR (32),창호유효열관류율 VARCHAR (32),유리면적비 VARCHAR (32),법규열관류율 VARCHAR (32))"},
             {"Import_WindowSize", "CREATE TABLE IF NOT EXISTS Import_WindowSize (ID INTEGER PRIMARY KEY AUTOINCREMENT,창호명칭 VARCHAR (32),창호면적 VARCHAR (32),창호너비 VARCHAR (32),창호높이 VARCHAR (32),고정창유리면적 VARCHAR (32),개폐창유리면적 VARCHAR (32),개폐프레임면적 VARCHAR (32),고정프레임면적 VARCHAR (32),중간프레임면적 VARCHAR (32),고정창유리둘레길이 VARCHAR (32),개폐창유리둘레길이 VARCHAR (32))"},
             {"Import_CWSize", "CREATE TABLE IF NOT EXISTS Import_CWSize (ID INTEGER PRIMARY KEY AUTOINCREMENT,명칭 VARCHAR (32),커튼월면적 VARCHAR (32),너비 VARCHAR (32),높이 VARCHAR (32),고정창유리면적 VARCHAR (32),개폐창유리면적 VARCHAR (32),고정창유리둘레길이 VARCHAR (32),개폐창유리둘레길이 VARCHAR (32),패널면적 VARCHAR (32),패널둘레길이 VARCHAR (32),M_T프레임면적 VARCHAR (32),개폐창프레임면적 VARCHAR (32),출입문프레임면적 VARCHAR (32),출입문유리면적 VARCHAR (32),출입문유리둘레길이 VARCHAR (32))"},
@@ -133,8 +137,8 @@ namespace main
             //Zone
             {"User_Lighting", "CREATE TABLE IF NOT EXISTS User_Lighting (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),등기구명칭 VARCHAR (32),램프유형 VARCHAR (32),제조사 VARCHAR (32),안정기_컨버터 VARCHAR (32),광속 VARCHAR (32),소비전력 VARCHAR (32),광효율 VARCHAR (32),조명계수 VARCHAR (32))"},
             {"User_Renew", "CREATE TABLE IF NOT EXISTS User_Renew (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),DB유형 VARCHAR (32),집광채광명칭 VARCHAR (32),집광채광종류 VARCHAR (32),제조사 VARCHAR (32),집광채광효율 VARCHAR (32),산광부가로길이 VARCHAR (32),산광부세로길이 VARCHAR (32),산광부면적 VARCHAR (32))"},
-            {"ZoneGeneral_Form", "CREATE TABLE IF NOT EXISTS ZoneGeneral_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32),프로젝트유형 VARCHAR (32),존이름 VARCHAR (32),실제어방식 VARCHAR (32),냉난방유무 VARCHAR (32),환기유무 VARCHAR (32),환기방식 VARCHAR (32),선택열회수기 VARCHAR (32),용도프로필 VARCHAR (32),순바닥면적 VARCHAR (32),천장고 VARCHAR (32),시작시간 VARCHAR (32),종료시간 VARCHAR (32),주이용일 VARCHAR (32),재실자수 VARCHAR (32),기기발열수준 VARCHAR (32),일일급탕요구량 VARCHAR (32),냉난방시간 VARCHAR (32),사용시간 VARCHAR (32),공조시간 VARCHAR (32),연이용일수 VARCHAR (32),재실밀도 VARCHAR (32),재실수준 VARCHAR (32),일일인체발열 VARCHAR (32),면적당인체발열 VARCHAR (32),일일기기발열 VARCHAR (32),면적당기기발열 VARCHAR (32),순체적 VARCHAR (32),환기횟수 VARCHAR (32),이용일환기량 VARCHAR (32),비이용일환기량  VARCHAR (32),천장축열선택 VARCHAR (32),외벽축열선택 VARCHAR (32),내벽축열선택 VARCHAR (32),바닥축열선택 VARCHAR (32),천장축열 VARCHAR (32),외벽축열 VARCHAR (32),내벽축열 VARCHAR (32),바닥축열 VARCHAR (32),천장면적 VARCHAR (32),외벽면적 VARCHAR (32),내벽면적 VARCHAR (32),바닥면적 VARCHAR (32),존축열성능 VARCHAR (32),존기밀타입 VARCHAR (32),기존존 VARCHAR (32),증축여부 VARCHAR (32),n50 VARCHAR (32),냉방습도 VARCHAR (32),난방습도 VARCHAR (32))"},
-            {"ZoneLighting_form", "CREATE TABLE IF NOT EXISTS ZoneLighting_form (ID INTEGER PRIMARY KEY AUTOINCREMENT, 번호 VARCHAR (32),프로젝트유형 VARCHAR (32),너비 VARCHAR (32),길이 VARCHAR (32),순바닥면적 VARCHAR (32),상인방높이 VARCHAR (32),작업면높이 VARCHAR (32),조명설치높이 VARCHAR (32),기준조도 VARCHAR (32),조명방식 VARCHAR (32),제어방식 VARCHAR (32),디밍유형 VARCHAR (32),조명밀도 VARCHAR (32),조명예상전력 VARCHAR (32),대기전력 VARCHAR (32),재실계수 VARCHAR (32),조도제어계수 VARCHAR (32),조명번호 VARCHAR (32),등기구명칭 VARCHAR (32), 램프유형 VARCHAR (32), 컨버터_안정기 VARCHAR (32), 광속 VARCHAR (32), 소비전력 VARCHAR (32), 광효율 VARCHAR (32), 조명계수 VARCHAR (32),표준광속 VARCHAR (32), 표준소비전력 VARCHAR (32), 사용자광속 VARCHAR (32), 사용자소비전력 VARCHAR (32),자연채광유형 VARCHAR (32),주향 VARCHAR (32),주창면적합 VARCHAR (32),주창유리종류 VARCHAR (32),주창아이디 VARCHAR (32),차양 VARCHAR (32),주광길이 VARCHAR (32),주광깊이 VARCHAR (32),주광면적 VARCHAR (32),비주광면적 VARCHAR (32),서브유형 VARCHAR (32),주창유리빛투과율 VARCHAR (32),주창유리면적비 VARCHAR (32),이중외피유리 VARCHAR (32),아트리움유리 VARCHAR (32),파사드유리빛투과율 VARCHAR (32),파사드너비 VARCHAR (32),파사드길이 VARCHAR (32),파사드높이 VARCHAR (32),천창유리각 VARCHAR (32),천창수평측면각 VARCHAR (32),천창장변부길이 VARCHAR (32),천창단변부길이 VARCHAR (32),천창수평상부높이 VARCHAR (32),집광채광체크 VARCHAR (32),집광채광번호 VARCHAR (32),집광채광명칭 VARCHAR (32),집광채광종류 VARCHAR (32),집광채광향 VARCHAR (32),집광채광각도 VARCHAR (32),집광채광효율 VARCHAR (32),집광채광면적 VARCHAR (32),표준길이1 VARCHAR (32),표준길이2 VARCHAR (32),사용자길이1 VARCHAR (32),사용자길이2 VARCHAR (32),사용자면적 VARCHAR (32),조명개수 VARCHAR (32))"},
+            {"ZoneGeneral_Form", "CREATE TABLE IF NOT EXISTS ZoneGeneral_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32),프로젝트유형 VARCHAR (32),존이름 VARCHAR (32),실제어방식 VARCHAR (32),냉난방유무 VARCHAR (32),환기유무 VARCHAR (32),환기방식 VARCHAR (32),선택열회수기 VARCHAR (32),용도프로필 VARCHAR (32),순바닥면적 VARCHAR (32),천장고 VARCHAR (32),시작시간 VARCHAR (32),종료시간 VARCHAR (32),주이용일 VARCHAR (32),재실자수 VARCHAR (32),기기발열수준 VARCHAR (32),일일급탕요구량 VARCHAR (32),냉난방시간 VARCHAR (32),사용시간 VARCHAR (32),공조시간 VARCHAR (32),연이용일수 VARCHAR (32),재실밀도 VARCHAR (32),재실수준 VARCHAR (32),일일인체발열 VARCHAR (32),면적당인체발열 VARCHAR (32),일일기기발열 VARCHAR (32),면적당기기발열 VARCHAR (32),순체적 VARCHAR (32),환기횟수 VARCHAR (32),이용일환기량 VARCHAR (32),비이용일환기량  VARCHAR (32),천장축열선택 VARCHAR (32),외벽축열선택 VARCHAR (32),내벽축열선택 VARCHAR (32),바닥축열선택 VARCHAR (32),천장축열 VARCHAR (32),외벽축열 VARCHAR (32),내벽축열 VARCHAR (32),바닥축열 VARCHAR (32),천장면적 VARCHAR (32),외벽면적 VARCHAR (32),내벽면적 VARCHAR (32),바닥면적 VARCHAR (32),존축열성능 VARCHAR (32),존기밀타입 VARCHAR (32),기존존 VARCHAR (32),증축여부 VARCHAR (32),n50 VARCHAR (32),냉방습도 VARCHAR (32),난방습도 VARCHAR (32),미입력항목 VARCHAR (255),미입력_외피 VARCHAR (255))"},
+            {"ZoneLighting_form", "CREATE TABLE IF NOT EXISTS ZoneLighting_form (ID INTEGER PRIMARY KEY AUTOINCREMENT, 번호 VARCHAR (32),프로젝트유형 VARCHAR (32),너비 VARCHAR (32),길이 VARCHAR (32),순바닥면적 VARCHAR (32),상인방높이 VARCHAR (32),작업면높이 VARCHAR (32),조명설치높이 VARCHAR (32),기준조도 VARCHAR (32),조명방식 VARCHAR (32),제어방식 VARCHAR (32),디밍유형 VARCHAR (32),조명밀도 VARCHAR (32),조명예상전력 VARCHAR (32),대기전력 VARCHAR (32),재실계수 VARCHAR (32),조도제어계수 VARCHAR (32),조명번호 VARCHAR (32),등기구명칭 VARCHAR (32), 램프유형 VARCHAR (32), 컨버터_안정기 VARCHAR (32), 광속 VARCHAR (32), 소비전력 VARCHAR (32), 광효율 VARCHAR (32), 조명계수 VARCHAR (32),표준광속 VARCHAR (32), 표준소비전력 VARCHAR (32), 사용자광속 VARCHAR (32), 사용자소비전력 VARCHAR (32),자연채광유형 VARCHAR (32),주향 VARCHAR (32),주창면적합 VARCHAR (32),주창유리종류 VARCHAR (32),주창아이디 VARCHAR (32),차양 VARCHAR (32),주광길이 VARCHAR (32),주광깊이 VARCHAR (32),주광면적 VARCHAR (32),비주광면적 VARCHAR (32),서브유형 VARCHAR (32),주창유리빛투과율 VARCHAR (32),주창유리면적비 VARCHAR (32),이중외피유리 VARCHAR (32),아트리움유리 VARCHAR (32),파사드유리빛투과율 VARCHAR (32),파사드너비 VARCHAR (32),파사드길이 VARCHAR (32),파사드높이 VARCHAR (32),천창유리각 VARCHAR (32),천창수평측면각 VARCHAR (32),천창장변부길이 VARCHAR (32),천창단변부길이 VARCHAR (32),천창수평상부높이 VARCHAR (32),집광채광체크 VARCHAR (32),집광채광번호 VARCHAR (32),집광채광명칭 VARCHAR (32),집광채광종류 VARCHAR (32),집광채광향 VARCHAR (32),집광채광각도 VARCHAR (32),집광채광효율 VARCHAR (32),집광채광면적 VARCHAR (32),표준길이1 VARCHAR (32),표준길이2 VARCHAR (32),사용자길이1 VARCHAR (32),사용자길이2 VARCHAR (32),사용자면적 VARCHAR (32),조명개수 VARCHAR (32),미입력항목 VARCHAR (255))"},
             //System              
             {"HeatingSystem_Form", "CREATE TABLE IF NOT EXISTS HeatingSystem_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,번호 VARCHAR (32),프로젝트유형 VARCHAR (32),명칭 VARCHAR (32),존 VARCHAR (32),공조기 VARCHAR (32),설치위치 VARCHAR (32),공급환수온도 VARCHAR (32),복합설비유무 VARCHAR (32),주요설비 VARCHAR (32),보조설비1 VARCHAR (32),보조설비2 VARCHAR (32),보일러종류 VARCHAR (32),보일러대수 VARCHAR (32),태양열번호 VARCHAR (32),모듈개수 VARCHAR (32),모듈방위 VARCHAR (32),모듈기울기 VARCHAR (32),외기히트펌프번호 VARCHAR (32),외기히트펌프공급방식 VARCHAR (32),외기히트펌프제어방식 VARCHAR (32),외기히트펌프대수 VARCHAR (32),지열히트펌프번호 VARCHAR (32),지열히트펌프공급방식 VARCHAR (32),지열히트펌프제어방식 VARCHAR (32),지열히트펌프대수 VARCHAR (32),지하수히트펌프번호 VARCHAR (32),지하수히트펌프공급방식 VARCHAR (32),지하수히트펌프제어방식 VARCHAR (32),지하수히트펌프대수 VARCHAR (32),흡수식온수기번호 VARCHAR (32),흡수식온수기대수 VARCHAR (32),지역난방번호 VARCHAR (32),펌프유무 VARCHAR (32),펌프방식 VARCHAR (32),펌프1종류 VARCHAR (32),펌프2종류 VARCHAR (32),펌프1밸브 VARCHAR (32),펌프2밸브 VARCHAR (32),펌프1제어 VARCHAR (32),펌프2제어 VARCHAR (32),펌프1대수 VARCHAR (32),펌프2대수 VARCHAR (32),펌프1유량 VARCHAR (32),펌프2유량 VARCHAR (32),펌프1양정 VARCHAR (32),펌프2양정 VARCHAR (32),공급설비1종류 VARCHAR (32),공급설비2종류 VARCHAR (32),축열유무 VARCHAR (32),축열펌프유무 VARCHAR (32),축열펌프 VARCHAR (32),축열용량 VARCHAR (32),배관관경 VARCHAR (32),배관보온두께 VARCHAR (32),보온열전도율 VARCHAR (32),배관보온재 VARCHAR (32),노출배관길이 VARCHAR (32),연료전지번호 VARCHAR (32),연료전지대수 VARCHAR (32),연료전지설치유형 VARCHAR (32),연료전지생산유형 VARCHAR (32))"},
             {"Heating_ce_Form", "CREATE TABLE IF NOT EXISTS Heating_ce_Form (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32),프로젝트유형 VARCHAR (32),난방시스템 VARCHAR (32),공급설비종류 VARCHAR (32),공급설비 VARCHAR (32),설치위치 VARCHAR (32),가동시간 VARCHAR (32),부하율 VARCHAR (32))"},
@@ -194,6 +198,9 @@ namespace main
 
         public bool openDB(string projPath)
         {
+            // 다른 프로젝트를 열기 전에, 현재 프로젝트에 밀려있던 변경을 먼저 디스크에 저장한다.
+            saveProject();
+
             // 프로젝트마다 물리적으로 다른 sqlite 파일이라, 이전 프로젝트에서 검증된 테이블 캐시가 그대로 남으면
             // 새로 여는 프로젝트의 컬럼 누락 여부를 건너뛰게 됨 — 프로젝트를 열 때마다 초기화
             columnCheckedTables.Clear();
@@ -222,6 +229,8 @@ namespace main
             }
 
             projDBPath = projPath;
+            // 방금 디스크에서 새로 읽어온 상태이므로 저장할 변경 없음
+            projDirty = false;
 
             return true;
         }
@@ -254,17 +263,23 @@ namespace main
             SecureSQLite.CloseDB((int)type.ProjDB);
             SecureSQLite.CloseDB((int)type.CalcDB);
         }
+       
+        // path 지정 시: "이 파일로 지금 써라" → 조건 없이 무조건 저장.
+        // path 없을 때(기본): 프로젝트 DB에 밀려있는 변경이 있을 때만 저장.
+        //   화면 전환 / 프로그램 종료 / 계산 직전·직후 / 저장 버튼 등 "지금 저장해도 되는 순간"에 호출한다.
         public void saveProject(string path = null)
         {
-            if (path == null)
-            {
-                SecureSQLite.SaveDB(projDBPath, (int)type.ProjDB);
-            }
-            else
+            if (path != null)
             {
                 SecureSQLite.SaveDB(path, (int)customDB);
+                return;
             }
 
+            if (projDirty)
+            {
+                SecureSQLite.SaveDB(projDBPath, (int)type.ProjDB);
+                projDirty = false;
+            }
         }
 
         public void initTable (type dbType, string table)
@@ -299,10 +314,10 @@ namespace main
             {
                 SecureSQLite.ExecuteSQL((int)dbType, exec);
 
-                // 쓴 대상에 맞는 파일로 저장한다 (ProjDB/ProjListDB가 서로 다른 파일이라 구분 필요)
+                // ProjDB는 메모리에만 반영하고 저장은 미룬다(FlushIfDirty에서). ProjListDB는 종전대로 바로 저장.
                 if (dbType == type.ProjDB)
                 {
-                    saveProject();
+                    projDirty = true;
                 }
                 else if (dbType == type.ProjListDB)
                 {
@@ -489,22 +504,10 @@ namespace main
             }
         }
 
-        // 화면(UI)에서 쓰는 일반 버전 - 쓰고 나서 바로 디스크에 저장까지 한다.
-        // (예전엔 저장을 깜빡해서 반영이 안 되는 버그가 여러 곳 있었음)
+        // 값은 메모리 DB에만 쓰고 projDirty만 켠다. 실제 디스크 저장은 FlushIfDirty()에서
+        // "지금 저장해도 되는 순간"(화면 전환/프로그램 종료/계산 직전/저장 버튼)에만 일어난다.
+        // getValue/querySQL은 같은 메모리 DB에서 읽으므로, 쓴 값을 바로 다시 읽는 데는 문제 없다.
         public void setValue(type dbType, string table, string columns, string values, string key_columns)
-        {
-            setValueCore(dbType, table, columns, values, key_columns);
-            saveProject();
-        }
-
-        // 계산(CALC 등)에서 한 번의 계산 중 수백~수천 번 호출될 수 있어서, 매번 저장하면 느려진다.
-        // 그래서 저장 없이 값만 쓰고, 계산이 다 끝난 뒤 한 번만 saveProject()를 부르는 용도.
-        public void setValue_Calc(type dbType, string table, string columns, string values, string key_columns)
-        {
-            setValueCore(dbType, table, columns, values, key_columns);
-        }
-
-        private void setValueCore(type dbType, string table, string columns, string values, string key_columns)
         {
             createTable(dbType, table, tables[table]);
 
@@ -565,7 +568,11 @@ namespace main
                 sql += upd + " WHERE " + condition;
                 SecureSQLite.ExecuteSQL((int)dbType, sql);
             }
+
+            // 메모리에만 반영하고 디스크 저장은 미룬다. 실제 저장은 FlushIfDirty()에서.
+            projDirty = true;
         }
+
 
 
         public void deleteTable(type dbType, string table)
@@ -601,7 +608,7 @@ namespace main
 
                         SecureSQLite.ExecuteSQL((int)type.ProjDB, "UPDATE " + table + " SET 번호='" + Num + "' WHERE  ID = " + res1[0][0]);
 
-                        saveProject();
+                        projDirty = true;
                         return true;
                     }
                 }
@@ -620,7 +627,8 @@ namespace main
             {
                 SecureSQLite.ExecuteSQL((int)dbType, "delete from " + table);
             }
-            SecureSQLite.SaveDB(projDBPath, (int)type.ProjDB);
+            // 메모리에만 반영하고 디스크 저장은 미룬다. 실제 저장은 FlushIfDirty()에서.
+            projDirty = true;
         }
 
         public string[][] getValue(type dbType, string table, string columns, string conditions = "")

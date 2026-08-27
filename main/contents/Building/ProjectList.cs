@@ -290,7 +290,7 @@ namespace main.contents
                             }
                         }
                         Program.DB.executeSQL(pid, "UPDATE BuildingGeneral SET 프로젝트번호='" + pid + "', 프로젝트유형='" + types[ProjectType] + "', 프로젝트유형번호='" + ProjectType + "' Where 프로젝트번호='"+pid0+"'");
-                        Program.DB.saveProject();
+                        
                     }
 
 
@@ -415,6 +415,8 @@ namespace main.contents
             Program.DB.savePListDB();
             if (pid0 != "")
             {
+                // 원본 프로젝트 파일을 디스크에서 복사하므로, 현재 프로젝트에 밀려있던 변경을 먼저 저장한다.
+                Program.DB.saveProject();
                 File.Copy(Program.gPath + "projects\\" + pid0 + ".sqlite", Program.gPath + "projects\\" + pid + ".sqlite", true);
             }
             else
@@ -519,8 +521,8 @@ namespace main.contents
                 Program.DB.openDB("projects\\" + ProjectList.CurProjID + ".sqlite");
                 Program.DB.initTables(DB.type.ProjDB);
                 Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,프로젝트유형,프로젝트유형번호", "'" + ProjectList.CurProjID + "','" + types[ProjectType] + "','" + ProjectType + "'", "프로젝트번호");
-                Program.DB.savePListDB();
                 Program.DB.saveProject();
+
                 Program.getMenuForm().resetAll();
                 Program.UTIL.ReloadModel();
             }

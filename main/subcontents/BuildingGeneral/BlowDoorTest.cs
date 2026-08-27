@@ -176,7 +176,7 @@ public partial class BlowDoorTest : Form
                 Blow_dataGridView.Rows[a].Cells[5].Value.ToString()
                 + "'", "번호");
             }
-            Program.DB.saveProject();
+            
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

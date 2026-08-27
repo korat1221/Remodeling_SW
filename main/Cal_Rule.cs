@@ -1058,7 +1058,7 @@ namespace main
                 Qreg_elec_a += final1.Qreg_elec_tot[mth];
             }
             Qf_elec_tot_a = Qhf_elec_a + Qcf_elec_a + Qwf_elec_a + Qlf_elec_a + Qvf_elec_a + Qbase_elec_a - Qreg_elec_a;
-            Program.DB.setValue_Calc(DB.type.ProjDB, "FinalEnergy_Result_Rule", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Rule", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
                     "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + "전기" + "','" +
                     Qhf_elec_a + "','" + Qcf_elec_a + "','" + Qwf_elec_a + "','" + Qlf_elec_a + "','" +
@@ -1080,7 +1080,7 @@ namespace main
                 Qbase_gas_a += final1.Qbase_gas[mth];
             }
             Qf_gas_tot_a = Qhf_gas_a + Qcf_gas_a + Qwf_gas_a + Qbase_gas_a;
-            Program.DB.setValue_Calc(DB.type.ProjDB, "FinalEnergy_Result_Rule", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Rule", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
                     "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + Carrier + "','" +
                     Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_gas_a + "','" + "0" + "','" +
@@ -1089,7 +1089,7 @@ namespace main
             #endregion
             #region 전체           
 
-            Program.DB.setValue_Calc(DB.type.ProjDB, "FinalEnergy_Result_Rule", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Rule", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
                    "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                    "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + "전체" + "','" +
                    (Qhf_elec_a + Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_gas_a) + "','" + Qlf_elec_a + "','" +

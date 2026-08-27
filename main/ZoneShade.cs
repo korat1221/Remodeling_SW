@@ -82,7 +82,7 @@ namespace main
                 }
 
                 //지역,방향,각도에 따른 월별 설치면산란일사세기 (기후데이터_산란일사량)
-                for (int i = 0; i < 12; i++)
+                for (int i = 0; i < 12; i++) 
                 {
                     string[][] aa = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_산란일사량", "일사량", "지역명= '" + ValueA[0][0] + "' AND 방향 = '" + rec[0][10] + "' AND 각도 ='" + rec[0][11] + "˚" + "' AND 기간 ='" + (i + 1).ToString() + "월" + "'");
                     설치면산란[i] = Program.UTIL.ToDoubleOrZero(aa[0][0]);
@@ -525,7 +525,7 @@ namespace main
                     Program.DB.setValue(DB.type.ProjDB, "Shade_3D", "번호,프로젝트유형,유형,각도,월,음영계수",
                    "'" + ID + "','" + 프로젝트유형[0][0] + "','" + "최종음영" + "','" + "" + "','" + (i + 1) + "월" + "','" + 최종음영계수[i].ToString()
                    + "'", "번호,월");
-                    Program.DB.saveProject();
+                    
                 }
             }
         }

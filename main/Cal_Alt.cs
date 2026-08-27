@@ -51,7 +51,7 @@ namespace main
                 Qreg_elec_a += final1.Qreg_elec_tot[mth];
             }
             Qf_elec_tot_a = Qhf_elec_a + Qcf_elec_a + Qwf_elec_a + Qlf_elec_a + Qvf_elec_a + Qbase_elec_a - Qreg_elec_a;
-            Program.DB.setValue_Calc(DB.type.ProjDB, "FinalEnergy_Result_Element", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
                     "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + "전기" + "','" +
                     Qhf_elec_a + "','" + Qcf_elec_a + "','" + Qwf_elec_a + "','" + Qlf_elec_a + "','" +
@@ -73,7 +73,7 @@ namespace main
                 Qbase_gas_a += final1.Qbase_gas[mth];
             }
             Qf_gas_tot_a = Qhf_gas_a + Qcf_gas_a + Qwf_gas_a + Qbase_gas_a;
-            Program.DB.setValue_Calc(DB.type.ProjDB, "FinalEnergy_Result_Element", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
                     "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + Carrier + "','" +
                     Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_gas_a + "','" + "0" + "','" +
@@ -82,7 +82,7 @@ namespace main
             #endregion
             #region 전체           
 
-            Program.DB.setValue_Calc(DB.type.ProjDB, "FinalEnergy_Result_Element", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
                    "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                    "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + "전체" + "','" +
                    (Qhf_elec_a + Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_gas_a) + "','" + Qlf_elec_a + "','" +
@@ -1364,12 +1364,12 @@ namespace main
                         string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "기존존", "존번호='" + zone.ZoneNum + "'");
                         if (PostZone.Length > 0)
                         {
-                            Program.DB.setValue_Calc(DB.type.ProjDB, "Heating_Result_Element", "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료,난방소요량",
+                            Program.DB.setValue(DB.type.ProjDB, "Heating_Result_Element", "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료,난방소요량",
                                        "'" + 검토유형 + "','" + Heating1.HeatingNum + "','" + PostZone[0][0] + "','" + zone.ZoneNum + "','" + Value_ce[n][0] + "','" + Value_ce[n][2] + "','" + "전기" + "','" + Qhf_elec / Qb_a_sum * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]) * zone.Qb_a[0] + "'"
                                     , "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료");
                             if (Heating1.Carrier != "전기")
                             {
-                                Program.DB.setValue_Calc(DB.type.ProjDB, "Heating_Result_Element", "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료,난방소요량",
+                                Program.DB.setValue(DB.type.ProjDB, "Heating_Result_Element", "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료,난방소요량",
                                          "'" + 검토유형 + "','" + Heating1.HeatingNum + "','" + PostZone[0][0] + "','" + zone.ZoneNum + "','" + Value_ce[n][0] + "','" + Value_ce[n][2] + "','" + Heating1.Carrier + "','" + Qhf_gas / Qb_a_sum * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]) * zone.Qb_a[0] + "'"
                                       , "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료");
                             }
@@ -1388,12 +1388,12 @@ namespace main
                                     if (split[m].ToString() == Value_ce[n][1])
                                     {
                                         zone = Program.CALC.getZone(PostZone[j][0]);
-                                        Program.DB.setValue_Calc(DB.type.ProjDB, "Heating_Result_Element", "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료,난방소요량",
+                                        Program.DB.setValue(DB.type.ProjDB, "Heating_Result_Element", "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료,난방소요량",
                                                        "'" + 검토유형 + "','" + Heating1.HeatingNum + "','" + PostZone[j][1] + "','" + zone.ZoneNum + "','" + Value_ce[n][0] + "','" + Value_ce[n][2] + "','" + "전기" + "','" + Qhf_elec / Qb_a_sum * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]) * zone.Qb_a[0] + "'"
                                                     , "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료");
                                         if (Heating1.Carrier != "전기")
                                         {
-                                            Program.DB.setValue_Calc(DB.type.ProjDB, "Heating_Result_Element", "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료,난방소요량",
+                                            Program.DB.setValue(DB.type.ProjDB, "Heating_Result_Element", "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료,난방소요량",
                                                      "'" + 검토유형 + "','" + Heating1.HeatingNum + "','" + PostZone[j][1] + "','" + zone.ZoneNum + "','" + Value_ce[n][0] + "','" + Value_ce[n][2] + "','" + Heating1.Carrier + "','" + Qhf_gas / Qb_a_sum * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]) * zone.Qb_a[0] + "'"
                                                   , "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료");
                                         }
@@ -1536,12 +1536,12 @@ namespace main
                         string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "기존존", "존번호='" + zone.ZoneNum + "'");
                         if (PostZone.Length > 0)
                         {
-                            Program.DB.setValue_Calc(DB.type.ProjDB, "Cooling_Result_Element", "검토유형,냉방시스템,기존존번호,계획존번호,공급설비,부하율,연료,냉방소요량",
+                            Program.DB.setValue(DB.type.ProjDB, "Cooling_Result_Element", "검토유형,냉방시스템,기존존번호,계획존번호,공급설비,부하율,연료,냉방소요량",
                                        "'" + 검토유형 + "','" + Cooling1.CoolingNum + "','" + PostZone[0][0] + "','" + zone.ZoneNum + "','" + Value_ce[n][0] + "','" + Value_ce[n][2] + "','" + "전기" + "','" + Qcf_elec / Qb_a_sum * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]) * zone.Qb_a[1] + "'"
                                     , "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료");
                             if (Cooling1.Carrier != "전기")
                             {
-                                Program.DB.setValue_Calc(DB.type.ProjDB, "Cooling_Result_Element", "검토유형,냉방시스템,기존존번호,계획존번호,공급설비,부하율,연료,냉방소요량",
+                                Program.DB.setValue(DB.type.ProjDB, "Cooling_Result_Element", "검토유형,냉방시스템,기존존번호,계획존번호,공급설비,부하율,연료,냉방소요량",
                                          "'" + 검토유형 + "','" + Cooling1.CoolingNum + "','" + PostZone[0][0] + "','" + zone.ZoneNum + "','" + Value_ce[n][0] + "','" + Value_ce[n][2] + "','" + Cooling1.Carrier + "','" + Qcf_gas / Qb_a_sum * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]) * zone.Qb_a[1] + "'"
                                       , "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료");
                             }
@@ -1560,12 +1560,12 @@ namespace main
                                     if (split[m].ToString() == Value_ce[n][1])
                                     {
                                         zone = Program.CALC.getZone(PostZone[j][0]);
-                                        Program.DB.setValue_Calc(DB.type.ProjDB, "Cooling_Result_Element", "검토유형,냉방시스템,기존존번호,계획존번호,공급설비,부하율,연료,냉방소요량",
+                                        Program.DB.setValue(DB.type.ProjDB, "Cooling_Result_Element", "검토유형,냉방시스템,기존존번호,계획존번호,공급설비,부하율,연료,냉방소요량",
                                                        "'" + 검토유형 + "','" + Cooling1.CoolingNum + "','" + PostZone[j][1] + "','" + zone.ZoneNum + "','" + Value_ce[n][0] + "','" + Value_ce[n][2] + "','" + "전기" + "','" + Qcf_elec / Qb_a_sum * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]) * zone.Qb_a[1] + "'"
                                                     , "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료");
                                         if (Cooling1.Carrier != "전기")
                                         {
-                                            Program.DB.setValue_Calc(DB.type.ProjDB, "Cooling_Result_Element", "검토유형,냉방시스템,기존존번호,계획존번호,공급설비,부하율,연료,냉방소요량",
+                                            Program.DB.setValue(DB.type.ProjDB, "Cooling_Result_Element", "검토유형,냉방시스템,기존존번호,계획존번호,공급설비,부하율,연료,냉방소요량",
                                                      "'" + 검토유형 + "','" + Cooling1.CoolingNum + "','" + PostZone[j][1] + "','" + zone.ZoneNum + "','" + Value_ce[n][0] + "','" + Value_ce[n][2] + "','" + Cooling1.Carrier + "','" + Qcf_gas / Qb_a_sum * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]) * zone.Qb_a[1] + "'"
                                                   , "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료");
                                         }
@@ -1689,12 +1689,12 @@ namespace main
                     string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "기존존", "존번호='" + DHW1.SelectZone_split[n].ToString() + "'");
                     if (PostZone.Length > 0)
                     {
-                        Program.DB.setValue_Calc(DB.type.ProjDB, "DHWSystem_Result_Element", "검토유형,급탕시스템,기존존번호,계획존번호,연료,급탕소요량",
+                        Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Result_Element", "검토유형,급탕시스템,기존존번호,계획존번호,연료,급탕소요량",
                                    "'" + 검토유형 + "','" + DHW1.DHWNum + "','" + PostZone[0][0] + "','" + DHW1.SelectZone_split[n].ToString() + "','" + "전기" + "','" + Qwf_elec / Qwb_a_sum * Qwb_a[n] + "'"
                                 , "검토유형,급탕시스템,기존존번호,계획존번호,연료");
                         if (DHW1.Carrier != "전기")
                         {
-                            Program.DB.setValue_Calc(DB.type.ProjDB, "DHWSystem_Result_Element", "검토유형,급탕시스템,기존존번호,계획존번호,연료,급탕소요량",
+                            Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Result_Element", "검토유형,급탕시스템,기존존번호,계획존번호,연료,급탕소요량",
                                      "'" + 검토유형 + "','" + DHW1.DHWNum + "','" + PostZone[0][0] + "','" + DHW1.SelectZone_split[n].ToString() + "','" + DHW1.Carrier + "','" + Qwf_gas / Qwb_a_sum * Qwb_a[n] + "'"
                                   , "검토유형,급탕시스템,기존존번호,계획존번호,연료");
                         }
@@ -1713,12 +1713,12 @@ namespace main
                                 if (split[m].ToString() == DHW1.SelectZone_split[n].ToString())
                                 {
                                     zone = Program.CALC.getZone(PostZone[j][0]);
-                                    Program.DB.setValue_Calc(DB.type.ProjDB, "DHWSystem_Result_Element", "검토유형,급탕시스템,기존존번호,계획존번호,연료,급탕소요량",
+                                    Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Result_Element", "검토유형,급탕시스템,기존존번호,계획존번호,연료,급탕소요량",
                                                    "'" + 검토유형 + "','" + DHW1.DHWNum + "','" + PostZone[j][1] + "','" + zone.ZoneNum + "','" + "전기" + "','" + Qwf_elec / Qwb_a_sum * Qwb_a[n] + "'"
                                                 , "검토유형,급탕시스템,기존존번호,계획존번호,연료");
                                     if (DHW1.Carrier != "전기")
                                     {
-                                        Program.DB.setValue_Calc(DB.type.ProjDB, "DHWSystem_Result_Element", "검토유형,급탕시스템,기존존번호,계획존번호,연료,급탕소요량",
+                                        Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Result_Element", "검토유형,급탕시스템,기존존번호,계획존번호,연료,급탕소요량",
                                                  "'" + 검토유형 + "','" + DHW1.DHWNum + "','" + PostZone[j][1] + "','" + zone.ZoneNum + "','" + DHW1.Carrier + "','" + Qwf_gas / Qwb_a_sum * Qwb_a[n] + "'"
                                               , "검토유형,급탕시스템,기존존번호,계획존번호,연료");
                                     }
@@ -1761,7 +1761,7 @@ namespace main
             {
                 Qlf_a += light1.Zone_Final_kWh[mth];
             }
-            Program.DB.setValue_Calc(DB.type.ProjDB, "Light_Result_Element", "검토유형,존번호,조명번호,조명소요량",
+            Program.DB.setValue(DB.type.ProjDB, "Light_Result_Element", "검토유형,존번호,조명번호,조명소요량",
                                "'" + 검토유형 + "','" + light1.ZoneNum + "','" + 조명번호 + "','" + Qlf_a + "'"
                             , "검토유형,존번호");
         }

@@ -82,7 +82,7 @@ namespace main.subcontents.EquipmentList
                 Program.DB.setValue(DB.type.ProjDB, "User_WP", "번호,풍속구간별출력",
                     "'" + WPNum + "','" + Value
                     + "'", "번호");
-                Program.DB.saveProject();
+                
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

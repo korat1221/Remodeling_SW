@@ -200,7 +200,7 @@ namespace main.subcontents
                 Program.DB.setValue(DB.type.ProjDB, "User_WindowInstall", "번호,프로젝트유형,DB유형,제품명,구분1,구분2,구분3,구분4,상부설치선형열관류율,측면설치선형열관류율,하부설치선형열관류율",
                     "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + UserDBName + "','" + UserDBType1 + "','" + UserDBType2 + "','" + UserDBType3 + "','" + UserDBType4 + "','" + UserDB_Psi_InstallTop.ToString() + "','" + UserDB_Psi_InstallSide.ToString() + "','" + UserDB_Psi_InstallButtom.ToString() + "'", "번호");
                 load_table_InstallDB();
-                Program.DB.saveProject();
+                
             }
             else
             {

@@ -250,7 +250,7 @@ namespace main.subcontents
             Select[0] = row.Cells[1].Value.ToString();
             Select[10] = MaterialType;
 
-            Program.DB.saveProject();
+            
             this.DialogResult = DialogResult.OK;
             this.Close();
         사용자DB부족: int c = 0;

@@ -400,7 +400,7 @@ namespace main.subcontents
                 Program.DB.setValue(DB.type.ProjDB, "User_WindowFrame", "번호,프로젝트유형,DB유형,제품명,제조사,프레임종류,프레임재료,개폐부프레임열관류율,고정부프레임열관류율,중간바프레임열관류율,개폐부프레임두께,고정부프레임두께,중간바프레임두께,시험성적서이미지",
                     "'" + UserNum + "','" + 프로젝트유형[0][0] + "','" + "사용자" + "','" + UserDBName + "','" + UserDB_Manufacture + "','" + FrameType + "','" + UserDB_FrameMaterial + "','" + UserDB_Uf.ToString() + "','" + UserDB_Uf.ToString() + "','" + UserDB_Uf.ToString() + "','" + UserDB_FramedA.ToString() + "','" + UserDB_FramedB.ToString() + "','" + UserDB_FramedC.ToString() + "','" + UserDB_Image + "'", "번호");
                 load_table_FrameDB();
-                Program.DB.saveProject();
+                
             }
             else
             {

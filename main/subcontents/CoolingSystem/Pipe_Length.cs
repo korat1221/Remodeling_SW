@@ -264,7 +264,7 @@ namespace main.subcontents.CoolingSystem
                 Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관길이",
           "'" + Num + "','" + System + "','" + 배관유형 + "', '" + 배관길이 + "'", "번호,배관유형");
             }
-            Program.DB.saveProject();
+            
         }
 
         private void Save_button_Click(object sender, EventArgs e)

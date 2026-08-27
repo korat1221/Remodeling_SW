@@ -184,7 +184,6 @@ namespace main.contentslist
 
                 Program.DB.CopyValue(DB.type.ProjDB, "ConstructionDoor", "번호 ='" + Copy_Num + "'", DoorNum);
                 Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  ConstructionDoor" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + DoorNum + "'");
-                Program.DB.saveProject();
                 Load_form(DoorNum, "Copy");
 
             }

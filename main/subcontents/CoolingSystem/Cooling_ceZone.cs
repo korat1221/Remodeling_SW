@@ -273,7 +273,7 @@ namespace main.subcontents.CoolingSystem
                     }
                 }
             }
-            Program.DB.saveProject();
+            
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
@@ -817,7 +817,7 @@ namespace main.subcontents.CoolingSystem
     //                }     
     //            }
     //        }
-    //        Program.DB.saveProject();
+    //        
     //        this.DialogResult = DialogResult.OK;
     //        this.Close();
     //    }

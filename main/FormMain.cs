@@ -20,6 +20,20 @@ namespace main
         public FormMain()
         {
             InitializeComponent();
+            this.FormClosing += FormMain_FormClosing;
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // 종료 전: 현재 화면의 입력값을 DB에 반영하고 디스크에 저장한다.
+            try
+            {
+                MainContents.Instance?.SaveCurrentForm();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"종료 저장 오류: {ex.Message}");
+            }
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -54,6 +68,10 @@ namespace main
 
         private void OnClosed(object sender, FormClosedEventArgs e)
         {
+            // 저장은 FormClosing(FormMain_FormClosing)에서 SaveCurrentForm()으로 이미 처리됨.
+            // 혹시 남은 변경이 있으면 마지막으로 한 번 더 flush (dirty 아니면 no-op).
+            Program.DB.saveProject();
+
             Program.DB.closeDB();
             Program.DB.closePListDB();
             main.Program.killServer();
@@ -145,6 +163,10 @@ namespace main
                     MessageBox.Show("현재 선택된 프로젝트가 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
+
+                // 압축(zfx) 대상이 되는 .sqlite 파일을 디스크에서 읽으므로,
+                // 현재 화면의 입력값을 먼저 DB에 반영시키고 디스크에 저장한다.
+                MainContents.Instance?.SaveCurrentForm();
 
                 // 프로젝트 파일들이 있는 폴더 경로
                 string projectsPath = Program.gPath + "projects\\";

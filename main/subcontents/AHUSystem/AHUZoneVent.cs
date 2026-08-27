@@ -690,7 +690,7 @@ namespace main.subcontents.AHUSystem
                 }
             }
 
-            Program.DB.saveProject();
+            
         }
 
         // 실시간 저장 대신 SAVE 버튼을 눌렀을 때만 반영(다른 subcontents 폼들과 동일한 관례).

@@ -1059,6 +1059,9 @@ namespace main
                 }
             }
 
+            // 화면 전환 시점 = "지금 저장해도 되는 순간". 밀려있던 변경을 디스크에 저장한다.
+            Program.DB.saveProject();
+
             currentForm = FormID.None;
             int i = -1;
             while (++i < forms.Length)
@@ -1102,6 +1105,20 @@ namespace main
             // 현재 폼의 formID를 사용하여 저장 (formParam이 null일 수 있음)
             int currentFormID = (int)currentForm;
             previousFormID = $"{{\"formID\":{currentFormID},\"ID\":\"{actualID}\"}}";
+        }
+
+        // 상단 툴바 저장 버튼 / 프로그램 종료 시 호출한다.
+        // 이들 진입점엔 setValue가 없으므로, 먼저 현재 화면(IConfirmable)의 입력값을 DB(메모리)에 반영시킨 뒤 디스크에 저장한다.
+        public void SaveCurrentForm()
+        {
+            if (currentForm != FormID.None && (int)currentForm >= 0 && (int)currentForm < forms.Length)
+            {
+                if (forms[(int)currentForm] is IConfirmable confirmableForm)
+                {
+                    confirmableForm.ValidateAndSave(true);
+                }
+            }
+            Program.DB.saveProject();
         }
 
         public void DoResizeMain(Size sz)

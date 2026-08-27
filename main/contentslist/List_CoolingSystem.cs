@@ -186,7 +186,6 @@ namespace main.contentslist
 
                 Program.DB.CopyValue(DB.type.ProjDB, "CoolingSystem_Form", "번호 ='" + Copy_Num + "'", Num);
                 Program.DB.executeSQL(DB.type.ProjDB, "UPDATE  CoolingSystem_Form" + " SET 명칭 = '" + dataGridView1.Rows[k].Cells[2].Value.ToString() + "_복사" + "' WHERE  번호 = '" + Num + "'");
-                Program.DB.saveProject();
                 Load_form(Num, "Copy");
 
             }

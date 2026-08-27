@@ -599,7 +599,7 @@ namespace main.subcontents.Alt
                     }
                 }
 
-                Program.DB.saveProject();
+                
             }
         }
         private double[] Cal_Cost(string 리모델링안)

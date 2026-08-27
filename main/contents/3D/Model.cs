@@ -91,6 +91,9 @@ namespace main.contents
 
             ValidateAndSave();
 
+            // 3D 하위 화면 전환 시점에도 밀려있던 변경을 디스크에 저장한다.
+            Program.DB.saveProject();
+
             int i = -1;
             while (++i < forms.Length)
             {
@@ -140,21 +143,25 @@ namespace main.contents
         }
         public bool ValidateAndSave(bool isManualSave = false)
         {
-            //화면 전환 시 저장 > 안 됨 
+            //화면 전환 시 저장
             try
             {
                 foreach (Form form in splitContainer1.Panel2.Controls)
                 {
-                    if (form.Name == "sub3dZoneInfo")
+                    if (form.Name == "sub3dZoneInfo" && form.Visible)
                     {
                         sub3dZoneInfo f = (sub3dZoneInfo)form;
 
                         f.Save_Envelope();
+                    }
+                    if (form.Name == "sub3dBridgeInfo" && form.Visible)
+                    {
+                        sub3dBridgeInfo f = (sub3dBridgeInfo)form;
 
-                        return true;
+                        f.Save_TBDB();
                     }
                 }
-                return false;
+                return true;
 
             }
             catch (Exception ex)
@@ -261,7 +268,6 @@ namespace main.contents
                 {
                     sub3dZoneInfo f = (sub3dZoneInfo)form;
                     Save_Image();
-                    MessageBox.Show("저장되었습니다.");
                     return;
                 }
             }

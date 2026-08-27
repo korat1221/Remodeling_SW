@@ -96,7 +96,7 @@ namespace main.subcontents.RESystem_PV
             Program.DB.setValue(DB.type.ProjDB, "User_PVBattery", "번호,프로젝트유형,DB유형",
                     "'" + UserNum + "','" + 프로젝트유형 + "','" + "사용자" + "'", "번호");
             load_PVbatteryeDB();
-            Program.DB.saveProject();
+            
         }
 
         private void Deletebutton_Click(object sender, EventArgs e)
@@ -146,7 +146,7 @@ namespace main.subcontents.RESystem_PV
                         }
                         Program.DB.setValue(DB.type.ProjDB, "User_PVBattery", "번호,프로젝트유형,DB유형,제품명,제조사,정격전력,배터리타입",
                             "'" + value[0] + "','" + 프로젝트유형 + "','" + value[1] + "','" + value[2] + "','" + value[3] + "','" + value[4] + "','" + value[5] + "'", "번호");
-                        Program.DB.saveProject();
+                        
                     }
                 }
                 return true;

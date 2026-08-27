@@ -233,7 +233,7 @@ namespace main.subcontents.HeatingSystem
 
                 }
             }
-            Program.DB.saveProject();
+            
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
