@@ -38,7 +38,6 @@ namespace main.contents
             dUtbRoof_label = new Label();
             dUtbWall_label = new Label();
             dUtb_label = new Label();
-            Save_button = new Button();
             Check_checkBox = new CheckBox();
             TB_comboBox = new CustomComboBox();
             TB_button = new Button();
@@ -58,7 +57,6 @@ namespace main.contents
             panel1.Controls.Add(dUtbRoof_label);
             panel1.Controls.Add(dUtbWall_label);
             panel1.Controls.Add(dUtb_label);
-            panel1.Controls.Add(Save_button);
             panel1.Controls.Add(Check_checkBox);
             panel1.Controls.Add(TB_comboBox);
             panel1.Controls.Add(TB_button);
@@ -124,21 +122,9 @@ namespace main.contents
             dUtb_label.Size = new Size(67, 15);
             dUtb_label.TabIndex = 125;
             dUtb_label.Text = "열교가산치";
-            // 
-            // Save_button
-            // 
-            Save_button.BackColor = SystemColors.ButtonHighlight;
-            Save_button.ForeColor = Color.Black;
-            Save_button.Location = new Point(848, 419);
-            Save_button.Name = "Save_button";
-            Save_button.Size = new Size(88, 25);
-            Save_button.TabIndex = 124;
-            Save_button.Text = "SAVE";
-            Save_button.UseVisualStyleBackColor = true;
-            Save_button.Click += Save_button_Click;
-            // 
+            //
             // Check_checkBox
-            // 
+            //
             Check_checkBox.AutoSize = true;
             Check_checkBox.Font = new Font("나눔바른고딕", 9.75F);
             Check_checkBox.Location = new Point(616, 17);
@@ -265,7 +251,6 @@ namespace main.contents
         private Button TB_button;
         private CustomComboBox TB_comboBox;
         private CheckBox Check_checkBox;
-        private Button Save_button;
         private Label dUtbRoof_label;
         private Label dUtbWall_label;
         private Label dUtb_label;

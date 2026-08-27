@@ -124,6 +124,16 @@ namespace main.contents
             }
         }
 
+        private void TB_button_Click(object sender, EventArgs e)
+        {
+            subcontents.ThermalBridge.TB_DB tb = new subcontents.ThermalBridge.TB_DB(TBType);
+            DialogResult result = tb.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Load_TBDB();
+            }
+        }
+
         private void info_Click(object sender, EventArgs e)
         {
             string basePath = Program.gPath + "Manual\\2.subcontents\\9.3D_TB\\1.TB_List";

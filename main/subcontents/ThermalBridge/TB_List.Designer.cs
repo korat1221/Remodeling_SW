@@ -40,6 +40,7 @@ namespace main.contents
             Icon_pictureBox = new PictureBox();
             dataGridView1 = new DataGridView();
             info = new Button();
+            TB_button = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -49,6 +50,7 @@ namespace main.contents
             // 
             panel1.BackColor = Color.White;
             panel1.Controls.Add(info);
+            panel1.Controls.Add(TB_button);
             panel1.Controls.Add(Uw2_unit_label);
             panel1.Controls.Add(length_textBox);
             panel1.Controls.Add(label1);
@@ -167,9 +169,19 @@ namespace main.contents
             info.Text = "?";
             info.UseVisualStyleBackColor = false;
             info.Click += info_Click;
-            // 
+            //
+            // TB_button
+            //
+            TB_button.Location = new Point(811, 12);
+            TB_button.Name = "TB_button";
+            TB_button.Size = new Size(75, 23);
+            TB_button.TabIndex = 104;
+            TB_button.Text = "입력";
+            TB_button.UseVisualStyleBackColor = true;
+            TB_button.Click += TB_button_Click;
+            //
             // TB_List
-            // 
+            //
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(972, 641);
@@ -201,5 +213,6 @@ namespace main.contents
         private Label Uw2_unit_label;
         private TextBox length_textBox;
         private Button info;
+        private Button TB_button;
     }
 }
