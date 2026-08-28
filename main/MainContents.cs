@@ -672,6 +672,10 @@ namespace main
                         {
                             Program.UTIL.select3DObject(selID);
                         }
+                        else if (selectInfo[0] == "selectedg")
+                        {
+                            Program.UTIL.select3DObject(selID);
+                        }
                         else
                         {
                             Program.UTIL.select3DObject("---::---::" + selectInfo[2]);
@@ -802,12 +806,6 @@ namespace main
                 else if (i == 43)
                 {
                     List_RESystem f = (List_RESystem)forms[i];
-
-                    f.LoadData("");
-                }
-                else if (i == 44)
-                {
-                    Algorithm_Lighting f = (Algorithm_Lighting)forms[i];
 
                     f.LoadData("");
                 }
