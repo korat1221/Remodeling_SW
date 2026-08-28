@@ -170,7 +170,7 @@ partial class BlowDoorTest
         n50_label2.Name = "n50_label2";
         n50_label2.Size = new Size(29, 15);
         n50_label2.TabIndex = 177;
-        n50_label2.Text = "1/h";
+        n50_label2.Text = " h⁻¹";
         // 
         // info
         // 

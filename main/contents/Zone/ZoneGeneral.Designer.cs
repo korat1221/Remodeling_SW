@@ -961,7 +961,7 @@ namespace main.contents
             label61.Name = "label61";
             label61.Size = new Size(29, 15);
             label61.TabIndex = 103;
-            label61.Text = "1/h";
+            label61.Text = " h⁻¹";
             // 
             // HCTime_textBox
             // 

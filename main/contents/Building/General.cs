@@ -168,6 +168,7 @@ namespace main.contents
             if (BuildingUse_comboBox.SelectedItem != null)
             {
                 BuildingUse = BuildingUse_comboBox.SelectedItem.ToString();
+                Change_AirtightFlow();   // 주거/비주거가 바뀌면 존유형별 n50 표시도 갱신
             }
         }
 
@@ -308,6 +309,56 @@ namespace main.contents
             n50_textBox.Visible = n50Available;
             n50_label2.Visible = n50Available;
             if (!n50Available) { n50_textBox.Text = ""; }
+
+            // 보고서 있음 / (보고서 없음 + 존별) 경로는 존유형별 표준 n50을 참고용으로 보여줌
+            bool showZoneN50 = !testDone && (AirtightReport == "있음" || (showMethodStep && AirtightMethod == "존별"));
+            AirtightZone_panel.Visible = showZoneN50;
+            if (showZoneN50) { Fill_AirtightZoneN50(); }
+        }
+
+        // 존유형별 표준 n50(h⁻¹)을 기밀_존별 표에서 읽어 표시만 함(읽기전용). 실제 존별 최종 n50은
+        // ZoneEnvelope.cs의 Show_ZoneN50()이 존 순체적/면적까지 반영해 따로 산정함.
+        private void Fill_AirtightZoneN50()
+        {
+            string criteria = AirtightReport == "있음" ? "기밀설계보고서" : "표준값";
+            bool isResidential = BuildingUse == "단독주택" || BuildingUse == "공동주택";
+
+            if (isResidential)
+            {
+                ExtZoneN50_label.Text = "주거";
+                ExtZoneN50_textBox.Text = Zone_n50("주거", "", criteria);
+
+                IntZoneN50_label.Visible = false;
+                IntZoneN50_textBox.Visible = false;
+                DoorZoneN50_label.Visible = false;
+                DoorZoneN50_textBox.Visible = false;
+            }
+            else
+            {
+                ExtZoneN50_label.Text = "외부존";
+                ExtZoneN50_textBox.Text = Zone_n50("비주거", "외부존", criteria);
+
+                IntZoneN50_label.Text = "내부존";
+                IntZoneN50_textBox.Text = Zone_n50("비주거", "내부존", criteria);
+
+                DoorZoneN50_label.Text = "출입문존";
+                DoorZoneN50_textBox.Text = Zone_n50("비주거", "출입문존", criteria);
+
+                IntZoneN50_label.Visible = true;
+                IntZoneN50_textBox.Visible = true;
+                DoorZoneN50_label.Visible = true;
+                DoorZoneN50_textBox.Visible = true;
+            }
+        }
+
+        private string Zone_n50(string residence, string zoneType, string criteria)
+        {
+            string where = "주거여부 = '" + residence + "' And 기준유형 = '" + criteria + "'";
+            if (zoneType != "") { where += " And 존유형 = '" + zoneType + "'"; }
+
+            string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기밀_존별", "n50", where);
+            if (Value.Length > 0) { return Program.UTIL.ToDoubleOrZero(Value[0][0]).ToString("0.0") + " h⁻¹"; }
+            return "";
         }
         private void Cal_Infiltration(string BlowDoorTest, bool door, bool win, bool elec, bool pipe)
         {

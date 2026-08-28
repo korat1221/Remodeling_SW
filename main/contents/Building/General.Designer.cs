@@ -46,9 +46,11 @@ namespace main.contents
             Lat_label = new Label();
             Lat_textBox = new TextBox();
             Lon_label = new Label();
+            Lon_textBox = new TextBox();
             BuildingLocation_textBox = new TextBox();
             BuildingName_textBox = new TextBox();
             ByRawClimate_textBox = new TextBox();
+            BuildingUse_comboBox = new CustomComboBox();
             BuildingUse_label = new Label();
             Climate_comboBox = new CustomComboBox();
             label6 = new Label();
@@ -100,6 +102,13 @@ namespace main.contents
             label36 = new Label();
             label32 = new Label();
             panel7 = new Panel();
+            AirtightZone_panel = new Panel();
+            ExtZoneN50_label = new Label();
+            ExtZoneN50_textBox = new TextBox();
+            IntZoneN50_label = new Label();
+            IntZoneN50_textBox = new TextBox();
+            DoorZoneN50_label = new Label();
+            DoorZoneN50_textBox = new TextBox();
             BlowDoor_button = new Button();
             n50_textBox = new TextBox();
             n50_label2 = new Label();
@@ -131,14 +140,13 @@ namespace main.contents
             Icon_pictureBox = new PictureBox();
             label22 = new Label();
             info = new Button();
-            BuildingUse_comboBox = new CustomComboBox();
-            Lon_textBox = new TextBox();
             Panel10.SuspendLayout();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
             panel5.SuspendLayout();
             panel7.SuspendLayout();
+            AirtightZone_panel.SuspendLayout();
             Pipe_groupBox.SuspendLayout();
             ElecWiring_groupBox.SuspendLayout();
             Win_groupBox.SuspendLayout();
@@ -324,6 +332,19 @@ namespace main.contents
             Lon_label.TabIndex = 132;
             Lon_label.Text = "경도";
             // 
+            // Lon_textBox
+            // 
+            Lon_textBox.BackColor = Color.White;
+            Lon_textBox.BorderStyle = BorderStyle.FixedSingle;
+            Lon_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            Lon_textBox.ForeColor = SystemColors.ControlText;
+            Lon_textBox.Location = new Point(294, 146);
+            Lon_textBox.Name = "Lon_textBox";
+            Lon_textBox.Size = new Size(120, 22);
+            Lon_textBox.TabIndex = 133;
+            Lon_textBox.TextAlign = HorizontalAlignment.Center;
+            Lon_textBox.TextChanged += Lon_textBox_TextChanged;
+            // 
             // BuildingLocation_textBox
             // 
             BuildingLocation_textBox.BackColor = Color.White;
@@ -362,6 +383,17 @@ namespace main.contents
             ByRawClimate_textBox.Size = new Size(120, 15);
             ByRawClimate_textBox.TabIndex = 127;
             ByRawClimate_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // BuildingUse_comboBox
+            // 
+            BuildingUse_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            BuildingUse_comboBox.Font = new Font("나눔바른고딕", 9.75F);
+            BuildingUse_comboBox.FormattingEnabled = true;
+            BuildingUse_comboBox.Location = new Point(294, 19);
+            BuildingUse_comboBox.Name = "BuildingUse_comboBox";
+            BuildingUse_comboBox.Size = new Size(120, 23);
+            BuildingUse_comboBox.TabIndex = 125;
+            BuildingUse_comboBox.SelectedIndexChanged += BuildingUse_comboBox_SelectedIndexChanged;
             // 
             // BuildingUse_label
             // 
@@ -960,6 +992,7 @@ namespace main.contents
             // panel7
             // 
             panel7.BackColor = Color.White;
+            panel7.Controls.Add(AirtightZone_panel);
             panel7.Controls.Add(BlowDoor_button);
             panel7.Controls.Add(n50_textBox);
             panel7.Controls.Add(n50_label2);
@@ -984,6 +1017,90 @@ namespace main.contents
             panel7.Size = new Size(994, 120);
             panel7.TabIndex = 108;
             panel7.Paint += panel7_Paint;
+            // 
+            // AirtightZone_panel
+            // 
+            AirtightZone_panel.BackColor = Color.White;
+            AirtightZone_panel.Controls.Add(ExtZoneN50_label);
+            AirtightZone_panel.Controls.Add(ExtZoneN50_textBox);
+            AirtightZone_panel.Controls.Add(IntZoneN50_label);
+            AirtightZone_panel.Controls.Add(IntZoneN50_textBox);
+            AirtightZone_panel.Controls.Add(DoorZoneN50_label);
+            AirtightZone_panel.Controls.Add(DoorZoneN50_textBox);
+            AirtightZone_panel.Location = new Point(0, 81);
+            AirtightZone_panel.Name = "AirtightZone_panel";
+            AirtightZone_panel.Size = new Size(994, 30);
+            AirtightZone_panel.TabIndex = 174;
+            AirtightZone_panel.Visible = false;
+            // 
+            // ExtZoneN50_label
+            // 
+            ExtZoneN50_label.AutoSize = true;
+            ExtZoneN50_label.Font = new Font("나눔바른고딕", 9.75F);
+            ExtZoneN50_label.Location = new Point(52, 8);
+            ExtZoneN50_label.Name = "ExtZoneN50_label";
+            ExtZoneN50_label.Size = new Size(43, 15);
+            ExtZoneN50_label.TabIndex = 0;
+            ExtZoneN50_label.Text = "외부존";
+            // 
+            // ExtZoneN50_textBox
+            // 
+            ExtZoneN50_textBox.BackColor = Color.White;
+            ExtZoneN50_textBox.BorderStyle = BorderStyle.None;
+            ExtZoneN50_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            ExtZoneN50_textBox.ForeColor = SystemColors.ControlText;
+            ExtZoneN50_textBox.Location = new Point(108, 8);
+            ExtZoneN50_textBox.Name = "ExtZoneN50_textBox";
+            ExtZoneN50_textBox.ReadOnly = true;
+            ExtZoneN50_textBox.Size = new Size(120, 15);
+            ExtZoneN50_textBox.TabIndex = 1;
+            ExtZoneN50_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // IntZoneN50_label
+            // 
+            IntZoneN50_label.AutoSize = true;
+            IntZoneN50_label.Font = new Font("나눔바른고딕", 9.75F);
+            IntZoneN50_label.Location = new Point(258, 8);
+            IntZoneN50_label.Name = "IntZoneN50_label";
+            IntZoneN50_label.Size = new Size(43, 15);
+            IntZoneN50_label.TabIndex = 2;
+            IntZoneN50_label.Text = "내부존";
+            // 
+            // IntZoneN50_textBox
+            // 
+            IntZoneN50_textBox.BackColor = Color.White;
+            IntZoneN50_textBox.BorderStyle = BorderStyle.None;
+            IntZoneN50_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            IntZoneN50_textBox.ForeColor = SystemColors.ControlText;
+            IntZoneN50_textBox.Location = new Point(308, 8);
+            IntZoneN50_textBox.Name = "IntZoneN50_textBox";
+            IntZoneN50_textBox.ReadOnly = true;
+            IntZoneN50_textBox.Size = new Size(120, 15);
+            IntZoneN50_textBox.TabIndex = 3;
+            IntZoneN50_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // DoorZoneN50_label
+            // 
+            DoorZoneN50_label.AutoSize = true;
+            DoorZoneN50_label.Font = new Font("나눔바른고딕", 9.75F);
+            DoorZoneN50_label.Location = new Point(515, 8);
+            DoorZoneN50_label.Name = "DoorZoneN50_label";
+            DoorZoneN50_label.Size = new Size(55, 15);
+            DoorZoneN50_label.TabIndex = 4;
+            DoorZoneN50_label.Text = "출입문존";
+            // 
+            // DoorZoneN50_textBox
+            // 
+            DoorZoneN50_textBox.BackColor = Color.White;
+            DoorZoneN50_textBox.BorderStyle = BorderStyle.None;
+            DoorZoneN50_textBox.Font = new Font("나눔바른고딕", 9.75F);
+            DoorZoneN50_textBox.ForeColor = SystemColors.ControlText;
+            DoorZoneN50_textBox.Location = new Point(582, 8);
+            DoorZoneN50_textBox.Name = "DoorZoneN50_textBox";
+            DoorZoneN50_textBox.ReadOnly = true;
+            DoorZoneN50_textBox.Size = new Size(123, 15);
+            DoorZoneN50_textBox.TabIndex = 5;
+            DoorZoneN50_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // BlowDoor_button
             // 
@@ -1017,18 +1134,18 @@ namespace main.contents
             n50_label2.AutoSize = true;
             n50_label2.Font = new Font("나눔바른고딕", 9.75F);
             n50_label2.ForeColor = SystemColors.ControlText;
-            n50_label2.Location = new Point(906, 32);
+            n50_label2.Location = new Point(906, 30);
             n50_label2.Name = "n50_label2";
-            n50_label2.Size = new Size(29, 15);
+            n50_label2.Size = new Size(30, 15);
             n50_label2.TabIndex = 150;
-            n50_label2.Text = "1/h";
+            n50_label2.Text = " h⁻¹";
             // 
             // n50_label1
             // 
             n50_label1.AutoSize = true;
             n50_label1.Font = new Font("나눔바른고딕", 9.75F);
             n50_label1.ForeColor = SystemColors.ControlText;
-            n50_label1.Location = new Point(725, 9);
+            n50_label1.Location = new Point(745, 30);
             n50_label1.Name = "n50_label1";
             n50_label1.Size = new Size(31, 15);
             n50_label1.TabIndex = 148;
@@ -1225,11 +1342,11 @@ namespace main.contents
             // 
             AirtightReport_label.AutoSize = true;
             AirtightReport_label.Font = new Font("나눔바른고딕", 9.75F);
-            AirtightReport_label.Location = new Point(255, 9);
+            AirtightReport_label.Location = new Point(238, 30);
             AirtightReport_label.Name = "AirtightReport_label";
-            AirtightReport_label.Size = new Size(97, 15);
+            AirtightReport_label.Size = new Size(70, 15);
             AirtightReport_label.TabIndex = 123;
-            AirtightReport_label.Text = "기밀 설계 보고서";
+            AirtightReport_label.Text = "설계 보고서";
             // 
             // AirtightReport_comboBox
             // 
@@ -1246,7 +1363,7 @@ namespace main.contents
             // 
             AirtightMethod_label.AutoSize = true;
             AirtightMethod_label.Font = new Font("나눔바른고딕", 9.75F);
-            AirtightMethod_label.Location = new Point(490, 9);
+            AirtightMethod_label.Location = new Point(479, 30);
             AirtightMethod_label.Name = "AirtightMethod_label";
             AirtightMethod_label.Size = new Size(97, 15);
             AirtightMethod_label.TabIndex = 125;
@@ -1280,7 +1397,7 @@ namespace main.contents
             // 
             label40.AutoSize = true;
             label40.Font = new Font("나눔바른고딕", 9.75F);
-            label40.Location = new Point(20, 9);
+            label40.Location = new Point(20, 30);
             label40.Name = "label40";
             label40.Size = new Size(79, 15);
             label40.TabIndex = 41;
@@ -1330,30 +1447,6 @@ namespace main.contents
             info.UseVisualStyleBackColor = false;
             info.Click += info_Click;
             // 
-            // BuildingUse_comboBox
-            // 
-            BuildingUse_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
-            BuildingUse_comboBox.Font = new Font("나눔바른고딕", 9.75F);
-            BuildingUse_comboBox.FormattingEnabled = true;
-            BuildingUse_comboBox.Location = new Point(294, 19);
-            BuildingUse_comboBox.Name = "BuildingUse_comboBox";
-            BuildingUse_comboBox.Size = new Size(120, 23);
-            BuildingUse_comboBox.TabIndex = 125;
-            BuildingUse_comboBox.SelectedIndexChanged += BuildingUse_comboBox_SelectedIndexChanged;
-            // 
-            // Lon_textBox
-            // 
-            Lon_textBox.BackColor = Color.White;
-            Lon_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Lon_textBox.Font = new Font("나눔바른고딕", 9.75F);
-            Lon_textBox.ForeColor = SystemColors.ControlText;
-            Lon_textBox.Location = new Point(294, 146);
-            Lon_textBox.Name = "Lon_textBox";
-            Lon_textBox.Size = new Size(120, 22);
-            Lon_textBox.TabIndex = 133;
-            Lon_textBox.TextAlign = HorizontalAlignment.Center;
-            Lon_textBox.TextChanged += Lon_textBox_TextChanged;
-            // 
             // General
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1384,6 +1477,8 @@ namespace main.contents
             panel5.PerformLayout();
             panel7.ResumeLayout(false);
             panel7.PerformLayout();
+            AirtightZone_panel.ResumeLayout(false);
+            AirtightZone_panel.PerformLayout();
             Pipe_groupBox.ResumeLayout(false);
             Pipe_groupBox.PerformLayout();
             ElecWiring_groupBox.ResumeLayout(false);
@@ -1467,6 +1562,13 @@ namespace main.contents
         private CustomComboBox AirtightMethod_comboBox;
         private TextBox textBox3;
         private Label label40;
+        private Panel AirtightZone_panel;
+        private Label ExtZoneN50_label;
+        private TextBox ExtZoneN50_textBox;
+        private Label IntZoneN50_label;
+        private TextBox IntZoneN50_textBox;
+        private Label DoorZoneN50_label;
+        private TextBox DoorZoneN50_textBox;
         private CustomComboBox Climate_comboBox;
         private CustomComboBox BuildingCategory_comboBox;
         private CustomComboBox Month_comboBox;
