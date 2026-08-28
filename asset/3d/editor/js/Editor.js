@@ -613,6 +613,35 @@ Editor.prototype = {
 		}
 		this.signals.sceneGraphChanged.dispatch();
 	},
+	// [열교 3단계 하이라이트] 유형(key) 안에서 index 번째 열교 선분 하나만 표시.
+	// 문제 시 이 메서드와 index.html 의 selectedg 분기를 제거하면 원복됨.
+	selectByBridgeItem: function ( key, index ) {
+		let _showItem = (bridges) => {
+			for (const [id2, el] of Object.entries(bridges)) {
+				let i = -1;
+				while (++i < el.bridges.length) {
+					let o = this.getByUuid(el.bridges[i]);
+
+					if (o) {
+						o.visible = (id2 == key && i === index);
+					}
+				}
+			}
+		};
+
+		let i = -1;
+		while (++i < this.scene.children.length) {
+			if (this.scene.children[i] instanceof THREE.Group) {
+				let el = this.scene.children[i];
+				if (el.userData.bridges) {
+					_showItem(el.userData.bridges);
+				}
+
+				break;
+			}
+		}
+		this.signals.sceneGraphChanged.dispatch();
+	},
 	selectByZoneid: function ( zid ) {
 		let i = -1, j;
 		let arr = [];

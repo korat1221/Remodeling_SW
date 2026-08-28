@@ -351,6 +351,12 @@
 					if (arr[0] === 'selectbdg') {
 						editor.selectByBridgeID(arr[2]);
 					}
+					// [열교 3단계 하이라이트] 개별 열교 선분 선택. 문제 시 이 분기와 selectByBridgeItem 을 제거하면 원복됨.
+					else if (arr[0] === 'selectedg') {
+						let codes = { RTB1: 1, RTB2: 2, RTB3: 3, RTB4: 4, RTB5: 5, RTB6: 6,
+							WTB1: 7, WTB2: 8, WTB3: 9, WTB4: 10, WTB5: 11, WTB6: 12, WTB7: 13, WTB8: 14 };
+						editor.selectByBridgeItem(codes[arr[1]], parseInt(arr[2], 10) - 1);
+					}
 					else if (arr[2] === '---') {
 						editor.selectByZoneid(arr[1]);
 					}
