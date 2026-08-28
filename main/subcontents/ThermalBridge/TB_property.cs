@@ -22,8 +22,18 @@
         {
             if (main.MainContents.selID != sid)
             {
-                IDNum = main.MainContents.selID;
                 this.panel1.Show();
+
+                // selID 형식: "selectedg::RTB1::01" → ThermalBridge_3D.번호 는 "RTB1_01"
+                string[] parts = main.MainContents.selID.Split("::");
+                if (parts.Length >= 3)
+                {
+                    IDNum = parts[1] + "_" + parts[2];
+                }
+                else
+                {
+                    IDNum = main.MainContents.selID;
+                }
                 label4.Text = IDNum;
 
                 string[][] TB_Type = Program.DB.getValue(DB.type.ProjDB, "ThermalBridge_3D", "번호, 열교항목, 열교길이, 선택열교", "번호 = '" + IDNum + "'");
