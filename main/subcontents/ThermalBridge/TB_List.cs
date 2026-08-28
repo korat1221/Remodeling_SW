@@ -124,6 +124,22 @@ namespace main.contents
             }
         }
 
+        // 전체 리스트(sub3dBridgeInfo)와 동일하게, "적용 열교" 열의 첫 행 위에 입력 버튼을 그린다.
+        private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex == 0 && e.ColumnIndex == 2)
+            {
+                if (!TB_button.Visible)
+                {
+                    int cellX = dataGridView1.Location.X + e.CellBounds.X;
+                    int cellY = dataGridView1.Location.Y + e.CellBounds.Y;
+                    TB_button.Location = new Point(cellX, cellY - 1);
+                    TB_button.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
+                    TB_button.Show();
+                }
+            }
+        }
+
         private void TB_button_Click(object sender, EventArgs e)
         {
             subcontents.ThermalBridge.TB_DB tb = new subcontents.ThermalBridge.TB_DB(TBType);

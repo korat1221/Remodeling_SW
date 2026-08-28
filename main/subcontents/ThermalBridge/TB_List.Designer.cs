@@ -154,9 +154,10 @@ namespace main.contents
             dataGridView1.RowTemplate.Height = 24;
             dataGridView1.Size = new Size(902, 323);
             dataGridView1.TabIndex = 1;
-            // 
+            dataGridView1.CellPainting += dataGridView1_CellPainting;
+            //
             // info
-            // 
+            //
             info.BackColor = SystemColors.ControlLight;
             info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             info.FlatStyle = FlatStyle.System;
@@ -178,6 +179,7 @@ namespace main.contents
             TB_button.TabIndex = 104;
             TB_button.Text = "입력";
             TB_button.UseVisualStyleBackColor = true;
+            TB_button.Visible = false;
             TB_button.Click += TB_button_Click;
             //
             // TB_List
