@@ -268,25 +268,40 @@ Shadows.prototype = {
 
 		let _getProjWall = (verts, cardi, idx, isRight, center) => {
 			let key = cardi + '__' + idx;
-			let vert = verts[key], dist;
+			let vert = verts[key];
 
-			if (vert && vert.length == 2) {
-				let L = [vert[0],vert[1]];
+			if (!vert || vert.length != 2) return null;
 
-			//	for (const [key2, val2] of Object.entries(verts)) {
-			//		if (key != key2 && val2.length == 2) {
-			//			L = _unionLine(L, val2);						
-			//		}
-			//	}
+			// 바로 붙은 벽(1칸)만 찾으면 몇 칸 건너에 있는 돌출부는 못 찾아서, 벽을 여러 개 건너(최대 6칸)까지 확장 탐색.
+			// (창문 기준 방향/외적 판정은 항상 원래 center 기준으로 최종 후보에서만 검사)
+			let visited = {};
+			visited[key] = true;
+			let frontier = [[vert[0], vert[1]]];
+			let maxDepth = 6;
 
-				for (const [key2, val2] of Object.entries(verts)) {
-					if (key != key2 && val2.length == 2) {
-						if ((dist = _linkedPoint(L, val2)) !== null && ((!isRight && _isLeftProj(cardi, key2.substring(0,key2.indexOf('__')), center, dist)) || (isRight && _isRightProj(cardi, key2.substring(0,key2.indexOf('__')), center, dist))) &&
-						_checkCrossProduct(center, dist, val2, isRight)) {
+			for (let hop = 0; hop < maxDepth; hop++) {
+				let nextFrontier = [];
+
+				for (const nodePoints of frontier) {
+					for (const [key2, val2] of Object.entries(verts)) {
+						if (visited[key2] || val2.length != 2) continue;
+
+						let dist = _linkedPoint(nodePoints, val2);
+						if (dist === null) continue;
+
+						visited[key2] = true;
+
+						let cardiB = key2.substring(0, key2.indexOf('__'));
+						let matched = (!isRight && _isLeftProj(cardi, cardiB, center, dist)) || (isRight && _isRightProj(cardi, cardiB, center, dist));
+
+						if (matched && _checkCrossProduct(center, dist, val2, isRight)) {
 							return {base:center.distanceTo(dist), height:val2[0].distanceTo(val2[1]), point:(_equalPoint(dist, val2[0]) ? val2[1] : val2[0])};
 						}
+
+						nextFrontier.push(val2);
 					}
 				}
+				frontier = nextFrontier;
 			}
 			return null;
 		};
@@ -450,6 +465,7 @@ Shadows.prototype = {
 									upHeight = h;
 									upLength = l;
 									upPoint = _el2.pos;
+									
 									angle = agl;
 								}
 							}
@@ -521,7 +537,114 @@ Shadows.prototype = {
 								
 							}
 						}
+
+						const opposite = {
+							'N': ['S', 'SE', 'SW'],
+							'S': ['N', 'NE', 'NW'],
+							'E': ['W', 'NW', 'SW'],
+							'W': ['E', 'NE', 'SE'],
+							'NE': ['SW'],
+							'NW': ['SE'],
+							'SE': ['NW'],
+							'SW': ['NE']
+						};
+						  
+						  function isFacing(el2Cardi, wallCardi) {
+							return opposite[el2Cardi]?.includes(wallCardi);
+						}
+						// 로컬 rightup 벡터
+						const rightupVectors = {
+							'N': new THREE.Vector3(1, 0, -1),   // 오른쪽 = +x, 앞 = -z
+							'S': new THREE.Vector3(-1, 0, 1),   // 오른쪽 = -x, 앞 = +z
+							'E': new THREE.Vector3(1, 0, 1),    // 오른쪽 = +z, 앞 = +x
+							'W': new THREE.Vector3(-1, 0, -1),  // 오른쪽 = -z, 앞 = -x
+							'NE': new THREE.Vector3(1, 0, 0),
+							'NW': new THREE.Vector3(0, 0, -1),
+							'SE': new THREE.Vector3(0, 0, 1),
+							'SW': new THREE.Vector3(-1, 0, 0)
+						  };
+
+						  if(!el2?.cardi) return;
+
+						  const el2Dir = el2.cardi.replace(/^UP_/, '').replace(/^DOWN_/, '');
+						  const rotatedDir = rightupVectors[el2Dir]?.clone().normalize() ?? new THREE.Vector3(1, 0, 1).normalize();
+						  
+						  let rightupPoint = null;
+						  let bestScore = -Infinity;
+						  
+						  obj.userData.dummy.forEach(dummy => {
+							dummy.walls.forEach(wall => {
+							  const wallDir = wall.cardi.replace(/^UP_/, '').replace(/^DOWN_/, '');
+						  
+							  if (isFacing(el2Dir, wallDir)) {
+								wall.edges.forEach(edge => {
+								  if (edge[0].distanceTo(edge[1]) < 0.1) return;
+						  
+								  edge.forEach(p => {
+									const vec = new THREE.Vector3(p.x - ctr.x, p.y - ctr.y, p.z - ctr.z);
+									const dist = vec.length();
+									vec.normalize();
+
+									const dot = vec.dot(rotatedDir);
+
+									// 🔐 방향이 같은 사분면에 있을 때만
+									const sameDirection = 
+									Math.sign(vec.x) === Math.sign(rotatedDir.x) &&
+									Math.sign(vec.z) === Math.sign(rotatedDir.z);
+
+									if (sameDirection && p.y >= ctr.y) {
+									const score = dot / (dist + 0.0001);
+									if (score > bestScore) {
+										bestScore = score;
+										rightupPoint = p.clone();
+									}
+									}
+								  });
+								});
+							  }
+							});
+						  });
+						  
+						  const leftDir = new THREE.Vector3(rotatedDir.z, 0, -rotatedDir.x).normalize();
+
+						  let leftupPoint = null;
+						  let bestScore2 = -Infinity;
+						  
+						  obj.userData.dummy.forEach(dummy => {
+							dummy.walls.forEach(wall => {
+							  const wallDir = wall.cardi.replace(/^UP_/, '').replace(/^DOWN_/, '');
+						  
+							  if (isFacing(el2Dir, wallDir)) {
+								wall.edges.forEach(edge => {
+								  if (edge[0].distanceTo(edge[1]) < 0.1) return;
+						  
+								  edge.forEach(p => {
+									const vec = new THREE.Vector3(p.x - ctr.x, p.y - ctr.y, p.z - ctr.z);
+									const dist = vec.length();
+									vec.normalize();
+																		
+									const dot = vec.dot(leftDir);
+
+									const sameDirection = 
+									Math.sign(vec.x) === Math.sign(leftDir.x) &&
+									Math.sign(vec.z) === Math.sign(leftDir.z);
+						  
+									if (sameDirection && p.y >= ctr.y) {
+										const score2 = dot/ (dist+0.0001);
+										if(score2 > bestScore2){
+											bestScore2 = score2;
+											leftupPoint = p.clone();
+										}	
+									}
+								  });
+								});
+							  }
+							});
+						  });
+						  
+
 						let pid = _getPID(el2.pidx, el.userData.walls);
+
 						if (pid) {
 							let left = _getProjWall(verts2, el2.cardi, pid, false, ctr);
 							let right = _getProjWall(verts2, el2.cardi, pid, true, ctr);
@@ -555,8 +678,34 @@ Shadows.prototype = {
 
 								win.userData.shadows.push(_addLineObject([ctr, upPoint], 0xFF00FF, 0.5));
 							}
+/*
+							if (rightupPoint && typeof rightupPoint.clone === 'function') {
+								const flatPoint = rightupPoint.clone();
+								flatPoint.y = ctr.y;
 							
+								const base = Math.hypot(flatPoint.x - ctr.x, flatPoint.z - ctr.z);
+							
+								el2.rightup_shadow_base = base;
+								el2.rightup_shadow_height = 0;
+								el2.rightup_shadow_angle = 0;
+							
+								win.userData.shadows.push(_addLineObject([ctr.clone(), flatPoint], 0xFFA500, 0.5));
+							} 
 
+							if (leftupPoint && typeof leftupPoint.clone === 'function') {
+								const flatPoint = leftupPoint.clone();
+								flatPoint.y = ctr.y;
+							  
+								const base = Math.hypot(flatPoint.x - ctr.x, flatPoint.z - ctr.z);
+							  
+								el2.leftup_shadow_base = base;
+								el2.leftup_shadow_height = 0;
+								el2.leftup_shadow_angle = 0;
+							  
+								win.userData.shadows.push(_addLineObject([ctr.clone(), flatPoint], 0xA500FF, 0.5));
+							  }
+							  */
+ 
 						}
 
 

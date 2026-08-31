@@ -14,6 +14,13 @@ _DEFAULT_CAMERA.name = 'Camera';
 _DEFAULT_CAMERA.position.set( 0, 5, 10 );
 _DEFAULT_CAMERA.lookAt( new THREE.Vector3() );
 
+// 트리(.tree)의 개별 열교 id는 "RTB1" 같은 표시 코드를 쓰지만,
+// obj.userData.bridges의 실제 그룹 키는 숫자다. SQLExport.js의 _codes 표와 반드시 동일하게 유지할 것.
+var _BRIDGE_CODE_TO_KEY = {
+	RTB1: '1', RTB2: '2', RTB3: '3', RTB4: '4', RTB5: '5', RTB6: '6',
+	WTB1: '7', WTB2: '8', WTB3: '9', WTB4: '10', WTB5: '11', WTB6: '12', WTB7: '13', WTB8: '14'
+};
+
 function Editor() {
 
 	const Signal = signals.Signal; // eslint-disable-line no-undef
@@ -138,6 +145,21 @@ function Editor() {
 	this.pid = "";
 
 	this.selectOld = [];
+
+	// 선택 하이라이트: 원본 재질을 건드리지 않는 비파괴 방식(공유 오버레이 재질을 임시로 씌웠다 되돌림).
+	// 창호/커튼월/문은 지오메트리가 살짝 띄운 두 겹으로 만들어져 있어서(Zoning.js의 duplicate 처리),
+	// 반투명(transparent+depthWrite:false) 상태면 각도에 따라 두 겹이 겹쳐 그려지는 순서가 달라져
+	// 옅어 보이는 현상이 생긴다. 불투명 + depthWrite:true로 바꿔서 어느 각도에서도 일정하게 보이게 함.
+	this.highlightMaterial = new THREE.MeshBasicMaterial( {
+		color: 0xff3b30,
+		transparent: false,
+		opacity: 1,
+		depthTest: true,
+		depthWrite: true,
+		side: THREE.DoubleSide,
+		polygonOffset: true,
+		polygonOffsetFactor: -4
+	} );
 
 }
 
@@ -613,28 +635,23 @@ Editor.prototype = {
 		}
 		this.signals.sceneGraphChanged.dispatch();
 	},
-	// [열교 3단계 하이라이트] 유형(key) 안에서 index 번째 열교 선분 하나만 표시.
-	// 문제 시 이 메서드와 index.html 의 selectedg 분기를 제거하면 원복됨.
-	selectByBridgeItem: function ( key, index ) {
-		let _showItem = (bridges) => {
-			for (const [id2, el] of Object.entries(bridges)) {
-				let i = -1;
-				while (++i < el.bridges.length) {
-					let o = this.getByUuid(el.bridges[i]);
-
-					if (o) {
-						o.visible = (id2 == key && i === index);
-					}
-				}
-			}
-		};
-
+	selectByBridgeItemID: function ( code, index ) {
+		let key = _BRIDGE_CODE_TO_KEY[ code ] || code; // 이미 숫자 키가 온 경우도 방어적으로 허용
 		let i = -1;
-		while (++i < this.scene.children.length) {
+
+		while(++i < this.scene.children.length) {
 			if (this.scene.children[i] instanceof THREE.Group) {
 				let el = this.scene.children[i];
-				if (el.userData.bridges) {
-					_showItem(el.userData.bridges);
+				let group = el.userData.bridges && el.userData.bridges[key];
+
+				if (group) {
+					this.resetBridgesSelection(); // 다른 열교는 전부 숨기고
+					this.clearHighlight();
+
+					let uuid = group.bridges[index];
+					let obj = uuid ? this.getByUuid(uuid) : null;
+
+					if (obj) this.markSelect([obj]); // 선택한 항목 하나만 표시+강조
 				}
 
 				break;
@@ -970,32 +987,47 @@ Editor.prototype = {
 	},
 
 	restoreSelect: function () {
-		let i = -1, j;
 
 		this.resetBridgesSelection();
+		this.clearHighlight();
+
+	},
+
+	// 열교 그룹 표시 상태는 건드리지 않고, 현재 하이라이트만 원상복구.
+	clearHighlight: function () {
+		let i = -1, j;
 
 		while(++i < this.selectOld.length) {
-			let el = this.selectOld[i];
-			el.material.color.set(el.userData.color);
-			el.material.opacity = el.userData.opacity;
-			if (el.userData.shadows) {
+			let rec = this.selectOld[i];
+			rec.object.material = rec.material;
+			rec.object.visible = rec.visible;
+			if (rec.edge) rec.edge.visible = rec.edgeVisible;
+			if (rec.object.userData.shadows) {
 				j = -1;
-				while(++j < el.userData.shadows.length) {
-					this.getByUuid(el.userData.shadows[j]).visible = false;
+				while(++j < rec.object.userData.shadows.length) {
+					let shadowObj = this.getByUuid(rec.object.userData.shadows[j]);
+					if (shadowObj) shadowObj.visible = false;
 				}
 			}
 		}
 		this.selectOld = [];
 	},
 
+	// 원본 재질을 바꾸지 않고 공유 하이라이트 재질을 임시로 씌우는 방식(비파괴 선택 강조).
 	markSelect: function (arr) {
 		let i = -1, j;
 
 		while(++i < arr.length) {
 			let el = arr[i];
+			let edge = el.children && el.children.find(function (child) { return child.name === '__mesh_edges__'; });
+			let rec = { object: el, material: el.material, visible: el.visible, edge: edge, edgeVisible: edge ? edge.visible : undefined };
 
-			el.material.color.set(0xff0000);
-			el.material.opacity = 0.9;
+			this.selectOld.push(rec);
+
+			// 열교(선)는 원래도 빨간색이라 재질을 바꾸지 않고 보이기만 함 - 그대로 같은 빨간 선으로 강조됨.
+			if (!el.isLine) el.material = this.highlightMaterial;
+			el.visible = true;
+			if (edge) edge.visible = false;
 
 			if (el.userData.shadows) {
 				j = -1;
@@ -1003,8 +1035,6 @@ Editor.prototype = {
 					this.getByUuid(el.userData.shadows[j]).visible = true;
 				}
 			}
-
-			this.selectOld.push(el);
 		}
 	},
 };

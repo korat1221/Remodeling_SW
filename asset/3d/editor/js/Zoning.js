@@ -960,19 +960,29 @@ Zoning.prototype = {
                 }
 
                 if (graph.length > 1) {
-                    let board = [];
-                    
+                    // 인접벽 3개 이상 버그 수정:
+                    // 예전 _isDupPoints는 "테두리 점이 전부 이미 나온 적 있으면 중복"으로 판정했는데,
+                    // 가운데 조각(예: 3개가 나란히 붙어있을 때 중간 것)은 양옆 조각이 먼저 확정되고 나면
+                    // 자기 모서리 4점이 전부 "이미 나온 점"이 되어버려서 실제로는 다른 자리인데도
+                    // 중복으로 오판되어 통째로 삭제됐었다. 그래서 이미 확정된 조각의 실제 넓이(도형) 안에
+                    // 후보의 중심점이 들어있는지로 판정을 바꿈 - 옆 조각과 모서리를 공유해도
+                    // 서로 다른 자리(중심)면 중복이 아니라고 정확히 구분됨.
+                    let accepted = [];
+
                     graph.sort((a, b) => {
                         return b.area - a.area; // 내림차순
                     });
 
                     k = graph.length;
                     while (--k >= 0) {
-                        if (_overlappedArea(connections, arr, graph, k) || _isDupPoints(board, graph[k].raw)) {
+                        let candidateCenter = _getCenterPosition(graph[k].raw);
+                        let isDuplicate = accepted.some(piece => _pointInArea(piece.graph, candidateCenter));
+
+                        if (_overlappedArea(connections, arr, graph, k) || isDuplicate) {
                             graph.splice(k, 1);
                         }
                         else {
-                            _markPoints(board, graph[k].raw);
+                            accepted.push(graph[k]);
                         }
                     }
                     return graph;
@@ -1104,30 +1114,6 @@ Zoning.prototype = {
             const points = new THREE.Points(geometry, material);
 
             this.editor.scene.add(points);
-        };
-
-        let _isDupPoints = (board, graph) => {
-            let i = -1, cnt = 0;
-
-            while(++i < graph.length) {
-                let pnt = graph[i];
-
-                if (!board.find(el => _equalPoint(el, pnt))) {
-                    cnt++;
-                }
-            }
-            return !(cnt > 0);
-        };
-        let _markPoints = (board, graph) => {
-            let i = -1;
-
-            while(++i < graph.length) {
-                let pnt = graph[i];
-
-                if (!board.find(el => _equalPoint(el, pnt))) {
-                    board.push(pnt);
-                }
-            }
         };
 
         let _asEdges = (raw) => {
@@ -1335,21 +1321,68 @@ Zoning.prototype = {
                     let angle = {baseX:baseX, baseY:baseY, baseZ:baseZ, normal:el2.normal,x:baseX.angleTo(el2.normal),y:baseY.angleTo(el2.normal),z:baseZ.angleTo(el2.normal)};
 
                     let arr = _splitWall(angle, el2);
-                    
+
                     if (arr.length > 1) {
-    
-                        el2.deletable = true;
+    // 1. [정렬] 가장 작은 면적(알맹이)이 앞으로 오게 정렬
+    arr.sort((a, b) => a.area - b.area);
 
-                        k = -1;
-                        while (++k < arr.length) {
-                            if (arr[k].graph) {
+    let validPieces = [];
+
+    // 2. [필터링] 중복된 껍데기(죽은 면)는 생성 단계에서 컷!
+    for (let m = 0; m < arr.length; m++) {
+        let piece = arr[m];
         
-                                let edge = _asEdges(arr[k].raw);
+        // 내 중심점이 이미 확정된 조각(validPieces) 안에 있다면? -> 나는 중복된 껍데기다.
+        let isDuplicate = validPieces.some(confirmed => 
+            _pointInArea(piece.graph, _getCenterPosition(confirmed.raw))
+        );
 
-                                el.userData.walls.push({ cardi: el2.cardi, azimuth: el2.azimuth, type: el2.type, slope: el2.slope, pos: arr[k].graph, splitted:true, area:arr[k].area, links:[], edges:edge, normal:el2.normal, width:arr[k].width, height:arr[k].height});
-                            }
-                        }
-                    }
+        // 중복이 아닐 때만 '생존자 명단'에 올림
+        if (!isDuplicate) {
+            validPieces.push(piece);
+        }
+    }
+
+    // 3. [데이터 생성] 살아남은 조각들을 실제 데이터 포맷으로 변환
+    // ★ 여기서 pid와 id를 심어야 하이라이트가 됩니다! ★
+    let newWallObjects = validPieces.map(piece => {
+        let edge = _asEdges(piece.raw);
+        return {
+            cardi: el2.cardi,
+            azimuth: el2.azimuth,
+            type: el2.type,    // 일단 부모 타입을 물려받음 (나중에 updateNearWall에서 바뀜)
+            slope: el2.slope,
+            pos: piece.graph,
+            splitted: true,    // 쪼개진 놈이라는 표식
+            area: piece.area,
+            links: [],
+            edges: edge,
+            normal: el2.normal,
+            width: piece.width,
+            height: piece.height,
+            pre_near_ids: el2.pre_near_ids,
+            
+            // 🔥 [하이라이트 핵심] 소속 정보 주입
+            pid: id,          // Zone ID (예: 1F_Zone1)
+            id: id,           // Editor 식별용 ID
+            zoneid: _getName(id),
+            
+            // 아직 UUID는 없음 (addMeshObject 할 때 생김)
+            uuid: null 
+        };
+    });
+
+    // 4. [체계 전환의 핵심 - 바꿔치기]
+    // 기존 walls 배열에서 '현재 부모 벽(j번째)'을 제거하고,
+    // 그 자리에 '새로운 자식들(newWallObjects)'을 끼워 넣습니다.
+    // 이러면 죽은 부모도, 유령 외벽도 배열에 남지 않습니다.
+    el.userData.walls.splice(j, 1, ...newWallObjects);
+
+    // 5. [인덱스 조정]
+    // j는 건드리지 않는다. 루프가 while (--j >= 0)로 아래로 내려가니까,
+    // 다음 --j가 방금 끼워넣은 조각들 밑으로 내려가서 자연스럽게 건너뛰게 됨
+    // (j를 올리면 오히려 방금 넣은 조각들을 거꾸로 다시 훑으면서 재분할하게 됨).
+}
                 }
             }
 
@@ -1507,24 +1540,44 @@ Zoning.prototype = {
                 }
             }
 
+            _collectLines_SD();
+
+            // 벽 메쉬 생성 + 하이라이트/Bridges.js 연동용 데이터 세팅.
+            // (예전엔 이 작업을 하는 반복문이 두 개 있었음 - 뒤에 새로 추가된 통합 버전이 앞의 것을
+            // 대체할 예정이었는데 옛날 버전이 안 지워진 채 남아있었고, 옛날 버전에만 있던
+            // zoneid 세팅도 새 버전엔 빠져 있어서 Bridges.js/SQLExport.js가 참조하는 zoneid가
+            // 안 채워지고 있었음 - 옛날 버전은 지우고 zoneid만 옮겨왔음.)
             for (const [id, el] of Object.entries(zones)) {
+                if (el.userData.walls) {
+                    el.userData.walls.forEach((wallData, index) => {
 
-                j = -1;
-                while (++j < el.userData.walls.length) {
-                    let el2 = el.userData.walls[j];
+                        // 이미 만들어진 벽(uuid 있음)은 다시 만들지 않음 (중복 생성 방지)
+                        if (wallData.uuid) return;
 
-                    el2.center = _getCenterPosition(el2.pos);
-                    el2.uuid = _addMeshObject(el2.pos, this.colors[el2.type], id);
-                    el2.zoneid = _getName(id);
-                    k = -1;
+                        wallData.center = _getCenterPosition(wallData.pos);
+                        wallData.zoneid = _getName(id);
 
-                    while (++k < el2.edges.length) {
-                        el2.links.push(_collectLinks(id, j, k));
-                    }
+                        let meshUuid = _addMeshObject(wallData.pos, this.colors[wallData.type], id);
+                        wallData.uuid = meshUuid;
+
+                        // 하이라이트/트리 연동을 위해 메쉬 쪽에도 소속 정보를 심어둠.
+                        let mesh = obj.getObjectByProperty('uuid', meshUuid);
+                        if (mesh) {
+                            mesh.userData.pid = id;
+                            mesh.userData.id = id;
+                            mesh.userData.type = wallData.type;
+                            mesh.name = id;
+                            mesh.userData.wallIndex = index;
+                        }
+
+                        wallData.links = [];
+                        let k = -1;
+                        while (++k < wallData.edges.length) {
+                            wallData.links.push(_collectLinks(id, index, k));
+                        }
+                    });
                 }
             }
-
-            _collectLines_SD();
 
             i = -1;
             while (++i < obj.children.length) {
@@ -1551,6 +1604,21 @@ Zoning.prototype = {
 
                     while (++i < el.userData.walls.length) {
                         _updateNearWall(el.userData.walls[i], id);
+                    }
+                }
+            }
+
+            // 메쉬 생성 시점엔 아직 _updateNearWall이 안 돌아서 WL/IW 재분류 전 값이 박혀있었음.
+            // (트리뷰가 참조하는 mesh.userData.type이 실제 최종 타입과 어긋나는 원인이었음)
+            // 재분류가 끝난 지금 최종 el2.type으로 다시 맞춰줌.
+            for (const [id, el] of Object.entries(zones)) {
+                if (el.userData.walls) {
+                    i = -1;
+
+                    while (++i < el.userData.walls.length) {
+                        let el2 = el.userData.walls[i];
+                        let o = obj.getObjectByProperty('uuid', el2.uuid);
+                        if (o) o.userData.type = el2.type;
                     }
                 }
             }

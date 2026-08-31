@@ -173,7 +173,17 @@ namespace main.contents
         }
         void OnJSMessage(object sender, CoreWebView2WebMessageReceivedEventArgs args)
         {
-            Program.UTIL.selectWall(args.TryGetWebMessageAsString());
+            string msg = args.TryGetWebMessageAsString();
+
+            if (string.IsNullOrEmpty(msg))
+            {
+                // 3D 빈 곳 클릭으로 선택 해제됨 -> 좌측 트리 메뉴 선택도 같이 해제
+                Program.UTIL.unselectAll();
+            }
+            else
+            {
+                Program.UTIL.selectWall(msg);
+            }
         }
         private void resetZoneDraw()
         {

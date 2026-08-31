@@ -761,7 +761,7 @@ namespace main
                         {
                             Program.UTIL.select3DObject(message);
                         }
-                        // [열교 3단계 하이라이트] 개별 열교 선분 선택. 문제 시 이 분기만 제거하면 원복됨.
+                        // [열교 3단계 하이라이트] 개별 열교 선분 선택
                         else if (selectInfo[0] == "selectedg")
                         {
                             Program.UTIL.select3DObject(message);
