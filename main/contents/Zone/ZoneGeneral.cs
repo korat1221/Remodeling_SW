@@ -806,6 +806,18 @@ namespace main.contents
             //존일반정보 폼에 해당하는 정보만 저장
             //건물정보, 3D정보는 저장 안함
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+
+            // 순바닥면적이 0/음수면 외피 미지정 등으로 재계산이 안 된 상태이므로
+            // 엉터리값을 덮어쓰지 말고 기존 저장값을 유지한다.
+            string 순바닥면적저장값 = NetArea.ToString();
+            if (NetArea <= 0)
+            {
+                string[][] 기존 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호 = '" + ZoneNum + "'");
+                if (기존.Length > 0 && 기존[0][0] != "")
+                {
+                    순바닥면적저장값 = 기존[0][0];
+                }
+            }
             Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,프로젝트유형,존이름,실제어방식,냉난방유무,환기유무,환기방식," +
                 "용도프로필,천장고,시작시간,종료시간,주이용일,재실자수,기기발열수준," +
                 "일일급탕요구량,냉난방시간,사용시간,공조시간,연이용일수,재실밀도,재실수준,일일인체발열,면적당인체발열,일일기기발열,면적당기기발열," +
@@ -815,7 +827,7 @@ namespace main.contents
             + DHWneed.ToString() + "','" + HCTime.ToString() + "','" + UseTime.ToString() + "','" + AHUTime.ToString() + "','" + AnnualUseDay.ToString() + "','"
             + OccupancyDensity.ToString() + "','" + OccupancyDensity_index + "','" + PersonIHG_1day.ToString() + "','" + PersonIHG.ToString() + "','" + EquipIHG_1day.ToString() + "','" + EquipIHG.ToString() + "','"
             + NetVolume.ToString() + "','" + VentilationRate.ToString() + "','" + Volume_wd.ToString() + "','" + Volume_we.ToString() + "','"
-            + NetArea.ToString() + "','" + SelectHRV + "','" + SelectPreZone_nonsplit + "','" + 증축여부 + "','" + HumidC_index + "','" + HumidH_index + "','" + missingItems + "'", "존번호");
+            + 순바닥면적저장값 + "','" + SelectHRV + "','" + SelectPreZone_nonsplit + "','" + 증축여부 + "','" + HumidC_index + "','" + HumidH_index + "','" + missingItems + "'", "존번호");
 
                         
         }
@@ -938,7 +950,9 @@ namespace main.contents
                 {
                     Usage = item.Row.ItemArray[0].ToString();
                 }
-                if (Value[0][28] != "")
+                // 저장된 순바닥면적이 0/음수면 엉터리값(외피 미지정 상태에서 자동저장된 것)이므로
+                // 무시하고 GetValue_ZoneEnvelope()의 3D 재계산값을 그대로 둔다.
+                if (Program.UTIL.ToDoubleOrZero(Value[0][28]) > 0)
                 {
                     NetArea = Program.UTIL.ToDoubleOrZero(Value[0][28]);
                     NetArea_textBox.Text = NetArea.ToString();
@@ -1243,7 +1257,7 @@ namespace main.contents
                     }
                     for (int j = 0; j < Wall.Length; j++)
                     {
-                        double Wall_d, Wall_A;
+                        double Wall_d = 0, Wall_A;
                         String[][] Wall_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall",
                          "U적용방법, 두께합계,단열재두께,구조유형,열관류율," +
                          "재료1종류,재료1두께," +
@@ -1257,45 +1271,48 @@ namespace main.contents
                          "재료9종류,재료9두께," +
                          "재료10종류,재료10두께", "번호 = '" + Wall[j][1] + "'");
 
-                        if (Wall_Value[0][3] == "콘크리트조")
+                        if (Wall_Value.Length > 0)
                         {
-                            if (Wall_Value[0][0] == "계산")
+                            if (Wall_Value[0][3] == "콘크리트조")
                             {
-                                Wall_d = 0;
-
-                                for (int k = 0; k < 10; k++)
+                                if (Wall_Value[0][0] == "계산")
                                 {
-                                    if (Wall_Value[0][2 * k + 5] != "")
+                                    Wall_d = 0;
+
+                                    for (int k = 0; k < 10; k++)
                                     {
-                                        String[][] Material = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "구분", "재료명 = '" + Wall_Value[0][2 * k + 5] + "'");
-                                        if (Material.Length > 0)
+                                        if (Wall_Value[0][2 * k + 5] != "")
                                         {
-                                            if (Material[0][0] != "콘크리트")
+                                            String[][] Material = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "구분", "재료명 = '" + Wall_Value[0][2 * k + 5] + "'");
+                                            if (Material.Length > 0)
                                             {
-                                                Wall_d += Program.UTIL.ToDoubleOrZero(Wall_Value[0][2 * k + 6]) / 1000;
-                                            }
-                                            else
-                                            {
-                                                break;
+                                                if (Material[0][0] != "콘크리트")
+                                                {
+                                                    Wall_d += Program.UTIL.ToDoubleOrZero(Wall_Value[0][2 * k + 6]) / 1000;
+                                                }
+                                                else
+                                                {
+                                                    break;
+                                                }
                                             }
                                         }
+                                        else
+                                        {
+                                            break;
+                                        }
                                     }
-                                    else
-                                    {
-                                        break;
-                                    }
+                                }
+                                else
+                                {
+                                    Wall_d = 0.075 + Program.UTIL.ToDoubleOrZero(Wall_Value[0][2]) / 1000; //내단열로 가정함
                                 }
                             }
                             else
                             {
-                                Wall_d = 0.075 + Program.UTIL.ToDoubleOrZero(Wall_Value[0][2]) / 1000; //내단열로 가정함
-                            }
-                        }
-                        else
-                        {
 
-                            // Wall_d = 0.015 + Program.UTIL.ToDoubleOrZero(Wall[j][2]) / 2;
-                            Wall_d = 0.015 + Program.UTIL.ToDoubleOrZero(Wall_Value[0][2]) / 1000;
+                                // Wall_d = 0.015 + Program.UTIL.ToDoubleOrZero(Wall[j][2]) / 2;
+                                Wall_d = 0.015 + Program.UTIL.ToDoubleOrZero(Wall_Value[0][2]) / 1000;
+                            }
                         }
 
                         double value;
