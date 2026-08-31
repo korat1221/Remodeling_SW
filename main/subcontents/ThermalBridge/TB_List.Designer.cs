@@ -33,7 +33,6 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             panel1 = new Panel();
-            Uw2_unit_label = new Label();
             length_textBox = new TextBox();
             label1 = new Label();
             label4 = new Label();
@@ -51,7 +50,6 @@ namespace main.contents
             panel1.BackColor = Color.White;
             panel1.Controls.Add(info);
             panel1.Controls.Add(TB_button);
-            panel1.Controls.Add(Uw2_unit_label);
             panel1.Controls.Add(length_textBox);
             panel1.Controls.Add(label1);
             panel1.Controls.Add(label4);
@@ -61,17 +59,6 @@ namespace main.contents
             panel1.Name = "panel1";
             panel1.Size = new Size(971, 730);
             panel1.TabIndex = 0;
-            // 
-            // Uw2_unit_label
-            // 
-            Uw2_unit_label.AutoSize = true;
-            Uw2_unit_label.Font = new Font("나눔바른고딕", 9.75F);
-            Uw2_unit_label.ForeColor = SystemColors.ControlDark;
-            Uw2_unit_label.Location = new Point(224, 89);
-            Uw2_unit_label.Name = "Uw2_unit_label";
-            Uw2_unit_label.Size = new Size(19, 15);
-            Uw2_unit_label.TabIndex = 101;
-            Uw2_unit_label.Text = "m";
             // 
             // length_textBox
             // 
@@ -212,7 +199,6 @@ namespace main.contents
         private PictureBox Icon_pictureBox;
         private Button button2;
         private Label label1;
-        private Label Uw2_unit_label;
         private TextBox length_textBox;
         private Button info;
         private Button TB_button;

@@ -46,7 +46,6 @@
             dU_textBox = new TextBox();
             Ueff_label2 = new Label();
             label2 = new Label();
-            PerArea_label2 = new TextBox();
             PerArea_textBox = new TextBox();
             PerArea_label1 = new TextBox();
             label8 = new Label();
@@ -256,19 +255,6 @@
             label2.TabIndex = 100;
             label2.Text = "1D 열교가산치";
             // 
-            // PerArea_label2
-            // 
-            PerArea_label2.BackColor = Color.White;
-            PerArea_label2.BorderStyle = BorderStyle.None;
-            PerArea_label2.Enabled = false;
-            PerArea_label2.Font = new Font("나눔바른고딕", 9.75F);
-            PerArea_label2.ForeColor = SystemColors.ControlDark;
-            PerArea_label2.Location = new Point(250, 180);
-            PerArea_label2.Name = "PerArea_label2";
-            PerArea_label2.Size = new Size(68, 15);
-            PerArea_label2.TabIndex = 145;
-            PerArea_label2.TextAlign = HorizontalAlignment.Center;
-            // 
             // PerArea_textBox
             // 
             PerArea_textBox.BackColor = Color.White;
@@ -409,7 +395,6 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
-            panel2.Controls.Add(PerArea_label2);
             panel2.Controls.Add(pictureBox2);
             panel2.Controls.Add(PerArea_textBox);
             panel2.Controls.Add(PerArea_label1);
@@ -509,7 +494,6 @@
         private Label label5;
         private Label label4;
         private TextBox dx_textBox;
-        private TextBox PerArea_label2;
         private TextBox PerArea_textBox;
         private TextBox PerArea_label1;
         private TextBox TBName_textBox;

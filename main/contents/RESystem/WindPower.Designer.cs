@@ -32,7 +32,6 @@
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
-            label7 = new Label();
             annual_textBox = new TextBox();
             label5 = new Label();
             Num_textBox = new TextBox();
@@ -66,7 +65,6 @@
             label10 = new Label();
             label11 = new Label();
             label12 = new Label();
-            label13 = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel2.SuspendLayout();
@@ -79,7 +77,6 @@
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
-            GeneralPanel.Controls.Add(label7);
             GeneralPanel.Controls.Add(annual_textBox);
             GeneralPanel.Controls.Add(label5);
             GeneralPanel.Controls.Add(Num_textBox);
@@ -92,18 +89,7 @@
             GeneralPanel.Size = new Size(977, 101);
             GeneralPanel.TabIndex = 17;
             GeneralPanel.Paint += GeneralPanel_Paint;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("나눔바른고딕", 9.75F);
-            label7.ForeColor = SystemColors.ControlText;
-            label7.Location = new Point(660, 55);
-            label7.Name = "label7";
-            label7.Size = new Size(48, 15);
-            label7.TabIndex = 161;
-            label7.Text = "kWh/a";
-            // 
+            //
             // annual_textBox
             // 
             annual_textBox.BackColor = Color.White;
@@ -505,16 +491,7 @@
             label12.Size = new Size(0, 15);
             label12.TabIndex = 175;
             // 
-            // label13
             // 
-            label13.AutoSize = true;
-            label13.Font = new Font("나눔바른고딕", 9.75F);
-            label13.ForeColor = SystemColors.ControlDark;
-            label13.Location = new Point(1175, 183);
-            label13.Name = "label13";
-            label13.Size = new Size(19, 15);
-            label13.TabIndex = 176;
-            label13.Text = "m";
             // 
             // WindPower
             // 
@@ -523,7 +500,6 @@
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(label13);
             Controls.Add(label12);
             Controls.Add(label11);
             Controls.Add(label10);
@@ -583,13 +559,11 @@
         private Label label10;
         private Label label11;
         private Label label12;
-        private Label label13;
         private Label label14;
         private TextBox Num_textBox;
         private Label label4;
         private TextBox annual_textBox;
         private Label label5;
-        private Label label7;
         private Button Range_button;
     }
 }

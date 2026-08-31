@@ -50,7 +50,7 @@
                     {
                         SelectTBName = tb2[0][1];
                         TB_Textbox.Text = SelectTBNum + "." + " " + tb2[0][1];
-                        Psi_textBox.Text = Program.UTIL.ToDoubleOrZero(tb2[0][2]).ToString("0.000");
+                        Psi_textBox.Text = Program.UTIL.ToDoubleOrZero(tb2[0][2]).ToString("0.000") + " W/m·K";
                         SelectTBIns1 = tb2[0][3];
                         SelectTBIns2 = tb2[0][4];
                         Load_Image2();

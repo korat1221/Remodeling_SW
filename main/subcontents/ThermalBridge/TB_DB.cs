@@ -141,8 +141,7 @@ public partial class TB_DB : Form
             if (TB_dataGridView.Rows[SelectRow].Cells[4].Value != null)
             { TBName_textBox.Text = TB_dataGridView.Rows[SelectRow].Cells[4].Value.ToString(); }//명칭
             if (TB_dataGridView.Rows[SelectRow].Cells[7].Value != null)
-            { result_textBox.Text = TB_dataGridView.Rows[SelectRow].Cells[7].Value.ToString(); }//선형열관류율
-            result_textBox2.Text = "W/m·K";
+            { result_textBox.Text = TB_dataGridView.Rows[SelectRow].Cells[7].Value.ToString() + " W/m·K"; }//선형열관류율
             Load_Image2();
         }
     }

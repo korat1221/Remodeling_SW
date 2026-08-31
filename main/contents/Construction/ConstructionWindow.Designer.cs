@@ -55,12 +55,10 @@ namespace main.contents
             Uw2_label = new Label();
             label21 = new Label();
             g3_textBox = new TextBox();
-            label28 = new Label();
             label20 = new Label();
             Size_textBox = new TextBox();
             label1 = new Label();
             ImportSize_button = new Button();
-            Uw2_unit_label = new Label();
             Uw2_textBox = new TextBox();
             tabControl1 = new CustomTabControl();
             Glass_tabPage = new TabPage();
@@ -68,24 +66,17 @@ namespace main.contents
             GlassName_textBox2 = new TextBox();
             Ug_textBox = new TextBox();
             Ug_label = new Label();
-            Ug_unit_label = new Label();
             label23 = new Label();
             g_textBox = new TextBox();
             label26 = new Label();
             τD65_SNA_textBox = new TextBox();
-            label12 = new Label();
-            label9 = new Label();
             Psi_g_fix_textBox = new TextBox();
             Psi_fix_label = new Label();
-            Psi_fix_unit_label = new Label();
             Psi_open_label = new Label();
             Psi_g_open_textBox = new TextBox();
-            Psi_open_unit_label = new Label();
             Frame_tabPage = new TabPage();
             FrameCert_button = new Button();
             FrameCert_pictureBox = new PictureBox();
-            label10 = new Label();
-            label8 = new Label();
             label22 = new Label();
             df_btw_textBox = new TextBox();
             df_fix_textBox = new TextBox();
@@ -101,13 +92,10 @@ namespace main.contents
             label14 = new Label();
             WindowFrame_pictureBox = new PictureBox();
             Install_tabPage = new TabPage();
-            label44 = new Label();
             label45 = new Label();
             Psi_InstallButtom_textBox = new TextBox();
             Psi_InstallSide_textBox = new TextBox();
             Psi_InstallTop_textBox = new TextBox();
-            label41 = new Label();
-            label40 = new Label();
             label24 = new Label();
             label33 = new Label();
             label38 = new Label();
@@ -133,7 +121,6 @@ namespace main.contents
             g2_textBox = new TextBox();
             label13 = new Label();
             Uw3_textBox = new TextBox();
-            Uw3_unit_label = new Label();
             Uw3_label = new Label();
             τD65_SNA2_textBox = new TextBox();
             label27 = new Label();
@@ -390,12 +377,10 @@ namespace main.contents
             panel2.Controls.Add(Uw2_label);
             panel2.Controls.Add(label21);
             panel2.Controls.Add(g3_textBox);
-            panel2.Controls.Add(label28);
             panel2.Controls.Add(label20);
             panel2.Controls.Add(Size_textBox);
             panel2.Controls.Add(label1);
             panel2.Controls.Add(ImportSize_button);
-            panel2.Controls.Add(Uw2_unit_label);
             panel2.Controls.Add(Uw2_textBox);
             panel2.Controls.Add(tabControl1);
             panel2.Controls.Add(Install_button);
@@ -457,16 +442,7 @@ namespace main.contents
             g3_textBox.TabIndex = 106;
             g3_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label28
             // 
-            label28.AutoSize = true;
-            label28.Font = new Font("나눔바른고딕", 9.75F);
-            label28.ForeColor = SystemColors.ControlDark;
-            label28.Location = new Point(820, 85);
-            label28.Name = "label28";
-            label28.Size = new Size(15, 15);
-            label28.TabIndex = 107;
-            label28.Text = "-";
             // 
             // label20
             // 
@@ -516,16 +492,7 @@ namespace main.contents
             ImportSize_button.UseVisualStyleBackColor = false;
             ImportSize_button.Click += ImportSize_button_Click;
             // 
-            // Uw2_unit_label
             // 
-            Uw2_unit_label.AutoSize = true;
-            Uw2_unit_label.Font = new Font("나눔바른고딕", 9.75F);
-            Uw2_unit_label.ForeColor = SystemColors.ControlDark;
-            Uw2_unit_label.Location = new Point(800, 55);
-            Uw2_unit_label.Name = "Uw2_unit_label";
-            Uw2_unit_label.Size = new Size(0, 15);
-            Uw2_unit_label.TabIndex = 98;
-            Uw2_unit_label.Visible = false;
             // 
             // Uw2_textBox
             // 
@@ -576,19 +543,14 @@ namespace main.contents
             Glass_tabPage.Controls.Add(GlassName_textBox2);
             Glass_tabPage.Controls.Add(Ug_textBox);
             Glass_tabPage.Controls.Add(Ug_label);
-            Glass_tabPage.Controls.Add(Ug_unit_label);
             Glass_tabPage.Controls.Add(label23);
             Glass_tabPage.Controls.Add(g_textBox);
             Glass_tabPage.Controls.Add(label26);
             Glass_tabPage.Controls.Add(τD65_SNA_textBox);
-            Glass_tabPage.Controls.Add(label12);
-            Glass_tabPage.Controls.Add(label9);
             Glass_tabPage.Controls.Add(Psi_g_fix_textBox);
             Glass_tabPage.Controls.Add(Psi_fix_label);
-            Glass_tabPage.Controls.Add(Psi_fix_unit_label);
             Glass_tabPage.Controls.Add(Psi_open_label);
             Glass_tabPage.Controls.Add(Psi_g_open_textBox);
-            Glass_tabPage.Controls.Add(Psi_open_unit_label);
             Glass_tabPage.Location = new Point(4, 25);
             Glass_tabPage.Name = "Glass_tabPage";
             Glass_tabPage.Padding = new Padding(3);
@@ -644,15 +606,7 @@ namespace main.contents
             Ug_label.TabIndex = 65;
             Ug_label.Text = "[Ug] 유리 열관류율";
             // 
-            // Ug_unit_label
             // 
-            Ug_unit_label.AutoSize = true;
-            Ug_unit_label.Font = new Font("나눔바른고딕", 9.75F);
-            Ug_unit_label.ForeColor = SystemColors.ControlDark;
-            Ug_unit_label.Location = new Point(296, 128);
-            Ug_unit_label.Name = "Ug_unit_label";
-            Ug_unit_label.Size = new Size(0, 15);
-            Ug_unit_label.TabIndex = 64;
             // 
             // label23
             // 
@@ -702,27 +656,9 @@ namespace main.contents
             τD65_SNA_textBox.TabIndex = 72;
             τD65_SNA_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label12
             // 
-            label12.AutoSize = true;
-            label12.Font = new Font("나눔바른고딕", 9.75F);
-            label12.ForeColor = SystemColors.ControlDark;
-            label12.Location = new Point(316, 66);
-            label12.Name = "label12";
-            label12.Size = new Size(15, 15);
-            label12.TabIndex = 97;
-            label12.Text = "-";
             // 
-            // label9
             // 
-            label9.AutoSize = true;
-            label9.Font = new Font("나눔바른고딕", 9.75F);
-            label9.ForeColor = SystemColors.ControlDark;
-            label9.Location = new Point(316, 97);
-            label9.Name = "label9";
-            label9.Size = new Size(15, 15);
-            label9.TabIndex = 96;
-            label9.Text = "-";
             // 
             // Psi_g_fix_textBox
             // 
@@ -748,16 +684,7 @@ namespace main.contents
             Psi_fix_label.TabIndex = 74;
             Psi_fix_label.Text = "[Ψg] 선형열관류율(고정창)";
             // 
-            // Psi_fix_unit_label
             // 
-            Psi_fix_unit_label.AutoSize = true;
-            Psi_fix_unit_label.Font = new Font("나눔바른고딕", 9.75F);
-            Psi_fix_unit_label.ForeColor = SystemColors.ControlDark;
-            Psi_fix_unit_label.Location = new Point(802, 66);
-            Psi_fix_unit_label.Name = "Psi_fix_unit_label";
-            Psi_fix_unit_label.Size = new Size(52, 15);
-            Psi_fix_unit_label.TabIndex = 73;
-            Psi_fix_unit_label.Text = "W/m·K";
             // 
             // Psi_open_label
             // 
@@ -783,24 +710,13 @@ namespace main.contents
             Psi_g_open_textBox.TabIndex = 78;
             Psi_g_open_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // Psi_open_unit_label
             // 
-            Psi_open_unit_label.AutoSize = true;
-            Psi_open_unit_label.Font = new Font("나눔바른고딕", 9.75F);
-            Psi_open_unit_label.ForeColor = SystemColors.ControlDark;
-            Psi_open_unit_label.Location = new Point(802, 97);
-            Psi_open_unit_label.Name = "Psi_open_unit_label";
-            Psi_open_unit_label.Size = new Size(52, 15);
-            Psi_open_unit_label.TabIndex = 76;
-            Psi_open_unit_label.Text = "W/m·K";
             // 
             // Frame_tabPage
             // 
             Frame_tabPage.BackColor = Color.White;
             Frame_tabPage.Controls.Add(FrameCert_button);
             Frame_tabPage.Controls.Add(FrameCert_pictureBox);
-            Frame_tabPage.Controls.Add(label10);
-            Frame_tabPage.Controls.Add(label8);
             Frame_tabPage.Controls.Add(label22);
             Frame_tabPage.Controls.Add(df_btw_textBox);
             Frame_tabPage.Controls.Add(df_fix_textBox);
@@ -847,26 +763,9 @@ namespace main.contents
             FrameCert_pictureBox.Visible = false;
             FrameCert_pictureBox.Click += FrameCert_pictureBox_Click;
             // 
-            // label10
             // 
-            label10.AutoSize = true;
-            label10.Font = new Font("나눔바른고딕", 9.75F);
-            label10.ForeColor = SystemColors.ControlDark;
-            label10.Location = new Point(354, 148);
-            label10.Name = "label10";
-            label10.Size = new Size(19, 15);
-            label10.TabIndex = 106;
-            label10.Text = "m";
             // 
-            // label8
             // 
-            label8.AutoSize = true;
-            label8.Font = new Font("나눔바른고딕", 9.75F);
-            label8.ForeColor = SystemColors.ControlDark;
-            label8.Location = new Point(338, 110);
-            label8.Name = "label8";
-            label8.Size = new Size(0, 15);
-            label8.TabIndex = 105;
             // 
             // label22
             // 
@@ -1036,13 +935,10 @@ namespace main.contents
             // Install_tabPage
             // 
             Install_tabPage.BackColor = Color.White;
-            Install_tabPage.Controls.Add(label44);
             Install_tabPage.Controls.Add(label45);
             Install_tabPage.Controls.Add(Psi_InstallButtom_textBox);
             Install_tabPage.Controls.Add(Psi_InstallSide_textBox);
             Install_tabPage.Controls.Add(Psi_InstallTop_textBox);
-            Install_tabPage.Controls.Add(label41);
-            Install_tabPage.Controls.Add(label40);
             Install_tabPage.Controls.Add(label24);
             Install_tabPage.Controls.Add(label33);
             Install_tabPage.Controls.Add(label38);
@@ -1054,16 +950,7 @@ namespace main.contents
             Install_tabPage.TabIndex = 3;
             Install_tabPage.Text = "설치열교";
             // 
-            // label44
             // 
-            label44.AutoSize = true;
-            label44.Font = new Font("나눔바른고딕", 9.75F);
-            label44.ForeColor = SystemColors.ControlDark;
-            label44.Location = new Point(455, 169);
-            label44.Name = "label44";
-            label44.Size = new Size(52, 15);
-            label44.TabIndex = 125;
-            label44.Text = "W/m·K";
             // 
             // label45
             // 
@@ -1115,27 +1002,9 @@ namespace main.contents
             Psi_InstallTop_textBox.TabIndex = 108;
             Psi_InstallTop_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label41
             // 
-            label41.AutoSize = true;
-            label41.Font = new Font("나눔바른고딕", 9.75F);
-            label41.ForeColor = SystemColors.ControlDark;
-            label41.Location = new Point(455, 133);
-            label41.Name = "label41";
-            label41.Size = new Size(52, 15);
-            label41.TabIndex = 119;
-            label41.Text = "W/m·K";
             // 
-            // label40
             // 
-            label40.AutoSize = true;
-            label40.Font = new Font("나눔바른고딕", 9.75F);
-            label40.ForeColor = SystemColors.ControlDark;
-            label40.Location = new Point(455, 97);
-            label40.Name = "label40";
-            label40.Size = new Size(52, 15);
-            label40.TabIndex = 118;
-            label40.Text = "W/m·K";
             // 
             // label24
             // 
@@ -1431,15 +1300,7 @@ namespace main.contents
             Uw3_textBox.TabIndex = 142;
             Uw3_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // Uw3_unit_label
             // 
-            Uw3_unit_label.AutoSize = true;
-            Uw3_unit_label.Font = new Font("나눔바른고딕", 9.75F);
-            Uw3_unit_label.ForeColor = SystemColors.ControlDark;
-            Uw3_unit_label.Location = new Point(1148, 284);
-            Uw3_unit_label.Name = "Uw3_unit_label";
-            Uw3_unit_label.Size = new Size(0, 15);
-            Uw3_unit_label.TabIndex = 143;
             // 
             // Uw3_label
             // 
@@ -1489,7 +1350,6 @@ namespace main.contents
             Controls.Add(g2_textBox);
             Controls.Add(label13);
             Controls.Add(Uw3_textBox);
-            Controls.Add(Uw3_unit_label);
             Controls.Add(Uw3_label);
             Controls.Add(WindowType_pictureBox);
             Controls.Add(panel2);
@@ -1546,17 +1406,14 @@ namespace main.contents
         private Label Frame_label;
         private CustomComboBox Uw_comboBox;
         private Label label25;
-        private Label Psi_open_unit_label;
         private TextBox Psi_g_open_textBox;
         private Label Psi_open_label;
-        private Label Psi_fix_unit_label;
         private TextBox Psi_g_fix_textBox;
         private Label Psi_fix_label;
         private TextBox τD65_SNA_textBox;
         private Label label26;
         private TextBox g_textBox;
         private Label label23;
-        private Label Ug_unit_label;
         private TextBox Ug_textBox;
         private Label Ug_label;
         private Button FrameDB_button;
@@ -1568,23 +1425,17 @@ namespace main.contents
         private Button Spacer_button;
         private TextBox Install_textBox;
         private Button Install_button;
-        private Label label12;
-        private Label label9;
         private PictureBox WindowType_pictureBox;
         private TextBox WinNum_textBox;
         private PictureBox Icon_pictureBox;
-        private Label Uw2_unit_label;
         private TextBox Uw2_textBox;
         private Label Uw2_label;
         private TextBox AdditionalWindow_textBox;
         private TabPage Install_tabPage;
-        private Label label44;
         private Label label45;
         private TextBox Psi_InstallButtom_textBox;
         private TextBox Psi_InstallSide_textBox;
         private TextBox Psi_InstallTop_textBox;
-        private Label label41;
-        private Label label40;
         private Label label24;
         private Label label33;
         private Label label38;
@@ -1608,12 +1459,9 @@ namespace main.contents
         private TextBox Size_textBox;
         private Label label1;
         private Button ImportSize_button;
-        private Label label10;
-        private Label label8;
         private TextBox g2_textBox;
         private Label label13;
         private TextBox Uw3_textBox;
-        private Label Uw3_unit_label;
         private Label Uw3_label;
         private TextBox τD65_SNA2_textBox;
         private Label label27;
@@ -1623,7 +1471,6 @@ namespace main.contents
         private TextBox GlassName_textBox2;
         private Label label21;
         private TextBox g3_textBox;
-        private Label label28;
         private Button FrameCert_button;
         private PictureBox FrameCert_pictureBox;
         private Button info;

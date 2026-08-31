@@ -106,7 +106,7 @@ namespace main.contents
 
             //덕트단열재 설정
             PipeIns_Ramda = 0.035;
-            PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
+            PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString() + " W/m·K";
             PipeIns_textBox.Text = "보온단열재";
             PipeIns = "보온단열재";
 
@@ -634,12 +634,12 @@ namespace main.contents
                 PipeIns = InsDB_form.Select[1];
                 PipeIns_textBox.Text = PipeIns;
                 PipeIns_Ramda = Program.UTIL.ToDoubleOrZero(InsDB_form.Select[4]);
-                PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
+                PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString() + " W/m·K";
             }
             else
             {
                 PipeIns_Ramda = 0.035;
-                PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
+                PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString() + " W/m·K";
                 PipeIns_textBox.Text = "보온단열재";
                 PipeIns = "보온단열재";
             }
@@ -1295,7 +1295,7 @@ namespace main.contents
                 PipeIns_textBox.Text = PipeIns.ToString();
 
                 PipeIns_Ramda = Program.UTIL.ToDoubleOrZero(Value[0][7]);
-                PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString();
+                PipeIns_Ramda_textBox.Text = PipeIns_Ramda.ToString() + " W/m·K";
                 Program.UTIL.textBox_doubleComa(PipeIns_Ramda_textBox, true, 3);
             }
 

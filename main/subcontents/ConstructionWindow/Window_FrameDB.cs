@@ -200,7 +200,7 @@ namespace main.subcontents
             {
                 UserDB_LE_CL_V = User_WinGlass[0][2];
                 UserDB_Ug = Program.UTIL.ToDoubleOrZero(User_WinGlass[0][3]);
-                UserDB_Ug_textBox.Text = String.Format("{0:F3}", UserDB_Ug);
+                UserDB_Ug_textBox.Text = String.Format("{0:F3}", UserDB_Ug) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
             }
 
             string[][] WinGlass = Program.DB.getValue(DB.type.BaseDB_HCneed, "유리", "번호,제품명,LE_CL_V,열관류율", "제품명 ='" + UserDBGlass + "'");
@@ -208,7 +208,7 @@ namespace main.subcontents
             {
                 UserDB_LE_CL_V = WinGlass[0][2];
                 UserDB_Ug = Program.UTIL.ToDoubleOrZero(WinGlass[0][3]);
-                UserDB_Ug_textBox.Text = String.Format("{0:F3}", UserDB_Ug);
+                UserDB_Ug_textBox.Text = String.Format("{0:F3}", UserDB_Ug) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
             }
             Calc_Uf();
         }
@@ -231,8 +231,8 @@ namespace main.subcontents
                     UserDB_PsiFix = Program.UTIL.ToDoubleOrZero(User_WinSpacer[0][2]);
                     UserDB_PsiOpen = Program.UTIL.ToDoubleOrZero(User_WinSpacer[0][3]);
                 }
-                UserDB_PsiFix_textBox.Text = String.Format("{0:F3}", UserDB_PsiFix);
-                UserDB_PsiOpen_textBox.Text = String.Format("{0:F3}", UserDB_PsiOpen);
+                UserDB_PsiFix_textBox.Text = String.Format("{0:F3}", UserDB_PsiFix) + " W/m·K";
+                UserDB_PsiOpen_textBox.Text = String.Format("{0:F3}", UserDB_PsiOpen) + " W/m·K";
             }
             string[][] WinSpacer = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호간봉", "번호,제품명,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "구분1 = '" + UserDBSpacer + "'AND 구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + UserDB_FrameMaterial + "'");
             if (WinSpacer.Length > 0)
@@ -248,8 +248,8 @@ namespace main.subcontents
                     UserDB_PsiFix = Program.UTIL.ToDoubleOrZero(WinSpacer[0][2]);
                     UserDB_PsiOpen = Program.UTIL.ToDoubleOrZero(WinSpacer[0][3]);
                 }
-                UserDB_PsiFix_textBox.Text = String.Format("{0:F3}", UserDB_PsiFix);
-                UserDB_PsiOpen_textBox.Text = String.Format("{0:F3}", UserDB_PsiOpen);
+                UserDB_PsiFix_textBox.Text = String.Format("{0:F3}", UserDB_PsiFix) + " W/m·K";
+                UserDB_PsiOpen_textBox.Text = String.Format("{0:F3}", UserDB_PsiOpen) + " W/m·K";
             }
             Calc_Uf();
         }
@@ -368,9 +368,9 @@ namespace main.subcontents
 
             if (UserDB_Uf > 0.65)
             {
-                UserDB_UfA_textBox.Text = String.Format("{0:F3}", UserDB_Uf);
-                UserDB_UfB_textBox.Text = String.Format("{0:F3}", UserDB_Uf);
-                UserDB_UfC_textBox.Text = String.Format("{0:F3}", UserDB_Uf);
+                UserDB_UfA_textBox.Text = String.Format("{0:F3}", UserDB_Uf) + " W/m·K";
+                UserDB_UfB_textBox.Text = String.Format("{0:F3}", UserDB_Uf) + " W/m·K";
+                UserDB_UfC_textBox.Text = String.Format("{0:F3}", UserDB_Uf) + " W/m·K";
             }
             else
             {

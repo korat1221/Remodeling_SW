@@ -38,7 +38,6 @@ partial class TB_DB
         pictureBox1 = new PictureBox();
         Save_button = new Button();
         panel1 = new Panel();
-        result_textBox2 = new TextBox();
         TBName_textBox = new TextBox();
         result_textBox = new TextBox();
         pictureBox3 = new PictureBox();
@@ -118,7 +117,6 @@ partial class TB_DB
         // 
         panel1.BackColor = SystemColors.GradientInactiveCaption;
         panel1.Controls.Add(info);
-        panel1.Controls.Add(result_textBox2);
         panel1.Controls.Add(TBName_textBox);
         panel1.Controls.Add(result_textBox);
         panel1.Controls.Add(pictureBox3);
@@ -129,19 +127,7 @@ partial class TB_DB
         panel1.Name = "panel1";
         panel1.Size = new Size(508, 297);
         panel1.TabIndex = 27;
-        // 
-        // result_textBox2
-        // 
-        result_textBox2.BackColor = SystemColors.GradientInactiveCaption;
-        result_textBox2.BorderStyle = BorderStyle.None;
-        result_textBox2.Enabled = false;
-        result_textBox2.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
-        result_textBox2.ForeColor = SystemColors.ControlDark;
-        result_textBox2.Location = new Point(323, 27);
-        result_textBox2.Name = "result_textBox2";
-        result_textBox2.Size = new Size(75, 15);
-        result_textBox2.TabIndex = 136;
-        // 
+            // 
         // TBName_textBox
         // 
         TBName_textBox.BackColor = SystemColors.GradientInactiveCaption;
@@ -349,7 +335,6 @@ partial class TB_DB
     private Button Deletebutton;
     private Label label36;
     private PictureBox pictureBox3;
-    private TextBox result_textBox2;
     private PictureBox pictureBox4;
     private Button info;
 }

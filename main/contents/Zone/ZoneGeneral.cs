@@ -35,11 +35,6 @@ namespace main.contents
             Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "상위메뉴아이콘_on2", "상위메뉴명 = '결과 정보'");
 
 
-            label54.Text  = "m"+Program.UTIL.Subscript(2,true);
-            label63.Text = "m" + Program.UTIL.Subscript(3, true) + "/h";
-            label35.Text = "Wh/m" + Program.UTIL.Subscript(2, true) + "d";
-            label31.Text = "Wh/m" + Program.UTIL.Subscript(2, true) + "d";
-            label24.Text = "m" + Program.UTIL.Subscript(2, true) + "/인";
             //존 환기방식 콤보박스
             //Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, AHU_comboBox, "존일반", "환기방식", "");
             AHU_comboBox.Items.Clear();
@@ -367,6 +362,8 @@ namespace main.contents
                     AnnualUseDay = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue2_BySelectComboBox(WeekUseDay_comboBox, "이용일수", "주간일수", "월='연간'", "이용일수"));
                     AnnualUseDay_textBox.Text = AnnualUseDay.ToString();
                     Program.UTIL.textBox_doubleComa(AnnualUseDay_textBox, true, 0);
+                    AnnualUseDay_textBox.Text += " days";
+                    AnnualUseDay_textBox.TextAlign = HorizontalAlignment.Left;
                 }
             }
         }
@@ -407,9 +404,9 @@ namespace main.contents
                 PersonIHG_Cal(PersonIHG, UseTime);
                 EquipIHG_Cal(EquipIHG_Time);
                 Calc_VentilationVolume(NetArea, NetVolume, VA, VA_we);
-                theta_i_h_set_Label.Text = String.Format("{0:F0}", theta_i_h_set) + "℃";
-                theta_i_c_set_Label.Text = String.Format("{0:F0}", theta_i_c_set) + "℃";
-                Em_Label.Text = String.Format("{0:F0}", Em) + "lx";
+                theta_i_h_set_Label.Text = String.Format("{0:F0}", theta_i_h_set) + " ℃";
+                theta_i_c_set_Label.Text = String.Format("{0:F0}", theta_i_c_set) + " ℃";
+                Em_Label.Text = String.Format("{0:F0}", Em) + " lx";
             }
         }
 
@@ -441,8 +438,12 @@ namespace main.contents
                     AHUTime = 24;
                     UseTime_textBox.Text = UseTime.ToString();
                     Program.UTIL.textBox_doubleComa(UseTime_textBox, true, 0);
+                    UseTime_textBox.Text += " h/d";
+                    UseTime_textBox.TextAlign = HorizontalAlignment.Left;
                     HCTime_textBox.Text = HCTime.ToString();
                     Program.UTIL.textBox_doubleComa(HCTime_textBox, true, 0);
+                    HCTime_textBox.Text += " h/d";
+                    HCTime_textBox.TextAlign = HorizontalAlignment.Left;
                     PersonIHG_Cal(PersonIHG, UseTime);
                     EquipIHG_Cal(EquipIHG_Time); //usetime 반영되므로 추가 
                 }
@@ -458,8 +459,12 @@ namespace main.contents
                     AHUTime = UseTime + 1;
                     UseTime_textBox.Text = UseTime.ToString();
                     Program.UTIL.textBox_doubleComa(UseTime_textBox, true, 0);
+                    UseTime_textBox.Text += " h/d";
+                    UseTime_textBox.TextAlign = HorizontalAlignment.Left;
                     HCTime_textBox.Text = HCTime.ToString();
                     Program.UTIL.textBox_doubleComa(HCTime_textBox, true, 0);
+                    HCTime_textBox.Text += " h/d";
+                    HCTime_textBox.TextAlign = HorizontalAlignment.Left;
                     PersonIHG_Cal(PersonIHG, UseTime);
                     EquipIHG_Cal(EquipIHG_Time); //usetime 반영되므로 추가 
                 }
@@ -489,6 +494,8 @@ namespace main.contents
 
                 NetVolume_textBox.Text = NetVolume.ToString();
                 Program.UTIL.textBox_doubleComa(NetVolume_textBox, true, 1);
+                NetVolume_textBox.Text += " m" + Program.UTIL.Subscript(3, true);
+                NetVolume_textBox.TextAlign = HorizontalAlignment.Left;
 
                 Calc_VentilationVolume(NetArea, NetVolume, VA, VA_we);
             }
@@ -503,6 +510,8 @@ namespace main.contents
 
                 NetVolume_textBox.Text = NetVolume.ToString();
                 Program.UTIL.textBox_doubleComa(NetVolume_textBox, true, 1);
+                NetVolume_textBox.Text += " m" + Program.UTIL.Subscript(3, true);
+                NetVolume_textBox.TextAlign = HorizontalAlignment.Left;
 
                 Calc_VentilationVolume(NetArea, NetVolume, VA, VA_we);
             }
@@ -544,7 +553,8 @@ namespace main.contents
                 if (value.Length > 0)
                 {
                     HumidC = Program.UTIL.ToDoubleOrZero(value[0][0]);
-                    HumidC_textBox.Text = string.Format("{0:F1}", HumidC);
+                    HumidC_textBox.Text = string.Format("{0:F1}", HumidC) + " g/kg'";
+                    HumidC_textBox.TextAlign = HorizontalAlignment.Left;
                 }
             }
         }
@@ -558,7 +568,8 @@ namespace main.contents
                 if (value.Length > 0)
                 {
                     HumidH = Program.UTIL.ToDoubleOrZero(value[0][0]);
-                    HumidH_textBox.Text = string.Format("{0:F1}", HumidH);
+                    HumidH_textBox.Text = string.Format("{0:F1}", HumidH) + " g/kg'";
+                    HumidH_textBox.TextAlign = HorizontalAlignment.Left;
                 }
             }
         }
@@ -575,7 +586,9 @@ namespace main.contents
 
                     DHWneed_textBox.Text = DHWneed.ToString();
                     Program.UTIL.textBox_doubleComa(DHWneed_textBox, true, 1);
-                    DHWneed_image_Label.Text = string.Format("{0:F1}", (DHWneed)) + "kWh/d";
+                    DHWneed_textBox.Text += " kWh/d";
+                    DHWneed_textBox.TextAlign = HorizontalAlignment.Left;
+                    DHWneed_image_Label.Text = string.Format("{0:F1}", (DHWneed)) + " kWh/d";
                 }
             }
         }
@@ -587,12 +600,16 @@ namespace main.contents
                 OccupancyDensity = Area / PersonNum;
                 OccupancyDensity_textBox.Text = OccupancyDensity.ToString();
                 Program.UTIL.textBox_doubleComa(OccupancyDensity_textBox, true, 1);
+                OccupancyDensity_textBox.Text += " m" + Program.UTIL.Subscript(2, true) + "/인";
+                OccupancyDensity_textBox.TextAlign = HorizontalAlignment.Left;
             }
             else if (PersonNum == 0)
             {
                 OccupancyDensity = 0;
                 OccupancyDensity_textBox.Text = OccupancyDensity.ToString();
                 Program.UTIL.textBox_doubleComa(OccupancyDensity_textBox, true, 0);
+                OccupancyDensity_textBox.Text += " m" + Program.UTIL.Subscript(2, true) + "/인";
+                OccupancyDensity_textBox.TextAlign = HorizontalAlignment.Left;
             }
 
             if (String.IsNullOrEmpty(PersonNum_textBox.Text) == false && String.IsNullOrEmpty(NetArea_textBox.Text) == false && Usage_comboBox.SelectedItem != null)
@@ -629,8 +646,9 @@ namespace main.contents
             double 사람일일이용시간 = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "사람일일이용시간"));
 
             PersonIHG_1day = PersonIHG * UseTime * 사람일일이용시간 / 일일이용시간;
-            PersonIHG_textBox.Text = string.Format("{0:F1}", PersonIHG_1day);
-            PersonIHG_image_Label.Text = string.Format("{0:F0}", PersonIHG_1day) + "Wh/m2d";
+            PersonIHG_textBox.Text = string.Format("{0:F1}", PersonIHG_1day) + " Wh/m" + Program.UTIL.Subscript(2, true) + "d";
+            PersonIHG_textBox.TextAlign = HorizontalAlignment.Left;
+            PersonIHG_image_Label.Text = string.Format("{0:F0}", PersonIHG_1day) + " Wh/m" + Program.UTIL.Subscript(2, true) + "d";
         }
 
         //기기밀도수준 및 용도프로필 선택에 따라 기기발열 계산 
@@ -660,7 +678,9 @@ namespace main.contents
 
                 EquipIHG_textBox.Text = EquipIHG_1day.ToString();
                 Program.UTIL.textBox_doubleComa(EquipIHG_textBox, true, 1);
-                EquipIHG_image_Label.Text = string.Format("{0:F0}", EquipIHG_1day) + "Wh/m2d";
+                EquipIHG_textBox.Text += " Wh/m" + Program.UTIL.Subscript(2, true) + "d";
+                EquipIHG_textBox.TextAlign = HorizontalAlignment.Left;
+                EquipIHG_image_Label.Text = string.Format("{0:F0}", EquipIHG_1day) + " Wh/m" + Program.UTIL.Subscript(2, true) + "d";
             }
         }
         private void Calc_VentilationVolume(double Area, double NetVolume, double VA, double VA_we)
@@ -669,16 +689,20 @@ namespace main.contents
             Volume_wd = Area * VA;
             Volume_wd_textBox.Text = Volume_wd.ToString();
             Program.UTIL.textBox_doubleComa(Volume_wd_textBox, true, 1);
-            SA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + "m3/h";
+            Volume_wd_textBox.Text += " m" + Program.UTIL.Subscript(3, true) + "/h";
+            Volume_wd_textBox.TextAlign = HorizontalAlignment.Left;
+            SA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + " m" + Program.UTIL.Subscript(3, true) + "/h";
 
             Volume_we = Area * VA_we;
-            RA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + "m3/h";
+            RA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + " m" + Program.UTIL.Subscript(3, true) + "/h";
 
             if (NetVolume != null && NetVolume != 0)
             { VentilationRate = Volume_wd / NetVolume; }
             else { VentilationRate = 0; }
             VentilationRate_textBox.Text = VentilationRate.ToString();
             Program.UTIL.textBox_doubleComa(VentilationRate_textBox, true, 1);
+            VentilationRate_textBox.Text += " h⁻¹";
+            VentilationRate_textBox.TextAlign = HorizontalAlignment.Left;
         }
 
        
@@ -967,19 +991,25 @@ namespace main.contents
                     DHWneed = Program.UTIL.ToDoubleOrZero(Value[0][13]);
                     DHWneed_textBox.Text = DHWneed.ToString();
                     Program.UTIL.textBox_doubleComa(DHWneed_textBox, true, 1);
-                    DHWneed_image_Label.Text = string.Format("{0:F1}", (DHWneed)) + "kWh/d";
+                    DHWneed_textBox.Text += " kWh/d";
+                    DHWneed_textBox.TextAlign = HorizontalAlignment.Left;
+                    DHWneed_image_Label.Text = string.Format("{0:F1}", (DHWneed)) + " kWh/d";
                 }
                 if (Value[0][14] != "")
                 {
                     HCTime = Program.UTIL.ToDoubleOrZero(Value[0][14]);
                     HCTime_textBox.Text = HCTime.ToString();
                     Program.UTIL.textBox_doubleComa(HCTime_textBox, true, 0);
+                    HCTime_textBox.Text += " h/d";
+                    HCTime_textBox.TextAlign = HorizontalAlignment.Left;
                 }
                 if (Value[0][15] != "")
                 {
                     UseTime = Program.UTIL.ToDoubleOrZero(Value[0][15]);
                     UseTime_textBox.Text = UseTime.ToString();
                     Program.UTIL.textBox_doubleComa(UseTime_textBox, true, 0);
+                    UseTime_textBox.Text += " h/d";
+                    UseTime_textBox.TextAlign = HorizontalAlignment.Left;
                 }
                 if (Value[0][16] != "")
                 {
@@ -990,12 +1020,16 @@ namespace main.contents
                     AnnualUseDay = Program.UTIL.ToDoubleOrZero(Value[0][17]);
                     AnnualUseDay_textBox.Text = AnnualUseDay.ToString();
                     Program.UTIL.textBox_doubleComa(AnnualUseDay_textBox, true, 0);
+                    AnnualUseDay_textBox.Text += " days";
+                    AnnualUseDay_textBox.TextAlign = HorizontalAlignment.Left;
                 }
                 if (Value[0][18] != "")
                 {
                     OccupancyDensity = Program.UTIL.ToDoubleOrZero(Value[0][18]);
                     OccupancyDensity_textBox.Text = OccupancyDensity.ToString();
                     Program.UTIL.textBox_doubleComa(OccupancyDensity_textBox, true, 1);
+                    OccupancyDensity_textBox.Text += " m" + Program.UTIL.Subscript(2, true) + "/인";
+                    OccupancyDensity_textBox.TextAlign = HorizontalAlignment.Left;
                 }
                 if (Value[0][19] != "")
                 {
@@ -1008,7 +1042,9 @@ namespace main.contents
                     PersonIHG = Program.UTIL.ToDoubleOrZero(Value[0][21]);
                     PersonIHG_textBox.Text = PersonIHG_1day.ToString();
                     Program.UTIL.textBox_doubleComa(PersonIHG_textBox, true, 1);
-                    PersonIHG_image_Label.Text = string.Format("{0:F0}", PersonIHG_1day) + "Wh/m2d";
+                    PersonIHG_textBox.Text += " Wh/m" + Program.UTIL.Subscript(2, true) + "d";
+                    PersonIHG_textBox.TextAlign = HorizontalAlignment.Left;
+                    PersonIHG_image_Label.Text = string.Format("{0:F0}", PersonIHG_1day) + " Wh/m" + Program.UTIL.Subscript(2, true) + "d";
                 }
                 if (Value[0][22] != "")
                 {
@@ -1016,27 +1052,35 @@ namespace main.contents
                     EquipIHG = Program.UTIL.ToDoubleOrZero(Value[0][22]);
                     EquipIHG_textBox.Text = EquipIHG_1day.ToString();
                     Program.UTIL.textBox_doubleComa(EquipIHG_textBox, true, 1);
-                    EquipIHG_image_Label.Text = string.Format("{0:F0}", EquipIHG_1day) + "Wh/m2d";
+                    EquipIHG_textBox.Text += " Wh/m" + Program.UTIL.Subscript(2, true) + "d";
+                    EquipIHG_textBox.TextAlign = HorizontalAlignment.Left;
+                    EquipIHG_image_Label.Text = string.Format("{0:F0}", EquipIHG_1day) + " Wh/m" + Program.UTIL.Subscript(2, true) + "d";
                 }
                 if (Value[0][24] != "")
                 {
                     NetVolume = Program.UTIL.ToDoubleOrZero(Value[0][24]);
                     NetVolume_textBox.Text = NetVolume.ToString();
                     Program.UTIL.textBox_doubleComa(NetVolume_textBox, true, 1);
+                    NetVolume_textBox.Text += " m" + Program.UTIL.Subscript(3, true);
+                    NetVolume_textBox.TextAlign = HorizontalAlignment.Left;
                 }
                 if (Value[0][25] != "")
                 {
                     VentilationRate = Program.UTIL.ToDoubleOrZero(Value[0][25]);
                     VentilationRate_textBox.Text = VentilationRate.ToString();
                     Program.UTIL.textBox_doubleComa(VentilationRate_textBox, true, 1);
+                    VentilationRate_textBox.Text += " h⁻¹";
+                    VentilationRate_textBox.TextAlign = HorizontalAlignment.Left;
                 }
                 if (Value[0][26] != "")
                 {
                     Volume_wd = Program.UTIL.ToDoubleOrZero(Value[0][26]);
                     Volume_wd_textBox.Text = Volume_wd.ToString();
                     Program.UTIL.textBox_doubleComa(Volume_wd_textBox, true, 1);
-                    SA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + "m3/h";
-                    RA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + "m3/h";
+                    Volume_wd_textBox.Text += " m" + Program.UTIL.Subscript(3, true) + "/h";
+                    Volume_wd_textBox.TextAlign = HorizontalAlignment.Left;
+                    SA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + " m" + Program.UTIL.Subscript(3, true) + "/h";
+                    RA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + " m" + Program.UTIL.Subscript(3, true) + "/h";
                 }
                 if (Value[0][27] != "")
                 {
@@ -1316,48 +1360,55 @@ namespace main.contents
                 {
                     CW_textBox.Text = Construction_AreaSum[0].ToString();
                     Program.UTIL.textBox_doubleComa(CW_textBox, true, 1);
-                    CW_textBox.Text = CW_textBox.Text.ToString() + "m2";
+                    CW_textBox.Text = CW_textBox.Text.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                    CW_textBox.TextAlign = HorizontalAlignment.Center;
                 }
                 if (Construction_AreaSum[1] != 0)
                 {
                     Wall_textBox.Text = Construction_AreaSum[1].ToString();
                     Program.UTIL.textBox_doubleComa(Wall_textBox, true, 1);
-                    Wall_textBox.Text = Wall_textBox.Text.ToString() + "m2";
+                    Wall_textBox.Text = Wall_textBox.Text.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                    Wall_textBox.TextAlign = HorizontalAlignment.Center;
                 }
 
                 if (Construction_AreaSum[2] != 0)
                 {
                     Roof_textBox.Text = Construction_AreaSum[2].ToString();
                     Program.UTIL.textBox_doubleComa(Roof_textBox, true, 1);
-                    Roof_textBox.Text = Roof_textBox.Text.ToString() + "m2";
+                    Roof_textBox.Text = Roof_textBox.Text.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                    Roof_textBox.TextAlign = HorizontalAlignment.Center;
                 }
 
                 if (Construction_AreaSum[3] != 0)
                 {
                     Floor_textBox.Text = Construction_AreaSum[3].ToString();
                     Program.UTIL.textBox_doubleComa(Floor_textBox, true, 1);
-                    Floor_textBox.Text = Floor_textBox.Text.ToString() + "m2";
+                    Floor_textBox.Text = Floor_textBox.Text.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                    Floor_textBox.TextAlign = HorizontalAlignment.Center;
                 }
 
                 if (Construction_AreaSum[4] != 0)
                 {
                     Window_textBox.Text = Construction_AreaSum[4].ToString();
                     Program.UTIL.textBox_doubleComa(Window_textBox, true, 1);
-                    Window_textBox.Text = Window_textBox.Text.ToString() + "m2";
+                    Window_textBox.Text = Window_textBox.Text.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                    Window_textBox.TextAlign = HorizontalAlignment.Center;
                 }
 
                 if (Construction_AreaSum[5] != 0)
                 {
                     Door_textBox.Text = Construction_AreaSum[5].ToString();
                     Program.UTIL.textBox_doubleComa(Door_textBox, true, 1);
-                    Door_textBox.Text = Door_textBox.Text.ToString() + "m2";
+                    Door_textBox.Text = Door_textBox.Text.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                    Door_textBox.TextAlign = HorizontalAlignment.Center;
                 }
 
                 if (Construction_AreaSum[6] != 0)
                 {
                     InWall_textBox.Text = Construction_AreaSum[6].ToString();
                     Program.UTIL.textBox_doubleComa(InWall_textBox, true, 1);
-                    InWall_textBox.Text = InWall_textBox.Text.ToString() + "m2";
+                    InWall_textBox.Text = InWall_textBox.Text.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                    InWall_textBox.TextAlign = HorizontalAlignment.Center;
                 }
 
                 if (Construction_AreaSum[3] > 0) //최하층 바닥 존재

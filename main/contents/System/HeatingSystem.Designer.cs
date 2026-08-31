@@ -153,7 +153,6 @@ namespace main.contents
             PipeIns_textBox = new TextBox();
             PipeIns_Ramda_textBox = new TextBox();
             PipeIns_button = new Button();
-            PipeIns_Ramda_label2 = new Label();
             Pipe_dataGridView = new DataGridView();
             PumpHead_label = new Label();
             PumpHead_textBox = new TextBox();
@@ -1613,7 +1612,6 @@ namespace main.contents
             Pipe_panel.Controls.Add(PipeIns_textBox);
             Pipe_panel.Controls.Add(PipeIns_Ramda_textBox);
             Pipe_panel.Controls.Add(PipeIns_button);
-            Pipe_panel.Controls.Add(PipeIns_Ramda_label2);
             Pipe_panel.Dock = DockStyle.Bottom;
             Pipe_panel.Location = new Point(3, 154);
             Pipe_panel.Name = "Pipe_panel";
@@ -1730,16 +1728,7 @@ namespace main.contents
             PipeIns_button.UseVisualStyleBackColor = false;
             PipeIns_button.Click += PipeIns_button_Click;
             // 
-            // PipeIns_Ramda_label2
             // 
-            PipeIns_Ramda_label2.AutoSize = true;
-            PipeIns_Ramda_label2.Font = new Font("나눔바른고딕", 9.75F);
-            PipeIns_Ramda_label2.ForeColor = SystemColors.ControlDark;
-            PipeIns_Ramda_label2.Location = new Point(557, 8);
-            PipeIns_Ramda_label2.Name = "PipeIns_Ramda_label2";
-            PipeIns_Ramda_label2.Size = new Size(46, 15);
-            PipeIns_Ramda_label2.TabIndex = 196;
-            PipeIns_Ramda_label2.Text = "W/mK";
             // 
             // Pipe_dataGridView
             // 
@@ -2601,7 +2590,6 @@ namespace main.contents
         private Button PipeIns_button;
         private Label PipeIns_label;
         private Label PipeIns_Ramda_label1;
-        private Label PipeIns_Ramda_label2;
         private TextBox PipeIns_Ramda_textBox;
         private DataGridView HP_dataGridView;
         private DataGridView Solar_dataGridView;

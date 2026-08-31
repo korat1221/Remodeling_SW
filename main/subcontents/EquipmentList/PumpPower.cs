@@ -36,7 +36,7 @@ namespace main.subcontents.EquipmentList
             {
                 Qmax = Program.UTIL.textBox_doubleComa(Qmax_textBox, false, 1);
                 Volume = Qmax * 3.6 / (5 * 4.18);
-                Volume_textBox.Text = Volume.ToString("#,0.#");
+                Volume_textBox.Text = Volume.ToString("#,0.#") + " CMH";
                 Clac_Power();
             }
         }
@@ -93,8 +93,8 @@ namespace main.subcontents.EquipmentList
             }
             if (Lmax > 0 && PumpHead > 0)
             {
-                Lmax_textBox.Text = string.Format("{0:F1}", Lmax);
-                PumpHead_textBox.Text = string.Format("{0:F1}", PumpHead);
+                Lmax_textBox.Text = string.Format("{0:F1}", Lmax) + " m";
+                PumpHead_textBox.Text = string.Format("{0:F1}", PumpHead) + " m";
                 Clac_Power();
             }
         }
@@ -106,6 +106,7 @@ namespace main.subcontents.EquipmentList
                 Power = (PumpHead * 1000 * 9.81) * Volume / 3600 / (eta / 100);
                 PumpPower_textBox.Text = Power.ToString();
                 Program.UTIL.textBox_doubleComa(PumpPower_textBox, true, 1);
+                PumpPower_textBox.Text += " W";
             }
         }
 

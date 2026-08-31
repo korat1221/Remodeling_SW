@@ -37,8 +37,6 @@ namespace main.contents
             floor_label = new Label();
             FloorName_label = new Label();
             panel2 = new Panel();
-            lightload_unit = new Label();
-            label17 = new Label();
             lightHeight_textBox = new TextBox();
             label16 = new Label();
             Pci_textBox = new TextBox();
@@ -66,16 +64,13 @@ namespace main.contents
             Aca_label = new Label();
             panel3 = new Panel();
             Subtype = new Label();
-            areaunit1 = new Label();
             RoofButton = new RadioButton();
-            Acam2_label = new Label();
             FacadeButton = new RadioButton();
             direction_textBox = new TextBox();
             NaturalDB_button = new Button();
             Aca_textBox = new TextBox();
             tabControl1 = new CustomTabControl();
             주창정보 = new TabPage();
-            areaunit2 = new Label();
             Blind3_textBox = new TextBox();
             Shade5_label = new Label();
             Blind_textBox = new TextBox();
@@ -145,14 +140,9 @@ namespace main.contents
             NA_textBox = new TextBox();
             label11 = new Label();
             label12 = new Label();
-            label13 = new Label();
-            label14 = new Label();
             label10 = new Label();
             panel5 = new Panel();
             panel6 = new Panel();
-            label18 = new Label();
-            label19 = new Label();
-            label20 = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             panel2.SuspendLayout();
@@ -260,8 +250,6 @@ namespace main.contents
             // panel2
             // 
             panel2.BackColor = Color.White;
-            panel2.Controls.Add(lightload_unit);
-            panel2.Controls.Add(label17);
             panel2.Controls.Add(lightHeight_textBox);
             panel2.Controls.Add(label16);
             panel2.Controls.Add(Pci_textBox);
@@ -289,26 +277,9 @@ namespace main.contents
             panel2.TabIndex = 18;
             panel2.Paint += panel2_Paint;
             // 
-            // lightload_unit
             // 
-            lightload_unit.AutoSize = true;
-            lightload_unit.Font = new Font("나눔바른고딕", 9.75F);
-            lightload_unit.ForeColor = SystemColors.ButtonShadow;
-            lightload_unit.Location = new Point(845, 73);
-            lightload_unit.Name = "lightload_unit";
-            lightload_unit.Size = new Size(0, 15);
-            lightload_unit.TabIndex = 219;
             // 
-            // label17
             // 
-            label17.AutoSize = true;
-            label17.Font = new Font("나눔바른고딕", 9.75F);
-            label17.ForeColor = SystemColors.ButtonShadow;
-            label17.Location = new Point(327, 152);
-            label17.Name = "label17";
-            label17.Size = new Size(19, 15);
-            label17.TabIndex = 218;
-            label17.Text = "m";
             // 
             // lightHeight_textBox
             // 
@@ -593,9 +564,7 @@ namespace main.contents
             // 
             panel3.BackColor = Color.White;
             panel3.Controls.Add(Subtype);
-            panel3.Controls.Add(areaunit1);
             panel3.Controls.Add(RoofButton);
-            panel3.Controls.Add(Acam2_label);
             panel3.Controls.Add(FacadeButton);
             panel3.Controls.Add(direction_textBox);
             panel3.Controls.Add(Direction_label);
@@ -621,16 +590,7 @@ namespace main.contents
             Subtype.TabIndex = 220;
             Subtype.Text = "일반 파사드";
             // 
-            // areaunit1
             // 
-            areaunit1.AutoSize = true;
-            areaunit1.Font = new Font("나눔바른고딕", 9.75F);
-            areaunit1.ForeColor = SystemColors.ButtonShadow;
-            areaunit1.Location = new Point(329, 100);
-            areaunit1.Name = "areaunit1";
-            areaunit1.Size = new Size(19, 15);
-            areaunit1.TabIndex = 220;
-            areaunit1.Text = "m";
             // 
             // roofButton
             // 
@@ -643,15 +603,7 @@ namespace main.contents
             RoofButton.Text = "천창";
             RoofButton.UseVisualStyleBackColor = true;
             // 
-            // Acam2_label
             // 
-            Acam2_label.AutoSize = true;
-            Acam2_label.Font = new Font("나눔바른고딕", 9.75F);
-            Acam2_label.Location = new Point(327, 100);
-            Acam2_label.Name = "Acam2_label";
-            Acam2_label.Size = new Size(0, 15);
-            Acam2_label.TabIndex = 125;
-            Acam2_label.Visible = false;
             // 
             // facadeButton
             // 
@@ -736,7 +688,6 @@ namespace main.contents
             // 주창정보
             // 
             주창정보.BackColor = Color.White;
-            주창정보.Controls.Add(areaunit2);
             주창정보.Controls.Add(Blind3_textBox);
             주창정보.Controls.Add(Shade5_label);
             주창정보.Controls.Add(Blind_textBox);
@@ -761,16 +712,7 @@ namespace main.contents
             주창정보.TabIndex = 2;
             주창정보.Text = "채광 정보";
             // 
-            // areaunit2
             // 
-            areaunit2.AutoSize = true;
-            areaunit2.Font = new Font("나눔바른고딕", 9.75F);
-            areaunit2.ForeColor = SystemColors.ButtonShadow;
-            areaunit2.Location = new Point(431, 62);
-            areaunit2.Name = "areaunit2";
-            areaunit2.Size = new Size(19, 15);
-            areaunit2.TabIndex = 221;
-            areaunit2.Text = "m";
             // 
             // Blind3_textBox
             // 
@@ -1608,27 +1550,9 @@ namespace main.contents
             label12.TabIndex = 211;
             label12.Visible = false;
             // 
-            // label13
             // 
-            label13.AutoSize = true;
-            label13.Font = new Font("나눔바른고딕", 9.75F);
-            label13.Location = new Point(1163, 330);
-            label13.Name = "label13";
-            label13.Size = new Size(19, 15);
-            label13.TabIndex = 212;
-            label13.Text = "m";
-            label13.Visible = false;
             // 
-            // label14
             // 
-            label14.AutoSize = true;
-            label14.Font = new Font("나눔바른고딕", 9.75F);
-            label14.Location = new Point(1163, 354);
-            label14.Name = "label14";
-            label14.Size = new Size(19, 15);
-            label14.TabIndex = 213;
-            label14.Text = "m";
-            label14.Visible = false;
             // 
             // label10
             // 
@@ -1662,35 +1586,11 @@ namespace main.contents
             panel6.TabIndex = 219;
             panel6.Paint += panel6_Paint;
             // 
-            // label18
             // 
-            label18.AutoSize = true;
-            label18.Font = new Font("나눔바른고딕", 9.75F);
-            label18.Location = new Point(1163, 274);
-            label18.Name = "label18";
-            label18.Size = new Size(19, 15);
-            label18.TabIndex = 220;
-            label18.Text = "m";
             // 
-            // label19
             // 
-            label19.AutoSize = true;
-            label19.Font = new Font("나눔바른고딕", 9.75F);
-            label19.Location = new Point(1163, 306);
-            label19.Name = "label19";
-            label19.Size = new Size(19, 15);
-            label19.TabIndex = 221;
-            label19.Text = "m";
             // 
-            // label20
             // 
-            label20.AutoSize = true;
-            label20.Font = new Font("나눔바른고딕", 9.75F);
-            label20.Location = new Point(1163, 386);
-            label20.Name = "label20";
-            label20.Size = new Size(19, 15);
-            label20.TabIndex = 222;
-            label20.Text = "m";
             // 
             // ZoneLighting
             // 
@@ -1699,13 +1599,8 @@ namespace main.contents
             AutoScroll = true;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(label20);
-            Controls.Add(label19);
-            Controls.Add(label18);
             Controls.Add(panel6);
             Controls.Add(label10);
-            Controls.Add(label14);
-            Controls.Add(label13);
             Controls.Add(label12);
             Controls.Add(label11);
             Controls.Add(NA_textBox);
@@ -1792,7 +1687,6 @@ namespace main.contents
         private TabPage 집광채광정보;
         private TabPage 주창정보;
         private Panel panel4;
-        private Label Acam2_label;
         private CustomComboBox RenewDi_comboBox;
         private Panel panel1;
         private CustomComboBox Slope_comboBox;
@@ -1834,8 +1728,6 @@ namespace main.contents
         private TextBox NA_textBox;
         private Label label11;
         private Label label12;
-        private Label label13;
-        private Label label14;
         private Label label10;
         private TextBox ZoneName_textBox;
         private Label Window_Tao_label;
@@ -1869,16 +1761,9 @@ namespace main.contents
         private TextBox Num_textBox;
         private Panel panel5;
         private Panel panel6;
-        private Label label17;
         private TextBox lightHeight_textBox;
         private Label label16;
         private PictureBox Ltype_pictureBox;
-        private Label lightload_unit;
-        private Label areaunit1;
-        private Label areaunit2;
-        private Label label18;
-        private Label label19;
-        private Label label20;
         private Label Subtype;
         private PictureBox Main_pictureBox3;
         private PictureBox Main_pictureBox2;

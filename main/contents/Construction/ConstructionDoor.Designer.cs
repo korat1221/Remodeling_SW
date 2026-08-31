@@ -54,10 +54,8 @@
             tabControl1 = new CustomTabControl();
             Size_tabPage = new TabPage();
             bottom_textBox = new TextBox();
-            label23 = new Label();
             label26 = new Label();
             over_textBox = new TextBox();
-            label9 = new Label();
             label12 = new Label();
             Material_textBox = new TextBox();
             FrameIn_textBox = new TextBox();
@@ -69,18 +67,13 @@
             UnderL_textBox = new TextBox();
             OverL_textBox = new TextBox();
             Size_textBox = new TextBox();
-            label67 = new Label();
             label69 = new Label();
-            label71 = new Label();
             label75 = new Label();
             tabPage1 = new TabPage();
             DoorArea2_textBox = new TextBox();
             DoorH2_textBox = new TextBox();
-            label7 = new Label();
             DoorL2_textBox = new TextBox();
-            label2 = new Label();
             label8 = new Label();
-            label34 = new Label();
             GlassArea2_textBox = new TextBox();
             label35 = new Label();
             pictureBox1 = new PictureBox();
@@ -89,9 +82,7 @@
             label19 = new Label();
             label18 = new Label();
             label17 = new Label();
-            label15 = new Label();
             pictureBox3 = new PictureBox();
-            label49 = new Label();
             d_InstallBottom_textBox = new TextBox();
             d_InstallSide_textBox = new TextBox();
             d_InstallTop_textBox = new TextBox();
@@ -99,14 +90,9 @@
             Psi_InstallBottom_textBox = new TextBox();
             Psi_InstallSide_textBox = new TextBox();
             Psi_InstallTop_textBox = new TextBox();
-            label51 = new Label();
-            label52 = new Label();
             label53 = new Label();
             label54 = new Label();
-            label44 = new Label();
             label45 = new Label();
-            label41 = new Label();
-            label40 = new Label();
             label24 = new Label();
             label33 = new Label();
             label38 = new Label();
@@ -115,19 +101,14 @@
             DoorH_textBox = new TextBox();
             DoorL_textBox = new TextBox();
             DoorDB_textBox = new TextBox();
-            label28 = new Label();
             DoorArea_textBox = new TextBox();
             label30 = new Label();
-            label21 = new Label();
             label22 = new Label();
             label27 = new Label();
-            label86 = new Label();
             UD2_textBox = new TextBox();
             label87 = new Label();
             GlassU_textBox = new TextBox();
-            label84 = new Label();
             label85 = new Label();
-            label83 = new Label();
             label29 = new Label();
             GlassH_textBox = new TextBox();
             glass2_label = new Label();
@@ -139,8 +120,6 @@
             DoorColor_comboBox = new CustomComboBox();
             GlassL_textBox = new TextBox();
             glass1_label = new Label();
-            αp_label2 = new Label();
-            glassArea_label2 = new Label();
             GlassArea_textBox = new TextBox();
             Install_textBox = new TextBox();
             Install_button = new Button();
@@ -148,7 +127,6 @@
             αp_label = new Label();
             GlassArea_label = new Label();
             UD1_textBox = new TextBox();
-            Ug_unit_label = new Label();
             abs_textBox = new TextBox();
             UCW_g_label = new Label();
             DiIndi_comboBox = new CustomComboBox();
@@ -421,19 +399,14 @@
             panel2.Controls.Add(DoorH_textBox);
             panel2.Controls.Add(DoorL_textBox);
             panel2.Controls.Add(DoorDB_textBox);
-            panel2.Controls.Add(label28);
             panel2.Controls.Add(DoorArea_textBox);
             panel2.Controls.Add(label30);
-            panel2.Controls.Add(label21);
             panel2.Controls.Add(label22);
             panel2.Controls.Add(label27);
-            panel2.Controls.Add(label86);
             panel2.Controls.Add(UD2_textBox);
             panel2.Controls.Add(label87);
             panel2.Controls.Add(GlassU_textBox);
-            panel2.Controls.Add(label84);
             panel2.Controls.Add(label85);
-            panel2.Controls.Add(label83);
             panel2.Controls.Add(label29);
             panel2.Controls.Add(GlassH_textBox);
             panel2.Controls.Add(glass2_label);
@@ -445,8 +418,6 @@
             panel2.Controls.Add(DoorColor_comboBox);
             panel2.Controls.Add(GlassL_textBox);
             panel2.Controls.Add(glass1_label);
-            panel2.Controls.Add(αp_label2);
-            panel2.Controls.Add(glassArea_label2);
             panel2.Controls.Add(GlassArea_textBox);
             panel2.Controls.Add(Install_textBox);
             panel2.Controls.Add(Install_button);
@@ -454,7 +425,6 @@
             panel2.Controls.Add(αp_label);
             panel2.Controls.Add(GlassArea_label);
             panel2.Controls.Add(UD1_textBox);
-            panel2.Controls.Add(Ug_unit_label);
             panel2.Controls.Add(abs_textBox);
             panel2.Controls.Add(UCW_g_label);
             panel2.Controls.Add(DiIndi_comboBox);
@@ -515,10 +485,8 @@
             // 
             Size_tabPage.BackColor = Color.White;
             Size_tabPage.Controls.Add(bottom_textBox);
-            Size_tabPage.Controls.Add(label23);
             Size_tabPage.Controls.Add(label26);
             Size_tabPage.Controls.Add(over_textBox);
-            Size_tabPage.Controls.Add(label9);
             Size_tabPage.Controls.Add(label12);
             Size_tabPage.Controls.Add(Material_textBox);
             Size_tabPage.Controls.Add(FrameIn_textBox);
@@ -530,9 +498,7 @@
             Size_tabPage.Controls.Add(UnderL_textBox);
             Size_tabPage.Controls.Add(OverL_textBox);
             Size_tabPage.Controls.Add(Size_textBox);
-            Size_tabPage.Controls.Add(label67);
             Size_tabPage.Controls.Add(label69);
-            Size_tabPage.Controls.Add(label71);
             Size_tabPage.Controls.Add(label75);
             Size_tabPage.Location = new Point(4, 25);
             Size_tabPage.Name = "Size_tabPage";
@@ -554,15 +520,7 @@
             bottom_textBox.TabIndex = 190;
             bottom_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label23
             // 
-            label23.AutoSize = true;
-            label23.Font = new Font("나눔바른고딕", 9.75F);
-            label23.ForeColor = SystemColors.ControlDark;
-            label23.Location = new Point(828, 82);
-            label23.Name = "label23";
-            label23.Size = new Size(0, 15);
-            label23.TabIndex = 188;
             // 
             // label26
             // 
@@ -588,15 +546,7 @@
             over_textBox.TabIndex = 187;
             over_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label9
             // 
-            label9.AutoSize = true;
-            label9.Font = new Font("나눔바른고딕", 9.75F);
-            label9.ForeColor = SystemColors.ControlDark;
-            label9.Location = new Point(828, 55);
-            label9.Name = "label9";
-            label9.Size = new Size(0, 15);
-            label9.TabIndex = 185;
             // 
             // label12
             // 
@@ -728,16 +678,7 @@
             Size_textBox.TabIndex = 103;
             Size_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label67
             // 
-            label67.AutoSize = true;
-            label67.Font = new Font("나눔바른고딕", 9.75F);
-            label67.ForeColor = SystemColors.ControlDark;
-            label67.Location = new Point(828, 156);
-            label67.Name = "label67";
-            label67.Size = new Size(19, 15);
-            label67.TabIndex = 175;
-            label67.Text = "m";
             // 
             // label69
             // 
@@ -750,16 +691,7 @@
             label69.TabIndex = 171;
             label69.Text = "하부 설치 길이";
             // 
-            // label71
             // 
-            label71.AutoSize = true;
-            label71.Font = new Font("나눔바른고딕", 9.75F);
-            label71.ForeColor = SystemColors.ControlDark;
-            label71.Location = new Point(828, 129);
-            label71.Name = "label71";
-            label71.Size = new Size(19, 15);
-            label71.TabIndex = 169;
-            label71.Text = "m";
             // 
             // label75
             // 
@@ -776,11 +708,8 @@
             // 
             tabPage1.Controls.Add(DoorArea2_textBox);
             tabPage1.Controls.Add(DoorH2_textBox);
-            tabPage1.Controls.Add(label7);
             tabPage1.Controls.Add(DoorL2_textBox);
-            tabPage1.Controls.Add(label2);
             tabPage1.Controls.Add(label8);
-            tabPage1.Controls.Add(label34);
             tabPage1.Controls.Add(GlassArea2_textBox);
             tabPage1.Controls.Add(label35);
             tabPage1.Controls.Add(pictureBox1);
@@ -818,16 +747,7 @@
             DoorH2_textBox.TabIndex = 187;
             DoorH2_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label7
             // 
-            label7.AutoSize = true;
-            label7.Font = new Font("나눔바른고딕", 9.75F);
-            label7.ForeColor = SystemColors.ControlDark;
-            label7.Location = new Point(158, 7);
-            label7.Name = "label7";
-            label7.Size = new Size(31, 15);
-            label7.TabIndex = 186;
-            label7.Text = "mm";
             // 
             // DoorL2_textBox
             // 
@@ -842,15 +762,7 @@
             DoorL2_textBox.TabIndex = 185;
             DoorL2_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label2
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("나눔바른고딕", 9.75F);
-            label2.ForeColor = SystemColors.ControlDark;
-            label2.Location = new Point(568, 68);
-            label2.Name = "label2";
-            label2.Size = new Size(0, 15);
-            label2.TabIndex = 184;
             // 
             // label8
             // 
@@ -863,15 +775,7 @@
             label8.TabIndex = 182;
             label8.Text = "[Ad] 문면적";
             // 
-            // label34
             // 
-            label34.AutoSize = true;
-            label34.Font = new Font("나눔바른고딕", 9.75F);
-            label34.ForeColor = SystemColors.ControlDark;
-            label34.Location = new Point(567, 127);
-            label34.Name = "label34";
-            label34.Size = new Size(0, 15);
-            label34.TabIndex = 181;
             // 
             // GlassArea2_textBox
             // 
@@ -912,9 +816,7 @@
             Install_tabPage.Controls.Add(label19);
             Install_tabPage.Controls.Add(label18);
             Install_tabPage.Controls.Add(label17);
-            Install_tabPage.Controls.Add(label15);
             Install_tabPage.Controls.Add(pictureBox3);
-            Install_tabPage.Controls.Add(label49);
             Install_tabPage.Controls.Add(d_InstallBottom_textBox);
             Install_tabPage.Controls.Add(d_InstallSide_textBox);
             Install_tabPage.Controls.Add(d_InstallTop_textBox);
@@ -922,14 +824,9 @@
             Install_tabPage.Controls.Add(Psi_InstallBottom_textBox);
             Install_tabPage.Controls.Add(Psi_InstallSide_textBox);
             Install_tabPage.Controls.Add(Psi_InstallTop_textBox);
-            Install_tabPage.Controls.Add(label51);
-            Install_tabPage.Controls.Add(label52);
             Install_tabPage.Controls.Add(label53);
             Install_tabPage.Controls.Add(label54);
-            Install_tabPage.Controls.Add(label44);
             Install_tabPage.Controls.Add(label45);
-            Install_tabPage.Controls.Add(label41);
-            Install_tabPage.Controls.Add(label40);
             Install_tabPage.Controls.Add(label24);
             Install_tabPage.Controls.Add(label33);
             Install_tabPage.Controls.Add(label38);
@@ -985,15 +882,7 @@
             label17.TabIndex = 164;
             label17.Text = "상부/측면";
             // 
-            // label15
             // 
-            label15.AutoSize = true;
-            label15.Font = new Font("나눔바른고딕", 9.75F);
-            label15.ForeColor = SystemColors.ControlDark;
-            label15.Location = new Point(584, 22);
-            label15.Name = "label15";
-            label15.Size = new Size(0, 15);
-            label15.TabIndex = 163;
             // 
             // pictureBox3
             // 
@@ -1003,16 +892,7 @@
             pictureBox3.TabIndex = 136;
             pictureBox3.TabStop = false;
             // 
-            // label49
             // 
-            label49.AutoSize = true;
-            label49.Font = new Font("나눔바른고딕", 9.75F);
-            label49.ForeColor = SystemColors.ControlDark;
-            label49.Location = new Point(848, 166);
-            label49.Name = "label49";
-            label49.Size = new Size(19, 15);
-            label49.TabIndex = 135;
-            label49.Text = "m";
             // 
             // d_InstallBottom_textBox
             // 
@@ -1109,27 +989,9 @@
             Psi_InstallTop_textBox.TabIndex = 108;
             Psi_InstallTop_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label51
             // 
-            label51.AutoSize = true;
-            label51.Font = new Font("나눔바른고딕", 9.75F);
-            label51.ForeColor = SystemColors.ControlDark;
-            label51.Location = new Point(848, 130);
-            label51.Name = "label51";
-            label51.Size = new Size(19, 15);
-            label51.TabIndex = 133;
-            label51.Text = "m";
             // 
-            // label52
             // 
-            label52.AutoSize = true;
-            label52.Font = new Font("나눔바른고딕", 9.75F);
-            label52.ForeColor = SystemColors.ControlDark;
-            label52.Location = new Point(848, 94);
-            label52.Name = "label52";
-            label52.Size = new Size(19, 15);
-            label52.TabIndex = 132;
-            label52.Text = "m";
             // 
             // label53
             // 
@@ -1153,16 +1015,7 @@
             label54.TabIndex = 127;
             label54.Text = "열교가산치[ΔU]";
             // 
-            // label44
             // 
-            label44.AutoSize = true;
-            label44.Font = new Font("나눔바른고딕", 9.75F);
-            label44.ForeColor = SystemColors.ControlDark;
-            label44.Location = new Point(583, 166);
-            label44.Name = "label44";
-            label44.Size = new Size(52, 15);
-            label44.TabIndex = 125;
-            label44.Text = "W/m·K";
             // 
             // label45
             // 
@@ -1175,27 +1028,9 @@
             label45.TabIndex = 124;
             label45.Text = "하부";
             // 
-            // label41
             // 
-            label41.AutoSize = true;
-            label41.Font = new Font("나눔바른고딕", 9.75F);
-            label41.ForeColor = SystemColors.ControlDark;
-            label41.Location = new Point(583, 130);
-            label41.Name = "label41";
-            label41.Size = new Size(52, 15);
-            label41.TabIndex = 119;
-            label41.Text = "W/m·K";
             // 
-            // label40
             // 
-            label40.AutoSize = true;
-            label40.Font = new Font("나눔바른고딕", 9.75F);
-            label40.ForeColor = SystemColors.ControlDark;
-            label40.Location = new Point(583, 94);
-            label40.Name = "label40";
-            label40.Size = new Size(52, 15);
-            label40.TabIndex = 118;
-            label40.Text = "W/m·K";
             // 
             // label24
             // 
@@ -1294,15 +1129,7 @@
             DoorDB_textBox.TabIndex = 177;
             DoorDB_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label28
             // 
-            label28.AutoSize = true;
-            label28.Font = new Font("나눔바른고딕", 9.75F);
-            label28.ForeColor = SystemColors.ControlDark;
-            label28.Location = new Point(850, 117);
-            label28.Name = "label28";
-            label28.Size = new Size(0, 15);
-            label28.TabIndex = 176;
             // 
             // DoorArea_textBox
             // 
@@ -1328,16 +1155,7 @@
             label30.TabIndex = 174;
             label30.Text = "[Ad] 문면적";
             // 
-            // label21
             // 
-            label21.AutoSize = true;
-            label21.Font = new Font("나눔바른고딕", 9.75F);
-            label21.ForeColor = SystemColors.ControlDark;
-            label21.Location = new Point(499, 117);
-            label21.Name = "label21";
-            label21.Size = new Size(31, 15);
-            label21.TabIndex = 173;
-            label21.Text = "mm";
             // 
             // label22
             // 
@@ -1359,15 +1177,7 @@
             label27.TabIndex = 169;
             label27.Text = "가로";
             // 
-            // label86
             // 
-            label86.AutoSize = true;
-            label86.Font = new Font("나눔바른고딕", 9.75F);
-            label86.ForeColor = SystemColors.ControlDark;
-            label86.Location = new Point(850, 219);
-            label86.Name = "label86";
-            label86.Size = new Size(0, 15);
-            label86.TabIndex = 168;
             // 
             // UD2_textBox
             // 
@@ -1407,16 +1217,7 @@
             GlassU_textBox.TextAlign = HorizontalAlignment.Center;
             GlassU_textBox.Visible = false;
             // 
-            // label84
             // 
-            label84.AutoSize = true;
-            label84.Font = new Font("나눔바른고딕", 9.75F);
-            label84.ForeColor = SystemColors.ControlDark;
-            label84.Location = new Point(850, 189);
-            label84.Name = "label84";
-            label84.Size = new Size(0, 15);
-            label84.TabIndex = 163;
-            label84.Visible = false;
             // 
             // label85
             // 
@@ -1430,15 +1231,7 @@
             label85.Text = "[Ug] 유리 열관류율";
             label85.Visible = false;
             // 
-            // label83
             // 
-            label83.AutoSize = true;
-            label83.Font = new Font("나눔바른고딕", 9.75F);
-            label83.ForeColor = SystemColors.ControlDark;
-            label83.Location = new Point(850, 272);
-            label83.Name = "label83";
-            label83.Size = new Size(0, 15);
-            label83.TabIndex = 162;
             // 
             // label29
             // 
@@ -1564,27 +1357,9 @@
             glass1_label.Text = "가로";
             glass1_label.Visible = false;
             // 
-            // αp_label2
             // 
-            αp_label2.AutoSize = true;
-            αp_label2.Font = new Font("나눔바른고딕", 9.75F);
-            αp_label2.ForeColor = SystemColors.ControlDark;
-            αp_label2.Location = new Point(850, 50);
-            αp_label2.Name = "αp_label2";
-            αp_label2.Size = new Size(15, 15);
-            αp_label2.TabIndex = 114;
-            αp_label2.Text = "-";
             // 
-            // glassArea_label2
             // 
-            glassArea_label2.AutoSize = true;
-            glassArea_label2.Font = new Font("나눔바른고딕", 9.75F);
-            glassArea_label2.ForeColor = SystemColors.ControlDark;
-            glassArea_label2.Location = new Point(850, 161);
-            glassArea_label2.Name = "glassArea_label2";
-            glassArea_label2.Size = new Size(0, 15);
-            glassArea_label2.TabIndex = 113;
-            glassArea_label2.Visible = false;
             // 
             // GlassArea_textBox
             // 
@@ -1679,15 +1454,7 @@
             UD1_textBox.TabIndex = 69;
             UD1_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // Ug_unit_label
             // 
-            Ug_unit_label.AutoSize = true;
-            Ug_unit_label.Font = new Font("나눔바른고딕", 9.75F);
-            Ug_unit_label.ForeColor = SystemColors.ControlDark;
-            Ug_unit_label.Location = new Point(850, 85);
-            Ug_unit_label.Name = "Ug_unit_label";
-            Ug_unit_label.Size = new Size(0, 15);
-            Ug_unit_label.TabIndex = 64;
             // 
             // abs_textBox
             // 
@@ -1794,7 +1561,6 @@
         private Label αp_label;
         private Label GlassArea_label;
         private TextBox UD1_textBox;
-        private Label Ug_unit_label;
         private TextBox abs_textBox;
         private Label UCW_g_label;
         private CustomComboBox DiIndi_comboBox;
@@ -1805,8 +1571,6 @@
         private Label dPanel_label2;
         private TextBox GlassL_textBox;
         private Label glass1_label;
-        private Label αp_label2;
-        private Label glassArea_label2;
         private TextBox GlassArea_textBox;
         private Label DoorlColor_label;
         private TextBox UD_textBox;
@@ -1816,25 +1580,20 @@
         private Label label1;
         private Label label27;
         private TextBox bottom_textBox;
-        private Label label23;
         private Label label26;
         private TextBox over_textBox;
-        private Label label9;
         private Label label12;
         private TextBox DoorTh_textBox;
         private CustomComboBox DoorIn_ComboBox;
-        private Label label83;
         private Label label29;
         private TextBox GlassH_textBox;
         private Label glass2_label;
         private Label label88;
         private Label label89;
         private TextBox GlassShgc_textBox;
-        private Label label86;
         private TextBox UD2_textBox;
         private Label label87;
         private TextBox GlassU_textBox;
-        private Label label84;
         private Label label85;
         private TabPage Size_tabPage;
         private TextBox Material_textBox;
@@ -1850,9 +1609,7 @@
         private TextBox Size_textBox;
         private TextBox Length_textBox;
         private TextBox Height_textBox;
-        private Label label67;
         private Label label69;
-        private Label label71;
         private Label label73;
         private Label label74;
         private Label label75;
@@ -1862,9 +1619,7 @@
         private Label label66;
         private TabPage Install_tabPage;
         private Label label17;
-        private Label label15;
         private PictureBox pictureBox3;
-        private Label label49;
         private TextBox d_InstallBottom_textBox;
         private TextBox d_InstallSide_textBox;
         private TextBox d_InstallTop_textBox;
@@ -1872,14 +1627,9 @@
         private TextBox Psi_InstallButtom_textBox;
         private TextBox Psi_InstallSide_textBox;
         private TextBox Psi_InstallTop_textBox;
-        private Label label51;
-        private Label label52;
         private Label label53;
         private Label label54;
-        private Label label44;
         private Label label45;
-        private Label label41;
-        private Label label40;
         private Label label24;
         private Label label33;
         private Label label38;
@@ -1888,15 +1638,11 @@
         private Label label20;
         private Label label19;
         private Label label18;
-        private Label label28;
         private TextBox DoorArea_textBox;
         private Label label30;
-        private Label label21;
         private Label label22;
         private TabPage tabPage1;
-        private Label label2;
         private Label label8;
-        private Label label34;
         private TextBox GlassArea2_textBox;
         private Label label35;
         private PictureBox pictureBox1;
@@ -1904,7 +1650,6 @@
         private TextBox DoorDB_textBox;
         private TextBox DoorArea2_textBox;
         private TextBox DoorH2_textBox;
-        private Label label7;
         private TextBox DoorL2_textBox;
         private TextBox DoorH_textBox;
         private TextBox DoorL_textBox;

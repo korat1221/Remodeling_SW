@@ -210,7 +210,7 @@ namespace main.contents
                     DI_textBox.Text = Load[0][6];
                     abs_textBox.Text = Load[0][43];
                     UW = Program.UTIL.ToDoubleOrZero(Load[0][46]);
-                    uw_textBox.Text = String.Format("{0:F2}", UW);
+                    uw_textBox.Text = String.Format("{0:F2}", UW) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                     if (Load[0][9] == null || Load[0][9] == "")
                     { Type_textBox.Text = ""; }
                     else { Type_textBox.Text = Load[0][7]; }
@@ -258,7 +258,7 @@ namespace main.contents
                 //정보 불러오기
                 Name_textBox.Text = value1[0][2];
                 Area = Program.UTIL.ToDoubleOrZero(value1[0][1]);
-                Area_textBox.Text = String.Format("{0:F2}", Area);
+                Area_textBox.Text = String.Format("{0:F2}", Area) + " m" + Program.UTIL.Subscript(2, true);
             }
             else
             {

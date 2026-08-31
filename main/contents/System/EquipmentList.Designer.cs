@@ -95,12 +95,9 @@ namespace main.contents
             Qcmax_textBox = new TextBox();
             Qhmax_textBox = new TextBox();
             label26 = new System.Windows.Forms.Label();
-            label27 = new System.Windows.Forms.Label();
             Qmax_button = new Button();
             label23 = new System.Windows.Forms.Label();
             label22 = new System.Windows.Forms.Label();
-            Qcmax_label = new System.Windows.Forms.Label();
-            Qhmax_label = new System.Windows.Forms.Label();
             output_text = new System.Windows.Forms.Label();
             input_textBox = new TextBox();
             unit_comboBox = new ComboBox();
@@ -350,12 +347,9 @@ namespace main.contents
             GeneralPanel.Controls.Add(Qcmax_textBox);
             GeneralPanel.Controls.Add(Qhmax_textBox);
             GeneralPanel.Controls.Add(label26);
-            GeneralPanel.Controls.Add(label27);
             GeneralPanel.Controls.Add(Qmax_button);
             GeneralPanel.Controls.Add(label23);
             GeneralPanel.Controls.Add(label22);
-            GeneralPanel.Controls.Add(Qcmax_label);
-            GeneralPanel.Controls.Add(Qhmax_label);
             GeneralPanel.Controls.Add(output_text);
             GeneralPanel.Controls.Add(input_textBox);
             GeneralPanel.Controls.Add(unit_comboBox);
@@ -435,18 +429,7 @@ namespace main.contents
             label26.Size = new Size(58, 15);
             label26.TabIndex = 144;
             label26.Text = "급탕 부하";
-            // 
-            // label27
-            // 
-            label27.AutoSize = true;
-            label27.Font = new Font("나눔바른고딕", 9F);
-            label27.ForeColor = SystemColors.ControlText;
-            label27.Location = new Point(664, 32);
-            label27.Name = "label27";
-            label27.Size = new Size(25, 14);
-            label27.TabIndex = 143;
-            label27.Text = "kW";
-            // 
+            //
             // Qmax_button
             // 
             Qmax_button.BackColor = SystemColors.ControlLight;
@@ -481,29 +464,7 @@ namespace main.contents
             label22.Size = new Size(58, 15);
             label22.TabIndex = 139;
             label22.Text = "난방 부하";
-            // 
-            // Qcmax_label
-            // 
-            Qcmax_label.AutoSize = true;
-            Qcmax_label.Font = new Font("나눔바른고딕", 9F);
-            Qcmax_label.ForeColor = SystemColors.ControlText;
-            Qcmax_label.Location = new Point(531, 32);
-            Qcmax_label.Name = "Qcmax_label";
-            Qcmax_label.Size = new Size(25, 14);
-            Qcmax_label.TabIndex = 137;
-            Qcmax_label.Text = "kW";
-            // 
-            // Qhmax_label
-            // 
-            Qhmax_label.AutoSize = true;
-            Qhmax_label.Font = new Font("나눔바른고딕", 9F);
-            Qhmax_label.ForeColor = SystemColors.ControlText;
-            Qhmax_label.Location = new Point(398, 32);
-            Qhmax_label.Name = "Qhmax_label";
-            Qhmax_label.Size = new Size(25, 14);
-            Qhmax_label.TabIndex = 135;
-            Qhmax_label.Text = "kW";
-            // 
+            //
             // output_text
             // 
             output_text.AutoSize = true;
@@ -3373,9 +3334,7 @@ namespace main.contents
         private System.Windows.Forms.Label output_text;
         private TextBox input_textBox;
         private ComboBox unitselect_comboBox;
-        private System.Windows.Forms.Label Qcmax_label;
         private TextBox Qcmax_textBox;
-        private System.Windows.Forms.Label Qhmax_label;
         private TextBox Qhmax_textBox;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label22;
@@ -3385,7 +3344,6 @@ namespace main.contents
         private Panel panel2;
         private Panel panel3;
         private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Label label27;
         private TextBox Qwmax_textBox;
         private TabPage tabPage7;
         private DataGridView Fan_dataGridView;

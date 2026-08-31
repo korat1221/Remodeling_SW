@@ -146,7 +146,6 @@
             PipeIns_textBox = new TextBox();
             label22 = new Label();
             label16 = new Label();
-            label21 = new Label();
             PipeIns_button = new Button();
             PipeIns_Ramda_textBox = new TextBox();
             Pipe_dataGridView = new DataGridView();
@@ -1510,7 +1509,6 @@
             Pipe_panel.Controls.Add(PipeIns_textBox);
             Pipe_panel.Controls.Add(label22);
             Pipe_panel.Controls.Add(label16);
-            Pipe_panel.Controls.Add(label21);
             Pipe_panel.Controls.Add(PipeIns_button);
             Pipe_panel.Controls.Add(PipeIns_Ramda_textBox);
             Pipe_panel.Dock = DockStyle.Bottom;
@@ -1601,16 +1599,7 @@
             label16.TabIndex = 186;
             label16.Text = "배관보온재";
             // 
-            // label21
             // 
-            label21.AutoSize = true;
-            label21.Font = new Font("나눔바른고딕", 9.75F);
-            label21.ForeColor = SystemColors.ControlDark;
-            label21.Location = new Point(508, 11);
-            label21.Name = "label21";
-            label21.Size = new Size(46, 15);
-            label21.TabIndex = 196;
-            label21.Text = "W/mK";
             // 
             // PipeIns_button
             // 
@@ -2168,7 +2157,6 @@
         private Button PipeIns_button;
         private Label label16;
         private Label label22;
-        private Label label21;
         private TextBox PipeIns_Ramda_textBox;
         private DataGridView HP_dataGridView;
         private DataGridView Solar_dataGridView;

@@ -90,27 +90,7 @@ namespace main.contents
             Door_checkBox.Checked = true;
             Door_checkBox.Checked = false;
 
-            string unit = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
-            Ug_unit_label.Text = unit;
-            UCW_p_label2.Text = unit;
-            UCW_d_label2.Text = unit;
-            label34.Text = unit;
-            label32.Text = unit;
-            label35.Text = unit;
-            label30.Text = unit;
-            label28.Text = unit;
-            label21.Text = unit;
-            label84.Text = unit;
 
-            unit = "m" + Program.UTIL.Subscript(2, true);
-            label65.Text = unit;
-            label59.Text = unit;
-            label58.Text = unit;
-            label57.Text = unit;
-            label14.Text = unit;
-            label10.Text = unit;
-            label72.Text = unit;
-            label68.Text = unit;
 
         }
 
@@ -319,7 +299,6 @@ namespace main.contents
 
                     dPanel_label.Visible = false;
                     dPanel_textBox.Visible = false;
-                    dPanel_label2.Visible = false;
 
                     PanelGlass_label.Visible = false;
                     PanelGlass_textBox.Visible = false;
@@ -376,7 +355,6 @@ namespace main.contents
 
                     dPanel_label.Visible = false;
                     dPanel_textBox.Visible = false;
-                    dPanel_label2.Visible = false;
 
                     PanelGlass_label.Visible = false;
                     PanelGlass_textBox.Visible = false;
@@ -509,10 +487,10 @@ namespace main.contents
                     Psi_p = Program.UTIL.ToDoubleOrZero(cw_frameDB_form.Select_CWFrame[7]);
                     df_mt = Program.UTIL.ToDoubleOrZero(cw_frameDB_form.Select_CWFrame[8]);
                     df_open = Program.UTIL.ToDoubleOrZero(cw_frameDB_form.Select_CWFrame[9]);
-                    Uf_mt_textBox.Text = Uf_mt.ToString();
-                    Uf_open_textBox.Text = Uf_open.ToString();
-                    df_mt_textBox.Text = df_mt.ToString();
-                    df_open_textBox.Text = df_open.ToString();
+                    Uf_mt_textBox.Text = Uf_mt.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
+                    Uf_open_textBox.Text = Uf_open.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
+                    df_mt_textBox.Text = df_mt.ToString() + " m";
+                    df_open_textBox.Text = df_open.ToString() + " m";
                     Program.UTIL.textBox_doubleComa(Uf_mt_textBox, true, 2);
                     Program.UTIL.textBox_doubleComa(Uf_open_textBox, true, 2);
                     Program.UTIL.textBox_doubleComa(df_mt_textBox, true, 2);
@@ -554,7 +532,7 @@ namespace main.contents
                 tabControl1.SelectedTab = tabControl1.TabPages["Glass_tabPage"];
                 LE_CL_V = cw_glassDB_form.Select_Glass[5];
                 Ug_Fix = Program.UTIL.ToDoubleOrZero(cw_glassDB_form.Select_Glass[6]);
-                Ug_Fix_textBox.Text = Ug_Fix.ToString();
+                Ug_Fix_textBox.Text = Ug_Fix.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 g = Program.UTIL.ToDoubleOrZero(cw_glassDB_form.Select_Glass[7]);
                 g_textBox.Text = g.ToString();
                 τ = Program.UTIL.ToDoubleOrZero(cw_glassDB_form.Select_Glass[8]);
@@ -595,7 +573,7 @@ namespace main.contents
                 OpenGlassName2_textBox.Text = OpenGlassName;
                 tabControl1.SelectedTab = tabControl1.TabPages["Glass_tabPage"];
                 Ug_Open = Program.UTIL.ToDoubleOrZero(cw_glassDB_form.Select_Glass[6]);
-                Ug_Open_textBox.Text = Ug_Open.ToString();
+                Ug_Open_textBox.Text = Ug_Open.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 Program.UTIL.textBox_doubleComa(Ug_Open_textBox, true, 3);
             }
             Calc_Ucw();
@@ -633,8 +611,8 @@ namespace main.contents
                         Psi_g_fix = Program.UTIL.ToDoubleOrZero(cw_spacerDB_form.Select_Spacer[5]);
                         Psi_g_open = Program.UTIL.ToDoubleOrZero(cw_spacerDB_form.Select_Spacer[6]);
                     }
-                    Psi_g_fix_textBox.Text = Psi_g_fix.ToString();
-                    Psi_g_open_textBox.Text = Psi_g_open.ToString();
+                    Psi_g_fix_textBox.Text = Psi_g_fix.ToString() + " W/m·K";
+                    Psi_g_open_textBox.Text = Psi_g_open.ToString() + " W/m·K";
                     Program.UTIL.textBox_doubleComa(Psi_g_fix_textBox, true, 3);
                     Program.UTIL.textBox_doubleComa(Psi_g_open_textBox, true, 3);
                     tabControl1.SelectedTab = tabControl1.TabPages["Glass_tabPage"];
@@ -663,7 +641,6 @@ namespace main.contents
 
                 dPanel_label.Visible = true;
                 dPanel_textBox.Visible = true;
-                dPanel_label2.Visible = true;
 
                 PanelGlass_label.Visible = true;
                 PanelGlass_textBox.Visible = true;
@@ -675,12 +652,10 @@ namespace main.contents
 
                 UCW_p_label.Visible = true;
                 UCW_p_textBox.Visible = true;
-                UCW_p_label2.Visible = true;
 
                 αp_label.Visible = true;
                 αp_textBox.Visible = true;
                 αp_label.Visible = true;
-                αp_label2.Visible = true;
 
 
             }
@@ -692,7 +667,6 @@ namespace main.contents
 
                 dPanel_label.Visible = false;
                 dPanel_textBox.Visible = false;
-                dPanel_label2.Visible = false;
 
                 PanelGlass_label.Visible = false;
                 PanelGlass_textBox.Visible = false;
@@ -703,13 +677,11 @@ namespace main.contents
 
                 UCW_p_label.Visible = false;
                 UCW_p_textBox.Visible = false;
-                UCW_p_label2.Visible = false;
                 Ucw_p = 0;
 
                 αp_label.Visible = false;
                 αp_textBox.Visible = false;
                 αp_label.Visible = false;
-                αp_label2.Visible = false;
                 αp = 0;
             }
         }
@@ -810,15 +782,12 @@ namespace main.contents
 
                 UCW_d_label.Visible = true;
                 UCW_d_textBox.Visible = true;
-                UCW_d_label2.Visible = true;
 
                 gd_label.Visible = true;
                 gd_textBox.Visible = true;
-                gd_label2.Visible = true;
 
                 τd_label.Visible = true;
                 τd_textBox.Visible = true;
-                τd_label2.Visible = true;
 
                 Ug_Door_textBox.Visible = true;
                 Psi_g_Door_textBox.Visible = true;
@@ -840,17 +809,14 @@ namespace main.contents
 
                 UCW_d_label.Visible = false;
                 UCW_d_textBox.Visible = false;
-                UCW_d_label2.Visible = false;
                 Ucw_d = 0;
 
                 gd_label.Visible = false;
                 gd_textBox.Visible = false;
-                gd_label2.Visible = false;
                 gd = 0;
 
                 τd_label.Visible = false;
                 τd_textBox.Visible = false;
-                τd_label2.Visible = false;
                 τd = 0;
 
                 Ug_Door_textBox.Visible = false;
@@ -873,8 +839,8 @@ namespace main.contents
                 check_DoorFrame = cw_doorframeDB_form.Select_DoorFrame[3];
                 Uf_door = Program.UTIL.ToDoubleOrZero(cw_doorframeDB_form.Select_DoorFrame[4]);
                 df_door = Program.UTIL.ToDoubleOrZero(cw_doorframeDB_form.Select_DoorFrame[5]);
-                Uf_door_textBox.Text = Uf_door.ToString();
-                df_door_textBox.Text = df_door.ToString();
+                Uf_door_textBox.Text = Uf_door.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
+                df_door_textBox.Text = df_door.ToString() + " m";
                 Program.UTIL.textBox_doubleComa(Uf_door_textBox, true, 2);
                 Program.UTIL.textBox_doubleComa(df_door_textBox, true, 2);
             }
@@ -894,7 +860,7 @@ namespace main.contents
                 DoorGlass2_textBox.Text = DoorGlassName;
                 LE_CL_V_Door = cw_glassDB_form.Select_Glass[5];
                 Ug_Door = Program.UTIL.ToDoubleOrZero(cw_glassDB_form.Select_Glass[6]);
-                Ug_Door_textBox.Text = Ug_Door.ToString();
+                Ug_Door_textBox.Text = Ug_Door.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 gd = Program.UTIL.ToDoubleOrZero(cw_glassDB_form.Select_Glass[7]);
                 gd_textBox.Text = gd.ToString();
                 τd = Program.UTIL.ToDoubleOrZero(cw_glassDB_form.Select_Glass[8]);
@@ -953,7 +919,7 @@ namespace main.contents
                     {
                         Psi_g_Door = Program.UTIL.ToDoubleOrZero(cw_spacerDB_form.Select_Spacer[5]);
                     }
-                    Psi_g_Door_textBox.Text = Psi_g_Door.ToString();
+                    Psi_g_Door_textBox.Text = Psi_g_Door.ToString() + " W/m·K";
                     Program.UTIL.textBox_doubleComa(Psi_g_Door_textBox, true, 3);
                     tabControl1.SelectedTab = tabControl1.TabPages["Glass_tabPage"];
                 }
@@ -1013,9 +979,9 @@ namespace main.contents
                         Psi_InstallSide = Program.UTIL.ToDoubleOrZero(cw_installDB_form.Select_CWInstall[6]);
                         Psi_InstallButtom = Program.UTIL.ToDoubleOrZero(cw_installDB_form.Select_CWInstall[7]);
 
-                        Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString();
-                        Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString();
-                        Psi_InstallButtom_textBox.Text = Psi_InstallButtom.ToString();
+                        Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString() + " W/m·K";
+                        Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString() + " W/m·K";
+                        Psi_InstallButtom_textBox.Text = Psi_InstallButtom.ToString() + " W/m·K";
                         Program.UTIL.textBox_doubleComa(Psi_InstallTop_textBox, true, 3);
                         Program.UTIL.textBox_doubleComa(Psi_InstallSide_textBox, true, 3);
                         Program.UTIL.textBox_doubleComa(Psi_InstallButtom_textBox, true, 3);
@@ -1051,9 +1017,9 @@ namespace main.contents
                         Psi_InstallSide = Program.UTIL.ToDoubleOrZero(window_installDB_form.Select_CWInstall[6]);
                         Psi_InstallButtom = Program.UTIL.ToDoubleOrZero(window_installDB_form.Select_CWInstall[7]);
 
-                        Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString();
-                        Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString();
-                        Psi_InstallButtom_textBox.Text = Psi_InstallButtom.ToString();
+                        Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString() + " W/m·K";
+                        Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString() + " W/m·K";
+                        Psi_InstallButtom_textBox.Text = Psi_InstallButtom.ToString() + " W/m·K";
                         Program.UTIL.textBox_doubleComa(Psi_InstallTop_textBox, true, 3);
                         Program.UTIL.textBox_doubleComa(Psi_InstallSide_textBox, true, 3);
                         Program.UTIL.textBox_doubleComa(Psi_InstallButtom_textBox, true, 3);
@@ -1128,20 +1094,20 @@ namespace main.contents
                 Lg_d = Program.UTIL.ToDoubleOrZero(Importsize_form.Select[16]);
 
                 Size_textBox.Text = SizeName + " 치수 적용";
-                Area_textBox.Text = Area.ToString();
-                Width_textBox.Text = Width.ToString();
-                Height_textBox.Text = Height.ToString();
-                Ag_fix_textBox.Text = Ag_fix.ToString();
-                Ag_open_textBox.Text = Ag_open.ToString();
-                Lg_fix_textBox.Text = Lg_fix.ToString();
-                Lg_open_textBox.Text = Lg_open.ToString();
-                Ap_textBox.Text = Ap.ToString();
-                Lp_textBox.Text = Lp.ToString();
-                Af_mt_textBox.Text = Af_mt.ToString();
-                Af_open_textBox.Text = Af_open.ToString();
-                Af_d_textBox.Text = Af_d.ToString();
-                Ag_d_textBox.Text = Ag_d.ToString();
-                Lg_d_textBox.Text = Lg_d.ToString();
+                Area_textBox.Text = Area.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                Width_textBox.Text = Width.ToString() + " m";
+                Height_textBox.Text = Height.ToString() + " m";
+                Ag_fix_textBox.Text = Ag_fix.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                Ag_open_textBox.Text = Ag_open.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                Lg_fix_textBox.Text = Lg_fix.ToString() + " m";
+                Lg_open_textBox.Text = Lg_open.ToString() + " m";
+                Ap_textBox.Text = Ap.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                Lp_textBox.Text = Lp.ToString() + " m";
+                Af_mt_textBox.Text = Af_mt.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                Af_open_textBox.Text = Af_open.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                Af_d_textBox.Text = Af_d.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                Ag_d_textBox.Text = Ag_d.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                Lg_d_textBox.Text = Lg_d.ToString() + " m";
 
                 Program.UTIL.textBox_doubleComa(Area_textBox, true, 2);
                 Program.UTIL.textBox_doubleComa(Area_textBox2, true, 2);
@@ -1187,7 +1153,7 @@ namespace main.contents
                 if (Uvalue.Length > 0)
                 {
                     Ucw_g = Program.UTIL.ToDoubleOrZero(Uvalue[0][0]);
-                    UCW_g_textBox.Text = Ucw_g.ToString();
+                    UCW_g_textBox.Text = Ucw_g.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                     Program.UTIL.textBox_doubleComa(UCW_g_textBox, true, 3);
                 }
 
@@ -1215,7 +1181,7 @@ namespace main.contents
                     if (Uvalue.Length > 0)
                     {
                         Ucw_p = Program.UTIL.ToDoubleOrZero(Uvalue[0][0]);
-                        UCW_p_textBox.Text = Ucw_p.ToString();
+                        UCW_p_textBox.Text = Ucw_p.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                         Program.UTIL.textBox_doubleComa(UCW_p_textBox, true, 3);
                     }
                 }
@@ -1246,7 +1212,7 @@ namespace main.contents
                     if (Uvalue.Length > 0)
                     {
                         Ucw_d = Program.UTIL.ToDoubleOrZero(Uvalue[0][0]);
-                        UCW_d_textBox.Text = Ucw_d.ToString();
+                        UCW_d_textBox.Text = Ucw_d.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                         Program.UTIL.textBox_doubleComa(UCW_d_textBox, true, 3);
                         Ff_d = 0.7;
                     }
@@ -1275,7 +1241,7 @@ namespace main.contents
                 if (Ug_Fix != 0 && Uf_open != 0 && Psi_g_fix != 0 && Area != 0)
                 {
                     Ucw_g = ((Ug_Fix * Ag_fix) + (Ug_Open * Ag_open) + (Uf_mt * Af_mt_g) + (Uf_open * Af_open) + (Psi_g_fix * Lg_fix) + (Psi_g_open * Lg_open)) / (Ag_fix + Ag_open + Af_mt_g + Af_open);
-                    UCW_g_textBox.Text = Ucw_g.ToString("0.000");
+                    UCW_g_textBox.Text = Ucw_g.ToString("0.000") + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                     //Program\.UTIL\.textBox_doubleComa\(UCW_g_textBox, true, 3);
                     Ff_g = (Ag_fix + Ag_open) / (Ag_fix + Ag_open + Af_mt_g + Af_open);
                 }
@@ -1285,7 +1251,7 @@ namespace main.contents
                     if (Up != 0 && Psi_p != 0 && Area != 0)
                     {
                         Ucw_p = ((Up * Ag_open) + (Uf_mt * Af_mt_p) + +(Psi_p * Lp)) / (Ap + Af_mt_p);
-                        UCW_p_textBox.Text = Ucw_p.ToString("0.000");
+                        UCW_p_textBox.Text = Ucw_p.ToString("0.000") + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                         //Program\.UTIL\.textBox_doubleComa\(UCW_p_textBox, true, 3);
                     }
                 }
@@ -1299,7 +1265,7 @@ namespace main.contents
                     if (Ug_Door != 0 && Uf_door != 0 && Psi_g_Door != 0 && Area != 0)
                     {
                         Ucw_d = ((Ug_Door * Ag_d) + (Uf_mt * Af_mt_d) + (Uf_door * Af_d) + (Psi_g_Door * Lg_d)) / (Ag_d + Af_mt_d + Af_d);
-                        UCW_d_textBox.Text = Ucw_d.ToString("0.000");
+                        UCW_d_textBox.Text = Ucw_d.ToString("0.000") + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                         //Program\.UTIL\.textBox_doubleComa\(UCW_d_textBox, true, 3);
                         Ff_d = Ag_d / (Ag_d + Af_mt_d + Af_d);
                     }
@@ -1323,7 +1289,7 @@ namespace main.contents
 
                 if (dUinst.Equals(double.NaN) == false)
                 {
-                    dUinst_textBox.Text = dUinst.ToString("0.000");
+                    dUinst_textBox.Text = dUinst.ToString("0.000") + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                     // Program.UTIL.textBox_doubleComa(dUinst_textBox, true, 3);
                 }
             }
@@ -1354,9 +1320,9 @@ namespace main.contents
             {
                 Ucw_d_inst = 0;
             }
-            d_InstallTop_textBox.Text = Width.ToString();
-            d_InstallButtom_textBox.Text = Width.ToString();
-            d_InstallSide_textBox.Text = (Height * 2).ToString();
+            d_InstallTop_textBox.Text = Width.ToString() + " m";
+            d_InstallButtom_textBox.Text = Width.ToString() + " m";
+            d_InstallSide_textBox.Text = (Height * 2).ToString() + " m";
             Program.UTIL.textBox_doubleComa(d_InstallTop_textBox, true, 2);
             Program.UTIL.textBox_doubleComa(d_InstallButtom_textBox, true, 2);
             Program.UTIL.textBox_doubleComa(d_InstallSide_textBox, true, 2);
@@ -1692,25 +1658,25 @@ namespace main.contents
                 check_LE_CL_V = Load[0][13];
 
                 Ug_Fix = Program.UTIL.ToDoubleOrZero(Load[0][14]);
-                Ug_Fix_textBox.Text = Ug_Fix.ToString();
+                Ug_Fix_textBox.Text = Ug_Fix.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 Ug_Open = Program.UTIL.ToDoubleOrZero(Load[0][15]);
-                Ug_Open_textBox.Text = Ug_Open.ToString();
+                Ug_Open_textBox.Text = Ug_Open.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 g = Program.UTIL.ToDoubleOrZero(Load[0][16]);
                 g_textBox.Text = g.ToString();
                 τ = Program.UTIL.ToDoubleOrZero(Load[0][17]);
                 τg_textBox.Text = τ.ToString();
                 Psi_g_fix = Program.UTIL.ToDoubleOrZero(Load[0][18]);
-                Psi_g_fix_textBox.Text = Psi_g_fix.ToString();
+                Psi_g_fix_textBox.Text = Psi_g_fix.ToString() + " W/m·K";
                 Psi_g_open = Program.UTIL.ToDoubleOrZero(Load[0][19]);
-                Psi_g_open_textBox.Text = Psi_g_open.ToString();
+                Psi_g_open_textBox.Text = Psi_g_open.ToString() + " W/m·K";
                 Uf_mt = Program.UTIL.ToDoubleOrZero(Load[0][20]);
-                Uf_mt_textBox.Text = Uf_mt.ToString();
+                Uf_mt_textBox.Text = Uf_mt.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 Uf_open = Program.UTIL.ToDoubleOrZero(Load[0][21]);
-                Uf_open_textBox.Text = Uf_open.ToString();
+                Uf_open_textBox.Text = Uf_open.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 df_mt = Program.UTIL.ToDoubleOrZero(Load[0][22]);
-                df_mt_textBox.Text = df_mt.ToString();
+                df_mt_textBox.Text = df_mt.ToString() + " m";
                 df_open = Program.UTIL.ToDoubleOrZero(Load[0][23]);
-                df_open_textBox.Text = df_open.ToString();
+                df_open_textBox.Text = df_open.ToString() + " m";
                 Program.UTIL.textBox_doubleComa(Ug_Fix_textBox, true, 3);
                 Program.UTIL.textBox_doubleComa(Ug_Open_textBox, true, 3);
                 Program.UTIL.textBox_doubleComa(g_textBox, true, 3);
@@ -1723,11 +1689,11 @@ namespace main.contents
                 Program.UTIL.textBox_doubleComa(df_open_textBox, true, 3);
 
                 Psi_InstallTop = Program.UTIL.ToDoubleOrZero(Load[0][24]);
-                Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString();
+                Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString() + " W/m·K";
                 Psi_InstallSide = Program.UTIL.ToDoubleOrZero(Load[0][25]);
-                Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString();
+                Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString() + " W/m·K";
                 Psi_InstallButtom = Program.UTIL.ToDoubleOrZero(Load[0][26]);
-                Psi_InstallButtom_textBox.Text = Psi_InstallButtom.ToString();
+                Psi_InstallButtom_textBox.Text = Psi_InstallButtom.ToString() + " W/m·K";
                 Program.UTIL.textBox_doubleComa(Psi_InstallTop_textBox, true, 3);
                 Program.UTIL.textBox_doubleComa(Psi_InstallSide_textBox, true, 3);
                 Program.UTIL.textBox_doubleComa(Psi_InstallButtom_textBox, true, 3);
@@ -1744,20 +1710,20 @@ namespace main.contents
                 Af_open = Program.UTIL.ToDoubleOrZero(Load[0][36]);
 
                 Size_textBox.Text = SizeName + " 치수 적용";
-                Area_textBox.Text = Area.ToString();
-                Area_textBox2.Text = Area.ToString();
-                Width_textBox.Text = Width.ToString();
-                Height_textBox.Text = Height.ToString();
-                Ag_fix_textBox.Text = Ag_fix.ToString();
-                Ag_open_textBox.Text = Ag_open.ToString();
-                Lg_fix_textBox.Text = Lg_fix.ToString();
-                Lg_open_textBox.Text = Lg_open.ToString();
-                Af_mt_textBox.Text = Af_mt.ToString();
-                Af_open_textBox.Text = Af_open.ToString();
+                Area_textBox.Text = Area.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                Area_textBox2.Text = Area.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                Width_textBox.Text = Width.ToString() + " m";
+                Height_textBox.Text = Height.ToString() + " m";
+                Ag_fix_textBox.Text = Ag_fix.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                Ag_open_textBox.Text = Ag_open.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                Lg_fix_textBox.Text = Lg_fix.ToString() + " m";
+                Lg_open_textBox.Text = Lg_open.ToString() + " m";
+                Af_mt_textBox.Text = Af_mt.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                Af_open_textBox.Text = Af_open.ToString() + " m" + Program.UTIL.Subscript(2, true);
 
-                d_InstallTop_textBox.Text = Width.ToString();
-                d_InstallButtom_textBox.Text = Width.ToString();
-                d_InstallSide_textBox.Text = (Height * 2).ToString();
+                d_InstallTop_textBox.Text = Width.ToString() + " m";
+                d_InstallButtom_textBox.Text = Width.ToString() + " m";
+                d_InstallSide_textBox.Text = (Height * 2).ToString() + " m";
 
                 Program.UTIL.textBox_doubleComa(Area_textBox, true, 2);
                 Program.UTIL.textBox_doubleComa(Area_textBox2, true, 2);
@@ -1776,11 +1742,11 @@ namespace main.contents
 
                 Ucw = Program.UTIL.ToDoubleOrZero(Load[0][37]);
                 Ucw_g = Program.UTIL.ToDoubleOrZero(Load[0][38]);
-                UCW_g_textBox.Text = Ucw_g.ToString();
+                UCW_g_textBox.Text = Ucw_g.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 Program.UTIL.textBox_doubleComa(UCW_g_textBox, true, 3);
 
                 dUinst = Program.UTIL.ToDoubleOrZero(Load[0][39]);
-                dUinst_textBox.Text = dUinst.ToString();
+                dUinst_textBox.Text = dUinst.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 Program.UTIL.textBox_doubleComa(dUinst_textBox, true, 3);
 
                 Ucw_inst = Program.UTIL.ToDoubleOrZero(Load[0][40]);
@@ -1820,19 +1786,19 @@ namespace main.contents
                     Psi_p = Program.UTIL.ToDoubleOrZero(Load[0][7]);
 
                     dPanel = Program.UTIL.ToDoubleOrZero(Load[0][8]);
-                    dPanel_textBox.Text = dPanel.ToString();
+                    dPanel_textBox.Text = dPanel.ToString() + " mm";
                     Program.UTIL.textBox_doubleComa(dPanel_textBox, true, 1);
 
                     Ap = Program.UTIL.ToDoubleOrZero(Load[0][9]);
                     Lp = Program.UTIL.ToDoubleOrZero(Load[0][10]);
-                    Ap_textBox.Text = Ap.ToString();
-                    Lp_textBox.Text = Lp.ToString();
+                    Ap_textBox.Text = Ap.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                    Lp_textBox.Text = Lp.ToString() + " m";
                     Program.UTIL.textBox_doubleComa(Ap_textBox, true, 2);
                     Program.UTIL.textBox_doubleComa(Lp_textBox, true, 2);
 
 
                     Ucw_p = Program.UTIL.ToDoubleOrZero(Load[0][11]);
-                    UCW_p_textBox.Text = Ucw_p.ToString();
+                    UCW_p_textBox.Text = Ucw_p.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                     Program.UTIL.textBox_doubleComa(UCW_p_textBox, true, 3);
                     Ucw_p_inst = Program.UTIL.ToDoubleOrZero(Load[0][12]);
                 }
@@ -1862,7 +1828,7 @@ namespace main.contents
                     check_LE_CL_V_Door = LE_CL_V_Door;
 
                     Ug_Door = Program.UTIL.ToDoubleOrZero(Load[0][5]);
-                    Ug_Door_textBox.Text = Ug_Door.ToString();
+                    Ug_Door_textBox.Text = Ug_Door.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                     Program.UTIL.textBox_doubleComa(Ug_Door_textBox, true, 3);
 
                     gd = Program.UTIL.ToDoubleOrZero(Load[0][6]);
@@ -1874,29 +1840,29 @@ namespace main.contents
                     Program.UTIL.textBox_doubleComa(τd_textBox, true, 3);
 
                     Psi_g_Door = Program.UTIL.ToDoubleOrZero(Load[0][8]);
-                    Psi_g_Door_textBox.Text = Psi_g_Door.ToString();
+                    Psi_g_Door_textBox.Text = Psi_g_Door.ToString() + " W/m·K";
                     Program.UTIL.textBox_doubleComa(Psi_g_Door_textBox, true, 3);
 
                     df_door = Program.UTIL.ToDoubleOrZero(Load[0][9]);
-                    df_door_textBox.Text = df_door.ToString();
+                    df_door_textBox.Text = df_door.ToString() + " m";
                     Program.UTIL.textBox_doubleComa(df_door_textBox, true, 3);
 
                     Uf_door = Program.UTIL.ToDoubleOrZero(Load[0][10]);
-                    Uf_door_textBox.Text = Uf_door.ToString();
+                    Uf_door_textBox.Text = Uf_door.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                     Program.UTIL.textBox_doubleComa(Uf_door_textBox, true, 3);
 
                     Af_d = Program.UTIL.ToDoubleOrZero(Load[0][11]);
                     Ag_d = Program.UTIL.ToDoubleOrZero(Load[0][12]);
                     Lg_d = Program.UTIL.ToDoubleOrZero(Load[0][13]);
-                    Af_d_textBox.Text = Af_d.ToString();
-                    Ag_d_textBox.Text = Ag_d.ToString();
-                    Lg_d_textBox.Text = Lg_d.ToString();
+                    Af_d_textBox.Text = Af_d.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                    Ag_d_textBox.Text = Ag_d.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                    Lg_d_textBox.Text = Lg_d.ToString() + " m";
                     Program.UTIL.textBox_doubleComa(Af_d_textBox, true, 2);
                     Program.UTIL.textBox_doubleComa(Ag_d_textBox, true, 2);
                     Program.UTIL.textBox_doubleComa(Lg_d_textBox, true, 2);
 
                     Ucw_d = Program.UTIL.ToDoubleOrZero(Load[0][14]);
-                    UCW_d_textBox.Text = Ucw_d.ToString();
+                    UCW_d_textBox.Text = Ucw_d.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                     Program.UTIL.textBox_doubleComa(UCW_d_textBox, true, 3);
                     Ucw_d_inst = Program.UTIL.ToDoubleOrZero(Load[0][15]);
                 }

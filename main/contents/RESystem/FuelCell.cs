@@ -245,15 +245,15 @@ namespace main.contents
                     
                     v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "난방설비 = '" + db[0][1] + "' and 신재생시스템= '" + db[0][0] + "' and 신재생시스템유형='연료전지' and 생산소비 ='생산' and 생산유형='전기'");
                     if (v.Length > 0 && v[0][0] != "")
-                    { elec_textBox.Text = Program.UTIL.ToDoubleOrZero(v[0][0]).ToString("#,##0") ; }
+                    { elec_textBox.Text = Program.UTIL.ToDoubleOrZero(v[0][0]).ToString("#,##0") + " kWh/년"; }
                    
                     v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "난방설비 = '" + db[0][1] + "' and 신재생시스템= '" + db[0][0] + "' and 신재생시스템유형='연료전지' and 생산소비 ='생산' and 생산유형='열'");
                     if (v.Length > 0 && v[0][0] != "")
-                    { heat_textBox.Text = Program.UTIL.ToDoubleOrZero(v[0][0]).ToString("#,##0"); }
+                    { heat_textBox.Text = Program.UTIL.ToDoubleOrZero(v[0][0]).ToString("#,##0") + " kWh/년"; }
                    
                     v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "난방설비 = '" + db[0][1] + "' and 신재생시스템= '" + db[0][0] + "' and 신재생시스템유형='연료전지' and 생산소비 ='소비' and 소비연료='가스'");
                     if (v.Length > 0 && v[0][0] != "")
-                    { gas_textBox.Text = Program.UTIL.ToDoubleOrZero(v[0][0]).ToString("#,##0"); }
+                    { gas_textBox.Text = Program.UTIL.ToDoubleOrZero(v[0][0]).ToString("#,##0") + " kWh/년"; }
 
                     for(int mth =0; mth <12; mth++)
                     {
@@ -286,15 +286,15 @@ namespace main.contents
 
                     v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "급탕설비 = '" + db[0][1] + "' and 신재생시스템= '" + db[0][0] + "' and 신재생시스템유형='연료전지' and 생산소비 ='생산' and 생산유형='전기'");
                     if (v.Length > 0 && v[0][0] != "")
-                    { elec_textBox.Text = Program.UTIL.ToDoubleOrZero(v[0][0]).ToString("#,##0"); }
+                    { elec_textBox.Text = Program.UTIL.ToDoubleOrZero(v[0][0]).ToString("#,##0") + " kWh/년"; }
 
                     v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "급탕설비 = '" + db[0][1] + "' and 신재생시스템= '" + db[0][0] + "' and 신재생시스템유형='연료전지' and 생산소비 ='생산' and 생산유형='열'");
                     if (v.Length > 0 && v[0][0] != "")
-                    { heat_textBox.Text = Program.UTIL.ToDoubleOrZero(v[0][0]).ToString("#,##0"); }
+                    { heat_textBox.Text = Program.UTIL.ToDoubleOrZero(v[0][0]).ToString("#,##0") + " kWh/년"; }
 
                     v = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "급탕설비 = '" + db[0][1] + "' and 신재생시스템= '" + db[0][0] + "' and 신재생시스템유형='연료전지' and 생산소비 ='소비' and 소비연료='가스'");
                     if (v.Length > 0 && v[0][0] != "")
-                    { gas_textBox.Text = Program.UTIL.ToDoubleOrZero(v[0][0]).ToString("#,##0"); }
+                    { gas_textBox.Text = Program.UTIL.ToDoubleOrZero(v[0][0]).ToString("#,##0") + " kWh/년"; }
 
                     for (int mth = 0; mth < 12; mth++)
                     {

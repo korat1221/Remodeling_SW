@@ -86,21 +86,21 @@ namespace main.contents
                 }
                 //음영정보
                 R1 = Program.UTIL.ToDoubleOrZero(rec[0][5]);
-                R1_textBox.Text = R1.ToString("0.00") + "m";
+                R1_textBox.Text = R1.ToString("0.00") + " m";
                 R2 = Program.UTIL.ToDoubleOrZero(rec[0][1]);
-                R2_textBox.Text = R2.ToString("0.00") + "°";
+                R2_textBox.Text = R2.ToString("0.00") + " °";
                 L1 = Program.UTIL.ToDoubleOrZero(rec[0][6]);
-                L1_textBox.Text = L1.ToString("0.00") + "m";
+                L1_textBox.Text = L1.ToString("0.00") + " m";
                 L2 = Program.UTIL.ToDoubleOrZero(rec[0][2]);
-                L2_textBox.Text = L2.ToString("0.00") + "°";
+                L2_textBox.Text = L2.ToString("0.00") + " °";
                 S1 = Program.UTIL.ToDoubleOrZero(rec[0][8]);
-                S1_textBox.Text = S1.ToString("0.00") + "m";
+                S1_textBox.Text = S1.ToString("0.00") + " m";
                 S2 = Program.UTIL.ToDoubleOrZero(rec[0][4]);
-                S2_textBox.Text = S2.ToString("0.00") + "°";
+                S2_textBox.Text = S2.ToString("0.00") + " °";
                 T1 = Program.UTIL.ToDoubleOrZero(rec[0][7]);
-                T1_textBox.Text = T1.ToString("0.00") + "m";
+                T1_textBox.Text = T1.ToString("0.00") + " m";
                 T2 = Program.UTIL.ToDoubleOrZero(rec[0][3]);
-                T2_textBox.Text = T2.ToString("0.00") + "°";
+                T2_textBox.Text = T2.ToString("0.00") + " °";
 
                 //창호정보 불러오기 // *************************창호 너비 높이 면적은 존 인벨롭에서 들어오는 값으로 해야함 (임시방편)
                 String[][] SubLoad = Program.DB.getValue(DB.type.ProjDB, "SubWindow", "번호,명칭,상위창호번호,창호면적,창호너비,창호높이,창호유효열관류율,설치열교가산치", "번호 = '" + rec[0][12] + "'");
@@ -133,7 +133,6 @@ namespace main.contents
                 {
                     label8.Visible = true;
                     height_textBox.Visible = true;
-                    label16.Visible = true;
                     label4.Visible = true;
                     install_textBox.Visible = true;
                     label2.Visible = true;
@@ -155,9 +154,9 @@ namespace main.contents
                 //정보
                 Name_textBox.Text = rec[0][9];
                 Area = Program.UTIL.ToDoubleOrZero(rec[0][13]);
-                Area_textBox.Text = String.Format("{0:F2}", Area);
-                Width_textBox.Text = rec[0][14] == "" ? "0" : String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(rec[0][14]));
-                height_textBox.Text = rec[0][15] == "" ? "0" : String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(rec[0][15]));
+                Area_textBox.Text = String.Format("{0:F2}", Area) + " m" + Program.UTIL.Subscript(2, true);
+                Width_textBox.Text = (rec[0][14] == "" ? "0" : String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(rec[0][14]))) + " m";
+                height_textBox.Text = (rec[0][15] == "" ? "0" : String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(rec[0][15]))) + " m";
 
                 if (SubLoad.Length > 0 && SubLoad[0][0] != "")
                 {
@@ -184,17 +183,17 @@ namespace main.contents
                     Tao_on_textBox.Text = light.ToString("0.000");
 
                     uw = Program.UTIL.ToDoubleOrZero(SubLoad[0][6]);
-                    uw_textBox.Text = uw.ToString("0.000");
+                    uw_textBox.Text = uw.ToString("0.000") + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                     install = Program.UTIL.ToDoubleOrZero(SubLoad[0][7]);
-                    inst_textBox.Text = install.ToString("0.000");
+                    inst_textBox.Text = install.ToString("0.000") + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                     Type = MainLoad[0][10];
                     InstallType = MainLoad[0][11];
                     FrameMaterial = MainLoad[0][12];
                     SingleDoubleType = MainLoad[0][13];
                     InstallName = MainLoad[0][14];
                     Ug = Program.UTIL.ToDoubleOrZero(MainLoad[0][15]);
-                    Ug_off_textBox.Text = Ug.ToString("0.000");
-                    Ug_on_textBox.Text = Ug.ToString("0.000");
+                    Ug_off_textBox.Text = Ug.ToString("0.000") + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
+                    Ug_on_textBox.Text = Ug.ToString("0.000") + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
 
                     //그림로드
                     string[][] Image2 = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호구조유형이미지", "이미지", "구조유형 = '" + Type + "'");

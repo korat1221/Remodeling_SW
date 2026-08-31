@@ -55,7 +55,6 @@ namespace main.contents
             dataGridView1 = new DataGridView();
             panel3 = new Panel();
             AdditionalPanel = new Panel();
-            label10 = new System.Windows.Forms.Label();
             label9 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             Cwirk_textBox = new System.Windows.Forms.TextBox();
@@ -68,7 +67,6 @@ namespace main.contents
             WallCwirk_comboBox = new CustomComboBox();
             label5 = new System.Windows.Forms.Label();
             panel1 = new Panel();
-            label11 = new System.Windows.Forms.Label();
             label12 = new System.Windows.Forms.Label();
             textBox1 = new System.Windows.Forms.TextBox();
             groupBox1 = new System.Windows.Forms.GroupBox();
@@ -285,7 +283,6 @@ namespace main.contents
             // AdditionalPanel
             // 
             AdditionalPanel.BackColor = Color.White;
-            AdditionalPanel.Controls.Add(label10);
             AdditionalPanel.Controls.Add(label9);
             AdditionalPanel.Controls.Add(label2);
             AdditionalPanel.Controls.Add(Cwirk_textBox);
@@ -304,15 +301,7 @@ namespace main.contents
             AdditionalPanel.TabIndex = 18;
             AdditionalPanel.Paint += AdditionalPanel_Paint;
             // 
-            // label10
             // 
-            label10.AutoSize = true;
-            label10.Font = new Font("나눔바른고딕", 9.75F);
-            label10.Location = new Point(418, 84);
-            label10.Name = "label10";
-            label10.Size = new Size(59, 15);
-            label10.TabIndex = 101;
-            label10.Text = "wh/m2K";
             // 
             // label9
             // 
@@ -431,7 +420,6 @@ namespace main.contents
             // panel1
             // 
             panel1.BackColor = Color.White;
-            panel1.Controls.Add(label11);
             panel1.Controls.Add(label12);
             panel1.Controls.Add(textBox1);
             panel1.Controls.Add(groupBox1);
@@ -442,17 +430,7 @@ namespace main.contents
             panel1.Size = new Size(500, 204);
             panel1.TabIndex = 36;
             panel1.Paint += panel1_Paint;
-            // 
-            // label11
-            // 
-            label11.AutoSize = true;
-            label11.Font = new Font("나눔바른고딕", 9.75F);
-            label11.Location = new Point(367, 83);
-            label11.Name = "label11";
-            label11.Size = new Size(30, 15);
-            label11.TabIndex = 104;
-            label11.Text = " h⁻¹";
-            // 
+            //
             // label12
             // 
             label12.AutoSize = true;
@@ -591,7 +569,6 @@ namespace main.contents
         private System.Windows.Forms.Label label7;
         private CustomComboBox CeilingCwirk_comboBox;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox Cwirk_textBox;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -605,7 +582,6 @@ namespace main.contents
         private DataGridView dataGridView2;
         private DataGridView dataGridView1;
         private System.Windows.Forms.Button info;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox textBox1;
     }

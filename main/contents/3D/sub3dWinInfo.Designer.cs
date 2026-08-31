@@ -39,8 +39,6 @@
             label9 = new Label();
             WindowInstall_pictureBox = new PictureBox();
             WindowType_pictureBox = new PictureBox();
-            label16 = new Label();
-            label15 = new Label();
             label14 = new Label();
             inst_textBox = new TextBox();
             uw_textBox = new TextBox();
@@ -158,8 +156,6 @@
             tabPage1.Controls.Add(label9);
             tabPage1.Controls.Add(WindowInstall_pictureBox);
             tabPage1.Controls.Add(WindowType_pictureBox);
-            tabPage1.Controls.Add(label16);
-            tabPage1.Controls.Add(label15);
             tabPage1.Controls.Add(label14);
             tabPage1.Controls.Add(inst_textBox);
             tabPage1.Controls.Add(uw_textBox);
@@ -286,27 +282,9 @@
             WindowType_pictureBox.TabIndex = 134;
             WindowType_pictureBox.TabStop = false;
             // 
-            // label16
             // 
-            label16.AutoSize = true;
-            label16.ForeColor = SystemColors.ControlDark;
-            label16.Location = new Point(183, 137);
-            label16.Name = "label16";
-            label16.Size = new Size(18, 15);
-            label16.TabIndex = 133;
-            label16.Text = "m";
-            label16.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // label15
             // 
-            label15.AutoSize = true;
-            label15.ForeColor = SystemColors.ControlDark;
-            label15.Location = new Point(183, 108);
-            label15.Name = "label15";
-            label15.Size = new Size(18, 15);
-            label15.TabIndex = 132;
-            label15.Text = "m";
-            label15.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label14
             // 
@@ -1178,8 +1156,6 @@
         private Label label7;
         private TextBox Spacer_textBox;
         private Label label14;
-        private Label label16;
-        private Label label15;
         private PictureBox WindowType_pictureBox;
         private PictureBox WindowInstall_pictureBox;
         private Label label12;

@@ -326,7 +326,6 @@ namespace main.subcontents.ConstructionWall
                     PerArea = 0;
                 }
                 PerArea_label1.Text = "적용개수";
-                PerArea_label2.Text = "EA/m" + Program.UTIL.Subscript(2, true);
             }
             else
             {
@@ -335,10 +334,9 @@ namespace main.subcontents.ConstructionWall
 
                     PerArea = 1 / Math.Max(dx, dy);
                     PerArea_label1.Text = "적용길이";
-                    PerArea_label2.Text = "m/m" + Program.UTIL.Subscript(2, true);
                 }
             }
-            PerArea_textBox.Text = string.Format("{0:F3}", PerArea);
+            PerArea_textBox.Text = string.Format("{0:F3}", PerArea) + (LinearPoint == "점형" ? " EA/m" : " m/m") + Program.UTIL.Subscript(2, true);
             Calc_dU();
         }
         private void Calc_dU()
@@ -351,7 +349,7 @@ namespace main.subcontents.ConstructionWall
             {
                 dU = Psi * PerArea;
             }
-            dU_textBox.Text = string.Format("{0:F3}", dU);
+            dU_textBox.Text = string.Format("{0:F3}", dU) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
         }
         private void Save_button_Click(object sender, EventArgs e)
         {

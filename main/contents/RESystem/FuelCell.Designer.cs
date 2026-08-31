@@ -52,7 +52,6 @@
             Num_textBox = new TextBox();
             pictureBox1 = new PictureBox();
             Save_button = new Button();
-            label28 = new Label();
             elec_textBox = new TextBox();
             label27 = new Label();
             panel2 = new Panel();
@@ -63,10 +62,8 @@
             label24 = new Label();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             panel1 = new Panel();
-            label2 = new Label();
             heat_textBox = new TextBox();
             label4 = new Label();
-            label1 = new Label();
             gas_textBox = new TextBox();
             label5 = new Label();
             PVMainPanel.SuspendLayout();
@@ -338,18 +335,7 @@
             Save_button.Text = "BACK";
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
-            // 
-            // label28
-            // 
-            label28.AutoSize = true;
-            label28.Font = new Font("나눔바른고딕", 9.75F);
-            label28.ForeColor = SystemColors.ControlDark;
-            label28.Location = new Point(1148, 28);
-            label28.Name = "label28";
-            label28.Size = new Size(53, 15);
-            label28.TabIndex = 109;
-            label28.Text = "kWh/년";
-            // 
+            //
             // elec_textBox
             // 
             elec_textBox.BackColor = SystemColors.InactiveBorder;
@@ -502,18 +488,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1000, 350);
             panel1.TabIndex = 141;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("나눔바른고딕", 9.75F);
-            label2.ForeColor = SystemColors.ControlDark;
-            label2.Location = new Point(1148, 56);
-            label2.Name = "label2";
-            label2.Size = new Size(53, 15);
-            label2.TabIndex = 144;
-            label2.Text = "kWh/년";
-            // 
+            //
             // heat_textBox
             // 
             heat_textBox.BackColor = SystemColors.InactiveBorder;
@@ -535,18 +510,7 @@
             label4.Size = new Size(55, 15);
             label4.TabIndex = 142;
             label4.Text = "열생산량";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("나눔바른고딕", 9.75F);
-            label1.ForeColor = SystemColors.ControlDark;
-            label1.Location = new Point(1148, 84);
-            label1.Name = "label1";
-            label1.Size = new Size(53, 15);
-            label1.TabIndex = 147;
-            label1.Text = "kWh/년";
-            // 
+            //
             // gas_textBox
             // 
             gas_textBox.BackColor = SystemColors.InactiveBorder;
@@ -575,13 +539,10 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 896);
-            Controls.Add(label1);
             Controls.Add(gas_textBox);
             Controls.Add(label5);
-            Controls.Add(label2);
             Controls.Add(heat_textBox);
             Controls.Add(label4);
-            Controls.Add(label28);
             Controls.Add(elec_textBox);
             Controls.Add(label27);
             Controls.Add(Save_button);
@@ -621,7 +582,6 @@
         private TextBox PVModule_textBox;
         private Button InverterDB1_button;
         private Button Save_button;
-        private Label label28;
         private TextBox elec_textBox;
         private Label label27;
         private Panel panel2;
@@ -634,7 +594,6 @@
         private RadioButton radioButton4;
         private RadioButton radioButton3;
         private RadioButton radioButton1;
-        private Label label1;
         private TextBox Num_textBox;
         private TextBox Name_textBox;
         private CustomComboBox PVsystem_combobox;
@@ -667,7 +626,6 @@
         private Label batterypower;
         private PictureBox STTypepictureBox;
         private DataGridView FC_dataGridView;
-        private Label label2;
         private TextBox heat_textBox;
         private Label label4;
         private TextBox gas_textBox;

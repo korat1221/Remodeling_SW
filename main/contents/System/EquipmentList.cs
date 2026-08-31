@@ -167,13 +167,14 @@ namespace main.contents
             {
                 Qhmax_textBox.Text = (Program.UTIL.ToDoubleOrZero(value[0][0]) / 1000).ToString();
                 Program.UTIL.textBox_doubleComa(Qhmax_textBox, true, 1);
-
+                Qhmax_textBox.Text += " kW";
             }
             value = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(Q_max) From Zone_HCneed_Result Where 난방_냉방='냉방' and 비이용일_이용일='이용일' and  월='1월'");
             if (value.Length > 0 && value[0][0] != "")
             {
                 Qcmax_textBox.Text = (Program.UTIL.ToDoubleOrZero(value[0][0]) / 1000).ToString();
                 Program.UTIL.textBox_doubleComa(Qcmax_textBox, true, 1);
+                Qcmax_textBox.Text += " kW";
             }
             string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "일일급탕요구량,용도프로필");
             if (ZoneValue.Length > 0)
@@ -192,7 +193,7 @@ namespace main.contents
                 }
                 Qwmax_textBox.Text = (Qmax_w).ToString();
                 Program.UTIL.textBox_doubleComa(Qwmax_textBox, true, 1);
-
+                Qwmax_textBox.Text += " kW";
             }
         }
 

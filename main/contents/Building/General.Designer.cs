@@ -111,7 +111,6 @@ namespace main.contents
             DoorZoneN50_textBox = new TextBox();
             BlowDoor_button = new Button();
             n50_textBox = new TextBox();
-            n50_label2 = new Label();
             n50_label1 = new Label();
             Pipe_label = new Label();
             Pipe_groupBox = new GroupBox();
@@ -995,7 +994,6 @@ namespace main.contents
             panel7.Controls.Add(AirtightZone_panel);
             panel7.Controls.Add(BlowDoor_button);
             panel7.Controls.Add(n50_textBox);
-            panel7.Controls.Add(n50_label2);
             panel7.Controls.Add(n50_label1);
             panel7.Controls.Add(Pipe_label);
             panel7.Controls.Add(Pipe_groupBox);
@@ -1129,16 +1127,7 @@ namespace main.contents
             n50_textBox.TabIndex = 149;
             n50_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // n50_label2
             // 
-            n50_label2.AutoSize = true;
-            n50_label2.Font = new Font("나눔바른고딕", 9.75F);
-            n50_label2.ForeColor = SystemColors.ControlText;
-            n50_label2.Location = new Point(906, 30);
-            n50_label2.Name = "n50_label2";
-            n50_label2.Size = new Size(30, 15);
-            n50_label2.TabIndex = 150;
-            n50_label2.Text = " h⁻¹";
             // 
             // n50_label1
             // 
@@ -1591,7 +1580,6 @@ namespace main.contents
         private RadioButton Door_False_radioButton;
         private RadioButton Door_True_radioButton;
         private TextBox n50_textBox;
-        private Label n50_label2;
         private Label n50_label1;
         private Button BlowDoor_button;
         private TextBox OldProject_textBox;

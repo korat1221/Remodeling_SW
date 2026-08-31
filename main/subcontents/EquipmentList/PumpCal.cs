@@ -71,8 +71,8 @@ namespace main.subcontents.EquipmentList
             }
             if (Lmax > 0 && PumpHead > 0)
             {
-                Lmax_textBox.Text = string.Format("{0:F1}", Lmax);
-                PumpHead_textBox.Text = string.Format("{0:F1}", PumpHead);
+                Lmax_textBox.Text = string.Format("{0:F1}", Lmax) + " m";
+                PumpHead_textBox.Text = string.Format("{0:F1}", PumpHead) + " m";
             }
         }
 

@@ -307,7 +307,6 @@ namespace main.contents
             bool n50Available = testDone || showElementJudgement;
             n50_label1.Visible = n50Available;
             n50_textBox.Visible = n50Available;
-            n50_label2.Visible = n50Available;
             if (!n50Available) { n50_textBox.Text = ""; }
 
             // 보고서 있음 / (보고서 없음 + 존별) 경로는 존유형별 표준 n50을 참고용으로 보여줌
@@ -374,7 +373,7 @@ namespace main.contents
                 if (Value.Length > 0)
                 {
                     n50 = Program.UTIL.ToDoubleOrZero(Value[0][0]);
-                    n50_textBox.Text = n50.ToString("0.0");
+                    n50_textBox.Text = n50.ToString("0.0") + " h⁻¹";
                 }
             }
         }
@@ -650,7 +649,7 @@ namespace main.contents
             if (result == DialogResult.OK)
             {
                 n50 = form.n50;
-                n50_textBox.Text = form.n50.ToString("0.0");
+                n50_textBox.Text = form.n50.ToString("0.0") + " h⁻¹";
             }
         }
 
@@ -1051,7 +1050,7 @@ namespace main.contents
             if (Value.Length > 0 && Value[0][0] != "")
             {
                 n50 = Program.UTIL.ToDoubleOrZero(Value[0][0]);
-                n50_textBox.Text = Program.UTIL.ToDoubleOrZero(Value[0][0]).ToString("0.0");
+                n50_textBox.Text = Program.UTIL.ToDoubleOrZero(Value[0][0]).ToString("0.0") + " h⁻¹";
             }
         }
 

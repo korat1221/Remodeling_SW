@@ -61,7 +61,6 @@ namespace main.contents
             label12.Visible = false;
 
             label11.Visible = false;
-            label13.Visible = false;
 
             label18.Visible = false;
 
@@ -175,14 +174,13 @@ namespace main.contents
                 }
 
                 Type_textBox.Text = Type;
-                RotateArea_textBox.Text = RotateArea.ToString();
-                HerbHeight_textBox.Text = HerbHeight.ToString();
+                RotateArea_textBox.Text = RotateArea.ToString() + " m" + Program.UTIL.Subscript(2, true);
+                HerbHeight_textBox.Text = HerbHeight.ToString() + " m";
 
                 label10.Visible = true;
                 label12.Visible = true;
 
                 label11.Visible = true;
-                label13.Visible = true;
 
                 label18.Visible = true;
                 Load_WPType_image(Type);
@@ -406,7 +404,7 @@ namespace main.contents
                         s += Qfwps[mth] + ",";
                     }
                 }
-                annual_textBox.Text = sum.ToString("0.00");
+                annual_textBox.Text = sum.ToString("0.00") + " kWh/a";
 
                 #region 풍속 평균 
                 string[][] Value3 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");

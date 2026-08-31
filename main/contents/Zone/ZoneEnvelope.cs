@@ -89,7 +89,6 @@ namespace main.contents
                     SlabCwirk_comboBox.Items.Add(SQL_index_Slab[i][0]);
                 }
             }
-            label10.Text = "Wh/(m" + Program.UTIL.Subscript(2, true) + "K)";
         }
 
 
@@ -462,6 +461,7 @@ namespace main.contents
                 }
                 Cwirk_textBox.Text = Cwirk_total.ToString();
                 Program.UTIL.textBox_doubleComa(Cwirk_textBox, true, 2);
+                Cwirk_textBox.Text += " Wh/(m" + Program.UTIL.Subscript(2, true) + "K)";
             }
             else
             {
@@ -675,6 +675,7 @@ namespace main.contents
                 Calc_Cwirk_all();
                 Cwirk_textBox.Text = Cwirk_total.ToString();
                 Program.UTIL.textBox_doubleComa(Cwirk_textBox, true, 2);
+                Cwirk_textBox.Text += " Wh/(m" + Program.UTIL.Subscript(2, true) + "K)";
 
             }
 
@@ -741,11 +742,10 @@ namespace main.contents
             }
 
             label12.Visible = showN50;
-            label11.Visible = showN50;
             textBox1.Visible = showN50;
             if (showN50)
             {
-                textBox1.Text = n50Value.ToString("0.00");
+                textBox1.Text = n50Value.ToString("0.00") + " h⁻¹";
             }
 
             // 저장 버튼과 무관하게 항상 최신 계산값을 반영 — Cal_HCneed.cs가 이 값을 그대로 읽어다 씀.

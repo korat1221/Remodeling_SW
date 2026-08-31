@@ -41,25 +41,19 @@ namespace main.subcontents
             Icon_pictureBox = new PictureBox();
             label35 = new Label();
             Qhb_textBox = new TextBox();
-            label26 = new Label();
             label34 = new Label();
             Qcb_textBox = new TextBox();
-            label1 = new Label();
             label2 = new Label();
             Qcmax_textBox = new TextBox();
-            label3 = new Label();
             label4 = new Label();
             Qhmax_textBox = new TextBox();
-            label5 = new Label();
             label6 = new Label();
             Qhmax_Copy_button = new Button();
             Qcmax_Copy_button = new Button();
             Qwmax_Copy_button = new Button();
             Qwmax_textBox = new TextBox();
-            label7 = new Label();
             label8 = new Label();
             Qwb_textBox = new TextBox();
-            label9 = new Label();
             label10 = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ZoneResult_dataGridView).BeginInit();
@@ -192,14 +186,7 @@ namespace main.subcontents
             Qhb_textBox.TabIndex = 168;
             Qhb_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label26
             // 
-            label26.AutoSize = true;
-            label26.Location = new Point(331, 34);
-            label26.Name = "label26";
-            label26.Size = new Size(42, 15);
-            label26.TabIndex = 167;
-            label26.Text = "kWh/a";
             // 
             // label34
             // 
@@ -222,14 +209,7 @@ namespace main.subcontents
             Qcb_textBox.TabIndex = 172;
             Qcb_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label1
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(331, 59);
-            label1.Name = "label1";
-            label1.Size = new Size(42, 15);
-            label1.TabIndex = 171;
-            label1.Text = "kWh/a";
             // 
             // label2
             // 
@@ -252,14 +232,7 @@ namespace main.subcontents
             Qcmax_textBox.TabIndex = 178;
             Qcmax_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label3
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(548, 59);
-            label3.Name = "label3";
-            label3.Size = new Size(24, 15);
-            label3.TabIndex = 177;
-            label3.Text = "kW";
             // 
             // label4
             // 
@@ -282,14 +255,7 @@ namespace main.subcontents
             Qhmax_textBox.TabIndex = 175;
             Qhmax_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label5
             // 
-            label5.AutoSize = true;
-            label5.Location = new Point(548, 34);
-            label5.Name = "label5";
-            label5.Size = new Size(24, 15);
-            label5.TabIndex = 174;
-            label5.Text = "kW";
             // 
             // label6
             // 
@@ -357,14 +323,7 @@ namespace main.subcontents
             Qwmax_textBox.TabIndex = 186;
             Qwmax_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label7
             // 
-            label7.AutoSize = true;
-            label7.Location = new Point(548, 82);
-            label7.Name = "label7";
-            label7.Size = new Size(24, 15);
-            label7.TabIndex = 185;
-            label7.Text = "kW";
             // 
             // label8
             // 
@@ -387,14 +346,7 @@ namespace main.subcontents
             Qwb_textBox.TabIndex = 183;
             Qwb_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label9
             // 
-            label9.AutoSize = true;
-            label9.Location = new Point(331, 82);
-            label9.Name = "label9";
-            label9.Size = new Size(42, 15);
-            label9.TabIndex = 182;
-            label9.Text = "kWh/a";
             // 
             // label10
             // 
@@ -414,25 +366,19 @@ namespace main.subcontents
             ClientSize = new Size(1015, 559);
             Controls.Add(Qwmax_Copy_button);
             Controls.Add(Qwmax_textBox);
-            Controls.Add(label7);
             Controls.Add(label8);
             Controls.Add(Qwb_textBox);
-            Controls.Add(label9);
             Controls.Add(label10);
             Controls.Add(Qcmax_Copy_button);
             Controls.Add(Qhmax_Copy_button);
             Controls.Add(Qcmax_textBox);
-            Controls.Add(label3);
             Controls.Add(label4);
             Controls.Add(Qhmax_textBox);
-            Controls.Add(label5);
             Controls.Add(label6);
             Controls.Add(Qcb_textBox);
-            Controls.Add(label1);
             Controls.Add(label2);
             Controls.Add(label35);
             Controls.Add(Qhb_textBox);
-            Controls.Add(label26);
             Controls.Add(label34);
             Controls.Add(Icon_pictureBox);
             Controls.Add(panel1);
@@ -455,19 +401,15 @@ namespace main.subcontents
         private PictureBox Icon_pictureBox;
         private DataGridView ZoneResult_dataGridView;
         private DataGridView Zone_dataGridView;
-        private Label label1;
         private Label ZoneCount;
         private Label label35;
         private TextBox UserDB_UfA_textBox;
-        private Label label26;
         private Label label34;
         private TextBox textBox1;
         private Label label2;
         private TextBox textBox2;
-        private Label label3;
         private Label label4;
         private TextBox textBox3;
-        private Label label5;
         private Label label6;
         private Button AirHP_Copy_button;
         private Button button1;
@@ -479,10 +421,8 @@ namespace main.subcontents
         private Button Qcmax_Copy_button;
         private Button Qwmax_Copy_button;
         private TextBox Qwmax_textBox;
-        private Label label7;
         private Label label8;
         private TextBox Qwb_textBox;
-        private Label label9;
         private Label label10;
     }
 }

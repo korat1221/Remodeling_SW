@@ -95,12 +95,6 @@ namespace main.contents
             //Program.UTIL.FillComboBox(DB.type.BaseDB_Lighting, NaturalType_comboBox, "조명", "자연채광 유형1", "1");
 
             //면적기호작성
-            label18.Text = "m\u00B2";
-            label19.Text = "m\u00B2";
-            label20.Text = "m\u00B2";
-            lightload_unit.Text = "W/m\u00B2";
-            areaunit1.Text = "m\u00B2";
-            areaunit2.Text = "m\u00B2";
 
             Main_pictureBox2.Parent = Main_pictureBox;
             Main_pictureBox3.Parent = Main_pictureBox2;
@@ -446,7 +440,7 @@ namespace main.contents
                     Pn = U_LightPi * N;
                     Pj = Pn / A;
                 }
-                Pj_textbox.Text = Pj.ToString();
+                Pj_textbox.Text = Pj.ToString() + " W/m" + Program.UTIL.Subscript(2, true);
                 Program.UTIL.textBox_doubleComa(Pj_textbox, true, 2);
             }
             else
@@ -542,12 +536,12 @@ namespace main.contents
             {
                 if (LightNumber.Contains("LP"))
                 {
-                    L5_textBox.Text = D_LightFi;
+                    L5_textBox.Text = D_LightFi == "" ? "" : D_LightFi + " m";
                     L6_textBox.Text = D_LightPi;
                 }
                 else
                 {
-                    L5_textBox.Text = U_LightFi.ToString();
+                    L5_textBox.Text = U_LightFi.ToString() + " m";
                     L6_textBox.Text = U_LightPi.ToString();
                 }
             }
@@ -629,8 +623,6 @@ namespace main.contents
                 }
                 AD = ad * bd;
                 unAD = A - AD;
-                areaunit1.Visible = true;
-                areaunit2.Visible = true;
             }
             else if (NaturalType == "천창")
             {
@@ -647,8 +639,6 @@ namespace main.contents
                 }
                 AD = ad * bd;
                 unAD = A - AD;
-                areaunit1.Visible = true;
-                areaunit2.Visible = true;
             }
             else
             {
@@ -657,10 +647,10 @@ namespace main.contents
                 AD = 0;
                 unAD = A;
             }
-            AD_textBox.Text = string.Format("{0:N2}", AD);
-            aad_textBox.Text = string.Format("{0:N2}", ad);
-            bbd_textBox.Text = string.Format("{0:N2}", bd);
-            NA_textBox.Text = string.Format("{0:N2}", unAD);
+            AD_textBox.Text = string.Format("{0:N2}", AD) + " m" + Program.UTIL.Subscript(2, true);
+            aad_textBox.Text = string.Format("{0:N2}", ad) + " m";
+            bbd_textBox.Text = string.Format("{0:N2}", bd) + " m";
+            NA_textBox.Text = string.Format("{0:N2}", unAD) + " m" + Program.UTIL.Subscript(2, true);
         }
 
         // 주창 정보 들어오기 
@@ -699,42 +689,42 @@ namespace main.contents
             if (NaturalType == "파사드")
             {
                 Window1_textBox.Text = Facade_MainDi;
-                WindowA_textBox.Text = Facade_Aca.ToString();
+                WindowA_textBox.Text = Facade_Aca.ToString() + " m" + Program.UTIL.Subscript(2, true);
                 Program.UTIL.textBox_doubleComa(WindowA_textBox, true, 2);
 
                 Window_glass_textBox.Text = Main_glass;
                 Window_Tao_textBox.Text = Facade_τD65_SNA.ToString();
                 Program.UTIL.textBox_doubleComa(Window_Tao_textBox, true, 3);
 
-                bbd_textBox.Text = bd.ToString();
+                bbd_textBox.Text = bd.ToString() + " m";
                 Program.UTIL.textBox_doubleComa(bbd_textBox, true, 2);
 
-                aad_textBox.Text = ad.ToString();
+                aad_textBox.Text = ad.ToString() + " m";
                 Program.UTIL.textBox_doubleComa(aad_textBox, true, 2);
 
-                AD_textBox.Text = AD.ToString();
+                AD_textBox.Text = AD.ToString() + " m" + Program.UTIL.Subscript(2, true);
                 Program.UTIL.textBox_doubleComa(AD_textBox, true, 2);
 
-                NA_textBox.Text = unAD.ToString();
+                NA_textBox.Text = unAD.ToString() + " m" + Program.UTIL.Subscript(2, true);
                 Program.UTIL.textBox_doubleComa(NA_textBox, true, 2);
             }
             else if (NaturalType == "천창")
             {
                 Window1_textBox.Text = Roof_MainDi;
-                WindowA_textBox.Text = Roof_Aca.ToString();
+                WindowA_textBox.Text = Roof_Aca.ToString() + " m" + Program.UTIL.Subscript(2, true);
                 Program.UTIL.textBox_doubleComa(WindowA_textBox, true, 2);
 
                 Window_glass_textBox.Text = Main_glass;
                 Window_Tao_textBox.Text = Roof_τD65_SNA.ToString();
                 Program.UTIL.textBox_doubleComa(Window_Tao_textBox, true, 3);
 
-                bbd_textBox.Text = bd.ToString();
+                bbd_textBox.Text = bd.ToString() + " m";
                 Program.UTIL.textBox_doubleComa(bbd_textBox, true, 2);
-                aad_textBox.Text = ad.ToString();
+                aad_textBox.Text = ad.ToString() + " m";
                 Program.UTIL.textBox_doubleComa(aad_textBox, true, 2);
-                AD_textBox.Text = AD.ToString();
+                AD_textBox.Text = AD.ToString() + " m" + Program.UTIL.Subscript(2, true);
                 Program.UTIL.textBox_doubleComa(AD_textBox, true, 2);
-                NA_textBox.Text = unAD.ToString();
+                NA_textBox.Text = unAD.ToString() + " m" + Program.UTIL.Subscript(2, true);
                 Program.UTIL.textBox_doubleComa(NA_textBox, true, 2);
             }
             else;
@@ -789,7 +779,6 @@ namespace main.contents
                 Aca_label.Visible = true;
                 direction_textBox.Visible = true;
                 Aca_textBox.Visible = true;
-                Acam2_label.Visible = true;
                 type_pictureBox.Visible = true;
             }
         }
@@ -883,14 +872,14 @@ namespace main.contents
             if (NaturalType == "파사드")
             {
                 direction_textBox.Text = Facade_MainDi;
-                Aca_textBox.Text = Facade_Aca.ToString();
+                Aca_textBox.Text = Facade_Aca.ToString() + " m" + Program.UTIL.Subscript(2, true);
                 Program.UTIL.textBox_doubleComa(Aca_textBox, true, 2);
 
             }
             else if (NaturalType == "천창")
             {
                 direction_textBox.Text = Roof_MainDi;
-                Aca_textBox.Text = Roof_Aca.ToString();
+                Aca_textBox.Text = Roof_Aca.ToString() + " m" + Program.UTIL.Subscript(2, true);
                 Program.UTIL.textBox_doubleComa(Aca_textBox, true, 2);
             }
             else
@@ -966,8 +955,6 @@ namespace main.contents
             label10.Visible = true;
             label11.Visible = true;
             label12.Visible = true;
-            label13.Visible = true;
-            label14.Visible = true;
         }
 
         public static bool OnLoadListProc(Form form)
@@ -1144,8 +1131,6 @@ namespace main.contents
             direction_textBox.Text = "";
             Aca_textBox.Text = ""; ;
 
-            areaunit1.Visible = false;
-            areaunit2.Visible = false;
 
             Subtype.Text = null;
             Renew_checkBox.Checked = false;
@@ -1208,7 +1193,7 @@ namespace main.contents
                 DimmingType_comboBox.SelectedItem = dimming;
 
                 Pj = Program.UTIL.ToDoubleOrZero(Load[0][4]);
-                Pj_textbox.Text = Pj.ToString();
+                Pj_textbox.Text = Pj.ToString() + " W/m" + Program.UTIL.Subscript(2, true);
                 Program.UTIL.textBox_doubleComa(Pj_textbox, true, 2);
 
                 Pci = Program.UTIL.ToDoubleOrZero(Load[0][5]);
@@ -1334,12 +1319,12 @@ namespace main.contents
 
                 if (LightNumber.Contains("LP"))
                 {
-                    L5_textBox.Text = Load[0][7];
+                    L5_textBox.Text = Load[0][7] == "" ? "" : Load[0][7] + " m";
                     L6_textBox.Text = Load[0][8];
                 }
                 else
                 {
-                    L5_textBox.Text = Load[0][9];
+                    L5_textBox.Text = Load[0][9] == "" ? "" : Load[0][9] + " m";
                     L6_textBox.Text = Load[0][10];
                 }
 
@@ -1399,7 +1384,7 @@ namespace main.contents
                     Usage = Value[0][2];
 
                     A = Program.UTIL.ToDoubleOrZero(Value[0][3]); //순바닥면적
-                    A_textBox.Text = A.ToString();
+                    A_textBox.Text = A.ToString() + " m" + Program.UTIL.Subscript(2, true);
                     Program.UTIL.textBox_doubleComa(A_textBox, true, 2);
 
 

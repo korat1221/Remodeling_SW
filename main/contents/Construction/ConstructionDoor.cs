@@ -73,21 +73,8 @@ namespace main.contents
                 }
             }
 
-            string unit = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
-            Ug_unit_label.Text = unit;
-            label84.Text = unit;
-            label86.Text = unit;
-            label83.Text = unit;
-            label9.Text = unit;
-            label23.Text = unit;
-            label15.Text = unit;
 
-            unit = "m" + Program.UTIL.Subscript(2, true);
-            label2.Text = unit;
-            label34.Text = unit;
 
-            label28.Text = "m\u00B2";
-            glassArea_label2.Text = "m\u00B2";
 
         }
         private void GeneralPanel_Paint(object sender, PaintEventArgs e)
@@ -249,22 +236,18 @@ namespace main.contents
                 DoorColor_comboBox.Visible = true;
                 αp_label.Visible = true;
                 abs_textBox.Visible = true;
-                αp_label2.Visible = true;
 
                 Door_label.Visible = true;
                 label1.Visible = true;
                 DoorDB_button.Visible = true;
                 UCW_g_label.Visible = true;
                 UD1_textBox.Visible = true;
-                Ug_unit_label.Visible = true;
                 label27.Visible = true;
                 DoorL_textBox.Visible = true;
                 label22.Visible = true;
                 DoorH_textBox.Visible = true;
-                label21.Visible = true;
                 label30.Visible = true;
                 DoorArea_textBox.Visible = true;
-                label28.Visible = true;
 
                 UD1_textBox.Enabled = false;
                 UD1_textBox.BorderStyle = BorderStyle.None;
@@ -279,18 +262,14 @@ namespace main.contents
                 DoorColor_comboBox.Visible = true;
                 αp_label.Visible = true;
                 abs_textBox.Visible = true;
-                αp_label2.Visible = true;
                 Door_label.Visible = true;
                 DoorL_textBox.Visible = true;
                 label22.Visible = true;
                 DoorH_textBox.Visible = true;
-                label21.Visible = true;
                 label30.Visible = true;
                 DoorArea_textBox.Visible = true;
-                label28.Visible = true;
                 UCW_g_label.Visible = true;
                 UD1_textBox.Visible = true;
-                Ug_unit_label.Visible = true;
                 label27.Visible = true;
 
                 label1.Visible = false;
@@ -299,10 +278,8 @@ namespace main.contents
                 DoorL_textBox.Visible = false;
                 label22.Visible = false;
                 DoorH_textBox.Visible = false;
-                label21.Visible = false;
                 label30.Visible = false;
                 DoorArea_textBox.Visible = false;
-                label28.Visible = false;
                 DoorDB_button.Visible = false;
                 label11.Visible = false;
                 glass_checkBox.Visible = false;
@@ -311,7 +288,6 @@ namespace main.contents
 
                 GlassArea_label.Visible = false;
                 GlassArea_textBox.Visible = false;
-                glassArea_label2.Visible = false;
 
             }
             else if (UDoorMethod == "진단")
@@ -322,21 +298,17 @@ namespace main.contents
                 DoorColor_comboBox.Visible = true;
                 αp_label.Visible = true;
                 abs_textBox.Visible = true;
-                αp_label2.Visible = true;
                 Door_label.Visible = true;
                 label1.Visible = true;
                 DoorDB_button.Visible = true;
                 UCW_g_label.Visible = true;
                 UD1_textBox.Visible = true;
-                Ug_unit_label.Visible = true;
                 label27.Visible = true;
                 DoorL_textBox.Visible = true;
                 label22.Visible = true;
                 DoorH_textBox.Visible = true;
-                label21.Visible = true;
                 label30.Visible = true;
                 DoorArea_textBox.Visible = true;
-                label28.Visible = true;
 
                 label11.Visible = false;
                 glass_checkBox.Visible = false;
@@ -346,7 +318,6 @@ namespace main.contents
 
                 GlassArea_label.Visible = false;
                 GlassArea_textBox.Visible = false;
-                glassArea_label2.Visible = false;
             }
             //Calc_dUinst();
             glasscheck();
@@ -359,12 +330,12 @@ namespace main.contents
             {
                 //출입문문가로
                 DoorL = 900;
-                DoorL_textBox.Text = DoorL.ToString();
-                DoorL2_textBox.Text = DoorL.ToString();
+                DoorL_textBox.Text = DoorL.ToString() + " mm";
+                DoorL2_textBox.Text = DoorL.ToString() + " mm";
                 //출입문세로
                 DoorH = 2100;
-                DoorH_textBox.Text = DoorH.ToString();
-                DoorH2_textBox.Text = DoorH.ToString();
+                DoorH_textBox.Text = DoorH.ToString() + " mm";
+                DoorH2_textBox.Text = DoorH.ToString() + " mm";
             }
             else;
         }
@@ -392,7 +363,7 @@ namespace main.contents
                     Doorsize();
                     //출입문열관류율
                     DoorUD = Program.UTIL.ToDoubleOrZero(doordb.Select_Door[13]);
-                    UD1_textBox.Text = DoorUD.ToString();
+                    UD1_textBox.Text = DoorUD.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
 
                     //문짝문틀정보
                     Material = doordb.Select_Door[7];
@@ -412,9 +383,9 @@ namespace main.contents
                     }
                     //문틀상하부
                     DoorOver = doordb.Select_Door[5]=="" ?  0: Program.UTIL.ToDoubleOrZero(doordb.Select_Door[5]);
-                    over_textBox.Text = DoorOver.ToString();
+                    over_textBox.Text = DoorOver.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                     DoorBottom = doordb.Select_Door[6] == "" ? 0 : Program.UTIL.ToDoubleOrZero(doordb.Select_Door[6]);
-                    bottom_textBox.Text =  DoorBottom.ToString();
+                    bottom_textBox.Text =  DoorBottom.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                     //제품명
                     DoorDB = doordb.Select_Door[2];
                     DoorDB_textBox.Text = DoorDB.ToString();
@@ -424,12 +395,12 @@ namespace main.contents
                     {
                         //출입문문가로
                         DoorL = Program.UTIL.ToDoubleOrZero(doordb.Select_Door[11]);
-                        DoorL_textBox.Text = DoorL.ToString();
-                        DoorL2_textBox.Text = DoorL.ToString();
+                        DoorL_textBox.Text = DoorL.ToString() + " mm";
+                        DoorL2_textBox.Text = DoorL.ToString() + " mm";
                         //출입문세로
                         DoorH = Program.UTIL.ToDoubleOrZero(doordb.Select_Door[12]);
-                        DoorH_textBox.Text = DoorH.ToString();
-                        DoorH2_textBox.Text = DoorH.ToString();
+                        DoorH_textBox.Text = DoorH.ToString() + " mm";
+                        DoorH2_textBox.Text = DoorH.ToString() + " mm";
                     }
                     else;
                 }
@@ -451,7 +422,7 @@ namespace main.contents
 
                     //출입문열관류율
                     DoorUD = Program.UTIL.ToDoubleOrZero(doordb.Select_Door[13]);
-                    UD1_textBox.Text = DoorUD.ToString();
+                    UD1_textBox.Text = DoorUD.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                     //문짝문틀정보
                     Material = doordb.Select_Door[7];
                     Material_textBox.Text = Material;
@@ -470,9 +441,9 @@ namespace main.contents
                     }
                     //문틀상하부
                     DoorOver = doordb.Select_Door[5]=="" ?  0 : Program.UTIL.ToDoubleOrZero(doordb.Select_Door[5]);
-                    over_textBox.Text = DoorOver.ToString();
+                    over_textBox.Text = DoorOver.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                     DoorBottom = doordb.Select_Door[6]=="" ? 0 :  Program.UTIL.ToDoubleOrZero(doordb.Select_Door[6]);
-                    bottom_textBox.Text = DoorBottom.ToString();
+                    bottom_textBox.Text = DoorBottom.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                     //제품명
                     DoorDB = doordb.Select_Door[2];
                     DoorDB_textBox.Text = DoorDB.ToString();
@@ -485,12 +456,12 @@ namespace main.contents
                     {
                         //출입문문가로
                         DoorL = Program.UTIL.ToDoubleOrZero(doordb.Select_Door[11]);
-                        DoorL_textBox.Text = DoorL.ToString();
-                        DoorL2_textBox.Text = DoorL.ToString();
+                        DoorL_textBox.Text = DoorL.ToString() + " mm";
+                        DoorL2_textBox.Text = DoorL.ToString() + " mm";
                         //출입문세로
                         DoorH = Program.UTIL.ToDoubleOrZero(doordb.Select_Door[12]);
-                        DoorH_textBox.Text = DoorH.ToString();
-                        DoorH2_textBox.Text = DoorH.ToString();
+                        DoorH_textBox.Text = DoorH.ToString() + " mm";
+                        DoorH2_textBox.Text = DoorH.ToString() + " mm";
                     }
                     else;
 
@@ -506,11 +477,11 @@ namespace main.contents
             if (DoorH_textBox.Text != "")
             {
                 DoorArea = DoorH * DoorL;
-                DoorArea_textBox.Text = String.Format("{0:F1}", DoorArea / 1000000);
-                DoorArea2_textBox.Text = String.Format("{0:F1}", DoorArea / 1000000);
+                DoorArea_textBox.Text = String.Format("{0:F1}", DoorArea / 1000000) + " m" + Program.UTIL.Subscript(2, true);
+                DoorArea2_textBox.Text = String.Format("{0:F1}", DoorArea / 1000000) + " m" + Program.UTIL.Subscript(2, true);
 
-                OverL_textBox.Text = ((DoorL + DoorH * 2) / 1000).ToString();
-                UnderL_textBox.Text = (DoorL / 1000).ToString();
+                OverL_textBox.Text = ((DoorL + DoorH * 2) / 1000).ToString() + " m";
+                UnderL_textBox.Text = (DoorL / 1000).ToString() + " m";
             }
         }
 
@@ -519,11 +490,11 @@ namespace main.contents
             if (DoorL_textBox.Text != "")
             {
                 DoorArea = DoorH * DoorL;
-                DoorArea_textBox.Text = String.Format("{0:F1}", DoorArea / 1000000);
-                DoorArea2_textBox.Text = String.Format("{0:F1}", DoorArea / 1000000);
+                DoorArea_textBox.Text = String.Format("{0:F1}", DoorArea / 1000000) + " m" + Program.UTIL.Subscript(2, true);
+                DoorArea2_textBox.Text = String.Format("{0:F1}", DoorArea / 1000000) + " m" + Program.UTIL.Subscript(2, true);
 
-                OverL_textBox.Text = ((DoorL + DoorH * 2 / 1000)).ToString();
-                UnderL_textBox.Text = (DoorL / 1000).ToString();
+                OverL_textBox.Text = ((DoorL + DoorH * 2 / 1000)).ToString() + " m";
+                UnderL_textBox.Text = (DoorL / 1000).ToString() + " m";
             }
         }
 
@@ -534,8 +505,8 @@ namespace main.contents
             {
                 GlassH = double.Parse(GlassH_textBox.Text);
                 GlassArea = GlassH * GlassL;
-                GlassArea_textBox.Text = String.Format("{0:F3}", GlassArea / 1000000);
-                GlassArea2_textBox.Text = String.Format("{0:F3}", GlassArea / 1000000);
+                GlassArea_textBox.Text = String.Format("{0:F3}", GlassArea / 1000000) + " m" + Program.UTIL.Subscript(2, true);
+                GlassArea2_textBox.Text = String.Format("{0:F3}", GlassArea / 1000000) + " m" + Program.UTIL.Subscript(2, true);
             }
         }
 
@@ -545,8 +516,8 @@ namespace main.contents
             {
                 GlassL = double.Parse(GlassL_textBox.Text);
                 GlassArea = GlassH * GlassL;
-                GlassArea_textBox.Text = String.Format("{0:F3}", GlassArea / 1000000);
-                GlassArea2_textBox.Text = String.Format("{0:F3}", GlassArea / 1000000);
+                GlassArea_textBox.Text = String.Format("{0:F3}", GlassArea / 1000000) + " m" + Program.UTIL.Subscript(2, true);
+                GlassArea2_textBox.Text = String.Format("{0:F3}", GlassArea / 1000000) + " m" + Program.UTIL.Subscript(2, true);
             }
         }
 
@@ -587,7 +558,7 @@ namespace main.contents
                 GlassName = door_glassDB_form.Select_Glass[1];
                 GlassName_textBox.Text = GlassName;
                 Ug = Program.UTIL.ToDoubleOrZero(door_glassDB_form.Select_Glass[6]);
-                GlassU_textBox.Text = String.Format("{0:F3}", Ug);
+                GlassU_textBox.Text = String.Format("{0:F3}", Ug) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
             }
 
             UD_Glass();
@@ -621,15 +592,15 @@ namespace main.contents
                         Psi_InstallSide = Program.UTIL.ToDoubleOrZero(DoorInstall_form.Select_DoorInstall[4]);
                         Psi_InstallBottom = Program.UTIL.ToDoubleOrZero(DoorInstall_form.Select_DoorInstall[5]);
 
-                        Psi_InstallTop_textBox.Text = String.Format("{0:F3}", Psi_InstallTop);
-                        Psi_InstallSide_textBox.Text = String.Format("{0:F3}", Psi_InstallSide);
-                        Psi_InstallBottom_textBox.Text = String.Format("{0:F3}", Psi_InstallBottom);
+                        Psi_InstallTop_textBox.Text = String.Format("{0:F3}", Psi_InstallTop) + " W/m·K";
+                        Psi_InstallSide_textBox.Text = String.Format("{0:F3}", Psi_InstallSide) + " W/m·K";
+                        Psi_InstallBottom_textBox.Text = String.Format("{0:F3}", Psi_InstallBottom) + " W/m·K";
 
-                        d_InstallTop_textBox.Text = Convert.ToString(DoorL / 1000);
-                        d_InstallSide_textBox.Text = Convert.ToString(DoorH / 1000 * 2);
-                        d_InstallBottom_textBox.Text = Convert.ToString(DoorL / 1000);
+                        d_InstallTop_textBox.Text = Convert.ToString(DoorL / 1000) + " m";
+                        d_InstallSide_textBox.Text = Convert.ToString(DoorH / 1000 * 2) + " m";
+                        d_InstallBottom_textBox.Text = Convert.ToString(DoorL / 1000) + " m";
 
-                        dUinst_textBox.Text = String.Format("{0:F3}", (Psi_InstallTop * (DoorL / 1000) + Psi_InstallSide * (DoorH / 1000 * 2) + Psi_InstallBottom * (DoorL / 1000)) / (DoorArea / 1000000));
+                        dUinst_textBox.Text = String.Format("{0:F3}", (Psi_InstallTop * (DoorL / 1000) + Psi_InstallSide * (DoorH / 1000 * 2) + Psi_InstallBottom * (DoorL / 1000)) / (DoorArea / 1000000)) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
 
                     }
                 }
@@ -655,15 +626,15 @@ namespace main.contents
                         Psi_InstallSide = Program.UTIL.ToDoubleOrZero(DoorInstall_form.Select_DoorInstall[4]);
                         Psi_InstallBottom = Program.UTIL.ToDoubleOrZero(DoorInstall_form.Select_DoorInstall[5]);
 
-                        Psi_InstallTop_textBox.Text = String.Format("{0:F3}", Psi_InstallTop);
-                        Psi_InstallSide_textBox.Text = String.Format("{0:F3}", Psi_InstallSide);
-                        Psi_InstallBottom_textBox.Text = String.Format("{0:F3}", Psi_InstallBottom);
+                        Psi_InstallTop_textBox.Text = String.Format("{0:F3}", Psi_InstallTop) + " W/m·K";
+                        Psi_InstallSide_textBox.Text = String.Format("{0:F3}", Psi_InstallSide) + " W/m·K";
+                        Psi_InstallBottom_textBox.Text = String.Format("{0:F3}", Psi_InstallBottom) + " W/m·K";
 
-                        d_InstallTop_textBox.Text = Convert.ToString(DoorL / 1000);
-                        d_InstallSide_textBox.Text = Convert.ToString(DoorH / 1000 * 2);
-                        d_InstallBottom_textBox.Text = Convert.ToString(DoorL / 1000);
+                        d_InstallTop_textBox.Text = Convert.ToString(DoorL / 1000) + " m";
+                        d_InstallSide_textBox.Text = Convert.ToString(DoorH / 1000 * 2) + " m";
+                        d_InstallBottom_textBox.Text = Convert.ToString(DoorL / 1000) + " m";
 
-                        dUinst_textBox.Text = String.Format("{0:F3}", (Psi_InstallTop * (DoorL / 1000) + Psi_InstallSide * (DoorH / 1000 * 2) + Psi_InstallBottom * (DoorL / 1000)) / (DoorArea / 1000000));
+                        dUinst_textBox.Text = String.Format("{0:F3}", (Psi_InstallTop * (DoorL / 1000) + Psi_InstallSide * (DoorH / 1000 * 2) + Psi_InstallBottom * (DoorL / 1000)) / (DoorArea / 1000000)) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
 
                     }
                 }
@@ -757,7 +728,7 @@ namespace main.contents
                     if (Uvalue.Length > 0)
                     {
                         DoorUD = Program.UTIL.ToDoubleOrZero(Uvalue[0][0]);
-                        UD1_textBox.Text = String.Format("{0:F3}", DoorUD);
+                        UD1_textBox.Text = String.Format("{0:F3}", DoorUD) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                     }
                 }
             }
@@ -772,7 +743,7 @@ namespace main.contents
                 if (UD1_textBox.Text != null && UD1_textBox.Text.ToString() != "")
                 {
                     DoorUDGlass = Program.UTIL.ToDoubleOrZero(UD1_textBox.Text);
-                    UD2_textBox.Text = String.Format("{0:F3}", DoorUDGlass);
+                    UD2_textBox.Text = String.Format("{0:F3}", DoorUDGlass) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 }
             }
             else
@@ -789,7 +760,7 @@ namespace main.contents
                     glassu = Ug;
 
                     DoorUDGlass = (glassarea * glassu + doorarea * dooru) / totalarea;
-                    UD2_textBox.Text = String.Format("{0:F3}", DoorUDGlass);
+                    UD2_textBox.Text = String.Format("{0:F3}", DoorUDGlass) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
 
                 }
                 else;
@@ -810,7 +781,7 @@ namespace main.contents
                     DoorUDinsGlass = DoorUDGlass + Program.UTIL.ToDoubleOrZero(dUinst_textBox.Text);
                 }
 
-                UD_textBox.Text = String.Format("{0:F3}", DoorUDinsGlass);
+                UD_textBox.Text = String.Format("{0:F3}", DoorUDinsGlass) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
             }
         }
 
@@ -833,18 +804,14 @@ namespace main.contents
                 label29.Visible = true;
                 GlassArea_label.Visible = true;
                 GlassArea_textBox.Visible = true;
-                glassArea_label2.Visible = true;
                 GlassName_textBox.Visible = true;
                 GlassDB_button.Visible = true;
                 label85.Visible = true;
                 GlassU_textBox.Visible = true;
-                label84.Visible = true;
                 label87.Visible = true;
                 UD2_textBox.Visible = true;
-                label86.Visible = true;
                 GlassArea2_textBox.Visible = true;
                 label35.Visible = true;
-                label34.Visible = true;
 
                 Program.UTIL.FillComboBox(DB.type.BaseDB_HCneed, DoorColor_comboBox, "출입문", "외장재색", "1");
             }
@@ -857,18 +824,14 @@ namespace main.contents
                 label29.Visible = false;
                 GlassArea_label.Visible = false;
                 GlassArea_textBox.Visible = false;
-                glassArea_label2.Visible = false;
                 GlassName_textBox.Visible = false;
                 GlassDB_button.Visible = false;
                 label85.Visible = false;
                 GlassU_textBox.Visible = false;
-                label84.Visible = false;
                 label87.Visible = false;
                 UD2_textBox.Visible = false;
-                label86.Visible = false;
                 GlassArea2_textBox.Visible = false;
                 label35.Visible = false;
-                label34.Visible = false;
             }
         }
 
@@ -964,8 +927,8 @@ namespace main.contents
                           "문유효열관류율,Door유형,제품명,제조사," +
                           "법규열관류율,미입력항목",
                         "'" + DoorNum_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + DoorName + "','" + Type + "','" + OldDoor + "','" + UDoorMethod + "','" + DiIndi + "','" + DoorDB + "','" + Material + "','" + FrameIn + "','" + DoorIn + "','" + DoorColor + "','" + αd.ToString() + "','" + DoorInsul + "','" +
-                        DoorThk.ToString() + "','" + DoorUD.ToString() + "','" + DoorOver.ToString() + "','" + DoorBottom.ToString() + "','" + DoorArea_textBox.Text + "','" + DoorH.ToString() + "','" + DoorL.ToString() + "','" + glass_check.ToString() + "','" +
-                        InstallType + "','" + Install2 + "','" + Psi_InstallTop.ToString() + "','" + Psi_InstallSide.ToString() + "','" + Psi_InstallBottom.ToString() + "','" + d_InstallTop_textBox.Text + "','" + d_InstallSide_textBox.Text + "','" + d_InstallBottom_textBox.Text + "','" + dUinst_textBox.Text + "','" +
+                        DoorThk.ToString() + "','" + DoorUD.ToString() + "','" + DoorOver.ToString() + "','" + DoorBottom.ToString() + "','" + DoorArea_textBox.Text.Split(' ')[0] + "','" + DoorH.ToString() + "','" + DoorL.ToString() + "','" + glass_check.ToString() + "','" +
+                        InstallType + "','" + Install2 + "','" + Psi_InstallTop.ToString() + "','" + Psi_InstallSide.ToString() + "','" + Psi_InstallBottom.ToString() + "','" + d_InstallTop_textBox.Text.Split(' ')[0] + "','" + d_InstallSide_textBox.Text.Split(' ')[0] + "','" + d_InstallBottom_textBox.Text.Split(' ')[0] + "','" + dUinst_textBox.Text.Split(' ')[0] + "','" +
                         DoorUDinsGlass.ToString() + "','" + DBType + "','" + DBName + "','" + DBName2 + "','" +
                         법규U.ToString()
                         + "','" + missingItems + "'", "번호");
@@ -977,7 +940,7 @@ namespace main.contents
                               "유리가로,유리세로,유리종류,유리면적,유리열관류율,유리반영문열관류율",
                             "'" + DoorNum_textBox.Text + "','" +
                             GlassL.ToString() + "','" + GlassH.ToString() + "','" + GlassName + "','" +
-                           GlassArea_textBox.Text + "','" + Ug.ToString() + "','" + DoorUDGlass.ToString()
+                           GlassArea_textBox.Text.Split(' ')[0] + "','" + Ug.ToString() + "','" + DoorUDGlass.ToString()
                             + "'", "번호");
                 }
                 else { }
@@ -1113,15 +1076,15 @@ namespace main.contents
                 DoorDB = Load[0][6];
                 DoorDB_textBox.Text = DoorDB;
                 DoorUD = Program.UTIL.ToDoubleOrZero(Load[0][14]);
-                UD1_textBox.Text = DoorUD.ToString();
+                UD1_textBox.Text = DoorUD.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 DoorL = Program.UTIL.ToDoubleOrZero(Load[0][19]);
-                DoorL_textBox.Text = DoorL.ToString();
-                DoorL2_textBox.Text = DoorL.ToString();
+                DoorL_textBox.Text = DoorL.ToString() + " mm";
+                DoorL2_textBox.Text = DoorL.ToString() + " mm";
                 DoorH = Program.UTIL.ToDoubleOrZero(Load[0][18]);
-                DoorH_textBox.Text = DoorH.ToString();
-                DoorH2_textBox.Text = DoorH.ToString();
-                DoorArea_textBox.Text = Load[0][17];
-                DoorArea2_textBox.Text = Load[0][17];
+                DoorH_textBox.Text = DoorH.ToString() + " mm";
+                DoorH2_textBox.Text = DoorH.ToString() + " mm";
+                DoorArea_textBox.Text = Load[0][17] == "" ? "" : Load[0][17] + " m" + Program.UTIL.Subscript(2, true);
+                DoorArea2_textBox.Text = Load[0][17] == "" ? "" : Load[0][17] + " m" + Program.UTIL.Subscript(2, true);
 
                 glass_check = Convert.ToBoolean(Load[0][20]);
                 glass_checkBox.Checked = Convert.ToBoolean(Load[0][20]);
@@ -1133,7 +1096,7 @@ namespace main.contents
                 Install_textBox.Text = Install2;
 
                 DoorUDinsGlass = Program.UTIL.ToDoubleOrZero(Load[0][30]);
-                UD_textBox.Text = String.Format("{0:F3}", DoorUDinsGlass);
+                UD_textBox.Text = String.Format("{0:F3}", DoorUDinsGlass) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
 
                 //문짝문틀정보
                 Material = Load[0][7];
@@ -1144,27 +1107,27 @@ namespace main.contents
                 DoorIn_textBox.Text = DoorIn;
 
                 DoorOver = Program.UTIL.ToDoubleOrZero(Load[0][15]);
-                over_textBox.Text = DoorOver.ToString();
+                over_textBox.Text = DoorOver.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 DoorBottom = Program.UTIL.ToDoubleOrZero(Load[0][16]);
-                bottom_textBox.Text = DoorBottom.ToString();
+                bottom_textBox.Text = DoorBottom.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
 
-                OverL_textBox.Text = ((DoorL + DoorH * 2) / 1000).ToString();
-                UnderL_textBox.Text = (DoorL / 1000).ToString();
+                OverL_textBox.Text = ((DoorL + DoorH * 2) / 1000).ToString() + " m";
+                UnderL_textBox.Text = (DoorL / 1000).ToString() + " m";
 
                 //설치열교정보
                 Psi_InstallTop = Program.UTIL.ToDoubleOrZero(Load[0][23]);
-                Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString();
+                Psi_InstallTop_textBox.Text = Psi_InstallTop.ToString() + " W/m·K";
                 Psi_InstallSide = Program.UTIL.ToDoubleOrZero(Load[0][24]);
-                Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString();
+                Psi_InstallSide_textBox.Text = Psi_InstallSide.ToString() + " W/m·K";
                 Psi_InstallBottom = Program.UTIL.ToDoubleOrZero(Load[0][25]);
-                Psi_InstallBottom_textBox.Text = Psi_InstallBottom.ToString();
+                Psi_InstallBottom_textBox.Text = Psi_InstallBottom.ToString() + " W/m·K";
 
-                d_InstallTop_textBox.Text = Load[0][26];
-                d_InstallSide_textBox.Text = Load[0][27];
-                d_InstallBottom_textBox.Text = Load[0][28];
+                d_InstallTop_textBox.Text = Load[0][26] == "" ? "" : Load[0][26] + " m";
+                d_InstallSide_textBox.Text = Load[0][27] == "" ? "" : Load[0][27] + " m";
+                d_InstallBottom_textBox.Text = Load[0][28] == "" ? "" : Load[0][28] + " m";
 
                 DoorUDinsGlass = Program.UTIL.ToDoubleOrZero(Load[0][29]);
-                dUinst_textBox.Text = String.Format("{0:F3}", DoorUDinsGlass);
+                dUinst_textBox.Text = String.Format("{0:F3}", DoorUDinsGlass) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 Load_DoorType_image2();
                 Load_DoorType_image3();
                 Load_DoorType_image4();
@@ -1204,13 +1167,13 @@ namespace main.contents
 
                     GlassName = Load[0][2];
                     GlassName_textBox.Text = GlassName;
-                    GlassArea_textBox.Text = Load[0][3];
-                    GlassArea2_textBox.Text = Load[0][3];
+                    GlassArea_textBox.Text = Load[0][3] == "" ? "" : Load[0][3] + " m" + Program.UTIL.Subscript(2, true).ToString();
+                    GlassArea2_textBox.Text = Load[0][3] == "" ? "" : Load[0][3] + " m" + Program.UTIL.Subscript(2, true).ToString();
 
                     Ug = Program.UTIL.ToDoubleOrZero(Load[0][4]);
-                    GlassU_textBox.Text = Ug.ToString();
+                    GlassU_textBox.Text = Ug.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                     DoorUDGlass = Program.UTIL.ToDoubleOrZero(Load[0][5]);
-                    UD2_textBox.Text = String.Format("{0:F3}", DoorUDGlass);
+                    UD2_textBox.Text = String.Format("{0:F3}", DoorUDGlass) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 }
             }
         }

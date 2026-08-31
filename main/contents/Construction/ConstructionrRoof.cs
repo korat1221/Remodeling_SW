@@ -87,9 +87,6 @@ namespace main.contents
             webView21.Source = new Uri(Program.gPath + "transmit.html?type=roof", true);
             InitializeAsync();
 
-            U_label2.Text = "W/(m\u00B2∙K)";
-            dU_label2.Text = "W/(m\u00B2∙K)";
-            Ueff_label2.Text = "W/(m\u00B2∙K)";
         }
         async void InitializeAsync()
         {
@@ -506,42 +503,36 @@ namespace main.contents
                         C = Program.UTIL.ToDoubleOrZero(TB_form.Select_TB[6]);
                         PerArea = Program.UTIL.ToDoubleOrZero(TB_form.Select_TB[7]);
                         if (PerArea != 0)
-                        { PerArea_textBox.Text = string.Format("{0:F3}", PerArea); }
+                        { PerArea_textBox.Text = string.Format("{0:F3}", PerArea) + (LinearPoint == "점형" ? " EA/m" : " m/m") + Program.UTIL.Subscript(2, true); }
 
                         check_Type = TB_form.Select_TB[8];
                         check_dins = Program.UTIL.ToDoubleOrZero(TB_form.Select_TB[9]);
                         dU = Program.UTIL.ToDoubleOrZero(TB_form.Select_TB[10]);
-                        dU_textBox.Text = string.Format("{0:F3}", dU);
+                        dU_textBox.Text = string.Format("{0:F3}", dU) + " W/(m" + Program.UTIL.Subscript(2, true) + "∙K)";
 
                         if (PerArea_textBox.Text != "" && PerArea != 0)
-                        { dU2_textBox.Text = string.Format("{0:F3}", dU); }
+                        { dU2_textBox.Text = string.Format("{0:F3}", dU) + " W/m" + Program.UTIL.Subscript(2, true) + "·K"; }
 
                         LinearPoint = TB_form.Select_TB[11];
                         PsiKai = Program.UTIL.ToDoubleOrZero(TB_form.Select_TB[12]);
 
                         if (PerArea_textBox.Text != "" && PerArea != 0)
-                        { PsiKai_textBox.Text = string.Format("{0:F3}", PsiKai); }
+                        { PsiKai_textBox.Text = string.Format("{0:F3}", PsiKai) + (LinearPoint == "점형" ? " W/K" : " W/mK"); }
 
                         tabControl1.SelectedTab = tabControl1.TabPages["dU_tabPage"];
                         if (LinearPoint == "점형")
                         {
                             PerArea_label1.Text = "적용개수";
-                            PerArea_label2.Text = "EA/m2";
                             PsiKai_label1.Text = "점형열교 열관류율";
-                            PsiKai_label2.Text = "W/K";
                             dU_label3.Text = "1D 열교가산치";
-                            dU_label4.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
 
 
                         }
                         else
                         {
                             PerArea_label1.Text = "적용길이";
-                            PerArea_label2.Text = "m/m2";
                             PsiKai_label1.Text = "선형열교 열관류율";
-                            PsiKai_label2.Text = "W/mK";
                             dU_label3.Text = "1D 열교가산치";
-                            dU_label4.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
                         }
 
                         Load_TB_Image();
@@ -884,7 +875,7 @@ namespace main.contents
                         {
                             Uvalue = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                         }
-                        U_textBox.Text = string.Format("{0:F3}", Uvalue);
+                        U_textBox.Text = string.Format("{0:F3}", Uvalue) + " W/(m" + Program.UTIL.Subscript(2, true) + "∙K)";
                         dins = (1 / Uvalue) * 0.04 * 1000;
                         Calc_dU();
                     }
@@ -900,7 +891,7 @@ namespace main.contents
                 if (RsiValue.Length > 0)
                 {
                     Rsi = Program.UTIL.ToDoubleOrZero(RsiValue[0][0]);
-                    Rsi_textBox.Text = string.Format("{0:F3}", Rsi);
+                    Rsi_textBox.Text = string.Format("{0:F3}", Rsi) + " m" + Program.UTIL.Subscript(2, true) + "·K/W";
 
                 }
 
@@ -908,7 +899,7 @@ namespace main.contents
                 if (RseValue.Length > 0)
                 {
                     Rse = Program.UTIL.ToDoubleOrZero(RseValue[0][0]);
-                    Rse_textBox.Text = string.Format("{0:F3}", Rse);
+                    Rse_textBox.Text = string.Format("{0:F3}", Rse) + " m" + Program.UTIL.Subscript(2, true) + "·K/W";
                 }
             }
         }
@@ -995,10 +986,10 @@ namespace main.contents
 
 
 
-                Material_dtot_textBox.Text = String.Format("{0:F0}", dtot);
-                Material_Rtot_textBox.Text = String.Format("{0:F2}", Rtot);
+                Material_dtot_textBox.Text = String.Format("{0:F0}", dtot) + " mm";
+                Material_Rtot_textBox.Text = String.Format("{0:F2}", Rtot) + " m" + Program.UTIL.Subscript(2, true) + "·K/W";
                 Uvalue = 1 / Rtot;
-                U_textBox.Text = string.Format("{0:F3}", Uvalue);
+                U_textBox.Text = string.Format("{0:F3}", Uvalue) + " W/(m" + Program.UTIL.Subscript(2, true) + "∙K)";
 
                 int i = 0;
                 int count = Ucalc_dataGridView.RowCount + 1;
@@ -1051,10 +1042,10 @@ namespace main.contents
                 else
                 {
                     PsiKai = (A * Math.Pow(dins, 2) + B * dins + C) / 1000;
-                    PsiKai_textBox.Text = string.Format("{0:F3}", PsiKai);
+                    PsiKai_textBox.Text = string.Format("{0:F3}", PsiKai) + (LinearPoint == "점형" ? " W/K" : " W/mK");
                     dU = PsiKai * PerArea;
-                    dU_textBox.Text = string.Format("{0:F3}", dU);
-                    dU2_textBox.Text = string.Format("{0:F3}", dU);
+                    dU_textBox.Text = string.Format("{0:F3}", dU) + " W/(m" + Program.UTIL.Subscript(2, true) + "∙K)";
+                    dU2_textBox.Text = string.Format("{0:F3}", dU) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 }
 
             }
@@ -1064,8 +1055,8 @@ namespace main.contents
         private void Calc_Ueff()
         {
             Ueff = dU + Uvalue;
-            Ueff_textBox.Text = string.Format("{0:F3}", Ueff);
-            Ueff2_textBox.Text = string.Format("{0:F3}", Ueff);
+            Ueff_textBox.Text = string.Format("{0:F3}", Ueff) + " W/(m" + Program.UTIL.Subscript(2, true) + "∙K)";
+            Ueff2_textBox.Text = string.Format("{0:F3}", Ueff) + " W/(m" + Program.UTIL.Subscript(2, true) + "∙K)";
         }
 
         public bool ValidateAndSave(bool isManualSave = false)
@@ -1192,11 +1183,8 @@ namespace main.contents
             PerArea_textBox.Text = null;
 
             PerArea_label1.Text = null;
-            PerArea_label2.Text = null;
             PsiKai_label1.Text = null;
-            PsiKai_label2.Text = null;
             dU_label3.Text = null;
-            dU_label4.Text = null;
 
             Rse_textBox.Text = null;
             Rsi_textBox.Text = null;
@@ -1342,20 +1330,14 @@ namespace main.contents
                 if (LinearPoint == "점형")
                 {
                     PerArea_label1.Text = "적용개수";
-                    PerArea_label2.Text = "EA/m2";
                     PsiKai_label1.Text = "점형열교 열관류율";
-                    PsiKai_label2.Text = "W/K";
                     dU_label3.Text = "1D 열교가산치";
-                    dU_label4.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 }
                 else if (LinearPoint == "선형")
                 {
                     PerArea_label1.Text = "적용길이";
-                    PerArea_label2.Text = "m/m2";
                     PsiKai_label1.Text = "선형열교 열관류율";
-                    PsiKai_label2.Text = "W/mK";
                     dU_label3.Text = "1D 열교가산치";
-                    dU_label4.Text = "W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 }
                 else { }
 
@@ -1369,14 +1351,14 @@ namespace main.contents
                 PerArea = Program.UTIL.ToDoubleOrZero(Load[0][16]);
 
                 Rse = Program.UTIL.ToDoubleOrZero(Load[0][17]);
-                Rse_textBox.Text = string.Format("{0:F3}", Rse);
+                Rse_textBox.Text = string.Format("{0:F3}", Rse) + " m" + Program.UTIL.Subscript(2, true) + "·K/W";
                 Rsi = Program.UTIL.ToDoubleOrZero(Load[0][18]);
-                Rsi_textBox.Text = string.Format("{0:F3}", Rsi);
+                Rsi_textBox.Text = string.Format("{0:F3}", Rsi) + " m" + Program.UTIL.Subscript(2, true) + "·K/W";
 
                 dtot = Program.UTIL.ToDoubleOrZero(Load[0][19]);
                 Rtot = Program.UTIL.ToDoubleOrZero(Load[0][20]);
-                Material_dtot_textBox.Text = String.Format("{0:F0}", dtot);
-                Material_Rtot_textBox.Text = String.Format("{0:F2}", Rtot);
+                Material_dtot_textBox.Text = String.Format("{0:F0}", dtot) + " mm";
+                Material_Rtot_textBox.Text = String.Format("{0:F2}", Rtot) + " m" + Program.UTIL.Subscript(2, true) + "·K/W";
 
                 dins = Program.UTIL.ToDoubleOrZero(Load[0][21]);
                 check_dins = Program.UTIL.ToDoubleOrZero(Load[0][21]);
@@ -1387,7 +1369,7 @@ namespace main.contents
                 α2_textBox.Text = String.Format("{0:F1}", α);
 
                 Uvalue = Program.UTIL.ToDoubleOrZero(Load[0][43]);
-                U_textBox.Text = string.Format("{0:F3}", Uvalue);
+                U_textBox.Text = string.Format("{0:F3}", Uvalue) + " W/(m" + Program.UTIL.Subscript(2, true) + "∙K)";
 
                 Ucalc_dataGridView.Rows.Clear();
                 for (int i = 0; i < 10; i++)
@@ -1508,21 +1490,21 @@ namespace main.contents
                 Load_Material_Num();
 
                 dU = Program.UTIL.ToDoubleOrZero(Load[0][44]);
-                dU_textBox.Text = string.Format("{0:F3}", dU);
+                dU_textBox.Text = string.Format("{0:F3}", dU) + " W/(m" + Program.UTIL.Subscript(2, true) + "∙K)";
 
                 if (PerArea != 0)
                 {
-                    PerArea_textBox.Text = string.Format("{0:F3}", Program.UTIL.ToDoubleOrZero(Load[0][16]));
+                    PerArea_textBox.Text = string.Format("{0:F3}", Program.UTIL.ToDoubleOrZero(Load[0][16])) + (LinearPoint == "점형" ? " EA/m" : " m/m") + Program.UTIL.Subscript(2, true);
                 }
                 if (PerArea_textBox.Text != "" && PerArea != 0)
                 {
-                    PsiKai_textBox.Text = string.Format("{0:F3}", Program.UTIL.ToDoubleOrZero(Load[0][15]));
-                    dU2_textBox.Text = string.Format("{0:F3}", Program.UTIL.ToDoubleOrZero(Load[0][44]));
+                    PsiKai_textBox.Text = string.Format("{0:F3}", Program.UTIL.ToDoubleOrZero(Load[0][15])) + (LinearPoint == "점형" ? " W/K" : " W/mK");
+                    dU2_textBox.Text = string.Format("{0:F3}", Program.UTIL.ToDoubleOrZero(Load[0][44])) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 }
 
                 Ueff = Program.UTIL.ToDoubleOrZero(Load[0][45]);
-                Ueff_textBox.Text = string.Format("{0:F3}", Ueff);
-                Ueff2_textBox.Text = string.Format("{0:F3}", Ueff);
+                Ueff_textBox.Text = string.Format("{0:F3}", Ueff) + " W/(m" + Program.UTIL.Subscript(2, true) + "∙K)";
+                Ueff2_textBox.Text = string.Format("{0:F3}", Ueff) + " W/(m" + Program.UTIL.Subscript(2, true) + "∙K)";
 
                 string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "메뉴아이콘", "하위메뉴아이콘", "하위메뉴명 = '지붕'");
                 if (Image.Length > 0)

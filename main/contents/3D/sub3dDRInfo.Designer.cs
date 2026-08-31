@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label16 = new Label();
-            label15 = new Label();
             label14 = new Label();
             DRFrame_textBox = new TextBox();
             Door_textBox = new TextBox();
@@ -53,27 +51,9 @@
             Panel1.SuspendLayout();
             SuspendLayout();
             // 
-            // label16
             // 
-            label16.AutoSize = true;
-            label16.ForeColor = SystemColors.ControlDark;
-            label16.Location = new Point(196, 158);
-            label16.Name = "label16";
-            label16.Size = new Size(18, 15);
-            label16.TabIndex = 149;
-            label16.Text = "m";
-            label16.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // label15
             // 
-            label15.AutoSize = true;
-            label15.ForeColor = SystemColors.ControlDark;
-            label15.Location = new Point(196, 129);
-            label15.Name = "label15";
-            label15.Size = new Size(18, 15);
-            label15.TabIndex = 148;
-            label15.Text = "m";
-            label15.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label14
             // 
@@ -300,8 +280,6 @@
             BackColor = Color.White;
             ClientSize = new Size(800, 450);
             Controls.Add(Name_textBox1);
-            Controls.Add(label16);
-            Controls.Add(label15);
             Controls.Add(label14);
             Controls.Add(Area_textBox);
             Controls.Add(height_textBox);
@@ -324,8 +302,6 @@
 
         #endregion
 
-        private Label label16;
-        private Label label15;
         private Label label14;
         private TextBox DRFrame_textBox;
         private TextBox Door_textBox;

@@ -1063,7 +1063,7 @@ namespace main.contents
 
                 PowerTotal = Power_f;
                 EERTotal = EER_f;
-                PowerTotal_textBox.Text = Power_f.ToString();
+                PowerTotal_textBox.Text = Power_f.ToString() + " kW";
                 Program.UTIL.textBox_doubleComa(PowerTotal_textBox, true, 1);
                 EERTotal_textBox.Text = EER_f.ToString();
                 Program.UTIL.textBox_doubleComa(EERTotal_textBox, true, 1);
@@ -1363,7 +1363,7 @@ namespace main.contents
 
                 PowerTotal = Power_f;
                 EERTotal = EER_f;
-                PowerTotal_textBox.Text = Power_f.ToString();
+                PowerTotal_textBox.Text = Power_f.ToString() + " kW";
                 Program.UTIL.textBox_doubleComa(PowerTotal_textBox, true, 1);
                 EERTotal_textBox.Text = EER_f.ToString();
                 Program.UTIL.textBox_doubleComa(EERTotal_textBox, true, 1);
@@ -1666,7 +1666,7 @@ namespace main.contents
 
                 PowerTotal = Power_f;
                 EERTotal = EER_f;
-                PowerTotal_textBox.Text = Power_f.ToString();
+                PowerTotal_textBox.Text = Power_f.ToString() + " kW";
                 Program.UTIL.textBox_doubleComa(PowerTotal_textBox, true, 1);
                 EERTotal_textBox.Text = EER_f.ToString();
                 Program.UTIL.textBox_doubleComa(EERTotal_textBox, true, 1);
@@ -1979,7 +1979,7 @@ namespace main.contents
 
                 PowerTotal = Power_f;
                 EERTotal = EER_f;
-                PowerTotal_textBox.Text = Power_f.ToString();
+                PowerTotal_textBox.Text = Power_f.ToString() + " kW";
                 Program.UTIL.textBox_doubleComa(PowerTotal_textBox, true, 1);
                 EERTotal_textBox.Text = EER_f.ToString();
                 Program.UTIL.textBox_doubleComa(EERTotal_textBox, true, 1);
@@ -2264,7 +2264,7 @@ namespace main.contents
 
                 PowerTotal = Power_f;
                 EERTotal = EER_f;
-                PowerTotal_textBox.Text = Power_f.ToString();
+                PowerTotal_textBox.Text = Power_f.ToString() + " kW";
                 Program.UTIL.textBox_doubleComa(PowerTotal_textBox, true, 1);
                 EERTotal_textBox.Text = EER_f.ToString();
                 Program.UTIL.textBox_doubleComa(EERTotal_textBox, true, 1);
@@ -2520,7 +2520,7 @@ namespace main.contents
 
                 PowerTotal = Power_f;
                 EERTotal = EER_f;
-                PowerTotal_textBox.Text = Power_f.ToString();
+                PowerTotal_textBox.Text = Power_f.ToString() + " kW";
                 Program.UTIL.textBox_doubleComa(PowerTotal_textBox, true, 1);
                 EERTotal_textBox.Text = EER_f.ToString();
                 Program.UTIL.textBox_doubleComa(EERTotal_textBox, true, 1);
@@ -4476,9 +4476,8 @@ namespace main.contents
             CT_cwout.Visible = true;
             CT_cwout.Text = string.Format("{0}:{1:F1}", "출구[℃]", CTout_f);
             CT_1.Visible = true;
-            CT_2.Visible = true;
             CTPower_Text.Visible = true;
-            CTPower_Text.Text = string.Format("{0:F1}", CTPower_f);
+            CTPower_Text.Text = string.Format("{0:F1}", CTPower_f) + " kW";
         }
         private void CoolingTop_Save()
         {
@@ -4578,7 +4577,7 @@ namespace main.contents
                 if (User_Value[0][2] != null && User_Value[0][2] != "")
                 {
                     PipeIns_Lamda = Program.UTIL.ToDoubleOrZero(User_Value[0][2].ToString());
-                    lamda_textBox.Text = User_Value[0][2].ToString();
+                    lamda_textBox.Text = User_Value[0][2].ToString() + " W/m·K";
                 }
                 if (User_Value[0][3] != null && User_Value[0][3] != "")
                 {
@@ -4692,17 +4691,17 @@ namespace main.contents
                     Ls_pipe = Lv_pipe;
                     La_pipe = GetPipeOuterDiameter(laWW, "분기관").ToString();
 
-                    Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','냉방','주배관', '" + Lv_pipe + "','" + PipeIns + "','" + lamda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
-                    Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','냉방','수직배관', '" + Ls_pipe + "','" + PipeIns + "','" + lamda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
-                    Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','냉방','분기관', '" + La_pipe + "','" + PipeIns + "','" + lamda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
+                    Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','냉방','주배관', '" + Lv_pipe + "','" + PipeIns + "','" + lamda_textBox.Text.Split(' ')[0] + "','" + PipeD_SelectMode + "'", "번호,배관유형");
+                    Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','냉방','수직배관', '" + Ls_pipe + "','" + PipeIns + "','" + lamda_textBox.Text.Split(' ')[0] + "','" + PipeD_SelectMode + "'", "번호,배관유형");
+                    Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','냉방','분기관', '" + La_pipe + "','" + PipeIns + "','" + lamda_textBox.Text.Split(' ')[0] + "','" + PipeD_SelectMode + "'", "번호,배관유형");
 
                 }
             }
             else if (PipeD_SelectMode == "직접")
             {
-                Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','냉방','주배관', '" + null + "','" + PipeIns + "','" + lamda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
-                Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','냉방','수직배관', '" + null + "','" + PipeIns + "','" + lamda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
-                Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','냉방','분기관', '" + null + "','" + PipeIns + "','" + lamda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
+                Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','냉방','주배관', '" + null + "','" + PipeIns + "','" + lamda_textBox.Text.Split(' ')[0] + "','" + PipeD_SelectMode + "'", "번호,배관유형");
+                Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','냉방','수직배관', '" + null + "','" + PipeIns + "','" + lamda_textBox.Text.Split(' ')[0] + "','" + PipeD_SelectMode + "'", "번호,배관유형");
+                Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','냉방','분기관', '" + null + "','" + PipeIns + "','" + lamda_textBox.Text.Split(' ')[0] + "','" + PipeD_SelectMode + "'", "번호,배관유형");
             }
             
             Load_Pipe_Table();
@@ -4744,7 +4743,7 @@ namespace main.contents
                 PipeIns_Lamda = Program.UTIL.ToDoubleOrZero(InsDB_form.Select[4]);
             }
             insul_textBox.Text = PipeIns;
-            lamda_textBox.Text = PipeIns_Lamda.ToString("0.000");
+            lamda_textBox.Text = PipeIns_Lamda.ToString("0.000") + " W/m·K";
 
             string 배관유형;
             for (int k = 0; k < 3; k++)

@@ -116,7 +116,6 @@ namespace main.contents
             OASALength_label = new Label();
             EARALength_label = new Label();
             label2 = new Label();
-            label6 = new Label();
             PipeIns_Ramda_textBox = new TextBox();
             PipeIns_textBox = new TextBox();
             PipeIns_button = new Button();
@@ -1123,7 +1122,6 @@ namespace main.contents
             Duct_tabPage.Controls.Add(OASALength_label);
             Duct_tabPage.Controls.Add(EARALength_label);
             Duct_tabPage.Controls.Add(label2);
-            Duct_tabPage.Controls.Add(label6);
             Duct_tabPage.Controls.Add(PipeIns_Ramda_textBox);
             Duct_tabPage.Controls.Add(PipeIns_textBox);
             Duct_tabPage.Controls.Add(PipeIns_button);
@@ -1178,16 +1176,7 @@ namespace main.contents
             label2.TabIndex = 217;
             label2.Text = "열전도율";
             // 
-            // label6
             // 
-            label6.AutoSize = true;
-            label6.Font = new Font("나눔바른고딕", 9.75F);
-            label6.ForeColor = SystemColors.ControlDark;
-            label6.Location = new Point(920, 78);
-            label6.Name = "label6";
-            label6.Size = new Size(46, 15);
-            label6.TabIndex = 216;
-            label6.Text = "W/mK";
             // 
             // PipeIns_Ramda_textBox
             // 
@@ -1749,7 +1738,6 @@ namespace main.contents
         private CustomComboBox AHUVolumeControl_comboBox;
         private CustomTabControl tabControl1;
         private Label label2;
-        private Label label6;
         private TextBox PipeIns_Ramda_textBox;
         private TextBox PipeIns_textBox;
         private Button PipeIns_button;

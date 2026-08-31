@@ -461,13 +461,13 @@ namespace main.contents
             cal.PVcal();
             LoadGraph(cal.Qfpvm_kWh, cal.Esol);
 
-            allcapacity_textBox.Text = string.Format("{0:n0}", cal.Qfpva_kWh);
+            allcapacity_textBox.Text = string.Format("{0:n0}", cal.Qfpva_kWh) + " kWh/년";
             double[] Qeff = new double[12];
             for (int i = 0; i < 12; i++)
             {
                 Qeff[i] = cal.Qfpvm_m2_kWh[i] / cal.Esol[i];
             }
-            averagecpacity_textBox.Text = string.Format("{0:F1}", Qeff.Average() * 100);
+            averagecpacity_textBox.Text = string.Format("{0:F1}", Qeff.Average() * 100) + " %";
         }
         #endregion
 
@@ -573,13 +573,13 @@ namespace main.contents
                 cal.PVcal();
                 LoadGraph(cal.Qfpvm_kWh, cal.Esol);
 
-                allcapacity_textBox.Text = string.Format("{0:n0}", cal.Qfpva_kWh);
+                allcapacity_textBox.Text = string.Format("{0:n0}", cal.Qfpva_kWh) + " kWh/년";
                 double[] Qeff = new double[12];
                 for (int i = 0; i < 12; i++)
                 {
                     Qeff[i] = cal.Qfpvm_m2_kWh[i] / cal.Esol[i];
                 }
-                averagecpacity_textBox.Text = string.Format("{0:F1}", Qeff.Average() * 100);
+                averagecpacity_textBox.Text = string.Format("{0:F1}", Qeff.Average() * 100) + " %";
             }
         }
 

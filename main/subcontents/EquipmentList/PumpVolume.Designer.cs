@@ -41,10 +41,8 @@ namespace main.subcontents
             Icon_pictureBox = new PictureBox();
             Save_button = new Button();
             PumpVolume_textBox = new TextBox();
-            label7 = new Label();
             label8 = new Label();
             Qwmax_textBox = new TextBox();
-            label9 = new Label();
             label10 = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)PumpVolume_dataGridView).BeginInit();
@@ -181,14 +179,7 @@ namespace main.subcontents
             PumpVolume_textBox.TabIndex = 186;
             PumpVolume_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label7
             // 
-            label7.AutoSize = true;
-            label7.Location = new Point(546, 40);
-            label7.Name = "label7";
-            label7.Size = new Size(35, 15);
-            label7.TabIndex = 185;
-            label7.Text = "CMH";
             // 
             // label8
             // 
@@ -211,14 +202,7 @@ namespace main.subcontents
             Qwmax_textBox.TabIndex = 183;
             Qwmax_textBox.TextAlign = HorizontalAlignment.Center;
             // 
-            // label9
             // 
-            label9.AutoSize = true;
-            label9.Location = new Point(329, 40);
-            label9.Name = "label9";
-            label9.Size = new Size(24, 15);
-            label9.TabIndex = 182;
-            label9.Text = "kW";
             // 
             // label10
             // 
@@ -238,10 +222,8 @@ namespace main.subcontents
             ClientSize = new Size(799, 550);
             Controls.Add(Save_button);
             Controls.Add(PumpVolume_textBox);
-            Controls.Add(label7);
             Controls.Add(label8);
             Controls.Add(Qwmax_textBox);
-            Controls.Add(label9);
             Controls.Add(label10);
             Controls.Add(Icon_pictureBox);
             Controls.Add(panel1);
@@ -273,10 +255,8 @@ namespace main.subcontents
         private Button button1;
         private Button Save_button;
         private TextBox PumpVolume_textBox;
-        private Label label7;
         private Label label8;
         private TextBox Qwmax_textBox;
-        private Label label9;
         private Label label10;
     }
 }

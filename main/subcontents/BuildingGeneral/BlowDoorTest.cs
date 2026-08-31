@@ -147,7 +147,7 @@ public partial class BlowDoorTest : Form
                 CMH_tot += Program.UTIL.ToDoubleOrZero(Blow_dataGridView.Rows[a].Cells[3].Value.ToString());
                 volume_tot += Program.UTIL.ToDoubleOrZero(Blow_dataGridView.Rows[a].Cells[5].Value.ToString());
                 n50 = CMH_tot / volume_tot;
-                n50_textBox.Text = n50.ToString("0.00");
+                n50_textBox.Text = n50.ToString("0.00") + " h⁻¹";
             }
         }
     }

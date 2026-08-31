@@ -136,12 +136,14 @@ namespace main.subcontents
             {
                 Qwmax_textBox.Text = Qwmax.ToString();
                 Program.UTIL.textBox_doubleComa(Qwmax_textBox, true, 2);
+                Qwmax_textBox.Text += " kW";
             }
             if (Qwmax > 0)
             {
                 double Volume = Qwmax * 3.6 / (4.18 * 5) * 1000 / 60; // m3/h
                 PumpVolume_textBox.Text = Volume.ToString();
                 Program.UTIL.textBox_doubleComa(PumpVolume_textBox, true, 1);
+                PumpVolume_textBox.Text += " CMH";
             }
         }
 

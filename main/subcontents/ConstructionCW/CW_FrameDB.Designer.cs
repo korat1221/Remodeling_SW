@@ -49,7 +49,6 @@
             UserNum_textBox = new TextBox();
             panel3 = new Panel();
             label36 = new Label();
-            label27 = new Label();
             panel2 = new Panel();
             label1 = new Label();
             label7 = new Label();
@@ -295,7 +294,6 @@
             panel3.Controls.Add(label35);
             panel3.Controls.Add(UserDB_UfA_textBox);
             panel3.Controls.Add(label26);
-            panel3.Controls.Add(label27);
             panel3.Controls.Add(label28);
             panel3.Controls.Add(UserDB_UfC_textBox);
             panel3.Controls.Add(label31);
@@ -317,14 +315,7 @@
             label36.TabIndex = 171;
             label36.Text = "사용자DB";
             // 
-            // label27
             // 
-            label27.AutoSize = true;
-            label27.Location = new Point(1042, 13);
-            label27.Name = "label27";
-            label27.Size = new Size(44, 15);
-            label27.TabIndex = 162;
-            label27.Text = "W/m·K";
             // 
             // panel2
             // 
@@ -826,7 +817,6 @@
         private Panel panel2;
         private Label label36;
         private Label label1;
-        private Label label27;
         private Label label7;
         private Label label9;
         private TextBox UserDBName_textBox;

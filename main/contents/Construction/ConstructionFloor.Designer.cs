@@ -62,7 +62,6 @@ namespace main.contents.Construction
             Frost_comboBox = new CustomComboBox();
             TBName_textBox = new TextBox();
             DiIndi_textBox = new TextBox();
-            Ueff_label2 = new Label();
             tabControl1 = new CustomTabControl();
             Ucalc_tabPage = new TabPage();
             DiIndi2_textBox = new TextBox();
@@ -82,13 +81,10 @@ namespace main.contents.Construction
             AddMaterial_button = new Button();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             dU_tabPage = new TabPage();
-            dU_label4 = new TextBox();
             dU2_textBox = new TextBox();
             dU_label3 = new TextBox();
-            PsiKai_label2 = new TextBox();
             PsiKai_textBox = new TextBox();
             PsiKai_label1 = new TextBox();
-            PerArea_label2 = new TextBox();
             PerArea_textBox = new TextBox();
             PerArea_label1 = new TextBox();
             TBName2_textBox = new TextBox();
@@ -96,12 +92,10 @@ namespace main.contents.Construction
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
             Base_comboBox = new CustomComboBox();
-            dU_label2 = new Label();
             Ueff_textBox = new TextBox();
             Ueff_label = new Label();
             dU_textBox = new TextBox();
             label26 = new Label();
-            U_label2 = new Label();
             U_textBox = new TextBox();
             U_label = new Label();
             FloorType_pictureBox = new PictureBox();
@@ -430,17 +424,14 @@ namespace main.contents.Construction
             panel2.Controls.Add(Frost_comboBox);
             panel2.Controls.Add(TBName_textBox);
             panel2.Controls.Add(DiIndi_textBox);
-            panel2.Controls.Add(Ueff_label2);
             panel2.Controls.Add(tabControl1);
             panel2.Controls.Add(Base_comboBox);
-            panel2.Controls.Add(dU_label2);
             panel2.Controls.Add(Ueff_textBox);
             panel2.Controls.Add(TB_button);
             panel2.Controls.Add(StructureType_textBox);
             panel2.Controls.Add(Ueff_label);
             panel2.Controls.Add(dU_textBox);
             panel2.Controls.Add(label26);
-            panel2.Controls.Add(U_label2);
             panel2.Controls.Add(U_textBox);
             panel2.Controls.Add(U_label);
             panel2.Controls.Add(label11);
@@ -503,15 +494,7 @@ namespace main.contents.Construction
             DiIndi_textBox.TextAlign = HorizontalAlignment.Center;
             DiIndi_textBox.TextChanged += DiIndi_textBox_TextChanged;
             // 
-            // Ueff_label2
             // 
-            Ueff_label2.AutoSize = true;
-            Ueff_label2.Font = new Font("나눔바른고딕", 9.75F);
-            Ueff_label2.ForeColor = SystemColors.ControlDark;
-            Ueff_label2.Location = new Point(824, 117);
-            Ueff_label2.Name = "Ueff_label2";
-            Ueff_label2.Size = new Size(0, 15);
-            Ueff_label2.TabIndex = 132;
             // 
             // tabControl1
             // 
@@ -803,13 +786,10 @@ namespace main.contents.Construction
             // dU_tabPage
             // 
             dU_tabPage.BackColor = Color.White;
-            dU_tabPage.Controls.Add(dU_label4);
             dU_tabPage.Controls.Add(dU2_textBox);
             dU_tabPage.Controls.Add(dU_label3);
-            dU_tabPage.Controls.Add(PsiKai_label2);
             dU_tabPage.Controls.Add(PsiKai_textBox);
             dU_tabPage.Controls.Add(PsiKai_label1);
-            dU_tabPage.Controls.Add(PerArea_label2);
             dU_tabPage.Controls.Add(PerArea_textBox);
             dU_tabPage.Controls.Add(PerArea_label1);
             dU_tabPage.Controls.Add(TBName2_textBox);
@@ -823,18 +803,7 @@ namespace main.contents.Construction
             dU_tabPage.TabIndex = 2;
             dU_tabPage.Text = "열교 세부정보";
             // 
-            // dU_label4
             // 
-            dU_label4.BackColor = Color.White;
-            dU_label4.BorderStyle = BorderStyle.None;
-            dU_label4.Enabled = false;
-            dU_label4.Font = new Font("나눔바른고딕", 9.75F);
-            dU_label4.ForeColor = SystemColors.ControlDark;
-            dU_label4.Location = new Point(816, 181);
-            dU_label4.Name = "dU_label4";
-            dU_label4.Size = new Size(68, 15);
-            dU_label4.TabIndex = 154;
-            dU_label4.TextAlign = HorizontalAlignment.Center;
             // 
             // dU2_textBox
             // 
@@ -861,18 +830,7 @@ namespace main.contents.Construction
             dU_label3.Size = new Size(149, 15);
             dU_label3.TabIndex = 152;
             // 
-            // PsiKai_label2
             // 
-            PsiKai_label2.BackColor = Color.White;
-            PsiKai_label2.BorderStyle = BorderStyle.None;
-            PsiKai_label2.Enabled = false;
-            PsiKai_label2.Font = new Font("나눔바른고딕", 9.75F);
-            PsiKai_label2.ForeColor = SystemColors.ControlDark;
-            PsiKai_label2.Location = new Point(819, 148);
-            PsiKai_label2.Name = "PsiKai_label2";
-            PsiKai_label2.Size = new Size(68, 15);
-            PsiKai_label2.TabIndex = 151;
-            PsiKai_label2.TextAlign = HorizontalAlignment.Center;
             // 
             // PsiKai_textBox
             // 
@@ -899,18 +857,7 @@ namespace main.contents.Construction
             PsiKai_label1.Size = new Size(149, 15);
             PsiKai_label1.TabIndex = 149;
             // 
-            // PerArea_label2
             // 
-            PerArea_label2.BackColor = Color.White;
-            PerArea_label2.BorderStyle = BorderStyle.None;
-            PerArea_label2.Enabled = false;
-            PerArea_label2.Font = new Font("나눔바른고딕", 9.75F);
-            PerArea_label2.ForeColor = SystemColors.ControlDark;
-            PerArea_label2.Location = new Point(819, 115);
-            PerArea_label2.Name = "PerArea_label2";
-            PerArea_label2.Size = new Size(68, 15);
-            PerArea_label2.TabIndex = 148;
-            PerArea_label2.TextAlign = HorizontalAlignment.Center;
             // 
             // PerArea_textBox
             // 
@@ -992,15 +939,7 @@ namespace main.contents.Construction
             Base_comboBox.TabIndex = 121;
             Base_comboBox.SelectedIndexChanged += Base_comboBox_SelectedIndexChanged;
             // 
-            // dU_label2
             // 
-            dU_label2.AutoSize = true;
-            dU_label2.Font = new Font("나눔바른고딕", 9.75F);
-            dU_label2.ForeColor = SystemColors.ControlDark;
-            dU_label2.Location = new Point(824, 88);
-            dU_label2.Name = "dU_label2";
-            dU_label2.Size = new Size(0, 15);
-            dU_label2.TabIndex = 113;
             // 
             // Ueff_textBox
             // 
@@ -1050,15 +989,7 @@ namespace main.contents.Construction
             label26.TabIndex = 71;
             label26.Text = "[ΔU1D] 1D_열교가산치 ②";
             // 
-            // U_label2
             // 
-            U_label2.AutoSize = true;
-            U_label2.Font = new Font("나눔바른고딕", 9.75F);
-            U_label2.ForeColor = SystemColors.ControlDark;
-            U_label2.Location = new Point(824, 59);
-            U_label2.Name = "U_label2";
-            U_label2.Size = new Size(0, 15);
-            U_label2.TabIndex = 64;
             // 
             // U_textBox
             // 
@@ -1182,13 +1113,10 @@ namespace main.contents.Construction
         private Panel panel2;
         private TextBox dU_textBox;
         private Label label26;
-        private Label U_label2;
         private TextBox U_textBox;
         private Label U_label;
         private PictureBox FloorType_pictureBox;
-        private Label dU_label2;
         private TextBox Ueff_textBox;
-        private Label Ueff_label2;
         private Label Ueff_label;
         private GroupBox groupBox1;
         private RadioButton radioButton5;
@@ -1224,13 +1152,10 @@ namespace main.contents.Construction
         private TextBox TBType_textBox;
         private Label label13;
         private TextBox TBName2_textBox;
-        private TextBox PsiKai_label2;
         private TextBox PsiKai_textBox;
         private TextBox PsiKai_label1;
-        private TextBox PerArea_label2;
         private TextBox PerArea_textBox;
         private TextBox PerArea_label1;
-        private TextBox dU_label4;
         private TextBox dU2_textBox;
         private TextBox dU_label3;
         private Label label1;

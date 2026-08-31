@@ -233,13 +233,13 @@ namespace main.subcontents.Alt
                 Load_WindowImage(Value[0][0], Value[0][1], Value[0][2]);
                 double[] result = Cal_Ueff(리모델링안, Value[0][0]);////유효열관류율, 태양열취득률, 빛투과율, 설치열교가산치
                 double Ueff = result[0], g = result[1], tao = result[2], dU = result[3];
-                Ueff_textBox.Text = Ueff.ToString();
+                Ueff_textBox.Text = Ueff.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 Program.UTIL.textBox_doubleComa(Ueff_textBox, true, 3);
                 g_textBox.Text = g.ToString();
                 Program.UTIL.textBox_doubleComa(g_textBox, true, 3);
                 tao_textBox.Text = tao.ToString();
                 Program.UTIL.textBox_doubleComa(tao_textBox, true, 3);
-                dU_textBox.Text = dU.ToString();
+                dU_textBox.Text = dU.ToString() + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 Program.UTIL.textBox_doubleComa(dU_textBox, true, 3);
 
                 double[] WinValue = LoadData_Win(리모델링안);

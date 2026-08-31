@@ -47,7 +47,6 @@
             Num_textBox = new TextBox();
             pictureBox1 = new PictureBox();
             Save_button = new Button();
-            label28 = new Label();
             allcapacity = new TextBox();
             label27 = new Label();
             panel2 = new Panel();
@@ -62,11 +61,9 @@
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             panel1 = new Panel();
             label29 = new Label();
-            label12 = new Label();
             averagecpacity = new TextBox();
             auxcapacity = new TextBox();
             label4 = new Label();
-            label2 = new Label();
             PVMainPanel.SuspendLayout();
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -237,18 +234,7 @@
             Save_button.Text = "BACK";
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
-            // 
-            // label28
-            // 
-            label28.AutoSize = true;
-            label28.Font = new Font("나눔바른고딕", 9.75F);
-            label28.ForeColor = SystemColors.ControlDark;
-            label28.Location = new Point(1148, 28);
-            label28.Name = "label28";
-            label28.Size = new Size(53, 15);
-            label28.TabIndex = 109;
-            label28.Text = "kWh/년";
-            // 
+            //
             // allcapacity
             // 
             allcapacity.BackColor = SystemColors.InactiveBorder;
@@ -471,18 +457,7 @@
             label29.Size = new Size(58, 15);
             label29.TabIndex = 128;
             label29.Text = "평균 효율";
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Font = new Font("나눔바른고딕", 9.75F);
-            label12.ForeColor = SystemColors.ControlDark;
-            label12.Location = new Point(1148, 95);
-            label12.Name = "label12";
-            label12.Size = new Size(19, 15);
-            label12.TabIndex = 138;
-            label12.Text = "%";
-            // 
+            //
             // averagecpacity
             // 
             averagecpacity.BackColor = SystemColors.InactiveBorder;
@@ -516,31 +491,17 @@
             label4.Size = new Size(70, 15);
             label4.TabIndex = 142;
             label4.Text = "펌프 소요량";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("나눔바른고딕", 9.75F);
-            label2.ForeColor = SystemColors.ControlDark;
-            label2.Location = new Point(1148, 56);
-            label2.Name = "label2";
-            label2.Size = new Size(53, 15);
-            label2.TabIndex = 144;
-            label2.Text = "kWh/년";
-            // 
+            //
             // SolarTherm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(239, 239, 239);
             ClientSize = new Size(1200, 896);
-            Controls.Add(label2);
             Controls.Add(auxcapacity);
             Controls.Add(label4);
-            Controls.Add(label12);
             Controls.Add(averagecpacity);
             Controls.Add(label29);
-            Controls.Add(label28);
             Controls.Add(allcapacity);
             Controls.Add(label27);
             Controls.Add(Save_button);
@@ -583,7 +544,6 @@
         private TextBox PVModule_textBox;
         private Button InverterDB1_button;
         private Button Save_button;
-        private Label label28;
         private TextBox allcapacity;
         private Label label27;
         private Panel panel2;
@@ -633,10 +593,8 @@
         private PictureBox STpictureBox;
         private DataGridView dataGridView1;
         private Label label29;
-        private Label label12;
         private TextBox averagecpacity;
         private TextBox auxcapacity;
         private Label label4;
-        private Label label2;
     }
 }

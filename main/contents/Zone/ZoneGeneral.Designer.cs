@@ -61,7 +61,6 @@ namespace main.contents
             label5 = new System.Windows.Forms.Label();
             Icon_pictureBox = new PictureBox();
             panel2 = new Panel();
-            label35 = new System.Windows.Forms.Label();
             AdditionalPanel = new Panel();
             SA_Volume_Label = new System.Windows.Forms.Label();
             RA_Volume_Label = new System.Windows.Forms.Label();
@@ -96,20 +95,15 @@ namespace main.contents
             label62 = new System.Windows.Forms.Label();
             VentilationRate_textBox = new System.Windows.Forms.TextBox();
             label11 = new System.Windows.Forms.Label();
-            label61 = new System.Windows.Forms.Label();
             HCTime_textBox = new System.Windows.Forms.TextBox();
             WeekUseDay_comboBox = new CustomComboBox();
-            label10 = new System.Windows.Forms.Label();
-            label63 = new System.Windows.Forms.Label();
             StartTime_comboBox = new CustomComboBox();
             label19 = new System.Windows.Forms.Label();
             CeilingHeight_textBox = new System.Windows.Forms.TextBox();
             Volume_wd_textBox = new System.Windows.Forms.TextBox();
-            label31 = new System.Windows.Forms.Label();
             EquipIHG_textBox = new System.Windows.Forms.TextBox();
             label32 = new System.Windows.Forms.Label();
             label64 = new System.Windows.Forms.Label();
-            label54 = new System.Windows.Forms.Label();
             label33 = new System.Windows.Forms.Label();
             NetVolume_textBox = new System.Windows.Forms.TextBox();
             label56 = new System.Windows.Forms.Label();
@@ -118,36 +112,30 @@ namespace main.contents
             HumidC_comboBox = new CustomComboBox();
             HumidC_result_label = new System.Windows.Forms.Label();
             HumidC_textBox = new System.Windows.Forms.TextBox();
-            HumidC_unit_label = new System.Windows.Forms.Label();
             HumidH_label = new System.Windows.Forms.Label();
             HumidH_comboBox = new CustomComboBox();
             HumidH_result_label = new System.Windows.Forms.Label();
             HumidH_textBox = new System.Windows.Forms.TextBox();
-            HumidH_unit_label = new System.Windows.Forms.Label();
             label34 = new System.Windows.Forms.Label();
             label55 = new System.Windows.Forms.Label();
             PersonIHG_textBox = new System.Windows.Forms.TextBox();
             label36 = new System.Windows.Forms.Label();
-            label24 = new System.Windows.Forms.Label();
             OccupancyDensity_textBox = new System.Windows.Forms.TextBox();
             NetArea_textBox = new System.Windows.Forms.TextBox();
             label23 = new System.Windows.Forms.Label();
             label26 = new System.Windows.Forms.Label();
             label27 = new System.Windows.Forms.Label();
             label28 = new System.Windows.Forms.Label();
-            label29 = new System.Windows.Forms.Label();
             AnnualUseDay_textBox = new System.Windows.Forms.TextBox();
             label30 = new System.Windows.Forms.Label();
             EndTime_comboBox = new CustomComboBox();
             label16 = new System.Windows.Forms.Label();
             label17 = new System.Windows.Forms.Label();
-            label18 = new System.Windows.Forms.Label();
             UseTime_textBox = new System.Windows.Forms.TextBox();
             label22 = new System.Windows.Forms.Label();
             label7 = new System.Windows.Forms.Label();
             Usage_comboBox = new CustomComboBox();
             label25 = new System.Windows.Forms.Label();
-            label8 = new System.Windows.Forms.Label();
             DHWneed_textBox = new System.Windows.Forms.TextBox();
             label14 = new System.Windows.Forms.Label();
             label51 = new System.Windows.Forms.Label();
@@ -480,7 +468,6 @@ namespace main.contents
             // panel2
             // 
             panel2.BackColor = Color.White;
-            panel2.Controls.Add(label35);
             panel2.Controls.Add(AdditionalPanel);
             panel2.Controls.Add(label20);
             panel2.Controls.Add(PersonNum_textBox);
@@ -488,20 +475,15 @@ namespace main.contents
             panel2.Controls.Add(label62);
             panel2.Controls.Add(VentilationRate_textBox);
             panel2.Controls.Add(label11);
-            panel2.Controls.Add(label61);
             panel2.Controls.Add(HCTime_textBox);
             panel2.Controls.Add(WeekUseDay_comboBox);
-            panel2.Controls.Add(label10);
-            panel2.Controls.Add(label63);
             panel2.Controls.Add(StartTime_comboBox);
             panel2.Controls.Add(label19);
             panel2.Controls.Add(CeilingHeight_textBox);
             panel2.Controls.Add(Volume_wd_textBox);
-            panel2.Controls.Add(label31);
             panel2.Controls.Add(EquipIHG_textBox);
             panel2.Controls.Add(label32);
             panel2.Controls.Add(label64);
-            panel2.Controls.Add(label54);
             panel2.Controls.Add(label33);
             panel2.Controls.Add(NetVolume_textBox);
             panel2.Controls.Add(label56);
@@ -510,36 +492,30 @@ namespace main.contents
             panel2.Controls.Add(HumidC_comboBox);
             panel2.Controls.Add(HumidC_result_label);
             panel2.Controls.Add(HumidC_textBox);
-            panel2.Controls.Add(HumidC_unit_label);
             panel2.Controls.Add(HumidH_label);
             panel2.Controls.Add(HumidH_comboBox);
             panel2.Controls.Add(HumidH_result_label);
             panel2.Controls.Add(HumidH_textBox);
-            panel2.Controls.Add(HumidH_unit_label);
             panel2.Controls.Add(label34);
             panel2.Controls.Add(label55);
             panel2.Controls.Add(PersonIHG_textBox);
             panel2.Controls.Add(label36);
-            panel2.Controls.Add(label24);
             panel2.Controls.Add(OccupancyDensity_textBox);
             panel2.Controls.Add(NetArea_textBox);
             panel2.Controls.Add(label23);
             panel2.Controls.Add(label26);
             panel2.Controls.Add(label27);
             panel2.Controls.Add(label28);
-            panel2.Controls.Add(label29);
             panel2.Controls.Add(AnnualUseDay_textBox);
             panel2.Controls.Add(label30);
             panel2.Controls.Add(EndTime_comboBox);
             panel2.Controls.Add(label16);
             panel2.Controls.Add(label17);
-            panel2.Controls.Add(label18);
             panel2.Controls.Add(UseTime_textBox);
             panel2.Controls.Add(label22);
             panel2.Controls.Add(label7);
             panel2.Controls.Add(Usage_comboBox);
             panel2.Controls.Add(label25);
-            panel2.Controls.Add(label8);
             panel2.Controls.Add(DHWneed_textBox);
             panel2.Controls.Add(label14);
             panel2.Location = new Point(0, 84);
@@ -547,16 +523,6 @@ namespace main.contents
             panel2.Size = new Size(1000, 635);
             panel2.TabIndex = 18;
             panel2.Paint += panel2_Paint;
-            // 
-            // label35
-            // 
-            label35.AutoSize = true;
-            label35.Font = new Font("나눔바른고딕", 9.75F);
-            label35.ForeColor = SystemColors.ControlDark;
-            label35.Location = new Point(681, 161);
-            label35.Name = "label35";
-            label35.Size = new Size(0, 15);
-            label35.TabIndex = 65;
             // 
             // AdditionalPanel
             // 
@@ -935,11 +901,10 @@ namespace main.contents
             VentilationRate_textBox.BorderStyle = BorderStyle.None;
             VentilationRate_textBox.Font = new Font("나눔바른고딕", 9.75F);
             VentilationRate_textBox.ForeColor = SystemColors.ControlDark;
-            VentilationRate_textBox.Location = new Point(816, 60);
+            VentilationRate_textBox.Location = new Point(839, 60);
             VentilationRate_textBox.Name = "VentilationRate_textBox";
-            VentilationRate_textBox.Size = new Size(100, 15);
+            VentilationRate_textBox.Size = new Size(116, 15);
             VentilationRate_textBox.TabIndex = 102;
-            VentilationRate_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label11
             // 
@@ -952,17 +917,6 @@ namespace main.contents
             label11.TabIndex = 43;
             label11.Text = "냉난방시간";
             // 
-            // label61
-            // 
-            label61.AutoSize = true;
-            label61.Font = new Font("나눔바른고딕", 9.75F);
-            label61.ForeColor = SystemColors.ControlDark;
-            label61.Location = new Point(917, 60);
-            label61.Name = "label61";
-            label61.Size = new Size(29, 15);
-            label61.TabIndex = 103;
-            label61.Text = " h⁻¹";
-            // 
             // HCTime_textBox
             // 
             HCTime_textBox.BackColor = Color.White;
@@ -970,11 +924,10 @@ namespace main.contents
             HCTime_textBox.Enabled = false;
             HCTime_textBox.Font = new Font("나눔바른고딕", 9.75F);
             HCTime_textBox.ForeColor = SystemColors.ControlDark;
-            HCTime_textBox.Location = new Point(816, 94);
+            HCTime_textBox.Location = new Point(839, 94);
             HCTime_textBox.Name = "HCTime_textBox";
-            HCTime_textBox.Size = new Size(100, 15);
+            HCTime_textBox.Size = new Size(116, 15);
             HCTime_textBox.TabIndex = 44;
-            HCTime_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // WeekUseDay_comboBox
             // 
@@ -986,27 +939,6 @@ namespace main.contents
             WeekUseDay_comboBox.Size = new Size(120, 23);
             WeekUseDay_comboBox.TabIndex = 79;
             WeekUseDay_comboBox.SelectedIndexChanged += WeekUseDay_comboBox_SelectedIndexChanged;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Font = new Font("나눔바른고딕", 9.75F);
-            label10.ForeColor = SystemColors.ControlDark;
-            label10.Location = new Point(917, 94);
-            label10.Name = "label10";
-            label10.Size = new Size(29, 15);
-            label10.TabIndex = 42;
-            label10.Text = "h/d";
-            // 
-            // label63
-            // 
-            label63.AutoSize = true;
-            label63.Font = new Font("나눔바른고딕", 9.75F);
-            label63.ForeColor = SystemColors.ControlDark;
-            label63.Location = new Point(682, 60);
-            label63.Name = "label63";
-            label63.Size = new Size(0, 15);
-            label63.TabIndex = 106;
             // 
             // StartTime_comboBox
             // 
@@ -1047,21 +979,10 @@ namespace main.contents
             Volume_wd_textBox.BorderStyle = BorderStyle.None;
             Volume_wd_textBox.Font = new Font("나눔바른고딕", 9.75F);
             Volume_wd_textBox.ForeColor = SystemColors.ControlDark;
-            Volume_wd_textBox.Location = new Point(558, 60);
+            Volume_wd_textBox.Location = new Point(591, 60);
             Volume_wd_textBox.Name = "Volume_wd_textBox";
-            Volume_wd_textBox.Size = new Size(117, 15);
+            Volume_wd_textBox.Size = new Size(116, 15);
             Volume_wd_textBox.TabIndex = 105;
-            Volume_wd_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // label31
-            // 
-            label31.AutoSize = true;
-            label31.Font = new Font("나눔바른고딕", 9.75F);
-            label31.ForeColor = SystemColors.ControlDark;
-            label31.Location = new Point(923, 161);
-            label31.Name = "label31";
-            label31.Size = new Size(0, 15);
-            label31.TabIndex = 72;
             // 
             // EquipIHG_textBox
             // 
@@ -1070,11 +991,10 @@ namespace main.contents
             EquipIHG_textBox.Enabled = false;
             EquipIHG_textBox.Font = new Font("나눔바른고딕", 9.75F);
             EquipIHG_textBox.ForeColor = SystemColors.ControlDark;
-            EquipIHG_textBox.Location = new Point(816, 161);
+            EquipIHG_textBox.Location = new Point(839, 161);
             EquipIHG_textBox.Name = "EquipIHG_textBox";
-            EquipIHG_textBox.Size = new Size(100, 15);
+            EquipIHG_textBox.Size = new Size(116, 15);
             EquipIHG_textBox.TabIndex = 74;
-            EquipIHG_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label32
             // 
@@ -1098,16 +1018,6 @@ namespace main.contents
             label64.TabIndex = 104;
             label64.Text = "필요환기량";
             // 
-            // label54
-            // 
-            label54.AutoSize = true;
-            label54.Font = new Font("나눔바른고딕", 9.75F);
-            label54.ForeColor = SystemColors.ControlDark;
-            label54.Location = new Point(682, 30);
-            label54.Name = "label54";
-            label54.Size = new Size(0, 15);
-            label54.TabIndex = 94;
-            // 
             // label33
             // 
             label33.AutoSize = true;
@@ -1125,11 +1035,10 @@ namespace main.contents
             NetVolume_textBox.BorderStyle = BorderStyle.None;
             NetVolume_textBox.Font = new Font("나눔바른고딕", 9.75F);
             NetVolume_textBox.ForeColor = SystemColors.ControlDark;
-            NetVolume_textBox.Location = new Point(558, 30);
+            NetVolume_textBox.Location = new Point(591, 30);
             NetVolume_textBox.Name = "NetVolume_textBox";
             NetVolume_textBox.Size = new Size(116, 15);
             NetVolume_textBox.TabIndex = 93;
-            NetVolume_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label56
             // 
@@ -1193,22 +1102,10 @@ namespace main.contents
             HumidC_textBox.Enabled = false;
             HumidC_textBox.Font = new Font("나눔바른고딕", 9.75F);
             HumidC_textBox.ForeColor = SystemColors.ControlDark;
-            HumidC_textBox.Location = new Point(558, 195);
+            HumidC_textBox.Location = new Point(591, 195);
             HumidC_textBox.Name = "HumidC_textBox";
             HumidC_textBox.Size = new Size(116, 15);
             HumidC_textBox.TabIndex = 203;
-            HumidC_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // HumidC_unit_label
-            // 
-            HumidC_unit_label.AutoSize = true;
-            HumidC_unit_label.Font = new Font("나눔바른고딕", 9.75F);
-            HumidC_unit_label.ForeColor = SystemColors.ControlDark;
-            HumidC_unit_label.Location = new Point(677, 195);
-            HumidC_unit_label.Name = "HumidC_unit_label";
-            HumidC_unit_label.Size = new Size(40, 15);
-            HumidC_unit_label.TabIndex = 204;
-            HumidC_unit_label.Text = "g/kg'";
             // 
             // HumidH_label
             // 
@@ -1250,22 +1147,10 @@ namespace main.contents
             HumidH_textBox.Enabled = false;
             HumidH_textBox.Font = new Font("나눔바른고딕", 9.75F);
             HumidH_textBox.ForeColor = SystemColors.ControlDark;
-            HumidH_textBox.Location = new Point(816, 195);
+            HumidH_textBox.Location = new Point(839, 195);
             HumidH_textBox.Name = "HumidH_textBox";
-            HumidH_textBox.Size = new Size(100, 15);
+            HumidH_textBox.Size = new Size(116, 15);
             HumidH_textBox.TabIndex = 208;
-            HumidH_textBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // HumidH_unit_label
-            // 
-            HumidH_unit_label.AutoSize = true;
-            HumidH_unit_label.Font = new Font("나눔바른고딕", 9.75F);
-            HumidH_unit_label.ForeColor = SystemColors.ControlDark;
-            HumidH_unit_label.Location = new Point(923, 195);
-            HumidH_unit_label.Name = "HumidH_unit_label";
-            HumidH_unit_label.Size = new Size(40, 15);
-            HumidH_unit_label.TabIndex = 209;
-            HumidH_unit_label.Text = "g/kg'";
             // 
             // label34
             // 
@@ -1294,11 +1179,10 @@ namespace main.contents
             PersonIHG_textBox.Enabled = false;
             PersonIHG_textBox.Font = new Font("나눔바른고딕", 9.75F);
             PersonIHG_textBox.ForeColor = SystemColors.ControlDark;
-            PersonIHG_textBox.Location = new Point(558, 161);
+            PersonIHG_textBox.Location = new Point(591, 161);
             PersonIHG_textBox.Name = "PersonIHG_textBox";
-            PersonIHG_textBox.Size = new Size(117, 15);
+            PersonIHG_textBox.Size = new Size(116, 15);
             PersonIHG_textBox.TabIndex = 67;
-            PersonIHG_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label36
             // 
@@ -1311,16 +1195,6 @@ namespace main.contents
             label36.TabIndex = 66;
             label36.Text = "인체발열";
             // 
-            // label24
-            // 
-            label24.AutoSize = true;
-            label24.Font = new Font("나눔바른고딕", 9.75F);
-            label24.ForeColor = SystemColors.ControlDark;
-            label24.Location = new Point(917, 128);
-            label24.Name = "label24";
-            label24.Size = new Size(0, 15);
-            label24.TabIndex = 62;
-            // 
             // OccupancyDensity_textBox
             // 
             OccupancyDensity_textBox.BackColor = Color.White;
@@ -1328,11 +1202,10 @@ namespace main.contents
             OccupancyDensity_textBox.Enabled = false;
             OccupancyDensity_textBox.Font = new Font("나눔바른고딕", 9.75F);
             OccupancyDensity_textBox.ForeColor = SystemColors.ControlDark;
-            OccupancyDensity_textBox.Location = new Point(816, 128);
+            OccupancyDensity_textBox.Location = new Point(839, 128);
             OccupancyDensity_textBox.Name = "OccupancyDensity_textBox";
-            OccupancyDensity_textBox.Size = new Size(100, 15);
+            OccupancyDensity_textBox.Size = new Size(116, 15);
             OccupancyDensity_textBox.TabIndex = 64;
-            OccupancyDensity_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // NetArea_textBox
             // 
@@ -1387,17 +1260,6 @@ namespace main.contents
             label28.TabIndex = 58;
             label28.Text = "주이용일";
             // 
-            // label29
-            // 
-            label29.AutoSize = true;
-            label29.Font = new Font("나눔바른고딕", 9.75F);
-            label29.ForeColor = SystemColors.ControlDark;
-            label29.Location = new Point(682, 128);
-            label29.Name = "label29";
-            label29.Size = new Size(35, 15);
-            label29.TabIndex = 55;
-            label29.Text = "days";
-            // 
             // AnnualUseDay_textBox
             // 
             AnnualUseDay_textBox.BackColor = Color.White;
@@ -1405,11 +1267,10 @@ namespace main.contents
             AnnualUseDay_textBox.Enabled = false;
             AnnualUseDay_textBox.Font = new Font("나눔바른고딕", 9.75F);
             AnnualUseDay_textBox.ForeColor = SystemColors.ControlDark;
-            AnnualUseDay_textBox.Location = new Point(558, 128);
+            AnnualUseDay_textBox.Location = new Point(591, 128);
             AnnualUseDay_textBox.Name = "AnnualUseDay_textBox";
-            AnnualUseDay_textBox.Size = new Size(120, 15);
+            AnnualUseDay_textBox.Size = new Size(116, 15);
             AnnualUseDay_textBox.TabIndex = 57;
-            AnnualUseDay_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label30
             // 
@@ -1453,17 +1314,6 @@ namespace main.contents
             label17.TabIndex = 48;
             label17.Text = "사용시간";
             // 
-            // label18
-            // 
-            label18.AutoSize = true;
-            label18.Font = new Font("나눔바른고딕", 9.75F);
-            label18.ForeColor = SystemColors.ControlDark;
-            label18.Location = new Point(680, 94);
-            label18.Name = "label18";
-            label18.Size = new Size(29, 15);
-            label18.TabIndex = 45;
-            label18.Text = "h/d";
-            // 
             // UseTime_textBox
             // 
             UseTime_textBox.BackColor = Color.White;
@@ -1471,11 +1321,10 @@ namespace main.contents
             UseTime_textBox.Enabled = false;
             UseTime_textBox.Font = new Font("나눔바른고딕", 9.75F);
             UseTime_textBox.ForeColor = SystemColors.ControlDark;
-            UseTime_textBox.Location = new Point(558, 94);
+            UseTime_textBox.Location = new Point(591, 94);
             UseTime_textBox.Name = "UseTime_textBox";
-            UseTime_textBox.Size = new Size(120, 15);
+            UseTime_textBox.Size = new Size(116, 15);
             UseTime_textBox.TabIndex = 47;
-            UseTime_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label22
             // 
@@ -1519,17 +1368,6 @@ namespace main.contents
             label25.TabIndex = 32;
             label25.Text = "용도프로필";
             // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Font = new Font("나눔바른고딕", 9.75F);
-            label8.ForeColor = SystemColors.ControlDark;
-            label8.Location = new Point(917, 30);
-            label8.Name = "label8";
-            label8.Size = new Size(49, 15);
-            label8.TabIndex = 22;
-            label8.Text = "kWh/d";
-            // 
             // DHWneed_textBox
             // 
             DHWneed_textBox.BackColor = Color.White;
@@ -1537,11 +1375,10 @@ namespace main.contents
             DHWneed_textBox.Enabled = false;
             DHWneed_textBox.Font = new Font("나눔바른고딕", 9.75F);
             DHWneed_textBox.ForeColor = SystemColors.ControlDark;
-            DHWneed_textBox.Location = new Point(816, 30);
+            DHWneed_textBox.Location = new Point(839, 30);
             DHWneed_textBox.Name = "DHWneed_textBox";
-            DHWneed_textBox.Size = new Size(100, 15);
+            DHWneed_textBox.Size = new Size(116, 15);
             DHWneed_textBox.TabIndex = 29;
-            DHWneed_textBox.TextAlign = HorizontalAlignment.Center;
             // 
             // label14
             // 
@@ -1750,11 +1587,9 @@ namespace main.contents
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox DHWneed_textBox;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox Heating_checkBox;
         private System.Windows.Forms.CheckBox Ventilation_checkBox;
         private System.Windows.Forms.CheckBox Cooling_checkBox;
-        private System.Windows.Forms.Label label31;
         private System.Windows.Forms.TextBox EquipIHG_textBox;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Label label33;
@@ -1763,31 +1598,24 @@ namespace main.contents
         private CustomComboBox HumidC_comboBox;
         private System.Windows.Forms.Label HumidC_result_label;
         private System.Windows.Forms.TextBox HumidC_textBox;
-        private System.Windows.Forms.Label HumidC_unit_label;
         private System.Windows.Forms.Label HumidH_label;
         private CustomComboBox HumidH_comboBox;
         private System.Windows.Forms.Label HumidH_result_label;
         private System.Windows.Forms.TextBox HumidH_textBox;
-        private System.Windows.Forms.Label HumidH_unit_label;
         private System.Windows.Forms.Label label34;
-        private System.Windows.Forms.Label label35;
         private System.Windows.Forms.TextBox PersonIHG_textBox;
         private System.Windows.Forms.Label label36;
-        private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox OccupancyDensity_textBox;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.Label label29;
         private System.Windows.Forms.TextBox AnnualUseDay_textBox;
         private System.Windows.Forms.Label label30;
         private CustomComboBox EndTime_comboBox;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox UseTime_textBox;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox HCTime_textBox;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label7;
@@ -1827,13 +1655,10 @@ namespace main.contents
         private System.Windows.Forms.TextBox ZoneName_textBox;
         private System.Windows.Forms.TextBox OccupancyDensity_index_textBox;
         private System.Windows.Forms.Label label55;
-        private System.Windows.Forms.Label label54;
         private System.Windows.Forms.TextBox NetVolume_textBox;
         private System.Windows.Forms.Label label56;
-        private System.Windows.Forms.Label label61;
         private System.Windows.Forms.TextBox VentilationRate_textBox;
         private System.Windows.Forms.Label label62;
-        private System.Windows.Forms.Label label63;
         private System.Windows.Forms.TextBox Volume_wd_textBox;
         private System.Windows.Forms.Label label64;
         private PictureBox Icon_pictureBox;

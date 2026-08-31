@@ -218,9 +218,9 @@ namespace main.contents
                 c += wgen[i];
             }
 
-            allcapacity.Text = string.Format("{0:N0}", a * installedarea);
-            auxcapacity.Text = string.Format("{0:N0}", c * installedarea);
-            averagecpacity.Text = string.Format("{0:N0}", 100*a/b);
+            allcapacity.Text = string.Format("{0:N0}", a * installedarea) + " kWh/년";
+            auxcapacity.Text = string.Format("{0:N0}", c * installedarea) + " kWh/년";
+            averagecpacity.Text = string.Format("{0:N0}", 100*a/b) + " %";
         }
 
         private void Reset()

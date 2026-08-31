@@ -98,7 +98,7 @@ namespace main.contents
                 }
             }
 
-            length_textBox.Text = Total_length.ToString("0.0");
+            length_textBox.Text = Total_length.ToString("0.0") + " m";
 
         }
 

@@ -44,8 +44,6 @@
             CWType_pictureBox = new PictureBox();
             glass2_textBox = new TextBox();
             label10 = new Label();
-            label16 = new Label();
-            label15 = new Label();
             label14 = new Label();
             Spacer_textBox = new TextBox();
             frame_textBox = new TextBox();
@@ -169,8 +167,6 @@
             tabPage1.Controls.Add(CWType_pictureBox);
             tabPage1.Controls.Add(glass2_textBox);
             tabPage1.Controls.Add(label10);
-            tabPage1.Controls.Add(label16);
-            tabPage1.Controls.Add(label15);
             tabPage1.Controls.Add(label14);
             tabPage1.Controls.Add(Spacer_textBox);
             tabPage1.Controls.Add(frame_textBox);
@@ -339,27 +335,9 @@
             label10.Text = "개폐창유리";
             label10.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // label16
             // 
-            label16.AutoSize = true;
-            label16.ForeColor = SystemColors.ControlDark;
-            label16.Location = new Point(183, 137);
-            label16.Name = "label16";
-            label16.Size = new Size(18, 15);
-            label16.TabIndex = 133;
-            label16.Text = "m";
-            label16.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // label15
             // 
-            label15.AutoSize = true;
-            label15.ForeColor = SystemColors.ControlDark;
-            label15.Location = new Point(183, 108);
-            label15.Name = "label15";
-            label15.Size = new Size(18, 15);
-            label15.TabIndex = 132;
-            label15.Text = "m";
-            label15.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label14
             // 
@@ -1208,8 +1186,6 @@
         private PictureBox CWInstall_pictureBox;
         private TextBox Spacer_textBox;
         private Label label14;
-        private Label label16;
-        private Label label15;
         private TextBox glass2_textBox;
         private Label label7;
         private TextBox shgc_textBox;

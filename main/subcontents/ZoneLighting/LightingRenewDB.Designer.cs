@@ -34,7 +34,6 @@ namespace main.subcontents.ZoneLighting
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             Save_button = new Button();
             panel1 = new Panel();
-            label1 = new Label();
             label5 = new Label();
             UserDB_A_textBox = new TextBox();
             label6 = new Label();
@@ -79,7 +78,6 @@ namespace main.subcontents.ZoneLighting
             // 
             panel1.BackColor = SystemColors.GradientInactiveCaption;
             panel1.Controls.Add(infoRenewdb);
-            panel1.Controls.Add(label1);
             panel1.Controls.Add(label5);
             panel1.Controls.Add(UserDB_A_textBox);
             panel1.Controls.Add(label6);
@@ -107,14 +105,7 @@ namespace main.subcontents.ZoneLighting
             panel1.Size = new Size(902, 133);
             panel1.TabIndex = 26;
             // 
-            // label1
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(850, 103);
-            label1.Name = "label1";
-            label1.Size = new Size(19, 15);
-            label1.TabIndex = 122;
-            label1.Text = "㎡";
             // 
             // label5
             // 
@@ -423,7 +414,6 @@ namespace main.subcontents.ZoneLighting
         private Label label2;
         private TextBox UserDB_Manufacture_textBox;
         private Label label6;
-        private Label label1;
         private Label label5;
         private TextBox UserDB_A_textBox;
         private Button infoRenewdb;

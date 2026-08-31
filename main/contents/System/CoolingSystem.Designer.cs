@@ -113,7 +113,6 @@ namespace main.contents
             label18 = new Label();
             insul_lamdaLabel = new Label();
             Pipe_Length_button = new Button();
-            label16 = new Label();
             Pipe_Length_Text = new Label();
             insul_textBox = new TextBox();
             lamda_textBox = new TextBox();
@@ -199,14 +198,12 @@ namespace main.contents
             Icon_pictureBox = new PictureBox();
             label30 = new Label();
             PowerTotal_textBox = new TextBox();
-            label31 = new Label();
             label32 = new Label();
             EERTotal_textBox = new TextBox();
             label33 = new Label();
             label34 = new Label();
             InstallTotal_textBox = new TextBox();
             label35 = new Label();
-            CT_2 = new Label();
             CTPower_Text = new TextBox();
             CT_1 = new Label();
             panel7 = new Panel();
@@ -1146,7 +1143,6 @@ namespace main.contents
             Pipe_panel.Controls.Add(label18);
             Pipe_panel.Controls.Add(insul_lamdaLabel);
             Pipe_panel.Controls.Add(Pipe_Length_button);
-            Pipe_panel.Controls.Add(label16);
             Pipe_panel.Controls.Add(Pipe_Length_Text);
             Pipe_panel.Controls.Add(insul_textBox);
             Pipe_panel.Controls.Add(lamda_textBox);
@@ -1205,16 +1201,7 @@ namespace main.contents
             Pipe_Length_button.UseVisualStyleBackColor = false;
             Pipe_Length_button.Click += Pipe_Length_button_Click;
             // 
-            // label16
             // 
-            label16.AutoSize = true;
-            label16.Font = new Font("나눔바른고딕", 9.75F);
-            label16.ForeColor = SystemColors.ControlDark;
-            label16.Location = new Point(521, 9);
-            label16.Name = "label16";
-            label16.Size = new Size(52, 15);
-            label16.TabIndex = 214;
-            label16.Text = "W/m·K";
             // 
             // Pipe_Length_Text
             // 
@@ -2301,15 +2288,7 @@ namespace main.contents
             PowerTotal_textBox.TabIndex = 149;
             PowerTotal_textBox.TextAlign = HorizontalAlignment.Right;
             // 
-            // label31
             // 
-            label31.AutoSize = true;
-            label31.Font = new Font("나눔바른고딕", 9.75F);
-            label31.Location = new Point(1154, 18);
-            label31.Name = "label31";
-            label31.Size = new Size(27, 15);
-            label31.TabIndex = 150;
-            label31.Text = "kW";
             // 
             // label32
             // 
@@ -2373,16 +2352,7 @@ namespace main.contents
             label35.TabIndex = 154;
             label35.Text = "설치대수:";
             // 
-            // CT_2
             // 
-            CT_2.AutoSize = true;
-            CT_2.Font = new Font("나눔바른고딕", 9.75F);
-            CT_2.Location = new Point(1154, 117);
-            CT_2.Name = "CT_2";
-            CT_2.Size = new Size(27, 15);
-            CT_2.TabIndex = 159;
-            CT_2.Text = "kW";
-            CT_2.Visible = false;
             // 
             // CTPower_Text
             // 
@@ -2431,7 +2401,6 @@ namespace main.contents
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.InactiveBorder;
             ClientSize = new Size(1200, 730);
-            Controls.Add(CT_2);
             Controls.Add(CTPower_Text);
             Controls.Add(CT_1);
             Controls.Add(label34);
@@ -2440,7 +2409,6 @@ namespace main.contents
             Controls.Add(label32);
             Controls.Add(EERTotal_textBox);
             Controls.Add(label33);
-            Controls.Add(label31);
             Controls.Add(PowerTotal_textBox);
             Controls.Add(label30);
             Controls.Add(GeneralPanel);
@@ -2574,7 +2542,6 @@ namespace main.contents
         private PictureBox Press_pictureBox;
         private Label label30;
         private TextBox PowerTotal_textBox;
-        private Label label31;
         private Label label32;
         private TextBox EERTotal_textBox;
         private Label label33;
@@ -2616,7 +2583,6 @@ namespace main.contents
         private DataGridView SoilWaterCooler_dataGridView;
         private Label CT_cwout;
         private Label CT_cwin;
-        private Label CT_2;
         private TextBox CTPower_Text;
         private Label CT_1;
         private TextBox CPump2_textBox;
@@ -2642,7 +2608,6 @@ namespace main.contents
         private Label label14;
         private TextBox lamda_textBox;
         private Label insul_lamdaLabel;
-        private Label label16;
         private Panel Pipe_panel;
         private TextBox insul_textBox;
         private CustomComboBox Pipe_Diameter_ComboBox;

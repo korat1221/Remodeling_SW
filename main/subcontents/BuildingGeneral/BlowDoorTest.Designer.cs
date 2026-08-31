@@ -38,7 +38,6 @@ partial class BlowDoorTest
         label4 = new Label();
         n50_textBox = new TextBox();
         n50_label1 = new Label();
-        n50_label2 = new Label();
         info = new Button();
         ((System.ComponentModel.ISupportInitialize)Blow_dataGridView).BeginInit();
         SuspendLayout();
@@ -161,16 +160,7 @@ partial class BlowDoorTest
         n50_label1.TabIndex = 175;
         n50_label1.Text = "평균 n50";
         // 
-        // n50_label2
         // 
-        n50_label2.AutoSize = true;
-        n50_label2.Font = new Font("나눔바른고딕", 9.75F);
-        n50_label2.ForeColor = SystemColors.ControlText;
-        n50_label2.Location = new Point(352, 185);
-        n50_label2.Name = "n50_label2";
-        n50_label2.Size = new Size(29, 15);
-        n50_label2.TabIndex = 177;
-        n50_label2.Text = " h⁻¹";
         // 
         // info
         // 
@@ -194,7 +184,6 @@ partial class BlowDoorTest
         BackColor = Color.White;
         ClientSize = new Size(393, 244);
         Controls.Add(info);
-        Controls.Add(n50_label2);
         Controls.Add(n50_textBox);
         Controls.Add(n50_label1);
         Controls.Add(label4);
@@ -220,6 +209,5 @@ partial class BlowDoorTest
     private Label label4;
     private TextBox n50_textBox;
     private Label n50_label1;
-    private Label n50_label2;
     private Button info;
 }

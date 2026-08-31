@@ -49,10 +49,8 @@ namespace main.subcontents.EquipmentList
             PumpNum_textBox = new TextBox();
             panel1 = new Panel();
             label11 = new Label();
-            label12 = new Label();
             PumpHead_textBox = new TextBox();
             label10 = new Label();
-            label9 = new Label();
             Lmax_textBox = new TextBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             GeneralPanel.SuspendLayout();
@@ -263,10 +261,8 @@ namespace main.subcontents.EquipmentList
             // 
             panel1.BackColor = SystemColors.GradientInactiveCaption;
             panel1.Controls.Add(label11);
-            panel1.Controls.Add(label12);
             panel1.Controls.Add(PumpHead_textBox);
             panel1.Controls.Add(label10);
-            panel1.Controls.Add(label9);
             panel1.Controls.Add(Lmax_textBox);
             panel1.Location = new Point(-2, 366);
             panel1.Name = "panel1";
@@ -283,16 +279,7 @@ namespace main.subcontents.EquipmentList
             label11.TabIndex = 140;
             label11.Text = "펌프 양정";
             // 
-            // label12
             // 
-            label12.AutoSize = true;
-            label12.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            label12.ForeColor = SystemColors.ControlText;
-            label12.Location = new Point(357, 42);
-            label12.Name = "label12";
-            label12.Size = new Size(18, 16);
-            label12.TabIndex = 139;
-            label12.Text = "m";
             // 
             // PumpHead_textBox
             // 
@@ -314,16 +301,7 @@ namespace main.subcontents.EquipmentList
             label10.TabIndex = 137;
             label10.Text = "분배영역 직관길이";
             // 
-            // label9
             // 
-            label9.AutoSize = true;
-            label9.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
-            label9.ForeColor = SystemColors.ControlText;
-            label9.Location = new Point(357, 16);
-            label9.Name = "label9";
-            label9.Size = new Size(18, 16);
-            label9.TabIndex = 127;
-            label9.Text = "m";
             // 
             // Lmax_textBox
             // 
@@ -375,10 +353,8 @@ namespace main.subcontents.EquipmentList
         private Panel GeneralPanel;
         private Panel panel1;
         private Label label10;
-        private Label label9;
         private TextBox Lmax_textBox;
         private Label label11;
-        private Label label12;
         private TextBox PumpHead_textBox;
         private TextBox PumpNum_textBox;
     }

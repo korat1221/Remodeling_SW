@@ -1753,8 +1753,10 @@ namespace main.contents.Alt
 
                 Ueff_textBox.Text = Win_New_dataGridView.Rows[row].Cells[3].Value.ToString();
                 Program.UTIL.textBox_doubleComa(Ueff_textBox, true, 2);
+                Ueff_textBox.Text += " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 dU_textBox.Text = Win_New_dataGridView.Rows[row].Cells[6].Value.ToString();
                 Program.UTIL.textBox_doubleComa(dU_textBox, true, 2);
+                dU_textBox.Text += " W/m" + Program.UTIL.Subscript(2, true) + "·K";
             }
         }
         private void WinCheck_button_Click(object sender, EventArgs e)

@@ -51,7 +51,6 @@ namespace main.subcontents.EquipmentList
             panel2 = new Panel();
             label18 = new Label();
             label16 = new Label();
-            label17 = new Label();
             Volume_textBox = new TextBox();
             label15 = new Label();
             label14 = new Label();
@@ -59,15 +58,12 @@ namespace main.subcontents.EquipmentList
             label13 = new Label();
             label11 = new Label();
             PumpNum_textBox = new TextBox();
-            label12 = new Label();
             PumpHead_textBox = new TextBox();
             label10 = new Label();
-            label9 = new Label();
             Lmax_textBox = new TextBox();
             panel1 = new Panel();
             label21 = new Label();
             label19 = new Label();
-            label20 = new Label();
             PumpPower_textBox = new TextBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             GeneralPanel.SuspendLayout();
@@ -248,13 +244,11 @@ namespace main.subcontents.EquipmentList
             GeneralPanel.Controls.Add(panel2);
             GeneralPanel.Controls.Add(label11);
             GeneralPanel.Controls.Add(PumpNum_textBox);
-            GeneralPanel.Controls.Add(label12);
             GeneralPanel.Controls.Add(pictureBox1);
             GeneralPanel.Controls.Add(PumpHead_textBox);
             GeneralPanel.Controls.Add(label8);
             GeneralPanel.Controls.Add(label10);
             GeneralPanel.Controls.Add(label6);
-            GeneralPanel.Controls.Add(label9);
             GeneralPanel.Controls.Add(label7);
             GeneralPanel.Controls.Add(Lmax_textBox);
             GeneralPanel.Controls.Add(nG_textBox);
@@ -298,7 +292,6 @@ namespace main.subcontents.EquipmentList
             panel2.BackColor = SystemColors.InactiveBorder;
             panel2.Controls.Add(label18);
             panel2.Controls.Add(label16);
-            panel2.Controls.Add(label17);
             panel2.Controls.Add(Volume_textBox);
             panel2.Controls.Add(label15);
             panel2.Controls.Add(label14);
@@ -329,16 +322,7 @@ namespace main.subcontents.EquipmentList
             label16.TabIndex = 143;
             label16.Text = "유량";
             // 
-            // label17
             // 
-            label17.AutoSize = true;
-            label17.Font = new Font("나눔바른고딕", 9.75F);
-            label17.ForeColor = SystemColors.ControlText;
-            label17.Location = new Point(744, 54);
-            label17.Name = "label17";
-            label17.Size = new Size(35, 15);
-            label17.TabIndex = 142;
-            label17.Text = "CMH";
             // 
             // Volume_textBox
             // 
@@ -411,16 +395,7 @@ namespace main.subcontents.EquipmentList
             PumpNum_textBox.TabIndex = 138;
             PumpNum_textBox.TextAlign = HorizontalAlignment.Right;
             // 
-            // label12
             // 
-            label12.AutoSize = true;
-            label12.Font = new Font("나눔바른고딕", 9.75F);
-            label12.ForeColor = SystemColors.ControlText;
-            label12.Location = new Point(756, 303);
-            label12.Name = "label12";
-            label12.Size = new Size(19, 15);
-            label12.TabIndex = 139;
-            label12.Text = "m";
             // 
             // PumpHead_textBox
             // 
@@ -442,16 +417,7 @@ namespace main.subcontents.EquipmentList
             label10.TabIndex = 137;
             label10.Text = "분배영역 직관길이";
             // 
-            // label9
             // 
-            label9.AutoSize = true;
-            label9.Font = new Font("나눔바른고딕", 9.75F);
-            label9.ForeColor = SystemColors.ControlText;
-            label9.Location = new Point(756, 277);
-            label9.Name = "label9";
-            label9.Size = new Size(19, 15);
-            label9.TabIndex = 127;
-            label9.Text = "m";
             // 
             // Lmax_textBox
             // 
@@ -468,7 +434,6 @@ namespace main.subcontents.EquipmentList
             panel1.BackColor = SystemColors.GradientInactiveCaption;
             panel1.Controls.Add(label21);
             panel1.Controls.Add(label19);
-            panel1.Controls.Add(label20);
             panel1.Controls.Add(PumpPower_textBox);
             panel1.Location = new Point(-2, 343);
             panel1.Name = "panel1";
@@ -495,16 +460,7 @@ namespace main.subcontents.EquipmentList
             label19.TabIndex = 146;
             label19.Text = "동력";
             // 
-            // label20
             // 
-            label20.AutoSize = true;
-            label20.Font = new Font("나눔바른고딕", 9.75F);
-            label20.ForeColor = SystemColors.ControlText;
-            label20.Location = new Point(746, 22);
-            label20.Name = "label20";
-            label20.Size = new Size(20, 15);
-            label20.TabIndex = 145;
-            label20.Text = "W";
             // 
             // PumpPower_textBox
             // 
@@ -558,10 +514,8 @@ namespace main.subcontents.EquipmentList
         private Panel GeneralPanel;
         private Panel panel1;
         private Label label10;
-        private Label label9;
         private TextBox Lmax_textBox;
         private Label label11;
-        private Label label12;
         private TextBox PumpHead_textBox;
         private TextBox PumpNum_textBox;
         private Panel panel2;
@@ -571,11 +525,9 @@ namespace main.subcontents.EquipmentList
         private Label label15;
         private Label label18;
         private Label label16;
-        private Label label17;
         private TextBox Volume_textBox;
         private Label label21;
         private Label label19;
-        private Label label20;
         private TextBox PumpPower_textBox;
         private Label label22;
         private TextBox textBox1;

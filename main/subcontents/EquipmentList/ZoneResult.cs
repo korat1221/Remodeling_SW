@@ -161,49 +161,55 @@ namespace main.subcontents
             {
                 Qhb_textBox.Text = Qhb.ToString();
                 Program.UTIL.textBox_doubleComa(Qhb_textBox, true, 0);
+                Qhb_textBox.Text += " kWh/a";
             }
             if (Qcb > 0)
             {
                 Qcb_textBox.Text = Qcb.ToString();
                 Program.UTIL.textBox_doubleComa(Qcb_textBox, true, 0);
+                Qcb_textBox.Text += " kWh/a";
             }
             if (Qwb > 0)
             {
                 Qwb_textBox.Text = Qwb.ToString();
                 Program.UTIL.textBox_doubleComa(Qwb_textBox, true, 0);
+                Qwb_textBox.Text += " kWh/a";
             }
             if (Qhmax > 0)
             {
                 Qhmax_textBox.Text = Qhmax.ToString();
                 Program.UTIL.textBox_doubleComa(Qhmax_textBox, true, 2);
+                Qhmax_textBox.Text += " kW";
             }
             if (Qcmax > 0)
             {
                 Qcmax_textBox.Text = Qcmax.ToString();
                 Program.UTIL.textBox_doubleComa(Qcmax_textBox, true, 2);
+                Qcmax_textBox.Text += " kW";
             }
             if (Qwmax > 0)
             {
                 Qwmax_textBox.Text = Qwmax.ToString();
                 Program.UTIL.textBox_doubleComa(Qwmax_textBox, true, 2);
+                Qwmax_textBox.Text += " kW";
             }
         }
 
         private void Qhmax_Copy_button_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(Qhmax_textBox.Text.ToString());
+            Clipboard.SetText(Qhmax_textBox.Text.Split(" ")[0]);
             MessageBox.Show("최대 난방 부하 값이 복사되었습니다.");
         }
 
         private void Qcmax_Copy_button_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(Qcmax_textBox.Text.ToString());
+            Clipboard.SetText(Qcmax_textBox.Text.Split(" ")[0]);
             MessageBox.Show("최대 냉방 부하 값이 복사되었습니다.");
         }
 
         private void Qwmax_Copy_button_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(Qwmax_textBox.Text.ToString());
+            Clipboard.SetText(Qwmax_textBox.Text.Split(" ")[0]);
             MessageBox.Show("최대 급탕 부하 값이 복사되었습니다.");
         }
         private void ZoneResult_dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)

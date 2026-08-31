@@ -24,7 +24,14 @@ namespace main
         // 파싱 실패 시 예외 대신 0을 반환하는 안전한 버전. 프로젝트 전체에서 Convert.ToDouble 대신 이걸 쓴다.
         public double ToDoubleOrZero(object value)
         {
-            return double.TryParse(value?.ToString(), out double result) ? result : 0;
+            string s = value?.ToString() ?? "";
+            if (double.TryParse(s, out double result)) { return result; }
+
+            // 표시용 텍스트박스가 "값 단위"(예: "0.595 W/(m²·K)") 형태면 앞의 숫자 부분만 파싱
+            int space = s.IndexOf(' ');
+            if (space > 0 && double.TryParse(s.Substring(0, space), out result)) { return result; }
+
+            return 0;
         }
         // 옛날 프로젝트 데이터에 저장된 값이 지금의 콤보박스 목록에 없으면(DB 값 이름 변경, 컬럼 나중 추가 등)
         // DataGridViewComboBoxCell이 ArgumentException을 던져서 기본 오류 대화상자가 뜬다.
@@ -515,11 +522,14 @@ namespace main
                 double value;
                 if (textBox.Text != null && textBox.Text.ToString() != "")
                 {
-                    if (double.TryParse(textBox.Text, out value) == true)
+                    // "값 단위"(예: "0.595 W/(m²·K)") 형태면 앞 숫자 부분만 파싱하고 뒤 단위는 보존
+                    string numberPart = double.TryParse(textBox.Text, out value) ? textBox.Text : textBox.Text.Split(' ')[0];
+                    if (double.TryParse(numberPart, out value) == true)
                     {
                         string code_N = NumberDecimalPlaces(NumberDecimal, value);
-                        textBox.Text = value.ToString(code_N);
-                        this.textdouble = Program.UTIL.ToDoubleOrZero(textBox.Text.ToString());
+                        string unitPart = textBox.Text.Length > numberPart.Length ? textBox.Text.Substring(numberPart.Length) : "";
+                        textBox.Text = value.ToString(code_N) + unitPart;
+                        this.textdouble = Program.UTIL.ToDoubleOrZero(value.ToString(code_N));
                     }
                     else
                     {
@@ -533,9 +543,11 @@ namespace main
                 double value;
                 if (textBox.Text != null && textBox.Text.ToString() != "")
                 {
-                    if (double.TryParse(textBox.Text, out value) == true)
+                    // "값 단위" 형태면 앞 숫자 부분만 파싱
+                    string numberPart = double.TryParse(textBox.Text, out value) ? textBox.Text : textBox.Text.Split(' ')[0];
+                    if (double.TryParse(numberPart, out value) == true)
                     {
-                        this.textdouble = Program.UTIL.ToDoubleOrZero(textBox.Text.ToString());
+                        this.textdouble = value;
                     }
                     else
                     {

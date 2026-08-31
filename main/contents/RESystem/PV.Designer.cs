@@ -54,10 +54,8 @@
             label7 = new Label();
             label6 = new Label();
             Save_button = new Button();
-            label12 = new Label();
             averagecpacity_textBox = new TextBox();
             label29 = new Label();
-            label28 = new Label();
             allcapacity_textBox = new TextBox();
             label27 = new Label();
             panel2 = new Panel();
@@ -379,18 +377,7 @@
             Save_button.Text = "SAVE";
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
-            // 
-            // label12
-            // 
-            label12.AutoSize = true;
-            label12.Font = new Font("나눔바른고딕", 9.75F);
-            label12.ForeColor = SystemColors.ControlDark;
-            label12.Location = new Point(1148, 59);
-            label12.Name = "label12";
-            label12.Size = new Size(19, 15);
-            label12.TabIndex = 138;
-            label12.Text = "%";
-            // 
+            //
             // averagecpacity_textBox
             // 
             averagecpacity_textBox.BackColor = SystemColors.InactiveBorder;
@@ -412,18 +399,7 @@
             label29.Size = new Size(58, 15);
             label29.TabIndex = 128;
             label29.Text = "평균 효율";
-            // 
-            // label28
-            // 
-            label28.AutoSize = true;
-            label28.Font = new Font("나눔바른고딕", 9.75F);
-            label28.ForeColor = SystemColors.ControlDark;
-            label28.Location = new Point(1148, 28);
-            label28.Name = "label28";
-            label28.Size = new Size(53, 15);
-            label28.TabIndex = 109;
-            label28.Text = "kWh/년";
-            // 
+            //
             // allcapacity_textBox
             // 
             allcapacity_textBox.BackColor = SystemColors.InactiveBorder;
@@ -827,10 +803,8 @@
             BackColor = Color.FromArgb(239, 239, 239);
             ClientSize = new Size(1200, 896);
             Controls.Add(panel2);
-            Controls.Add(label12);
             Controls.Add(averagecpacity_textBox);
             Controls.Add(label29);
-            Controls.Add(label28);
             Controls.Add(allcapacity_textBox);
             Controls.Add(label27);
             Controls.Add(Save_button);
@@ -879,10 +853,8 @@
         private Button Save_button;
         private TextBox averagecpacity_textBox;
         private Label label29;
-        private Label label28;
         private TextBox allcapacity_textBox;
         private Label label27;
-        private Label label12;
         private Panel panel2;
         private DataGridView PV_dataGridView;
         private Label label8;

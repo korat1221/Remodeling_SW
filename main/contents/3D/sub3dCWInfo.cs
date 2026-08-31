@@ -65,21 +65,21 @@ namespace main.contents
                 }
                 //음영정보
                 R1 = Program.UTIL.ToDoubleOrZero(rec[0][5]);
-                R1_textBox.Text = R1.ToString("0.00") + "m";
+                R1_textBox.Text = R1.ToString("0.00") + " m";
                 R2 = Program.UTIL.ToDoubleOrZero(rec[0][1]);
-                R2_textBox.Text = R2.ToString("0.00") + "°";
+                R2_textBox.Text = R2.ToString("0.00") + " °";
                 L1 = Program.UTIL.ToDoubleOrZero(rec[0][6]);
-                L1_textBox.Text = L1.ToString("0.00") + "m";
+                L1_textBox.Text = L1.ToString("0.00") + " m";
                 L2 = Program.UTIL.ToDoubleOrZero(rec[0][2]);
-                L2_textBox.Text = L2.ToString("0.00") + "°";
+                L2_textBox.Text = L2.ToString("0.00") + " °";
                 S1 = Program.UTIL.ToDoubleOrZero(rec[0][8]);
-                S1_textBox.Text = S1.ToString("0.00") + "m";
+                S1_textBox.Text = S1.ToString("0.00") + " m";
                 S2 = Program.UTIL.ToDoubleOrZero(rec[0][4]);
-                S2_textBox.Text = S2.ToString("0.00") + "°";
+                S2_textBox.Text = S2.ToString("0.00") + " °";
                 T1 = Program.UTIL.ToDoubleOrZero(rec[0][7]);
-                T1_textBox.Text = T1.ToString("0.00") + "m";
+                T1_textBox.Text = T1.ToString("0.00") + " m";
                 T2 = Program.UTIL.ToDoubleOrZero(rec[0][3]);
-                T2_textBox.Text = T2.ToString("0.00") + "°";
+                T2_textBox.Text = T2.ToString("0.00") + " °";
 
 
                 //커튼월정보 불러오기  // *************************창호 너비 높이 면적은 존 인벨롭에서 들어오는 값으로 해야함 (임시방편)
@@ -94,10 +94,10 @@ namespace main.contents
                     Name_textBox1.Text = CWLoad[0][1];
 
                     Area = Program.UTIL.ToDoubleOrZero(rec[0][13]);
-                    Area_textBox.Text = String.Format("{0:F2}", Area);
+                    Area_textBox.Text = String.Format("{0:F2}", Area) + " m" + Program.UTIL.Subscript(2, true);
 
-                    Width_textBox.Text = String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(rec[0][14]));
-                    height_textBox.Text = String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(rec[0][15]));
+                    Width_textBox.Text = String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(rec[0][14])) + " m";
+                    height_textBox.Text = String.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(rec[0][15])) + " m";
                     if (CWLoad[0][9] == "내단열" || CWLoad[0][9] == "외단열")
                     {
                         install_textBox.Text = "콘크리트조 " + CWLoad[0][9];
@@ -118,9 +118,9 @@ namespace main.contents
                     Tao_off_textBox.Text = CWLoad[0][11];
 
                     uw = Program.UTIL.ToDoubleOrZero(CWLoad[0][13]);
-                    uw_textBox.Text = uw.ToString("0.000") + " W/m" + Program.UTIL.Subscript(2, true) + "K";
+                    uw_textBox.Text = uw.ToString("0.000") + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                     install = Program.UTIL.ToDoubleOrZero(CWLoad[0][12]);
-                    inst_textBox.Text = install.ToString("0.000") + " W/m" + Program.UTIL.Subscript(2, true) + "K";
+                    inst_textBox.Text = install.ToString("0.000") + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
 
                     Type = CWLoad[0][14];
                     InstallType = CWLoad[0][9];
