@@ -42,7 +42,7 @@ namespace main.contents
         //선택값
         string Method, control, dimming;
         //계산값
-        double Pj, Pn;
+        double Pj, Pn, RoomIndex; //공간계수 추가함
         double Fo, Fo1, Fo2, Fo3, Fc;
         double N = 1; //조명 설치 개수
         //차양선택값
@@ -1017,20 +1017,39 @@ namespace main.contents
             }
         }
 
-
-        private void Save(string missingItems, bool isManualSave = false) //공간계수 대신 조명설치 높이값을 저장함
+        private double Cal_RoomIndex(double Hm, double WRoom, double LRoom)
         {
+            double roomindex;
+            roomindex = (WRoom * LRoom) / (Hm * (WRoom + LRoom));
+            if (roomindex <= 0.65) roomindex = 0.6;
+            else if (roomindex <= 0.75) roomindex = 0.7;
+            else if (roomindex <= 0.85) roomindex = 0.8;
+            else if (roomindex <= 0.95) roomindex = 0.9;
+            else if (roomindex <= 1.125) roomindex = 1;
+            else if (roomindex <= 1.375) roomindex = 1.25;
+            else if (roomindex <= 1.75) roomindex = 1.5;
+            else if (roomindex <= 2.25) roomindex = 2;
+            else if (roomindex <= 2.75) roomindex = 2.5;
+            else if (roomindex <= 3.5) roomindex = 3;
+            else if (roomindex <= 4.5) roomindex = 4;
+            else roomindex = 5;
+            return roomindex;
+        }
+
+        private void Save(string missingItems, bool isManualSave = false) //조명설치높이 추가
+        {
+            RoomIndex = Cal_RoomIndex(hm,Wr,Lr);
             Program.DB.setValue(DB.type.ProjDB, "ZoneLighting_form", "번호,너비,길이,순바닥면적,상인방높이,작업면높이,조명설치높이,기준조도," +
                 "조명방식,제어방식,디밍유형,조명밀도,조명예상전력," +
                 "대기전력,재실계수,조도제어계수," +
                 "조명번호, 등기구명칭, 램프유형, 컨버터_안정기, 광효율, 조명계수,조명개수," +
-                "집광채광체크,주광길이,주광깊이,주광면적,비주광면적,미입력항목",
+                "집광채광체크,주광길이,주광깊이,주광면적,비주광면적,미입력항목,공간계수",
                 "'" + Num_textBox.Text + "','" + Wr + "','" + Lr + "','" + A + "','" + hLi + "','" + hTa + "','" + LightInstallHeight + "','" + Em + "','" +
                 Method + "','" + control + "','" + dimming + "','" + Pj.ToString() + "','" + Pn.ToString() + "','" +
                 Pci.ToString() + "','" + Fo.ToString() + "','" + Fc.ToString() + "','" +
                 LightNumber + "','" + LightType + "','" + LightType2 + "','" + LightConverter + "','" + lm_W + "','" + LightFL.ToString() + "','" + N.ToString() + "','" +
                 Renew_checkBox.Checked.ToString() + "','" +
-                bd + "','" + ad + "','" + AD + "','" + unAD + "','" + missingItems + "'", "번호");
+                bd + "','" + ad + "','" + AD + "','" + unAD + "','" + missingItems + "','"+RoomIndex+"'", "번호");
 
             if (LightNumber.Contains("LP"))
             {
@@ -1329,7 +1348,7 @@ namespace main.contents
                 }
 
                 Pn = Program.UTIL.ToDoubleOrZero(Load[0][11]);
-                LightInstallHeight = Program.UTIL.ToDoubleOrZero(Load[0][12]); //조명설치높이 반영함-공간계수
+                LightInstallHeight = Program.UTIL.ToDoubleOrZero(Load[0][12]); //조명설치높이 반영함
                 lightHeight_textBox.Text = LightInstallHeight.ToString();
                 string[][] Img = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_램프분류이미지", "이미지", "조명분류 = '" + Method + "'");
                 if (Img.Length > 0)
@@ -1550,7 +1569,7 @@ namespace main.contents
                     MaxIsWindow = Glazing[i][5] == "창호";
                     MainType_ID = Glazing[i][0];
                     Main_WinCW = Glazing[i][2];
-                    hLi = Math.Min(hR, Program.UTIL.ToDoubleOrZero(Glazing[i][4]) -100); //100은 중심선으로부터의 슬라브 두께 
+                    hLi = Math.Min(hR, Program.UTIL.ToDoubleOrZero(Glazing[i][4]) -0.1); //100은 중심선으로부터의 슬라브 두께 
                 }
             }
 

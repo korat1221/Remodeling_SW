@@ -15,7 +15,7 @@ namespace main
         //CSV 파일 불러오기 
         //다른 클래스(하위) 객체화해서 Calc
         public string ZoneNum;
-        public double Wr, Lr, A, hR, hm, Zone_hLi, Zone_hTa, K;  //존 일반정보 csv 변수
+        public double Wr, Lr, A, hR, hm, Zone_hLi, Zone_hTa, RoomIndex;  //존 일반정보 csv 변수
         public double A_DL, AL;
         public string WinNum; //존이름과 일치하는 주창아이디
         public string Location;  //존 용도프로필 csv 변수
@@ -136,7 +136,7 @@ namespace main
         }
         public void LoadData_LightGeneral()
         {
-            string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,너비,길이,순바닥면적,상인방높이,작업면높이,공간계수,기준조도,주창아이디", "번호='" + ZoneNum + "'");
+            string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form", "번호,너비,길이,순바닥면적,상인방높이,작업면높이,기준조도,주창아이디,조명설치높이", "번호='" + ZoneNum + "'");
             int kk = -1;
             if (ValueA.Length > 0)
             {
@@ -147,9 +147,9 @@ namespace main
                     A = Program.UTIL.ToDoubleOrZero(ValueA[kk][3]);
                     Zone_hLi = Program.UTIL.ToDoubleOrZero(ValueA[kk][4]);
                     Zone_hTa = Program.UTIL.ToDoubleOrZero(ValueA[kk][5]);
-                    K = Program.UTIL.ToDoubleOrZero(ValueA[kk][6]);
-                    Em = Program.UTIL.ToDoubleOrZero(ValueA[kk][7]);
-                    WinNum = ValueA[kk][8];
+                    Em = Program.UTIL.ToDoubleOrZero(ValueA[kk][6]);
+                    WinNum = ValueA[kk][7];
+                    RoomIndex = Cal_RoomIndex(ValueA[kk][8].ToString(), Wr, Lr, Zone_hTa); //공간계수
                 }
             }
             String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "주이용일,julianday(time(시작시간)),julianday(time(종료시간))", "존번호='" + ZoneNum + "'");
@@ -159,6 +159,24 @@ namespace main
                 starttime = Program.UTIL.ToDoubleOrZero(Value[0][1]);
                 endtime = Program.UTIL.ToDoubleOrZero(Value[0][2]);
             }
+        }
+        //공간계수 계산
+        private double Cal_RoomIndex(string LHeight, double WRoom, double LRoom, double THeight)
+        {
+            double roomindex, _LHeight;
+            _LHeight = Program.UTIL.ToDoubleOrZero(LHeight);
+            roomindex = (WRoom * LRoom) / ((_LHeight - THeight) * (WRoom + LRoom));
+            if (roomindex <= 0.7) roomindex = 0.6;
+            else if (roomindex <= 0.9) roomindex = 0.8;
+            else if (roomindex <= 1.125) roomindex = 1;
+            else if (roomindex <= 1.375) roomindex = 1.25;
+            else if (roomindex <= 1.75) roomindex = 1.5;
+            else if (roomindex <= 2.25) roomindex = 2;
+            else if (roomindex <= 2.75) roomindex = 2.5;
+            else if (roomindex <= 3.5) roomindex = 3;
+            else if (roomindex <= 4.5) roomindex = 4;
+            else roomindex = 5;
+            return roomindex;
         }
         public void LoadData_LightSystem()
         {
@@ -613,9 +631,11 @@ namespace main
                 {
                     if (Middle == "일반형" || Middle == "돔형")
                     {
+                        //공간계수 계산하기
+
                         //천창 효율 계수
                         //조건에 맞는 값 가져오기
-                        string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_천창일반형ηR", "ηR", "K='" + K + "' AND hs_bs ='" + Zone_hs_bs + "' AND as_bs ='" + Zone_as_bs + "' AND γW ='" + γW + "'");
+                        string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_천창일반형ηR", "ηR", "K='" + RoomIndex + "' AND hs_bs ='" + Zone_hs_bs + "' AND as_bs ='" + Zone_as_bs + "' AND γW ='" + γW + "'");
                         int kk = -1;
                         if (ValueA.Length > 0)
                         {
@@ -629,7 +649,7 @@ namespace main
                     else if (Middle == "톱니형")
                     {
                         //조건에 맞는 값 가져오기
-                        string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_천창톱니형ηR", "ηR", "K='" + K + "' AND hg_hw ='" + Zone_hg_hw + "' AND γF ='" + γF + "' AND γW ='" + γW + "'");
+                        string[][] ValueA = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_천창톱니형ηR", "ηR", "K='" + RoomIndex + "' AND hg_hw ='" + Zone_hg_hw + "' AND γF ='" + γF + "' AND γW ='" + γW + "'");
                         int kk = -1;
                         if (ValueA.Length > 0)
                         {
@@ -1141,7 +1161,7 @@ namespace main
     public class Facade_shade
     {
         //  중정 및 아트리움 공간 계수
-        public double Calc_Wi(double hIn_At, double aIn_At, double bIn_At)  //공간계수 계산
+        public double Calc_Wi(double hIn_At, double aIn_At, double bIn_At)  //중정, 아트리움 공간계수 계산
         {
             double Wi;
             Wi = (hIn_At * (aIn_At + bIn_At)) / (2 * aIn_At * bIn_At);
