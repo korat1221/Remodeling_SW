@@ -3098,7 +3098,7 @@ namespace main.contents
                                 }
                             }
                             break;
-                        case ("천장고4m초과","전기독립형"):
+                        case ("천장고4m이하","전기독립형"):
                             공급설비종류comboBox.Items.AddRange(new string[] { "외벽측설치", "내벽측설치" });
                             ctrValue = Program.DB.getValue_SameCheck(DB.type.BaseDB_Heating, "공급설비온도차", "제어유형", "구분 = '전기독립형' and 온도차 ='Dtheta'");
                             if (ctrValue.Length > 0)
