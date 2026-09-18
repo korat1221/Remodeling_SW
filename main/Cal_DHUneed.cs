@@ -333,7 +333,7 @@ namespace main
             double 인체잠열 = 54;     // W/person, ASHRAE Handbook 기준
             double 증발잠열 = 0.680;  // kWh/kg, EN 16798-5-1 표27
 
-            G_int = 재실 ? (인체잠열 * OccDensity * zoneArea / 1000) / 증발잠열 : 0;
+            G_int = 재실 && OccDensity > 0 ? (인체잠열 * (zoneArea / OccDensity) / 1000) / 증발잠열 : 0;
             return G_int;
         }
 

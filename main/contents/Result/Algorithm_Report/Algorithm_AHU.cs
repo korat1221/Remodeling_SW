@@ -510,13 +510,13 @@ namespace main.contents.Result
             }
             else if(type == "난방덕트")
             {
-                string[][] var = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "Q_loss_OA_du,Q_loss_SA_du,Q_loss_EA_du", "번호 ='" + num + "' AND 난방_냉방 = '난방' AND 월 = '" + mth + "'");
-                vla = (Program.UTIL.ToDoubleOrZero(var[0][0]) + Program.UTIL.ToDoubleOrZero(var[0][1]) + Program.UTIL.ToDoubleOrZero(var[0][2]));
+                string[][] var = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "Q_loss_OA_du,Q_loss_SA_du,Q_loss_RA_du,Q_loss_EA_du", "번호 ='" + num + "' AND 난방_냉방 = '난방' AND 월 = '" + mth + "'");
+                vla = (Program.UTIL.ToDoubleOrZero(var[0][0]) + Program.UTIL.ToDoubleOrZero(var[0][1]) + Program.UTIL.ToDoubleOrZero(var[0][2]) + Program.UTIL.ToDoubleOrZero(var[0][3]));
             } 
             else if(type == "냉방덕트")
             {
-                string[][] var = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "Q_loss_OA_du,Q_loss_SA_du,Q_loss_EA_du", "번호 ='" + num + "' AND 난방_냉방 = '냉방' AND 월 = '" + mth + "'");
-                vla = (Program.UTIL.ToDoubleOrZero(var[0][0]) + Program.UTIL.ToDoubleOrZero(var[0][1]) + Program.UTIL.ToDoubleOrZero(var[0][2]));
+                string[][] var = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "Q_loss_OA_du,Q_loss_SA_du,Q_loss_RA_du,Q_loss_EA_du", "번호 ='" + num + "' AND 난방_냉방 = '냉방' AND 월 = '" + mth + "'");
+                vla = (Program.UTIL.ToDoubleOrZero(var[0][0]) + Program.UTIL.ToDoubleOrZero(var[0][1]) + Program.UTIL.ToDoubleOrZero(var[0][2]) + Program.UTIL.ToDoubleOrZero(var[0][3]));
             }
             else if (type == "급기팬")
             {
