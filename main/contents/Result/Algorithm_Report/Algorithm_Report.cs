@@ -29,7 +29,11 @@ namespace main.contents
             MainMenu.Add(new { text = "냉방 에너지소요량", id = "{\\\"formID\\\":46,\\\"ID\\\":\\\"Algorithm_Cooling\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             MainMenu.Add(new { text = "급탕 에너지소요량", id = "{\\\"formID\\\":47,\\\"ID\\\":\\\"Algorithm_DHW\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
             MainMenu.Add(new { text = "조명 에너지소요량", id = "{\\\"formID\\\":44,\\\"ID\\\":\\\"Algorithm_Lighting\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
-            MainMenu.Add(new { text = "공조 에너지소요량", id = "{\\\"formID\\\":48,\\\"ID\\\":\\\"Algorithm_AHU\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
+            string[][] ahuList = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "번호", "유형 = '공조기'");
+            if (ahuList.Length > 0)
+            {
+                MainMenu.Add(new { text = "공조 에너지소요량", id = "{\\\"formID\\\":48,\\\"ID\\\":\\\"Algorithm_AHU\\\"}" });
+            }
           //  MainMenu.Add(new { text = "신재생 에너지생산량", id = "{\\\"formID\\\":37,\\\"ID\\\":\\\"Algorithm_RESystem\\\"}" }); // 예시 코드: 메인 메뉴 동적 할당
 
             Program.UTIL.resetMainTree(6, 2, MainMenu.ToArray(), "37"); // 예시 코드: 메인 메뉴 동적 할당

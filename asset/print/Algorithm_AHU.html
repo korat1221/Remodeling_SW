@@ -1031,6 +1031,11 @@ rt
 	}
 -->
 </style>
+<style id="ahu-draft-style">
+  .draft-badge { color:#7f6000; background:#fff2cc; font-weight:700; }
+  .draft-note { color:#666; font-size:8pt; }
+  @media print { .draft-badge { color:#7f6000 !important; background:#fff2cc !important; } }
+</style>
 </head>
 
 <body>
@@ -1149,7 +1154,7 @@ rt
   <td class=xl864381><font class="font114381">%&nbsp&nbsp&nbsp</font>냉방&nbsp&nbsp</td>
   <td class="xl1234381 eff_Ct"></td>
   <td class=xl934381>%</td>
-  <td class=xl824381 colspan=2 style='border-right:.5pt solid #BFBFBF'>가습에너지
+  <td class=xl824381 colspan=2 style='border-right:.5pt solid #BFBFBF'>제습에너지
   요구량</td>
   <td class="xl954381 year_hum" style='border-top:none;border-left:none'></td>
   <td class=xl1044381 colspan=2>kWh/m<font class="font114381"><sup>2</sup></font><font
@@ -1194,7 +1199,7 @@ rt
   <td class="xl954381 coil_coolpower"></td>
   <td class=xl934381>kW</td>
   <td class=xl934381 colspan=2>습도 유형</td>
-  <td class="xl954381 ahu_humtype"><span style='mso-spacerun:yes'> </span></td>
+  <td class="xl954381">절대습도</td>
   <td class=xl1284381> </td>
   <td class=xl934381>　</td>
  </tr>
@@ -1246,7 +1251,7 @@ rt
   class="font124381">가습기 정보</font></td>
   <td class=xl1004381>　</td>
  </tr>
- 
+
  <tr height=6 style='mso-height-source:userset;height:5.1pt'>
   <td colspan=11 rowspan=10 class="imagestyle image" style="height:200pt; text-align: center;vertical-align: middle;"><img class="ahuImage" src="" alt="Image" style="height:100%; width: auto; "></td>
  </tr>
@@ -1299,7 +1304,7 @@ rt
  </tr>
  <th style="height:4px"></th>
  <tr height=22 style='height:16.5pt'>
-  <td height=22 class=xl984381 style='height:16.5pt'>적용된 모든존</td>
+  <td height=22 class=xl984381 style='height:16.5pt'>존 에너지요구량</td>
   <td class=xl844381>1월</td>
   <td class=xl844381>2월</td>
   <td class=xl844381>3월</td>
@@ -1315,7 +1320,7 @@ rt
   <td class=xl844381>합 계</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
-  <td height=22 class=xl1084381 style='height:16.5pt;border-top:none'>난방요구량</td>
+  <td height=22 class=xl1084381 style='height:16.5pt;border-top:none'>난방</td>
   <td class="xl864381 zone_hndmth"></td>
   <td class="xl864381 zone_hndmth"></td>
   <td class="xl864381 zone_hndmth"></td>
@@ -1331,7 +1336,7 @@ rt
   <td class="xl864381 zone_hndmth"></td>
  </tr>
  <tr height=22 style='height:16.5pt'>
-  <td height=22 class=xl914381 style='height:16.5pt'>냉방요구량</td>
+  <td height=22 class=xl914381 style='height:16.5pt'>냉방</td>
   <td class="xl864381 zone_cndmth"></td>
   <td class="xl864381 zone_cndmth"></td>
   <td class="xl864381 zone_cndmth"></td>
@@ -1347,8 +1352,7 @@ rt
   <td class="xl864381 zone_cndmth"></td>
  </tr>
  <tr height=22 style='height:16.5pt'>
-  <td height=22 class=xl914381 style='height:16.5pt'>제습요구량</td>
-  <td class="xl864381 zone_dehumth"></td>
+  <td height=22 class=xl914381 style='height:16.5pt'>제습</td>
   <td class="xl864381 zone_dehumth"></td>
   <td class="xl864381 zone_dehumth"></td>
   <td class="xl864381 zone_dehumth"></td>
@@ -1363,8 +1367,9 @@ rt
   <td class="xl864381 zone_dehumth"></td>
   <td class="xl864381 zone_dehumth"></td>
  </tr>
+
  <tr height=22 style='height:16.5pt'>
-  <td height=22 class=xl984381 style='height:16.5pt'>예열 절감량</td>
+  <td height=22 class="xl984381 duct_title" style='height:16.5pt'>적용 덕트 영향</td>
   <td class=xl844381>1월</td>
   <td class=xl844381>2월</td>
   <td class=xl844381>3월</td>
@@ -1380,55 +1385,7 @@ rt
   <td class=xl844381>합 계</td>
  </tr>
  <tr height=22 style='height:16.5pt'>
-  <td height=22 class=xl1084381 style='height:16.5pt;border-top:none'>난방시 절감량</td>
-  <td class="xl864381 pre_hmth"></td>
-  <td class="xl864381 pre_hmth"></td>
-  <td class="xl864381 pre_hmth"></td>
-  <td class="xl864381 pre_hmth"></td>
-  <td class="xl864381 pre_hmth"></td>
-  <td class="xl864381 pre_hmth"></td>
-  <td class="xl864381 pre_hmth"></td>
-  <td class="xl864381 pre_hmth"></td>
-  <td class="xl864381 pre_hmth"></td>
-  <td class="xl864381 pre_hmth"></td>
-  <td class="xl864381 pre_hmth"></td>
-  <td class="xl864381 pre_hmth"></td>
-  <td class="xl864381 pre_hmth"></td>
- </tr>
- <tr height=22 style='height:16.5pt'>
-  <td height=22 class=xl914381 style='height:16.5pt'>냉방시 절감량</td>
-  <td class="xl864381 pre_cmth"></td>
-  <td class="xl864381 pre_cmth"></td>
-  <td class="xl864381 pre_cmth"></td>
-  <td class="xl864381 pre_cmth"></td>
-  <td class="xl864381 pre_cmth"></td>
-  <td class="xl864381 pre_cmth"></td>
-  <td class="xl864381 pre_cmth"></td>
-  <td class="xl864381 pre_cmth"></td>
-  <td class="xl864381 pre_cmth"></td>
-  <td class="xl864381 pre_cmth"></td>
-  <td class="xl864381 pre_cmth"></td>
-  <td class="xl864381 pre_cmth"></td>
-  <td class="xl864381 pre_cmth"></td>
- </tr>
- <tr height=22 style='height:16.5pt'>
-  <td height=22 class=xl984381 style='height:16.5pt'>덕트 열손실량</td>
-  <td class=xl844381>1월</td>
-  <td class=xl844381>2월</td>
-  <td class=xl844381>3월</td>
-  <td class=xl844381>4월</td>
-  <td class=xl844381>5월</td>
-  <td class=xl844381>6월</td>
-  <td class=xl844381>7월</td>
-  <td class=xl844381>8월</td>
-  <td class=xl844381>9월</td>
-  <td class=xl844381>10월</td>
-  <td class=xl844381>11월</td>
-  <td class=xl844381>12월</td>
-  <td class=xl844381>합 계</td>
- </tr>
- <tr height=22 style='height:16.5pt'>
-  <td height=22 class=xl914381 style='height:16.5pt'>난방시 손실량</td>
+  <td height=22 class=xl914381 style='height:16.5pt'>난방 열손실</td>
   <td class="xl864381 duct_h"></td>
   <td class="xl864381 duct_h"></td>
   <td class="xl864381 duct_h"></td>
@@ -1444,7 +1401,7 @@ rt
   <td class="xl864381 duct_h"></td>
  </tr>
  <tr height=22 style='height:16.5pt'>
-  <td height=22 class=xl914381 style='height:16.5pt'>냉방시 손실량</td>
+  <td height=22 class=xl914381 style='height:16.5pt'>냉방 열획득</td>
   <td class="xl864381 duct_c"></td>
   <td class="xl864381 duct_c"></td>
   <td class="xl864381 duct_c"></td>
@@ -1524,7 +1481,7 @@ rt
   <td class="xl864381 w_rafan"></td>
  </tr>
  <tr height=22 style='height:16.5pt'>
-  <td height=22 class=xl914381 style='height:16.5pt'>가습</td>
+  <td height=22 class=xl914381 style='height:16.5pt'>가습기</td>
   <td class="xl864381 w_hum"></td>
   <td class="xl864381 w_hum"></td>
   <td class="xl864381 w_hum"></td>
@@ -1540,7 +1497,7 @@ rt
   <td class="xl864381 w_hum"></td>
  </tr>
  <tr height=22 style='height:16.5pt'>
-  <td height=22 class=xl1094381 style='height:16.5pt'>예열기</td>
+  <td height=22 class=xl914381 style='height:16.5pt'>예열기</td>
   <td class="xl864381 w_pre"></td>
   <td class="xl864381 w_pre"></td>
   <td class="xl864381 w_pre"></td>
@@ -1556,7 +1513,39 @@ rt
   <td class="xl864381 w_pre"></td>
  </tr>
  <tr height=22 style='height:16.5pt'>
-  <td height=22 class=xl984381 style='height:16.5pt;border-top:none'>공조기요구량</td>
+  <td height=22 class=xl914381 style='height:16.5pt'>제어</td>
+  <td class="xl864381 w_ctrl"></td>
+  <td class="xl864381 w_ctrl"></td>
+  <td class="xl864381 w_ctrl"></td>
+  <td class="xl864381 w_ctrl"></td>
+  <td class="xl864381 w_ctrl"></td>
+  <td class="xl864381 w_ctrl"></td>
+  <td class="xl864381 w_ctrl"></td>
+  <td class="xl864381 w_ctrl"></td>
+  <td class="xl864381 w_ctrl"></td>
+  <td class="xl864381 w_ctrl"></td>
+  <td class="xl864381 w_ctrl"></td>
+  <td class="xl864381 w_ctrl"></td>
+  <td class="xl864381 w_ctrl"></td>
+ </tr>
+<tr height=22 style='height:16.5pt'>
+  <td height=22 class=xl1094381 style='height:16.5pt'>로터모터</td>
+  <td class="xl864381 w_rotor"></td>
+  <td class="xl864381 w_rotor"></td>
+  <td class="xl864381 w_rotor"></td>
+  <td class="xl864381 w_rotor"></td>
+  <td class="xl864381 w_rotor"></td>
+  <td class="xl864381 w_rotor"></td>
+  <td class="xl864381 w_rotor"></td>
+  <td class="xl864381 w_rotor"></td>
+  <td class="xl864381 w_rotor"></td>
+  <td class="xl864381 w_rotor"></td>
+  <td class="xl864381 w_rotor"></td>
+  <td class="xl864381 w_rotor"></td>
+  <td class="xl864381 w_rotor"></td>
+ </tr>
+<tr height=22 style='height:16.5pt'>
+  <td height=22 class=xl984381 style='height:16.5pt;border-top:none'>공조 요구량</td>
   <td class=xl844381>1월</td>
   <td class=xl844381 style='border-top:none'>2월</td>
   <td class=xl844381 style='border-top:none'>3월</td>
@@ -1588,7 +1577,7 @@ rt
   <td class="xl864381 mth_hnd"></td>
  </tr>
  <tr height=22 style='height:16.5pt'>
-  <td height=22 class=xl914381 style='height:16.5pt'>냉방(제습포함)</td>
+  <td height=22 class=xl914381 style='height:16.5pt'>냉방</td>
   <td class="xl864381 mth_cnd"></td>
   <td class="xl864381 mth_cnd"></td>
   <td class="xl864381 mth_cnd"></td>
@@ -1604,20 +1593,52 @@ rt
   <td class="xl864381 mth_cnd"></td>
  </tr>
  <tr height=22 style='height:16.5pt'>
-  <td height=22 class=xl914381 style='height:16.5pt'>가습</td>
-  <td class="xl864381 mth_humnd"></td>
-  <td class="xl864381 mth_humnd"></td>
-  <td class="xl864381 mth_humnd"></td>
-  <td class="xl864381 mth_humnd"></td>
-  <td class="xl864381 mth_humnd"></td>
-  <td class="xl864381 mth_humnd"></td>
-  <td class="xl864381 mth_humnd"></td>
-  <td class="xl864381 mth_humnd"></td>
-  <td class="xl864381 mth_humnd"></td>
-  <td class="xl864381 mth_humnd"></td>
-  <td class="xl864381 mth_humnd"></td>
-  <td class="xl864381 mth_humnd"></td>
-  <td class="xl864381 mth_humnd"></td>
+  <td height=22 class=xl984381 style='height:16.5pt;border-top:none'>공조 소요량</td>
+  <td class=xl844381>1월</td>
+  <td class=xl844381 style='border-top:none'>2월</td>
+  <td class=xl844381 style='border-top:none'>3월</td>
+  <td class=xl844381 style='border-top:none'>4월</td>
+  <td class=xl844381 style='border-top:none'>5월</td>
+  <td class=xl844381 style='border-top:none'>6월</td>
+  <td class=xl844381 style='border-top:none'>7월</td>
+  <td class=xl844381 style='border-top:none'>8월</td>
+  <td class=xl844381 style='border-top:none'>9월</td>
+  <td class=xl844381 style='border-top:none'>10월</td>
+  <td class=xl844381 style='border-top:none'>11월</td>
+  <td class=xl844381 style='border-top:none'>12월</td>
+  <td class=xl844381 style='border-top:none'>합 계</td>
+ </tr>
+<tr height=22 style='height:16.5pt'>
+  <td height=22 class=xl914381 style='height:16.5pt'>난방</td>
+  <td class="xl864381 qvf_h"></td>
+  <td class="xl864381 qvf_h"></td>
+  <td class="xl864381 qvf_h"></td>
+  <td class="xl864381 qvf_h"></td>
+  <td class="xl864381 qvf_h"></td>
+  <td class="xl864381 qvf_h"></td>
+  <td class="xl864381 qvf_h"></td>
+  <td class="xl864381 qvf_h"></td>
+  <td class="xl864381 qvf_h"></td>
+  <td class="xl864381 qvf_h"></td>
+  <td class="xl864381 qvf_h"></td>
+  <td class="xl864381 qvf_h"></td>
+  <td class="xl864381 qvf_h"></td>
+ </tr>
+<tr height=22 style='height:16.5pt'>
+  <td height=22 class=xl914381 style='height:16.5pt'>냉방</td>
+  <td class="xl864381 qvf_c"></td>
+  <td class="xl864381 qvf_c"></td>
+  <td class="xl864381 qvf_c"></td>
+  <td class="xl864381 qvf_c"></td>
+  <td class="xl864381 qvf_c"></td>
+  <td class="xl864381 qvf_c"></td>
+  <td class="xl864381 qvf_c"></td>
+  <td class="xl864381 qvf_c"></td>
+  <td class="xl864381 qvf_c"></td>
+  <td class="xl864381 qvf_c"></td>
+  <td class="xl864381 qvf_c"></td>
+  <td class="xl864381 qvf_c"></td>
+  <td class="xl864381 qvf_c"></td>
  </tr>
  <tr height=22 style='height:16.5pt'>
   <td colspan=14 rowspan=15 height=330 class=xl1164381 style='border-bottom:

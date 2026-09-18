@@ -48,7 +48,7 @@ namespace main.contents.Result
         {
             string s, s2;
             string charts = "";
-            string[][] 번호 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "번호", "");
+            string[][] 번호 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "번호", "유형 = '공조기'");
 
             List<object> items = new List<object>();
             List<object> data = new List<object>();
@@ -60,7 +60,6 @@ namespace main.contents.Result
 
             List<string> chart_hnd = new List<string>();
             List<string> chart_cnd = new List<string>();
-            List<string> chart_humnd = new List<string>();
             List<string> chart_w = new List<string>();
 
             int i = -1;
@@ -81,7 +80,7 @@ namespace main.contents.Result
             while (++i < 번호.Length)
             {
                 string Num = 번호[i][0];
-                items.Add("ahu_report.html"); // 예시 코드: 메인 메뉴 동적 할당
+                items.Add("Algorithm_AHU.html"); // 예시 코드: 메인 메뉴 동적 할당
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
                 string 공조기유형, 설치위치;
                 if (Value.Length > 0)
@@ -123,6 +122,7 @@ namespace main.contents.Result
                     }
                     FormData[9].Add(new { idx = i, val = Value2[0][2] }); //실제어유형
                     FormData[10].Add(new { idx = i, val = Value2[0][3] }); //설치위치
+                    FormData[11].Add(new { idx = i, val = 설치위치 == "단열외피 내부" ? "EA 덕트 영향" : "SA 덕트 영향" });
                     //subdata 16개 만들기
 
                     if(설치위치 == "단열외피 내부")
@@ -214,33 +214,10 @@ namespace main.contents.Result
                     {
                         Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "프리히터용량", "번호 = '" + Num + "'");
                         PreData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][0].ToString(), 0) }); //용량
-
-                        PreData[2].Add(new { idx = i, val = "-" });  //토양유형
-                        PreData[3].Add(new { idx = i, val = "-" });  //지중깊이
-                        PreData[4].Add(new { idx = i, val = "-" });  //재질
-                        PreData[5].Add(new { idx = i, val = "-" });  //길이
-                        PreData[6].Add(new { idx = i, val = "-" });   //관경
-                    }
-                    else if(pretype == "쿨튜브")
-                    {
-                        Value = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "토양유형,지중깊이,쿨튜브재질,쿨튜브길이,쿨튜브관경", "번호 = '" + Num + "'");
-                        PreData[1].Add(new { idx = i, val = "-" });   //용량
-
-                        PreData[2].Add(new { idx = i, val = Value[0][0].ToString() });  //토양유형
-                        PreData[3].Add(new { idx = i, val = Value[0][1].ToString() });  //지중깊이
-                        PreData[4].Add(new { idx = i, val = Value[0][2].ToString() });  //재질
-                        PreData[5].Add(new { idx = i, val = Value[0][3].ToString() });  //길이
-                        PreData[6].Add(new { idx = i, val = Value[0][4].ToString() });   //관경
                     }
                     else
                     {
                         PreData[1].Add(new { idx = i, val = "-" });   //용량
-
-                        PreData[2].Add(new { idx = i, val = "-" });  //토양유형
-                        PreData[3].Add(new { idx = i, val = "-" }); //지중깊이
-                        PreData[4].Add(new { idx = i, val = "-" });  //재질
-                        PreData[5].Add(new { idx = i, val = "-" }); //길이
-                        PreData[6].Add(new { idx = i, val = "-" });   //관경
                     }
 
                     //존난방,냉방,제습요구량
@@ -248,9 +225,10 @@ namespace main.contents.Result
                     Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호", "선택열회수기 = '" + Num + "'");
                     List<string> zonecheck = new List<string>();
                     double[] heat = new double[13], cool = new double[13], dehum = new double[13];
-                    double[] preh = new double[13], prec = new double[13], heatduct = new double[13], coolduct = new double[13];
-                    double[] aux_sa = new double[13], aux_ra = new double[13], aux_pre = new double[13], aux_hum = new double[13], aux_total = new double[13];
-                    double[] AHU_heat = new double[13], AHU_cool = new double[13], AHU_hum = new double[13];
+                    double[] heatduct = new double[13], coolduct = new double[13];
+                    double[] aux_sa = new double[13], aux_ra = new double[13], aux_pre = new double[13], aux_hum = new double[13];
+                    double[] aux_ctrl = new double[13], aux_rotor = new double[13], aux_total = new double[13];
+                    double[] AHU_heat = new double[13], AHU_cool = new double[13], AHU_heat_use = new double[13], AHU_cool_use = new double[13];
                     double area = 0;
                     string zone;
                     foreach (string[] k in Value)
@@ -266,10 +244,6 @@ namespace main.contents.Result
                         dehum[j] = Cal_Qb(zonecheck, j, "제습");
                         dehum[12] += dehum[j];
 
-                        preh[j] = Cal_Qv("난방예열기", Num, j);
-                        preh[12] += preh[j];
-                        prec[j] = Cal_Qv("냉방예열기", Num,j);
-                        prec[12] += prec[j];
                         heatduct[j] = Cal_Qv("난방덕트", Num,j);
                         heatduct[12] += heatduct[j];
                         coolduct[j] = Cal_Qv("냉방덕트", Num,j);
@@ -283,8 +257,12 @@ namespace main.contents.Result
                         aux_pre[12] += aux_pre[j];
                         aux_hum[j] = Cal_Qv("가습기", Num, j);
                         aux_hum[12] += aux_hum[j];
+                        aux_ctrl[j] = Cal_Qv("제어", Num, j);
+                        aux_ctrl[12] += aux_ctrl[j];
+                        aux_rotor[j] = Cal_Qv("로터모터", Num, j);
+                        aux_rotor[12] += aux_rotor[j];
 
-                        aux_total[j] = aux_sa[j] + aux_ra[j] + aux_pre[j] + aux_hum[j];
+                        aux_total[j] = aux_sa[j] + aux_ra[j] + aux_pre[j] + aux_hum[j] + aux_ctrl[j] + aux_rotor[j];
                         aux_total[12] += aux_total[j];
 
 
@@ -292,8 +270,10 @@ namespace main.contents.Result
                         AHU_heat[12] += AHU_heat[j];
                         AHU_cool[j] = Cal_Qv("냉방", Num, j);
                         AHU_cool[12] += AHU_cool[j];
-                        AHU_hum[j] = Cal_Qv("가습", Num, j);
-                        AHU_hum[12] += AHU_hum[j];
+                        AHU_heat_use[j] = Cal_Qv("난방소요량", Num, j);
+                        AHU_heat_use[12] += AHU_heat_use[j];
+                        AHU_cool_use[j] = Cal_Qv("냉방소요량", Num, j);
+                        AHU_cool_use[12] += AHU_cool_use[j];
 
                     }
 
@@ -305,15 +285,13 @@ namespace main.contents.Result
                     AnnualData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(area.ToString(), 2) }); //면적 정보
                     AnnualData[2].Add(new { idx = i, val = Program.UTIL.doubleComa((AHU_heat[12]/area).ToString(), 0) }); //연간난방에너지요구량
                     AnnualData[3].Add(new { idx = i, val = Program.UTIL.doubleComa((AHU_cool[12]/area).ToString(), 0) }); //연간냉방에너지요구량
-                    AnnualData[4].Add(new { idx = i, val = Program.UTIL.doubleComa((AHU_hum[12]/area).ToString(), 0) }); //연간가습에너지요구량
+                    AnnualData[4].Add(new { idx = i, val = Program.UTIL.doubleComa((dehum[12]/area).ToString(), 0) }); //연간제습에너지요구량
                     AnnualData[5].Add(new { idx = i, val = Program.UTIL.doubleComa((aux_total[12]/area).ToString(), 0) }); //연간보조에너지소요량
                     for (int mth = 0; mth < 13; mth++)
                     {
                         MthData[0].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(heat[mth].ToString(), 0) }); //난방
                         MthData[1].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(cool[mth].ToString(), 0) }); //냉방(제습제외)
                         MthData[2].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(dehum[mth].ToString(), 0) }); //제습
-                        MthData[3].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(preh[mth].ToString(), 0) }); //난방예열기절감량
-                        MthData[4].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(prec[mth].ToString(), 0) }); //냉방예열기절감량
                         MthData[5].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(heatduct[mth].ToString(), 0) }); //난방덕트절감량
                         MthData[6].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(coolduct[mth].ToString(), 0) }); //냉방덕트절갈량
                         MthData[7].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(aux_total[mth].ToString(), 0) }); //총보조에너지
@@ -323,7 +301,10 @@ namespace main.contents.Result
                         MthData[11].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(aux_pre[mth].ToString(), 0) }); //예열기보조에너지
                         MthData[12].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(AHU_heat[mth].ToString(), 0) }); //공조난방에너지요구량
                         MthData[13].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(AHU_cool[mth].ToString(), 0) }); //공조냉방에너지요구량
-                        MthData[14].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(AHU_hum[mth].ToString(), 0) }); //공조가습에너지요구량
+                        MthData[15].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(aux_ctrl[mth].ToString(), 0) }); //제어보조에너지
+                        MthData[16].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(aux_rotor[mth].ToString(), 0) }); //로터모터보조에너지
+                        MthData[17].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(AHU_heat_use[mth].ToString(), 0) }); //공조난방에너지소요량
+                        MthData[18].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(AHU_cool_use[mth].ToString(), 0) }); //공조냉방에너지소요량
                     }
 
                     data.Add(new { cname = "projectnum", data = FormData[0] });
@@ -337,6 +318,7 @@ namespace main.contents.Result
                     data.Add(new { cname = "ahu_motor", data = FormData[8] });
                     data.Add(new { cname = "ahu_control", data = FormData[9] });
                     data.Add(new { cname = "ahu_location", data = FormData[10] });
+                    data.Add(new { cname = "duct_title", data = FormData[11] });
 
 
                     data.Add(new { cname = "OA_SA", data = AhuData[0] });
@@ -366,18 +348,11 @@ namespace main.contents.Result
 
                     data.Add(new { cname = "pre_type", data = PreData[0] });
                     data.Add(new { cname = "pre_power", data = PreData[1] });
-                    data.Add(new { cname = "pre_groundtype", data = PreData[2] });
-                    data.Add(new { cname = "pre_depth", data = PreData[3] });
-                    data.Add(new { cname = "pre_material", data = PreData[4] });
-                    data.Add(new { cname = "pre_length", data = PreData[5] });
-                    data.Add(new { cname = "pre_diameter", data = PreData[6] });
 
                     data.Add(new { cname = "zone_hndmth", data = MthData[0] });
                     data.Add(new { cname = "zone_cndmth", data = MthData[1] });
                     data.Add(new { cname = "zone_dehumth", data = MthData[2] });
 
-                    data.Add(new { cname = "pre_hmth", data = MthData[3] });
-                    data.Add(new { cname = "pre_cmth", data = MthData[4] });
                     data.Add(new { cname = "duct_h", data = MthData[5] });
                     data.Add(new { cname = "duct_c", data = MthData[6] });
                     data.Add(new { cname = "w_total", data = MthData[7] });
@@ -385,10 +360,13 @@ namespace main.contents.Result
                     data.Add(new { cname = "w_rafan", data = MthData[9] });
                     data.Add(new { cname = "w_hum", data = MthData[10] });
                     data.Add(new { cname = "w_pre", data = MthData[11] });
+                    data.Add(new { cname = "w_ctrl", data = MthData[15] });
+                    data.Add(new { cname = "w_rotor", data = MthData[16] });
 
                     data.Add(new { cname = "mth_hnd", data = MthData[12] });
                     data.Add(new { cname = "mth_cnd", data = MthData[13] });
-                    data.Add(new { cname = "mth_humnd", data = MthData[14] });
+                    data.Add(new { cname = "qvf_h", data = MthData[17] });
+                    data.Add(new { cname = "qvf_c", data = MthData[18] });
 
                     data.Add(new { cname = "zoneinfo", data = AnnualData[0] });
                     data.Add(new { cname = "zonearea", data = AnnualData[1] });
@@ -399,35 +377,36 @@ namespace main.contents.Result
 
                     List<object> hnd_chart = new List<object>();
                     List<object> cnd_chart = new List<object>();
-                    List<object> humnd_chart = new List<object>();
                     List<object> w_chart = new List<object>();
 
                     for (int mth = 0; mth < 12; mth++)
                     {
                         hnd_chart.Add(Program.UTIL.ToDoubleOrZero(Program.UTIL.doubleComa(AHU_heat[mth].ToString(), 0)));
                         cnd_chart.Add(Program.UTIL.ToDoubleOrZero(Program.UTIL.doubleComa(AHU_cool[mth].ToString(), 0)));
-                       humnd_chart.Add(Program.UTIL.ToDoubleOrZero(Program.UTIL.doubleComa(AHU_hum[mth].ToString(), 0)));
                         w_chart.Add(Program.UTIL.ToDoubleOrZero(Program.UTIL.doubleComa(aux_total[mth].ToString(), 0)));
                     }
                     chart_hnd.Add(System.Text.Json.JsonSerializer.Serialize(hnd_chart.ToArray()));
                     chart_cnd.Add(System.Text.Json.JsonSerializer.Serialize(cnd_chart.ToArray()));
-                    chart_humnd.Add(System.Text.Json.JsonSerializer.Serialize(humnd_chart.ToArray()));
                     chart_w.Add(System.Text.Json.JsonSerializer.Serialize(w_chart.ToArray()));
 
                     double max = 0;
 
-                    double[] maxValue = new double[] { secondmax(AHU_heat), secondmax(AHU_cool), secondmax(AHU_hum), secondmax(aux_total)};
+                    max = Enumerable.Range(0, 12)
+                        .Select(mth => AHU_heat[mth] + AHU_cool[mth] + aux_total[mth])
+                        .Max() * 1.05;
 
-                    max = maxValue.Max() * 1.05;
+                    if (max <= 0)
+                    {
+                        max = 100;
+                    }
 
                     int n = ((int)max).ToString().Length;
                     max = Program.UTIL.ToDoubleOrZero(String.Format("{0:F0}", max / Math.Pow(10, n - 1))) * Math.Pow(10, n - 1) + Math.Pow(10, n - 1);
                     if (charts != "") charts += ",";
                     charts += "{data:[" +
-                    "{type:\"bar\",barPercentage:0.4,label:\"공조난방요구량 [kWh]\",data:" + chart_hnd[i] + ",borderColor:\"#FFD966\",backgroundColor:\"#FFD966\",dash:false}," +
-                    "{type:\"bar\",barPercentage:0.4,label:\"공조냉방요구량 [kWh]\",data:" + chart_cnd[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
-                    "{type:\"bar\",barPercentage:0.4,label:\"공조가습요구량 [kWh]\",data:" + chart_humnd[i] + ",borderColor:\"#A9D18E\",backgroundColor:\"#A9D18E\",dash:false}," +
-                    "{type:\"line\",yAxisID: 'y',label:\"보조설비소요량 [kWh]\",data:" + chart_w[i] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false, tension: 0.4}," +
+                    "{type:\"bar\",barPercentage:0.55,label:\"보조설비소요량 [kWh]\",data:" + chart_w[i] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false}," +
+                    "{type:\"bar\",barPercentage:0.55,label:\"공조난방요구량 [kWh]\",data:" + chart_hnd[i] + ",borderColor:\"#FFD966\",backgroundColor:\"#FFD966\",dash:false}," +
+                    "{type:\"bar\",barPercentage:0.55,label:\"공조냉방요구량 [kWh]\",data:" + chart_cnd[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
                     "],max:" + max.ToString() + ",step:100,legend:true,stacked:true}";
 
 
@@ -439,20 +418,6 @@ namespace main.contents.Result
                 Debug.Print("start");
                 runScript("init(" + s + "," + s2 + "," + "[" + charts + "])");
             }
-        }
-
-        private double secondmax(double[] value)
-        {
-            var top2 = value
-                       .Where(x => !double.IsNaN(x))
-                       .Distinct()
-                       .OrderByDescending(x => x)
-                       .Take(2)
-                       .ToArray();
-
-            double secondMaxDistinct = top2.Length == 2 ? top2[1] : double.NaN; // 없으면 NaN
-
-            return secondMaxDistinct;
         }
 
         double Cal_Qb(List<string> SelectZone, int g, string HC)
@@ -510,13 +475,23 @@ namespace main.contents.Result
             }
             else if(type == "난방덕트")
             {
-                string[][] var = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "Q_loss_OA_du,Q_loss_SA_du,Q_loss_RA_du,Q_loss_EA_du", "번호 ='" + num + "' AND 난방_냉방 = '난방' AND 월 = '" + mth + "'");
-                vla = (Program.UTIL.ToDoubleOrZero(var[0][0]) + Program.UTIL.ToDoubleOrZero(var[0][1]) + Program.UTIL.ToDoubleOrZero(var[0][2]) + Program.UTIL.ToDoubleOrZero(var[0][3]));
+                string[][] location = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "설치위치", "번호 ='" + num + "'");
+                string ductColumn = location.Length > 0 && location[0][0] == "단열외피 내부" ? "Q_loss_EA_du" : "Q_loss_SA_du";
+                string[][] var = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "순공조요구량," + ductColumn, "번호 ='" + num + "' AND 난방_냉방 = '난방' AND 월 = '" + mth + "'");
+                if (var.Length > 0 && Program.UTIL.ToDoubleOrZero(var[0][0]) != 0)
+                {
+                    vla = Math.Max(0, Program.UTIL.ToDoubleOrZero(var[0][1]));
+                }
             } 
             else if(type == "냉방덕트")
             {
-                string[][] var = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "Q_loss_OA_du,Q_loss_SA_du,Q_loss_RA_du,Q_loss_EA_du", "번호 ='" + num + "' AND 난방_냉방 = '냉방' AND 월 = '" + mth + "'");
-                vla = (Program.UTIL.ToDoubleOrZero(var[0][0]) + Program.UTIL.ToDoubleOrZero(var[0][1]) + Program.UTIL.ToDoubleOrZero(var[0][2]) + Program.UTIL.ToDoubleOrZero(var[0][3]));
+                string[][] location = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "설치위치", "번호 ='" + num + "'");
+                string ductColumn = location.Length > 0 && location[0][0] == "단열외피 내부" ? "Q_loss_EA_du" : "Q_loss_SA_du";
+                string[][] var = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "순공조요구량," + ductColumn, "번호 ='" + num + "' AND 난방_냉방 = '냉방' AND 월 = '" + mth + "'");
+                if (var.Length > 0 && Program.UTIL.ToDoubleOrZero(var[0][0]) != 0)
+                {
+                    vla = Math.Max(0, -Program.UTIL.ToDoubleOrZero(var[0][1]));
+                }
             }
             else if (type == "급기팬")
             {
@@ -538,6 +513,16 @@ namespace main.contents.Result
                 string[][] var = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "가습보조에너지", "번호 ='" + num + "' AND 난방_냉방 = '난방' AND 월 = '" + mth + "'");
                 vla = (Program.UTIL.ToDoubleOrZero(var[0][0]));
             }
+            else if (type == "제어")
+            {
+                string[][] var = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "제어보조에너지", "번호 ='" + num + "' AND 난방_냉방 = '난방' AND 월 = '" + mth + "'");
+                vla = Program.UTIL.ToDoubleOrZero(var[0][0]);
+            }
+            else if (type == "로터모터")
+            {
+                string[][] var = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "로터모터보조에너지", "번호 ='" + num + "' AND 난방_냉방 = '난방' AND 월 = '" + mth + "'");
+                vla = Program.UTIL.ToDoubleOrZero(var[0][0]);
+            }
             else if (type == "난방")
             {
                 string[][] var = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "공조요구량", "번호 ='" + num + "' AND 난방_냉방 = '난방' AND 월 = '" + mth + "'");
@@ -548,10 +533,15 @@ namespace main.contents.Result
                 string[][] var = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "공조요구량", "번호 ='" + num + "' AND 난방_냉방 = '냉방' AND 월 = '" + mth + "'");
                 vla = (Program.UTIL.ToDoubleOrZero(var[0][0]));
             }
-            else if (type == "가습")
+            else if (type == "난방소요량")
             {
-                string[][] var = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "가습요구량", "번호 ='" + num + "' AND 난방_냉방 = '난방' AND 월 = '" + mth + "'");
-                vla = (Program.UTIL.ToDoubleOrZero(var[0][0]));
+                string[][] var = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "공조소요량", "번호 ='" + num + "' AND 난방_냉방 = '난방' AND 월 = '" + mth + "'");
+                vla = Program.UTIL.ToDoubleOrZero(var[0][0]);
+            }
+            else if (type == "냉방소요량")
+            {
+                string[][] var = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "공조소요량", "번호 ='" + num + "' AND 난방_냉방 = '냉방' AND 월 = '" + mth + "'");
+                vla = Program.UTIL.ToDoubleOrZero(var[0][0]);
             }
 
             return vla;
