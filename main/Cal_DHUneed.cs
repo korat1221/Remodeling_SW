@@ -35,11 +35,13 @@ namespace main
         public double[] G_stor = new double[2];
         public double[] Q_DHU_mth = new double[12];
         public double[] Q_HU_mth = new double[12];
-        public double Q_DHU_max = 0; // 제습 첨두부하 — 시간별 최댓값 기반 계산 미구현, 자리만 마련(0 고정)
+        public double Q_DHU_max = 0; // 제습 첨두부하 — 시간별 요구량의 연간 최댓값(존별 비동시 보수값)
+        private Zone zoneRef;
 
-        public ZoneDHU(String zoneNum)
+        public ZoneDHU(Zone zone)
         {
-            this.ZoneNum = zoneNum;
+            zoneRef = zone;
+            ZoneNum = zone.ZoneNum;
         }
 
         public void LoadData()
@@ -59,7 +61,6 @@ namespace main
             string[][] IncomingZV = null;
             double incomingZ = 0;
             double V = 0;
-            Zone zoneRef = null;
             string 주이용일 = "";
             string[][] ValueK = null;
 
@@ -140,8 +141,7 @@ namespace main
                 nETA = (Vmech_ETA + V_ETA_z) / V;
             }
 
-            zoneRef = Program.CALC.getZone(ZoneNum);
-            if (zoneRef != null) { n50 = zoneRef.n50; }
+            n50 = zoneRef.n50;
 
             주이용일 = ZoneG[0][12];
             for (int mth = 0; mth < 12; mth++)
@@ -169,8 +169,9 @@ namespace main
                 for (int t = 0; t < climT.Length; t++)
                 {
                     T = Program.UTIL.ToDoubleOrZero(climT[t][0]);
-                    RH = Program.UTIL.ToDoubleOrZero(climRH[t][0]);
-                    x_e[t] = 611.2 * Math.Exp(17.62 * T / (243.12 + T)) / 461.51 / (273.15 + T) / 1.2 * (RH / 100);
+                    RH = Program.UTIL.ToDoubleOrZero(climRH[t][0]) / 100;
+                    double Pv = 611.2 * Math.Exp(17.62 * T / (243.12 + T)) * RH;
+                    x_e[t] = 0.622 * Pv / (101325 - Pv);
                 }
             }
         }
@@ -178,14 +179,14 @@ namespace main
         private double n_inf_t(bool mechOn)
         {
             double n_inf0 = n50 * e;
-            double fe = (nSUP != 0 && n50 != 0) ? 1 / (1 + f / e * Math.Pow((nETA - nSUP) / n50, 2)) : 1;
+            double fe = (nETA != nSUP && n50 != 0) ? 1 / (1 + f / e * Math.Pow((nETA - nSUP) / n50, 2)) : 1;
             return mechOn ? n_inf0 * fe : n_inf0;
         }
 
         private double n_win_t(bool mechOn)
         {
             double n_inf0 = n50 * e;
-            double fe = (nSUP != 0 && n50 != 0) ? 1 / (1 + f / e * Math.Pow((nETA - nSUP) / n50, 2)) : 1;
+            double fe = (nETA != nSUP && n50 != 0) ? 1 / (1 + f / e * Math.Pow((nETA - nSUP) / n50, 2)) : 1;
             double nwd = 0;
             double dw0 = 0;
             double dwMech = 0;
@@ -201,11 +202,18 @@ namespace main
             return 0.1 + dwMech;
         }
 
+        private bool IsOperatingHour(int h)
+        {
+            if (StartHour == EndHour) { return true; }
+            if (StartHour < EndHour) { return h >= StartHour && h <= EndHour; }
+            return h >= StartHour || h <= EndHour;
+        }
+
         // 5.3.1 실내 절대습도 χ_int,a,ztc,t — 식(80). hc: 1=제습평가트랙(냉방효율), 0=가습평가트랙(난방효율)
         public double x_int_a_ztc_t(int hu_dhu)
         {
             int h = idx % 24 + 1;
-            bool mechOn = h >= StartHour && h < EndHour;
+            bool mechOn = IsOperatingHour(h);
             double V = zoneArea * zoneHeight;
             double x_prev = 0;
             double q_win = 0, qx_win = 0;
@@ -280,7 +288,7 @@ namespace main
         public double G_e_ztc_t_tot(int hc)
         {
             int h = idx % 24 + 1;
-            bool mechOn = h >= StartHour && h < EndHour;
+            bool mechOn = IsOperatingHour(h);
             double x_set = hc == 1 ? x_set_max : x_set_min;
             double V = zoneArea * zoneHeight;
             double G_tot = 0, G_win = 0, G_inf = 0, G_mech = 0, G_z = 0;
@@ -329,7 +337,7 @@ namespace main
         public double G_int_ztc_t()
         {
             int h = idx % 24 + 1;
-            bool 재실 = h >= StartHour && h < EndHour;
+            bool 재실 = IsOperatingHour(h);
             double 인체잠열 = 54;     // W/person, ASHRAE Handbook 기준
             double 증발잠열 = 0.680;  // kWh/kg, EN 16798-5-1 표27
 
@@ -420,9 +428,11 @@ namespace main
                 X_i[hu_dhu, mth] += x_int_a[hu_dhu, idx];
             }
 
-            if (h >= StartHour && h < EndHour)
+            if (IsOperatingHour(h))
             {
-                Q_DHU_mth[mth] += Q_DHU_h();
+                double Q_DHU = Q_DHU_h();
+                Q_DHU_mth[mth] += Q_DHU;
+                Q_DHU_max = Math.Max(Q_DHU_max, Q_DHU); // 동시부하 미반영 존별 보수값
                 Q_HU_mth[mth] += Q_HU_h();
             }
 

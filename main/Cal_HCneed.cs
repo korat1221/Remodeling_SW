@@ -1031,7 +1031,7 @@ namespace main
             // 둘 다 공유해서 씀(예전엔 각자 따로 계산해서 중복이었음)
             double n_inf0 = n50 * e;
             double fe = 1;
-            if (nSUP != 0 && n50 != 0) // n50=0일 때 0으로 나누는 것 방지
+            if (nETA != nSUP && n50 != 0) // 급배기 불균형 시 적용, n50=0일 때 0으로 나누는 것 방지
             { fe = 1 / (1 + f / e * Math.Pow(((nETA - nSUP) / n50), 2)); }
 
             nmech = hvcalc.nmech_Calc(nmech_SUP, th_op_d);

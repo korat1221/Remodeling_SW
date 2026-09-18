@@ -272,13 +272,10 @@ namespace main
         }
         private static void Cal_Qahu(string ProjNum)
         {
+            AHUs.Clear();
             string[][] Num = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Form", "번호,유형");
             if (Num.Length > 0)
             {
-                for (int k = 0; k < Num.Length; k++)
-                {
-                    CALC.AHUs[Num[k][0]] = null;
-                }
                 int i = -1;
                 while (++i < Num.Length)
                 {
@@ -298,11 +295,8 @@ namespace main
                     }
                 }
                 Cal_Qb();
+                AHUs.Clear();
                 i = -1;
-                for (int k = 0; k < Num.Length; k++)
-                {
-                    CALC.AHUs[Num[k][0]] = null;
-                }
                 while (++i < Num.Length)
                 {
                     if (Num[i][1] == "공조기")
@@ -329,13 +323,10 @@ namespace main
         public static void Cal_Qfh(string ProjNum)
         {
             Heating_ce_zone_calc(ProjNum);
+            Heatings.Clear();
             string[][] HeatingNum = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호");
             if (HeatingNum.Length > 0)
             {
-                for (int k = 0; k < HeatingNum.Length; k++)
-                {
-                    CALC.Heatings[HeatingNum[k][0]] = null;
-                }
                 int i = -1;
                 while (++i < HeatingNum.Length)
                 {
@@ -350,6 +341,7 @@ namespace main
         public static void Cal_Qfc(string ProjNum)
         {
             Cooling_ce_zone_calc(ProjNum);
+            Coolings.Clear();
             string[][] CoolingNum = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Form", "번호");
 
             for (int i = 0; i < CoolingNum.Length; i++)
@@ -363,13 +355,10 @@ namespace main
         }
         public static void Cal_Qfw(string ProjNum)
         {
+            DHWs.Clear();
             string[][] DHWNum = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호");
             if(DHWNum.Length > 0)
             {
-                for (int k = 0; k < DHWNum.Length; k++)
-                {
-                    CALC.DHWs[DHWNum[k][0]] = null;
-                }
                 int i = -1;
                 while(++i < DHWNum.Length)
                 {
@@ -645,13 +634,8 @@ namespace main
         public static void Zone_Init()
         {
             zone.Clear(); zonelight.Clear();
+            Zones.Clear(); ZoneLights.Clear();
             string[][] zones = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,냉난방유무");
-
-            for (int k = 0; k < zones.Length; k++)
-            {
-                ZoneLights[zones[k][0]] = null;
-                Zones[zones[k][0]] = null;
-            }
             for (int i = 0; i < zones.Length; i++)
             {
                 ZoneLight zonelight1 = new ZoneLight(zones[i][0]);
@@ -686,12 +670,13 @@ namespace main
         public static void ZoneDHU_Init()
         {
             zoneDHU.Clear();
+            ZoneDHUs.Clear();
             ZoneDHU.LoadClimate();
             string[][] zones = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,냉난방유무");
 
             for (int i = 0; i < zones.Length; i++)
             {
-                ZoneDHU zoneDHU1 = new ZoneDHU(zones[i][0]);
+                ZoneDHU zoneDHU1 = new ZoneDHU(Zones[zones[i][0]]);
                 zoneDHU.Add(zoneDHU1);
                 ZoneDHUs[zones[i][0]] = zoneDHU1;
             }
@@ -721,6 +706,22 @@ namespace main
             ZoneDHU_Init();
             ZoneDHU_LoadData();
             ZoneDHU_Calc();
+            ZoneDHU_Save();
+        }
+        private static void ZoneDHU_Save()
+        {
+            for (int k = 0; k < zoneDHU.Count; k++)
+            {
+                ZoneDHU zoneDHU1 = (ZoneDHU)zoneDHU[k];
+
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    Program.DB.setValue(DB.type.ProjDB, "Zone_HCneed_Result",
+                        "번호,난방_냉방,비이용일_이용일,월,Q_DHU_tot",
+                        "'" + zoneDHU1.ZoneNum + "','냉방','이용일','" + (mth + 1).ToString() + "월','" + zoneDHU1.Q_DHU_mth[mth].ToString() + "'",
+                        "번호,난방_냉방,비이용일_이용일,월");
+                }
+            }
         }
         // 웜업 패스에서 모든 존에 대해 먼저 실행돼야 함 — 조명/일사/내부발열 중 "인접 ZTU 배분 전"
         // 자기 몫(QStr_own, QI_own)까지만 계산. 인접존이 어떤 순서로 계산되든 이 값들을 안전하게
