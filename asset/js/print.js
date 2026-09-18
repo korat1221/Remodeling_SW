@@ -72,7 +72,7 @@ window.addEventListener("message", async (event) => {
         let lightingNumValue = o.items.find(item => item.cname === "lightingnum");
         let lightingH = o.items.find(item => item.cname === "lightingHeightnum");
         let lightingT = o.items.find(item => item.cname === "lightingType");
-        let ahu = o.items.find(item => item.cname === "ahu_num");
+        let ahuLayersValue = o.items.find(item => item.cname === "ahu_layers");
 
         $(".buildingImage").each((idx,al) => {          
           if (projectNumValue.data[idx]) {
@@ -148,14 +148,22 @@ window.addEventListener("message", async (event) => {
             }
         });
           $(".ahuImage").each((idx,al) => {
-            if (projectNumValue.data[idx]) {
-          let projectNum = projectNumValue.data[idx].val; 
-          let ahuNum = ahu.data[idx].val; 
-          if(ahuNum!== null)
-          {
-          al.setAttribute("src", "../projects/" + projectNum + "/"+ ahuNum + ".png"); 
-          }
-         }
+            if (!ahuLayersValue || !ahuLayersValue.data[idx]) return;
+
+            al.innerHTML = "";
+            ahuLayersValue.data[idx].val.forEach((layer) => {
+              let img = document.createElement("img");
+              let src = layer.s || "";
+              img.setAttribute("src", /^(data:|https?:|file:)/i.test(src) ? src : "../" + src.replace(/^[/\\]+/, ""));
+              img.style.position = "absolute";
+              img.style.left = (layer.x / 990 * 100) + "%";
+              img.style.top = (layer.y / 365 * 100) + "%";
+              img.style.width = (layer.w / 990 * 100) + "%";
+              img.style.height = (layer.h / 365 * 100) + "%";
+              img.style.objectFit = "contain";
+              img.style.objectPosition = "center";
+              al.appendChild(img);
+            });
         });  
         
       }

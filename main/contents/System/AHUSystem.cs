@@ -950,7 +950,7 @@ namespace main.contents
                         ccoilpictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                     }
                 }
-                if (double.TryParse(Value[0][0].ToString(), out double heatresult) && heatresult > 0) //난방코일 그림
+                if (double.TryParse(Value[0][1].ToString(), out double heatresult) && heatresult > 0) //난방코일 그림
                 {
                     if (HRVType == "판형")
                     {
@@ -1038,7 +1038,6 @@ namespace main.contents
             try
             {
                 WarnIncompleteZoneVentilation();
-                Save_Image();
                 Save(isManualSave);
                 none_AHU_HRV_check();
                 return true;
@@ -1107,33 +1106,6 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "AHUSystem_Form", "번호,토양유형,지중깊이,쿨튜브관경,쿨튜브두께,쿨튜브길이,쿨튜브재질", "'" + Num_textBox.Text + "','" + GroundOptions + "','" + GroundDepth.ToString() + "','" + CooltubeDiameter.ToString() + "','" + CooltubeThickness.ToString() + "','" + CooltubeLength.ToString() + "','" + CooltubeMaterial + "'", "번호");
             
         }
-        private void Save_Image()
-        {
-            try
-            {
-                Bitmap bmp = new Bitmap(ImagePanel.Width, ImagePanel.Height);
-                ImagePanel.DrawToBitmap(bmp, new Rectangle(0, 0, ImagePanel.Width, ImagePanel.Height));
-
-                string pid = "0000-00-00";
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
-                if (Value.Length > 0)
-                {
-                    pid = Value[0][0];
-                }
-
-                Directory.CreateDirectory(Program.gPath + "\\projects\\" + pid);
-
-                string ImageName = "/projects/" + pid + "/" + Num + ".png";
-                string imagePath = Program.gPath + ImageName;
-
-                bmp.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("오류 발생: " + ex.Message);
-            }
-        }
-
         public static bool OnLoadListProc(Form form)
         {
             List_AHUSystem f = (List_AHUSystem)form;

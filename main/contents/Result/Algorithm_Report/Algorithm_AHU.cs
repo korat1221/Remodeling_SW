@@ -57,6 +57,7 @@ namespace main.contents.Result
             List<object>[] AnnualData = new List<object>[30];
             List<object>[] PreData = new List<object>[100];
             List<object>[] MthData = new List<object>[100];
+            List<object> AHULayersData = new List<object>();
 
             List<string> chart_hnd = new List<string>();
             List<string> chart_cnd = new List<string>();
@@ -220,6 +221,8 @@ namespace main.contents.Result
                         PreData[1].Add(new { idx = i, val = "-" });   //용량
                     }
 
+                    AHULayersData.Add(new { idx = i, val = BuildAhuImageLayers(Num, 설치위치, pretype) });
+
                     //존난방,냉방,제습요구량
 
                     Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호", "선택열회수기 = '" + Num + "'");
@@ -348,6 +351,7 @@ namespace main.contents.Result
 
                     data.Add(new { cname = "pre_type", data = PreData[0] });
                     data.Add(new { cname = "pre_power", data = PreData[1] });
+                    data.Add(new { cname = "ahu_layers", data = AHULayersData });
 
                     data.Add(new { cname = "zone_hndmth", data = MthData[0] });
                     data.Add(new { cname = "zone_cndmth", data = MthData[1] });
@@ -418,6 +422,69 @@ namespace main.contents.Result
                 Debug.Print("start");
                 runScript("init(" + s + "," + s2 + "," + "[" + charts + "])");
             }
+        }
+
+        private List<object> BuildAhuImageLayers(string num, string location, string pretype)
+        {
+            const double parentX = 100;
+            List<object> layers = new List<object>();
+
+            string[][] ahu = Program.DB.getValue(DB.type.ProjDB, "User_AHU",
+                "열회수유형,냉각코일출력,난방코일출력,가습기용량,공조방식",
+                "번호 ='" + num + "'");
+            if (ahu.Length == 0)
+            {
+                return layers;
+            }
+
+            string hrvType = ahu[0][0] == "판형" ? "판형" :
+                ahu[0][0] == "없음" ? "없음" : "회전형";
+
+            void AddDbImage(string condition, double x, double y, double width, double height)
+            {
+                string[][] image = Program.DB.getValue(DB.type.BaseDB_AHU, "공조시스템이미지", "이미지", condition);
+                if (image.Length > 0 && !string.IsNullOrWhiteSpace(image[0][0]))
+                {
+                    layers.Add(new { s = image[0][0], x, y, w = width, h = height });
+                }
+            }
+
+            // ImagePanel에서 LocationpictureBox가 (100, 0), MainpictureBox와 부품들이 그 자식으로 배치된다.
+            AddDbImage("항목유형 = '공조기' And 설비유형 = '" + location + "'", parentX, 0, 790, 365);
+            AddDbImage("항목유형 = '공조기' And 설비유형='" + hrvType + "'", parentX, 0, 790, 365);
+
+            if (pretype == "전기예열기")
+            {
+                AddDbImage("항목유형 = '예열예냉' And 설비유형='전기예열기'", parentX + 220, 190, 40, 80);
+            }
+
+            double coolingCoil = Program.UTIL.ToDoubleOrZero(ahu[0][1]);
+            double heatingCoil = Program.UTIL.ToDoubleOrZero(ahu[0][2]);
+            double humidifier = Program.UTIL.ToDoubleOrZero(ahu[0][3]);
+            bool plateType = hrvType == "판형";
+
+            if (coolingCoil > 0 && hrvType != "없음")
+            {
+                AddDbImage("항목유형 = '냉방코일' And 설비유형='" + hrvType + "'",
+                    parentX + 395, plateType ? 100 : 188, 40, 80);
+            }
+            if (heatingCoil > 0 && hrvType != "없음")
+            {
+                AddDbImage("항목유형 = '난방코일' And 설비유형='" + hrvType + "'",
+                    parentX + 427, plateType ? 100 : 188, 40, 80);
+            }
+            if (humidifier > 0 && hrvType != "없음")
+            {
+                AddDbImage("항목유형 = '가습기' And 설비유형='" + hrvType + "'",
+                    parentX + 459, plateType ? 100 : 188, 30, 80);
+            }
+            if (ahu[0][4] == "변풍량" && hrvType != "없음")
+            {
+                AddDbImage("항목유형 = 'VAV' And 설비유형 = '변풍량'",
+                    parentX + 608, plateType ? 122 : 196, 118, 55);
+            }
+
+            return layers;
         }
 
         double Cal_Qb(List<string> SelectZone, int g, string HC)
