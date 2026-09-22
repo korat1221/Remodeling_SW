@@ -29,6 +29,9 @@ namespace main.contents
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
+            Label label30;
+            Label label27;
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
@@ -56,6 +59,7 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle25 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle26 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle27 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HeatingSystem));
             DataGridViewCellStyle dataGridViewCellStyle28 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle29 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle30 = new DataGridViewCellStyle();
@@ -89,6 +93,13 @@ namespace main.contents
             Name_textBox = new TextBox();
             tabControl1 = new CustomTabControl();
             Qhg_tabPage = new TabPage();
+            theta_panel = new Panel();
+            label24 = new Label();
+            label25 = new Label();
+            theta_ret_textBox = new TextBox();
+            label16 = new Label();
+            label14 = new Label();
+            theta_flw_textBox = new TextBox();
             tabControl = new CustomTabControl();
             Boiler_tabPage = new TabPage();
             Boiler_Remove_button = new Button();
@@ -153,6 +164,7 @@ namespace main.contents
             PipeIns_textBox = new TextBox();
             PipeIns_Ramda_textBox = new TextBox();
             PipeIns_button = new Button();
+            PipeIns_Ramda_label2 = new Label();
             Pipe_dataGridView = new DataGridView();
             PumpHead_label = new Label();
             PumpHead_textBox = new TextBox();
@@ -176,6 +188,16 @@ namespace main.contents
             Pump1_button = new Button();
             Pump1_label = new Label();
             Qhce_tabPage = new TabPage();
+            label28 = new Label();
+            hydr2_ComboBox = new CustomComboBox();
+            hrvDiagramPanel2 = new main.subcontents.AHUSystem.HRVDiagramPanel();
+            hrvDiagramPanel1 = new main.subcontents.AHUSystem.HRVDiagramPanel();
+            label26 = new Label();
+            hydr1_ComboBox = new CustomComboBox();
+            roomauto2_label = new Label();
+            roomauto2_ComboBox = new CustomComboBox();
+            roomauto1_label = new Label();
+            roomauto1_ComboBox = new CustomComboBox();
             ce_Remove_button = new Button();
             ce_dataGridView = new DataGridView();
             ce2Zone_button = new Button();
@@ -205,10 +227,14 @@ namespace main.contents
             panel2 = new Panel();
             panel5 = new Panel();
             panel6 = new Panel();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            label30 = new Label();
+            label27 = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             tabControl1.SuspendLayout();
             Qhg_tabPage.SuspendLayout();
+            theta_panel.SuspendLayout();
             tabControl.SuspendLayout();
             Boiler_tabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Boiler_dataGridView).BeginInit();
@@ -229,6 +255,8 @@ namespace main.contents
             Pipe_panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Pipe_dataGridView).BeginInit();
             Qhce_tabPage.SuspendLayout();
+            hrvDiagramPanel2.SuspendLayout();
+            hrvDiagramPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ce_dataGridView).BeginInit();
             ImagePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)stopumppictureBox).BeginInit();
@@ -248,6 +276,32 @@ namespace main.contents
             panel5.SuspendLayout();
             panel6.SuspendLayout();
             SuspendLayout();
+            // 
+            // label30
+            // 
+            label30.AutoSize = true;
+            label30.BackColor = Color.Transparent;
+            label30.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label30.ForeColor = Color.SteelBlue;
+            label30.Location = new Point(4, 3);
+            label30.Name = "label30";
+            label30.Size = new Size(19, 15);
+            label30.TabIndex = 205;
+            label30.Text = "１";
+            label30.TextAlign = ContentAlignment.TopRight;
+            // 
+            // label27
+            // 
+            label27.AutoSize = true;
+            label27.BackColor = Color.Transparent;
+            label27.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label27.ForeColor = Color.SteelBlue;
+            label27.Location = new Point(2, 3);
+            label27.Name = "label27";
+            label27.Size = new Size(19, 15);
+            label27.TabIndex = 206;
+            label27.Text = "２";
+            label27.TextAlign = ContentAlignment.TopRight;
             // 
             // GeneralPanel
             // 
@@ -622,6 +676,7 @@ namespace main.contents
             // Qhg_tabPage
             // 
             Qhg_tabPage.BackColor = Color.White;
+            Qhg_tabPage.Controls.Add(theta_panel);
             Qhg_tabPage.Controls.Add(tabControl);
             Qhg_tabPage.Controls.Add(label9);
             Qhg_tabPage.Controls.Add(Complex_comboBox);
@@ -650,6 +705,80 @@ namespace main.contents
             Qhg_tabPage.Size = new Size(992, 275);
             Qhg_tabPage.TabIndex = 0;
             Qhg_tabPage.Text = "생산";
+            // 
+            // theta_panel
+            // 
+            theta_panel.Controls.Add(label24);
+            theta_panel.Controls.Add(label25);
+            theta_panel.Controls.Add(theta_ret_textBox);
+            theta_panel.Controls.Add(label16);
+            theta_panel.Controls.Add(label14);
+            theta_panel.Controls.Add(theta_flw_textBox);
+            theta_panel.Location = new Point(702, 5);
+            theta_panel.Name = "theta_panel";
+            theta_panel.Size = new Size(204, 71);
+            theta_panel.TabIndex = 206;
+            theta_panel.Visible = false;
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Font = new Font("나눔바른고딕", 9.75F);
+            label24.Location = new Point(16, 42);
+            label24.Name = "label24";
+            label24.Size = new Size(55, 15);
+            label24.TabIndex = 205;
+            label24.Text = "환수온도";
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Font = new Font("나눔바른고딕", 9.75F);
+            label25.Location = new Point(156, 42);
+            label25.Name = "label25";
+            label25.Size = new Size(19, 15);
+            label25.TabIndex = 204;
+            label25.Text = "℃";
+            // 
+            // theta_ret_textBox
+            // 
+            theta_ret_textBox.BorderStyle = BorderStyle.FixedSingle;
+            theta_ret_textBox.Location = new Point(75, 39);
+            theta_ret_textBox.Name = "theta_ret_textBox";
+            theta_ret_textBox.Size = new Size(80, 23);
+            theta_ret_textBox.TabIndex = 203;
+            theta_ret_textBox.TextAlign = HorizontalAlignment.Center;
+            theta_ret_textBox.TextChanged += theta_ret_textBox_TextChanged;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Font = new Font("나눔바른고딕", 9.75F);
+            label16.Location = new Point(17, 15);
+            label16.Name = "label16";
+            label16.Size = new Size(55, 15);
+            label16.TabIndex = 202;
+            label16.Text = "공급온도";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Font = new Font("나눔바른고딕", 9.75F);
+            label14.Location = new Point(157, 15);
+            label14.Name = "label14";
+            label14.Size = new Size(19, 15);
+            label14.TabIndex = 201;
+            label14.Text = "℃";
+            // 
+            // theta_flw_textBox
+            // 
+            theta_flw_textBox.BorderStyle = BorderStyle.FixedSingle;
+            theta_flw_textBox.Location = new Point(75, 12);
+            theta_flw_textBox.Name = "theta_flw_textBox";
+            theta_flw_textBox.Size = new Size(80, 23);
+            theta_flw_textBox.TabIndex = 200;
+            theta_flw_textBox.TextAlign = HorizontalAlignment.Center;
+            theta_flw_textBox.TextChanged += theta_flw_textBox_TextChanged;
             // 
             // tabControl
             // 
@@ -1612,6 +1741,7 @@ namespace main.contents
             Pipe_panel.Controls.Add(PipeIns_textBox);
             Pipe_panel.Controls.Add(PipeIns_Ramda_textBox);
             Pipe_panel.Controls.Add(PipeIns_button);
+            Pipe_panel.Controls.Add(PipeIns_Ramda_label2);
             Pipe_panel.Dock = DockStyle.Bottom;
             Pipe_panel.Location = new Point(3, 154);
             Pipe_panel.Name = "Pipe_panel";
@@ -1728,7 +1858,16 @@ namespace main.contents
             PipeIns_button.UseVisualStyleBackColor = false;
             PipeIns_button.Click += PipeIns_button_Click;
             // 
+            // PipeIns_Ramda_label2
             // 
+            PipeIns_Ramda_label2.AutoSize = true;
+            PipeIns_Ramda_label2.Font = new Font("나눔바른고딕", 9.75F);
+            PipeIns_Ramda_label2.ForeColor = SystemColors.ControlDark;
+            PipeIns_Ramda_label2.Location = new Point(557, 8);
+            PipeIns_Ramda_label2.Name = "PipeIns_Ramda_label2";
+            PipeIns_Ramda_label2.Size = new Size(46, 15);
+            PipeIns_Ramda_label2.TabIndex = 196;
+            PipeIns_Ramda_label2.Text = "W/mK";
             // 
             // Pipe_dataGridView
             // 
@@ -2040,6 +2179,16 @@ namespace main.contents
             // Qhce_tabPage
             // 
             Qhce_tabPage.BackColor = Color.White;
+            Qhce_tabPage.Controls.Add(label28);
+            Qhce_tabPage.Controls.Add(hydr2_ComboBox);
+            Qhce_tabPage.Controls.Add(hrvDiagramPanel2);
+            Qhce_tabPage.Controls.Add(hrvDiagramPanel1);
+            Qhce_tabPage.Controls.Add(label26);
+            Qhce_tabPage.Controls.Add(hydr1_ComboBox);
+            Qhce_tabPage.Controls.Add(roomauto2_label);
+            Qhce_tabPage.Controls.Add(roomauto2_ComboBox);
+            Qhce_tabPage.Controls.Add(roomauto1_label);
+            Qhce_tabPage.Controls.Add(roomauto1_ComboBox);
             Qhce_tabPage.Controls.Add(ce_Remove_button);
             Qhce_tabPage.Controls.Add(ce_dataGridView);
             Qhce_tabPage.Controls.Add(ce2Zone_button);
@@ -2059,13 +2208,139 @@ namespace main.contents
             Qhce_tabPage.TabIndex = 4;
             Qhce_tabPage.Text = "공급";
             // 
+            // label28
+            // 
+            label28.AutoSize = true;
+            label28.Font = new Font("나눔바른고딕", 9.75F);
+            label28.Location = new Point(531, 35);
+            label28.Name = "label28";
+            label28.Size = new Size(91, 15);
+            label28.TabIndex = 203;
+            label28.Text = "유량밸런스밸브";
+            label28.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // hydr2_ComboBox
+            // 
+            hydr2_ComboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            hydr2_ComboBox.Font = new Font("나눔바른고딕", 9.75F);
+            hydr2_ComboBox.FormattingEnabled = true;
+            hydr2_ComboBox.Location = new Point(642, 31);
+            hydr2_ComboBox.Name = "hydr2_ComboBox";
+            hydr2_ComboBox.Size = new Size(196, 23);
+            hydr2_ComboBox.TabIndex = 202;
+            hydr2_ComboBox.SelectedIndexChanged += hydr2_ComboBox_SelectedIndexChanged;
+            // 
+            // hrvDiagramPanel2
+            // 
+            hrvDiagramPanel2.BackColor = SystemColors.GradientInactiveCaption;
+            hrvDiagramPanel2.Controls.Add(label27);
+            hrvDiagramPanel2.EquipmentTypeName = "열회수기";
+            hrvDiagramPanel2.ForeColor = SystemColors.ActiveCaptionText;
+            hrvDiagramPanel2.HRVName = "HRV01";
+            hrvDiagramPanel2.InputTotalRA = 0D;
+            hrvDiagramPanel2.InputTotalSA = 0D;
+            hrvDiagramPanel2.Location = new Point(505, 0);
+            hrvDiagramPanel2.Name = "hrvDiagramPanel2";
+            hrvDiagramPanel2.RatedRA = 0D;
+            hrvDiagramPanel2.RatedSA = 0D;
+            hrvDiagramPanel2.ShowAdjacentFlow = false;
+            hrvDiagramPanel2.Size = new Size(24, 83);
+            hrvDiagramPanel2.TabIndex = 201;
+            // 
+            // hrvDiagramPanel1
+            // 
+            hrvDiagramPanel1.BackColor = SystemColors.GradientInactiveCaption;
+            hrvDiagramPanel1.Controls.Add(label30);
+            hrvDiagramPanel1.EquipmentTypeName = "열회수기";
+            hrvDiagramPanel1.ForeColor = SystemColors.ActiveCaptionText;
+            hrvDiagramPanel1.HRVName = "HRV01";
+            hrvDiagramPanel1.InputTotalRA = 0D;
+            hrvDiagramPanel1.InputTotalSA = 0D;
+            hrvDiagramPanel1.Location = new Point(0, 0);
+            hrvDiagramPanel1.Name = "hrvDiagramPanel1";
+            hrvDiagramPanel1.RatedRA = 0D;
+            hrvDiagramPanel1.RatedSA = 0D;
+            hrvDiagramPanel1.ShowAdjacentFlow = false;
+            hrvDiagramPanel1.Size = new Size(24, 83);
+            hrvDiagramPanel1.TabIndex = 200;
+            // 
+            // label26
+            // 
+            label26.AutoSize = true;
+            label26.Font = new Font("나눔바른고딕", 9.75F);
+            label26.Location = new Point(22, 35);
+            label26.Name = "label26";
+            label26.Size = new Size(91, 15);
+            label26.TabIndex = 199;
+            label26.Text = "유량밸런스밸브";
+            label26.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // hydr1_ComboBox
+            // 
+            hydr1_ComboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            hydr1_ComboBox.Font = new Font("나눔바른고딕", 9.75F);
+            hydr1_ComboBox.FormattingEnabled = true;
+            hydr1_ComboBox.Location = new Point(127, 31);
+            hydr1_ComboBox.Name = "hydr1_ComboBox";
+            hydr1_ComboBox.Size = new Size(197, 23);
+            hydr1_ComboBox.TabIndex = 198;
+            hydr1_ComboBox.SelectedIndexChanged += hydr1_ComboBox_SelectedIndexChanged;
+            // 
+            // roomauto2_label
+            // 
+            roomauto2_label.AutoSize = true;
+            roomauto2_label.Font = new Font("나눔바른고딕", 9.75F);
+            roomauto2_label.Location = new Point(533, 61);
+            roomauto2_label.Name = "roomauto2_label";
+            roomauto2_label.Size = new Size(91, 15);
+            roomauto2_label.TabIndex = 197;
+            roomauto2_label.Text = "실내자동화제어";
+            roomauto2_label.TextAlign = ContentAlignment.MiddleLeft;
+            roomauto2_label.Visible = false;
+            // 
+            // roomauto2_ComboBox
+            // 
+            roomauto2_ComboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            roomauto2_ComboBox.Font = new Font("나눔바른고딕", 9.75F);
+            roomauto2_ComboBox.FormattingEnabled = true;
+            roomauto2_ComboBox.Location = new Point(642, 57);
+            roomauto2_ComboBox.Name = "roomauto2_ComboBox";
+            roomauto2_ComboBox.Size = new Size(196, 23);
+            roomauto2_ComboBox.TabIndex = 196;
+            roomauto2_ComboBox.Visible = false;
+            roomauto2_ComboBox.SelectedIndexChanged += roomauto2_ComboBox_SelectedIndexChanged;
+            // 
+            // roomauto1_label
+            // 
+            roomauto1_label.AutoSize = true;
+            roomauto1_label.Font = new Font("나눔바른고딕", 9.75F);
+            roomauto1_label.Location = new Point(22, 61);
+            roomauto1_label.Name = "roomauto1_label";
+            roomauto1_label.Size = new Size(91, 15);
+            roomauto1_label.TabIndex = 195;
+            roomauto1_label.Text = "실내자동화제어";
+            roomauto1_label.TextAlign = ContentAlignment.MiddleLeft;
+            roomauto1_label.Visible = false;
+            // 
+            // roomauto1_ComboBox
+            // 
+            roomauto1_ComboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            roomauto1_ComboBox.Font = new Font("나눔바른고딕", 9.75F);
+            roomauto1_ComboBox.FormattingEnabled = true;
+            roomauto1_ComboBox.Location = new Point(127, 57);
+            roomauto1_ComboBox.Name = "roomauto1_ComboBox";
+            roomauto1_ComboBox.Size = new Size(197, 23);
+            roomauto1_ComboBox.TabIndex = 138;
+            roomauto1_ComboBox.Visible = false;
+            roomauto1_ComboBox.SelectedIndexChanged += roomauto1_ComboBox_SelectedIndexChanged;
+            // 
             // ce_Remove_button
             // 
             ce_Remove_button.BackColor = SystemColors.ControlLight;
             ce_Remove_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ce_Remove_button.FlatStyle = FlatStyle.System;
             ce_Remove_button.Font = new Font("나눔바른고딕", 9.75F);
-            ce_Remove_button.Location = new Point(916, 51);
+            ce_Remove_button.Location = new Point(916, 57);
             ce_Remove_button.Margin = new Padding(0);
             ce_Remove_button.Name = "ce_Remove_button";
             ce_Remove_button.Size = new Size(23, 23);
@@ -2123,7 +2398,7 @@ namespace main.contents
             ce2Zone_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ce2Zone_button.FlatStyle = FlatStyle.System;
             ce2Zone_button.Font = new Font("나눔바른고딕", 12F, FontStyle.Bold);
-            ce2Zone_button.Location = new Point(762, 28);
+            ce2Zone_button.Location = new Point(815, 7);
             ce2Zone_button.Margin = new Padding(0);
             ce2Zone_button.Name = "ce2Zone_button";
             ce2Zone_button.Size = new Size(23, 23);
@@ -2136,7 +2411,7 @@ namespace main.contents
             // 
             label7.AutoSize = true;
             label7.Font = new Font("나눔바른고딕", 9.75F);
-            label7.Location = new Point(715, 32);
+            label7.Location = new Point(768, 11);
             label7.Name = "label7";
             label7.Size = new Size(46, 15);
             label7.TabIndex = 190;
@@ -2146,18 +2421,18 @@ namespace main.contents
             // 
             label10.AutoSize = true;
             label10.Font = new Font("나눔바른고딕", 9.75F);
-            label10.Location = new Point(493, 32);
+            label10.Location = new Point(533, 11);
             label10.Name = "label10";
-            label10.Size = new Size(90, 15);
+            label10.Size = new Size(85, 15);
             label10.TabIndex = 189;
-            label10.Text = "공급설비2 종류";
+            label10.Text = "공급설비  종류";
             // 
             // ce2Type_comboBox
             // 
             ce2Type_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             ce2Type_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             ce2Type_comboBox.FormattingEnabled = true;
-            ce2Type_comboBox.Location = new Point(589, 27);
+            ce2Type_comboBox.Location = new Point(642, 6);
             ce2Type_comboBox.Name = "ce2Type_comboBox";
             ce2Type_comboBox.Size = new Size(120, 23);
             ce2Type_comboBox.TabIndex = 188;
@@ -2170,7 +2445,7 @@ namespace main.contents
             ce1Zone_textBox.Enabled = false;
             ce1Zone_textBox.Font = new Font("나눔바른고딕", 9.75F);
             ce1Zone_textBox.ForeColor = SystemColors.ControlDark;
-            ce1Zone_textBox.Location = new Point(314, 32);
+            ce1Zone_textBox.Location = new Point(326, 11);
             ce1Zone_textBox.Name = "ce1Zone_textBox";
             ce1Zone_textBox.Size = new Size(145, 15);
             ce1Zone_textBox.TabIndex = 187;
@@ -2182,7 +2457,7 @@ namespace main.contents
             ce1Zone_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ce1Zone_button.FlatStyle = FlatStyle.System;
             ce1Zone_button.Font = new Font("나눔바른고딕", 12F, FontStyle.Bold);
-            ce1Zone_button.Location = new Point(289, 28);
+            ce1Zone_button.Location = new Point(301, 7);
             ce1Zone_button.Margin = new Padding(0);
             ce1Zone_button.Name = "ce1Zone_button";
             ce1Zone_button.Size = new Size(23, 23);
@@ -2195,7 +2470,7 @@ namespace main.contents
             // 
             label5.AutoSize = true;
             label5.Font = new Font("나눔바른고딕", 9.75F);
-            label5.Location = new Point(241, 32);
+            label5.Location = new Point(253, 11);
             label5.Name = "label5";
             label5.Size = new Size(46, 15);
             label5.TabIndex = 185;
@@ -2205,18 +2480,18 @@ namespace main.contents
             // 
             label4.AutoSize = true;
             label4.Font = new Font("나눔바른고딕", 9.75F);
-            label4.Location = new Point(19, 32);
+            label4.Location = new Point(22, 11);
             label4.Name = "label4";
-            label4.Size = new Size(90, 15);
+            label4.Size = new Size(82, 15);
             label4.TabIndex = 177;
-            label4.Text = "공급설비1 종류";
+            label4.Text = "공급설비 종류";
             // 
             // ce1Type_comboBox
             // 
             ce1Type_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             ce1Type_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             ce1Type_comboBox.FormattingEnabled = true;
-            ce1Type_comboBox.Location = new Point(115, 27);
+            ce1Type_comboBox.Location = new Point(127, 6);
             ce1Type_comboBox.Name = "ce1Type_comboBox";
             ce1Type_comboBox.Size = new Size(120, 23);
             ce1Type_comboBox.TabIndex = 176;
@@ -2229,7 +2504,7 @@ namespace main.contents
             ce2Zone_textBox.Enabled = false;
             ce2Zone_textBox.Font = new Font("나눔바른고딕", 9.75F);
             ce2Zone_textBox.ForeColor = SystemColors.ControlDark;
-            ce2Zone_textBox.Location = new Point(786, 32);
+            ce2Zone_textBox.Location = new Point(839, 11);
             ce2Zone_textBox.Name = "ce2Zone_textBox";
             ce2Zone_textBox.Size = new Size(145, 15);
             ce2Zone_textBox.TabIndex = 192;
@@ -2438,6 +2713,11 @@ namespace main.contents
             panel6.Size = new Size(1000, 291);
             panel6.TabIndex = 127;
             // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(61, 4);
+            // 
             // HeatingSystem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -2457,6 +2737,8 @@ namespace main.contents
             tabControl1.ResumeLayout(false);
             Qhg_tabPage.ResumeLayout(false);
             Qhg_tabPage.PerformLayout();
+            theta_panel.ResumeLayout(false);
+            theta_panel.PerformLayout();
             tabControl.ResumeLayout(false);
             Boiler_tabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)Boiler_dataGridView).EndInit();
@@ -2481,6 +2763,10 @@ namespace main.contents
             ((System.ComponentModel.ISupportInitialize)Pipe_dataGridView).EndInit();
             Qhce_tabPage.ResumeLayout(false);
             Qhce_tabPage.PerformLayout();
+            hrvDiagramPanel2.ResumeLayout(false);
+            hrvDiagramPanel2.PerformLayout();
+            hrvDiagramPanel1.ResumeLayout(false);
+            hrvDiagramPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)ce_dataGridView).EndInit();
             ImagePanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)stopumppictureBox).EndInit();
@@ -2590,6 +2876,7 @@ namespace main.contents
         private Button PipeIns_button;
         private Label PipeIns_label;
         private Label PipeIns_Ramda_label1;
+        private Label PipeIns_Ramda_label2;
         private TextBox PipeIns_Ramda_textBox;
         private DataGridView HP_dataGridView;
         private DataGridView Solar_dataGridView;
@@ -2650,5 +2937,23 @@ namespace main.contents
         private Label label17;
         private CustomComboBox PipeInsD_ComboBox;
         private Label label23;
+        private Label label24;
+        private Label label25;
+        private TextBox theta_ret_textBox;
+        private Label label16;
+        private Label label14;
+        private TextBox theta_flw_textBox;
+        private Panel theta_panel;
+        private CustomComboBox roomauto1_ComboBox;
+        private Label roomauto1_label;
+        private Label roomauto2_label;
+        private CustomComboBox roomauto2_ComboBox;
+        private Label label26;
+        private CustomComboBox hydr1_ComboBox;
+        private subcontents.AHUSystem.HRVDiagramPanel hrvDiagramPanel2;
+        private subcontents.AHUSystem.HRVDiagramPanel hrvDiagramPanel1;
+        private ContextMenuStrip contextMenuStrip1;
+        private Label label28;
+        private CustomComboBox hydr2_ComboBox;
     }
 }
