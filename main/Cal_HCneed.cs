@@ -31,6 +31,7 @@ namespace main
         public ArrayList zoneInWall = new ArrayList();
         public ArrayList zoneSlab = new ArrayList();
         public double[] Zone_HT_tot = new double[2]; public double Zone_HT_Di_tot;
+        public double H_ztu_e; // 기술서 H_ztu;e: ZTU의 외부경계 열전달계수(W/K). b_ztu와 인접존 배분에 공통 사용.
         public double Zone_HT_Wall, Zone_HT_Roof, Zone_HT_Floor, Zone_HT_GWall, Zone_HT_Door, Zone_HT_Win, Zone_HT_CW;
         public double[] Zone_HT_Inwall = new double[2], Zone_HT_Slab = new double[2];
         public double Zone_HT_Di_Wall, Zone_HT_Indi_Wall, Zone_HT_Di_Roof, Zone_HT_Indi_Roof, Zone_HT_Di_Win, Zone_HT_Indi_Win, Zone_HT_Di_Door, Zone_HT_Indi_Door;
@@ -428,44 +429,7 @@ namespace main
                 int i = -1;
                 while (++i < ZoneF.Length)
                 {
-                    double fx_f = 0.8;
-
-                    switch (ZoneF[i][5].ToString())
-                    {
-                        case "지면위":
-                            {
-                                if (Program.UTIL.ToDoubleOrZero(ZoneF[i][3]) >= 3)
-                                { fx_f = 0.3; }
-                                else if (Program.UTIL.ToDoubleOrZero(ZoneF[i][3]) >= 1)
-                                { fx_f = 0.55; }
-                                else if (Program.UTIL.ToDoubleOrZero(ZoneF[i][3]) > 0.3)
-                                { fx_f = 0.7; }
-                                else { fx_f = 0.8; }
-                                break;
-                            }
-                        case "단열지하":
-                            {
-                                if (Program.UTIL.ToDoubleOrZero(ZoneF[i][3]) >= 3)
-                                { fx_f = 0.2; }
-                                else if (Program.UTIL.ToDoubleOrZero(ZoneF[i][3]) >= 1)
-                                { fx_f = 0.45; }
-                                else if (Program.UTIL.ToDoubleOrZero(ZoneF[i][3]) > 0.3)
-                                { fx_f = 0.55; }
-                                else { fx_f = 0.7; }
-                                break;
-                            }
-                        case "비단열지하":
-                            {
-                                if (Program.UTIL.ToDoubleOrZero(ZoneF[i][3]) >= 3)
-                                { fx_f = 0.45; }
-                                else if (Program.UTIL.ToDoubleOrZero(ZoneF[i][3]) >= 1)
-                                { fx_f = 0.75; }
-                                else if (Program.UTIL.ToDoubleOrZero(ZoneF[i][3]) > 0.3)
-                                { fx_f = 0.8; }
-                                else { fx_f = 0.85; }
-                                break;
-                            }
-                    }
+                    double fx_f = Floor.CalculateFx(Program.UTIL.ToDoubleOrZero(ZoneF[i][3]), ZoneF[i][5]);
 
                     Floor floor = new Floor(ZoneF[i][0], ZoneF[i][2], Program.UTIL.ToDoubleOrZero(ZoneF[i][1]), Program.UTIL.ToDoubleOrZero(ZoneF[i][3]), ZoneF[i][5], fx_f);
                     zoneFloor.Add(floor);
@@ -610,9 +574,10 @@ namespace main
             Zone_HT_Di_Win = 0; Zone_HT_Indi_Win = 0; Zone_HT_TB_Win = 0;
             Zone_HT_CW = 0; Zone_HT_TB_CW = 0;
 
-            // b_ztu 전용 집계 — 관류 손실용 Zone_HT_Di_tot/Zone_HT_Indi_*와는 별개(할인 없이 순수 UA만 사용).
-            // H_ue_air: 외기와 공기로 접하는 요소(벽/지붕/문/창/커튼월, 직접·간접·통기층 구분 없음, 열교 포함) — 1.5배 스케일링 대상
-            // H_ue_ground: 지반과 접하는 요소(바닥의 지면위/단열지하/비단열지하, 지하벽) — 침기 영향 없어 1.5배 제외
+            // b_ztu 전용 집계 — 관류 손실용 Zone_HT_Di_tot/Zone_HT_Indi_*와는 별개.
+            // H_ue_air: 외기와 공기로 접하는 요소의 UA+열교. 직접외기 바닥은 Fx 없이 여기에 포함한다.
+            // H_ue_ground: 지반 접촉 바닥/지하벽의 UA+열교를 기존 지반 계산과 동일하게 Fx로 등가화한다.
+            // 외기와 지반의 경계조건을 theta_e 하나로 계산하므로, 지반분은 raw UA가 아니라 Fx×UA여야 한다.
             double H_ue_air = 0, H_ue_ground = 0;
 
             //외벽 HT
@@ -693,18 +658,19 @@ namespace main
                 zoneFloor_HT_TB[i] = htcalc.Calc(Utb[2], zonefloor.Area());
 
 
-                Zone_HT_Floor += zoneFloor_HT[i];
-                Zone_HT_TB_Floor += zoneFloor_HT_TB[i];
+                // 월 관류열량·최대부하·시간상수에 공통으로 쓰는 바닥 유효 H.
+                Zone_HT_Floor += zonefloor.Fx() * zoneFloor_HT[i];
+                Zone_HT_TB_Floor += zonefloor.Fx() * zoneFloor_HT_TB[i];
 
-                // b_ztu용: 바닥은 GroundType()이 직접외기/간접외기(차고 등 공기접촉)면 H_ue_air,
-                // 지면위/단열지하/비단열지하(지반접촉)면 H_ue_ground — 둘 다 순수 UA(할인 없음)
-                if (zonefloor.GroundType() == "직접외기" || zonefloor.GroundType() == "간접외기")
+                // 기초설치가 외기바닥이면 공기 접촉 경계, 지반 유형이면 지반 경계다.
+                // '직접간접'만으로 분류하면 비단열지하실(간접외기)까지 공기 경계로 잘못 들어간다.
+                if (zonefloor.IsAirBoundary())
                 {
                     H_ue_air += zoneFloor_HT[i] + zoneFloor_HT_TB[i];
                 }
                 else
                 {
-                    H_ue_ground += zoneFloor_HT[i] + zoneFloor_HT_TB[i];
+                    H_ue_ground += zonefloor.Fx() * (zoneFloor_HT[i] + zoneFloor_HT_TB[i]);
                 }
             }
 
@@ -720,9 +686,9 @@ namespace main
                 zoneGWall_HT[i] = htcalc.Calc(zonegwall.Ueff(), zonegwall.Area());
                 zoneGWall_HT_TB[i] = htcalc.Calc(Utb[2], zonegwall.Area());
 
-                Zone_HT_GWall += zoneGWall_HT[i];
-                Zone_HT_TB_GWall += zoneGWall_HT_TB[i];
-                H_ue_ground += zoneGWall_HT[i] + zoneGWall_HT_TB[i]; // b_ztu용: 지하벽은 항상 지반 접촉, 순수 UA
+                Zone_HT_GWall += zonegwall.Fx() * zoneGWall_HT[i];
+                Zone_HT_TB_GWall += zonegwall.Fx() * zoneGWall_HT_TB[i];
+                H_ue_ground += zonegwall.Fx() * (zoneGWall_HT[i] + zoneGWall_HT_TB[i]); // 지하벽도 기존 지반 계산과 동일하게 Fx 보정
             }
 
 
@@ -800,22 +766,25 @@ namespace main
                     HT_InwallSlab += zoneslab.U() * zoneslab.Area();
                 }
                 Zone_HT_Di_tot = Zone_HT_Di_Wall + Zone_HT_Di_Roof + Zone_HT_Di_Win + Zone_HT_Di_Door + Zone_HT_CW + Zone_HT_TB_tot; //직접외기 바닥 포함시켜야 함 
-                Zone_HT_tot[hc] = Zone_HT_Di_tot + Zone_HT_Indi_Wall + Zone_HT_Indi_Roof + Zone_HT_Indi_Win + Zone_HT_Indi_Door + Zone_HT_Floor;
+                // Zone_HT_tot은 인접 ZTU의 내벽/슬래브 H까지 확정된 뒤 ZoneHT()에서 계산한다.
+                // 여기의 raw UA 집계를 시간상수에 쓰면 월 관류열량의 Fx 보정과 달라진다.
                 
-                // b_ztu 전용 집계(H_ue_air/H_ue_ground, 순수 UA)로 계산 — 관류손실용 Zone_HT_Di_tot/Zone_HT_tot와는 별개.
-                // HT_InwallSlab(내벽/슬래브, 인접 조닝존 쪽)이 H_iu, H_ue_air만 1.5배(52016 식(6), 침기 영향 반영),
-                // H_ue_ground(지반 접촉, 침기 없음)는 분자·분모 모두 ×1로만 참여.
-                b_ztu[hc] = (1.5 * H_ue_air + H_ue_ground) / (HT_InwallSlab + H_ue_ground + 1.5 * H_ue_air);
+                // ISO 52016-1 식(2)~(3): b_ztu = H_ztu;e / (인접존 경계 H + H_ztu;e).
+                // 공기 접촉 경계에는 1.5배, 지반 접촉 경계에는 Fx 보정값을 적용한다.
+                // 같은 H_ztu;e를 아래 인접존 관류 기여량에도 사용한다.
+                H_ztu_e = 1.5 * H_ue_air + H_ue_ground;
+                double H_ztu_tot = HT_InwallSlab + H_ztu_e;
+                b_ztu[hc] = H_ztu_tot == 0 ? 0 : H_ztu_e / H_ztu_tot;
 
                 for (int i = 0; i < zoneInWall.Count; i++)
                 {
                     InWall zoneInwall = (InWall)zoneInWall[i];
-                    zoneInwall.Inwall_f = zoneInwall.U() * zoneInwall.Area() / HT_InwallSlab;
+                    zoneInwall.Inwall_f = HT_InwallSlab == 0 ? 0 : zoneInwall.U() * zoneInwall.Area() / HT_InwallSlab;
                 }
                 for (int i = 0; i < zoneSlab.Count; i++)
                 {
                     Slab zoneslab = (Slab)zoneSlab[i];
-                    zoneslab.Slab_f = zoneslab.U() * zoneslab.Area() / HT_InwallSlab;
+                    zoneslab.Slab_f = HT_InwallSlab == 0 ? 0 : zoneslab.U() * zoneslab.Area() / HT_InwallSlab;
                 }
             }
         }
@@ -830,7 +799,7 @@ namespace main
                    (zoneHC == "냉난방" && hc == 1 && (zoneZTU.zoneHC == "비냉난방" || zoneZTU.zoneHC == "난방"));
         }
 
-        // 인접 ZTU존의 자기완결적 값(b_ztu, Zone_HT_Di_tot, Inwall_f/Slab_f — 전부 Zone_bztu()가 채워둠)을
+        // 인접 ZTU존의 b_ztu, H_ztu_e, Inwall_f/Slab_f를 사용해
         // 실제로 읽어서 이 존의 Zone_HT_Inwall/Zone_HT_Slab를 계산하는 부분만 담당.
         // 웜업 패스에서 모든 존의 Zone_bztu()가 먼저 끝난 뒤 본계산에서 호출돼야 안전.
         // 두 번 호출돼도 안전하도록 += 로 누적되는 필드를 리셋.
@@ -850,7 +819,7 @@ namespace main
                 {
                     processedZTU_InWall_HT.Add(zoneInwall.SideZone());
 
-                    // 이 ZTU존에서 이 존(this)으로 연결된 세그먼트들의 배분계수는 합산(sum)해서 사용
+                    // 이 ZTU존에서 이 존(this)으로 연결된 세그먼트들의 배분계수를 합산한다.
                     double f_total = 0;
                     for (int a = 0; a < zoneZTU.zoneInWall.Count; a++)
                     {
@@ -865,9 +834,10 @@ namespace main
                     {
                         bool isAdjacentZTU = IsAdjacentZTU(zoneZTU, hc);
 
-                        // ztu 존은 이미 "조닝된 비냉난방존"이므로 항상 internal type — 식 111: H = (1 - b_ztu) × U_외벽 × A_외벽, ZTU존당 1회만 반영
+                        // 식 111: (1-b_ztu) × ZTU 외부경계 H × 이 존의 연결부 배분계수.
+                        // b_ztu의 분자에 쓴 H_ztu_e를 그대로 사용한다.
                         double contribution = isAdjacentZTU
-                            ? (1 - zoneZTU.b_ztu[hc]) * zoneZTU.Zone_HT_Di_tot * f_total
+                            ? (1 - zoneZTU.b_ztu[hc]) * zoneZTU.H_ztu_e * f_total
                             : 0;
 
                         Zone_HT_Inwall[hc] += contribution;
@@ -886,7 +856,7 @@ namespace main
                 {
                     processedZTU_Slab_HT.Add(zoneslab.SideZone());
 
-                    // 이 ZTU존에서 이 존(this)으로 연결된 세그먼트들의 배분계수는 합산(sum)해서 사용
+                    // 이 ZTU존에서 이 존(this)으로 연결된 세그먼트들의 배분계수를 합산한다.
                     double f_total = 0;
                     for (int a = 0; a < zoneZTU.zoneSlab.Count; a++)
                     {
@@ -901,14 +871,23 @@ namespace main
                     {
                         bool isAdjacentZTU = IsAdjacentZTU(zoneZTU, hc);
 
-                        // 위와 동일 — 항상 internal type, 식 111, ZTU존당 1회만 반영
+                        // 내벽과 동일한 식 111 및 배분계수. ZTU존당 1회만 반영한다.
                         double contribution = isAdjacentZTU
-                            ? (1 - zoneZTU.b_ztu[hc]) * zoneZTU.Zone_HT_Di_tot * f_total
+                            ? (1 - zoneZTU.b_ztu[hc]) * zoneZTU.H_ztu_e * f_total
                             : 0;
 
                         Zone_HT_Slab[hc] += contribution;
                     }
                 }
+            }
+
+            // 월 관류열량과 같은 유효 H를 그대로 시간상수의 분모에 사용한다.
+            // b_ztu의 외부경계 집계(H_ue_air/H_ue_ground)는 별도이다.
+            for (int hc = 0; hc < 2; hc++)
+            {
+                Zone_HT_tot[hc] = Zone_HT_Wall + Zone_HT_Roof + Zone_HT_Door
+                    + Zone_HT_Win + Zone_HT_CW + Zone_HT_Floor + Zone_HT_GWall
+                    + Zone_HT_TB_tot + Zone_HT_Inwall[hc] + Zone_HT_Slab[hc];
             }
         }
 
@@ -1063,7 +1042,7 @@ namespace main
                 }
             }
 
-            // nz는 리포트 저장용(Zone_HCneed_Result.nz, 인접존 유입 총량 기준 환기횟수 참고값)으로만
+            // nz는 리포트 저장용(Zone_52016_Result.nz, 인접존 유입 총량 기준 환기횟수 참고값)으로만
             // 유지 — 실제 열전달 계산(Zone_HV_z)에는 안 씀
             nz = hvcalc.nz_Calc(nz_SUP, th_op_d);
 
@@ -1169,7 +1148,7 @@ namespace main
 
                         // theta_s(지반 등가온도) 대신 theta_e 기준 + Fx 가중 H로 계산(수학적으로 동일, Calc_sink가 (Ti-Te)*H 선형이라 Fx를 H에 곱하나 온도에 녹이나 같음)
                         zoneFloors_QTsink[i, hc, mth] = qtcalc.Calc_sink(theta_e[mth], theta_i_set[hc], zonefloor.Fx() * zonefloor.Ueff() * zonefloor.Area(), dmth[mth]);
-                        zoneFloors_QTsink_TB[i, hc, mth] = qtcalc.Calc_sink(theta_e[mth], theta_i_set[hc], Utb[2] * zonefloor.Area(), dmth[mth]);
+                        zoneFloors_QTsink_TB[i, hc, mth] = qtcalc.Calc_sink(theta_e[mth], theta_i_set[hc], zonefloor.Fx() * Utb[2] * zonefloor.Area(), dmth[mth]);
 
 
                         QTsink_Floor[hc, mth] += zoneFloors_QTsink[i, hc, mth];
@@ -1179,17 +1158,18 @@ namespace main
                     }
                 }
 
-                QTsink_Floor_max += (zonefloor.Ueff() * zonefloor.Area() * (theta_i_h_min - theta_e_min));
+                // M3: 최대부하도 월 관류열량과 동일하게 지반/외기 경계 Fx를 적용한다.
+                QTsink_Floor_max += (zonefloor.Fx() * zonefloor.Ueff() * zonefloor.Area() * (theta_i_h_min - theta_e_min));
 
-                QTsink_TB_max += (Utb[2] * zonefloor.Area() * (theta_i_h_min - theta_e_min));
-
-                if (theta_i_c_max_d > theta_e_max)
-                { QTsink_Floor_Cmax += (zonefloor.Ueff() * zonefloor.Area() * (theta_i_c_max_d - theta_e_max)); }
-                else { QTsource_Floor_Cmax += (zonefloor.Ueff() * zonefloor.Area() * (theta_e_max - theta_i_c_max_d)); }
+                QTsink_TB_max += (zonefloor.Fx() * Utb[2] * zonefloor.Area() * (theta_i_h_min - theta_e_min));
 
                 if (theta_i_c_max_d > theta_e_max)
-                { QTsink_TB_Cmax += (Utb[2] * zonefloor.Area() * (theta_i_c_max_d - theta_e_max)); }
-                else { QTsource_TB_Cmax += (Utb[2] * zonefloor.Area() * (theta_e_max - theta_i_c_max_d)); }
+                { QTsink_Floor_Cmax += (zonefloor.Fx() * zonefloor.Ueff() * zonefloor.Area() * (theta_i_c_max_d - theta_e_max)); }
+                else { QTsource_Floor_Cmax += (zonefloor.Fx() * zonefloor.Ueff() * zonefloor.Area() * (theta_e_max - theta_i_c_max_d)); }
+
+                if (theta_i_c_max_d > theta_e_max)
+                { QTsink_TB_Cmax += (zonefloor.Fx() * Utb[2] * zonefloor.Area() * (theta_i_c_max_d - theta_e_max)); }
+                else { QTsource_TB_Cmax += (zonefloor.Fx() * Utb[2] * zonefloor.Area() * (theta_e_max - theta_i_c_max_d)); }
             }
 
             //지하벽 QT계산    
@@ -1218,17 +1198,17 @@ namespace main
                     }
                 }
 
-                QTsink_GWall_max += (zonegwall.Ueff() * zonegwall.Area() * (theta_i_h_min - theta_e_min));
+                QTsink_GWall_max += (zonegwall.Fx() * zonegwall.Ueff() * zonegwall.Area() * (theta_i_h_min - theta_e_min));
 
-                QTsink_TB_max += (Utb[2] * zonegwall.Area() * (theta_i_h_min - theta_e_min));
-
-                if (theta_i_c_max_d > theta_e_max)
-                { QTsink_GWall_Cmax += (zonegwall.Ueff() * zonegwall.Area() * (theta_i_c_max_d - theta_e_max)); }
-                else { QTsource_GWall_Cmax += (zonegwall.Ueff() * zonegwall.Area() * (theta_e_max - theta_i_c_max_d)); }
+                QTsink_TB_max += (zonegwall.Fx() * Utb[2] * zonegwall.Area() * (theta_i_h_min - theta_e_min));
 
                 if (theta_i_c_max_d > theta_e_max)
-                { QTsink_TB_Cmax += (Utb[2] * zonegwall.Area() * (theta_i_c_max_d - theta_e_max)); }
-                else { QTsource_TB_Cmax += (Utb[2] * zonegwall.Area() * (theta_e_max - theta_i_c_max_d)); }
+                { QTsink_GWall_Cmax += (zonegwall.Fx() * zonegwall.Ueff() * zonegwall.Area() * (theta_i_c_max_d - theta_e_max)); }
+                else { QTsource_GWall_Cmax += (zonegwall.Fx() * zonegwall.Ueff() * zonegwall.Area() * (theta_e_max - theta_i_c_max_d)); }
+
+                if (theta_i_c_max_d > theta_e_max)
+                { QTsink_TB_Cmax += (zonegwall.Fx() * Utb[2] * zonegwall.Area() * (theta_i_c_max_d - theta_e_max)); }
+                else { QTsource_TB_Cmax += (zonegwall.Fx() * Utb[2] * zonegwall.Area() * (theta_e_max - theta_i_c_max_d)); }
             }
 
             {
@@ -1370,8 +1350,8 @@ namespace main
 
             QV_inf_sink_max = Zone_HV_inf * (theta_i_h_min - theta_e_min);
             QV_win_sink_max = Zone_HV_win * (theta_i_h_min - theta_e_min);
-            QV_z_sink_max = Zone_HV_z[0] * (theta_i_h_min - theta_i_h_min); // 원래도 (a-a) 형태라 hc 무관하게 항상 0
-            QV_mech_sink_max = H_mech_raw * (theta_i_h_min - (theta_e_min + eta_V_mech[1] * (theta_i_h_min - theta_e_min))); // 설계조건 최대치라 b 적용 없이 원래 방식 그대로
+            QV_z_sink_max = Zone_HV_z[0] * (theta_i_h_min - theta_e_min); // ZTU의 b는 Zone_HV_z에 이미 반영됨
+            QV_mech_sink_max = H_mech_raw * (theta_i_h_min - (theta_e_min + eta_V_mech[0] * (theta_i_h_min - theta_e_min))); // 난방 최대부하는 난방 온도교환효율 사용
             QVsink_tot_max = QV_inf_sink_max + QV_win_sink_max + QV_z_sink_max; //기계환기 제외
 
             if (theta_i_c_max_d > theta_e_max)
@@ -1616,12 +1596,14 @@ namespace main
 
             }
 
-            //불투명일사 합계 계산
+            // 불투명 일사와 투명 외피의 천공 복사를 웜업에서 모두 확정한다.
+            // 인접 ZTU의 순 일사열을 계산 순서와 무관하게 읽기 위한 값이다.
             for (int hc = 0; hc <= 1; hc++)
             {
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    QS_rad_tot[hc, mth] = QS_rad_Wall[mth] + QS_rad_Roof[mth] + QS_rad_Door[mth] + QS_rad_CW_p[mth];
+                    QS_rad_tot[hc, mth] = QS_rad_Wall[mth] + QS_rad_Roof[mth] + QS_rad_Door[mth] + QS_rad_CW_p[mth]
+                        + QS_rad_Win[hc, mth] + QS_rad_CW[hc, mth];
                     QSopsource_tot[hc, mth] = QSopsource_Wall[mth] + QSopsource_Roof[mth] + QSopsource_Door[mth] + QSopsource_CW_p[mth];
                 }
             }
@@ -1895,10 +1877,8 @@ namespace main
             QStr_tot_Cmax = QStr_Win_max + QStr_CW_max;
         }
 
-        // 인접 ZTU 배분(Qstr_ztu, 인접존의 QStr_own을 읽음) + 최종 QStr_tot 조립 — 본계산 패스에서 실행.
-        // 모든 존의 QStr_own이 웜업에서 이미 준비돼 있어야 안전.
-        // QS_rad_tot도 여기서 조립 — ZoneQSop()(불투명 일사, QS_rad_tot을 Wall+Roof+Door+CW_p로 덮어씀)이
-        // 이 함수보다 먼저(Zone_Calc() 순서상) 실행된 뒤라야 Win/CW분을 안전하게 더할 수 있음.
+        // 인접 ZTU의 순 일사열(투명+불투명-천공 복사) 배분과 최종 합계 조립.
+        // QStr_own, QSopsource_tot, QS_rad_tot은 모든 존의 웜업에서 이미 확정된다.
         public void ZoneQStr_CW_finalize()
         {
             double[,] Qstr_Ztu = Qstr_ztu();
@@ -1907,7 +1887,6 @@ namespace main
                 for (int mth = 0; mth < 12; mth++)
                 {
                     QStr_tot[hc, mth] = QStr_own[hc, mth] + Qstr_Ztu[hc, mth];
-                    QS_rad_tot[hc, mth] = QS_rad_tot[hc, mth] + QS_rad_Win[hc, mth] + QS_rad_CW[hc, mth];
                 }
             }
         }
@@ -1950,7 +1929,8 @@ namespace main
                         {
                             // ZTU존당 1회만 반영
                             double contribution = isAdjacentZTU
-                                ? (1 - zoneZTU.b_ztu[hc]) * zoneZTU.QStr_own[hc, mth] * f_total
+                                ? (1 - zoneZTU.b_ztu[hc]) * (zoneZTU.QSopsource_tot[hc, mth]
+                                    + zoneZTU.QStr_own[hc, mth] - zoneZTU.QS_rad_tot[hc, mth]) * f_total
                                 : 0;
 
                             Qs_Inwall_ztu[hc, mth] += contribution;
@@ -1989,7 +1969,8 @@ namespace main
                         {
                             // ZTU존당 1회만 반영
                             double contribution = isAdjacentZTU
-                                ? (1 - zoneZTU.b_ztu[hc]) * zoneZTU.QStr_own[hc, mth] * f_total
+                                ? (1 - zoneZTU.b_ztu[hc]) * (zoneZTU.QSopsource_tot[hc, mth]
+                                    + zoneZTU.QStr_own[hc, mth] - zoneZTU.QS_rad_tot[hc, mth]) * f_total
                                 : 0;
 
                             Qs_Slab_ztu[hc, mth] += contribution;
@@ -2199,7 +2180,11 @@ namespace main
                     Qsink[hc, mth] = QTsink_tot[hc, mth] + QVsink_tot[hc, mth];
                     Qsource[hc, mth] = (QSopsource_tot[hc, mth] + QStr_tot[hc, mth] - QS_rad_tot[hc, mth]) + QI_tot[hc, mth];
 
-                    gamma[hc, mth] = Qsource[hc, mth] / Qsink[hc, mth];
+                    // C5 결정: Qsink=0은 예상 밖이므로 gamma의 분모에만 1 kWh를 사용해 계산을 계속한다.
+                    // 실제 Qsink와 월 열량은 변경하지 않는다.
+                    gamma[hc, mth] = Qsource[hc, mth] / (Qsink[hc, mth] == 0 ? 1 : Qsink[hc, mth]);
+                    if (!double.IsFinite(gamma[hc, mth]))
+                        System.Diagnostics.Trace.TraceWarning($"HCneed 1차 비정상 gamma: 존={ZoneNum}, 월={mth + 1}, hc={hc}, QT={QTsink_tot[hc, mth]}, QV={QVsink_tot[hc, mth]}, Qsource={Qsource[hc, mth]}, Qsink={Qsink[hc, mth]}");
                 }
             }
         }
@@ -2244,6 +2229,12 @@ namespace main
         }
         public void ZoneQT2()//관류 열전달 계산
         {
+            // C8: 1차 ZoneQT()가 채운 최대부하 누적값을 비우고 2차에서 한 번만 다시 산정한다.
+            // 월별 QTsink_TB 초기화와 별개이며, 아래 += 항목만 대상으로 한다.
+            QTsink_TB_max = 0; QTsink_TB_Cmax = 0; QTsource_TB_Cmax = 0;
+            QTsink_Floor_max = 0; QTsink_Floor_Cmax = 0; QTsource_Floor_Cmax = 0;
+            QTsink_GWall_max = 0; QTsink_GWall_Cmax = 0; QTsource_GWall_Cmax = 0;
+
             for (int hc = 0; hc < 2; hc++)
             {
                 for (int mth = 0; mth < 12; mth++)
@@ -2331,7 +2322,7 @@ namespace main
                         // 기존엔 theta_s 자체는 theta_i_set으로 계산해놓고 바깥 Ti는 theta_i(동적)를 써서
                         // 서로 안 맞았는데, 이 방식으로 바꾸면서 그 불일치도 같이 해소됨)
                         zoneFloors_QTsink[i, hc, mth] = qtcalc.Calc_sink(theta_e[mth], theta_i[hc, mth], zonefloor.Fx() * zonefloor.Ueff() * zonefloor.Area(), dmth[mth]);
-                        zoneFloors_QTsink_TB[i, hc, mth] = qtcalc.Calc_sink(theta_e[mth], theta_i[hc, mth], Utb[2] * zonefloor.Area(), dmth[mth]);
+                        zoneFloors_QTsink_TB[i, hc, mth] = qtcalc.Calc_sink(theta_e[mth], theta_i[hc, mth], zonefloor.Fx() * Utb[2] * zonefloor.Area(), dmth[mth]);
 
 
                         QTsink_Floor[hc, mth] += zoneFloors_QTsink[i, hc, mth];
@@ -2341,17 +2332,18 @@ namespace main
                     }
                 }
 
-                QTsink_Floor_max += (zonefloor.Ueff() * zonefloor.Area() * (theta_i_h_min - theta_e_min));
+                // M3: 2차 최대부하도 월 관류열량·시간상수와 동일한 Fx 보정을 사용한다.
+                QTsink_Floor_max += (zonefloor.Fx() * zonefloor.Ueff() * zonefloor.Area() * (theta_i_h_min - theta_e_min));
 
-                QTsink_TB_max += (Utb[2] * zonefloor.Area() * (theta_i_h_min - theta_e_min));
-
-                if (theta_i_c_max_d > theta_e_max)
-                { QTsink_Floor_Cmax += (zonefloor.Ueff() * zonefloor.Area() * (theta_i_c_max_d - theta_e_max)); }
-                else { QTsource_Floor_Cmax += (zonefloor.Ueff() * zonefloor.Area() * (theta_e_max - theta_i_c_max_d)); }
+                QTsink_TB_max += (zonefloor.Fx() * Utb[2] * zonefloor.Area() * (theta_i_h_min - theta_e_min));
 
                 if (theta_i_c_max_d > theta_e_max)
-                { QTsink_TB_Cmax += (Utb[2] * zonefloor.Area() * (theta_i_c_max_d - theta_e_max)); }
-                else { QTsource_TB_Cmax += (Utb[2] * zonefloor.Area() * (theta_e_max - theta_i_c_max_d)); }
+                { QTsink_Floor_Cmax += (zonefloor.Fx() * zonefloor.Ueff() * zonefloor.Area() * (theta_i_c_max_d - theta_e_max)); }
+                else { QTsource_Floor_Cmax += (zonefloor.Fx() * zonefloor.Ueff() * zonefloor.Area() * (theta_e_max - theta_i_c_max_d)); }
+
+                if (theta_i_c_max_d > theta_e_max)
+                { QTsink_TB_Cmax += (zonefloor.Fx() * Utb[2] * zonefloor.Area() * (theta_i_c_max_d - theta_e_max)); }
+                else { QTsource_TB_Cmax += (zonefloor.Fx() * Utb[2] * zonefloor.Area() * (theta_e_max - theta_i_c_max_d)); }
             }
 
             //지하벽 QT계산    
@@ -2380,17 +2372,17 @@ namespace main
                     }
                 }
 
-                QTsink_GWall_max += (zonegwall.Ueff() * zonegwall.Area() * (theta_i_h_min - theta_e_min));
+                QTsink_GWall_max += (zonegwall.Fx() * zonegwall.Ueff() * zonegwall.Area() * (theta_i_h_min - theta_e_min));
 
-                QTsink_TB_max += (Utb[2] * zonegwall.Area() * (theta_i_h_min - theta_e_min));
-
-                if (theta_i_c_max_d > theta_e_max)
-                { QTsink_GWall_Cmax += (zonegwall.Ueff() * zonegwall.Area() * (theta_i_c_max_d - theta_e_max)); }
-                else { QTsource_GWall_Cmax += (zonegwall.Ueff() * zonegwall.Area() * (theta_e_max - theta_i_c_max_d)); }
+                QTsink_TB_max += (zonegwall.Fx() * Utb[2] * zonegwall.Area() * (theta_i_h_min - theta_e_min));
 
                 if (theta_i_c_max_d > theta_e_max)
-                { QTsink_TB_Cmax += (Utb[2] * zonegwall.Area() * (theta_i_c_max_d - theta_e_max)); }
-                else { QTsource_TB_Cmax += (Utb[2] * zonegwall.Area() * (theta_e_max - theta_i_c_max_d)); }
+                { QTsink_GWall_Cmax += (zonegwall.Fx() * zonegwall.Ueff() * zonegwall.Area() * (theta_i_c_max_d - theta_e_max)); }
+                else { QTsource_GWall_Cmax += (zonegwall.Fx() * zonegwall.Ueff() * zonegwall.Area() * (theta_e_max - theta_i_c_max_d)); }
+
+                if (theta_i_c_max_d > theta_e_max)
+                { QTsink_TB_Cmax += (zonegwall.Fx() * Utb[2] * zonegwall.Area() * (theta_i_c_max_d - theta_e_max)); }
+                else { QTsource_TB_Cmax += (zonegwall.Fx() * Utb[2] * zonegwall.Area() * (theta_e_max - theta_i_c_max_d)); }
             }
 
             {
@@ -2533,8 +2525,8 @@ namespace main
 
             QV_inf_sink_max = Zone_HV_inf * (theta_i_h_min - theta_e_min);
             QV_win_sink_max = Zone_HV_win * (theta_i_h_min - theta_e_min);
-            QV_z_sink_max = Zone_HV_z[0] * (theta_i_h_min - theta_i_h_min); // 원래도 (a-a) 형태라 hc 무관하게 항상 0
-            QV_mech_sink_max = H_mech_raw * (theta_i_h_min - (theta_e_min + eta_V_mech[1] * (theta_i_h_min - theta_e_min))); // 설계조건 최대치라 b 적용 없이 원래 방식 그대로
+            QV_z_sink_max = Zone_HV_z[0] * (theta_i_h_min - theta_e_min); // ZTU의 b는 Zone_HV_z에 이미 반영됨
+            QV_mech_sink_max = H_mech_raw * (theta_i_h_min - (theta_e_min + eta_V_mech[0] * (theta_i_h_min - theta_e_min))); // 난방 최대부하는 난방 온도교환효율 사용
             QVsink_tot_max = QV_inf_sink_max + QV_win_sink_max + QV_z_sink_max; //기계환기 제외
 
             if (theta_i_c_max_d > theta_e_max)
@@ -2564,7 +2556,10 @@ namespace main
                     Qsink[hc, mth] = QTsink_tot[hc, mth] + QVsink_tot[hc, mth];
                     Qsource[hc, mth] = (QSopsource_tot[hc, mth] + QStr_tot[hc, mth] - QS_rad_tot[hc, mth]) + QI_tot[hc, mth];
 
-                    gamma[hc, mth] = Qsource[hc, mth] / Qsink[hc, mth];
+                    // 1차 gamma와 같은 예외 규칙: 분모만 대체하고 실제 열손실 합계는 유지한다.
+                    gamma[hc, mth] = Qsource[hc, mth] / (Qsink[hc, mth] == 0 ? 1 : Qsink[hc, mth]);
+                    if (!double.IsFinite(gamma[hc, mth]) || !double.IsFinite(tao[hc, mth]))
+                        System.Diagnostics.Trace.TraceWarning($"HCneed 2차 비정상 입력: 존={ZoneNum}, 월={mth + 1}, hc={hc}, QT={QTsink_tot[hc, mth]}, QV={QVsink_tot[hc, mth]}, Qsource={Qsource[hc, mth]}, Qsink={Qsink[hc, mth]}, gamma={gamma[hc, mth]}, tao={tao[hc, mth]}");
 
                     a[hc, mth] = 1 + tao[hc, mth] / 15;
                     if (hc == 0)
@@ -2601,7 +2596,8 @@ namespace main
 
                 // Qcb_we_day[mth] = qbcalc.Qcb_Calc(eta[1, 0, mth], Qsource[1, 0, mth]);
 
-                if (1 / gamma[1, mth] > 1.5)
+                // Qsink=0이면 냉방에 활용할 열손실이 없으므로 Qsource를 그대로 요구량에 반영한다.
+                if (Qsink[1, mth] != 0 && 1 / gamma[1, mth] > 1.5)
                 {
                     Qb_mth[1, mth] = 0;
                 }
@@ -2613,8 +2609,12 @@ namespace main
 
 
 
-                Qb_mth[0, mth] = double.IsNaN(Qb_mth[0, mth]) || Qb_mth[0, mth] < 0 ? 0 : Qb_mth[0, mth];
-                Qb_mth[1, mth] = double.IsNaN(Qb_mth[1, mth]) || Qb_mth[1, mth] < 0 ? 0 : Qb_mth[1, mth];
+                for (int hc = 0; hc < 2; hc++)
+                {
+                    if (!double.IsFinite(Qb_mth[hc, mth]))
+                        System.Diagnostics.Trace.TraceWarning($"HCneed 비정상 월 요구량: 존={ZoneNum}, 월={mth + 1}, hc={hc}, QT={QTsink_tot[hc, mth]}, QV={QVsink_tot[hc, mth]}, Qsink={Qsink[hc, mth]}, Qsource={Qsource[hc, mth]}, gamma={gamma[hc, mth]}, tao={tao[hc, mth]}, eta={eta[hc, mth]}");
+                    Qb_mth[hc, mth] = !double.IsFinite(Qb_mth[hc, mth]) || Qb_mth[hc, mth] < 0 ? 0 : Qb_mth[hc, mth];
+                }
 
 
 
@@ -2660,6 +2660,8 @@ namespace main
             Qsink_max = QTsink_tot_Cmax + QVsink_tot_Cmax + QSopsink_tot_Cmax;
 
             Q_max[1] = 0.8 * (Qsource_max - Qsink_max) * (1 + 0.3 * Math.Exp(-tao_max / 120)) - Cwirk_A * zoneArea / 60 * (dtheta_i_NA - 2) + Cwirk_A * zoneArea / 40 * (12 / t_c_op_d - 1);
+            // DIN 간이 부하식의 음수 결과는 냉방 최대부하가 없는 경우로 취급한다.
+            if (Q_max[1] < 0) Q_max[1] = 0;
 
             double[,] beta_h = new double[2, 12]; double[,] beta_c = new double[2, 12]; double[,] t_mth = new double[2, 12]; double[,] th_mth = new double[2, 12]; double[,] tc_mth = new double[2, 12]; //wewd,mth
 
@@ -2670,7 +2672,7 @@ namespace main
                     beta_h[0, mth] = 0;
                     beta_c[0, mth] = 0;
                     beta_h[1, mth] = Qb_mth[0, mth] / (Q_max[0] * 24);
-                    beta_c[1, mth] = Qb_mth[1, mth] / (Q_max[1] * t_c_op_d);
+                    beta_c[1, mth] = Q_max[1] > 0 ? Qb_mth[1, mth] / (Q_max[1] * t_c_op_d) : 0;
                     if (beta_h[wewd, mth] > 1)
                     {
                         beta_h[wewd, mth] = 1;
@@ -3276,6 +3278,31 @@ namespace main
             this.Floor_Fx = Fx;
         }
 
+        // ConstructionFloor 폼의 '기초설치' 저장값으로 공기/지반 경계를 판정한다.
+        public bool IsAirBoundary()
+        {
+            return IsAirBoundary(Floor_GroundType);
+        }
+
+        public static bool IsAirBoundary(string groundType)
+        {
+            return groundType == "바닥(직접외기)" || groundType == "바닥(간접외기)";
+        }
+
+        // 기본·대안·법규·최적 계산이 동일한 Fx 표와 실제 폼 저장 문자열을 사용한다.
+        public static double CalculateFx(double u, string groundType)
+        {
+            switch (groundType)
+            {
+                case "바닥(직접외기)": return 1.0;
+                case "바닥(간접외기)": return 0.8;
+                case "지면위": return u >= 3 ? 0.3 : u >= 1 ? 0.55 : u > 0.3 ? 0.7 : 0.8;
+                case "단열지하실": return u >= 3 ? 0.2 : u >= 1 ? 0.45 : u > 0.3 ? 0.55 : 0.7;
+                case "비단열지하실": return u >= 3 ? 0.45 : u >= 1 ? 0.75 : u > 0.3 ? 0.8 : 0.85;
+                default: throw new ArgumentException($"알 수 없는 바닥 기초설치 유형: {groundType}");
+            }
+        }
+
         public String Num()
         {
             return Floor_Num;
@@ -3458,6 +3485,9 @@ namespace main
 
         public double Setback(double gamma, double theta_e, double theta_i_set, double tao, double dt_red, double n_red, double dtheta_i_NA, string mode)
         {
+            // 셋백 시간이 없으면 감소계수는 1. dt_red/tao의 0/0 계산을 피한다.
+            if (dt_red <= 0 || n_red <= 0) return 1;
+
             double f_H_red_y = (dt_red * n_red) / (24 * 7);
             double dtheta_float = 1;
             if (theta_i_set > theta_e)
@@ -3687,7 +3717,13 @@ namespace main
             {
                 eta = a / (a + 1);
             }
-            else if (gamma > 0 && gamma != 1)
+            else if (gamma > 1)
+            {
+                // 동치식: gamma^a의 overflow 없이 같은 이용계수를 계산한다.
+                double inversePower = Math.Pow(gamma, -a);
+                eta = (1 - inversePower) / (gamma - inversePower);
+            }
+            else if (gamma > 0)
             {
                 eta = (1 - Math.Pow(gamma, a)) / (1 - Math.Pow(gamma, a + 1));
             }
@@ -3701,7 +3737,9 @@ namespace main
             }
 
 
-            if (double.IsNaN(eta) || eta < 0)
+            if (!double.IsFinite(eta))
+                System.Diagnostics.Trace.TraceWarning($"HCneed 비정상 난방 이용계수: gamma={gamma}, a={a}, Qsource={Qsource}");
+            if (!double.IsFinite(eta) || eta < 0)
             {
                 eta = 0;
             }
@@ -3718,7 +3756,13 @@ namespace main
             {
                 eta = a / (a + 1);
             }
-            else if (gamma > 0 && gamma != 1)
+            else if (gamma > 0 && gamma < 1)
+            {
+                // 동치식: gamma^(-a)의 overflow 없이 같은 이용계수를 계산한다.
+                double power = Math.Pow(gamma, a + 1);
+                eta = (gamma - power) / (1 - power);
+            }
+            else if (gamma > 0)
             {
                 eta = (1 - Math.Pow(gamma, -a)) / (1 - Math.Pow(gamma, -(a + 1)));
             }
@@ -3727,7 +3771,9 @@ namespace main
                 eta = 1;
             }
 
-            if (double.IsNaN(eta) || eta < 0)
+            if (!double.IsFinite(eta))
+                System.Diagnostics.Trace.TraceWarning($"HCneed 비정상 냉방 이용계수: gamma={gamma}, a={a}");
+            if (!double.IsFinite(eta) || eta < 0)
             {
                 eta = 0;
             }
@@ -3746,7 +3792,9 @@ namespace main
             double Qhb;
             Qhb = Qsink - η * Qsource;
 
-            if (double.IsNaN(Qhb) || Qhb < 0)
+            if (!double.IsFinite(Qhb))
+                System.Diagnostics.Trace.TraceWarning($"HCneed 비정상 난방 요구량: Qsink={Qsink}, eta={η}, Qsource={Qsource}");
+            if (!double.IsFinite(Qhb) || Qhb < 0)
             {
                 Qhb = 0;
             }
@@ -3758,7 +3806,9 @@ namespace main
         {
             double Qcb;
             Qcb = (Qsource - η * Qsink);
-            if (double.IsNaN(Qcb) || Qcb < 0)
+            if (!double.IsFinite(Qcb))
+                System.Diagnostics.Trace.TraceWarning($"HCneed 비정상 냉방 요구량: Qsource={Qsource}, eta={η}, Qsink={Qsink}");
+            if (!double.IsFinite(Qcb) || Qcb < 0)
             {
                 Qcb = 0;
             }

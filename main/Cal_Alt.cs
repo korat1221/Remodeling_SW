@@ -479,43 +479,7 @@ namespace main
                         if (Pre.Length > 0)
                         { Uvalue = Program.UTIL.ToDoubleOrZero(Pre[0][0]); }
                     }
-                    double fx_f = 0.8;
-                    switch (ZoneF[i][5].ToString())
-                    {
-                        case "지면위":
-                            {
-                                if (Program.UTIL.ToDoubleOrZero(Uvalue) >= 3)
-                                { fx_f = 0.3; }
-                                else if (Program.UTIL.ToDoubleOrZero(Uvalue) >= 1)
-                                { fx_f = 0.55; }
-                                else if (Program.UTIL.ToDoubleOrZero(Uvalue) > 0.3)
-                                { fx_f = 0.7; }
-                                else { fx_f = 0.8; }
-                                break;
-                            }
-                        case "단열지하":
-                            {
-                                if (Program.UTIL.ToDoubleOrZero(Uvalue) >= 3)
-                                { fx_f = 0.2; }
-                                else if (Program.UTIL.ToDoubleOrZero(Uvalue) >= 1)
-                                { fx_f = 0.45; }
-                                else if (Program.UTIL.ToDoubleOrZero(Uvalue) > 0.3)
-                                { fx_f = 0.55; }
-                                else { fx_f = 0.7; }
-                                break;
-                            }
-                        case "비단열지하":
-                            {
-                                if (Program.UTIL.ToDoubleOrZero(Uvalue) >= 3)
-                                { fx_f = 0.45; }
-                                else if (Program.UTIL.ToDoubleOrZero(Uvalue) >= 1)
-                                { fx_f = 0.75; }
-                                else if (Program.UTIL.ToDoubleOrZero(Uvalue) > 0.3)
-                                { fx_f = 0.8; }
-                                else { fx_f = 0.85; }
-                                break;
-                            }
-                    }
+                    double fx_f = Floor.CalculateFx(Uvalue, ZoneF[i][5]);
 
 
                     Floor floor = new Floor(ZoneF[i][0], ZoneF[i][2], Program.UTIL.ToDoubleOrZero(ZoneF[i][1]), Uvalue, ZoneF[i][5], fx_f);

@@ -244,7 +244,7 @@ namespace main
 
             Zone_Init();
 
-            // 웜업 패스: 모든 존의 LoadData를 먼저 끝내고 Zone_bztu()(b_ztu/Zone_HT_Di_tot/Inwall_f/
+            // 웜업 패스: 모든 존의 LoadData를 먼저 끝내고 Zone_bztu()(b_ztu/H_ztu_e/Inwall_f/
             // Slab_f 등 이 존 자기완결적 값들, zoneHC 포함)를 처리순서와 무관하게 채워둠 — 관류
             // ZTU 인접존 기여분(ZoneHT()), 환기 인접존 기여분 등 다른 존을 조회하는 계산이 어떤
             // 순서로 돌아도 안전하도록 함. LoadData류는 전부 이 존 자기 자신의 DB 값만 읽어서 다른
@@ -724,7 +724,7 @@ namespace main
             }
         }
         // 웜업 패스에서 모든 존에 대해 먼저 실행돼야 함 — 조명/일사/내부발열 중 "인접 ZTU 배분 전"
-        // 자기 몫(QStr_own, QI_own)까지만 계산. 인접존이 어떤 순서로 계산되든 이 값들을 안전하게
+        // 자기 몫(투명·불투명 일사와 천공 복사, QI_own)까지만 계산. 인접존이 어떤 순서로 계산되든 이 값들을 안전하게
         // 참조할 수 있어야 Qstr_ztu()/QI_ztu()(본계산에서 호출)가 순서 무관하게 정확함.
         // Cal_Qb()/Cal_Alt.cs/Cal_Rule.cs/Cal_Optimal.cs 전부 "재로드+Zone_bztu()" 웜업 루프 뒤에
         // 이 함수를 호출해야 함(4곳 전부 동일 구조).
@@ -744,6 +744,8 @@ namespace main
 
             zone1.ZoneQStr_Win();
             zone1.ZoneQStr_CW_own();
+            // ZTU 일사 배분에는 불투명 외피와 천공 복사도 필요하므로 모든 존에서 먼저 확정한다.
+            zone1.ZoneQSop();
             zone1.ZoneQI_L();
             zone1.ZoneQI_own();
         }
@@ -754,7 +756,6 @@ namespace main
             zone1.ZoneHV();
             zone1.ZoneQT();
             zone1.ZoneQV();
-            zone1.ZoneQSop();
             zone1.ZoneQStr_CW_finalize();
             zone1.ZoneQI_finalize();
             zone1.Zonetao();
@@ -762,6 +763,9 @@ namespace main
             zone1.Zonethetai();
             zone1.ZoneQT2();
             zone1.ZoneQV2();
+            // C2 검토 결정: 2차 환기에서 기계환기 보정 H가 바뀔 수 있지만,
+            // 시간상수는 1차 환기 H로 구한 값을 최종 이용계수에도 사용하는 근사로 유지한다.
+            // 관류 H는 1·2차에서 동일하며, 2차 후 Zonetao()를 재호출하지 않는다.
             zone1.Zoneeta();
             zone1.ZoneQb();
             zone1.ZoneQmax();

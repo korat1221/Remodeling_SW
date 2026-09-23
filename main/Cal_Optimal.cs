@@ -256,49 +256,13 @@ namespace main
                 int i = -1;
                 while (++i < ZoneF.Length)
                 {
-                    double fx_f = 0.8;
                     double U = Program.UTIL.ToDoubleOrZero(ZoneF[i][3]);
-                    if (리모델링유형 =="내부덧댐" ||(리모델링유형 == "외부덧댐" && ZoneF[i][5] == "바닥(외기)"))
+                    if (리모델링유형 =="내부덧댐" ||(리모델링유형 == "외부덧댐" && Floor.IsAirBoundary(ZoneF[i][5])))
                     {
                         U = 1 / (1 / Program.UTIL.ToDoubleOrZero(ZoneF[i][3]) + dR) + dU;
                     }
 
-                    switch (ZoneF[i][5].ToString())
-                    {
-                        case "지면위":
-                            {
-                                if (U >= 3)
-                                { fx_f = 0.3; }
-                                else if (U >= 1)
-                                { fx_f = 0.55; }
-                                else if (U > 0.3)
-                                { fx_f = 0.7; }
-                                else { fx_f = 0.8; }
-                                break;
-                            }
-                        case "단열지하":
-                            {
-                                if (U >= 3)
-                                { fx_f = 0.2; }
-                                else if (U >= 1)
-                                { fx_f = 0.45; }
-                                else if (U > 0.3)
-                                { fx_f = 0.55; }
-                                else { fx_f = 0.7; }
-                                break;
-                            }
-                        case "비단열지하":
-                            {
-                                if (U >= 3)
-                                { fx_f = 0.45; }
-                                else if (U >= 1)
-                                { fx_f = 0.75; }
-                                else if (U > 0.3)
-                                { fx_f = 0.8; }
-                                else { fx_f = 0.85; }
-                                break;
-                            }
-                    }
+                    double fx_f = Floor.CalculateFx(U, ZoneF[i][5]);
 
                     Floor floor = new Floor(ZoneF[i][0], ZoneF[i][2], Program.UTIL.ToDoubleOrZero(ZoneF[i][1]), U, ZoneF[i][5], fx_f);
                    zone1. zoneFloor.Add(floor);
