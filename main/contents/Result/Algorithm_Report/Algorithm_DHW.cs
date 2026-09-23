@@ -96,7 +96,7 @@ namespace main.contents.Result
             {
                 string Num = 번호[i][0]; string MainSystem = "", sub1 = "-", sub2 = "-";
                 double power = 0; double count = 0; double eta = 0; string systemnum = ""; string etaunit = "";
-                items.Add("dhwReport_new.html"); // 예시 코드: 메인 메뉴 동적 할당
+                items.Add("Algorithm_DHW.html"); // 예시 코드: 메인 메뉴 동적 할당
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
                 if (Value.Length > 0)
                 {

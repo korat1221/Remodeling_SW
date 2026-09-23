@@ -172,7 +172,7 @@ namespace main.contents.Result.Building_Report
                              
                 for (int mt = 0; mt < 12; mt++)
                 {
-                    string[][] heat = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "난방_냉방 = '난방' and 비이용일_이용일='이용일' and 월 ='" + (mt + 1).ToString() + "월'");
+                    string[][] heat = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Qb_mth", "난방_냉방 = '난방' and 월='" + (mt + 1).ToString() + "월'");
                     if (heat.Length > 0)
                     {
                         for (int h = 0; h < heat.Length; h++)
@@ -180,7 +180,7 @@ namespace main.contents.Result.Building_Report
                             난방요구량[mt] += Program.UTIL.ToDoubleOrZero(heat[h][0]);
                         }
                     }
-                    string[][] cool = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "난방_냉방 = '냉방' and 비이용일_이용일='이용일' and 월 ='" + (mt + 1).ToString() + "월'");
+                    string[][] cool = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Qb_mth", "난방_냉방 = '냉방' and 월='" + (mt + 1).ToString() + "월'");
                     if (cool.Length > 0)
                     {
                         for (int h = 0; h < cool.Length; h++)
@@ -188,7 +188,7 @@ namespace main.contents.Result.Building_Report
                              냉방요구량[mt] += Program.UTIL.ToDoubleOrZero(cool[h][0]);
                         }
                     }
-                    string[][] hotw = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "번호, dwd_mth", "비이용일_이용일='이용일' and 월 ='" + (mt + 1).ToString() + "월'");
+                    string[][] hotw = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_52016_Result", "존번호, dwd_mth", "월='" + (mt + 1).ToString() + "월'");
                     if (hotw.Length > 0)
                     {
                         for(int aaa = 0; aaa<hotw.Length ; aaa++)
@@ -1277,7 +1277,7 @@ namespace main.contents.Result.Building_Report
                     #region 리모델링 후 요구량
                     for (int mt = 0; mt < 12; mt++)
                     {
-                        string[][] heat = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "난방_냉방 = '난방' and 비이용일_이용일='이용일' and 월 ='" + (mt + 1).ToString() + "월'");
+                        string[][] heat = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Qb_mth", "난방_냉방 = '난방' and 월='" + (mt + 1).ToString() + "월'");
                         if (heat.Length > 0)
                         {
                             for (int h = 0; h < heat.Length; h++)
@@ -1285,7 +1285,7 @@ namespace main.contents.Result.Building_Report
                                 난방요구량[mt] += Program.UTIL.ToDoubleOrZero(heat[h][0]);
                             }
                         }
-                        string[][] cool = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "난방_냉방 = '냉방' and 비이용일_이용일='이용일' and 월 ='" + (mt + 1).ToString() + "월'");
+                        string[][] cool = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Qb_mth", "난방_냉방 = '냉방' and 월='" + (mt + 1).ToString() + "월'");
                         if (cool.Length > 0)
                         {
                             for (int h = 0; h < cool.Length; h++)
@@ -1293,7 +1293,7 @@ namespace main.contents.Result.Building_Report
                                 냉방요구량[mt] += Program.UTIL.ToDoubleOrZero(cool[h][0]);
                             }
                         }
-                        string[][] hotw = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "번호, dwd_mth", "비이용일_이용일='이용일' and 월 ='" + (mt + 1).ToString() + "월'");
+                        string[][] hotw = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_52016_Result", "존번호, dwd_mth", "월='" + (mt + 1).ToString() + "월'");
                         if (hotw.Length > 0)
                         {
                             for (int aaa = 0; aaa < hotw.Length; aaa++)
@@ -1341,7 +1341,7 @@ namespace main.contents.Result.Building_Report
                     #region 리모델링 전 요구량
                     for (int mt = 0; mt < 12; mt++)
                     {
-                        string[][] heat = Program.DB.getValue(res[0][0], "Zone_HCneed_Result", "Qb_mth", "난방_냉방 = '난방' and 비이용일_이용일='이용일' and 월 ='" + (mt + 1).ToString() + "월'");
+                        string[][] heat = Program.DB.getValue(res[0][0], "Zone_52016_Result", "Qb_mth", "난방_냉방 = '난방' and 월='" + (mt + 1).ToString() + "월'");
                         if (heat.Length > 0)
                         {
                             for (int h = 0; h < heat.Length; h++)
@@ -1349,7 +1349,7 @@ namespace main.contents.Result.Building_Report
                                 난방요구량2[mt] += Program.UTIL.ToDoubleOrZero(heat[h][0]);
                             }
                         }
-                        string[][] cool = Program.DB.getValue(res[0][0], "Zone_HCneed_Result", "Qb_mth", "난방_냉방 = '냉방' and 비이용일_이용일='이용일' and 월 ='" + (mt + 1).ToString() + "월'");
+                        string[][] cool = Program.DB.getValue(res[0][0], "Zone_52016_Result", "Qb_mth", "난방_냉방 = '냉방' and 월='" + (mt + 1).ToString() + "월'");
                         if (cool.Length > 0)
                         {
                             for (int h = 0; h < cool.Length; h++)
@@ -1357,7 +1357,7 @@ namespace main.contents.Result.Building_Report
                                 냉방요구량2[mt] += Program.UTIL.ToDoubleOrZero(cool[h][0]);
                             }
                         }
-                        string[][] hotw = Program.DB.getValue_SameCheck(res[0][0], "Zone_HCneed_Result", "번호, dwd_mth", "비이용일_이용일='이용일' and 월 ='" + (mt + 1).ToString() + "월'");
+                        string[][] hotw = Program.DB.getValue_SameCheck(res[0][0], "Zone_52016_Result", "존번호, dwd_mth", "월='" + (mt + 1).ToString() + "월'");
                         if (hotw.Length > 0)
                         {
                             for (int aaa = 0; aaa < hotw.Length; aaa++)

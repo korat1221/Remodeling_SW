@@ -495,7 +495,7 @@ namespace main.contents.Result
             {
                 for (int i = 0; i < SelectZone.Count; i++)
                 {
-                    string[][] 난방 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth", "번호 ='" + SelectZone[i] + "' AND 난방_냉방 = '난방' AND 비이용일_이용일 = '이용일' AND 월 = '" + mth + "'");
+                    string[][] 난방 = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Qb_mth", "존번호 ='" + SelectZone[i] + "' AND 난방_냉방 = '난방' AND 월 = '" + mth + "'");
                     Need += Program.UTIL.ToDoubleOrZero(난방[0][0]);
                 }
             }
@@ -503,7 +503,7 @@ namespace main.contents.Result
             {
                 for (int i = 0; i < SelectZone.Count; i++)
                 {
-                    string[][] 제습 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_DHU_tot, dwd_mth", "번호 ='" + SelectZone[i] + "' AND 난방_냉방 = '냉방' AND 비이용일_이용일 = '이용일' AND 월 = '" + mth + "'");
+                    string[][] 제습 = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Q_DHU_tot, dwd_mth", "존번호 ='" + SelectZone[i] + "' AND 난방_냉방 = '냉방' AND 월 = '" + mth + "'");
                     Need += Program.UTIL.ToDoubleOrZero(제습[0][0]) * Program.UTIL.ToDoubleOrZero(제습[0][1]) / 1000;
                 }
             }
@@ -511,7 +511,7 @@ namespace main.contents.Result
             {
                 for (int i = 0; i < SelectZone.Count; i++)
                 {
-                    string[][] 냉방 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_mth,Q_DHU_tot, dwd_mth", "번호 ='" + SelectZone[i] + "' AND 난방_냉방 = '냉방' AND 비이용일_이용일 = '이용일' AND 월 = '" + mth + "'");
+                    string[][] 냉방 = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Qb_mth,Q_DHU_tot, dwd_mth", "존번호 ='" + SelectZone[i] + "' AND 난방_냉방 = '냉방' AND 월 = '" + mth + "'");
                     Need += Program.UTIL.ToDoubleOrZero(냉방[0][0]) - Program.UTIL.ToDoubleOrZero(냉방[0][1]) * Program.UTIL.ToDoubleOrZero(냉방[0][2]) / 1000;
                 }
             }

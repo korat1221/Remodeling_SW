@@ -270,12 +270,12 @@ namespace main.contents.Result
                 double EHP_Qmax_h = 0; double EHP_Qmax_c = 0; double EHP_ZoneArea = 0;
                 for (int a = 0; a < EHP_Zones_split.Count; a++)
                 {
-                    string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호='" + EHP_Zones_split[a].ToString() + "' And 난방_냉방='난방' and 비이용일_이용일='이용일' and 월='1월'");
+                    string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Q_max", "존번호='" + EHP_Zones_split[a].ToString() + "' And 난방_냉방='난방' and 월='1월'");
                     if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                     {
                         EHP_Qmax_h += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
                     }
-                    ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호='" + EHP_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 비이용일_이용일='이용일' and 월='8월'");
+                    ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Q_max", "존번호='" + EHP_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 월='8월'");
                     if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                     {
                         EHP_Qmax_c += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
@@ -450,7 +450,7 @@ namespace main.contents.Result
                 double AirC_Qmax_c = 0; double AirC_ZoneArea = 0;
                 for (int a = 0; a < AirC_Zones_split.Count; a++)
                 {
-                    string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호='" + AirC_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 비이용일_이용일='이용일' and 월='8월'");
+                    string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Q_max", "존번호='" + AirC_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 월='8월'");
                     if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                     {
                         AirC_Qmax_c += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
@@ -868,12 +868,12 @@ namespace main.contents.Result
                     double EHP_Qmax_h = 0; double EHP_Qmax_c = 0; double EHP_ZoneArea = 0;
                     for (int a = 0; a < EHP_Zones_split.Count; a++)
                     {
-                        string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호='" + EHP_Zones_split[a].ToString() + "' And 난방_냉방='난방' and 비이용일_이용일='이용일' and 월='1월'");
+                        string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Q_max", "존번호='" + EHP_Zones_split[a].ToString() + "' And 난방_냉방='난방' and 월='1월'");
                         if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                         {
                             EHP_Qmax_h += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
                         }
-                        ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호='" + EHP_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 비이용일_이용일='이용일' and 월='8월'");
+                        ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Q_max", "존번호='" + EHP_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 월='8월'");
                         if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                         {
                             EHP_Qmax_c += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
@@ -1075,7 +1075,7 @@ namespace main.contents.Result
                     double AirC_Qmax_c = 0; double AirC_ZoneArea = 0;
                     for (int a = 0; a < AirC_Zones_split.Count; a++)
                     {
-                        string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호='" + AirC_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 비이용일_이용일='이용일' and 월='8월'");
+                        string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Q_max", "존번호='" + AirC_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 월='8월'");
                         if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                         {
                             AirC_Qmax_c += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);

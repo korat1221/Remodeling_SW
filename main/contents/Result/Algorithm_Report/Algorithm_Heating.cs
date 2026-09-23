@@ -101,7 +101,7 @@ namespace main.contents.Result
             {
                 string Num = 번호[i][0]; string MainSystem = "", sub1 ="-", sub2 ="-";
                 double power = 0; double count = 0; double eta = 0; string systemnum = ""; string etaunit = "";
-                items.Add("heatingReport_new.html"); // 예시 코드: 메인 메뉴 동적 할당
+                items.Add("Algorithm_Heating.html"); // 예시 코드: 메인 메뉴 동적 할당
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
                 if (Value.Length > 0)
                 {
@@ -206,7 +206,7 @@ namespace main.contents.Result
                     double Zmax = 0; double ZArea = 0.00000001;
                     for(int a=0; a<splitzone.Count; a++)
                     {
-                        ZoneValue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct Q_max From Zone_HCneed_Result Where 번호='" + splitzone[a].ToString() + "' and 난방_냉방='난방' and 비이용일_이용일='이용일'");
+                        ZoneValue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct Q_max From Zone_52016_Result Where 존번호='" + splitzone[a].ToString() + "' and 난방_냉방='난방'");
                         if (ZoneValue.Length > 0)
                         {
                             Zmax += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
@@ -246,7 +246,7 @@ namespace main.contents.Result
                     double Zmax = 0; double ZArea = 0.00000001;
                     for (int a = 0; a < splitAHU.Count; a++)
                     {
-                        ZoneValue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.Q_max, b.존번호,b.순바닥면적 From Zone_HCneed_Result as a Inner Join ZoneGeneral_Form as b on a.번호=b.존번호 Where b.선택열회수기='" + splitAHU[a].ToString() + "' and a.난방_냉방='난방' and a.비이용일_이용일='이용일' and 월='1월' and not b.선택열회수기=''");
+                        ZoneValue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.Q_max, b.존번호,b.순바닥면적 From Zone_52016_Result as a Inner Join ZoneGeneral_Form as b on a.존번호=b.존번호 Where b.선택열회수기='" + splitAHU[a].ToString() + "' and a.난방_냉방='난방' and 월='1월' and not b.선택열회수기=''");
                         if (ZoneValue.Length > 0)
                         {
                             for(int aa=0; aa<ZoneValue.Length; aa++)

@@ -388,7 +388,7 @@ namespace main.contents.Result
                 {
                     double sunrise = 0, sunset = 0;
                     string mth = (j+1).ToString() + "월";
-                    light = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "dwd_mth", " 번호 = '" + Num + "' And 난방_냉방 = '냉방' And 비이용일_이용일='이용일' And  월 ='"+mth+"'");
+                    light = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "dwd_mth", "존번호 = '" + Num + "' And 난방_냉방 = '냉방' And 월 ='" + mth + "'");
                     mthday[j] = light[0][0].ToString();
                     Value = Program.DB.getValue(DB.type.BaseDB_Lighting, "조명_사용시간", "julianday(time(해뜨는시간)),julianday(time(해지는시간))", "ID = '" + (j + 1) + "'");
                     sunrise = Program.UTIL.ToDoubleOrZero(Value[0][0]);

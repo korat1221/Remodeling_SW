@@ -329,7 +329,7 @@ namespace main.contents.Result
                             ventil_eta_humidity[a] = Program.UTIL.ToDoubleOrZero(Value[a][3]);
                             ventil_power[a] = Program.UTIL.ToDoubleOrZero(Value[a][4]);
 
-                            string[][] zonevalue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.존번호,a.기존존,a.순바닥면적,a.순체적,a.이용일환기량,a.환기횟수,b.ninf From ZoneGeneral_Form as a inner join Zone_HCneed_Result as b on a.존번호 = b.번호 where a.선택열회수기='" + Value[a][0] + "' and b.비이용일_이용일='이용일' and b.난방_냉방='난방'");
+                            string[][] zonevalue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.존번호,a.기존존,a.순바닥면적,a.순체적,a.이용일환기량,a.환기횟수,b.ninf From ZoneGeneral_Form as a inner join Zone_52016_Result as b on a.존번호 = b.존번호 where a.선택열회수기='" + Value[a][0] + "' and b.난방_냉방='난방'");
                             if (zonevalue.Length > 0)
                             {
                                 if (zonevalue.Length > 1) { ventil_zone_text[a] = zonevalue[0][0] + " 외 " + (zonevalue.Length - 1).ToString() + "개"; }
@@ -842,7 +842,7 @@ namespace main.contents.Result
                             ventil_eta_humidity[a] = Program.UTIL.ToDoubleOrZero(Value[a][3]);
                             ventil_power[a] = Program.UTIL.ToDoubleOrZero(Value[a][4]);
 
-                            string[][] zonevalue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.존번호,a.기존존,a.순바닥면적,a.순체적,a.이용일환기량,a.환기횟수,b.ninf From ZoneGeneral_Form as a inner join Zone_HCneed_Result as b on a.존번호 = b.번호 where a.선택열회수기='" + Value[a][0] + "' and b.비이용일_이용일='이용일' and b.난방_냉방='난방'");
+                            string[][] zonevalue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.존번호,a.기존존,a.순바닥면적,a.순체적,a.이용일환기량,a.환기횟수,b.ninf From ZoneGeneral_Form as a inner join Zone_52016_Result as b on a.존번호 = b.존번호 where a.선택열회수기='" + Value[a][0] + "' and b.난방_냉방='난방'");
                             if (zonevalue.Length > 0)
                             {
                                 if (zonevalue.Length > 1) { ventil_zone_text[a] = zonevalue[0][0] + " 외 " + (zonevalue.Length - 1).ToString() + "개"; }

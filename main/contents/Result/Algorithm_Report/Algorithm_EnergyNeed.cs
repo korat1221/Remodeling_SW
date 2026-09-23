@@ -45,7 +45,7 @@ namespace main.contents.Result
         {
             string s, s2;
             string charts = "";
-            string[][] 번호 = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct 번호 From Zone_HCneed_Result Order by 번호");
+            string[][] 번호 = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct 존번호 From Zone_52016_Result Order by 존번호");
             List<object> items = new List<object>();
             List<object> data = new List<object>();
             List<object>[] GeneralData = new List<object>[30];
@@ -181,7 +181,7 @@ namespace main.contents.Result
                 #endregion
 
                 #region 환기정보
-                Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.이용일환기량,b.ninf,b.nmech,b.nwin From ZoneGeneral_Form as a Inner Join Zone_HCneed_Result as b on a.존번호 = b.번호 Where a.존번호='" + Num + "' and b.비이용일_이용일='이용일'");
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.이용일환기량,b.ninf,b.nmech,b.nwin From ZoneGeneral_Form as a Inner Join Zone_52016_Result as b on a.존번호 = b.존번호 Where a.존번호='" + Num + "'");
                 if (Value.Length > 0)
                 {
                     VentilData[0].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][0], 1) }); //필요환기량
@@ -193,7 +193,7 @@ namespace main.contents.Result
                 #endregion
 
                 #region 연간정보
-                Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct Qb_a, Q_max From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일='이용일' and 난방_냉방='난방'");
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct Qb_a, Q_max From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='난방'");
                 double annual = 0;
                 if (Value.Length > 0)
                 {
@@ -202,7 +202,7 @@ namespace main.contents.Result
                     annual = Program.UTIL.ToDoubleOrZero(Value[0][1]) / area;
                     AnnualData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(annual.ToString(), 1) }); //난방부하
                 }
-                Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct Qb_a, Q_max From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일='이용일' and 난방_냉방='냉방'");
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct Qb_a, Q_max From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='냉방'");
                 annual = 0;
                 if (Value.Length > 0)
                 {
@@ -220,14 +220,14 @@ namespace main.contents.Result
                 }
                 annual = 0; double dwd_a = 0; 
                 double[] dmth = new double[12] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-                Value = Program.DB.querySQL(DB.type.ProjDB, "Select sum(dwd_mth) From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일='이용일' and 난방_냉방='난방'");
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select sum(dwd_mth) From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='난방'");
                 if (Value.Length > 0)
                 {
                     dwd_a = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                 }
                 for (int mth =0; mth < 12; mth ++)
                 {
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.일일급탕요구량,b.theta_e From ZoneGeneral_Form as a Inner Join Zone_HCneed_Result as b on a.존번호=b.번호 Where b.번호='" + Num + "' and b.비이용일_이용일='이용일' and b.난방_냉방='난방' and b.월='" + (mth +1) + "월'");
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.일일급탕요구량,b.theta_e From ZoneGeneral_Form as a Inner Join Zone_52016_Result as b on a.존번호=b.존번호 Where b.존번호='" + Num + "' and b.난방_냉방='난방' and b.월='" + (mth + 1).ToString() + "월'");
                     if (Value.Length > 0)
                     {
                         annual  += Program.UTIL.ToDoubleOrZero(Value[0][0]) * dwd_a * dmth[mth] / 365 * (-0.02 * Program.UTIL.ToDoubleOrZero(Value[0][1]) + 1.25);
@@ -413,7 +413,7 @@ namespace main.contents.Result
                 {
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select  QTsink_tot  as total_1, QVsink_tot as total_2, QSopsink_tot as total_3, Qsink as total_4 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select QTsink_tot as total_1, QVsink_tot as total_2, QS_rad_tot as total_3, Qsink as total_4 From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
                        if(Value.Length >0)
                         {
                             HeatingMthData[0].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
@@ -425,25 +425,25 @@ namespace main.contents.Result
                     }
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select QTsource_tot as total_1, QVsource_tot as total_2, QStr_Win as total_3, QStr_CW as total_4,QSopsource_tot as total_5,QI_tot as total_6,Qsource  as total_7 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select QSopsource_tot, QStr_tot, QI_tot, Qsource From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
-                            HeatingMthData[8].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
-                            HeatingMthData[9].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 0) });
-                            double qs = Program.UTIL.ToDoubleOrZero(Value[0][2]) + Program.UTIL.ToDoubleOrZero(Value[0][3]) + Program.UTIL.ToDoubleOrZero(Value[0][4]);
+                            HeatingMthData[8].Add(new { idx = i * 12 + mth, val = "-" }); // ISO 52016 결과에는 관류 열획득을 별도 저장하지 않는다.
+                            HeatingMthData[9].Add(new { idx = i * 12 + mth, val = "-" }); // ISO 52016 결과에는 환기 열획득을 별도 저장하지 않는다.
+                            double qs = Program.UTIL.ToDoubleOrZero(Value[0][0]) + Program.UTIL.ToDoubleOrZero(Value[0][1]);
                             HeatingMthData[10].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(qs.ToString(), 0) });
-                            HeatingMthData[11].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][5], 0) });
-                            HeatingMthData[12].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][6], 0) });
+                            HeatingMthData[11].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][2], 0) });
+                            HeatingMthData[12].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][3], 0) });
                         }
                     }
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth, eta, dQc_b From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth, eta From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
                             HeatingMthData[13].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
                             HeatingMthData[14].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 2) });
-                            HeatingMthData[15].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][2], 0) });
+                            HeatingMthData[15].Add(new { idx = i * 12 + mth, val = "-" }); // DIN의 대차축열량은 ISO 52016 결과에 없다.
                         }
                     }
                 }
@@ -453,7 +453,7 @@ namespace main.contents.Result
                 {
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select  QTsink_tot as total_1, QVsink_tot* dwd_mth/1000 as total_2, QSopsink_tot* dwd_mth/1000 as total_3, Qsink* dwd_mth/1000 as total_4 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select QTsink_tot as total_1, QVsink_tot as total_2, QS_rad_tot as total_3, Qsink as total_4 From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
                             CoolingMthData[0].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
@@ -465,21 +465,21 @@ namespace main.contents.Result
                     }
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select QTsource_tot as total_1, QVsource_tot as total_2, QStr_Win as total_3, QStr_CW as total_4,QSopsource_tot as total_5,QI_tot as total_6,Qsource  as total_7 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select QSopsource_tot, QStr_tot, QI_tot, Qsource From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
-                            CoolingMthData[8].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
-                            CoolingMthData[9].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 0) });
-                            double qs = Program.UTIL.ToDoubleOrZero(Value[0][2]) + Program.UTIL.ToDoubleOrZero(Value[0][3]) + Program.UTIL.ToDoubleOrZero(Value[0][4]);
+                            CoolingMthData[8].Add(new { idx = i * 12 + mth, val = "-" }); // ISO 52016 결과에는 관류 열획득을 별도 저장하지 않는다.
+                            CoolingMthData[9].Add(new { idx = i * 12 + mth, val = "-" }); // ISO 52016 결과에는 환기 열획득을 별도 저장하지 않는다.
+                            double qs = Program.UTIL.ToDoubleOrZero(Value[0][0]) + Program.UTIL.ToDoubleOrZero(Value[0][1]);
                             CoolingMthData[10].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(qs.ToString(), 0) });
-                            CoolingMthData[11].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][5], 0) });
-                            CoolingMthData[12].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][6], 0) });
+                            CoolingMthData[11].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][2], 0) });
+                            CoolingMthData[12].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][3], 0) });
                         }
                     }
                     for (int mth = 0; mth < 12; mth++)
                     {
 
-                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth, eta, Q_DHU_tot as total_1 From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth, eta, Q_DHU_tot as total_1 From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
                             CoolingMthData[13].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
@@ -493,13 +493,13 @@ namespace main.contents.Result
                 #region 월간종합
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
                     if (Value.Length > 0)
                     {
                         MthData[0].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) }); //난방
                         MthData[1].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa((Program.UTIL.ToDoubleOrZero(Value[0][0]) / area).ToString(), 1) }); //단위면적당 난방
                     }
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일 ='이용일' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
                     if (Value.Length > 0)
                     {
                         MthData[2].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) }); //냉방
@@ -511,13 +511,13 @@ namespace main.contents.Result
                         MthData[4].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) }); //조명
                     }
 
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select sum(dwd_mth) From Zone_HCneed_Result Where 번호='" + Num + "' and 비이용일_이용일='이용일' and 난방_냉방='난방'");
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select sum(dwd_mth) From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='난방'");
                     if (Value.Length > 0)
                     {
                         dwd_a = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                     }
 
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.일일급탕요구량,b.theta_e From ZoneGeneral_Form as a Inner Join Zone_HCneed_Result as b on a.존번호=b.번호 Where b.번호='" + Num + "' and b.비이용일_이용일='이용일' and b.난방_냉방='난방' and b.월='" + (mth + 1) + "월'");
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct a.일일급탕요구량,b.theta_e From ZoneGeneral_Form as a Inner Join Zone_52016_Result as b on a.존번호=b.존번호 Where b.존번호='" + Num + "' and b.난방_냉방='난방' and b.월='" + (mth + 1).ToString() + "월'");
                     if (Value.Length > 0)
                     {
                         double DHW  = Program.UTIL.ToDoubleOrZero(Value[0][0]) * dwd_a * dmth[mth] / 365 * (-0.02 * Program.UTIL.ToDoubleOrZero(Value[0][1]) + 1.25);

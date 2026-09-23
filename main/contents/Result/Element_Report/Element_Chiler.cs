@@ -219,7 +219,7 @@ namespace main.contents.Result
                 double Air_Qmax_c = 0; double Air_ZoneArea = 0;
                 for (int a = 0; a < Air_Zones_split.Count; a++)
                 {
-                    string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호='" + Air_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 비이용일_이용일='이용일' and 월='8월'");
+                    string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Q_max", "존번호='" + Air_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 월='8월'");
                     if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                     {
                         Air_Qmax_c += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
@@ -377,7 +377,7 @@ namespace main.contents.Result
                 double Water_Qmax_c = 0; double Water_ZoneArea = 0;
                 for (int a = 0; a < Water_Zones_split.Count; a++)
                 {
-                    string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호='" + Water_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 비이용일_이용일='이용일' and 월='8월'");
+                    string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Q_max", "존번호='" + Water_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 월='8월'");
                     if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                     {
                         Water_Qmax_c += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
@@ -653,7 +653,7 @@ namespace main.contents.Result
                     double Air_Qmax_c = 0; double Air_ZoneArea = 0;
                     for (int a = 0; a < Air_Zones_split.Count; a++)
                     {
-                        string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호='" + Air_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 비이용일_이용일='이용일' and 월='8월'");
+                        string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Q_max", "존번호='" + Air_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 월='8월'");
                         if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                         {
                             Air_Qmax_c += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
@@ -833,7 +833,7 @@ namespace main.contents.Result
                     double Water_Qmax_c = 0; double Water_ZoneArea = 0;
                     for (int a = 0; a < Water_Zones_split.Count; a++)
                     {
-                        string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호='" + Water_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 비이용일_이용일='이용일' and 월='8월'");
+                        string[][] ZoneValue = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Q_max", "존번호='" + Water_Zones_split[a].ToString() + "' And 난방_냉방='냉방' and 월='8월'");
                         if (ZoneValue.Length > 0 && ZoneValue[0][0] != "")
                         {
                             Water_Qmax_c += Program.UTIL.ToDoubleOrZero(ZoneValue[0][0]);
