@@ -65,8 +65,8 @@ namespace main.subcontents.ZoneGeneral
                 {
                     string[][] Value2 = Program.DB.querySQL(PreProjNum[0][0], "Select 존번호,존이름,용도프로필,순바닥면적,냉난방유무 From ZoneGeneral_Form where 존번호='" + Value[n][0] + "'");
 
-                    string[][] 요구량 = Program.DB.getValue(PreProjNum[0][0], "Zone_HCneed_Result", "Qb_a", "번호 ='" + Value[n][0] + "' AND 난방_냉방 = '난방'");
-                    string[][] 요구량2 = Program.DB.getValue(PreProjNum[0][0], "Zone_HCneed_Result", "Qb_a", "번호 ='" + Value[n][0] + "' AND 난방_냉방 = '냉방'");
+                    string[][] 요구량 = Program.DB.getValue(PreProjNum[0][0], "Zone_52016_Result", "Qb_a", "존번호 ='" + Value[n][0] + "' AND 난방_냉방 = '난방'");
+                    string[][] 요구량2 = Program.DB.getValue(PreProjNum[0][0], "Zone_52016_Result", "Qb_a", "존번호 ='" + Value[n][0] + "' AND 난방_냉방 = '냉방'");
                     if (Value2.Length > 0)
                     {
                         Zone_dataGridView.Rows.Add();

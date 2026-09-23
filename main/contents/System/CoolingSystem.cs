@@ -343,7 +343,7 @@ namespace main.contents
                     if (zone != "" && zone != null)
                     {
                         string[][] 면적 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호 ='" + zone + "'");
-                        string[][] 부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a,Q_max", "번호 ='" + zone + "' And 난방_냉방 ='냉방'");
+                        string[][] 부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_52016_Result", "Qb_a,Q_max", "존번호 ='" + zone + "' And 난방_냉방 ='냉방'");
                         if (부하.Length == null || 부하.Length == 0)
                         {
                             MessageBox.Show("요구량계산을 해주세요!");
@@ -3441,7 +3441,7 @@ namespace main.contents
                         string[][] 일람표정보 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "번호,명칭,용량_냉방,소비전력_냉방", "번호 = '" + substring + "'");
                         ce_dataGridView.Rows[nRow].Cells[3].Value = 일람표정보[0][1]; //일람표명칭
 
-                        string[][] 최대부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "Q_max", "번호 = '" + Value[i][0] + "' And 난방_냉방 = '냉방' And 비이용일_이용일 = '이용일'");
+                        string[][] 최대부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_52016_Result", "Q_max", "존번호 = '" + Value[i][0] + "' And 난방_냉방 = '냉방'");
 
                         double 용량 = Program.UTIL.ToDoubleOrZero(최대부하[0][0]) / 1000;
                         ce_dataGridView.Rows[nRow].Cells[4].Value = string.Format("{0:F1}", 용량); //해당존의 최대부하값을 반영하기

@@ -261,7 +261,7 @@ namespace main.contents
                     double Qba = 0, Qmax = 0, Area = 0;
                     for (int a = 0; a < SelectZone_split.Count; a++)
                     {
-                        string[][] 요구량 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a, Q_max", "번호 ='" + SelectZone_split[a].ToString() + "' AND 난방_냉방 = '난방'");
+                        string[][] 요구량 = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Qb_a, Q_max", "존번호 ='" + SelectZone_split[a].ToString() + "' AND 난방_냉방 = '난방'");
                         if (요구량.Length > 0)
                         {
                             Qba += Program.UTIL.ToDoubleOrZero(요구량[0][0]);

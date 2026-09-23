@@ -162,14 +162,14 @@ namespace main.contents
         }
         private void Load_Qmax()
         {
-            string[][] value = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(Q_max) From Zone_HCneed_Result Where 난방_냉방='난방' and 비이용일_이용일='이용일' and  월='1월'");
+            string[][] value = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(Q_max) From Zone_52016_Result Where 난방_냉방='난방' and  월='1월'");
             if (value.Length > 0 && value[0][0] != "")
             {
                 Qhmax_textBox.Text = (Program.UTIL.ToDoubleOrZero(value[0][0]) / 1000).ToString();
                 Program.UTIL.textBox_doubleComa(Qhmax_textBox, true, 1);
                 Qhmax_textBox.Text += " kW";
             }
-            value = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(Q_max) From Zone_HCneed_Result Where 난방_냉방='냉방' and 비이용일_이용일='이용일' and  월='1월'");
+            value = Program.DB.querySQL(DB.type.ProjDB, "Select Sum(Q_max) From Zone_52016_Result Where 난방_냉방='냉방' and  월='1월'");
             if (value.Length > 0 && value[0][0] != "")
             {
                 Qcmax_textBox.Text = (Program.UTIL.ToDoubleOrZero(value[0][0]) / 1000).ToString();
@@ -5401,7 +5401,7 @@ namespace main.contents
 
         private void Qmax_button_Click(object sender, EventArgs e)
         {
-            string[][] 결과 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a,Q_max", "");
+            string[][] 결과 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_52016_Result", "Qb_a,Q_max", "");
             if (결과.Length > 0)
             {
                 ZoneResult pumpcal_form = new ZoneResult();

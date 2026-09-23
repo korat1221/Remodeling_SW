@@ -58,7 +58,7 @@ namespace main.subcontents.HeatingSystem
                 for (int n = 0; n < Value.Length; n++)
                 {
                     string[][] 층 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "층", "존 ='" + Value[n][0] + "'");
-                    string[][] 요구량 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a, Q_max", "번호 ='" + Value[n][0] + "' AND 난방_냉방 = '난방'");
+                    string[][] 요구량 = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Qb_a, Q_max", "존번호 ='" + Value[n][0] + "' AND 난방_냉방 = '난방'");
 
                     Zone_dataGridView.Rows.Add();
                     int nRow = Zone_dataGridView.Rows.Count - 1;

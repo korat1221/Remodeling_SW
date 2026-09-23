@@ -137,7 +137,7 @@ namespace main.contents
                     double Qba = 0, Qmax = 0, Area = 0;
                     for (int a = 0; a < SelectZone_split.Count; a++)
                     {
-                        string[][] 요구량 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a, Q_max", "번호 ='" + SelectZone_split[a].ToString() + "' AND 난방_냉방 = '난방'");
+                        string[][] 요구량 = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Qb_a, Q_max", "존번호 ='" + SelectZone_split[a].ToString() + "' AND 난방_냉방 = '난방'");
                         if (요구량.Length > 0)
                         {
                             Qba += Program.UTIL.ToDoubleOrZero(요구량[0][0]);
@@ -199,7 +199,7 @@ namespace main.contents
                             }
                             for (int mth = 0; mth < 12; mth++)
                             {
-                                string[][] 급탕부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "theta_e, dwd_mth", "번호 ='" + SelectZone_split[a].ToString() + "' AND 난방_냉방 = '난방' and 비이용일_이용일='이용일' and 월='" + (mth + 1) + "월'");
+                                string[][] 급탕부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_52016_Result", "theta_e, dwd_mth", "존번호 ='" + SelectZone_split[a].ToString() + "' AND 난방_냉방 = '난방' and 월='" + (mth + 1).ToString() + "월'");
                                 theta_e[mth] = Program.UTIL.ToDoubleOrZero(급탕부하[0][0]);
                                 dop_a += Program.UTIL.ToDoubleOrZero(급탕부하[0][1]);
                             }

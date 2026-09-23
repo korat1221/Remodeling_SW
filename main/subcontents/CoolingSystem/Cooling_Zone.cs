@@ -97,7 +97,7 @@ namespace main.subcontents
                     for (int n = 0; n < Value.Length; n++) //존번호로 작성함
                     {
                         string[][] 층 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", "층", "존번호 ='" + Value[n][0] + "'");
-                        string[][] 부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a,Q_max", "번호 ='" + Value[n][0] + "' AND 난방_냉방 = '냉방'");
+                        string[][] 부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_52016_Result", "Qb_a,Q_max", "존번호 ='" + Value[n][0] + "' AND 난방_냉방 = '냉방'");
                         string[][] 설비 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Cooling_ce_Form", "냉방시스템,공급설비종류", "존번호 ='" + Value[n][0] + "'");
 
                         CoolingZone_dataGridView.Rows.Add();

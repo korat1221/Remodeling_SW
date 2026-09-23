@@ -236,7 +236,7 @@ namespace main.contents
             CoolingLoad = 0;
             for (int i = 0; i < SelectZone_split.Count; i++)
             {
-                string[][] 난방 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a,Q_max", "번호 ='" + SelectZone_split[i] + "' AND 난방_냉방 = '난방'");
+                string[][] 난방 = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Qb_a,Q_max", "존번호 ='" + SelectZone_split[i] + "' AND 난방_냉방 = '난방'");
                 if (난방.Length > 0)
                 {
                     AnnualHeatingNeed += Program.UTIL.ToDoubleOrZero(난방[0][0]);
@@ -247,7 +247,7 @@ namespace main.contents
                     HeatingLoad_textBox.Text = HeatingLoad.ToString();
                     Program.UTIL.textBox_doubleComa(HeatingLoad_textBox, true, 2);
                 }
-                string[][] 냉방 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a,Q_max", "번호 ='" + SelectZone_split[i] + "' AND 난방_냉방 = '냉방'");
+                string[][] 냉방 = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Qb_a,Q_max", "존번호 ='" + SelectZone_split[i] + "' AND 난방_냉방 = '냉방'");
                 if (냉방.Length > 0)
                 {
                     AnnualCoolingNeed += Program.UTIL.ToDoubleOrZero(냉방[0][0]);

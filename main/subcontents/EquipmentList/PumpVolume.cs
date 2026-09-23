@@ -80,7 +80,7 @@ namespace main.subcontents
                     }
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        string[][] 급탕부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_HCneed_Result", "theta_e, dwd_mth", "번호 ='" + Value[n][0] + "' AND 난방_냉방 = '난방' and 비이용일_이용일='이용일' and 월='" + (mth + 1) + "월'");
+                        string[][] 급탕부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_52016_Result", "theta_e, dwd_mth", "존번호 ='" + Value[n][0] + "' AND 난방_냉방 = '난방' and 월='" + (mth + 1).ToString() + "월'");
                         theta_e[mth] = Program.UTIL.ToDoubleOrZero(급탕부하[0][0]);
                         dop_a += Program.UTIL.ToDoubleOrZero(급탕부하[0][1]);
                     }
