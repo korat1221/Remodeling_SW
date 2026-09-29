@@ -318,6 +318,7 @@ namespace main.contents
                     {
                         SelectHRV = AHU_HRV.SelectSystem;
                         if (SelectHRV != null) { AHU_textBox.Text = SelectHRV; }
+                        Load_ActualVentilationVolume();
                     }
                 }
             }
@@ -331,6 +332,7 @@ namespace main.contents
                     {
                         SelectHRV = AHU_HRV.SelectSystem;
                         if (SelectHRV != null) { AHU_textBox.Text = SelectHRV; }
+                        Load_ActualVentilationVolume();
                     }
                 }
             }
@@ -344,6 +346,7 @@ namespace main.contents
                     {
                         SelectHRV = AHU_HRV.SelectSystem;
                         if (SelectHRV != null) { AHU_textBox.Text = SelectHRV; }
+                        Load_ActualVentilationVolume();
                     }
                 }
             }
@@ -691,10 +694,8 @@ namespace main.contents
             Program.UTIL.textBox_doubleComa(Volume_wd_textBox, true, 1);
             Volume_wd_textBox.Text += " m" + Program.UTIL.Subscript(3, true) + "/h";
             Volume_wd_textBox.TextAlign = HorizontalAlignment.Left;
-            SA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + " m" + Program.UTIL.Subscript(3, true) + "/h";
 
             Volume_we = Area * VA_we;
-            RA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + " m" + Program.UTIL.Subscript(3, true) + "/h";
 
             if (NetVolume != null && NetVolume != 0)
             { VentilationRate = Volume_wd / NetVolume; }
@@ -703,45 +704,30 @@ namespace main.contents
             Program.UTIL.textBox_doubleComa(VentilationRate_textBox, true, 1);
             VentilationRate_textBox.Text += " h⁻¹";
             VentilationRate_textBox.TextAlign = HorizontalAlignment.Left;
+
+            Load_ActualVentilationVolume();
         }
 
-       
-        private void Save_Image()
+        private void Load_ActualVentilationVolume()
         {
-            try
+            SA_Volume_Label.Text = "";
+            RA_Volume_Label.Text = "";
+
+            if (string.IsNullOrEmpty(SelectHRV) || string.IsNullOrEmpty(ZoneNum))
             {
-                // 캡쳐할 영역의 위치와 크기 설정
-                Rectangle captureRectangle = Ground_pictureBox.RectangleToScreen(Ground_pictureBox.ClientRectangle); //RectangleToScree는 화면 상 좌표를 읽음, ClientRectangle는 그림의 크기를 읽음 
-
-                // 비트맵 생성
-                Bitmap bmp = new Bitmap(captureRectangle.Width, captureRectangle.Height);
-
-                using (Graphics g = Graphics.FromImage(bmp))
-                {
-                    // 특정 영역을 캡쳐
-                    g.CopyFromScreen(captureRectangle.Location, Point.Empty, captureRectangle.Size);
-                }
-
-                string pid = "0000-00-00";
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
-                if (Value.Length > 0)
-                {
-                    pid = Value[0][0];
-                }
-                Directory.CreateDirectory(Program.gPath + "\\projects\\" + pid);
-                // 저장할 파일 경로 설정
-                string ImageName = "/projects/" + pid + "/" + ZoneNum + ".png";
-                string imagePath = Program.gPath + ImageName; // 최종 경로
-
-
-                // 비트맵을 파일로 저장
-                bmp.Save(imagePath, System.Drawing.Imaging.ImageFormat.Png);
+                return;
             }
-            catch (Exception ex)
+
+            string[][] Value = Program.DB.getValue(DB.type.ProjDB, "AHUZoneVent_Form", "급기량,배기량", "설비 = '" + SelectHRV + "' And 존 = '" + ZoneNum + "'");
+            if (Value.Length > 0)
             {
-                MessageBox.Show("오류 발생: " + ex.Message);
+                double SA = Program.UTIL.ToDoubleOrZero(Value[0][0]);
+                double RA = Program.UTIL.ToDoubleOrZero(Value[0][1]);
+                SA_Volume_Label.Text = String.Format("{0:F1}", SA) + " m" + Program.UTIL.Subscript(3, true) + "/h";
+                RA_Volume_Label.Text = String.Format("{0:F1}", RA) + " m" + Program.UTIL.Subscript(3, true) + "/h";
             }
         }
+
         public bool ValidateAndSave(bool isManualSave = false)
         {
             try
@@ -802,7 +788,6 @@ namespace main.contents
 
         private void Save(string missingItems, bool isManualSave = false)
         {
-            Save_Image();
             //존일반정보 폼에 해당하는 정보만 저장
             //건물정보, 3D정보는 저장 안함
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
@@ -1093,13 +1078,13 @@ namespace main.contents
                     Program.UTIL.textBox_doubleComa(Volume_wd_textBox, true, 1);
                     Volume_wd_textBox.Text += " m" + Program.UTIL.Subscript(3, true) + "/h";
                     Volume_wd_textBox.TextAlign = HorizontalAlignment.Left;
-                    SA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + " m" + Program.UTIL.Subscript(3, true) + "/h";
-                    RA_Volume_Label.Text = String.Format("{0:F1}", Volume_wd) + " m" + Program.UTIL.Subscript(3, true) + "/h";
                 }
                 if (Value[0][27] != "")
                 {
                     Volume_we = Program.UTIL.ToDoubleOrZero(Value[0][27]);
                 }
+
+                Load_ActualVentilationVolume();
             }
             Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "기존존,증축여부", "존번호 = '" + ZoneNum + "'");
             if (Value.Length > 0)
