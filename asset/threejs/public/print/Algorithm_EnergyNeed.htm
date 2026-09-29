@@ -870,6 +870,13 @@ rt
 	mso-font-charset:129;
 	mso-char-type:none;}
 --></style>
+<style>
+tr:has(.gamma_h) td,
+tr:has(.gamma_c) td {
+  border-top: none !important;
+  border-bottom: none !important;
+}
+</style>
 </head>
 
 <body>
@@ -1275,7 +1282,7 @@ rt
 </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td colspan="16" rowspan="17"class=xl8222063 style='text-align: center'> <img class="zoneImage" src="path_to_image.jpg" alt="Image" style="width: 85%; max-height: 300px; height: auto;"></td>
+  <td colspan="16" rowspan="17"class=xl8222063 style='text-align:center;vertical-align:middle'><div class="zoneImage" style="position:relative;width:85%;max-width:773px;aspect-ratio:953/370;overflow:hidden;margin:0 auto;"></div></td>
   <td class=xl11022063>　</td>
  </tr>
  <tr height=18 style='height:14pt'>
@@ -1343,7 +1350,7 @@ rt
   <td class=xl11022063>　</td>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl11222063 colspan=2>월별 결과 정보</td>
+  <td class=xl11222063 colspan=2>월별 요구량 요약</td>
   <td class=xl11222063>　</td>
   <td class=xl11222063>　</td>
   <td class=xl11222063>　</td>
@@ -1462,6 +1469,26 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>제습요구량</td>
+  <td class=xl8522063>　</td>
+  <td class=xl8622063>kWh/mth</td>
+  <td class="xl11622063 qdhu">　</td>
+  <td class="xl11622063 qdhu">　</td>
+  <td class="xl11622063 qdhu">　</td>
+  <td class="xl11622063 qdhu">　</td>
+  <td class="xl11622063 qdhu">　</td>
+  <td class="xl11622063 qdhu">　</td>
+  <td class="xl11622063 qdhu">　</td>
+  <td class="xl11622063 qdhu">　</td>
+  <td class="xl11622063 qdhu">　</td>
+  <td class="xl11622063 qdhu">　</td>
+  <td class="xl11622063 qdhu">　</td>
+  <td class="xl11622063 qdhu">　</td>
+  <td class=xl11622063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
   <td class=xl8522063>급탕요구량</td>
   <td class=xl8522063>　</td>
   <td class=xl8622063>kWh/mth</td>
@@ -1502,7 +1529,7 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl11322063 colspan=2>난방요구량</td>
+  <td class=xl11322063 colspan=2>난방 계산 구성</td>
   <td class=xl11422063>단위</td>
   <td class=xl11522063>1월</td>
   <td class=xl11522063>2월</td>
@@ -1541,8 +1568,7 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl8522063>이용계수</td>
-  <td class=xl8522063>　</td>
+  <td class=xl8522063 colspan=2>열획득 이용계수 η</td>
   <td class=xl8622063>-</td>
   <td class="xl11722063 eta_h">　</td>
   <td class="xl11722063 eta_h">　</td>
@@ -1561,27 +1587,26 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl9322063>대차축열량</td>
-  <td class=xl9322063>　</td>
-  <td class=xl9422063>kWh/mth</td>
-  <td class="xl11822063 dqc_b">　</td>
-  <td class="xl11822063 dqc_b">　</td>
-  <td class="xl11822063 dqc_b">　</td>
-  <td class="xl11822063 dqc_b">　</td>
-  <td class="xl11822063 dqc_b">　</td>
-  <td class="xl11822063 dqc_b">　</td>
-  <td class="xl11822063 dqc_b">　</td>
-  <td class="xl11822063 dqc_b">　</td>
-  <td class="xl11822063 dqc_b">　</td>
-  <td class="xl11822063 dqc_b">　</td>
-  <td class="xl11822063 dqc_b">　</td>
-  <td class="xl11822063 dqc_b">　</td>
+  <td class=xl9322063 colspan=2>열획득전달비 γ</td>
+  <td class=xl9422063>-</td>
+  <td class="xl11822063 gamma_h">　</td>
+  <td class="xl11822063 gamma_h">　</td>
+  <td class="xl11822063 gamma_h">　</td>
+  <td class="xl11822063 gamma_h">　</td>
+  <td class="xl11822063 gamma_h">　</td>
+  <td class="xl11822063 gamma_h">　</td>
+  <td class="xl11822063 gamma_h">　</td>
+  <td class="xl11822063 gamma_h">　</td>
+  <td class="xl11822063 gamma_h">　</td>
+  <td class="xl11822063 gamma_h">　</td>
+  <td class="xl11822063 gamma_h">　</td>
+  <td class="xl11822063 gamma_h">　</td>
   <td class=xl11822063>　</td>
   <td class=xl11022063>　</td>
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl8522063>열손실량</td>
+  <td class=xl8522063>열전달량 합계 Qsink</td>
   <td class=xl8522063>　</td>
   <td class=xl8622063>kWh/mth</td>
   <td class="xl11722063 qsink_tot_h">　</td>
@@ -1601,7 +1626,7 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl8522063>관류</td>
+  <td class=xl8522063>관류 열전달</td>
   <td class=xl8522063>　</td>
   <td class=xl8622063>kWh/mth</td>
   <td class="xl11722063 qt_sink_h">　</td>
@@ -1621,7 +1646,7 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl8522063>환기</td>
+  <td class=xl8522063>환기 열전달</td>
   <td class=xl8522063>　</td>
   <td class=xl8622063>kWh/mth</td>
   <td class="xl11722063 qv_sink_h">　</td>
@@ -1641,27 +1666,7 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl9322063>일사</td>
-  <td class=xl9322063>　</td>
-  <td class=xl9422063>kWh/mth</td>
-  <td class="xl11822063 qs_sink_h">　</td>
-  <td class="xl11822063 qs_sink_h">　</td>
-  <td class="xl11822063 qs_sink_h">　</td>
-  <td class="xl11822063 qs_sink_h">　</td>
-  <td class="xl11822063 qs_sink_h">　</td>
-  <td class="xl11822063 qs_sink_h">　</td>
-  <td class="xl11822063 qs_sink_h">　</td>
-  <td class="xl11822063 qs_sink_h">　</td>
-  <td class="xl11822063 qs_sink_h">　</td>
-  <td class="xl11822063 qs_sink_h">　</td>
-  <td class="xl11822063 qs_sink_h">　</td>
-  <td class="xl11822063 qs_sink_h">　</td>
-  <td class=xl11822063>　</td>
-  <td class=xl11022063>　</td>
- </tr>
- <tr height=18 style='height:14pt'>
-  <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl8522063>열획득량</td>
+  <td class=xl8522063>열획득 합계 Qsource</td>
   <td class=xl8522063>　</td>
   <td class=xl8622063>kWh/mth</td>
   <td class="xl11722063 qsource_tot_h">　</td>
@@ -1681,7 +1686,7 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl8522063>관류</td>
+  <td class=xl8522063>불투명 일사열획득</td>
   <td class=xl8522063>　</td>
   <td class=xl8622063>kWh/mth</td>
   <td class="xl11722063 qt_source_h">　</td>
@@ -1701,7 +1706,7 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl8522063>환기</td>
+  <td class=xl8522063>투명 일사열획득</td>
   <td class=xl8522063>　</td>
   <td class=xl8622063>kWh/mth</td>
   <td class="xl11722063 qv_source_h">　</td>
@@ -1721,7 +1726,7 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl8522063>일사</td>
+  <td class=xl8522063>천공복사 (차감)</td>
   <td class=xl8522063>　</td>
   <td class=xl8622063>kWh/mth</td>
   <td class="xl11722063 qs_source_h">　</td>
@@ -1761,7 +1766,7 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl11322063 colspan=2>냉방요구량</td>
+  <td class=xl11322063 colspan=2>냉방 계산 구성</td>
   <td class=xl11422063>단위</td>
   <td class=xl11522063>1월</td>
   <td class=xl11522063>2월</td>
@@ -1800,28 +1805,7 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl8522063>제습요구량</td>
-  <td class=xl8522063>　</td>
-  <td class=xl8622063>kWh/mth</td>
-  <td class="xl11722063 qdhu">　</td>
-  <td class="xl11722063 qdhu">　</td>
-  <td class="xl11722063 qdhu">　</td>
-  <td class="xl11722063 qdhu">　</td>
-  <td class="xl11722063 qdhu">　</td>
-  <td class="xl11722063 qdhu">　</td>
-  <td class="xl11722063 qdhu">　</td>
-  <td class="xl11722063 qdhu">　</td>
-  <td class="xl11722063 qdhu">　</td>
-  <td class="xl11722063 qdhu">　</td>
-  <td class="xl11722063 qdhu">　</td>
-  <td class="xl11722063 qdhu">　</td>
-  <td class=xl11722063>　</td>
-  <td class=xl11022063>　</td>
- </tr>
- <tr height=18 style='height:14pt'>
-  <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl9322063>이용계수</td>
-  <td class=xl9322063>　</td>
+  <td class=xl9322063 colspan=2>열전달 이용계수 η</td>
   <td class=xl9422063>-</td>
   <td class="xl11822063 eta_c">　</td>
   <td class="xl11822063 eta_c">　</td>
@@ -1840,7 +1824,26 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl8522063>열손실량</td>
+  <td class=xl9322063 colspan=2>열획득전달비 γ</td>
+  <td class=xl9422063>-</td>
+  <td class="xl11822063 gamma_c">　</td>
+  <td class="xl11822063 gamma_c">　</td>
+  <td class="xl11822063 gamma_c">　</td>
+  <td class="xl11822063 gamma_c">　</td>
+  <td class="xl11822063 gamma_c">　</td>
+  <td class="xl11822063 gamma_c">　</td>
+  <td class="xl11822063 gamma_c">　</td>
+  <td class="xl11822063 gamma_c">　</td>
+  <td class="xl11822063 gamma_c">　</td>
+  <td class="xl11822063 gamma_c">　</td>
+  <td class="xl11822063 gamma_c">　</td>
+  <td class="xl11822063 gamma_c">　</td>
+  <td class=xl11722063>　</td>
+  <td class=xl11022063>　</td>
+ </tr>
+ <tr height=18 style='height:14pt'>
+  <td height=18 class=xl11022063 style='height:14pt'>　</td>
+  <td class=xl8522063>열전달량 합계 Qsink</td>
   <td class=xl8522063>　</td>
   <td class=xl8622063>kWh/mth</td>
   <td class="xl11722063 qsink_tot_c">　</td>
@@ -1860,7 +1863,7 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl8522063>관류</td>
+  <td class=xl8522063>관류 열전달</td>
   <td class=xl8522063>　</td>
   <td class=xl8622063>kWh/mth</td>
   <td class="xl11722063 qt_sink_c">　</td>
@@ -1880,7 +1883,7 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl8522063>환기</td>
+  <td class=xl8522063>환기 열전달</td>
   <td class=xl8522063>　</td>
   <td class=xl8622063>kWh/mth</td>
   <td class="xl11722063 qv_sink_c">　</td>
@@ -1895,32 +1898,12 @@ rt
   <td class="xl11722063 qv_sink_c">　</td>
   <td class="xl11722063 qv_sink_c">　</td>
   <td class="xl11722063 qv_sink_c">　</td>
-  <td class=xl11722063>　</td>
-  <td class=xl11022063>　</td>
- </tr>
- <tr height=18 style='height:14pt'>
-  <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl9322063>일사</td>
-  <td class=xl9322063>　</td>
-  <td class=xl9422063>kWh/mth</td>
-  <td class="xl11822063 qs_sink_c">　</td>
-  <td class="xl11822063 qs_sink_c">　</td>
-  <td class="xl11822063 qs_sink_c">　</td>
-  <td class="xl11822063 qs_sink_c">　</td>
-  <td class="xl11822063 qs_sink_c">　</td>
-  <td class="xl11822063 qs_sink_c">　</td>
-  <td class="xl11822063 qs_sink_c">　</td>
-  <td class="xl11822063 qs_sink_c">　</td>
-  <td class="xl11822063 qs_sink_c">　</td>
-  <td class="xl11822063 qs_sink_c">　</td>
-  <td class="xl11822063 qs_sink_c">　</td>
-  <td class="xl11822063 qs_sink_c">　</td>
   <td class=xl11822063>　</td>
   <td class=xl11022063>　</td>
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl8522063>열획득량</td>
+  <td class=xl8522063>열획득 합계 Qsource</td>
   <td class=xl8522063>　</td>
   <td class=xl8622063>kWh/mth</td>
   <td class="xl11722063 qsource_tot_c">　</td>
@@ -1940,7 +1923,7 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl8522063>관류</td>
+  <td class=xl8522063>불투명 일사열획득</td>
   <td class=xl8522063>　</td>
   <td class=xl8622063>kWh/mth</td>
   <td class="xl11722063 qt_source_c">　</td>
@@ -1960,7 +1943,7 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl8522063>환기</td>
+  <td class=xl8522063>투명 일사열획득</td>
   <td class=xl8522063>　</td>
   <td class=xl8622063>kWh/mth</td>
   <td class="xl11722063 qv_source_c">　</td>
@@ -1980,7 +1963,7 @@ rt
  </tr>
  <tr height=18 style='height:14pt'>
   <td height=18 class=xl11022063 style='height:14pt'>　</td>
-  <td class=xl8522063>일사</td>
+  <td class=xl8522063>천공복사 (차감)</td>
   <td class=xl8522063>　</td>
   <td class=xl8622063>kWh/mth</td>
   <td class="xl11722063 qs_source_c">　</td>

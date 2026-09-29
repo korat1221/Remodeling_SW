@@ -61,6 +61,7 @@ namespace main.contents.Result
             List<object>[] MthData = new List<object>[30];
             List<object>[] HeatingMthData = new List<object>[30];
             List<object>[] CoolingMthData = new List<object>[30];
+            List<object> ZoneLayersData = new List<object>();
             List<string> chart_nd = new List<string>();
             List<string> chart_ce = new List<string>();
             List<string> chart_d = new List<string>();
@@ -111,6 +112,7 @@ namespace main.contents.Result
                     GeneralData[6].Add(new { idx = i, val = Program.UTIL.doubleComa(volume.ToString(), 1) }); //체적
                     GeneralData[7].Add(new { idx = i, val = Program.UTIL.doubleComa(height.ToString(), 1) }); //천장고
                 }
+                ZoneLayersData.Add(new { idx = i, val = BuildZoneImageLayers(Num) });
                 #endregion
                 #region 설비정보
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.난방시스템,b.명칭 From Heating_ce_Form as a Inner Join HeatingSystem_Form as b on a.난방시스템=b.번호 where a.존번호='" + Num + "'");
@@ -425,13 +427,12 @@ namespace main.contents.Result
                     }
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select QSopsource_tot, QStr_tot, QI_tot, Qsource From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select QSopsource_tot, QStr_tot, QI_tot, Qsource, gamma From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
-                            HeatingMthData[8].Add(new { idx = i * 12 + mth, val = "-" }); // ISO 52016 결과에는 관류 열획득을 별도 저장하지 않는다.
-                            HeatingMthData[9].Add(new { idx = i * 12 + mth, val = "-" }); // ISO 52016 결과에는 환기 열획득을 별도 저장하지 않는다.
-                            double qs = Program.UTIL.ToDoubleOrZero(Value[0][0]) + Program.UTIL.ToDoubleOrZero(Value[0][1]);
-                            HeatingMthData[10].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(qs.ToString(), 0) });
+                            HeatingMthData[8].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
+                            HeatingMthData[9].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 0) });
+                            HeatingMthData[10].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][4], 2) });
                             HeatingMthData[11].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][2], 0) });
                             HeatingMthData[12].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][3], 0) });
                         }
@@ -443,7 +444,6 @@ namespace main.contents.Result
                         {
                             HeatingMthData[13].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
                             HeatingMthData[14].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 2) });
-                            HeatingMthData[15].Add(new { idx = i * 12 + mth, val = "-" }); // DIN의 대차축열량은 ISO 52016 결과에 없다.
                         }
                     }
                 }
@@ -465,13 +465,12 @@ namespace main.contents.Result
                     }
                     for (int mth = 0; mth < 12; mth++)
                     {
-                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select QSopsource_tot, QStr_tot, QI_tot, Qsource From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select QSopsource_tot, QStr_tot, QI_tot, Qsource, gamma From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
-                            CoolingMthData[8].Add(new { idx = i * 12 + mth, val = "-" }); // ISO 52016 결과에는 관류 열획득을 별도 저장하지 않는다.
-                            CoolingMthData[9].Add(new { idx = i * 12 + mth, val = "-" }); // ISO 52016 결과에는 환기 열획득을 별도 저장하지 않는다.
-                            double qs = Program.UTIL.ToDoubleOrZero(Value[0][0]) + Program.UTIL.ToDoubleOrZero(Value[0][1]);
-                            CoolingMthData[10].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(qs.ToString(), 0) });
+                            CoolingMthData[8].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
+                            CoolingMthData[9].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 0) });
+                            CoolingMthData[10].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][4], 2) });
                             CoolingMthData[11].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][2], 0) });
                             CoolingMthData[12].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][3], 0) });
                         }
@@ -528,6 +527,7 @@ namespace main.contents.Result
             }
             data.Add(new { cname = "projectnum", data = GeneralData[0] });
             data.Add(new { cname = "zonenum", data = GeneralData[1] });
+            data.Add(new { cname = "zone_layers", data = ZoneLayersData });
             data.Add(new { cname = "zonenum2", data = GeneralData[2] });
             data.Add(new { cname = "title", data = GeneralData[3] });
             data.Add(new { cname = "zonename", data = GeneralData[4] });
@@ -595,23 +595,22 @@ namespace main.contents.Result
             data.Add(new { cname = "door_alpha", data = DoorData[6] });
             data.Add(new { cname = "qt_sink_h", data = HeatingMthData[0] });
             data.Add(new { cname = "qv_sink_h", data = HeatingMthData[1] });
-            data.Add(new { cname = "qs_sink_h", data = HeatingMthData[2] });
             data.Add(new { cname = "qsink_tot_h", data = HeatingMthData[3] });
             data.Add(new { cname = "qt_source_h", data = HeatingMthData[8] });
             data.Add(new { cname = "qv_source_h", data = HeatingMthData[9] });
-            data.Add(new { cname = "qs_source_h", data = HeatingMthData[10] });
+            data.Add(new { cname = "gamma_h", data = HeatingMthData[10] });
+            data.Add(new { cname = "qs_source_h", data = HeatingMthData[2] });
             data.Add(new { cname = "qi_source_h", data = HeatingMthData[11] });
             data.Add(new { cname = "qsource_tot_h", data = HeatingMthData[12] });
             data.Add(new { cname = "qb_h", data = HeatingMthData[13] });
             data.Add(new { cname = "eta_h", data = HeatingMthData[14] });
-            data.Add(new { cname = "dqc_b", data = HeatingMthData[15] });
             data.Add(new { cname = "qt_sink_c", data = CoolingMthData[0] });
             data.Add(new { cname = "qv_sink_c", data = CoolingMthData[1] });
-            data.Add(new { cname = "qs_sink_c", data = CoolingMthData[2] });
             data.Add(new { cname = "qsink_tot_c", data = CoolingMthData[3] });
             data.Add(new { cname = "qt_source_c", data = CoolingMthData[8] });
             data.Add(new { cname = "qv_source_c", data = CoolingMthData[9] });
-            data.Add(new { cname = "qs_source_c", data = CoolingMthData[10] });
+            data.Add(new { cname = "gamma_c", data = CoolingMthData[10] });
+            data.Add(new { cname = "qs_source_c", data = CoolingMthData[2] });
             data.Add(new { cname = "qi_source_c", data = CoolingMthData[11] });
             data.Add(new { cname = "qsource_tot_c", data = CoolingMthData[12] });
             data.Add(new { cname = "qb_c", data = CoolingMthData[13] });
@@ -631,6 +630,132 @@ namespace main.contents.Result
 
             runScript("init(" + s + "," + s2 + "," + "[" + charts + "])");
         }
+
+        private List<object> BuildZoneImageLayers(string num)
+        {
+            const double imageWidth = 953;
+            const double imageHeight = 370;
+            List<object> layers = new List<object>();
+
+            string[][] zone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form",
+                "실제어방식,냉난방유무,환기유무,환기방식,선택열회수기,용도프로필,시작시간,종료시간,일일급탕요구량,일일인체발열,일일기기발열",
+                "존번호 = '" + num + "'");
+            if (zone.Length == 0)
+            {
+                return layers;
+            }
+
+            string roomControl = zone[0][0];
+            string hcType = zone[0][1];
+            string ahuType = zone[0][3];
+            string selectHRV = zone[0][4];
+            string usage = zone[0][5];
+
+            bool ventilation = false;
+            bool.TryParse(zone[0][2], out ventilation);
+            if (!ventilation)
+            {
+                ahuType = "none";
+            }
+
+            string imageAhuType = ahuType == "공조기" ? "열회수기" : ahuType;
+
+            void AddDbImage(string condition)
+            {
+                string[][] image = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필이미지", "이미지", condition);
+                if (image.Length > 0 && !string.IsNullOrWhiteSpace(image[0][0]))
+                {
+                    layers.Add(new { s = image[0][0], x = 0, y = 0, w = imageWidth, h = imageHeight });
+                }
+            }
+
+            void AddText(string text, double x, double y, double width, double height, double fontSize, bool bold, string color, string align, bool box)
+            {
+                layers.Add(new { t = text, x, y, w = width, h = height, fs = fontSize, b = bold, c = color, a = align, box });
+            }
+
+            AddDbImage("대분류 = '냉난방환기' AND 냉난방유무 = '" + hcType + "' and 환기유무='" + imageAhuType + "'");
+            AddDbImage("대분류 = '제어' AND 소분류 = '" + roomControl + "'");
+
+            string ground = "층간슬라브";
+            string[][] floor = Program.DB.querySQL(DB.type.ProjDB,
+                "Select a.기초설치 From ConstructionFloor as a Inner Join ZoneEnvelope_3D as b on a.번호=b.구조체번호 Where b.존 = '" + num + "' And b.외피유형 = '최하층바닥'");
+            if (floor.Length > 0 && (floor[0][0] == "비단열지하실" || floor[0][0] == "단열지하실" || floor[0][0] == "지면위"))
+            {
+                ground = floor[0][0];
+            }
+            AddDbImage("대분류 = '지면접합' AND 소분류 = '" + ground + "'");
+
+            AddText(zone[0][6], 195, 86, 39, 22, 9, true, "#696969", "left", false);
+            AddText(zone[0][7], 234, 86, 39, 22, 9, true, "#696969", "left", false);
+            if (!string.IsNullOrEmpty(zone[0][8]))
+            {
+                AddText(Program.UTIL.ToDoubleOrZero(zone[0][8]).ToString("0.0") + " kWh/d", 338, 86, 74, 22, 9, true, "#696969", "left", false);
+            }
+
+            string[][] profile = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "난방설정온도,냉방설정온도,조도", "용도명 = '" + usage + "'");
+            if (profile.Length > 0)
+            {
+                AddText(Program.UTIL.ToDoubleOrZero(profile[0][1]).ToString("0") + " ℃", 248, 119, 39, 22, 9, true, "#696969", "left", false);
+                AddText(Program.UTIL.ToDoubleOrZero(profile[0][0]).ToString("0") + " ℃", 248, 145, 37, 22, 9, true, "#696969", "left", false);
+                AddText(Program.UTIL.ToDoubleOrZero(profile[0][2]).ToString("0") + " lx", 195, 198, 74, 22, 9, true, "#696969", "left", false);
+            }
+
+            if (!string.IsNullOrEmpty(zone[0][9]))
+            {
+                AddText(Program.UTIL.ToDoubleOrZero(zone[0][9]).ToString("0") + " Wh/m²d", 269, 243, 80, 22, 9, true, "#696969", "left", false);
+            }
+            if (!string.IsNullOrEmpty(zone[0][10]))
+            {
+                AddText(Program.UTIL.ToDoubleOrZero(zone[0][10]).ToString("0") + " Wh/m²d", 472, 243, 80, 22, 9, true, "#696969", "left", false);
+            }
+
+            string[][] vent = Program.DB.getValue(DB.type.ProjDB, "AHUZoneVent_Form", "급기량,배기량", "설비 = '" + selectHRV + "' And 존 = '" + num + "'");
+            if (vent.Length > 0)
+            {
+                if (ahuType == "열회수기" || ahuType == "공조기")
+                {
+                    AddText(Program.UTIL.ToDoubleOrZero(vent[0][0]).ToString("0.0") + " m³/h", 490, 198, 74, 22, 9, true, "#696969", "left", false);
+                }
+                else if (ahuType == "배기환기(3종)")
+                {
+                    AddText(Program.UTIL.ToDoubleOrZero(vent[0][1]).ToString("0.0") + " m³/h", 412, 198, 74, 22, 9, true, "#696969", "left", false);
+                }
+            }
+
+            Dictionary<string, double> areas = new Dictionary<string, double>();
+            string[][] envelope = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "외피유형,면적", "존 = '" + num + "'");
+            for (int i = 0; i < envelope.Length; i++)
+            {
+                if (!areas.ContainsKey(envelope[i][0]))
+                {
+                    areas[envelope[i][0]] = 0;
+                }
+                areas[envelope[i][0]] += Program.UTIL.ToDoubleOrZero(envelope[i][1]);
+            }
+
+            void AddArea(string caption, string type, double captionX, double captionY, double valueX, double valueY, double width)
+            {
+                AddText(caption, captionX, captionY, width, 18, 9.75, false, "#808080", "left", false);
+                string value = "";
+                if (areas.ContainsKey(type) && areas[type] != 0)
+                {
+                    value = Program.UTIL.doubleComa(areas[type].ToString(), 1) + " m²";
+                }
+                AddText(value, valueX, valueY, width, 22, 9.75, false, "#000000", "center", true);
+            }
+
+            AddArea("지붕", "지붕", 37, 14, 36, 32, 74);
+            AddArea("외벽", "외벽", 36, 115, 36, 133, 74);
+            AddArea("창호", "창호", 37, 184, 36, 202, 74);
+            AddArea("바닥", "최하층바닥", 39, 241, 37, 259, 74);
+            AddArea("커튼월창", "커튼월창", 841, 89, 841, 107, 75);
+            AddArea("내벽", "내벽", 841, 159, 841, 177, 75);
+            AddArea("외부출입문", "외부출입문", 841, 228, 841, 246, 75);
+
+            return layers;
+        }
+
         private ArrayList Split_(String nonSplit)
         {
             ArrayList split = new ArrayList();
