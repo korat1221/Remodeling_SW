@@ -4644,7 +4644,8 @@ namespace main.contents
                 }
                 else
                 {
-                    MessageBox.Show("배관외경 계산 유형을 선택해 주세요");
+                    // 화면 전환마다(자동저장) 매번 떠서 일단 주석 처리 — 배관외경 계산 유형 미선택 시 배관손실 저장을 계속 건너뜀
+                    // MessageBox.Show("배관외경 계산 유형을 선택해 주세요");
                     return;
                 }
             }
