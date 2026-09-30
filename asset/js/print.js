@@ -66,7 +66,7 @@ window.addEventListener("message", async (event) => {
 
         let projectNumValue = o.items.find(item => item.cname === "projectnum");
         let zoneLayersValue = o.items.find(item => item.cname === "zone_layers");
-        let coolingNumValue = o.items.find(item => item.cname === "coolingnum");
+        let coolingLayersValue = o.items.find(item => item.cname === "cooling_layers");
         let heatingLayersValue = o.items.find(item => item.cname === "heating_layers");
         let dhwNumValue = o.items.find(item => item.cname === "dhwnum");
         let lightingNumValue = o.items.find(item => item.cname === "lightingnum");
@@ -127,14 +127,46 @@ window.addEventListener("message", async (event) => {
           });
         });
         $(".coolingImage").each((idx,al) => {
-          if (projectNumValue.data[idx]) {
-          let projectNum = projectNumValue.data[idx].val; 
-          let coolingNum = coolingNumValue.data[idx].val; 
-          if(coolingNum !== null)
-          {
-            al.setAttribute("src", "../projects/" + projectNum + "/"+ coolingNum + ".png"); 
-          }
-          }
+          if (!coolingLayersValue || !coolingLayersValue.data[idx]) return;
+
+          al.innerHTML = "";
+          let coolingScale = Math.min(al.getBoundingClientRect().width / 977, al.getBoundingClientRect().height / 279);
+          if (!Number.isFinite(coolingScale) || coolingScale <= 0) coolingScale = 1;
+          coolingLayersValue.data[idx].val.forEach((layer) => {
+            if (layer.s) {
+              let img = document.createElement("img");
+              let src = layer.s || "";
+              img.setAttribute("src", /^(data:|https?:|file:)/i.test(src) ? src : "../" + src.replace(/^[/\\]+/, ""));
+              img.style.position = "absolute";
+              img.style.left = (layer.x / 977 * 100) + "%";
+              img.style.top = (layer.y / 279 * 100) + "%";
+              img.style.width = (layer.w / 977 * 100) + "%";
+              img.style.height = (layer.h / 279 * 100) + "%";
+              img.style.objectFit = "contain";
+              img.style.objectPosition = "center";
+              al.appendChild(img);
+              return;
+            }
+
+            let text = document.createElement("div");
+            text.textContent = layer.t || "";
+            text.style.position = "absolute";
+            text.style.left = (layer.x / 977 * 100) + "%";
+            text.style.top = (layer.y / 279 * 100) + "%";
+            text.style.width = (layer.w / 977 * 100) + "%";
+            text.style.height = (layer.h / 279 * 100) + "%";
+            text.style.display = "flex";
+            text.style.alignItems = "center";
+            text.style.boxSizing = "border-box";
+            text.style.whiteSpace = "nowrap";
+            text.style.overflow = "hidden";
+            text.style.fontFamily = "나눔바른고딕, sans-serif";
+            text.style.fontSize = (layer.fs * coolingScale) + "pt";
+            text.style.fontWeight = layer.b ? "bold" : "normal";
+            text.style.fontStyle = layer.i ? "italic" : "normal";
+            text.style.color = layer.c || "#000";
+            al.appendChild(text);
+          });
         });
         $(".heatingImage").each((idx,al) => {
           if (!heatingLayersValue || !heatingLayersValue.data[idx]) return;

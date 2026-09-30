@@ -62,6 +62,7 @@ namespace main.contents.Result
             string[][] 번호 = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Form", "번호", "");
             List<object> items = new List<object>();
             List<object> data = new List<object>();
+            List<object> CoolingLayersData = new List<object>();
             List<object>[] FormData = new List<object>[30];
             List<object>[] ZoneData = new List<object>[30];
             List<object>[] ZahuData = new List<object>[30];
@@ -109,6 +110,7 @@ namespace main.contents.Result
                 }
                 FormData[1].Add(new { idx = i, val = Num }); //그림번호
                 FormData[2].Add(new { idx = i, val = Num }); //번호
+                CoolingLayersData.Add(new { idx = i, val = BuildCoolingImageLayers(Num) });
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select 명칭,냉방설비,냉방출력,냉방성능,압축기,제어유형,외기냉방시스템,설치대수  From CoolingSystem_Form Where 번호='" + Num + "'");
                 if (Value.Length > 0)
                 {
@@ -516,6 +518,7 @@ namespace main.contents.Result
                 data.Add(new { cname = "projectnum", data = FormData[0] });
                 data.Add(new { cname = "coolingnum", data = FormData[1] });
                 data.Add(new { cname = "coolingnum2", data = FormData[2] });
+                data.Add(new { cname = "cooling_layers", data = CoolingLayersData });
                 data.Add(new { cname = "coolingname", data = FormData[3] });
                 data.Add(new { cname = "coolingtype", data = FormData[4] });
                 data.Add(new { cname = "power", data = FormData[5] });
@@ -683,6 +686,157 @@ namespace main.contents.Result
         private void button1_Click(object sender, EventArgs e)
         {
             webView21.CoreWebView2.ShowPrintUI();
+        }
+
+        private List<object> BuildCoolingImageLayers(string num)
+        {
+            List<object> layers = new List<object>();
+            string[][] form = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Form",
+                "냉방설비,열원설비,압축기,펌프유무,공급설비1종류,공급설비2종류,저장탱크,저장유형,설치대수,공급존,공급AHU,냉각탑,냉각탑개수",
+                "번호 = '" + num + "'");
+            if (form.Length == 0)
+            {
+                return layers;
+            }
+
+            string SqlValue(string value)
+            {
+                return (value ?? "").Replace("'", "''");
+            }
+
+            void AddDbImage(string condition, double x, double y, double width, double height)
+            {
+                string[][] image = Program.DB.getValue(DB.type.BaseDB_Cooling, "냉방설비이미지", "이미지", condition);
+                if (image.Length > 0 && !string.IsNullOrWhiteSpace(image[0][0]))
+                {
+                    layers.Add(new { s = image[0][0], x, y, w = width, h = height });
+                }
+            }
+
+            void AddText(string text, double x, double y, double width, double height, double fontSize,
+                bool italic = true, string color = "#696969")
+            {
+                if (!string.IsNullOrWhiteSpace(text))
+                {
+                    layers.Add(new { t = text, x, y, w = width, h = height, fs = fontSize, i = italic, c = color });
+                }
+            }
+
+            int SelectionCount(string value)
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    return 0;
+                }
+
+                return value.Split('+').Count(item => !string.IsNullOrWhiteSpace(item));
+            }
+
+            string system = form[0][0];
+            string source = form[0][1];
+            string compressor = form[0][2];
+            string pumpUse = form[0][3];
+            string supply1 = form[0][4];
+            string supply2 = form[0][5];
+            string storage = form[0][6];
+            string storageType = form[0][7];
+            string installCount = form[0][8];
+            string zones = form[0][9];
+            string ahus = form[0][10];
+            string coolingTowers = form[0][11];
+            string coolingTowerCounts = form[0][12];
+
+            if (!string.IsNullOrWhiteSpace(source))
+            {
+                AddDbImage("설비유형 = '" + SqlValue(source) + "' And 설치유형 = '신규'", 0, 60, 250, 200);
+            }
+            if (!string.IsNullOrWhiteSpace(system))
+            {
+                AddDbImage("항목유형 = '생산설비' And 설비유형 = '" + SqlValue(system) + "' And 설치유형 = '신규'", 200, 90, 110, 170);
+            }
+            if (!string.IsNullOrWhiteSpace(compressor))
+            {
+                AddDbImage("항목유형 = '압축기' And 설비유형 = '" + SqlValue(compressor) + "' And 설치유형 = '신규'", 210, 205, 50, 40);
+            }
+            if (system == "공냉식냉동기" || system == "수냉식냉동기" || system == "지열히트펌프" || system == "수열히트펌프")
+            {
+                AddDbImage("항목유형 = '증발기' And 설비유형 = '판형' And 설치유형 = '신규'", 260, 188, 50, 40);
+            }
+
+            AddDbImage("항목유형 = '분배설비' And 설비유형 = '메인'", 310, 25, 610, 254);
+            if (!string.IsNullOrWhiteSpace(storage) && storage != "축냉탱크없음")
+            {
+                AddDbImage("항목유형 = '저장설비' And 설비유형 = '" + SqlValue(storage) + "' And 설치유형 = '신규'", 322, 123, 135, 135);
+                if (!string.IsNullOrWhiteSpace(storageType))
+                {
+                    AddDbImage("항목유형 = '저장설비' And 설비유형 = '" + SqlValue(storageType) + "'", 382, 193, 50, 50);
+                }
+            }
+            if (pumpUse == "펌프 있음")
+            {
+                AddDbImage("항목유형 = '분배설비' And 설비유형 = '펌프'", 500, 211, 40, 50);
+            }
+            if (!string.IsNullOrWhiteSpace(supply1))
+            {
+                AddDbImage("항목유형 = '공급설비' And 설비유형 = '" + SqlValue(supply1) + "'", 560, 35, 260, 60);
+            }
+            if (!string.IsNullOrWhiteSpace(supply2))
+            {
+                AddDbImage("항목유형 = '공급설비' And 설비유형 = '" + SqlValue(supply2) + "'", 560, 105, 260, 60);
+            }
+
+            double count = 0;
+            foreach (string value in (installCount ?? "").Split('+'))
+            {
+                count += Program.UTIL.ToDoubleOrZero(value.Trim());
+            }
+            AddText("설치대수: " + count.ToString("0.##"), 206, 6, 150, 18, 9.75);
+
+            int zoneCount = SelectionCount(zones);
+            if (zoneCount > 0)
+            {
+                AddText("존 공급방식: " + (zoneCount > 1 ? "멀티존" : "단일존"), 787, 6, 185, 18, 9.75);
+            }
+            int ahuCount = SelectionCount(ahus);
+            if (ahuCount > 0)
+            {
+                AddText("공조기 공급방식: " + (ahuCount > 1 ? "멀티존" : "단일존"), 787, 21, 185, 18, 9.75);
+            }
+
+            if ((system == "수냉식냉동기" || system == "흡수식냉동기") && !string.IsNullOrWhiteSpace(coolingTowers))
+            {
+                string[] towerNumbers = coolingTowers.Split('+');
+                string[] towerCounts = (coolingTowerCounts ?? "").Split('+');
+                double totalCount = 0;
+                double inletTotal = 0;
+                double outletTotal = 0;
+                for (int index = 0; index < towerNumbers.Length; index++)
+                {
+                    string towerNumber = towerNumbers[index].Trim();
+                    double towerCount = index < towerCounts.Length
+                        ? Program.UTIL.ToDoubleOrZero(towerCounts[index].Trim()) : 0;
+                    if (towerNumber == "" || towerCount <= 0)
+                    {
+                        continue;
+                    }
+
+                    string[][] tower = Program.DB.getValue(DB.type.ProjDB, "User_CoolingTop", "입구온도,출구온도",
+                        "번호 = '" + SqlValue(towerNumber) + "'");
+                    if (tower.Length > 0)
+                    {
+                        totalCount += towerCount;
+                        inletTotal += Program.UTIL.ToDoubleOrZero(tower[0][0]) * towerCount;
+                        outletTotal += Program.UTIL.ToDoubleOrZero(tower[0][1]) * towerCount;
+                    }
+                }
+                if (totalCount > 0)
+                {
+                    AddText("출구[℃]:" + (outletTotal / totalCount).ToString("0.0"), 48, 80, 145, 18, 10, false, "#000");
+                    AddText("입구[℃]:" + (inletTotal / totalCount).ToString("0.0"), 48, 114, 145, 18, 10, false, "#000");
+                }
+            }
+
+            return layers;
         }
 
     }
