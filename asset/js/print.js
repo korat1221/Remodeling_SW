@@ -67,7 +67,7 @@ window.addEventListener("message", async (event) => {
         let projectNumValue = o.items.find(item => item.cname === "projectnum");
         let zoneLayersValue = o.items.find(item => item.cname === "zone_layers");
         let coolingNumValue = o.items.find(item => item.cname === "coolingnum");
-        let heatingNumValue = o.items.find(item => item.cname === "heatingnum");
+        let heatingLayersValue = o.items.find(item => item.cname === "heating_layers");
         let dhwNumValue = o.items.find(item => item.cname === "dhwnum");
         let lightingNumValue = o.items.find(item => item.cname === "lightingnum");
         let lightingH = o.items.find(item => item.cname === "lightingHeightnum");
@@ -137,15 +137,24 @@ window.addEventListener("message", async (event) => {
           }
         });
         $(".heatingImage").each((idx,al) => {
-          if (projectNumValue.data[idx]) {
-          let projectNum = projectNumValue.data[idx].val; 
-          let heatingNum = heatingNumValue.data[idx].val; 
-          
-          if(heatingNum !== null)
-             {
-              al.setAttribute("src", "../projects/" + projectNum + "/"+ heatingNum + ".png"); 
-             }
-          }
+          if (!heatingLayersValue || !heatingLayersValue.data[idx]) return;
+
+          al.innerHTML = "";
+          heatingLayersValue.data[idx].val.forEach((layer) => {
+            if (!layer.s) return;
+
+            let img = document.createElement("img");
+            let src = layer.s || "";
+            img.setAttribute("src", /^(data:|https?:|file:)/i.test(src) ? src : "../" + src.replace(/^[/\\]+/, ""));
+            img.style.position = "absolute";
+            img.style.left = (layer.x / 900 * 100) + "%";
+            img.style.top = (layer.y / 290 * 100) + "%";
+            img.style.width = (layer.w / 900 * 100) + "%";
+            img.style.height = (layer.h / 290 * 100) + "%";
+            img.style.objectFit = "contain";
+            img.style.objectPosition = "center";
+            al.appendChild(img);
+          });
         });
         $(".dhwImage").each((idx,al) => {
           if (projectNumValue.data[idx]) {

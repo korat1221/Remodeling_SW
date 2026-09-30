@@ -71,6 +71,7 @@ namespace main.contents.Result
             List<object>[] ZahuMthData = new List<object>[100];
             List<object>[] MthData = new List<object>[100];
             List<object>[] WMthData = new List<object>[100];
+            List<object> HeatingLayersData = new List<object>();
             List<string> chart_nd = new List<string>();
             List<string> chart_ce = new List<string>();
             List<string> chart_d = new List<string>();
@@ -109,6 +110,7 @@ namespace main.contents.Result
                 }
                 FormData[1].Add(new { idx = i, val = Num }); //그림번호
                 FormData[2].Add(new { idx = i, val = Num }); //번호
+                HeatingLayersData.Add(new { idx = i, val = BuildHeatingImageLayers(Num) });
                 #region 주요정보
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select 명칭,주요설비,보조설비1,보조설비2,공급환수온도,노출배관길이  From HeatingSystem_Form Where 번호='" + Num + "'");
                 if (Value.Length > 0)
@@ -498,6 +500,7 @@ namespace main.contents.Result
                 data.Add(new { cname = "projectnum", data = FormData[0] });
                 data.Add(new { cname = "heatingnum", data = FormData[1] });
                 data.Add(new { cname = "heatingnum2", data = FormData[2] });
+                data.Add(new { cname = "heating_layers", data = HeatingLayersData });
                 data.Add(new { cname = "heatingname", data = FormData[3] });
                 data.Add(new { cname = "mainsystem", data = FormData[4] });
                 data.Add(new { cname = "subsystem1", data = FormData[5] });
@@ -611,6 +614,92 @@ namespace main.contents.Result
 
             runScript("init(" + s + "," + s2 + "," + "[" + charts + "])");
         }
+
+        private List<object> BuildHeatingImageLayers(string num)
+        {
+            List<object> layers = new List<object>();
+            string[][] form = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form",
+                "복합설비유무,주요설비,보조설비1,펌프유무,공급설비1종류,공급설비2종류,축열유무,축열펌프유무",
+                "번호 = '" + num + "'");
+            if (form.Length == 0)
+            {
+                return layers;
+            }
+
+            void AddDbImage(string condition, double x, double y, double width, double height)
+            {
+                string[][] image = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", condition);
+                if (image.Length > 0 && !string.IsNullOrWhiteSpace(image[0][0]))
+                {
+                    layers.Add(new { s = image[0][0], x, y, w = width, h = height });
+                }
+            }
+
+            void AddProductionAndSource(string system, double systemX, double sourceX)
+            {
+                if (string.IsNullOrWhiteSpace(system))
+                {
+                    return;
+                }
+
+                AddDbImage("항목유형 = '생산설비' And 설비유형 = '" + system + "' And 설치유형 = '신규'",
+                    systemX, 77, 110, 170);
+                AddDbImage("항목유형 = '열원' And 설비유형 = '" + system + "' And 설치유형 = '신규'",
+                    sourceX, 87, 110, 160);
+            }
+
+            void AddSupply(string supply, double y)
+            {
+                if (string.IsNullOrWhiteSpace(supply))
+                {
+                    return;
+                }
+
+                string imageType = supply == "CAV유닛" || supply == "VAV유닛" || supply == "파워팬유닛"
+                    ? "공조기" : supply;
+                AddDbImage("항목유형 = '공급설비' And 설비유형 = '" + imageType + "' And 설치유형 = '신규'",
+                    712, y, 190, 80);
+            }
+
+            string complex = form[0][0];
+            string mainSystem = form[0][1];
+            string subSystem = form[0][2];
+            string pumpUse = form[0][3];
+            string supply1 = form[0][4];
+            string supply2 = form[0][5];
+            string storageUse = form[0][6];
+            string storagePumpUse = form[0][7];
+
+            AddDbImage("항목유형 = '분배설비' And 설비유형 = '메인'", 0, 0, 900, 290);
+
+            if (complex == "복합설비가동" && !string.IsNullOrWhiteSpace(subSystem))
+            {
+                AddDbImage("항목유형 = '분배설비' And 설비유형 = '서브'", 0, 0, 235, 290);
+                AddDbImage("항목유형 = '분배설비' And 설비유형 = '서브2'", 620, 157, 53, 65);
+                AddProductionAndSource(subSystem, 100, -5);
+            }
+
+            AddProductionAndSource(mainSystem, 350, 245);
+
+            if (storageUse == "축열탱크 있음")
+            {
+                AddDbImage("항목유형 = '저장설비' And 설치유형 = '신규'", 490, 80, 125, 170);
+            }
+            if (storagePumpUse == "축열펌프 있음")
+            {
+                AddDbImage("항목유형 = '분배설비' And 설비유형 = '펌프'", 470, 148, 22, 38);
+            }
+            if (pumpUse == "펌프 있음")
+            {
+                AddDbImage("항목유형 = '분배설비' And 설비유형 = '펌프'", 685, 148, 22, 38);
+            }
+
+            AddSupply(supply1, 38);
+            AddSupply(supply2, 118);
+
+            return layers;
+        }
+
         private ArrayList Split_(String nonSplit)
         {
             ArrayList split = new ArrayList();
