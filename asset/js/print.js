@@ -69,7 +69,7 @@ window.addEventListener("message", async (event) => {
         let coolingLayersValue = o.items.find(item => item.cname === "cooling_layers");
         let heatingLayersValue = o.items.find(item => item.cname === "heating_layers");
         let dhwLayersValue = o.items.find(item => item.cname === "dhw_layers");
-        let lightingNumValue = o.items.find(item => item.cname === "lightingnum");
+        let lightingLayersValue = o.items.find(item => item.cname === "lighting_layers");
         let lightingH = o.items.find(item => item.cname === "lightingHeightnum");
         let lightingT = o.items.find(item => item.cname === "lightingType");
         let ahuLayersValue = o.items.find(item => item.cname === "ahu_layers");
@@ -208,15 +208,31 @@ window.addEventListener("message", async (event) => {
             al.appendChild(img);
           });
         });
-          $(".lightingImage").each((idx, al) => {
-            if (projectNumValue.data[idx]) {
-              let projectNum = projectNumValue.data[idx].val; 
-              let lightingNum = lightingNumValue.data[idx].val; 
-             if(lightingNum !== null)
-             {
-              al.setAttribute("src", "../projects/" + projectNum + "/"+ lightingNum + ".png"); 
-             }
-            }
+        $(".lightingImage").each((idx, al) => {
+          if (!lightingLayersValue || !lightingLayersValue.data[idx]) return;
+
+          al.innerHTML = "";
+          let bounds = al.getBoundingClientRect();
+          let lightingScale = Math.min(bounds.width / 500, bounds.height / 272);
+          if (!Number.isFinite(lightingScale) || lightingScale <= 0) lightingScale = 1;
+          let offsetX = (bounds.width - 500 * lightingScale) / 2;
+          let offsetY = (bounds.height - 272 * lightingScale) / 2;
+
+          lightingLayersValue.data[idx].val.forEach((layer) => {
+            if (!layer.s) return;
+
+            let img = document.createElement("img");
+            let src = layer.s || "";
+            img.setAttribute("src", /^(data:|https?:|file:)/i.test(src) ? src : "../" + src.replace(/^[/\\]+/, ""));
+            img.style.position = "absolute";
+            img.style.left = (offsetX + layer.x * lightingScale) + "px";
+            img.style.top = (offsetY + layer.y * lightingScale) + "px";
+            img.style.width = (layer.w * lightingScale) + "px";
+            img.style.height = (layer.h * lightingScale) + "px";
+            img.style.objectFit = "contain";
+            img.style.objectPosition = "center";
+            al.appendChild(img);
+          });
         });
           $(".lightingHeightImage").each((idx,al) => {
             if (lightingH.data[idx]) {

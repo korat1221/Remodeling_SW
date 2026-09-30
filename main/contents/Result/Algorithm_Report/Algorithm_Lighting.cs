@@ -197,6 +197,7 @@ namespace main.contents.Result
             List<object>[] zoneMthData = new List<object>[100]; //자연채광월정보
             
             List<object>[] FormData = new List<object>[30];
+            List<object> LightingLayersData = new List<object>();
 
             List<string> chart_final = new List<string>();
             List<string> chart_aux = new List<string>();
@@ -231,8 +232,8 @@ namespace main.contents.Result
                 {
                     FormData[0].Add(new { idx = i, val = Value[0][0] }); //프로젝트번호
                 }
-                FormData[1].Add(new { idx = i, val = Num + "_light" }); //메인그림번호
                 FormData[2].Add(new { idx = i, val = "L9" }); //높이그림번호 항상나오게함
+                LightingLayersData.Add(new { idx = i, val = BuildLightingImageLayers(Num) });
                 
 
 
@@ -337,7 +338,7 @@ namespace main.contents.Result
                 dData[3].Add(new { idx = i, val = light[0][3] });//유형
                 dData[4].Add(new { idx = i, val = light[0][4] });//세부유형
                
-                string imagetype = null;;
+                string imagetype = "L1"; // 알 수 없는 값은 해당없음 이미지로 표시
                 switch (light[0][4].ToString())
                 {
                     case "해당없음":
@@ -365,6 +366,15 @@ namespace main.contents.Result
                         imagetype = "L8";
                         break;
                     default:
+                        // 파사드의 세부유형이 비어 있으면 입력 화면과 동일하게 일반 파사드로 표시한다.
+                        if (light[0][3].ToString() == "파사드" && string.IsNullOrWhiteSpace(light[0][4].ToString()))
+                        {
+                            imagetype = "L2";
+                        }
+                        else if (light[0][3].ToString() == "천창" && string.IsNullOrWhiteSpace(light[0][4].ToString()))
+                        {
+                            imagetype = "L6";
+                        }
                         break;
                 }
                 FormData[3].Add(new { idx = i, val = imagetype }); //유형그림번호 서브유형으로 판단함
@@ -462,7 +472,7 @@ namespace main.contents.Result
 
                 //html 작성
                 data.Add(new { cname = "projectnum", data = FormData[0] });
-                data.Add(new { cname = "lightingnum", data = FormData[1] });
+                data.Add(new { cname = "lighting_layers", data = LightingLayersData });
                 data.Add(new { cname = "lightingHeightnum", data = FormData[2] });
                 data.Add(new { cname = "lightingType", data = FormData[3] });
 
@@ -582,6 +592,80 @@ namespace main.contents.Result
                 runScript("init(" + s + "," + s2 + "," + "[" + charts + "])");
                 
             }
+        }
+
+        private List<object> BuildLightingImageLayers(string num)
+        {
+            List<object> layers = new List<object>();
+            string[][] form = Program.DB.getValue(DB.type.ProjDB, "ZoneLighting_form",
+                "자연채광유형,서브유형,차양,집광채광체크,조명방식",
+                "번호 = '" + (num ?? "").Replace("'", "''") + "'");
+            if (form.Length == 0)
+            {
+                return layers;
+            }
+
+            string SqlValue(string value)
+            {
+                return (value ?? "").Replace("'", "''");
+            }
+
+            void AddDbImage(string table, string condition, double x, double y, double width, double height)
+            {
+                string[][] image = Program.DB.getValue(DB.type.BaseDB_Lighting, table, "이미지", condition);
+                if (image.Length > 0 && !string.IsNullOrWhiteSpace(image[0][0]))
+                {
+                    layers.Add(new { s = image[0][0], x, y, w = width, h = height });
+                }
+            }
+
+            string naturalType = form[0][0];
+            string subType = form[0][1];
+            string shadeType = form[0][2];
+            string renewUse = form[0][3];
+            string lightingMethod = form[0][4];
+
+            string naturalImageType = "해당없음";
+            if (naturalType == "파사드")
+            {
+                if (string.IsNullOrWhiteSpace(subType) || subType == "일반 파사드")
+                {
+                    naturalImageType = "파사드";
+                }
+                else if (subType == "이중외피" || subType == "중정" || subType == "아트리움")
+                {
+                    naturalImageType = subType;
+                }
+            }
+            else if (naturalType == "천창")
+            {
+                naturalImageType = "천창";
+            }
+
+            AddDbImage("조명_자연채광대분류이미지",
+                "자연채광대분류 = '" + SqlValue(naturalImageType) + "'", 0, 0, 473, 239);
+
+            string shadeImageType = "없음";
+            if (naturalType == "파사드")
+            {
+                shadeImageType = string.IsNullOrWhiteSpace(shadeType) || shadeType == "차양없음" ? "파사드" : "파사드차양";
+            }
+            else if (naturalType == "천창")
+            {
+                shadeImageType = string.IsNullOrWhiteSpace(shadeType) || shadeType == "차양없음" ? "천창" : "천창차양";
+            }
+            AddDbImage("조명_차양이미지", "차양 = '" + SqlValue(shadeImageType) + "'", 0, 0, 473, 239);
+
+            bool.TryParse(renewUse, out bool hasRenew);
+            AddDbImage("조명_집광채광이미지", "집광채광 = '" + (hasRenew ? "광덕트" : "없음") + "'", 14, 20, 300, 96);
+
+            if (!string.IsNullOrWhiteSpace(lightingMethod))
+            {
+                AddDbImage("조명_램프분류이미지",
+                    "조명분류 = '" + SqlValue(lightingMethod) + "'", 264, 33, 60, 120);
+            }
+
+            return layers;
         }
     }
 }
