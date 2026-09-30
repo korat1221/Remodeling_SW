@@ -59,6 +59,7 @@ namespace main.contents.Result
             string[][] 번호 = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호", "");
             List<object> items = new List<object>();
             List<object> data = new List<object>();
+            List<object> DhwLayersData = new List<object>();
             List<object>[] FormData = new List<object>[30];
             List<object>[] ZoneData = new List<object>[30];
             List<object>[] ZahuData = new List<object>[30];
@@ -104,6 +105,7 @@ namespace main.contents.Result
                 }
                 FormData[1].Add(new { idx = i, val = Num }); //그림번호
                 FormData[2].Add(new { idx = i, val = Num }); //번호
+                DhwLayersData.Add(new { idx = i, val = BuildDhwImageLayers(Num) });
                 #region 주요정보
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select 명칭,주요설비,보조설비1,보조설비2,공급환수온도,노출배관길이  From DHWSystem_Form Where 번호='" + Num + "'");
                 if (Value.Length > 0)
@@ -370,6 +372,7 @@ namespace main.contents.Result
                 data.Add(new { cname = "projectnum", data = FormData[0] });
                 data.Add(new { cname = "dhwnum", data = FormData[1] });
                 data.Add(new { cname = "dhwnum2", data = FormData[2] });
+                data.Add(new { cname = "dhw_layers", data = DhwLayersData });
                 data.Add(new { cname = "dhwname", data = FormData[3] });
                 data.Add(new { cname = "mainsystem", data = FormData[4] });
                 data.Add(new { cname = "subsystem1", data = FormData[5] });
@@ -480,6 +483,120 @@ namespace main.contents.Result
 
             runScript("init(" + s + "," + s2 + "," + "[" + charts + "])");
         }
+
+        private List<object> BuildDhwImageLayers(string num)
+        {
+            List<object> layers = new List<object>();
+            string[][] form = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form",
+                "복합설비유무,주요설비,보조설비1,펌프유무,축열유무,축열펌프유무,히트펌프번호",
+                "번호 = '" + num + "'");
+            if (form.Length == 0)
+            {
+                return layers;
+            }
+
+            string SqlValue(string value)
+            {
+                return (value ?? "").Replace("'", "''");
+            }
+
+            void AddDbImage(string condition, double x, double y, double width, double height)
+            {
+                string[][] image = Program.DB.getValue(DB.type.BaseDB_Heating, "난방설비이미지", "이미지", condition);
+                if (image.Length > 0 && !string.IsNullOrWhiteSpace(image[0][0]))
+                {
+                    layers.Add(new { s = image[0][0], x, y, w = width, h = height });
+                }
+            }
+
+            string ResolveSystemImageType(string system, string heatPumpNumbers)
+            {
+                if (system != "히트펌프" || string.IsNullOrWhiteSpace(heatPumpNumbers))
+                {
+                    return system;
+                }
+
+                string resolved = system;
+                double maxCapacity = double.MinValue;
+                foreach (string number in heatPumpNumbers.Split('+'))
+                {
+                    string heatPumpNumber = number.Trim();
+                    if (heatPumpNumber == "")
+                    {
+                        continue;
+                    }
+
+                    string[][] heatPump = Program.DB.getValue(DB.type.ProjDB, "User_DHWHP", "열원,급탕정격용량",
+                        "번호 = '" + SqlValue(heatPumpNumber) + "'");
+                    if (heatPump.Length == 0)
+                    {
+                        continue;
+                    }
+
+                    double capacity = Program.UTIL.ToDoubleOrZero(heatPump[0][1]);
+                    if (capacity > maxCapacity && !string.IsNullOrWhiteSpace(heatPump[0][0]))
+                    {
+                        maxCapacity = capacity;
+                        resolved = heatPump[0][0] + " 히트펌프";
+                    }
+                }
+
+                return resolved;
+            }
+
+            void AddProductionAndSource(string system, double systemX, double sourceX, string heatPumpNumbers)
+            {
+                if (string.IsNullOrWhiteSpace(system))
+                {
+                    return;
+                }
+
+                string imageType = ResolveSystemImageType(system, heatPumpNumbers);
+                AddDbImage("항목유형 = '생산설비' And 설비유형 = '" + SqlValue(imageType) + "' And 설치유형 = '신규'",
+                    systemX, 77, 110, 170);
+                AddDbImage("항목유형 = '열원' And 설비유형 = '" + SqlValue(imageType) + "' And 설치유형 = '신규'",
+                    sourceX, 87, 110, 160);
+            }
+
+            string complex = form[0][0];
+            string mainSystem = form[0][1];
+            string subSystem = form[0][2];
+            string pumpUse = form[0][3];
+            string storageUse = form[0][4];
+            string storagePumpUse = form[0][5];
+            string heatPumpNumbers = form[0][6];
+            bool hasStorage = storageUse == "축열탱크 있음";
+
+            string distributionType = pumpUse == "펌프 있음" || hasStorage ? "펌프 있음" : "펌프 없음";
+            AddDbImage("항목유형 = '급탕설비' And 설비유형 = '" + distributionType + "'", 0, 0, 900, 290);
+
+            if (complex == "복합설비가동" && !string.IsNullOrWhiteSpace(subSystem))
+            {
+                AddDbImage("항목유형 = '분배설비' And 설비유형 = '서브'", 0, 0, 235, 290);
+                AddDbImage("항목유형 = '분배설비' And 설비유형 = '서브2'", 620, 157, 53, 65);
+                AddProductionAndSource(subSystem, 100, -5, heatPumpNumbers);
+            }
+
+            AddProductionAndSource(mainSystem, 350, 245, heatPumpNumbers);
+
+            if (hasStorage)
+            {
+                AddDbImage("항목유형 = '저장설비' And 설치유형 = '신규'", 490, 80, 125, 170);
+            }
+            if (storagePumpUse == "축열펌프 있음")
+            {
+                AddDbImage("항목유형 = '분배설비' And 설비유형 = '펌프'", 470, 148, 22, 38);
+            }
+            if (pumpUse == "펌프 있음")
+            {
+                AddDbImage("항목유형 = '분배설비' And 설비유형 = '펌프'", 685, 148, 22, 38);
+            }
+
+            AddDbImage("설비유형 = '수전' And 설치유형 = '신규'", 795, 78, 60, 50);
+
+            return layers;
+        }
+
         private ArrayList Split_(String nonSplit)
         {
             ArrayList split = new ArrayList();

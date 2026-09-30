@@ -68,7 +68,7 @@ window.addEventListener("message", async (event) => {
         let zoneLayersValue = o.items.find(item => item.cname === "zone_layers");
         let coolingLayersValue = o.items.find(item => item.cname === "cooling_layers");
         let heatingLayersValue = o.items.find(item => item.cname === "heating_layers");
-        let dhwNumValue = o.items.find(item => item.cname === "dhwnum");
+        let dhwLayersValue = o.items.find(item => item.cname === "dhw_layers");
         let lightingNumValue = o.items.find(item => item.cname === "lightingnum");
         let lightingH = o.items.find(item => item.cname === "lightingHeightnum");
         let lightingT = o.items.find(item => item.cname === "lightingType");
@@ -189,14 +189,24 @@ window.addEventListener("message", async (event) => {
           });
         });
         $(".dhwImage").each((idx,al) => {
-          if (projectNumValue.data[idx]) {
-          let projectNum = projectNumValue.data[idx].val; 
-          let dhwNum = dhwNumValue.data[idx].val; 
-          if(dhwNum !== null)
-             {
-              al.setAttribute("src", "../projects/" + projectNum + "/"+ dhwNum + ".png"); 
-             }
-          }
+          if (!dhwLayersValue || !dhwLayersValue.data[idx]) return;
+
+          al.innerHTML = "";
+          dhwLayersValue.data[idx].val.forEach((layer) => {
+            if (!layer.s) return;
+
+            let img = document.createElement("img");
+            let src = layer.s || "";
+            img.setAttribute("src", /^(data:|https?:|file:)/i.test(src) ? src : "../" + src.replace(/^[/\\]+/, ""));
+            img.style.position = "absolute";
+            img.style.left = (layer.x / 900 * 100) + "%";
+            img.style.top = (layer.y / 290 * 100) + "%";
+            img.style.width = (layer.w / 900 * 100) + "%";
+            img.style.height = (layer.h / 290 * 100) + "%";
+            img.style.objectFit = "contain";
+            img.style.objectPosition = "center";
+            al.appendChild(img);
+          });
         });
           $(".lightingImage").each((idx, al) => {
             if (projectNumValue.data[idx]) {
