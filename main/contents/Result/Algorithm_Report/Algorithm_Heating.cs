@@ -497,6 +497,8 @@ namespace main.contents.Result
                     PumpData[4].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][1], 1) });
                 }
                 #endregion
+                if (data.Count == 0)
+                {
                 data.Add(new { cname = "projectnum", data = FormData[0] });
                 data.Add(new { cname = "heatingnum", data = FormData[1] });
                 data.Add(new { cname = "heatingnum2", data = FormData[2] });
@@ -580,6 +582,7 @@ namespace main.contents.Result
                 data.Add(new { cname = "pump_control", data = PumpData[2] });
                 data.Add(new { cname = "volume_s", data = PumpData[3] });
                 data.Add(new { cname = "pumps_power", data = PumpData[4] });
+                }
 
                
                 chart_nd.Add(System.Text.Json.JsonSerializer.Serialize(nd_chart.ToArray()));

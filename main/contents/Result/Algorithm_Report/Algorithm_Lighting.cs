@@ -470,78 +470,6 @@ namespace main.contents.Result
                 AnnualData[3].Add(new { idx = i, val = Program.UTIL.doubleComa((final[12]*0.4747/area).ToString(), 3) }); //CO2배출량
                 
 
-                //html 작성
-                data.Add(new { cname = "projectnum", data = FormData[0] });
-                data.Add(new { cname = "lighting_layers", data = LightingLayersData });
-                data.Add(new { cname = "lightingHeightnum", data = FormData[2] });
-                data.Add(new { cname = "lightingType", data = FormData[3] });
-
-                data.Add(new { cname = "title", data = zoneData[0] });
-                data.Add(new { cname = "zone_num", data = zoneData[1] });
-                data.Add(new { cname = "zone_profile", data = zoneData[2] });
-                data.Add(new { cname = "zone_lux", data = zoneData[3] });
-                data.Add(new { cname = "zone_starttime", data = zoneData[4] });
-                data.Add(new { cname = "zone_endtime", data = zoneData[5] });
-                data.Add(new { cname = "zone_weekuseday", data = zoneData[6] });
-                data.Add(new { cname = "zone_yearuseday", data = zoneData[7] });
-                data.Add(new { cname = "zone_length", data = zoneData[8] });
-                data.Add(new { cname = "zone_sfactor", data = zoneData[9] });
-                data.Add(new { cname = "zone_area", data = zoneData[10] });
-                data.Add(new { cname = "zone_wintopheight", data = zoneData[11] });
-                data.Add(new { cname = "zone_workheight", data = zoneData[12] });
-                data.Add(new { cname = "zone_cellingheight", data = zoneData[13] });
-                data.Add(new { cname = "zone_lightheight", data = zoneData[14] });
-
-                data.Add(new { cname = "daylight_length", data = daylightData[0] });
-                data.Add(new { cname = "daylight_depth", data = daylightData[1] });
-                data.Add(new { cname = "daylight_area", data = daylightData[2] });
-                data.Add(new { cname = "light_area", data = daylightData[3] });
-                data.Add(new { cname = "daylight_class", data = daylightData[4] });
-                data.Add(new { cname = "daylight_controalrate", data = daylightData[5] });
-                data.Add(new { cname = "daylight_userate", data = daylightData[6] });
-
-                data.Add(new { cname = "light_type", data = lightData[0] });
-                data.Add(new { cname = "light_dimm", data = lightData[1] });
-                data.Add(new { cname = "light_installtype", data = lightData[2] });
-                data.Add(new { cname = "light_power", data = lightData[3] });
-                data.Add(new { cname = "light_standby", data = lightData[4] });
-                data.Add(new { cname = "light_controltype", data = lightData[5] });
-                data.Add(new { cname = "light_flvalue", data = lightData[6] });
-                data.Add(new { cname = "light_load", data = lightData[7] });
-                data.Add(new { cname = "light_controlvalue", data = lightData[8] });
-
-                data.Add(new { cname = "renew_type", data = renewData[0] });
-                data.Add(new { cname = "renew_area", data = renewData[1] });
-                data.Add(new { cname = "renew_rate", data = renewData[2] });
-                data.Add(new { cname = "renew_direction", data = renewData[3] });
-                data.Add(new { cname = "renew_slope", data = renewData[4] });
-
-                data.Add(new { cname = "d_direction", data = dData[0] });
-                data.Add(new { cname = "d_area", data = dData[1] });
-                data.Add(new { cname = "d_visible", data = dData[2] });
-                data.Add(new { cname = "d_type", data = dData[3] });
-                data.Add(new { cname = "d_subtype", data = dData[4] });
-                data.Add(new { cname = "sundevice_name", data = dData[5] });
-                data.Add(new { cname = "sundevice_sa", data = dData[6] });
-                data.Add(new { cname = "sundevice_sna", data = dData[7] });
-
-                data.Add(new { cname = "mth_dh", data = zoneMthData[0] });
-                data.Add(new { cname = "mth_nh", data = zoneMthData[1] });
-                data.Add(new { cname = "mth_dluse", data = zoneMthData[2] });
-                data.Add(new { cname = "mth_outlux", data = zoneMthData[3] });
-                data.Add(new { cname = "mth_lightpower", data = zoneMthData[4] });
-                data.Add(new { cname = "mth_lightload", data = zoneMthData[5] });
-                data.Add(new { cname = "mth_final", data = zoneMthData[6] });
-                data.Add(new { cname = "mth_aux", data = zoneMthData[7] });
-                data.Add(new { cname = "mth_nd", data = zoneMthData[8] });
-                data.Add(new { cname = "mth_prod", data = zoneMthData[9] });
-
-                data.Add(new { cname = "annual_nd", data = AnnualData[0] });
-                data.Add(new { cname = "annual_final", data = AnnualData[1] });
-                data.Add(new { cname = "annual_primary", data = AnnualData[2] });
-                data.Add(new { cname = "annual_co2", data = AnnualData[3] });
-
-
                 //chart 작성
 
                 List<object> final_chart = new List<object>(); //에너지소요량
@@ -583,15 +511,84 @@ namespace main.contents.Result
                 "{type:\"line\",yAxisID: 'y',label:\"에너지소요량 [kWh]\",data:" + chart_final[i] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false, tension: 0.4}," +
                 "],max:" + max.ToString() + ",step:100,legend:true,stacked:true}";
 
-
-                s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
-                s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
-
-                Debug.Print("start");
-                
-                runScript("init(" + s + "," + s2 + "," + "[" + charts + "])");
-                
             }
+
+            // 모든 존 데이터를 수집한 뒤 HTML 바인딩 목록과 스크립트를 한 번만 구성한다.
+            data.Add(new { cname = "projectnum", data = FormData[0] });
+            data.Add(new { cname = "lighting_layers", data = LightingLayersData });
+            data.Add(new { cname = "lightingHeightnum", data = FormData[2] });
+            data.Add(new { cname = "lightingType", data = FormData[3] });
+
+            data.Add(new { cname = "title", data = zoneData[0] });
+            data.Add(new { cname = "zone_num", data = zoneData[1] });
+            data.Add(new { cname = "zone_profile", data = zoneData[2] });
+            data.Add(new { cname = "zone_lux", data = zoneData[3] });
+            data.Add(new { cname = "zone_starttime", data = zoneData[4] });
+            data.Add(new { cname = "zone_endtime", data = zoneData[5] });
+            data.Add(new { cname = "zone_weekuseday", data = zoneData[6] });
+            data.Add(new { cname = "zone_yearuseday", data = zoneData[7] });
+            data.Add(new { cname = "zone_length", data = zoneData[8] });
+            data.Add(new { cname = "zone_sfactor", data = zoneData[9] });
+            data.Add(new { cname = "zone_area", data = zoneData[10] });
+            data.Add(new { cname = "zone_wintopheight", data = zoneData[11] });
+            data.Add(new { cname = "zone_workheight", data = zoneData[12] });
+            data.Add(new { cname = "zone_cellingheight", data = zoneData[13] });
+            data.Add(new { cname = "zone_lightheight", data = zoneData[14] });
+
+            data.Add(new { cname = "daylight_length", data = daylightData[0] });
+            data.Add(new { cname = "daylight_depth", data = daylightData[1] });
+            data.Add(new { cname = "daylight_area", data = daylightData[2] });
+            data.Add(new { cname = "light_area", data = daylightData[3] });
+            data.Add(new { cname = "daylight_class", data = daylightData[4] });
+            data.Add(new { cname = "daylight_controalrate", data = daylightData[5] });
+            data.Add(new { cname = "daylight_userate", data = daylightData[6] });
+
+            data.Add(new { cname = "light_type", data = lightData[0] });
+            data.Add(new { cname = "light_dimm", data = lightData[1] });
+            data.Add(new { cname = "light_installtype", data = lightData[2] });
+            data.Add(new { cname = "light_power", data = lightData[3] });
+            data.Add(new { cname = "light_standby", data = lightData[4] });
+            data.Add(new { cname = "light_controltype", data = lightData[5] });
+            data.Add(new { cname = "light_flvalue", data = lightData[6] });
+            data.Add(new { cname = "light_load", data = lightData[7] });
+            data.Add(new { cname = "light_controlvalue", data = lightData[8] });
+
+            data.Add(new { cname = "renew_type", data = renewData[0] });
+            data.Add(new { cname = "renew_area", data = renewData[1] });
+            data.Add(new { cname = "renew_rate", data = renewData[2] });
+            data.Add(new { cname = "renew_direction", data = renewData[3] });
+            data.Add(new { cname = "renew_slope", data = renewData[4] });
+
+            data.Add(new { cname = "d_direction", data = dData[0] });
+            data.Add(new { cname = "d_area", data = dData[1] });
+            data.Add(new { cname = "d_visible", data = dData[2] });
+            data.Add(new { cname = "d_type", data = dData[3] });
+            data.Add(new { cname = "d_subtype", data = dData[4] });
+            data.Add(new { cname = "sundevice_name", data = dData[5] });
+            data.Add(new { cname = "sundevice_sa", data = dData[6] });
+            data.Add(new { cname = "sundevice_sna", data = dData[7] });
+
+            data.Add(new { cname = "mth_dh", data = zoneMthData[0] });
+            data.Add(new { cname = "mth_nh", data = zoneMthData[1] });
+            data.Add(new { cname = "mth_dluse", data = zoneMthData[2] });
+            data.Add(new { cname = "mth_outlux", data = zoneMthData[3] });
+            data.Add(new { cname = "mth_lightpower", data = zoneMthData[4] });
+            data.Add(new { cname = "mth_lightload", data = zoneMthData[5] });
+            data.Add(new { cname = "mth_final", data = zoneMthData[6] });
+            data.Add(new { cname = "mth_aux", data = zoneMthData[7] });
+            data.Add(new { cname = "mth_nd", data = zoneMthData[8] });
+            data.Add(new { cname = "mth_prod", data = zoneMthData[9] });
+
+            data.Add(new { cname = "annual_nd", data = AnnualData[0] });
+            data.Add(new { cname = "annual_final", data = AnnualData[1] });
+            data.Add(new { cname = "annual_primary", data = AnnualData[2] });
+            data.Add(new { cname = "annual_co2", data = AnnualData[3] });
+
+            s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
+            s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
+
+            Debug.Print("start");
+            runScript("init(" + s + "," + s2 + "," + "[" + charts + "])");
         }
 
         private List<object> BuildLightingImageLayers(string num)

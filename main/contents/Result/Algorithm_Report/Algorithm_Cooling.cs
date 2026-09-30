@@ -515,6 +515,8 @@ namespace main.contents.Result
                     WMthData[3].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][3], 0) });
                     WMthData[4].Add(new { idx = i * 13 + 12, val = Program.UTIL.doubleComa(Value[0][4], 0) });                   
                 }
+                if (data.Count == 0)
+                {
                 data.Add(new { cname = "projectnum", data = FormData[0] });
                 data.Add(new { cname = "coolingnum", data = FormData[1] });
                 data.Add(new { cname = "coolingnum2", data = FormData[2] });
@@ -625,6 +627,7 @@ namespace main.contents.Result
                 //data.Add(new { cname = "w_d", data = WMthData[7] });
                 //data.Add(new { cname = "w_s", data = WMthData[8] });
                 //data.Add(new { cname = "w_g", data = WMthData[9] });
+                }
 
 
                 List<object> nd_chart = new List<object>();

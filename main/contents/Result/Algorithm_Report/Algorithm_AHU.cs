@@ -310,6 +310,8 @@ namespace main.contents.Result
                         MthData[18].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(AHU_cool_use[mth].ToString(), 0) }); //공조냉방에너지소요량
                     }
 
+                    if (data.Count == 0)
+                    {
                     data.Add(new { cname = "projectnum", data = FormData[0] });
                     data.Add(new { cname = "title", data = FormData[1] });
                     data.Add(new { cname = "ahu_num", data = FormData[2] });
@@ -378,6 +380,7 @@ namespace main.contents.Result
                     data.Add(new { cname = "year_c", data = AnnualData[3] });
                     data.Add(new { cname = "year_hum", data = AnnualData[4] });
                     data.Add(new { cname = "year_aux", data = AnnualData[5] });
+                    }
 
                     List<object> hnd_chart = new List<object>();
                     List<object> cnd_chart = new List<object>();
@@ -415,13 +418,13 @@ namespace main.contents.Result
 
 
                 }
-
-                s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
-                s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
-
-                Debug.Print("start");
-                runScript("init(" + s + "," + s2 + "," + "[" + charts + "])");
             }
+
+            s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
+            s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
+
+            Debug.Print("start");
+            runScript("init(" + s + "," + s2 + "," + "[" + charts + "])");
         }
 
         private List<object> BuildAhuImageLayers(string num, string location, string pretype)
