@@ -18,6 +18,7 @@ namespace main.contents
         public double OccupancyDensity, OccupancyDensity_Low, OccupancyDensity_Medium, OccupancyDensity_High;
         public String OccupancyDensity_index, EquipIHG_index;
         public String HumidC_index, HumidH_index;
+        public String NightMode = "운전정지", WeekendMode = "운전정지";
         public double HumidC, HumidH; //냉방/난방 설정 절대습도 단위 : g/kg'
         public String ZoneName, BuildingCategory, BuildingUse, Usage, StartTime, EndTime;
         string SelectHRV; string 증축여부;
@@ -60,6 +61,20 @@ namespace main.contents
             HumidH_comboBox.Items.Add("항온항습");
             HumidH_comboBox.Items.Add("습도고려");
             HumidH_comboBox.Items.Add("습도고려안함");
+
+            // 실내계산기준온도 계산용 비이용시간 운전모드
+            NightMode_comboBox.Items.Clear();
+            NightMode_comboBox.Items.Add("지속운전");
+            NightMode_comboBox.Items.Add("간헐운전");
+            NightMode_comboBox.Items.Add("운전정지");
+
+            WeekendMode_comboBox.Items.Clear();
+            WeekendMode_comboBox.Items.Add("지속운전");
+            WeekendMode_comboBox.Items.Add("간헐운전");
+            WeekendMode_comboBox.Items.Add("운전정지");
+
+            NightMode_comboBox.SelectedItem = NightMode;
+            WeekendMode_comboBox.SelectedItem = WeekendMode;
 
 
             Heating_checkBox.Checked = true;
@@ -171,6 +186,8 @@ namespace main.contents
             else if (Cooling_checkBox.Checked == true)
             { HCType = "냉방"; }
             else { HCType = "비냉난방"; }
+            NightMode_comboBox.Enabled = Heating_checkBox.Checked;
+            WeekendMode_comboBox.Enabled = Heating_checkBox.Checked;
             Load_MainImage(HCType, AHUType);
 
 
@@ -547,6 +564,31 @@ namespace main.contents
             }
         }
 
+        private void NightMode_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (NightMode_comboBox.SelectedItem != null)
+            {
+                NightMode = NightMode_comboBox.SelectedItem.ToString();
+            }
+        }
+
+        private void WeekendMode_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (WeekendMode_comboBox.SelectedItem != null)
+            {
+                WeekendMode = WeekendMode_comboBox.SelectedItem.ToString();
+            }
+        }
+
+        private string ValidOperationModeOrDefault(string mode)
+        {
+            if (mode == "지속운전" || mode == "간헐운전" || mode == "운전정지")
+            {
+                return mode;
+            }
+            return "운전정지";
+        }
+
         //냉방 설정 습도등급 선택에 따라 실내 냉방 설정 절대습도 산정 (BaseDB_HCneed.습도설정, EN 16798-1:2017 표B.16 근거, 단위 : g/kg')
         private void HumidC_Cal()
         {
@@ -804,11 +846,11 @@ namespace main.contents
                 }
             }
             Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,프로젝트유형,존이름,실제어방식,냉난방유무,환기유무,환기방식," +
-                "용도프로필,천장고,시작시간,종료시간,주이용일,재실자수,기기발열수준," +
+                "용도프로필,천장고,시작시간,종료시간,주이용일,야간운전모드,주말운전모드,재실자수,기기발열수준," +
                 "일일급탕요구량,냉난방시간,사용시간,공조시간,연이용일수,재실밀도,재실수준,일일인체발열,면적당인체발열,일일기기발열,면적당기기발열," +
                 "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적,선택열회수기,기존존,증축여부,냉방습도,난방습도,미입력항목",
             "'" + ZoneNum + "','" + 프로젝트유형[0][0] + "','" + ZoneName + "','" + RoomControl + "','" + HCType + "','" + Ventilation_checkBox.Checked.ToString() + "','" + AHUType + "','"
-            + Usage + "','" + CeilingHeight.ToString() + "','" + StartTime + "','" + EndTime + "','" + WeekUseDay.ToString() + "','" + PersonNum + "','" + EquipIHG_index + "','"
+            + Usage + "','" + CeilingHeight.ToString() + "','" + StartTime + "','" + EndTime + "','" + WeekUseDay.ToString() + "','" + NightMode + "','" + WeekendMode + "','" + PersonNum + "','" + EquipIHG_index + "','"
             + DHWneed.ToString() + "','" + HCTime.ToString() + "','" + UseTime.ToString() + "','" + AHUTime.ToString() + "','" + AnnualUseDay.ToString() + "','"
             + OccupancyDensity.ToString() + "','" + OccupancyDensity_index + "','" + PersonIHG_1day.ToString() + "','" + PersonIHG.ToString() + "','" + EquipIHG_1day.ToString() + "','" + EquipIHG.ToString() + "','"
             + NetVolume.ToString() + "','" + VentilationRate.ToString() + "','" + Volume_wd.ToString() + "','" + Volume_we.ToString() + "','"
@@ -838,6 +880,8 @@ namespace main.contents
             HumidC = 0; HumidH = 0;
             HumidC_comboBox.SelectedIndex = 2; //기본값 : 습도고려안함
             HumidH_comboBox.SelectedIndex = 2; //기본값 : 습도고려안함
+            NightMode_comboBox.SelectedItem = "운전정지";
+            WeekendMode_comboBox.SelectedItem = "운전정지";
 
             CeilingHeight_textBox.Text = "";
             PersonNum_textBox.Text = "";
@@ -1085,6 +1129,14 @@ namespace main.contents
                 }
 
                 Load_ActualVentilationVolume();
+            }
+            String[][] OperationModeValue = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "야간운전모드,주말운전모드", "존번호 = '" + ZoneNum + "'");
+            if (OperationModeValue.Length > 0)
+            {
+                NightMode = ValidOperationModeOrDefault(OperationModeValue[0][0]);
+                NightMode_comboBox.SelectedItem = NightMode;
+                WeekendMode = ValidOperationModeOrDefault(OperationModeValue[0][1]);
+                WeekendMode_comboBox.SelectedItem = WeekendMode;
             }
             Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "기존존,증축여부", "존번호 = '" + ZoneNum + "'");
             if (Value.Length > 0)

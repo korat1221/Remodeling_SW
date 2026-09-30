@@ -12,7 +12,7 @@ namespace main
     {
         public String ZoneNum;
         public String zoneName;
-        public String zoneUsage, zoneHC, Mode_night, Mode_we; double n_Weekday;//주이용일수
+        public String zoneUsage, zoneHC, Mode_night = "운전정지", Mode_we = "운전정지"; double n_Weekday;//주이용일수
         public double Peope_Num, t_c_op_d, dtheta_i_NA, Fx, Fx_Floor, Fx_GWall, theta_s_c, theta_i_h_min, theta_i_c_max, theta_SUP_Wi;
         public double[] theta_i_set = new double[2];
         public double twd_d, th_op_d_we, th_op_d, dwd_a;
@@ -93,7 +93,7 @@ namespace main
 
         public void LoadData_ZoneGeneral()
         {  //존 사용 정보 가져오기            
-            string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "존이름,용도프로필,냉난방유무,재실자수,냉난방시간", "존번호='" + ZoneNum + "'");
+            string[][] ZoneG = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_form", "존이름,용도프로필,냉난방유무,재실자수,냉난방시간,야간운전모드,주말운전모드", "존번호='" + ZoneNum + "'");
             if (ZoneG.Length > 0)
             {
                 zoneName = ZoneG[0][0];
@@ -101,6 +101,8 @@ namespace main
                 zoneHC = ZoneG[0][2];
                 Peope_Num = Program.UTIL.ToDoubleOrZero(ZoneG[0][3]);
                 t_c_op_d = Program.UTIL.ToDoubleOrZero(ZoneG[0][4]);
+                Mode_night = ValidOperationModeOrDefault(ZoneG[0][5]);
+                Mode_we = ValidOperationModeOrDefault(ZoneG[0][6]);
             }
 
             //존 용도프로필 정보 가져오기 
@@ -117,8 +119,6 @@ namespace main
                 theta_i_h_min = Program.UTIL.ToDoubleOrZero(ZoneU[0][3]);
                 theta_i_c_max = Program.UTIL.ToDoubleOrZero(ZoneU[0][8]);
                 theta_SUP_Wi = 18;
-                Mode_night = "운전정지";
-                Mode_we = "운전정지";
                 xi_c_set = 611.2 * Math.Exp(17.62 * theta_i_set[1] / (243.12 + theta_i_set[1])) / 461.51 / (273.15 + theta_i_set[1]) / 1.2 * (Program.UTIL.ToDoubleOrZero(ZoneU[0][5]) / 100);
                 xi_h_set = 611.2 * Math.Exp(17.62 * theta_i_set[0] / (243.12 + theta_i_set[0])) / 461.51 / (273.15 + theta_i_set[0]) / 1.2 * (Program.UTIL.ToDoubleOrZero(ZoneU[0][4]) / 100);
                 H_winter = Program.UTIL.ToDoubleOrZero(ZoneU[0][6]);
@@ -190,6 +190,15 @@ namespace main
                     Is_max[k, 1] = Value[0][0];
                 }
             }
+        }
+
+        private string ValidOperationModeOrDefault(string mode)
+        {
+            if (mode == "지속운전" || mode == "간헐운전" || mode == "운전정지")
+            {
+                return mode;
+            }
+            return "운전정지";
         }
         public void LoadData_dUtb_2D()
         {
@@ -2203,13 +2212,17 @@ namespace main
                 if (Mode_we != "지속운전")
                 {
                     n_night = n_Weekday;
-                    t_we = 24;
-                    n_we = 7 - n_Weekday;
                 }
                 else
                 {
                     n_night = 7;
                 }
+            }
+            // 야간이 지속운전이어도 주말 운전모드는 독립적으로 적용한다.
+            if (Mode_we != "지속운전")
+            {
+                t_we = 24;
+                n_we = 7 - n_Weekday;
             }
 
             for (int mth = 0; mth < 12; mth++)
