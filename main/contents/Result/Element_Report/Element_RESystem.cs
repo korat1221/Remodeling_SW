@@ -369,7 +369,7 @@ namespace main.contents.Result
                     double[] wp_power = new double[8]; double[] wp_count_old = new double[8]; double[] wp_count_new = new double[8];
                     double[] wp_saving_element = new double[8]; double[] wp_point = new double[8];
                     sum_old = 0; sum_new = 0;
-                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.번호,a.명칭,a.풍력,a.설치대수,a.설치대수,b.정격출력,b.회전면적,b.허브높이,b.세부타입 From WindPower_Form as a inner Join User_WP as b on a.풍력=b.번호");
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.번호,a.명칭,a.풍력,a.설치대수,a.설치대수,b.정격출력,b.회전면적,b.허브높이,b.제품유형 From WindPower_Form as a inner Join User_WP as b on a.풍력=b.번호");
                     if (Value.Length > 0)
                     {
                         for (int a = 0; a < Value.Length; a++)

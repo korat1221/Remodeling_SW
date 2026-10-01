@@ -99,7 +99,7 @@ namespace main.subcontents.HeatingSystem
             else
             {
 
-                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_GroundWHP", "번호,명칭,연료,공급유형,정격용량,정격COP,정격소비전력,등급2용량,등급2COP,등급2소비전력", "");
+                string[][] User_Value = Program.DB.getValue(DB.type.ProjDB, "User_GroundWHP", "번호,명칭,연료,공급유형,난방정격용량,난방정격COP,난방정격소비전력,난방등급2용량,난방등급2COP,난방등급2소비전력", "");
                 if (User_Value.Length > 0)
                 {
                     for (int n = 0; n < User_Value.Length; n++)

@@ -117,7 +117,7 @@ namespace main.contentslist
                     Inverter_num = Value[n][4];
 
 
-                    string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "User_WP", "세부타입, 정격출력, 최적풍속", "번호 ='" + UWP + "'");
+                    string[][] ValueA = Program.DB.getValue(DB.type.ProjDB, "User_WP", "제품유형,정격출력,정격출력풍속", "번호 ='" + UWP + "'");
                     if (ValueA.Length > 0)
                     {
                         dataGridView1.Rows[n].Cells[3].Value = ValueA[0][0];
