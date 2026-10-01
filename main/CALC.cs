@@ -1134,7 +1134,7 @@ namespace main
             Heating1.Load_PumpData(ProjNum);
             Heating1.Load_ceData(ProjNum);
             Heating1.Load_StorageData(ProjNum);
-            Heating1.Load_PipeData(ProjNum);
+            Heating1.Load_DistributionData(ProjNum);
             Heating1.Load_AirHP_general(ProjNum);
             Heating1.Load_GroundHP_general(ProjNum);
             Heating1.Load_GWHP_general(ProjNum);
@@ -1176,7 +1176,7 @@ namespace main
                          "beta_h_ce,beta_h_d,beta_h_s,beta_h_gen," +
                          "theta_av_ce,theta_av_d,theta_av_s,theta_av_gen," +
                          "dtheta_ce,dtheta_d,dtheta_s,dtheta_gen," +
-                         "dtheta_ce1,dtheta_ce2,Psi_pipe,L,Qs_po_day,Vs," +
+                         "dtheta_ce1,dtheta_ce2,Qs_po_day,Vs," +
                          "Qh_gen_day,Pgen_Pn,Pgen_Pint,Pgen_P0,eta_gen_Pn,eta_gen_Pint," +
                          "fpint_Air,Qh_outg_sngminus7,Qh_outg_sng2,Qh_outg_sng7,COPminus7,COP2,COP7," +
                          "Qh_ce,Qh_d,Qh_s,Qh_gen,Qh_outg,Qh_f," +
@@ -1187,7 +1187,7 @@ namespace main
                           Heating1.beta_h_ce[mth] + "','" + Heating1.beta_h_d[mth] + "','" + Heating1.beta_h_s[mth] + "','" + Heating1.beta_h_gen[mth] + "','" +
                           Heating1.theta_av_ce[mth] + "','" + Heating1.theta_av_d[mth] + "','" + Heating1.theta_av_s[mth] + "','" + Heating1.theta_av_gen[mth] + "','" +
                           Heating1.dtheta_ce[mth] + "','" + Heating1.dtheta_d[mth] + "','" + Heating1.dtheta_s[mth] + "','" + Heating1.dtheta_gen[mth] + "','" +
-                          Heating1.dtheta_ce1 + "','" + Heating1.dtheta_ce2 + "','" + Heating1.Psi_pipe + "','" + Heating1.PipeL + "','" + Heating1.Qs_po_day + "','" + Heating1.Vs + "','" +
+                          Heating1.dtheta_ce1 + "','" + Heating1.dtheta_ce2 + "','" + Heating1.Qs_po_day + "','" + Heating1.Vs + "','" +
                           Heating1.Qh_gen_day[mth] + "','" + Heating1.Pgen_Pn[mth] + "','" + Heating1.Pgen_Pint[mth] + "','" + Heating1.Pgen_P0[mth] + "','" + Heating1.eta_gen_Pn[mth] + "','" + Heating1.eta_gen_Pint[mth] + "','" +
                           Heating1.fpint[mth] + "','" + Heating1.Qh_outg_sng[0, mth] + "','" + Heating1.Qh_outg_sng[1, mth] + "','" + Heating1.Qh_outg_sng[2, mth] + "','" + Heating1.COPpint[0, mth] + "','" + Heating1.COPpint[1, mth] + "','" + Heating1.COPpint[2, mth] + "','" +
                           Heating1.Qh_ce[mth] + "','" + Heating1.Qh_d[mth] + "','" + Heating1.Qh_s[mth] + "','" + Heating1.Qh_gen[mth] + "','" + Heating1.Qh_outg[mth] + "','" + Heating1.Qh_f[mth] + "','" +

@@ -45,7 +45,7 @@ namespace main
         public double[] dtheta_ce = new double[12], dtheta_d = new double[12], dtheta_s = new double[12], dtheta_gen = new double[12];
         public double[] Qh_ce = new double[12], Qh_d = new double[12], Qh_s = new double[12], Qh_gen = new double[12], Qh_outg = new double[12], Qh_f = new double[12];
         public double[] Wh_ce = new double[12], Wh_d = new double[12], Wh_s = new double[12], Wh_g = new double[12];
-        public double dtheta_ce1, dtheta_ce2, Psi_pipe, PipeL, Qs_po_day;
+        public double dtheta_ce1, dtheta_ce2, Qs_po_day;
         public double[] Qh_gen_day = new double[12], Pgen_Pn = new double[12], Pgen_Pint = new double[12], Pgen_P0 = new double[12], eta_gen_Pn = new double[12], eta_gen_Pint = new double[12];
         public double[] fpint = new double[12];  public double[,] COPpint = new double[3, 12], Qh_outg_sng = new double[3, 12];
         public String Carrier; 
@@ -664,19 +664,6 @@ namespace main
                 }
             }
         }
-        public void Load_PipeData(string ProjNum) //수정필요함
-        {
-            string[][] Value = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재,노출배관길이", "번호 = '" + HeatingNum + "'");
-            if (Value.Length > 0)
-            {
-                PipeD = Program.UTIL.ToDoubleOrZero(Value[0][0]);
-                PipeInsD = Program.UTIL.ToDoubleOrZero(Value[0][1]);
-                PipeIns_Ramda = Program.UTIL.ToDoubleOrZero(Value[0][2]);
-                PipeIns = Value[0][3];
-                if (Value[0][4] == "" || Value[0][4] == null) { PipeL = 0; }
-                else { PipeL = Program.UTIL.ToDoubleOrZero(Value[0][4]); }
-            }
-        }
         //외기 히트펌프 정보 불러오기 
         public void Load_AirHP_general(string ProjNum)
         {
@@ -1240,18 +1227,70 @@ namespace main
         public void Calc_Qd(string ProjNum)
         {
             //입력 변수
-            double[] top_day = new double[3]; //가동일수
-            double[] theta_w_mean = new double[3]; //가동시 배관 온도: 주배관, 수직배관, 분기관 순서
-            double[] theta_w_mean_off = new double[3]; //정지시 배관 온도: 주배관, 수직배관, 분기관 순서
-
+            double[,] theta_w_mean = new double[12, 3]; //가동시 배관 온도: 주배관, 수직배관, 분기관 순서
             double[,] theta_amb = new double[12, 3]; //배관 설치 주변 온도: 주배관, 수직배관, 분기관 순서
             double[,] tw_calc = new double[12, 3]; //가동시간: 주배관, 수직배관, 분기관 순서
-            
+
             //결과 변수
-            double[] Qwd_V = new double[12], Qwd_S = new double[12], Qwd_A = new double[12];
+            double[] Qhd_V = new double[12], Qhd_S = new double[12], Qhd_A = new double[12];
 
-            double[] Qhb = new double[12]; //배관 주변 온도 구하기 위해 필요 
+            #region theta_w_mean 계산
+            for (int mth = 0; mth < 12; mth++)
+            {
+                theta_w_mean[mth, 0] = theta_av_d[mth];
+                theta_w_mean[mth, 1] = theta_av_d[mth];
+                theta_w_mean[mth, 2] = theta_av_d[mth];
+            }
+            #endregion
 
+            #region theta_amb 주배관
+            for (int mth = 0; mth < 12; mth++)
+            {
+                if (SystemLoacation == "단열외피 외부")//비난방공간, 난방기간이면 20과 실외온도 평균, 비난방기간이면 22와 실외온도 평균
+                {
+                    if (Qhb_mth_sum[mth] > 0) theta_amb[mth, 0] = 0.5 * (20 + theta_e[mth]);
+                    else theta_amb[mth, 0] = 0.5 * (22 + theta_e[mth]);
+                }
+                else if (SystemLoacation == "외기")//실외공간
+                {
+                    theta_amb[mth, 0] = theta_e[mth];
+                }
+                else//난방기간이면 20, 비난방기간이면 22
+                {
+                    if (Qhb_mth_sum[mth] > 0) theta_amb[mth, 0] = 20;
+                    else theta_amb[mth, 0] = 22;
+                }
+            }
+            #endregion
+
+            #region theta_amb 수직배관
+            for (int mth = 0; mth < 12; mth++)
+            {
+                if (Qhb_mth_sum[mth] > 0) theta_amb[mth, 1] = 20;
+                else theta_amb[mth, 1] = 22;
+            }
+            #endregion
+
+            #region theta_amb 분기관
+            for (int mth = 0; mth < 12; mth++)
+            {
+                if (Qhb_mth_sum[mth] > 0) theta_amb[mth, 2] = 20;
+                else theta_amb[mth, 2] = 22;
+            }
+            #endregion
+
+            for (int mth = 0; mth < 12; mth++)
+            {
+                tw_calc[mth, 0] = thrL[mth];
+                tw_calc[mth, 1] = thrL[mth];
+                tw_calc[mth, 2] = thrL[mth];
+
+                Qhd_V[mth] = Math.Max(0.001 * PsiV * LV * (theta_w_mean[mth, 0] - theta_amb[mth, 0]) * tw_calc[mth, 0], 0);
+                Qhd_S[mth] = Math.Max(0.001 * PsiS * LS * (theta_w_mean[mth, 1] - theta_amb[mth, 1]) * tw_calc[mth, 1], 0);
+                Qhd_A[mth] = Math.Max(0.001 * PsiA * LA * (theta_w_mean[mth, 2] - theta_amb[mth, 2]) * tw_calc[mth, 2], 0);
+
+                Qh_d[mth] = Qhd_V[mth] + Qhd_S[mth] + Qhd_A[mth];
+            }
 
             //펌프
             {
