@@ -324,19 +324,19 @@ namespace main
         }
         public void Load_DistributionData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(ProjNum, "Distribution_Form", "배관유형,배관길이,선형열관류율", "번호 = '" + DHWNum + "' and 배관유형 ='주배관'");
+            string[][] Value = Program.DB.getValue(ProjNum, "Distribution_Form", "배관유형,배관길이,선형열관류율", "번호 = '" + DHWNum + "' and 설비유형='급탕' and 배관유형 ='주배관'");
             if (Value.Length > 0)
             {
                 LV = Program.UTIL.ToDoubleOrZero(Value[0][1]);
                 PsiV = Program.UTIL.ToDoubleOrZero(Value[0][2]);
             }
-            Value = Program.DB.getValue(ProjNum, "Distribution_Form", "배관유형,배관길이,선형열관류율", "번호 =  '" + DHWNum + "' and 배관유형 ='수직배관'");
+            Value = Program.DB.getValue(ProjNum, "Distribution_Form", "배관유형,배관길이,선형열관류율", "번호 =  '" + DHWNum + "' and 설비유형='급탕' and 배관유형 ='수직배관'");
             if (Value.Length > 0)
             {
                 LS = Program.UTIL.ToDoubleOrZero(Value[0][1]);
                 PsiS = Program.UTIL.ToDoubleOrZero(Value[0][2]);
             }
-            Value = Program.DB.getValue(ProjNum, "Distribution_Form", "배관유형,배관길이,선형열관류율", "번호 =  '" + DHWNum + "' and 배관유형 ='분기관'");
+            Value = Program.DB.getValue(ProjNum, "Distribution_Form", "배관유형,배관길이,선형열관류율", "번호 =  '" + DHWNum + "' and 설비유형='급탕' and 배관유형 ='분기관'");
             if (Value.Length > 0)
             {
                 LA = Program.UTIL.ToDoubleOrZero(Value[0][1]);
@@ -419,22 +419,22 @@ namespace main
             {
                 if (BoilerType == "순간온수기")
                 {
-                    theta_w_mean[0] = 20 * Math.Pow(PsiV, -0.2);
-                    theta_w_mean[1] = 20 * Math.Pow(PsiS, -0.2);
-                    theta_w_mean[2] = 20 * Math.Pow(PsiA, -0.2);
+                    theta_w_mean[0] = PsiV > 0 ? 20 * Math.Pow(PsiV, -0.2) : 0;
+                    theta_w_mean[1] = PsiS > 0 ? 20 * Math.Pow(PsiS, -0.2) : 0;
+                    theta_w_mean[2] = PsiA > 0 ? 20 * Math.Pow(PsiA, -0.2) : 0;
                 }
                 else
                 {
-                    theta_w_mean[0] = 25 * Math.Pow(PsiV, -0.2);
-                    theta_w_mean[1] = 25 * Math.Pow(PsiS, -0.2);
-                    theta_w_mean[2] = 25 * Math.Pow(PsiA, -0.2);
+                    theta_w_mean[0] = PsiV > 0 ? 25 * Math.Pow(PsiV, -0.2) : 0;
+                    theta_w_mean[1] = PsiS > 0 ? 25 * Math.Pow(PsiS, -0.2) : 0;
+                    theta_w_mean[2] = PsiA > 0 ? 25 * Math.Pow(PsiA, -0.2) : 0;
                 }
             }
             else if (PipeType == "순환배관") //가동시만
             {
                 theta_w_mean[0] = theta_w_flw;
                 theta_w_mean[1] = theta_w_flw;
-                theta_w_mean[2] = 25 * Math.Pow(PsiA, -0.2);
+                theta_w_mean[2] = PsiA > 0 ? 25 * Math.Pow(PsiA, -0.2) : 0;
             }
 
             //theta_w_mean_off 계산
@@ -444,15 +444,15 @@ namespace main
                 {
                     if (BoilerType == "순간온수기")
                     {
-                        theta_w_mean_off[0] = 20 * Math.Pow(PsiV, -0.2);
-                        theta_w_mean_off[1] = 20 * Math.Pow(PsiS, -0.2);
-                        theta_w_mean_off[2] = 20 * Math.Pow(PsiA, -0.2);
+                        theta_w_mean_off[0] = PsiV > 0 ? 20 * Math.Pow(PsiV, -0.2) : 0;
+                        theta_w_mean_off[1] = PsiS > 0 ? 20 * Math.Pow(PsiS, -0.2) : 0;
+                        theta_w_mean_off[2] = PsiA > 0 ? 20 * Math.Pow(PsiA, -0.2) : 0;
                     }
                     else
                     {
-                        theta_w_mean_off[0] = 25 * Math.Pow(PsiV, -0.2);
-                        theta_w_mean_off[1] = 25 * Math.Pow(PsiS, -0.2);
-                        theta_w_mean_off[2] = 25 * Math.Pow(PsiA, -0.2);
+                        theta_w_mean_off[0] = PsiV > 0 ? 25 * Math.Pow(PsiV, -0.2) : 0;
+                        theta_w_mean_off[1] = PsiS > 0 ? 25 * Math.Pow(PsiS, -0.2) : 0;
+                        theta_w_mean_off[2] = PsiA > 0 ? 25 * Math.Pow(PsiA, -0.2) : 0;
                     }
                 }
                 else
@@ -506,8 +506,8 @@ namespace main
                 if (건물유형[0][0] == "단독주택" || 건물유형[0][0] == "공동주택")
                 {
                     //가동시 정지시 구분해서 작성됨
-                    Qwd_A[mth] = Math.Max(0.001 * PsiV * LV * ((theta_w_mean[0] - theta_amb[mth, 0]) * dop_mth_avg[mth] * top_day[0] + (theta_w_mean_off[0] - theta_amb[mth, 0]) * dop_mth_avg[mth] * (24 - top_day[0])), 0);
-                    Qwd_A[mth] = Math.Max(0.001 * PsiS * LS * ((theta_w_mean[1] - theta_amb[mth, 1]) * dop_mth_avg[mth] * top_day[1] + (theta_w_mean_off[1] - theta_amb[mth, 1]) * dop_mth_avg[mth] * (24 - top_day[1])), 0);
+                    Qwd_V[mth] = Math.Max(0.001 * PsiV * LV * ((theta_w_mean[0] - theta_amb[mth, 0]) * dop_mth_avg[mth] * top_day[0] + (theta_w_mean_off[0] - theta_amb[mth, 0]) * dop_mth_avg[mth] * (24 - top_day[0])), 0);
+                    Qwd_S[mth] = Math.Max(0.001 * PsiS * LS * ((theta_w_mean[1] - theta_amb[mth, 1]) * dop_mth_avg[mth] * top_day[1] + (theta_w_mean_off[1] - theta_amb[mth, 1]) * dop_mth_avg[mth] * (24 - top_day[1])), 0);
                     Qwd_A[mth] = Math.Max(0.001 * PsiA * LA * ((theta_w_mean[2] - theta_amb[mth, 2]) * dop_mth_avg[mth] * top_day[2] + (theta_w_mean_off[2] - theta_amb[mth, 2]) * dop_mth_avg[mth] * (24 - top_day[2])), 0);
                 }
                 else
@@ -516,8 +516,8 @@ namespace main
                     tw_calc[mth, 1] = dop_mth_avg[mth] * top_day[1];
                     tw_calc[mth, 2] = dop_mth_avg[mth] * top_day[2];
 
-                    Qwd_A[mth] = Math.Max(0.001 * PsiV * LV * (theta_w_mean[0] - theta_amb[mth, 0]) * tw_calc[mth, 0], 0);
-                    Qwd_A[mth] = Math.Max(0.001 * PsiS * LS * (theta_w_mean[1] - theta_amb[mth, 1]) * tw_calc[mth, 1], 0);
+                    Qwd_V[mth] = Math.Max(0.001 * PsiV * LV * (theta_w_mean[0] - theta_amb[mth, 0]) * tw_calc[mth, 0], 0);
+                    Qwd_S[mth] = Math.Max(0.001 * PsiS * LS * (theta_w_mean[1] - theta_amb[mth, 1]) * tw_calc[mth, 1], 0);
                     Qwd_A[mth] = Math.Max(0.001 * PsiA * LA * (theta_w_mean[2] - theta_amb[mth, 2]) * tw_calc[mth, 2], 0);
                 }
                    
