@@ -285,7 +285,7 @@ namespace main.subcontents.CoolingSystem
         private void Load_SaveValue()
         {
             reset();
-            String[][] Value = Program.DB.getValue(DB.type.ProjDB, "Cooling_ce_Form", "존번호,냉방시스템,공급설비종류,공급설비", "난방시스템 = '" + SystemNum + "' And 공급설비종류 = '" + ceType + "'");
+            String[][] Value = Program.DB.getValue(DB.type.ProjDB, "Cooling_ce_Form", "존번호,냉방시스템,공급설비종류,공급설비", "냉방시스템 = '" + SystemNum + "' And 공급설비종류 = '" + ceType + "'");
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)

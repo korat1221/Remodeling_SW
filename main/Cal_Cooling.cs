@@ -767,10 +767,12 @@ namespace main
                     {
                         load_sum += Program.UTIL.ToDoubleOrZero(v2[k][0]);
                     }
-                    QC_nd_z[i] += value.Qb_mth[1, i] * load_sum; //공급설비 부하율을 반영한 요구량 산정
+                    ZoneDHU zoneDHU1 = Program.CALC.getZoneDHU(value.ZoneNum);
+                    double zoneCoolingDemand = value.Qb_mth[1, i] + zoneDHU1.Q_DHU_mth[i];
+                    QC_nd_z[i] += zoneCoolingDemand * load_sum; //냉방 및 제습 요구량에 공급설비 부하율을 반영
                     QH_nd_z[i] += value.Qb_mth[0, i];
-                    dwd_z[i] += value.dwd_mth[i] * value.Qb_mth[1, i] * load_sum; // 요구량 가중하여 산정함
-                    theta_z[i] += value.theta_i[1, i] * value.Qb_mth[1, i] * load_sum; //요구량 가중하여 산정함
+                    dwd_z[i] += value.dwd_mth[i] * zoneCoolingDemand * load_sum; // 요구량 가중하여 산정함
+                    theta_z[i] += value.theta_i[1, i] * zoneCoolingDemand * load_sum; //요구량 가중하여 산정함
                     pre = pre + 1; 
                 }
                 if (QC_nd_z[i] == 0)
@@ -844,8 +846,6 @@ namespace main
             {
                 double[] Qcd_V = new double[12], Qcd_S = new double[12], Qcd_A = new double[12];
                 string[][] Ddata = Program.DB.getValue(DB.type.ProjDB, "Distribution_Form", "배관유형,배관길이,선형열관류율,설치위치", "번호 = '" + CoolingNum + "'");
-                string[][] SelectCG = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Form", "냉방유닛,배관길이,선형열관류율,설치위치", "번호 = '" + CoolingNum + "'");
-                
                 for (int i = 0; i < Ddata.Length; i++)
                 {
                     string Dtype = Ddata[i][0];
