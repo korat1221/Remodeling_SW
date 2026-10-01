@@ -107,7 +107,7 @@ namespace main.contents.Result
                 FormData[2].Add(new { idx = i, val = Num }); //번호
                 DhwLayersData.Add(new { idx = i, val = BuildDhwImageLayers(Num) });
                 #region 주요정보
-                Value = Program.DB.querySQL(DB.type.ProjDB, "Select 명칭,주요설비,보조설비1,보조설비2,공급환수온도,노출배관길이  From DHWSystem_Form Where 번호='" + Num + "'");
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select 명칭,주요설비,보조설비1,보조설비2,공급환수온도  From DHWSystem_Form Where 번호='" + Num + "'");
                 if (Value.Length > 0)
                 {
                     FormData[3].Add(new { idx = i, val = Value[0][0] });
@@ -118,7 +118,13 @@ namespace main.contents.Result
                     sub2 = Value[0][3] != "" ? Value[0][3] : "-";
                     FormData[6].Add(new { idx = i, val = sub2 });
                     FormData[7].Add(new { idx = i, val = Value[0][4] });
-                    FormData[8].Add(new { idx = i, val = Program.UTIL.doubleComa(Value[0][5], 1) });
+                    double PipeLength = 0;
+                    string[][] 배관 = Program.DB.getValue(DB.type.ProjDB, "Distribution_Form", "배관길이", "번호 = '" + Num + "' and 설비유형='급탕'");
+                    for (int p = 0; p < 배관.Length; p++)
+                    {
+                        PipeLength += Program.UTIL.ToDoubleOrZero(배관[p][0]);
+                    }
+                    FormData[8].Add(new { idx = i, val = Program.UTIL.doubleComa(PipeLength.ToString(), 1) });
                 }
                 string[][] List = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호,명칭,주요설비,보일러종류,히트펌프번호,지역난방번호,태양열번호", "번호='" + Num + "'");
                 string[][] count_ = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호,명칭,주요설비,보일러대수,히트펌프대수,지역난방번호,모듈개수", "번호='" + Num + "'");
