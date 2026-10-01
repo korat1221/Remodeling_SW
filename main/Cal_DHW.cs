@@ -524,44 +524,40 @@ namespace main
                 Qw_d[mth] = Qwd_V[mth] + Qwd_S[mth] + Qwd_A[mth];
             }
         }
-        public void  LoadCalc_Pump(string ProjNum)
-        { 
+        public void LoadCalc_Pump(string ProjNum)
+        {
             //펌프
-            string[][] Value2 = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + Pump1 + "'");
             Pump.Clear();
-            if (Value2.Length > 0)
+            string[][] Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + Pump1 + "'");
+            if (Value.Length > 0)
+            { Cal_Pump(Pump1, Pump1Valve, Pump1Control, Pump1Count, Program.UTIL.ToDoubleOrZero(Value[0][0])); }
+            Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + Pump2 + "'");
+            if (Value.Length > 0)
+            { Cal_Pump(Pump2, Pump2Valve, Pump2Control, Pump2Count, Program.UTIL.ToDoubleOrZero(Value[0][0])); }
+        }
+        private void Cal_Pump(string Pump, string PumpValve, string PumpControl, int PumpCount, double PumpPower)
+        {
+            double Cp1, Cp2, fhydr = 1;
+            double[] e_hydr = new double[12], Wh_hydr = new double[12];
+            DHW_Pump pump1 = new DHW_Pump(Pump, PumpPower, PumpCount, PumpValve, PumpControl);
+            this.Pump.Add(pump1);
+            string[][] Value_Control = Program.DB.getValue(DB.type.BaseDB_Heating, "펌프제어_급탕", "Cp1,Cp2", "펌프제어 = '" + PumpControl + "'");
+            Cp1 = Program.UTIL.ToDoubleOrZero(Value_Control[0][0]);
+            Cp2 = Program.UTIL.ToDoubleOrZero(Value_Control[0][1]);
+            if (PumpValve == "유량밸런스있음")
             {
-                for (int n = 0; n < Value2.Length; n++)
-                {
-                    String Num_pump; double Power_pump; double count_pump;
-                    double Cp1, Cp2, Ppump, fhydr = 1;
-                    double[] Vz = new double[12], e_hydr = new double[12], Wh_hydr = new double[12];
-                    double theta;
-                    Num_pump = Pump1;
-                    Power_pump = Program.UTIL.ToDoubleOrZero(Value2[0][0]);
-                    count_pump = Pump1Count;
-                    DHW_Pump pump1 = new DHW_Pump(Num_pump, Power_pump, Pump1Count, Pump1Valve, Pump1Control); ;
-                    Pump.Add(pump1);
-                    string[][] Value_Control = Program.DB.getValue(DB.type.BaseDB_Heating, "펌프제어_급탕", "Cp1,Cp2", "펌프제어 = '" + Pump1Control + "'");
-                    Cp1 = Program.UTIL.ToDoubleOrZero(Value_Control[0][0]);
-                    Cp2 = Program.UTIL.ToDoubleOrZero(Value_Control[0][1]);
-                    if (Pump1Valve == "유량밸런스있음")
-                    {
-                        fhydr = 1;
-                    }
-                    else
-                    {
-                        fhydr = 1.15;
-                    }
-                    for (int mth = 0; mth < 12; mth++)
-                    {
-                        e_hydr[mth] = 1 * (Cp1 + Cp2) * 0.25 / 0.25;
-                        double beta_wd = double.IsNaN(1 / Qmax) ? 0 : Qwb_mth_sum[mth] / (Qmax * dop_mth_avg[mth] * th_op_day_avg);
-                        Wh_hydr[mth] = Power_pump / 1000 * beta_wd * dop_mth_avg[mth] * th_op_day_avg * fhydr;
-                        Ww_d[mth] = Wh_hydr[mth] * e_hydr[mth];
-                    }
-
-                }
+                fhydr = 1;
+            }
+            else
+            {
+                fhydr = 1.15;
+            }
+            for (int mth = 0; mth < 12; mth++)
+            {
+                e_hydr[mth] = Cp1 + Cp2;
+                double beta_wd = Qmax > 0 ? Qwb_mth_sum[mth] / (Qmax * dop_mth_avg[mth] * th_op_day_avg) : 0;
+                Wh_hydr[mth] = PumpPower / 1000 * beta_wd * dop_mth_avg[mth] * th_op_day_avg * fhydr;
+                Ww_d[mth] += Wh_hydr[mth] * e_hydr[mth] * PumpCount;
             }
         }
         public void Calc_Qs(string ProjNum)
