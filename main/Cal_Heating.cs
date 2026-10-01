@@ -100,11 +100,11 @@ namespace main
             string[][] Value_ce = null;
             if (Now_Check == true)
             {
-                Value_ce = Program.DB.getValue(ProjNum, "Heating_ce_Form", "공급설비,존번호,부하율", "난방시스템 = '" + HeatingNum + "'and (Not 공급설비종류='CAV유닛' and Not 공급설비종류='VAV유닛') ");
+                Value_ce = Program.DB.getValue(ProjNum, "Heating_ce_Form", "번호,존번호,부하율", "난방시스템 = '" + HeatingNum + "' and 구분 <> '공조형'");
             }
             else
             {
-                Value_ce = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form_Element", "공급설비,존번호,부하율", "난방시스템 = '" + HeatingNum + "'and (Not 공급설비종류='CAV유닛' and Not 공급설비종류='VAV유닛') ");
+                Value_ce = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form_Element", "번호,존번호,부하율", "난방시스템 = '" + HeatingNum + "' and 구분 <> '공조형'");
             }
             if (Value_ce.Length > 0)
             {
@@ -185,8 +185,8 @@ namespace main
                     th_op_day_avg += (th_op_day[n] * Qh_a[n]);
                     theta_i_h_set_avg += (theta_i_h_set[n] * Qh_a[n]);
                 }
-                th_op_day_avg = th_op_day_avg / Qh_a_sum;
-                theta_i_h_set_avg = theta_i_h_set_avg / Qh_a_sum;
+                th_op_day_avg = Qh_a_sum > 0 ? th_op_day_avg / Qh_a_sum : 0;
+                theta_i_h_set_avg = Qh_a_sum > 0 ? theta_i_h_set_avg / Qh_a_sum : 0;
 
                 for (int mth = 0; mth < 12; mth++)
                 {
@@ -199,9 +199,9 @@ namespace main
                         th_avg[mth] += (th[n, mth] * Qh_a[n]);
                         dop_mth_avg[mth] += (dop_mth[n, mth] * Qh_a[n]);
                     }
-                    theta_ih_avg[mth] = theta_ih_avg[mth] / Qh_a_sum;
-                    th_avg[mth] = th_avg[mth] / Qh_a_sum;
-                    dop_mth_avg[mth] = dop_mth_avg[mth] / Qh_a_sum;
+                    theta_ih_avg[mth] = Qh_a_sum > 0 ? theta_ih_avg[mth] / Qh_a_sum : 0;
+                    th_avg[mth] = Qh_a_sum > 0 ? th_avg[mth] / Qh_a_sum : 0;
+                    dop_mth_avg[mth] = Qh_a_sum > 0 ? dop_mth_avg[mth] / Qh_a_sum : 0;
                 }
             }
         }
@@ -224,11 +224,11 @@ namespace main
             string[][] Value_ce = null;
             if (Now_Check == true)
             {
-                Value_ce = Program.DB.querySQL(ProjNum, "Select a.공급설비,a.존번호,a.부하율,b.선택열회수기 From Heating_ce_Form as a Inner Join ZoneGeneral_Form as b  on a.존번호=b.존번호 Where a.난방시스템 = '" + HeatingNum + "' and (a.공급설비종류='CAV유닛' or a.공급설비종류='VAV유닛') ");
+                Value_ce = Program.DB.querySQL(ProjNum, "Select a.번호,a.존번호,a.부하율,b.선택열회수기 From Heating_ce_Form as a Inner Join ZoneGeneral_Form as b on a.존번호=b.존번호 Where a.난방시스템 = '" + HeatingNum + "' and a.구분='공조형'");
             }
             else
             {
-                Value_ce = Program.DB.querySQL(DB.type.ProjDB, "Select a.공급설비,a.존번호,a.부하율,b.선택열회수기 From Heating_ce_Form as a Inner Join ZoneGeneral_Form as b  on a.존번호=b.존번호 Where a.난방시스템 = '" + HeatingNum + "' and (a.공급설비종류='CAV유닛' or a.공급설비종류='VAV유닛') ");
+                Value_ce = Program.DB.querySQL(DB.type.ProjDB, "Select 번호,존번호,부하율,'' From Heating_ce_Form_Element Where 난방시스템 = '" + HeatingNum + "' and 구분='공조형'");
             }
             if (Value_ce.Length > 0)
             {
@@ -331,8 +331,8 @@ namespace main
                     th_op_day_avg += (th_op_day[n] * Qh_a[n]);
                     theta_i_h_set_avg += (theta_i_h_set[n] * Qh_a[n]);
                 }
-                th_op_day_avg = th_op_day_avg / Qh_a_sum;
-                theta_i_h_set_avg = theta_i_h_set_avg / Qh_a_sum;
+                th_op_day_avg = Qh_a_sum > 0 ? th_op_day_avg / Qh_a_sum : 0;
+                theta_i_h_set_avg = Qh_a_sum > 0 ? theta_i_h_set_avg / Qh_a_sum : 0;
 
                 for (int mth = 0; mth < 12; mth++)
                 {
@@ -345,9 +345,9 @@ namespace main
                         th_avg[mth] += (th[n, mth] * Qh_a[n]);
                         dop_mth_avg[mth] += (dop_mth[n, mth] * Qh_a[n]);
                     }
-                    theta_ih_avg[mth] = theta_ih_avg[mth] / Qh_a_sum;
-                    th_avg[mth] = th_avg[mth] / Qh_a_sum;
-                    dop_mth_avg[mth] = dop_mth_avg[mth] / Qh_a_sum;
+                    theta_ih_avg[mth] = Qh_a_sum > 0 ? theta_ih_avg[mth] / Qh_a_sum : 0;
+                    th_avg[mth] = Qh_a_sum > 0 ? th_avg[mth] / Qh_a_sum : 0;
+                    dop_mth_avg[mth] = Qh_a_sum > 0 ? dop_mth_avg[mth] / Qh_a_sum : 0;
                 }
             }
         }
@@ -360,7 +360,7 @@ namespace main
                 Zone zone2 = Program.CALC.getZone(ahu.SelectZone_split[a].ToString());
                 sum += zone2.Qb_a[0];
             }
-            percent = zone.Qb_a[0] / sum; 
+            percent = sum > 0 ? zone.Qb_a[0] / sum : 0;
            return percent;
         }
         private void Cal_Zone_data_(Zone zone, string[][] Value_ce, int n, double[,] Qhb_mth, double[,] theta_ih, double[,] th, double[,] dop_mth, double[] Qh_a, double[] th_op_day, double[] theta_i_h_set, double Qhb_mth_, int mth)
@@ -616,19 +616,19 @@ namespace main
         }
         public void Load_DistributionData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(ProjNum, "Distribution_Form", "배관길이,선형열관류율", "번호 = '" + HeatingNum + "' and 배관유형 ='주배관'");
+            string[][] Value = Program.DB.getValue(ProjNum, "Distribution_Form", "배관길이,선형열관류율", "번호 = '" + HeatingNum + "' and 설비유형='난방' and 배관유형 ='주배관'");
             if (Value.Length > 0)
             {
                 LV = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                 PsiV = Program.UTIL.ToDoubleOrZero(Value[0][1]);
             }
-            Value = Program.DB.getValue(ProjNum, "Distribution_Form", "배관길이,선형열관류율", "번호 =  '" + HeatingNum + "' and 배관유형 ='수직배관'");
+            Value = Program.DB.getValue(ProjNum, "Distribution_Form", "배관길이,선형열관류율", "번호 =  '" + HeatingNum + "' and 설비유형='난방' and 배관유형 ='수직배관'");
             if (Value.Length > 0)
             {
                 LS = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                 PsiS = Program.UTIL.ToDoubleOrZero(Value[0][1]);
             }
-            Value = Program.DB.getValue(ProjNum, "Distribution_Form", "배관길이,선형열관류율", "번호 =  '" + HeatingNum + "' and 배관유형 ='분기관'");
+            Value = Program.DB.getValue(ProjNum, "Distribution_Form", "배관길이,선형열관류율", "번호 =  '" + HeatingNum + "' and 설비유형='난방' and 배관유형 ='분기관'");
             if (Value.Length > 0)
             {
                 LA = Program.UTIL.ToDoubleOrZero(Value[0][0]);
@@ -896,12 +896,12 @@ namespace main
                     string[][] embed = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "종류", "난방시스템 = '" + HeatingNum + "' And 구분 = '" + ceType + "' And 유형 = '천장고4m이하'");
                     if (embed.Length <= 10)
                     {
-                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10이하' And '제어유형 = '" + valveType + "'");
+                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10이하' And 제어유형 = '" + valveType + "'");
                         dtheta_hydr = Program.UTIL.ToDoubleOrZero(hydr[0][0]);
                     }
                     else
                     {
-                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10초과' And '제어유형 = '" + valveType + "'");
+                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10초과' And 제어유형 = '" + valveType + "'");
                         dtheta_hydr = Program.UTIL.ToDoubleOrZero(hydr[0][0]);
                     }
                     dtheta_ce = dtheta_str + dtheta_ctr + dtheta_im + dtheta_rad + dtheta_emb + dtheta_roomaut + dtheta_hydr;
@@ -922,12 +922,12 @@ namespace main
                     string[][] airSup = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "종류", "난방시스템 = '" + HeatingNum + "' And 구분 = '" + ceType + "'");
                     if (airSup.Length <= 10)
                     {
-                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10이하' And '제어유형 = '" + valveType + "'");
+                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10이하' And 제어유형 = '" + valveType + "'");
                         dtheta_hydr = Program.UTIL.ToDoubleOrZero(hydr[0][0]);
                     }
                     else
                     {
-                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10초과' And '제어유형 = '" + valveType + "'");
+                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10초과' And 제어유형 = '" + valveType + "'");
                         dtheta_hydr = Program.UTIL.ToDoubleOrZero(hydr[0][0]);
                     }
                     dtheta_ce = dtheta_str + dtheta_ctr + dtheta_im + dtheta_rad + dtheta_emb + dtheta_roomaut + dtheta_hydr;
@@ -950,12 +950,12 @@ namespace main
                     string[][] AirHU = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "종류", "난방시스템 = '" + HeatingNum + "' And 구분 = '" + ceType + "' And 유형 = '천장고4m이하'");
                     if (AirHU.Length <= 10)
                     {
-                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10이하' And '제어유형 = '" + valveType + "'");
+                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10이하' And 제어유형 = '" + valveType + "'");
                         dtheta_hydr = Program.UTIL.ToDoubleOrZero(hydr[0][0]);
                     }
                     else
                     {
-                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10초과' And '제어유형 = '" + valveType + "'");
+                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10초과' And 제어유형 = '" + valveType + "'");
                         dtheta_hydr = Program.UTIL.ToDoubleOrZero(hydr[0][0]);
                     }
                     dtheta_ce = dtheta_str + dtheta_ctr + dtheta_im + dtheta_rad + dtheta_emb + dtheta_roomaut + dtheta_hydr;
@@ -1003,12 +1003,12 @@ namespace main
                     dtheta_roomaut = 0;
                     if (HighSup.Length <= 10)
                     {
-                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10이하' And '제어유형 = '" + valveType + "'");
+                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10이하' And 제어유형 = '" + valveType + "'");
                         dtheta_hydr = Program.UTIL.ToDoubleOrZero(hydr[0][0]);
                     }
                     else
                     {
-                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10초과' And '제어유형 = '" + valveType + "'");
+                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10초과' And 제어유형 = '" + valveType + "'");
                         dtheta_hydr = Program.UTIL.ToDoubleOrZero(hydr[0][0]);
                     }
                     dtheta_ce = dtheta_str + dtheta_ctr + dtheta_im + dtheta_rad + dtheta_emb + dtheta_roomaut + dtheta_hydr;
@@ -1050,12 +1050,17 @@ namespace main
 
                     Num = Value[n][1];
                     ce_ZoneNum = Value[n][0];
-                    ceSystemNum = Value[n][1].Substring(0, Value[n][1].IndexOf("_"));
+                    int separatorIndex = Value[n][1].IndexOf("_");
+                    ceSystemNum = separatorIndex > 0 ? Value[n][1].Substring(0, separatorIndex) : Value[n][1];
                     ceil_heightType = Value[n][2];
                     sub_ceType = Value[n][3];
                     AddType = Value[n][4];
                     double Zone_Percent = Program.UTIL.ToDoubleOrZero(Value[n][5]);
                     string[][] 일람표정보 = Program.DB.getValue(ProjNum, "User_ce", "온도제어방식", "번호 = '" + ceSystemNum + "'");
+                    if (일람표정보.Length == 0)
+                    {
+                        continue;
+                    }
                     controlType = 일람표정보[0][0];
                     theta = Calc_theta_ce(ceType, sub_ceType, ceSystemNum, ceil_heightType, AddType, roomautoType, valveType);
                     dtheta_ce1 = theta;
@@ -1065,11 +1070,11 @@ namespace main
             }
             if (Now_Check == true)
             {
-                Value = Program.DB.getValue(ProjNum, "Heating_ce_Form", "존번호,공급설비,설치위치,부하율", "난방시스템 = '" + HeatingNum + "' And 공급설비종류 = '" + ce2Type + "'");
+                Value = Program.DB.getValue(ProjNum, "Heating_ce_Form", "존번호,번호,유형,종류,추가유형,부하율", "난방시스템 = '" + HeatingNum + "' And 구분 = '" + ce2Type + "'");
             }
             else
             {
-                Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form_Element", "존번호,공급설비,설치위치,부하율", "난방시스템 = '" + HeatingNum + "' And 공급설비종류 = '" + ce2Type + "'");
+                Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form_Element", "존번호,번호,유형,종류,추가유형,부하율", "난방시스템 = '" + HeatingNum + "' And 구분 = '" + ce2Type + "'");
             }
             ce_Type2.Clear();
             if (Value.Length > 0)
@@ -1085,12 +1090,17 @@ namespace main
 
                     Num = Value[n][1];
                     ce_ZoneNum = Value[n][0];
-                    ceSystemNum = Value[n][1].Substring(0, Value[n][1].IndexOf("_"));
+                    int separatorIndex = Value[n][1].IndexOf("_");
+                    ceSystemNum = separatorIndex > 0 ? Value[n][1].Substring(0, separatorIndex) : Value[n][1];
                     ceil_heightType = Value[n][2];
                     sub_ceType = Value[n][3];
                     AddType = Value[n][4];
                     double Zone_Percent = Program.UTIL.ToDoubleOrZero(Value[n][5]);
                     string[][] 일람표정보 = Program.DB.getValue(ProjNum, "User_ce", "온도제어방식", "번호 = '" + ceSystemNum + "'");
+                    if (일람표정보.Length == 0)
+                    {
+                        continue;
+                    }
                     controlType = 일람표정보[0][0];
                     theta = Calc_theta_ce(ceType, sub_ceType, ceSystemNum, ceil_heightType, AddType, roomautoType, valveType);
                     dtheta_ce2 = theta;
@@ -1249,7 +1259,7 @@ namespace main
                 if (PumpUse != "펌프 있음")
                 {
                     double dPrad = 0;
-                    if (ce1Type == "방열기" || ce2Type == "방열기") { dPrad = 2; }
+                    if (ce1Type == "방열기형" || ce2Type == "방열기형") { dPrad = 2; }
                     double dP = 0.13 * Pump1Head + 4.5 + 1 + 10 + dPrad;
                     double eta = Math.Max(20, -1.403 * Math.Pow(Math.Log(Pump1Volume / 60 * 1000), 2) + 26.35 * Math.Log(Pump1Volume / 60 * 1000) - 61.3) /100;
                     double Phydr = dP * Pump1Volume / 3600;
@@ -1295,10 +1305,16 @@ namespace main
             }
             for (int mth = 0; mth < 12; mth++)
             {
-                e_hydr[mth] = 1 * (Cp1 + Cp2 / beta_h_d[mth]) * 0.25 / 0.25;
-                Wh_hydr[mth] = PumpPower / 1000 * beta_h_d[mth] * th_avg[mth] * fhydr * 1;
-                Wh_d[mth] = Wh_hydr[mth] * e_hydr[mth];
-                Wh_d[mth] = Wh_d[mth] * PumpCount;
+                if (beta_h_d[mth] > 0 && PumpPower > 0 && PumpCount > 0)
+                {
+                    e_hydr[mth] = Cp1 + Cp2 / beta_h_d[mth];
+                    Wh_hydr[mth] = PumpPower / 1000 * beta_h_d[mth] * th_avg[mth] * fhydr;
+                    double pumpEnergy = Wh_hydr[mth] * e_hydr[mth] * PumpCount;
+                    if (double.IsFinite(pumpEnergy) && pumpEnergy > 0)
+                    {
+                        Wh_d[mth] += pumpEnergy;
+                    }
+                }
             }
         }
         public void Calc_beta_s()
@@ -2124,7 +2140,7 @@ namespace main
                         { FC[mth] = 0.1; }
 
                         string[][] Valuef;
-                        if (ce1Type == "복사난방" || ce2Type == "복사난방")
+                        if (ce1Type == "구조체일체형" || ce2Type == "구조체일체형")
                         {
                             Valuef = Program.DB.getValue(DB.type.BaseDB_Heating, "히트펌프부하계수", "값", "구분 ='바닥난방' AND FC ='" + FC[mth] + "'");
                         }
@@ -2341,7 +2357,7 @@ namespace main
                     else{
                         FC[mth] = Qh_outg_sng_i[mth] / Qh_outg_sng_max[mth];
                     }
-                    if(ce1Type=="복사난방" || ce2Type=="복사난방")
+                    if(ce1Type=="구조체일체형" || ce2Type=="구조체일체형")
                     {
                         fpint[mth] = 0.99;
                     }
@@ -2533,7 +2549,7 @@ namespace main
                     {
                         FC[mth] = Qh_outg_sng_i[mth] / Qh_outg_sng_max[mth];
                     }
-                    if (ce1Type == "복사난방" || ce2Type == "복사난방")
+                    if (ce1Type == "구조체일체형" || ce2Type == "구조체일체형")
                     {
                         fpint[mth] = 0.99;
                     }

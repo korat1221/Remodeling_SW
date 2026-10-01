@@ -254,7 +254,7 @@ namespace main.subcontents.HeatingSystem
         private void Load_SaveValue()
         {
             reset();
-            String[][] Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,난방시스템,유형,구분,종류", "난방시스템 = '" + SystemNum + "' And 구분 = '" + ceType + "'");
+            String[][] Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,난방시스템,유형,구분,종류,번호", "난방시스템 = '" + SystemNum + "' And 구분 = '" + ceType + "'");
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
@@ -272,11 +272,14 @@ namespace main.subcontents.HeatingSystem
                     string zonenumber = ceZone_dataGridView.Rows[ZoneRow].Cells[1].Value.ToString();
                     string[][] Value2 = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "종류,번호", "존번호 = '" + zonenumber + "' And 난방시스템 = '" + SystemNum + "' And 구분 = '" + ceType + "'");
                     ceZone_dataGridView.Rows[ZoneRow].Cells[6].Value = Value2.Length;
-                    ceZone_dataGridView.Rows[AddRowNum].Cells[0].Value = ceZone_dataGridView.Rows[ZoneRow].Cells[0].Value + "_" + Value[n][3].Substring(Value[n][3].IndexOf("_") + 1, 1);
+                    string equipmentNumber = Value[n][5];
+                    string equipmentBaseNumber = equipmentNumber.Contains("_") ? equipmentNumber.Substring(0, equipmentNumber.LastIndexOf("_")) : equipmentNumber;
+                    string equipmentSequence = equipmentNumber.Contains("_") ? equipmentNumber.Substring(equipmentNumber.LastIndexOf("_") + 1) : "1";
+                    ceZone_dataGridView.Rows[AddRowNum].Cells[0].Value = ceZone_dataGridView.Rows[ZoneRow].Cells[0].Value + "_" + equipmentSequence;
 
                     DataGridViewComboBoxCell 일람표comboBox = new DataGridViewComboBoxCell();
 
-                    double check = Convert.ToDouble(ceZone_dataGridView.Rows[AddRowNum].Cells[5].Value);
+                    double check = Convert.ToDouble(ceZone_dataGridView.Rows[ZoneRow].Cells[5].Value);
                     if (check <= 4)
                     {
                         String[][] 일람표 = Program.DB.getValue(DB.type.ProjDB, "User_ce", "명칭", "유형 = '천장고4m이하' AND 구분 = '" + ceType + "' AND 난방냉방 !='냉방'");
@@ -300,6 +303,11 @@ namespace main.subcontents.HeatingSystem
                         }
                     }
                     ceZone_dataGridView.Rows[AddRowNum].Cells[8] = 일람표comboBox;
+                    String[][] selectedEquipment = Program.DB.getValue(DB.type.ProjDB, "User_ce", "명칭", "번호 = '" + equipmentBaseNumber + "'");
+                    if (selectedEquipment.Length > 0)
+                    {
+                        ceZone_dataGridView.Rows[AddRowNum].Cells[8].Value = selectedEquipment[0][0];
+                    }
                     
                     DataGridViewRow AddRow = ceZone_dataGridView.Rows[AddRowNum];
                     ceZone_dataGridView.Rows.RemoveAt(AddRowNum);

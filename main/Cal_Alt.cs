@@ -1275,11 +1275,11 @@ namespace main
             string[][] Value_ce = null;
             if (Now_Check == true)
             {
-                Value_ce = Program.DB.getValue(ProjNum, "Heating_ce_Form", "공급설비,존번호,부하율", "난방시스템 = '" + Heating1.HeatingNum + "'");
+                Value_ce = Program.DB.getValue(ProjNum, "Heating_ce_Form", "번호,존번호,부하율", "난방시스템 = '" + Heating1.HeatingNum + "'");
             }
             else
             {
-                Value_ce = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form_Element", "공급설비,존번호,부하율", "난방시스템 = '" + Heating1.HeatingNum + "'");
+                Value_ce = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form_Element", "번호,존번호,부하율", "난방시스템 = '" + Heating1.HeatingNum + "'");
             }
 
             Zone zone = null;
@@ -1318,6 +1318,11 @@ namespace main
                             }
                         }
                     }
+                }
+
+                if (Qb_a_sum <= 0)
+                {
+                    return;
                 }
 
                 for (int n = 0; n < Value_ce.Length; n++)

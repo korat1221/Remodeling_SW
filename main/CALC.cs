@@ -1014,8 +1014,10 @@ namespace main
 
                         for (int a = 0; a < ce.Length; a++)
                         {
-                            string[][] ce2 = Program.DB.getValue(ProjNum, "User_ce", "용량_난방", "번호='" + ce[a][0].Substring(0, 4) + "'");
-                            if (ce2[0][0] != "")
+                            int separatorIndex = ce[a][0].IndexOf("_");
+                            string equipmentNumber = separatorIndex > 0 ? ce[a][0].Substring(0, separatorIndex) : ce[a][0];
+                            string[][] ce2 = Program.DB.getValue(ProjNum, "User_ce", "용량_난방", "번호='" + equipmentNumber + "'");
+                            if (ce2.Length > 0 && ce2[0][0] != "")
                             {
                                 가동비율[a] = Program.UTIL.ToDoubleOrZero(ce[a][2]) * Program.UTIL.ToDoubleOrZero(ce2[0][0]);
                                 가동비율_tot += 가동비율[a];
@@ -1030,7 +1032,7 @@ namespace main
 
                         for (int a = 0; a < ce.Length; a++)
                         {
-                            if (HeatingNum[i][0] == ce[a][3])
+                            if (HeatingNum[i][0] == ce[a][3] && 가동비율_tot > 0)
                             {
 
                                 Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,프로젝트유형,난방시스템,번호,부하율",
@@ -1049,72 +1051,48 @@ namespace main
         {
             Program.DB.deleteTable(DB.type.ProjDB, "Heating_ce_Form_Element");
             Program.DB.initTable(DB.type.ProjDB, "Heating_ce_Form_Element");
-            string[][] Zone = Program.DB.getValue(ProjNum, "ZoneGeneral_Form", "존번호,기존존", "냉난방유무 ='냉난방' OR 냉난방유무 = '난방'");
             string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,기존존", "");
-            if (Zone.Length > 0 && PostZone.Length >0)
+            string[][] ce = Program.DB.getValue(ProjNum, "Heating_ce_Form", "번호,유형,구분,종류,난방시스템,추가유형,가동시간,부하율,존번호", "");
+            if (ce.Length > 0 && PostZone.Length > 0)
             {
-                double[] 가동비율_tot_Element = new double[PostZone.Length];
                 for (int k = 0; k < PostZone.Length; k++)
                 {
-                    for (int n = 0; n < Zone.Length; n++)
+                    ArrayList existingZones = Split_(PostZone[k][1]);
+                    double loadRatioTotal = 0;
+
+                    for (int a = 0; a < ce.Length; a++)
                     {
-                        string[][] ce = Program.DB.getValue(ProjNum, "Heating_ce_Form", "공급설비,공급설비종류,가동시간,난방시스템,설치위치", "존번호 = '" + Zone[n][0] + "'");
-                        for (int a = 0; a < ce.Length; a++)
+                        if (existingZones.Contains(ce[a][8]))
                         {
-
-                            ArrayList split = Split_(PostZone[k][1]);
-                            for (int x = 0; x < split.Count; x++)
+                            string[][] value = Program.DB.getValue(ProjNum, "Zone_52016_Result", "Qb_a", "난방_냉방='난방' and 월='1월' and 존번호='" + ce[a][8] + "'");
+                            if (value.Length > 0)
                             {
-                                if (split[x].ToString() == Zone[n][0])
-                                {
+                                loadRatioTotal += Program.UTIL.ToDoubleOrZero(value[0][0]) * Program.UTIL.ToDoubleOrZero(ce[a][7]);
+                            }
+                        }
+                    }
 
-                                    string[][] value = Program.DB.querySQL(ProjNum, "select a.Qb_a, b.부하율 from Zone_52016_Result as a Inner Join Heating_ce_Form as b on a.존번호= b.존번호 where a.난방_냉방='난방' and 월='1월' and a.존번호='" + split[x].ToString() + "' and b.공급설비='" + ce[a][0] + "'");
-                                    if (value.Length > 0)
-                                    {
-                                        가동비율_tot_Element[k] += Program.UTIL.ToDoubleOrZero(value[0][0]) * Program.UTIL.ToDoubleOrZero(value[0][1]);
-                                    }
-                                    goto goto_End;
+                    if (loadRatioTotal <= 0)
+                    {
+                        continue;
+                    }
+
+                    for (int a = 0; a < ce.Length; a++)
+                    {
+                        if (existingZones.Contains(ce[a][8]))
+                        {
+                            string[][] value = Program.DB.getValue(ProjNum, "Zone_52016_Result", "Qb_a", "난방_냉방='난방' and 월='1월' and 존번호='" + ce[a][8] + "'");
+                            if (value.Length > 0)
+                            {
+                                double loadRatio = Program.UTIL.ToDoubleOrZero(value[0][0]) * Program.UTIL.ToDoubleOrZero(ce[a][7]);
+                                if (loadRatio > 0)
+                                {
+                                    Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form_Element",
+                                        "존번호,난방시스템,유형,구분,종류,번호,추가유형,가동시간,부하율",
+                                        "'" + ce[a][8] + "','" + ce[a][4] + "','" + ce[a][1] + "','" + ce[a][2] + "','" + ce[a][3] + "','" + ce[a][0] + "','" + ce[a][5] + "','" + ce[a][6] + "','" + (loadRatio / loadRatioTotal) + "'",
+                                        "존번호,난방시스템,번호");
                                 }
                             }
-                         goto_End: a = a;
-                        }
-                    }                
-                }
-                for (int k = 0; k < PostZone.Length; k++)
-                {
-                    for (int n = 0; n < Zone.Length; n++)
-                    {
-
-                        string[][] ce = Program.DB.getValue(ProjNum, "Heating_ce_Form", "공급설비,공급설비종류,가동시간,난방시스템,설치위치", "존번호 = '" + Zone[n][0] + "'");
-                        double[] 가동비율 = new double[ce.Length];
-                        for (int a = 0; a < ce.Length; a++)
-                        {
-
-                            ArrayList split = Split_(PostZone[k][1]);
-                            for (int x = 0; x < split.Count; x++)
-                            {
-                                if (split[x].ToString() == Zone[n][0])
-                                {
-
-                                    string[][] value = Program.DB.querySQL(ProjNum, "select a.Qb_a, b.부하율 from Zone_52016_Result as a Inner Join Heating_ce_Form as b on a.존번호= b.존번호 where a.난방_냉방='난방' and 월='1월' and a.존번호='" + split[x].ToString() + "' and b.공급설비='" + ce[a][0] + "'");
-                                    if (value.Length > 0)
-                                    {
-                                        가동비율[a] = Program.UTIL.ToDoubleOrZero(value[0][0]) * Program.UTIL.ToDoubleOrZero(value[0][1]);
-                                    }
-                                    goto goto_End;
-                                }
-                            }
-                         goto_End: a = a;
-                        }
-                        for (int a = 0; a < ce.Length; a++)
-                        {
-                            if(가동비율[a] >0 && 가동비율_tot_Element[k] >0)
-                            {
-                                Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form_Element", "존번호,난방시스템,공급설비종류,공급설비,설치위치,가동시간,부하율",
-                            "'" + Zone[n][0] + "','"
-                            + ce[a][3] + "','" + ce[a][1] + "','" + ce[a][0] + "','" + ce[a][4] + "','" + ce[a][2] + "','"
-                            + (가동비율[a] / 가동비율_tot_Element[k]) + "'", "존번호,난방시스템,공급설비");
-                            }                            
                         }
                     }
                 }

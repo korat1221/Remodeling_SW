@@ -221,7 +221,7 @@ namespace main.contents.Result
                     }
                     ZoneData[2].Add(new { idx = i, val = Program.UTIL.doubleComa((Zmax/1000).ToString(), 1) });
                     ZoneData[5].Add(new { idx = i, val = Program.UTIL.doubleComa((ZArea).ToString(), 1) });
-                    ZoneValue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct 공급설비종류 From Heating_ce_Form Where 난방시스템='" + Num + "' and (Not 공급설비종류='CAV유닛' and Not 공급설비종류 ='VAV유닛' and Not 공급설비종류='파워팬유닛')");
+                    ZoneValue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct 종류 From Heating_ce_Form Where 난방시스템='" + Num + "' and 구분 <> '공조형'");
                    if(ZoneValue.Length > 0)
                     {
                         ZoneData[3].Add(new { idx = i, val = ZoneValue[0][0] });
@@ -262,7 +262,7 @@ namespace main.contents.Result
                     }
                     ZahuData[2].Add(new { idx = i, val = Program.UTIL.doubleComa((Zmax / 1000).ToString(), 1) });
                     ZahuData[5].Add(new { idx = i, val = Program.UTIL.doubleComa((ZArea).ToString(), 1) });
-                    ZoneValue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct 공급설비종류 From Heating_ce_Form Where 난방시스템='" + Num + "' and (공급설비종류='CAV유닛' OR 공급설비종류 ='VAV유닛' OR 공급설비종류='파워팬유닛')");
+                    ZoneValue = Program.DB.querySQL(DB.type.ProjDB, "Select Distinct 종류 From Heating_ce_Form Where 난방시스템='" + Num + "' and 구분 = '공조형'");
                     if (ZoneValue.Length > 0)
                     {
                         ZahuData[3].Add(new { idx = i, val = ZoneValue[0][0] });

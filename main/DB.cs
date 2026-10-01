@@ -175,7 +175,7 @@ namespace main
              //ALT
             {"FinalEnergy_Result_Rule", "CREATE TABLE IF NOT EXISTS FinalEnergy_Result_Rule (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32),검토유형 VARCHAR (32),번호 VARCHAR (32),월 VARCHAR (32),연료 VARCHAR (32),난방 REAL,냉방 REAL,급탕 REAL,조명 REAL,공조 REAL,기저에너지 REAL,신재생에너지 REAL,총에너지소요량 REAL)"},
             {"FinalEnergy_Result_Element", "CREATE TABLE IF NOT EXISTS FinalEnergy_Result_Element (ID INTEGER PRIMARY KEY AUTOINCREMENT,프로젝트번호 VARCHAR (32),프로젝트유형 VARCHAR (32),검토유형 VARCHAR (32),번호 VARCHAR (32),월 VARCHAR (32),연료 VARCHAR (32),난방 REAL,냉방 REAL,급탕 REAL,조명 REAL,공조 REAL,기저에너지 REAL,신재생에너지 REAL,총에너지소요량 REAL)"},
-            {"Heating_ce_Form_Element", "CREATE TABLE IF NOT EXISTS Heating_ce_Form_Element (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32),난방시스템 VARCHAR (32),공급설비종류 VARCHAR (32),공급설비 VARCHAR (32),설치위치 VARCHAR (32),가동시간 VARCHAR (32),부하율 VARCHAR (32))"},
+            {"Heating_ce_Form_Element", "CREATE TABLE IF NOT EXISTS Heating_ce_Form_Element (ID INTEGER PRIMARY KEY AUTOINCREMENT,존번호 VARCHAR (32),프로젝트유형 VARCHAR (32),난방시스템 VARCHAR (32),유형 VARCHAR (32),구분 VARCHAR (32),종류 VARCHAR (32),번호 VARCHAR (32),추가유형 VARCHAR (32),가동시간 VARCHAR (32),부하율 VARCHAR (32))"},
             {"Heating_Result_Element" ,"CREATE TABLE IF NOT EXISTS Heating_Result_Element (ID INTEGER PRIMARY KEY AUTOINCREMENT,검토유형 VARCHAR (32),난방시스템 VARCHAR (32),기존존번호 VARCHAR (32),계획존번호 VARCHAR (32),공급설비 VARCHAR (32),부하율 VARCHAR (32),연료 VARCHAR (32),난방소요량 VARCHAR (32))"},
             {"Cooling_Result_Element" ,"CREATE TABLE IF NOT EXISTS Cooling_Result_Element (ID INTEGER PRIMARY KEY AUTOINCREMENT,검토유형 VARCHAR (32),냉방시스템 VARCHAR (32),기존존번호 VARCHAR (32),계획존번호 VARCHAR (32),공급설비 VARCHAR (32),부하율 VARCHAR (32),연료 VARCHAR (32),냉방소요량 VARCHAR (32))"},
             {"DHWSystem_Result_Element" ,"CREATE TABLE IF NOT EXISTS DHWSystem_Result_Element (ID INTEGER PRIMARY KEY AUTOINCREMENT,검토유형 VARCHAR (32),급탕시스템 VARCHAR (32),기존존번호 VARCHAR (32),계획존번호 VARCHAR (32),연료 VARCHAR (32),급탕소요량 VARCHAR (32))"},
@@ -496,6 +496,10 @@ namespace main
                         continue;
                     }
                     SecureSQLite.ExecuteSQL((int)dbType, "ALTER TABLE " + table + " ADD COLUMN " + colName + " " + colType);
+                    if (dbType == type.ProjDB)
+                    {
+                        projDirty = true;
+                    }
                 }
             }
             catch (Exception)

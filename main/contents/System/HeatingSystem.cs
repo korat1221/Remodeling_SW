@@ -261,7 +261,7 @@ namespace main.contents
                     double Qba = 0, Qmax = 0, Area = 0;
                     for (int a = 0; a < SelectZone_split.Count; a++)
                     {
-                        string[][] 요구량 = Program.DB.getValue(DB.type.ProjDB, "Zone_HCneed_Result", "Qb_a, Q_max", "번호 ='" + SelectZone_split[a].ToString() + "' AND 난방_냉방 = '난방'");
+                        string[][] 요구량 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_52016_Result", "Qb_a, Q_max", "존번호 ='" + SelectZone_split[a].ToString() + "' AND 난방_냉방 = '난방'");
                         if (요구량.Length > 0)
                         {
                             Qba += Program.UTIL.ToDoubleOrZero(요구량[0][0]);
@@ -2880,7 +2880,7 @@ namespace main.contents
         }
         private void Load_ce1Zone(String ce1Type)
         {
-            String[][] Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Heating_ce_Form", "존번호", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + ce1Type + "'");
+            String[][] Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Heating_ce_Form", "존번호", "난방시스템 = '" + Num + "' And 구분 = '" + ce1Type + "'");
             if (Value.Length > 0)
             {
                 if (Value.Length == 1)
@@ -2923,7 +2923,7 @@ namespace main.contents
         }
         private void Load_ce2Zone(String ce2Type)
         {
-            String[][] Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Heating_ce_Form", "존번호", "난방시스템 = '" + Num + "' And 공급설비종류 = '" + ce2Type + "'");
+            String[][] Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Heating_ce_Form", "존번호", "난방시스템 = '" + Num + "' And 구분 = '" + ce2Type + "'");
             if (Value.Length > 0)
             {
                 if (Value.Length == 1)
@@ -4095,15 +4095,14 @@ namespace main.contents
                     for (int n = 0; n < ce_dataGridView.Rows.Count; n++)
                     {
                         String 존번호, 공급설비;
-                        int index = ce_dataGridView.Rows[n].Cells[1].Value.ToString().IndexOf("CE");
-                        존번호 = ce_dataGridView.Rows[n].Cells[7].Value.ToString();
-                        공급설비 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(index, ce_dataGridView.Rows[n].Cells[1].Value.ToString().Length - index);
+                        존번호 = ce_dataGridView.Rows[n].Cells[8].Value.ToString();
+                        공급설비 = ce_dataGridView.Rows[n].Cells[1].Value.ToString();
 
-                        string[][] CE_Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "설치위치,가동시간", "난방시스템 = '" + ID + "' And 존번호 = '" + 존번호 + "' And 공급설비 = '" + 공급설비 + "'");
+                        string[][] CE_Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "추가유형,가동시간", "난방시스템 = '" + ID + "' And 존번호 = '" + 존번호 + "' And 번호 = '" + 공급설비 + "'");
                         if (CE_Value.Length > 0)
                         {
-                            ce_dataGridView.Rows[n].Cells[7].Value = CE_Value[0][0].ToString();
-                            ce_dataGridView.Rows[n].Cells[8].Value = CE_Value[0][1].ToString();
+                            ce_dataGridView.Rows[n].Cells[9].Value = CE_Value[0][0].ToString();
+                            ce_dataGridView.Rows[n].Cells[10].Value = CE_Value[0][1].ToString();
                         }
                     }
                 }
@@ -4122,15 +4121,14 @@ namespace main.contents
                     for (int n = 0; n < ce_dataGridView.Rows.Count; n++)
                     {
                         String 존번호, 공급설비;
-                        int index = ce_dataGridView.Rows[n].Cells[1].Value.ToString().IndexOf("CE");
-                        존번호 = ce_dataGridView.Rows[n].Cells[7].Value.ToString();
-                        공급설비 = ce_dataGridView.Rows[n].Cells[1].Value.ToString().Substring(index, ce_dataGridView.Rows[n].Cells[1].Value.ToString().Length - index);
+                        존번호 = ce_dataGridView.Rows[n].Cells[8].Value.ToString();
+                        공급설비 = ce_dataGridView.Rows[n].Cells[1].Value.ToString();
 
-                        string[][] CE_Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "설치위치,가동시간", "난방시스템 = '" + ID + "' And 존번호 = '" + 존번호 + "' And 공급설비 = '" + 공급설비 + "'");
+                        string[][] CE_Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "추가유형,가동시간", "난방시스템 = '" + ID + "' And 존번호 = '" + 존번호 + "' And 번호 = '" + 공급설비 + "'");
                         if (CE_Value.Length > 0)
                         {
-                            ce_dataGridView.Rows[n].Cells[7].Value = CE_Value[0][0].ToString();
-                            ce_dataGridView.Rows[n].Cells[8].Value = CE_Value[0][1].ToString();
+                            ce_dataGridView.Rows[n].Cells[9].Value = CE_Value[0][0].ToString();
+                            ce_dataGridView.Rows[n].Cells[10].Value = CE_Value[0][1].ToString();
                         }
                     }
                 }
@@ -4582,7 +4580,7 @@ namespace main.contents
                 if (k == 0) 배관유형 = "주배관";
                 else if (k == 1) 배관유형 = "수직배관";
                 else 배관유형 = "분기관";
-                Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,단열재,열전도율", "'" + Num + "','냉방','" + 배관유형 + "','" + PipeIns + "', '" + InsDB_form.Select[4] + "'", "번호,배관유형");
+                Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,단열재,열전도율", "'" + Num + "','난방','" + 배관유형 + "','" + PipeIns + "', '" + InsDB_form.Select[4] + "'", "번호,배관유형");
             }
 
             Create_Pipe_Table();

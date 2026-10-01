@@ -3024,7 +3024,7 @@ namespace main.contents
                     else if (type == "천장고4m초과")
                     {
                         DataGridViewComboBoxCell CEcategory_comboBox = new DataGridViewComboBoxCell();
-                        CEcategory_comboBox.Items.AddRange(new string[] { "구조체일체형", "공조형"});
+                        CEcategory_comboBox.Items.AddRange(new string[] { "방열기형", "구조체일체형", "공조형"});
                         ce_dataGridView.Rows[e.RowIndex].Cells[5] = CEcategory_comboBox;
                     }
                    
@@ -3039,6 +3039,7 @@ namespace main.contents
                     switch (heightType,categoryType)
                     {
                         case ("천장고4m이하", "방열기형"):
+                        case ("천장고4m초과", "방열기형"):
                             공급설비종류comboBox.Items.AddRange(new string[] { "방열기" });
                             string[][] ctrValue = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "제어유형", "구분 = '방열기형' and 온도차 ='Dtheta_ctr'");
                             if (ctrValue.Length > 0)
