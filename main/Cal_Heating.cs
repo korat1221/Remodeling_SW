@@ -1,12 +1,13 @@
-using main.subcontents.EquipmentList;
+using HidSharp.Utility;
 using main.subcontents;
+using main.subcontents.EquipmentList;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
+using System.ComponentModel;
 using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
-using System.ComponentModel;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace main
@@ -24,10 +25,10 @@ namespace main
         String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; int Pump1Count, Pump2Count; double Pump1Volume, Pump2Volume,Pump1Head,Pump2Head;
         String GPumpMethod, GPump1, GPump2, GPump1Valve, GPump2Valve, GPump1Control, GPump2Control; int GPump1Count, GPump2Count; double GPump1Volume, GPump2Volume, GPump1Head, GPump2Head;
         public String ce1Type, ce2Type; int ce_SelectRow;
+        String room1autoType, room2autoType, valve1Type, valve2Type; //공급설비의 제어자동화유형, 유량밸런스 유형
         public ArrayList ce_Type1 = new ArrayList(); public ArrayList ce_Type2 = new ArrayList(); public ArrayList Pump = new ArrayList();
         String StorageUse, StoragePumpUse, StoragePump; public double Vs;
         String[] SystemType = { "보일러", "히트펌프", "흡수식온수기", "지역난방", "태양열시스템,연료전지" };
-        String[] ceType = { "실내기", "방열기", "팬코일유닛", "파워팬유닛", "복사난방" };
         double PipeD, PipeInsD, PipeIns_Ramda;
         double LV = 0, LS = 0, LA = 0; //Distribution Data
         double PsiV = 0, PsiS = 0, PsiA = 0;//Distribution Data
@@ -407,25 +408,17 @@ namespace main
         //난방설비 일반정보 불러오기 
         public void Load_HeatingGeneral(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "설치위치,공급환수온도,복합설비유무,주요설비,보조설비1,보조설비2", "번호 = '" + HeatingNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "설치위치,복합설비유무,주요설비,보조설비1,보조설비2,공급온도,환수온도", "번호 = '" + HeatingNum + "'");
             if (Value.Length > 0)
             {
                 SystemLoacation = Value[0][0];
-                SLRL = Value[0][1];
-                if (SLRL != null && SLRL != "")
-                {
-                    string[][] Value2 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급환수온도", "공급온도,환수온도", "공급환수온도 = '" + SLRL + "'");
-                    if (Value2.Length > 0)
-                    {
-                        theta_w_flw = Program.UTIL.ToDoubleOrZero(Value2[0][0]);
-                        theta_w_ret = Program.UTIL.ToDoubleOrZero(Value2[0][1]);
-                    }
-                }
-
-                Complex = Value[0][2];
-                MainSystem = Value[0][3];
-                Sub1System = Value[0][4];
-                Sub2System = Value[0][5];
+                //SLRL = Value[0][1];
+                Complex = Value[0][1];
+                MainSystem = Value[0][2];
+                Sub1System = Value[0][3];
+                Sub2System = Value[0][4];
+                theta_w_flw = Program.UTIL.ToDoubleOrZero(Value[0][5]);
+                theta_w_ret = Program.UTIL.ToDoubleOrZero(Value[0][6]);
             }
         }
         //보일러 정보 불러오기
@@ -623,33 +616,39 @@ namespace main
         }
         public void Load_DistributionData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(ProjNum, "Distribution_Form", "배관유형,배관길이,선형열관류율", "번호 = '" + HeatingNum + "' and 배관유형 ='주배관'");
+            string[][] Value = Program.DB.getValue(ProjNum, "Distribution_Form", "배관길이,선형열관류율", "번호 = '" + HeatingNum + "' and 배관유형 ='주배관'");
             if (Value.Length > 0)
             {
-                LV = Program.UTIL.ToDoubleOrZero(Value[0][1]);
-                PsiV = Program.UTIL.ToDoubleOrZero(Value[0][2]);
+                LV = Program.UTIL.ToDoubleOrZero(Value[0][0]);
+                PsiV = Program.UTIL.ToDoubleOrZero(Value[0][1]);
             }
-            Value = Program.DB.getValue(ProjNum, "Distribution_Form", "배관유형,배관길이,선형열관류율", "번호 =  '" + HeatingNum + "' and 배관유형 ='수직배관'");
+            Value = Program.DB.getValue(ProjNum, "Distribution_Form", "배관길이,선형열관류율", "번호 =  '" + HeatingNum + "' and 배관유형 ='수직배관'");
             if (Value.Length > 0)
             {
-                LS = Program.UTIL.ToDoubleOrZero(Value[0][1]);
-                PsiS = Program.UTIL.ToDoubleOrZero(Value[0][2]);
+                LS = Program.UTIL.ToDoubleOrZero(Value[0][0]);
+                PsiS = Program.UTIL.ToDoubleOrZero(Value[0][1]);
             }
-            Value = Program.DB.getValue(ProjNum, "Distribution_Form", "배관유형,배관길이,선형열관류율", "번호 =  '" + HeatingNum + "' and 배관유형 ='분기관'");
+            Value = Program.DB.getValue(ProjNum, "Distribution_Form", "배관길이,선형열관류율", "번호 =  '" + HeatingNum + "' and 배관유형 ='분기관'");
             if (Value.Length > 0)
             {
-                LA = Program.UTIL.ToDoubleOrZero(Value[0][1]);
-                PsiA = Program.UTIL.ToDoubleOrZero(Value[0][2]);
+                LA = Program.UTIL.ToDoubleOrZero(Value[0][0]);
+                PsiA = Program.UTIL.ToDoubleOrZero(Value[0][1]);
             }
+
         }
         public void Load_ceData(string ProjNum)
         {
-            string[][] Value = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "공급설비1종류,공급설비2종류", "번호 = '" + HeatingNum + "'");
+            string[][] Value = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "공급설비1종류,생산설비1제어,유량밸런스1,공급설비2종류,생산설비2제어,유량밸런스2", "번호 = '" + HeatingNum + "'");
             if (Value.Length > 0)
             {
                 ce1Type = Value[0][0];
-                ce2Type = Value[0][1];
+                room1autoType = Value[0][1];
+                valve1Type = Value[0][2];
+                ce2Type = Value[0][3];
+                room2autoType = Value[0][4];
+                valve2Type = Value[0][5];
             }
+
         }
         public void Load_StorageData(string ProjNum)
         {
@@ -665,7 +664,7 @@ namespace main
                 }
             }
         }
-        public void Load_PipeData(string ProjNum)
+        public void Load_PipeData(string ProjNum) //수정필요함
         {
             string[][] Value = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "배관관경,배관보온두께,보온열전도율,배관보온재,노출배관길이", "번호 = '" + HeatingNum + "'");
             if (Value.Length > 0)
@@ -834,88 +833,190 @@ namespace main
                 }
             }
         }
-        public double Calc_theta_ce(String ceType, String SLRL, String 설치위치, String 제어방식)
+        public double Calc_theta_ce(String ceType, String  sub_ceType, String ce_number, String ceil_heightType, String addtype, String roomauto, String valveType) //구분,종류,번호,추가유형,자동제어,유량밸런스밸브
         {
-            double dtheta_str1 = 0.0, dtheta_str2 = 0.0, dtheta_ctr = 0.0, dtheta_im_ctr = 0.0, dtheta_roomaut = 0.0, dtheta_hydr = 0.4, theta_dash_str = 0.0;
-            double dtheta_emb1 = 0.0, dtheta_emb2 = 0.0, dtheta_im_emt = 0.0, dtheta_rad = 0.0;
-            double theta_ce =0;
-            if (ceType == "방열기" || ceType == "실내기")
+            double dtheta_str = 0;
+            double dtheta_ctr = 0;
+            double dtheta_im = 0;
+            double dtheta_rad = 0;
+            double dtheta_emb = 0;
+            double dtheta_roomaut = 0;
+            double dtheta_hydr = 0;
+            double dtheta_ce = 0;
+            
+            switch (ceType)
             {
+                case "방열기형":
+                    string[][] radiator = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "종류", "난방시스템 = '" + HeatingNum + "'");
+                    double dtheta_str1 = 0;
+                    if (theta_w_flw <= 30) dtheta_str1 = 0.4 + (0.5 - 0.4) * (theta_w_flw - 20) / (30 - 20);
+                    else if (theta_w_flw <= 42.5) dtheta_str1 = 0.5 + (0.7 - 0.5) * (theta_w_flw - 30) / (42.5 - 30);
+                    else dtheta_str1 = 0.7 + (1.2 - 0.7) * (theta_w_flw - 42.5) / (60 - 42.5);
 
-                dtheta_emb1 = 0; dtheta_emb2 = 0; dtheta_im_emt = -0.3; dtheta_rad = 0; dtheta_im_ctr = 0;
+                    string[][] str2 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '" + ceType + "' And 제어유형 = '" + addtype + "'");
+                    dtheta_str = 0.5 * (dtheta_str1 + Program.UTIL.ToDoubleOrZero(str2[0][0]));
 
-                string[][] Value_str1 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "설비유형 = '" + ceType + "' AND 구분 ='" + SLRL + "' And 온도변수 = 'dtheta_str1'");
-                if (Value_str1.Length > 0)
-                { dtheta_str1 = Program.UTIL.ToDoubleOrZero(Value_str1[0][0]); }
+                    string[][] ctrType = Program.DB.getValue(DB.type.ProjDB, "User_ce", "온도제어방식", "번호 = '" + ce_number + "'");
+                    string[][] ctr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '" + ceType + "'  And 제어유형 = '" + ctrType[0][0] + "'");
+                    dtheta_ctr = Program.UTIL.ToDoubleOrZero(ctr[0][0]);
 
-                string[][] Value_str2 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "설비유형 = '" + ceType + "' AND 구분 ='" + 설치위치 + "'And 온도변수 = 'dtheta_str2'");
-                if (Value_str2.Length > 0)
-                { dtheta_str2 = Program.UTIL.ToDoubleOrZero(Value_str2[0][0]); }
+                    dtheta_im = 0;
+                    dtheta_rad = 0;
+                    dtheta_emb = 0;
+                    string[][] _roomauto = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 =  '" + ceType + "'  And 제어유형 = '" + roomauto + "'");
+                    dtheta_roomaut = Program.UTIL.ToDoubleOrZero(_roomauto[0][0]);
+                    if (radiator.Length <= 10)
+                    {
+                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10이하' And 제어유형 = '" + valveType + "'");
+                        dtheta_hydr = Program.UTIL.ToDoubleOrZero(hydr[0][0]);
+                    }
+                    else
+                    {
+                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10초과' And 제어유형 = '" + valveType + "'");
+                        dtheta_hydr = Program.UTIL.ToDoubleOrZero(hydr[0][0]);
+                    }
+                    dtheta_ce = dtheta_str + dtheta_ctr + dtheta_im + dtheta_rad + dtheta_emb + dtheta_roomaut + dtheta_hydr;
+
+                    break;
+                case "구조체일체형":
+                    string[][] str = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '" + ceType + "' And 온도차 = 'Dtheta_str' And 항목 = '" + sub_ceType + "'");
+                    dtheta_str = Program.UTIL.ToDoubleOrZero(str[0][0]);
+
+                    string[][] emb_ctrType = Program.DB.getValue(DB.type.ProjDB, "User_ce", "온도제어방식", "번호 = '" + ce_number + "'");
+                    string[][] ctr_value = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '" + ceType + "' And 제어유형 = '" + emb_ctrType[0][0] + "'");
+                    dtheta_ctr = Program.UTIL.ToDoubleOrZero(ctr_value[0][0]);
+                    dtheta_im = -0.2;
+                    dtheta_rad = 0;
+                    string[][] emb1 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '" + ceType + "'And 온도차 = 'Dtheta_emb1' And 항목 = '" + sub_ceType + "'");
+                    string[][] emb2 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '" + ceType + "'And 제어유형 = '" + addtype + "'");
+                    dtheta_emb = 0.5 * (Program.UTIL.ToDoubleOrZero(emb1[0][0]) + Program.UTIL.ToDoubleOrZero(emb2[0][0]));
+
+                    string[][] _roomauto_value = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '" + ceType + "' And 제어유형 = '" + roomauto + "'");
+                    dtheta_roomaut = Program.UTIL.ToDoubleOrZero(_roomauto_value[0][0]);
+                    string[][] embed = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "종류", "난방시스템 = '" + HeatingNum + "' And 구분 = '" + ceType + "' And 유형 = '천장고4m이하'");
+                    if (embed.Length <= 10)
+                    {
+                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10이하' And '제어유형 = '" + valveType + "'");
+                        dtheta_hydr = Program.UTIL.ToDoubleOrZero(hydr[0][0]);
+                    }
+                    else
+                    {
+                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10초과' And '제어유형 = '" + valveType + "'");
+                        dtheta_hydr = Program.UTIL.ToDoubleOrZero(hydr[0][0]);
+                    }
+                    dtheta_ce = dtheta_str + dtheta_ctr + dtheta_im + dtheta_rad + dtheta_emb + dtheta_roomaut + dtheta_hydr;
+                    break;
+                case "대류형":
+                    string[][] airstr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '" + ceType + "' And 온도차 = 'Dtheta_str' And 항목 = '" + sub_ceType + "'");
+                    dtheta_str = Program.UTIL.ToDoubleOrZero(airstr[0][0]);
+
+                    string[][] air_ctrType = Program.DB.getValue(DB.type.ProjDB, "User_ce", "온도제어방식", "번호 = '" + ce_number + "'");
+                    string[][] air_ctr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '" + ceType + "' And 항목 = '" + sub_ceType + "' And 제어유형 = '" + air_ctrType[0][0] + "'");
+                    dtheta_ctr = Program.UTIL.ToDoubleOrZero(air_ctr[0][0]);
+                    dtheta_im = 0;
+                    dtheta_rad = 0;
+                    dtheta_emb = 0;
+
+                    string[][] air_roomauto = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '" + ceType + "' And 제어유형 = '" + roomauto + "'");
+                    dtheta_roomaut = Program.UTIL.ToDoubleOrZero(air_roomauto[0][0]);
+                    string[][] airSup = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "종류", "난방시스템 = '" + HeatingNum + "' And 구분 = '" + ceType + "'");
+                    if (airSup.Length <= 10)
+                    {
+                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10이하' And '제어유형 = '" + valveType + "'");
+                        dtheta_hydr = Program.UTIL.ToDoubleOrZero(hydr[0][0]);
+                    }
+                    else
+                    {
+                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10초과' And '제어유형 = '" + valveType + "'");
+                        dtheta_hydr = Program.UTIL.ToDoubleOrZero(hydr[0][0]);
+                    }
+                    dtheta_ce = dtheta_str + dtheta_ctr + dtheta_im + dtheta_rad + dtheta_emb + dtheta_roomaut + dtheta_hydr;
+                    break;
+                case "공조형":
+                    //dtheta_emb = dtheta_str + dtheta_ctr + dtheta_emb 로 산정함
+                    dtheta_str = 0;
+                    dtheta_ctr = 0;
+
+                    string[][] ahu_ctrType = Program.DB.getValue(DB.type.ProjDB, "User_ce", "온도제어방식", "번호 = '" + ce_number + "'");
+                    string[][] emb = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '" + ceType + "' And 항목 = '" + sub_ceType + "' And 제어유형 = '" + ahu_ctrType[0][0] + "'");
+                    dtheta_emb = Program.UTIL.ToDoubleOrZero(emb[0][0]);
+
+                    dtheta_im = 0;
+                    dtheta_rad = 0;
+
+                    string[][] ahu_roomauto = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '" + ceType + "' And 제어유형 = '" + roomauto + "'");
+                    dtheta_roomaut = Program.UTIL.ToDoubleOrZero(ahu_roomauto[0][0]);
+
+                    string[][] AirHU = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "종류", "난방시스템 = '" + HeatingNum + "' And 구분 = '" + ceType + "' And 유형 = '천장고4m이하'");
+                    if (AirHU.Length <= 10)
+                    {
+                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10이하' And '제어유형 = '" + valveType + "'");
+                        dtheta_hydr = Program.UTIL.ToDoubleOrZero(hydr[0][0]);
+                    }
+                    else
+                    {
+                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10초과' And '제어유형 = '" + valveType + "'");
+                        dtheta_hydr = Program.UTIL.ToDoubleOrZero(hydr[0][0]);
+                    }
+                    dtheta_ce = dtheta_str + dtheta_ctr + dtheta_im + dtheta_rad + dtheta_emb + dtheta_roomaut + dtheta_hydr;
+                    break;
+                case "전기독립형":
+                    //dtheta_emb = dtheta_str + dtheta_ctr + dtheta_emb 로 산정함
+                    dtheta_str = 0;
+                    dtheta_ctr = 0;
+
+                    string[][] ele_ctrType = Program.DB.getValue(DB.type.ProjDB, "User_ce", "온도제어방식", "번호 = '" + ce_number + "'");
+                    string[][] ele_emb = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '" + ceType + "' And 항목 = '" + sub_ceType + "' And 제어유형 = '" + ele_ctrType[0][0] + "'");
+                    dtheta_emb = Program.UTIL.ToDoubleOrZero(ele_emb[0][0]);
+
+                    dtheta_im = -0.3;
+                    dtheta_rad = 0;
+                    dtheta_roomaut = 0;
+                    dtheta_hydr = 0;
+
+                    dtheta_ce = dtheta_str + dtheta_ctr + dtheta_im + dtheta_rad + dtheta_emb + dtheta_roomaut + dtheta_hydr;
+                    break;
+                case "대공간형":
+                    string[][] HighSup = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form", "종류,존번호", "난방시스템 = '" + HeatingNum + "' And 구분 = '" + ceType + "' And 유형 = '천장고4m초과' And 종류 = '" + sub_ceType + "'");
+                    string[][] ceil_str = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '대공간형' And 항목 = '" + sub_ceType + "' And 제어유형 = '" + addtype + "'");
+                    string[][] ceilingH = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "천장고", "번호 = '" + HighSup[0][1] + "'");
+
+                    dtheta_str = 10 * Program.UTIL.ToDoubleOrZero(ceil_str[0][0]) / 16 * (0.5 * Program.UTIL.ToDoubleOrZero(ceilingH[0][0]) - 1.1);
+
+                    string[][] ceil_ctrType = Program.DB.getValue(DB.type.ProjDB, "User_ce", "온도제어방식", "번호 = '" + ce_number + "'");
+                    string[][] ceil_ctr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '대공간형' And 제어유형 = '" + ceil_ctrType[0][0] + "' And 온도차 = 'Dtheta_ctr'");
+                    dtheta_ctr = Program.UTIL.ToDoubleOrZero(ceil_ctr[0][0]);
+
+                    dtheta_im = 0;
+                    dtheta_rad = 0;
+
+                    if (sub_ceType == "바닥")
+                    {
+                        string[][] ceil_emb = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '대공간형' And 항목 = '바닥' And 제어유형 = '" + addtype + "'");
+                        dtheta_emb = Program.UTIL.ToDoubleOrZero(ceil_emb[0][0]);
+                    }
+                    else
+                    {
+                        string[][] ceil_emb = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '대공간형' And 항목 = '" + sub_ceType + "' And 온도차 = 'Dtheta_emb'");
+                        dtheta_emb = Program.UTIL.ToDoubleOrZero(ceil_emb[0][0]);
+                    }
+                    dtheta_roomaut = 0;
+                    if (HighSup.Length <= 10)
+                    {
+                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10이하' And '제어유형 = '" + valveType + "'");
+                        dtheta_hydr = Program.UTIL.ToDoubleOrZero(hydr[0][0]);
+                    }
+                    else
+                    {
+                        string[][] hydr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "값", "구분 = '유량밸런스' And 항목 = '10초과' And '제어유형 = '" + valveType + "'");
+                        dtheta_hydr = Program.UTIL.ToDoubleOrZero(hydr[0][0]);
+                    }
+                    dtheta_ce = dtheta_str + dtheta_ctr + dtheta_im + dtheta_rad + dtheta_emb + dtheta_roomaut + dtheta_hydr;
+                    break;
+                default:
+                    break;
             }
-            else if (ceType == "팬코일유닛")
-            {
-
-                dtheta_emb1 = 0; dtheta_emb2 = 0; dtheta_im_emt = -0.3; dtheta_rad = 0; dtheta_im_ctr = 0;
-                dtheta_str1 = 0.0;
-
-                string[][] Value_str2 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "설비유형 = '" + ceType + "' AND 구분 ='" + 설치위치 + "'And 온도변수 = 'dtheta_str2'");
-                if (Value_str2.Length > 0)
-                { dtheta_str2 = Program.UTIL.ToDoubleOrZero(Value_str2[0][0]); }
-            }
-            else if (ceType == "복사난방")
-            {
-                dtheta_im_emt = -0.2; dtheta_rad = 0; dtheta_im_ctr = 0;
-
-                string[][] Value_str1 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "설비유형 = '" + ceType + "' AND 구분 ='" + 설치위치 + "'And 온도변수 = 'dtheta_str1'");
-                if (Value_str1.Length > 0)
-                { dtheta_str1 = Program.UTIL.ToDoubleOrZero(Value_str1[0][0]); }
-                dtheta_str2 = 0.0;
-                string[][] Value_emb1 = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "설비유형 = '" + ceType + "' AND 구분 ='" + 설치위치 + "'And 온도변수 = 'dtheta_emb1'");
-                if (Value_emb1.Length > 0)
-                { dtheta_emb1 = Program.UTIL.ToDoubleOrZero(Value_emb1[0][0]); }
-                dtheta_emb2 = 0.0;
-            }
-            else
-            {
-                dtheta_emb1 = 0; dtheta_emb2 = 0; dtheta_im_emt = -0.3; dtheta_rad = 0; dtheta_im_ctr = 0;
-
-                string[][] Value = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "설비유형 = '파워팬유닛' AND 구분 ='" + 제어방식 + "'And 온도변수 = 'theta_dash_str'");
-                if (Value.Length > 0)
-                { theta_dash_str = 10 * Program.UTIL.ToDoubleOrZero(Value[0][0]) / (16 * (0.5 * 4 - 1.1)); }
-
-            }
-
-            string[][] Value_ctr = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "구분 ='" + 제어방식 + "'And 온도변수 = 'dtheta_ctr'");
-            if (Value_ctr.Length > 0)
-            { dtheta_ctr = Program.UTIL.ToDoubleOrZero(Value_ctr[0][0]); }
-
-            string[][] Value_roomaut = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "구분 ='" + 제어방식 + "'And 온도변수 = 'dtheta_roomaut'");
-            if (Value_roomaut.Length > 0)
-            { dtheta_roomaut = Program.UTIL.ToDoubleOrZero(Value_roomaut[0][0]); }
-
-
-            if (ceType == "방열기" || ceType == "실내기" || ceType == "팬코일유닛")
-            {
-                theta_ce = (dtheta_str1 + dtheta_str2) / 2 + (dtheta_ctr + dtheta_im_ctr + dtheta_roomaut + dtheta_hydr + theta_dash_str + dtheta_emb1 + dtheta_emb2 + dtheta_im_emt + dtheta_rad);
-            }
-            else if (ceType == "복사난방")
-            {
-                theta_ce = (dtheta_emb1 + dtheta_emb2) / 2 + (dtheta_str1 + dtheta_str2 + dtheta_ctr + dtheta_im_ctr + dtheta_roomaut + dtheta_hydr + theta_dash_str + dtheta_im_emt + dtheta_rad);
-            }
-            else if(ceType =="CAV유닛"|| ceType=="VAV유닛" || ceType == "바닥매립형컨백터")
-            {
-                string[][] value = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도", "값", "구분 ='" + 제어방식 + "'And 온도변수 = 'dtheta' and 설비유형='"+ceType+"'");
-                if(value.Length >0)
-                {
-                    theta_ce = Program.UTIL.ToDoubleOrZero(value[0][0]);
-                }            
-            }
-            else
-            {
-                theta_ce = (theta_dash_str + dtheta_emb1 + dtheta_emb2 + dtheta_ctr + dtheta_im_ctr + dtheta_roomaut + dtheta_hydr + theta_dash_str + dtheta_im_emt + dtheta_rad);
-            }
-
-            return theta_ce;
+            return dtheta_ce;
         }
         public void Load_ce(string ProjNum)
         {
@@ -927,29 +1028,38 @@ namespace main
 
             string[][] Value;
             if (Now_Check == true)
-            { Value = Program.DB.getValue(ProjNum, "Heating_ce_Form", "존번호,공급설비,설치위치,부하율", "난방시스템 = '" + HeatingNum + "' And 공급설비종류 = '" + ce1Type + "'"); }
+            { 
+                Value = Program.DB.getValue(ProjNum, "Heating_ce_Form", "존번호,번호,유형,종류,추가유형,부하율", "난방시스템 = '" + HeatingNum + "' And 구분 = '" + ce1Type + "'"); 
+
+            }
             else
             {
-                Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form_Element", "존번호,공급설비,설치위치,부하율", "난방시스템 = '" + HeatingNum + "' And 공급설비종류 = '" + ce1Type + "'");
+                Value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form_Element", "존번호,번호,유형,종류,추가유형,부하율", "난방시스템 = '" + HeatingNum + "' And 구분 = '" + ce1Type + "'");
             }
             ce_Type1.Clear();
             if (Value.Length > 0)
             {
                 for (int n = 0; n < Value.Length; n++)
                 {
-                    String Num, ce_ZoneNum, ceSystemNum, ceType, Location, Control;
+                    String ceType, roomautoType, valveType, Num, ce_ZoneNum, ceSystemNum, AddType, controlType, ceil_heightType, sub_ceType;
+
                     double theta;
+                    ceType = ce1Type;
+                    roomautoType = room1autoType;
+                    valveType = valve1Type;
+
                     Num = Value[n][1];
                     ce_ZoneNum = Value[n][0];
                     ceSystemNum = Value[n][1].Substring(0, Value[n][1].IndexOf("_"));
-                    ceType = ce1Type;
-                    Location = Value[n][2];
-                    double Zone_Percent = Program.UTIL.ToDoubleOrZero(Value[n][3]);
+                    ceil_heightType = Value[n][2];
+                    sub_ceType = Value[n][3];
+                    AddType = Value[n][4];
+                    double Zone_Percent = Program.UTIL.ToDoubleOrZero(Value[n][5]);
                     string[][] 일람표정보 = Program.DB.getValue(ProjNum, "User_ce", "온도제어방식", "번호 = '" + ceSystemNum + "'");
-                    Control = 일람표정보[0][0];
-                    theta = Calc_theta_ce(ceType, SLRL, Location, Control);
+                    controlType = 일람표정보[0][0];
+                    theta = Calc_theta_ce(ceType, sub_ceType, ceSystemNum, ceil_heightType, AddType, roomautoType, valveType);
                     dtheta_ce1 = theta;
-                    CE ce = new CE(Num, ce_ZoneNum, ceSystemNum, ceType, Location, Control, theta,Zone_Percent);
+                    CE ce = new CE(Num, ce_ZoneNum, ceSystemNum, ceType,  sub_ceType, ceil_heightType, AddType, controlType, valveType, roomautoType, theta, Zone_Percent);
                     ce_Type1.Add(ce);
                 }
             }
@@ -966,23 +1076,28 @@ namespace main
             {
                 for (int n = 0; n < Value.Length; n++)
                 {
-                    String Num, ce_ZoneNum, ceSystemNum, ceType, Location, Control;
+                    String ceType, roomautoType, valveType, Num, ce_ZoneNum, ceSystemNum, AddType, controlType, ceil_heightType, sub_ceType;
+
                     double theta;
+                    ceType = ce2Type;
+                    roomautoType = room2autoType;
+                    valveType = valve2Type;
+
                     Num = Value[n][1];
                     ce_ZoneNum = Value[n][0];
                     ceSystemNum = Value[n][1].Substring(0, Value[n][1].IndexOf("_"));
-                    ceType = ce2Type;
-                    Location = Value[n][2];
-                    double Zone_Percent = Program.UTIL.ToDoubleOrZero(Value[n][3]);
+                    ceil_heightType = Value[n][2];
+                    sub_ceType = Value[n][3];
+                    AddType = Value[n][4];
+                    double Zone_Percent = Program.UTIL.ToDoubleOrZero(Value[n][5]);
                     string[][] 일람표정보 = Program.DB.getValue(ProjNum, "User_ce", "온도제어방식", "번호 = '" + ceSystemNum + "'");
-                    Control = 일람표정보[0][0];
-                    theta = Calc_theta_ce(ceType, SLRL, Location, Control);
+                    controlType = 일람표정보[0][0];
+                    theta = Calc_theta_ce(ceType, sub_ceType, ceSystemNum, ceil_heightType, AddType, roomautoType, valveType);
                     dtheta_ce2 = theta;
-                    CE ce = new CE(Num, ce_ZoneNum, ceSystemNum, ceType, Location, Control, theta, Zone_Percent);
+                    CE ce = new CE(Num, ce_ZoneNum, ceSystemNum, ceType, sub_ceType, ceil_heightType, AddType, controlType, valveType, roomautoType, theta, Zone_Percent);
                     ce_Type2.Add(ce);
                 }
             }
-
         }
         public void Calc_Qce(string ProjNum)
         {
@@ -1067,6 +1182,7 @@ namespace main
                     { Qh_ce[mth] += Math.Max(zone.Qb_mth[0, mth] * ce.Zone_Percent() * ce.theta_ce() / (zone.theta_i[0, mth] - theta_e[mth]), 0); }
                     if (double.IsNaN(Qh_ce[mth]))
                     {
+
                         Qh_ce[mth] = 0;
                     }
                     string[][] Value2 = Program.DB.getValue(ProjNum, "User_ce", "소비전력_난방", "번호 = '" + ce.ceNum() + "'");
@@ -2730,16 +2846,22 @@ namespace main
       
     public class CE
     {
-        String ce_Num, ce_ZoneNum, ce_ceNum, ce_ceType, ce_Location, ce_Control;
+        String ce_Num, ce_ZoneNum, ce_ceNum, ce_ceType, ce_addType, ce_Control, ce_valveType, ce_roomautoType;
+        String ce_subceType, ce_ceil_heightType;
         double ce_theta, ce_Zone_Percent;
-        public CE(String Num, String ZoneNum, String ceNum, String ceType, String Location, String Control, double theta, double Zone_Percent)
+        public CE(String Num, String ZoneNum, String ceNum, String ceType, String sub_ceType, String ceil_HeightType, String addType, String Control, String valveType, String roomautoType, double theta, double Zone_Percent)
         {
             this.ce_Num = Num;
             this.ce_ZoneNum = ZoneNum;
             this.ce_ceNum = ceNum;
             this.ce_ceType = ceType;
-            this.ce_Location = Location;
+            this.ce_subceType = sub_ceType;
+            this.ce_ceil_heightType = ceil_HeightType;
+            this.ce_addType = addType;
             this.ce_Control = Control;
+            this.ce_valveType = valveType;
+            this.ce_roomautoType = roomautoType;
+            
             this.ce_theta = theta;
             this.ce_Zone_Percent = Zone_Percent;
         }
@@ -2758,10 +2880,6 @@ namespace main
         public String ceType()
         {
             return this.ce_ceType;
-        }
-        public String Location()
-        {
-            return this.ce_Location;
         }
         public String Control()
         {

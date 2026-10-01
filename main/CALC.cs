@@ -1008,8 +1008,8 @@ namespace main
                     for (int n = 0; n < Zone.Length; n++)
                     {
                         Zone zone = Program.CALC.getZone(Zone[n][0].ToString());
-                        string[][] ce = Program.DB.getValue(ProjNum, "Heating_ce_Form", "공급설비,공급설비종류,가동시간,난방시스템,설치위치", "존번호 = '" + Zone[n][0] + "'");
-                        double[] 가동비율 = new double[ce.Length];
+                        string[][] ce = Program.DB.getValue(ProjNum, "Heating_ce_Form", "번호,종류,가동시간,난방시스템,추가유형", "존번호 = '" + Zone[n][0] + "'");
+                        double[] 가동비율 = new double[ce.Length];                   //(공급설비)번호,(공급설비종류)종류,(설치위치)추가유형
                         double 가동비율_tot = 0;
 
                         for (int a = 0; a < ce.Length; a++)
@@ -1033,11 +1033,11 @@ namespace main
                             if (HeatingNum[i][0] == ce[a][3])
                             {
 
-                                Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,프로젝트유형,난방시스템,공급설비,부하율",
+                                Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form", "존번호,프로젝트유형,난방시스템,번호,부하율",
                             "'" + Zone[n][0] + "','" + 프로젝트유형[0][0] + "','"
                             + HeatingNum[i][0] + "','"
                             + ce[a][0] + "','"
-                            + (가동비율[a] / 가동비율_tot) + "'", "존번호,난방시스템,공급설비");
+                            + (가동비율[a] / 가동비율_tot) + "'", "존번호,난방시스템,번호");
                             }
                         }
                     }
