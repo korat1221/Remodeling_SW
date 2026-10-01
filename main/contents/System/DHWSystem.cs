@@ -327,9 +327,9 @@ namespace main.contents
         }
         private void theta_w_flw_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (e.ToString() != null && e.ToString() != "")
+            if (theta_w_flw_textBox.Text != null && theta_w_flw_textBox.Text != "")
             {
-                theta_w_flw = Program.UTIL.ToDoubleOrZero(e.ToString());
+                theta_w_flw = Program.UTIL.ToDoubleOrZero(theta_w_flw_textBox.Text);
             }
         }
 
@@ -3096,16 +3096,16 @@ namespace main.contents
                     Ls_pipe = Lv_pipe;
                     La_pipe = GetPipeOuterDiameter(laWW, "분기관").ToString();
 
-                    Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','난방','주배관', '" + Lv_pipe + "','" + PipeIns + "','" + PipeIns_Ramda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
-                    Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','난방','수직배관', '" + Ls_pipe + "','" + PipeIns + "','" + PipeIns_Ramda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
-                    Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','난방','분기관', '" + La_pipe + "','" + PipeIns + "','" + PipeIns_Ramda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
+                    Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','급탕','주배관', '" + Lv_pipe + "','" + PipeIns + "','" + PipeIns_Ramda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
+                    Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','급탕','수직배관', '" + Ls_pipe + "','" + PipeIns + "','" + PipeIns_Ramda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
+                    Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','급탕','분기관', '" + La_pipe + "','" + PipeIns + "','" + PipeIns_Ramda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
                 }
             }
             else if (PipeD_SelectMode == "직접")
             {
-                Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','난방','주배관', '" + null + "','" + PipeIns + "','" + PipeIns_Ramda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
-                Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','난방','수직배관', '" + null + "','" + PipeIns + "','" + PipeIns_Ramda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
-                Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','난방','분기관', '" + null + "','" + PipeIns + "','" + PipeIns_Ramda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
+                Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','급탕','주배관', '" + null + "','" + PipeIns + "','" + PipeIns_Ramda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
+                Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','급탕','수직배관', '" + null + "','" + PipeIns + "','" + PipeIns_Ramda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
+                Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','급탕','분기관', '" + null + "','" + PipeIns + "','" + PipeIns_Ramda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
             }
 
             
