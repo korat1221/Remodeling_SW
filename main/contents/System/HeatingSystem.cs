@@ -326,16 +326,22 @@ namespace main.contents
                                 Qba += Program.UTIL.ToDoubleOrZero(요구량[0][0]);
                             }
                         }
-                        string[][] 부하 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "Qmax_tot", "번호 ='" + SelectAHU_split[a].ToString() + "' And 난방_냉방 = '난방' And 월 = '1월'");
-                        if (부하.Length > 0)
+                        //string[][] 부하 = Program.DB.getValue(DB.type.ProjDB, "AHUSystem_Result", "Qmax_tot", "번호 ='" + SelectAHU_split[a].ToString() + "' And 난방_냉방 = '난방' And 월 = '1월'");
+                        //if (부하.Length > 0)
+                        //{
+                        //    Qmax += Program.UTIL.ToDoubleOrZero(부하[0][0]) / 1000;
+                        //    Qh_max = Qmax;
+                        //}=
+                        string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적,존번호", "선택열회수기 ='" + SelectAHU_split[a].ToString() + "'");
+                        for(int k = 0; k<Value.Length;k++)
                         {
-                            Qmax += Program.UTIL.ToDoubleOrZero(부하[0][0]) / 1000;
-                            Qh_max = Qmax;
-                        }
-                        string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "선택열회수기 ='" + SelectAHU_split[a].ToString() + "'");
-                        if (Value.Length > 0)
-                        {
-                            Area += Program.UTIL.ToDoubleOrZero(Value[0][0]);
+                            string[][] 부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_52016_Result", "Q_max", "존번호 ='" + Value[k][1].ToString() + "' AND 난방_냉방 = '난방'");
+                            if (부하.Length > 0)
+                            {
+                                Qmax += Program.UTIL.ToDoubleOrZero(부하[0][0]) / 1000;
+                                Qh_max = Qmax;
+                            }
+                            Area += Program.UTIL.ToDoubleOrZero(Value[k][0]);
                         }
                     }
                     AHU_Qba_textBox.Text = string.Empty;
@@ -348,12 +354,8 @@ namespace main.contents
                     AHU_Area_textBox.Text = Area.ToString();
                     Program.UTIL.textBox_doubleComa(AHU_Area_textBox, true, 2);
                 }
-
-
-
             }
             else { 내용 = ""; }
-
         }
 
         private void Load_ceCAV()

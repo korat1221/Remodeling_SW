@@ -1680,7 +1680,7 @@ namespace main
 
             for (int mth = 0; mth < 12; mth++)
             {
-                Pd_in[mth] = Qh_outg[mth] / th_avg[mth];
+                Pd_in[mth] = Qh_outg[mth] /Math.Max(1, th_avg[mth]);
 
                 eta_gen_Pn[mth] = eta_Pn + K * (theta_pn - theta_av_gen[mth]);
                 Pgen_Pn[mth] = Math.Max((fHN_HI - eta_gen_Pn[mth]) / eta_gen_Pn[mth] * Pd_in[mth], 0);
