@@ -494,8 +494,6 @@ namespace main.contents.Construction
             DiIndi_textBox.TextAlign = HorizontalAlignment.Center;
             DiIndi_textBox.TextChanged += DiIndi_textBox_TextChanged;
             // 
-            // 
-            // 
             // tabControl1
             // 
             tabControl1.Controls.Add(Ucalc_tabPage);
@@ -570,18 +568,18 @@ namespace main.contents.Construction
             Rse_textBox.Enabled = false;
             Rse_textBox.Font = new Font("나눔바른고딕", 9.75F);
             Rse_textBox.ForeColor = SystemColors.ControlDark;
-            Rse_textBox.Location = new Point(474, 303);
+            Rse_textBox.Location = new Point(448, 303);
             Rse_textBox.Name = "Rse_textBox";
-            Rse_textBox.Size = new Size(80, 15);
+            Rse_textBox.Size = new Size(120, 15);
             Rse_textBox.TabIndex = 118;
-            Rse_textBox.TextAlign = HorizontalAlignment.Center;
+            Rse_textBox.TextAlign = HorizontalAlignment.Right;
             // 
             // label12
             // 
             label12.AutoSize = true;
             label12.Font = new Font("나눔바른고딕", 9.75F);
             label12.ForeColor = SystemColors.ControlDark;
-            label12.Location = new Point(298, 303);
+            label12.Location = new Point(272, 303);
             label12.Name = "label12";
             label12.Size = new Size(148, 15);
             label12.TabIndex = 117;
@@ -594,18 +592,18 @@ namespace main.contents.Construction
             Rsi_textBox.Enabled = false;
             Rsi_textBox.Font = new Font("나눔바른고딕", 9.75F);
             Rsi_textBox.ForeColor = SystemColors.ControlDark;
-            Rsi_textBox.Location = new Point(474, 40);
+            Rsi_textBox.Location = new Point(448, 40);
             Rsi_textBox.Name = "Rsi_textBox";
-            Rsi_textBox.Size = new Size(80, 15);
+            Rsi_textBox.Size = new Size(120, 15);
             Rsi_textBox.TabIndex = 116;
-            Rsi_textBox.TextAlign = HorizontalAlignment.Center;
+            Rsi_textBox.TextAlign = HorizontalAlignment.Right;
             // 
             // label10
             // 
             label10.AutoSize = true;
             label10.Font = new Font("나눔바른고딕", 9.75F);
             label10.ForeColor = SystemColors.ControlDark;
-            label10.Location = new Point(299, 40);
+            label10.Location = new Point(273, 40);
             label10.Name = "label10";
             label10.Size = new Size(144, 15);
             label10.TabIndex = 114;
@@ -618,11 +616,11 @@ namespace main.contents.Construction
             Material_Rtot_textBox.Enabled = false;
             Material_Rtot_textBox.Font = new Font("나눔바른고딕", 9.75F);
             Material_Rtot_textBox.ForeColor = SystemColors.ControlDark;
-            Material_Rtot_textBox.Location = new Point(474, 330);
+            Material_Rtot_textBox.Location = new Point(448, 330);
             Material_Rtot_textBox.Name = "Material_Rtot_textBox";
-            Material_Rtot_textBox.Size = new Size(80, 15);
+            Material_Rtot_textBox.Size = new Size(120, 15);
             Material_Rtot_textBox.TabIndex = 112;
-            Material_Rtot_textBox.TextAlign = HorizontalAlignment.Center;
+            Material_Rtot_textBox.TextAlign = HorizontalAlignment.Right;
             // 
             // Material_dtot_textBox
             // 
@@ -631,7 +629,7 @@ namespace main.contents.Construction
             Material_dtot_textBox.Enabled = false;
             Material_dtot_textBox.Font = new Font("나눔바른고딕", 9.75F);
             Material_dtot_textBox.ForeColor = SystemColors.ControlDark;
-            Material_dtot_textBox.Location = new Point(390, 330);
+            Material_dtot_textBox.Location = new Point(364, 330);
             Material_dtot_textBox.Name = "Material_dtot_textBox";
             Material_dtot_textBox.Size = new Size(80, 15);
             Material_dtot_textBox.TabIndex = 111;
@@ -642,7 +640,7 @@ namespace main.contents.Construction
             label8.AutoSize = true;
             label8.Font = new Font("나눔바른고딕", 9.75F);
             label8.ForeColor = SystemColors.ControlDark;
-            label8.Location = new Point(353, 330);
+            label8.Location = new Point(327, 330);
             label8.Name = "label8";
             label8.Size = new Size(31, 15);
             label8.TabIndex = 110;
@@ -803,8 +801,6 @@ namespace main.contents.Construction
             dU_tabPage.TabIndex = 2;
             dU_tabPage.Text = "열교 세부정보";
             // 
-            // 
-            // 
             // dU2_textBox
             // 
             dU2_textBox.BackColor = Color.White;
@@ -830,8 +826,6 @@ namespace main.contents.Construction
             dU_label3.Size = new Size(149, 15);
             dU_label3.TabIndex = 152;
             // 
-            // 
-            // 
             // PsiKai_textBox
             // 
             PsiKai_textBox.BackColor = Color.White;
@@ -856,8 +850,6 @@ namespace main.contents.Construction
             PsiKai_label1.Name = "PsiKai_label1";
             PsiKai_label1.Size = new Size(149, 15);
             PsiKai_label1.TabIndex = 149;
-            // 
-            // 
             // 
             // PerArea_textBox
             // 
@@ -939,8 +931,6 @@ namespace main.contents.Construction
             Base_comboBox.TabIndex = 121;
             Base_comboBox.SelectedIndexChanged += Base_comboBox_SelectedIndexChanged;
             // 
-            // 
-            // 
             // Ueff_textBox
             // 
             Ueff_textBox.BackColor = Color.White;
@@ -988,8 +978,6 @@ namespace main.contents.Construction
             label26.Size = new Size(158, 15);
             label26.TabIndex = 71;
             label26.Text = "[ΔU1D] 1D_열교가산치 ②";
-            // 
-            // 
             // 
             // U_textBox
             // 

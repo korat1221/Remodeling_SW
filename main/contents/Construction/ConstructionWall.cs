@@ -985,7 +985,7 @@ namespace main.contents
                     }
                     if (Value.Length > 0)
                     {
-                        if (Type == "기존외벽" && DiIndi == "지면" )
+                        if (Type == "기존외벽" && DiIndi == "지면")
                         {
                             Uvalue = 1 / (0.13 + 0 + 150 / 1000 / 2.3);
                         }
@@ -1022,7 +1022,7 @@ namespace main.contents
                     Rse_textBox.Text = string.Format("{0:F3}", Rse) + " m" + Program.UTIL.Subscript(2, true) + "·K/W";
 
                 }
-               
+
             }
         }
         private void Calc_Air_Layer(int nRow, double d)
@@ -1166,7 +1166,7 @@ namespace main.contents
             Ueff2_textBox.Text = string.Format("{0:F3}", Ueff) + " W/(m" + Program.UTIL.Subscript(2, true) + "∙K)";
         }
 
-       
+
 
         public bool ValidateAndSave(bool isManualSave = false)
         {
@@ -1267,7 +1267,7 @@ namespace main.contents
                 α.ToString() + "','" + Uvalue.ToString() + "','" + dU.ToString() + "','" + Ueff.ToString() + "','" +
                 법규U.ToString()
                  + "','" + missingItems + "'", "번호");
-            
+
         }
 
         private void reset()
@@ -1679,6 +1679,11 @@ namespace main.contents
             {
                 MessageBox.Show("The folder path does not exist.");
             }
+        }
+
+        private void Ucalc_tabPage_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
