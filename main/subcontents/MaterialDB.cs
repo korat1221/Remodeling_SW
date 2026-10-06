@@ -173,26 +173,28 @@ namespace main.subcontents
         //데이터그리드뷰 체크박스 선택 시
         private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex >= 0 && e.ColumnIndex == 0)
             {
                 dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 SelectRow = e.RowIndex;
-                DataGridViewRow row = dataGridView.Rows[SelectRow];
-                DataGridViewRow row2;
-                for (int k = 0; k < Count_FrameDB; k++)
+
+                bool isChecked = (bool)dataGridView.Rows[SelectRow].Cells[0].Value;
+
+                // 한 번의 루프로 모든 행 처리
+                for (int k = 0; k < dataGridView.RowCount; k++)
                 {
-                    if (k != row.Index)
+                    if (k == SelectRow && isChecked)
                     {
-                        dataGridView.Rows[k].Cells[0].Value = false;
-                        row2 = dataGridView.Rows[k];
-                        row2.DefaultCellStyle.BackColor = Color.White;
-                        row2.DefaultCellStyle.ForeColor = Color.Black;
+                        // 선택된 행
+                        dataGridView.Rows[k].DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
+                        dataGridView.Rows[k].DefaultCellStyle.ForeColor = Color.Black;
                     }
                     else
                     {
-                        row.DefaultCellStyle.BackColor = SystemColors.GradientInactiveCaption;
-                        row.DefaultCellStyle.ForeColor = Color.Black;
-                        row = dataGridView.Rows[e.RowIndex];
+                        // 다른 모든 행
+                        dataGridView.Rows[k].Cells[0].Value = false;
+                        dataGridView.Rows[k].DefaultCellStyle.BackColor = Color.White;
+                        dataGridView.Rows[k].DefaultCellStyle.ForeColor = Color.Black;
                     }
                 }
             }
