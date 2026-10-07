@@ -471,19 +471,21 @@ namespace main.contents.Result
                 Value = Program.DB.querySQL(DB.type.ProjDB, "Select Max(Qwb_mth_sum), (Qw_outg), Max(Qw_f) From DHWSystem_Result Where 번호='" + Num + "' and 월='1월'");
                 if (Value.Length > 0)
                 {
-                    max = Program.UTIL.ToDoubleOrZero(Value[0][0]) > Program.UTIL.ToDoubleOrZero(Value[0][1]) ? Program.UTIL.ToDoubleOrZero(Value[0][0]) : Program.UTIL.ToDoubleOrZero(Value[0][1]);   
+                    max = Value.SelectMany(row => row)
+                                     .Select(v => Program.UTIL.ToDoubleOrZero(v))
+                                     .Max();
+                    //max = Program.UTIL.ToDoubleOrZero(Value[0][0]) > Program.UTIL.ToDoubleOrZero(Value[0][1]) ? Program.UTIL.ToDoubleOrZero(Value[0][0]) : Program.UTIL.ToDoubleOrZero(Value[0][1]);   
                 }
                 int n = ((int)max).ToString().Length;
                 max = Program.UTIL.ToDoubleOrZero(String.Format("{0:F0}", max / Math.Pow(10, n - 1))) * Math.Pow(10, n - 1) + Math.Pow(10, n - 1);
                 if (charts != "") charts += ",";
                 charts += "{data:[" +
-                "{type:\"bar\",barPercentage:0.4,label:\"에너지요구량 [kWh]\",data:" + chart_nd[i] + ",borderColor:\"#FFE0B2\",backgroundColor:\"#FFE0B2\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"분배열손실 [kWh]\",data:" + chart_d[i] + ",borderColor:\"#F06500\",backgroundColor:\"#F06500\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"에너지요구량 [kWh]\",data:" + chart_nd[i] + ",borderColor:\"#A9D18E\",backgroundColor:\"#A9D18E\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"분배열손실 [kWh]\",data:" + chart_d[i] + ",borderColor:\"#FFD966\",backgroundColor:\"#FFD966\",dash:false}," +
                 "{type:\"bar\",barPercentage:0.4,label:\"저장열손실 [kWh]\",data:" + chart_s[i] + ",borderColor:\"#9DC3E6\",backgroundColor:\"#9DC3E6\",dash:false}," +
-                "{type:\"bar\",barPercentage:0.4,label:\"생산열손실 [kWh]\",data:" + chart_g[i] + ",borderColor:\"#FFCCFF\",backgroundColor:\"#FFCCFF\",dash:false}," +
+                "{type:\"bar\",barPercentage:0.4,label:\"생산열손실 [kWh]\",data:" + chart_g[i] + ",borderColor:\"#FFD966\",backgroundColor:\"#FFD966\",dash:false}," +
                 "{type:\"line\",yAxisID: 'y',label:\"에너지소요량 [kWh]\",data:" + chart_f[i] + ",borderColor:\"#ED7D31\",backgroundColor:\"#ED7D31\",dash:false, tension: 0.4}," +
                 "],max:" + max.ToString() + ",step:100,legend:true,stacked:true}";
-
             }
             s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
             s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
