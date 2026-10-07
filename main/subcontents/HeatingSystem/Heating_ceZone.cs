@@ -44,7 +44,10 @@ namespace main.subcontents.HeatingSystem
                 for (int i = 0; i < SelectAHU_split.Count; i++)
                 {
                     string[][] 존 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호", "선택열회수기 = '" + SelectAHU_split[i] + "'");
-                    SelectZone_split.Add(존[0][0].ToString());
+                    for(int j =0; j < 존.Length; j++)
+                    {
+                        SelectZone_split.Add(존[j][0].ToString());
+                    }
                 }
             }
             else //실내난방인경우

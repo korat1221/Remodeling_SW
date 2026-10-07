@@ -2755,6 +2755,7 @@ namespace main.contents
                 {
                     roomauto1_label.Visible = true;
                     roomauto1_ComboBox.Visible = true;
+                    roomauto1_ComboBox.Items.Clear();
                     string[][] Value = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "제어유형", "구분 = '" + ce1Type + "' And 온도차 = 'Dtheta_roomaut'");
                     if (Value.Length > 0)
                     {
@@ -2788,6 +2789,7 @@ namespace main.contents
                 {
                     roomauto2_label.Visible = true;
                     roomauto2_ComboBox.Visible = true;
+                    roomauto2_ComboBox.Items.Clear();
                     string[][] Value = Program.DB.getValue(DB.type.BaseDB_Heating, "공급설비온도차", "제어유형", "구분 = '" + ce2Type + "' And 온도차 = 'Dtheta_roomaut'");
                     if (Value.Length > 0)
                     {
@@ -3287,16 +3289,16 @@ namespace main.contents
                 if (_type == ce1Type)
                 {
                     ce1_pictureBox.Visible = true;
-                    ce1_pictureBox.Location = new Point(712, 38);
-                    ce1_pictureBox.Size = new System.Drawing.Size(190, 80);
+                    ce1_pictureBox.Location = new Point(711, 38);
+                    ce1_pictureBox.Size = new System.Drawing.Size(182, 80);
                     ce1_pictureBox.Load(Program.gPath + image[0][0]);
                     ce1_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
                 else if (_type == ce2Type)
                 {
                     ce2_pictureBox.Visible = true;
-                    ce2_pictureBox.Location = new Point(712, 118);
-                    ce2_pictureBox.Size = new System.Drawing.Size(190, 80);
+                    ce2_pictureBox.Location = new Point(711, 118);
+                    ce2_pictureBox.Size = new System.Drawing.Size(182, 80);
                     ce2_pictureBox.Load(Program.gPath + image[0][0]);
                     ce2_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
                 }
