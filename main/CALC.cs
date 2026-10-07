@@ -1127,6 +1127,8 @@ namespace main
         {
             Heating1.Load_Zonedata(ProjNum);
             Heating1.Load_AHUdata(ProjNum); 
+            Heating1.Cal_Zone_Qmax_(ProjNum);
+            Heating1.Cal_Zone_Qavg_();
             Heating1.Load_HeatingGeneral(ProjNum);
             Heating1.Load_Boiler_general(ProjNum);
             Heating1.Load_Solar_general(ProjNum);

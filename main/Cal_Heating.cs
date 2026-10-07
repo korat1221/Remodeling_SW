@@ -37,6 +37,7 @@ namespace main
         public ArrayList SelectZone_split = new ArrayList(); public ArrayList SelectAHU_split = new ArrayList(); public ArrayList SelectBoiler_split = new ArrayList(); public ArrayList BoilerNum_split = new ArrayList(); public ArrayList SelectABS_split = new ArrayList(); public ArrayList ABSNum_split = new ArrayList(); public ArrayList SelectDH_split = new ArrayList();
         public double[] Qhb_mth_sum = new double[12];  public double[] theta_ih_avg = new double[12]; public double[] theta_e = new double[12]; public double[] theta_u = new double[12];
         public double Qh_max_sum, Qh_a_sum, th_op_day_avg, theta_i_h_set_avg; public double[] th_avg = new double[12]; public double[] dop_mth_avg = new double[12];
+        ArrayList zone_Noduplicate = new ArrayList();
         double theta_w_flw, theta_w_ret;
         double[] dmth = new double[12] { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         public double[] thrL = new double[12], thrL_day = new double[12], dhrB = new double[12], fLNA = new double[12], fLwe = new double[12];
@@ -76,7 +77,6 @@ namespace main
                 for (int mth = 0; mth < 12; mth++)
                 {
                     theta_e[mth] = Program.UTIL.ToDoubleOrZero(외기온도[mth][0]);
-                    theta_u[mth] = theta_ih_avg[mth] - 0.8 * (theta_ih_avg[mth] - theta_e[mth]);
                 }
             }
         }
@@ -115,7 +115,6 @@ namespace main
                 double[,] dop_mth = new double[Value_ce.Length, 12];
                 double[] th_op_day = new double[Value_ce.Length];
                 double[] theta_i_h_set = new double[Value_ce.Length];
-                double[] Qh_max = new double[SelectZone_split.Count];
                 for (int n = 0; n < Value_ce.Length; n++)
                 {
                     Zone zone = null; 
@@ -150,43 +149,13 @@ namespace main
                         }                        
                     }                   
                 }
-                for (int k = 0; k < SelectZone_split.Count; k++)
-                {
-                    Zone zone = null;
-                    if (Now_Check == true)
-                    {
-                        zone = Program.CALC.getZone(SelectZone_split[k].ToString());
-                        Cal_Zone_Qmax_(zone, k, Qh_max);
-                    }
-                    else
-                    {
-                        string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,기존존", "");
-                        if (PostZone.Length > 0)
-                        {
-                            for (int j = 0; j < PostZone.Length; j++)
-                            {
-                                ArrayList split = Split_(PostZone[j][1]);
-                                for (int m = 0; m < split.Count; m++)
-                                {
-                                    if (split[m].ToString() == SelectZone_split[k].ToString())
-                                    {
-                                        zone = Program.CALC.getZone(PostZone[j][0]);
-                                        Cal_Zone_Qmax_(zone, k, Qh_max);
-                                    }
-                                }                           
-                            }
-                        }
-                    }                    
-                }
                 for (int n = 0; n < Value_ce.Length; n++)
                 {
                     Qh_a_sum += Qh_a[n];
                     //요구량 가중
-                    th_op_day_avg += (th_op_day[n] * Qh_a[n]);
-                    theta_i_h_set_avg += (theta_i_h_set[n] * Qh_a[n]);
+                    th_op_day_avg += th_op_day[n];
+                    theta_i_h_set_avg += theta_i_h_set[n];
                 }
-                th_op_day_avg = Qh_a_sum > 0 ? th_op_day_avg / Qh_a_sum : 0;
-                theta_i_h_set_avg = Qh_a_sum > 0 ? theta_i_h_set_avg / Qh_a_sum : 0;
 
                 for (int mth = 0; mth < 12; mth++)
                 {
@@ -195,13 +164,9 @@ namespace main
                         Qhb_z[mth] += Qhb_mth[n, mth];
                         Qhb_mth_sum[mth] += Qhb_mth[n, mth];
                         //요구량 가중
-                        theta_ih_avg[mth] += (theta_ih[n, mth] * Qh_a[n]);
-                        th_avg[mth] += (th[n, mth] * Qh_a[n]);
-                        dop_mth_avg[mth] += (dop_mth[n, mth] * Qh_a[n]);
+                        theta_ih_avg[mth] += theta_ih[n, mth];
+                        dop_mth_avg[mth] += dop_mth[n, mth];
                     }
-                    theta_ih_avg[mth] = Qh_a_sum > 0 ? theta_ih_avg[mth] / Qh_a_sum : 0;
-                    th_avg[mth] = Qh_a_sum > 0 ? th_avg[mth] / Qh_a_sum : 0;
-                    dop_mth_avg[mth] = Qh_a_sum > 0 ? dop_mth_avg[mth] / Qh_a_sum : 0;
                 }
             }
         }
@@ -246,7 +211,6 @@ namespace main
                 double[,] dop_mth = new double[Value_ce.Length, 12];
                 double[] th_op_day = new double[Value_ce.Length];
                 double[] theta_i_h_set = new double[Value_ce.Length];
-                double[] Qh_max = new double[SelectZone_split.Count];
                 for (int n = 0; n < Value_ce.Length; n++)
                 {
                     Zone zone = null;
@@ -286,53 +250,13 @@ namespace main
                         }
                     }
                 }
-                for (int k = 0; k < SelectZone_split.Count; k++)
-                {
-                    Zone zone = null;
-                    if (Now_Check == true)
-                    {
-                        zone = Program.CALC.getZone(SelectZone_split[k].ToString());
-                        string[][] value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "선택열회수기", "존번호='" + zone.ZoneNum+"'");
-                        if (value.Length > 0  && value[0][0]!="")
-                        {
-                            AHU ahu = Program.CALC.getAHU(value[0][0]);
-                            Cal_Zone_Qmax_(ahu, k, Qh_max);
-                        }
-                    }
-                    else
-                    {
-                        string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,기존존", "");
-                        if (PostZone.Length > 0)
-                        {
-                            for (int j = 0; j < PostZone.Length; j++)
-                            {
-                                ArrayList split = Split_(PostZone[j][1]);
-                                for (int m = 0; m < split.Count; m++)
-                                {
-                                    if (split[m].ToString() == SelectZone_split[k].ToString())
-                                    {
-                                        zone = Program.CALC.getZone(PostZone[j][0]);
-                                        string[][] value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "선택열회수기", "존번호='" + zone.ZoneNum + "'");
-                                        if (value.Length > 0 && value[0][0] != "")
-                                        {
-                                            AHU ahu = Program.CALC.getAHU(value[0][0]);
-                                            Cal_Zone_Qmax_(ahu, k, Qh_max);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
                 for (int n = 0; n < Value_ce.Length; n++)
                 {
                     Qh_a_sum += Qh_a[n];
-                    //요구량 가중
-                    th_op_day_avg += (th_op_day[n] * Qh_a[n]);
-                    theta_i_h_set_avg += (theta_i_h_set[n] * Qh_a[n]);
+                    // 요구량 가중합 누적 - 평균 계산 전
+                    th_op_day_avg += th_op_day[n];
+                    theta_i_h_set_avg += theta_i_h_set[n];
                 }
-                th_op_day_avg = Qh_a_sum > 0 ? th_op_day_avg / Qh_a_sum : 0;
-                theta_i_h_set_avg = Qh_a_sum > 0 ? theta_i_h_set_avg / Qh_a_sum : 0;
 
                 for (int mth = 0; mth < 12; mth++)
                 {
@@ -340,15 +264,64 @@ namespace main
                     {
                         Qhb_ahu[mth] += Qhb_mth[n, mth];
                         Qhb_mth_sum[mth] += Qhb_mth[n, mth];
-                        //요구량 가중
-                        theta_ih_avg[mth] += (theta_ih[n, mth] * Qh_a[n]);
-                        th_avg[mth] += (th[n, mth] * Qh_a[n]);
-                        dop_mth_avg[mth] += (dop_mth[n, mth] * Qh_a[n]);
+                        // 요구량 가중합 누적 - 평균 계산 전
+                        theta_ih_avg[mth] += theta_ih[n, mth];
+                        dop_mth_avg[mth] += dop_mth[n, mth];
                     }
-                    theta_ih_avg[mth] = Qh_a_sum > 0 ? theta_ih_avg[mth] / Qh_a_sum : 0;
-                    th_avg[mth] = Qh_a_sum > 0 ? th_avg[mth] / Qh_a_sum : 0;
-                    dop_mth_avg[mth] = Qh_a_sum > 0 ? dop_mth_avg[mth] / Qh_a_sum : 0;
                 }
+            }
+        }
+        public void Cal_Zone_Qmax_(string ProjNum)
+        {
+            Boolean Now_Check = ProjNum == 프로젝트번호[0][0];
+            // Count each resolved zone once across both normal and AHU supply.
+            zone_Noduplicate.Clear();
+            Qh_max_sum = 0;
+            Array.Clear(th_avg, 0, th_avg.Length);
+            double[] Qh_max = new double[SelectZone_split.Count];
+            for (int k = 0; k < SelectZone_split.Count; k++)
+            {
+                Zone zone = null;
+                if (Now_Check == true)
+                {
+                    zone = Program.CALC.getZone(SelectZone_split[k].ToString());
+                    Cal_Zone_Qmax_(zone, k, Qh_max);
+                }
+                else
+                {
+                    string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,기존존", "");
+                    if (PostZone.Length > 0)
+                    {
+                        for (int j = 0; j < PostZone.Length; j++)
+                        {
+                            ArrayList split = Split_(PostZone[j][1]);
+                            for (int m = 0; m < split.Count; m++)
+                            {
+                                if (split[m].ToString() == SelectZone_split[k].ToString())
+                                {
+                                    zone = Program.CALC.getZone(PostZone[j][0]);
+                                    Cal_Zone_Qmax_(zone, k, Qh_max);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            for (int mth = 0; mth < 12; mth++)
+            {
+                th_avg[mth] = Qh_max_sum > 0 ? th_avg[mth] / Qh_max_sum : 0;
+            }
+        }
+        public void Cal_Zone_Qavg_()
+        {
+            // Finalize demand-weighted conditions after both data loaders.
+            th_op_day_avg = Qh_a_sum > 0 ? th_op_day_avg / Qh_a_sum : 0;
+            theta_i_h_set_avg = Qh_a_sum > 0 ? theta_i_h_set_avg / Qh_a_sum : 0;
+            for (int mth = 0; mth < 12; mth++)
+            {
+                theta_ih_avg[mth] = Qh_a_sum > 0 ? theta_ih_avg[mth] / Qh_a_sum : 0;
+                dop_mth_avg[mth] = Qh_a_sum > 0 ? dop_mth_avg[mth] / Qh_a_sum : 0;
+                theta_u[mth] = theta_ih_avg[mth] - 0.8 * (theta_ih_avg[mth] - theta_e[mth]);
             }
         }
         private double Cal_AHUneed_percent(AHU ahu, Zone zone)
@@ -368,12 +341,23 @@ namespace main
             if (zone != null)
             {
                 Qhb_mth[n, mth] += Qhb_mth_ * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]);
-                theta_ih[n, mth] = zone.theta_i[0, mth]; //이용일 난방
                 th[n, mth] = zone.t_max[0, mth]; // 난방 시간                             
-                dop_mth[n, mth] = zone.dwd_mth[mth];
-                Qh_a[n] += zone.Qb_a[0] * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]); //연간 난방요구량
-                th_op_day[n] = zone.th_op_d;
-                theta_i_h_set[n] = zone.theta_i_set[0];
+                Qh_a[n] += Qhb_mth_ * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]); //연간 난방요구량
+                if (mth == 0)
+                {
+                    double Qh_a_ = 0;
+                    for (int k = 0; k < 12; k++)
+                    {
+                        Qh_a_ += zone.Qb_mth[0, k] * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]);
+                    }
+                    for (int k = 0; k < 12; k++)
+                    {
+                        theta_ih[n, k] += zone.theta_i[0, k] * Qh_a_;
+                        dop_mth[n, k] += zone.dwd_mth[k] * Qh_a_;
+                    }
+                    th_op_day[n] += zone.th_op_d * Qh_a_;
+                    theta_i_h_set[n] += zone.theta_i_set[0] * Qh_a_;
+                }
             }
         }
         private void Cal_Zone_data_(Zone zone, AHU ahu, string[][] Value_ce, int n, double[,] Qhb_mth, double[,] theta_ih, double[,] th, double[,] dop_mth, double[] Qh_a, double[] th_op_day, double[] theta_i_h_set, double Qhb_mth_, int mth)
@@ -381,20 +365,37 @@ namespace main
             if (zone != null)
             {
                 Qhb_mth[n, mth] += Qhb_mth_ * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]);
-                theta_ih[n, mth] = zone.theta_i[0, mth]; //이용일 난방
                 th[n, mth] = zone.t_max[0, mth]; // 난방 시간                             
-                dop_mth[n, mth] = zone.dwd_mth[mth];
-                Qh_a[n] += ahu.Qh_a_tot * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]); //연간 난방요구량
-                th_op_day[n] = zone.th_op_d;
-                theta_i_h_set[n] = zone.theta_i_set[0];
+                Qh_a[n] += Qhb_mth_ * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]); //연간 난방요구량
+                if (mth == 0)
+                {
+                    double Qh_a_ = 0;
+                    double percent = Cal_AHUneed_percent(ahu, zone);
+                    for (int k = 0; k < 12; k++)
+                    {
+                        Qh_a_ += percent * ahu.Qstar_b[0, k] * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]);
+                    }
+                    for (int k = 0; k < 12; k++)
+                    {
+                        theta_ih[n, k] += zone.theta_i[0, k] * Qh_a_;
+                        dop_mth[n, k] += zone.dwd_mth[k] * Qh_a_;
+                    }
+                    th_op_day[n] += zone.th_op_d * Qh_a_;
+                    theta_i_h_set[n] += zone.theta_i_set[0] * Qh_a_;
+                }
             }
         }
         private void Cal_Zone_Qmax_(Zone zone, int k, double[] Qh_max)
         {            
-            if (zone != null)
+            if (zone != null && !zone_Noduplicate.Contains(zone.ZoneNum))
             {
+                zone_Noduplicate.Add(zone.ZoneNum);
                 Qh_max[k] = zone.Q_max[0];//최대부하 
                 Qh_max_sum += Qh_max[k];
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    th_avg[mth] += zone.t_max[0, mth] * Qh_max[k];
+                }
             }
         }
         private void Cal_Zone_Qmax_(AHU ahu, int k, double[] Qh_max)
