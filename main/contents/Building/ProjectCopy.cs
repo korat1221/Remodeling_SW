@@ -18,6 +18,7 @@ namespace main.contents
 {
     public partial class ProjectCopy : Form
     {
+        public string pid0;
         public List<string> tables = new List<string>();
         public bool model_copy = false;
         public class ComboboxItem
@@ -59,7 +60,7 @@ namespace main.contents
                 tables.Add("User_PVBattery");
                 tables.Add("User_FC");
                 tables.Add("User_WP");
-                tables.Add("User_WPInverte");
+                tables.Add("User_WPInverter");
                 tables.Add("User_Boiler");
                 tables.Add("User_AirHP");
                 tables.Add("User_GroundHP");
@@ -75,6 +76,8 @@ namespace main.contents
                 tables.Add("User_AirCooler");
                 tables.Add("User_WaterCooler");
                 tables.Add("User_CoolingTop");
+                tables.Add("User_Fan");
+                tables.Add("Optimal_Form");
             }
             if (Construction_checkBox.Checked)
             {
@@ -100,6 +103,7 @@ namespace main.contents
                 tables.Add("User_Material");
                 tables.Add("User_Blind");
                 tables.Add("User_DoorInstall");
+                tables.Add("User_1DTB");
             }
             if (Model_checkBox.Checked)
             {
@@ -126,8 +130,22 @@ namespace main.contents
                 tables.Add("Cooling_ce_Form");
                 tables.Add("DHWSystem_Form");
                 tables.Add("AHUSystem_Form");
+                tables.Add("AHUZoneVent_Form");
+                tables.Add("Distribution_Form");
+                tables.Add("WindPower_Form");
+                tables.Add("SolarTherm_Form");
+                tables.Add("FC_Form");
                 tables.Add("PV_Form");
-                tables.Add("PV_Result");
+            }
+
+            if (Building_checkBox.Checked && Construction_checkBox.Checked && Model_checkBox.Checked && Zone_checkBox.Checked && System_checkBox.Checked)
+            {
+                tables.Clear();
+                string[][] value = Program.DB.querySQL(pid0, "SELECT name FROM sqlite_master WHERE type IN ('table', 'view') AND name NOT LIKE 'sqlite_%' AND instr(lower(name), 'result') = 0");
+                for (int n = 0; n < value.Length; n++)
+                {
+                    tables.Add(value[n][0]);
+                }
             }
 
             this.DialogResult = DialogResult.OK;

@@ -271,6 +271,7 @@ namespace main.contents
             if (k >= 0)
             {
                 ProjectCopy projectcopy = new ProjectCopy();
+                projectcopy.pid0 = dataGridView1.Rows[k].Cells[2].Value.ToString();
                 DialogResult result = projectcopy.ShowDialog();
                 string pid0 = dataGridView1.Rows[k].Cells[2].Value.ToString();
                 if (result == DialogResult.OK)
