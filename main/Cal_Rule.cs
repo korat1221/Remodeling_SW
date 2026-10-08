@@ -522,6 +522,9 @@ namespace main
         {
             CALC.Clear_RESystems();
             Cal_Qv_Now(NowProjNum[0][0], 검토유형);
+            CALC.Cal_Qfh_Prepare(NowProjNum[0][0]);
+            CALC.Cal_Qfw_Prepare(NowProjNum[0][0]);
+            CALC.Heating_DHW_RECalc(NowProjNum[0][0], NowProjNum[0][0]);
 
             Cal_Qfh_Rule(NowProjNum[0][0], 검토유형);
 
@@ -632,26 +635,10 @@ namespace main
             string[][] HeatingNum = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호");
             if (HeatingNum.Length > 0)
             {
-                for (int k = 0; k < HeatingNum.Length; k++)
-                {
-                    CALC.Heatings[HeatingNum[k][0]] = null;
-                }
                 int i = -1;
                 while (++i < HeatingNum.Length)
                 {
-                    Heating Heating1 = new Heating(HeatingNum[i][0]);
-                    CALC.Heatings[HeatingNum[i][0]] = Heating1;
-                    CALC.Heating_LoadData(Heating1, ProjNum);
-                    Heating1.Calc_thrL();
-                    Heating1.Calc_beta_ce();
-                    Heating1.Calc_Qce(ProjNum);
-                    Heating1.Calc_beta_d();
-                    Heating1.Calc_Qd(ProjNum);
-                    Heating1.Calc_beta_s();
-                    Heating1.Calc_Qh_s(ProjNum);
-                    Heating1.Calc_beta_gen();
-                    Heating1.LoadCalc_Solar(ProjNum);
-                    Heating1.LoadCalc_FC(ProjNum);
+                    Heating Heating1 = CALC.Heatings[HeatingNum[i][0]];
                     if (검토유형 != "보일러")
                     { Heating1.LoadCalc_Boiler(ProjNum); }
                     else
@@ -902,21 +889,10 @@ namespace main
             string[][] DHWNum = Program.DB.getValue(ProjNum, "DHWSystem_Form", "번호");
             if (DHWNum.Length > 0)
             {
-                for (int k = 0; k < DHWNum.Length; k++)
-                {
-                    CALC.DHWs[DHWNum[k][0]] = null;
-                }
                 int i = -1;
                 while (++i < DHWNum.Length)
                 {
-                    DHW dhw1 = new DHW(DHWNum[i][0]);
-                    CALC.DHWs[DHWNum[i][0]] = dhw1;
-                    CALC.DHW_LoadData(dhw1, ProjNum);
-                    dhw1.LoadCalc_Qd();
-                    dhw1.Calc_Qs(ProjNum);
-                    dhw1.LoadCalc_Pump(ProjNum);
-                    dhw1.LoadCalc_Solar(ProjNum);
-                    dhw1.LoadCalc_FC(ProjNum);
+                    DHW dhw1 = CALC.DHWs[DHWNum[i][0]];
                     dhw1.LoadCalc_DH(ProjNum);
 
                     if (검토유형 != "보일러")

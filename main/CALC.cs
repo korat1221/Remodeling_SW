@@ -226,8 +226,12 @@ namespace main
             Clear_RESystems();
             Cal_Qb();
             Cal_Qahu(NowProjNum[0][0]);
-            Cal_Qfw(NowProjNum[0][0]);
+            Heating_ce_zone_calc(NowProjNum[0][0]);
+            Cal_Qfh_Prepare(NowProjNum[0][0]);
+            Cal_Qfw_Prepare(NowProjNum[0][0]);
+            Heating_DHW_RECalc(NowProjNum[0][0], NowProjNum[0][0]);
             Cal_Qfh(NowProjNum[0][0]);
+            Cal_Qfw(NowProjNum[0][0]);
             Cal_Qfc(NowProjNum[0][0]);
             Final final1 = new Final(NowProjNum[0][0]);
             Cal_Qf(final1, NowProjNum[0][0]);
@@ -322,19 +326,59 @@ namespace main
             }
 
         }
+        public static void Cal_Qfh_Prepare(string ProjNum)
+        {
+            Heatings.Clear();
+            string[][] HeatingNum = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "번호");
+            for (int i = 0; i < HeatingNum.Length; i++)
+            {
+                Heating Heating1 = new Heating(HeatingNum[i][0]);
+                Heatings[HeatingNum[i][0]] = Heating1;
+                Heating_LoadData(Heating1, ProjNum);
+                Heating1.Calc_thrL();
+                Heating1.Calc_beta_ce();
+                Heating1.Calc_Qce(ProjNum);
+                Heating1.Calc_beta_d();
+                Heating1.Calc_Qd(ProjNum);
+                Heating1.Calc_beta_s();
+                Heating1.Calc_Qh_s(ProjNum);
+                Heating1.Calc_beta_gen();
+            }
+        }
+        public static void Cal_Qfw_Prepare(string ProjNum)
+        {
+            DHWs.Clear();
+            string[][] DHWNum = Program.DB.getValue(ProjNum, "DHWSystem_Form", "번호");
+            for (int i = 0; i < DHWNum.Length; i++)
+            {
+                DHW DHW1 = new DHW(DHWNum[i][0]);
+                DHWs[DHWNum[i][0]] = DHW1;
+                DHW_LoadData(DHW1, ProjNum);
+                DHW1.LoadCalc_Qd();
+                DHW1.Calc_Qs(ProjNum);
+                DHW1.LoadCalc_Pump(ProjNum);
+            }
+        }
+        public static void Heating_DHW_RECalc(string HeatingProjNum, string DHWProjNum)
+        {
+            string[][] HeatingNum = Program.DB.getValue(HeatingProjNum, "HeatingSystem_Form", "번호");
+            string[][] DHWNum = Program.DB.getValue(DHWProjNum, "DHWSystem_Form", "번호");
+            // 공유 태양열을 양쪽에 반영한 뒤 급탕 전용 태양열을 계산한다.
+            for (int i = 0; i < HeatingNum.Length; i++) { Heatings[HeatingNum[i][0]].LoadCalc_Solar(HeatingProjNum, DHWNum); }
+            for (int i = 0; i < DHWNum.Length; i++) { DHWs[DHWNum[i][0]].LoadCalc_Solar(DHWProjNum); }
+            // 모든 태양열을 차감한 부하로 연료전지를 계산한다.
+            for (int i = 0; i < HeatingNum.Length; i++) { Heatings[HeatingNum[i][0]].LoadCalc_FC(HeatingProjNum, DHWNum); }
+            for (int i = 0; i < DHWNum.Length; i++) { DHWs[DHWNum[i][0]].LoadCalc_FC(DHWProjNum); }
+        }
         public static void Cal_Qfh(string ProjNum)
         {
-            Heating_ce_zone_calc(ProjNum);
-            Heatings.Clear();
-            string[][] HeatingNum = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호");
+            string[][] HeatingNum = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "번호");
             if (HeatingNum.Length > 0)
             {
                 int i = -1;
                 while (++i < HeatingNum.Length)
                 {
-                    Heating Heating1 = new Heating(HeatingNum[i][0]);
-                    Heatings[HeatingNum[i][0]] = Heating1;
-                    Heating_LoadData(Heating1, ProjNum);
+                    Heating Heating1 = Heatings[HeatingNum[i][0]];
                     Heating_Calc(Heating1, ProjNum);
                     Heating_Save(Heating1);
                 }
@@ -357,16 +401,13 @@ namespace main
         }
         public static void Cal_Qfw(string ProjNum)
         {
-            DHWs.Clear();
-            string[][] DHWNum = Program.DB.getValue(DB.type.ProjDB, "DHWSystem_Form", "번호");
+            string[][] DHWNum = Program.DB.getValue(ProjNum, "DHWSystem_Form", "번호");
             if(DHWNum.Length > 0)
             {
                 int i = -1;
                 while(++i < DHWNum.Length)
                 {
-                    DHW DHW1 = new DHW(DHWNum[i][0]);
-                    DHWs[DHWNum[i][0]] = DHW1;
-                    DHW_LoadData(DHW1, ProjNum);
+                    DHW DHW1 = DHWs[DHWNum[i][0]];
                     DHW_Calc(DHW1, ProjNum);
                     DHW_Save(DHW1);
                 }
@@ -1153,16 +1194,7 @@ namespace main
         }
         public static void Heating_Calc(Heating Heating1,string ProjNum)
         {
-            Heating1.Calc_thrL();
-            Heating1.Calc_beta_ce();
-            Heating1.Calc_Qce(ProjNum);
-            Heating1.Calc_beta_d();
-            Heating1.Calc_Qd(ProjNum);
-            Heating1.Calc_beta_s();
-            Heating1.Calc_Qh_s(ProjNum);
-            Heating1.Calc_beta_gen();
-            Heating1.LoadCalc_Solar(ProjNum);
-            Heating1.LoadCalc_FC(ProjNum);
+            // 부하 준비와 신재생 적용 후 남은 난방 부하를 계산한다.
             Heating1.LoadCalc_Boiler(ProjNum);
             Heating1.LoadCalc_AirHP(ProjNum);
             Heating1.LoadCalc_GroundHP(ProjNum);
@@ -1526,11 +1558,7 @@ namespace main
         }
         public static void DHW_Calc(DHW DHW1, string ProjNum)
         {
-            DHW1.LoadCalc_Qd();
-            DHW1.Calc_Qs(ProjNum);
-            DHW1.LoadCalc_Pump(ProjNum);
-            DHW1.LoadCalc_Solar(ProjNum);
-            DHW1.LoadCalc_FC(ProjNum);
+            // 부하 준비와 신재생 적용 후 남은 급탕 부하를 계산한다.
             DHW1.LoadCalc_Boiler(ProjNum);
             DHW1.LoadCalc_HP(ProjNum);
             DHW1.LoadCalc_DH(ProjNum);

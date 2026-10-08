@@ -762,6 +762,12 @@ namespace main
             }
             else { Cal_Qv_Pre(PreProjNum[0][0], 검토유형); }
 
+            if (검토유형 == "난방") { CALC.Heating_ce_zone_calc(NowProjNum[0][0]); }
+            else { CALC.Heating_ce_zone_calc_Element(PreProjNum[0][0]); }
+            CALC.Cal_Qfh_Prepare(검토유형 == "난방" ? NowProjNum[0][0] : PreProjNum[0][0]);
+            CALC.Cal_Qfw_Prepare(검토유형 == "급탕" ? NowProjNum[0][0] : PreProjNum[0][0]);
+            CALC.Heating_DHW_RECalc(검토유형 == "난방" ? NowProjNum[0][0] : PreProjNum[0][0], 검토유형 == "급탕" ? NowProjNum[0][0] : PreProjNum[0][0]);
+
             if (검토유형 != "난방")
             { Cal_Qfh_Pre(PreProjNum[0][0], 검토유형); }
             else { Cal_Qfh_Now(NowProjNum[0][0], 검토유형); }
@@ -1196,20 +1202,13 @@ namespace main
         #region 난방
         public void Cal_Qfh_Pre(string ProjNum, string 검토유형)
         {
-            CALC.Heating_ce_zone_calc_Element(ProjNum);
             string[][] HeatingNum = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "번호");
             if (HeatingNum.Length > 0)
             {
-                for (int k = 0; k < HeatingNum.Length; k++)
-                {
-                    CALC.Heatings[HeatingNum[k][0]] = null;
-                }
                 int i = -1;
                 while (++i < HeatingNum.Length)
                 {
-                    Heating Heating1 = new Heating(HeatingNum[i][0]);
-                    CALC.Heatings[HeatingNum[i][0]] = Heating1;
-                    CALC.Heating_LoadData(Heating1, ProjNum);
+                    Heating Heating1 = CALC.Heatings[HeatingNum[i][0]];
                     CALC.Heating_Calc(Heating1, ProjNum);
                     if (검토유형 == "조닝")
                     {
@@ -1221,20 +1220,13 @@ namespace main
         }
         public void Cal_Qfh_Now(string ProjNum, string 검토유형)
         {
-            CALC.Heating_ce_zone_calc(ProjNum);
             string[][] HeatingNum = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "번호");
             if (HeatingNum.Length > 0)
             {
-                for (int k = 0; k < HeatingNum.Length; k++)
-                {
-                    CALC.Heatings[HeatingNum[k][0]] = null;
-                }
                 int i = -1;
                 while (++i < HeatingNum.Length)
                 {
-                    Heating Heating1 = new Heating(HeatingNum[i][0]);
-                    CALC.Heatings[HeatingNum[i][0]] = Heating1;
-                    CALC.Heating_LoadData(Heating1, ProjNum);
+                    Heating Heating1 = CALC.Heatings[HeatingNum[i][0]];
                     CALC.Heating_Calc(Heating1, ProjNum);
                     if (검토유형 == "난방")
                     {
@@ -1497,16 +1489,10 @@ namespace main
             string[][] DHWNum = Program.DB.getValue(ProjNum, "DHWSystem_Form", "번호");
             if (DHWNum.Length > 0)
             {
-                for (int k = 0; k < DHWNum.Length; k++)
-                {
-                    CALC.DHWs[DHWNum[k][0]] = null;
-                }
                 int i = -1;
                 while (++i < DHWNum.Length)
                 {
-                    DHW DHW1 = new DHW(DHWNum[i][0]);
-                    CALC.DHWs[DHWNum[i][0]] = DHW1;
-                    CALC.DHW_LoadData(DHW1, ProjNum);
+                    DHW DHW1 = CALC.DHWs[DHWNum[i][0]];
                     CALC.DHW_Calc(DHW1, ProjNum);
                     if (검토유형 == "조닝" || 검토유형 == "급탕")
                     {

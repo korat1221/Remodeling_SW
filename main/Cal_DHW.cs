@@ -181,8 +181,8 @@ namespace main
                     th_op_day_avg += (th_op_day[n] * Qwb_a[n]);
                     theta_i_h_set_avg += (theta_i_h_set[n] * Qwb_a[n]);
                 }
-                th_op_day_avg = th_op_day_avg / Qw_a_sum;
-                theta_i_h_set_avg = theta_i_h_set_avg / Qw_a_sum;
+                th_op_day_avg = Qw_a_sum > 0 ? th_op_day_avg / Qw_a_sum : 0;
+                theta_i_h_set_avg = Qw_a_sum > 0 ? theta_i_h_set_avg / Qw_a_sum : 0;
 
                 for (int mth = 0; mth < 12; mth++)
                 {
@@ -195,8 +195,8 @@ namespace main
                         dop_mth_avg[mth] += (dop_mth[n, mth] * Qwb_a[n]);
                     }
 
-                    theta_ih_avg[mth] = theta_ih_avg[mth] / Qw_a_sum;
-                    dop_mth_avg[mth] = dop_mth_avg[mth] / Qw_a_sum;
+                    theta_ih_avg[mth] = Qw_a_sum > 0 ? theta_ih_avg[mth] / Qw_a_sum : 0;
+                    dop_mth_avg[mth] = Qw_a_sum > 0 ? dop_mth_avg[mth] / Qw_a_sum : 0;
                     theta_u[mth] = theta_ih_avg[mth] - 0.8 * (theta_ih_avg[mth] - theta_e[mth]);
                 }
             }
@@ -632,6 +632,13 @@ namespace main
         }
         public void Calc_Solar(DHW_Solar solar, string ProjNum, string direction, string degree)
         {
+            // 공유 설비는 난방에서 급탕 몫까지 적용했으므로 다시 계산하지 않는다.
+            for (int reIndex = 0; reIndex < CALC.RESystemKeys.Count; reIndex++)
+            {
+                RESystem system = Program.CALC.getRESystem(CALC.RESystemKeys[reIndex]);
+                if (system.RESystem_Type() == "태양열시스템" && system.RESystem_Num() == solar.Num() && system.DHW_Num() == DHWNum && !string.IsNullOrEmpty(system.Heating_Num()) && system.Production_Consumption() == "생산" && system.Production_Type() == "열") { return; }
+            }
+
             double qsol_HN_d, dtheta_korr;
             double[] qsol_HN_mth= new double[12], eta = new double[12], qsol_mth = new double[12], Qsol_mth = new double[12], Qh_sol = new double[12], Ww_gen = new double[12];
             string[][] Solarvalue;
@@ -756,6 +763,13 @@ namespace main
         }
         private void Calc_FC(string ProjNum, string FCNum, double Pfc_th, double Pfc_el, double eta_th, double eta_el, double eta_tot, string FCElecInstall, string FCElecHeat, int FC_nea)
         {
+            // 공유 설비는 난방에서 급탕 몫까지 적용했으므로 다시 계산하지 않는다.
+            for (int reIndex = 0; reIndex < CALC.RESystemKeys.Count; reIndex++)
+            {
+                RESystem system = Program.CALC.getRESystem(CALC.RESystemKeys[reIndex]);
+                if (system.RESystem_Type() == "연료전지" && system.RESystem_Num() == FCNum && system.DHW_Num() == DHWNum && !string.IsNullOrEmpty(system.Heating_Num()) && system.Production_Consumption() == "생산" && system.Production_Type() == "열") { return; }
+            }
+
             double top = 0;
             double Pth_min = 0, Pls_sb = 0, Pth_sb = 0, Pel_out_sb = 0, Paux_sb = 0, Ppilot = 0;
             double[] QCHW_gen_out = new double[12];

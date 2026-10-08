@@ -1312,7 +1312,7 @@ namespace main
                 if (double.IsNaN(Qh_outg[mth])) { Qh_outg[mth] = 0; }
             }
         }
-        public void LoadCalc_FC(string ProjNum)
+        public void LoadCalc_FC(string ProjNum, string[][] DHWNum)
         {
             for (int n = 0; n < SelectFC_split.Count; n++)
             {
@@ -1328,15 +1328,24 @@ namespace main
 
                     double Pfc_th = power_th ;
                     double Pfc_el = power_el ;
-                    Calc_FC(ProjNum, SelectFC_split[n].ToString(), Pfc_th, Pfc_el, eta_th, eta_el, eta_tot, FCElecInstall_split[n].ToString(), FCElecHeat_split[n].ToString(), FC_nea);
+                    DHW DHW1 = null;
+                    for (int i = 0; i < DHWNum.Length; i++)
+                    {
+                        if (CALC.DHWs[DHWNum[i][0]].SelectFC_split.Contains(SelectFC_split[n]))
+                        {
+                            DHW1 = CALC.DHWs[DHWNum[i][0]];
+                            break;
+                        }
+                    }
+                    Calc_FC(ProjNum, SelectFC_split[n].ToString(), Pfc_th, Pfc_el, eta_th, eta_el, eta_tot, FCElecInstall_split[n].ToString(), FCElecHeat_split[n].ToString(), FC_nea, DHW1);
                 }
             }
         }
-        private void Calc_FC(string ProjNum, string FCNum, double Pfc_th, double Pfc_el, double eta_th, double eta_el, double eta_tot, string FCElecInstall,string FCElecHeat, int FC_nea)
+        private void Calc_FC(string ProjNum, string FCNum, double Pfc_th, double Pfc_el, double eta_th, double eta_el, double eta_tot, string FCElecInstall,string FCElecHeat, int FC_nea, DHW DHW1)
         {
-            double top = 0;
+            double[] top = new double[12];
             double Pth_min = 0, Pls_sb = 0, Pth_sb = 0, Pel_out_sb = 0, Paux_sb = 0, Ppilot = 0;
-            double[] Qw_outg = new double[12]; string DHWNum = "";
+            double[] Qw_outg = new double[12]; string DHWNum = DHW1 == null ? "" : DHW1.DHWNum;
             double[] QCHW_gen_out = new double[12];
             double[] dop = new double[12], Pth_gen_out = new double[12]; 
             double[] Eth_gen_out_h = new double[12],Eth_gen_out_w = new double[12];
@@ -1347,30 +1356,31 @@ namespace main
            
             for (int mth = 0; mth < 12; mth++)
             {
-                string[][] DValue = Program.DB.querySQL(ProjNum, "Select a.Qw_outg,b.번호 From DHWSystem_Result as a Inner Join DHWSystem_Form as b on a.번호=b.번호 Where b.연료전지번호='" + FCNum + "' and a.월='" + (mth + 1) + "월'");
-                if (DValue.Length > 0)
-                {
-                    Qw_outg[mth] = Program.UTIL.ToDoubleOrZero(DValue[0][0]);
-                    DHWNum = DValue[0][1];
-                }
+                if (DHW1 != null) { Qw_outg[mth] = DHW1.Qw_outg[mth]; }
                 QCHW_gen_out[mth] = Qh_outg[mth] + Qw_outg[mth];
 
-                top = th_op_day_avg;
+                top[mth] = th_op_day_avg;
                 dop[mth] = dop_mth_avg[mth];
                 if (FCElecInstall == "단독형" && FCElecHeat == "전기와 열")
                 {
-                    top = th_op_day_avg;
+                    top[mth] = th_op_day_avg;
                     dop[mth] = dop_mth_avg[mth];
+                    // 급탕만 필요한 달은 급탕 시간, 두 부하가 있으면 더 긴 월 운전시간을 사용한다.
+                    if (DHW1 != null && Qw_outg[mth] > 0 && (Qh_outg[mth] <= 0 || DHW1.th_op_day_avg * DHW1.dop_mth_avg[mth] > top[mth] * dop[mth]))
+                    {
+                        top[mth] = DHW1.th_op_day_avg;
+                        dop[mth] = DHW1.dop_mth_avg[mth];
+                    }
                 }
                 else
                 {
-                    top = 24;
+                    top[mth] = 24;
                     dop = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
                 }
-                Pth_gen_out[mth] = Math.Min(Pfc_th, QCHW_gen_out[mth] / (top * dop[mth]));
+                Pth_gen_out[mth] = top[mth] * dop[mth] > 0 && FC_nea > 0 ? Math.Min(Pfc_th, QCHW_gen_out[mth] / (top[mth] * dop[mth] * FC_nea)) : 0;
                 if (FCElecHeat == "전기와 열")
                 {
-                    Eth_gen_out[mth] = Pth_gen_out[mth] * top * dop[mth]* FC_nea;
+                    Eth_gen_out[mth] = Pth_gen_out[mth] * top[mth] * dop[mth]* FC_nea;
                     Eth_gen_out_w[mth] = double.IsNaN(Eth_gen_out[mth] * Qw_outg[mth] / QCHW_gen_out[mth]) ? 0 : Eth_gen_out[mth] * Qw_outg[mth] / QCHW_gen_out[mth];
                     Eth_gen_out_h[mth] = double.IsNaN(Eth_gen_out[mth] * Qh_outg[mth] / QCHW_gen_out[mth]) ? 0 : Eth_gen_out[mth] * Qh_outg[mth] / QCHW_gen_out[mth];
                 }
@@ -1384,18 +1394,19 @@ namespace main
             for(int mth=0; mth < 12; mth ++)
             {
                 Pel_gen_out[mth] = Pel_out_sb + (Pfc_el - Pel_out_sb) * ((Pth_gen_out[mth] - Pth_sb) / (Pfc_th - Pth_sb));
-                Eel_gen_out[mth] = double.IsNaN(Pel_gen_out[mth] * top * dop[mth]) ? 0 : Pel_gen_out[mth] * top * dop[mth] *FC_nea;
+                Eel_gen_out[mth] = double.IsNaN(Pel_gen_out[mth] * top[mth] * dop[mth]) ? 0 : Pel_gen_out[mth] * top[mth] * dop[mth] *FC_nea;
                 Pgen_ls_sb = Pls_sb + Ppilot;
                 Pgen_in_chp = Pfc_th / eta_th;
                 Pgen_ls_chp = (1 - eta_th - eta_el) * Pgen_in_chp;
                 pgen_ls[mth] = Pgen_ls_sb + (Pgen_ls_chp - Pgen_ls_sb) * ((Pth_gen_out[mth] - Pth_sb) / (Pfc_th - Pth_sb));
-                Qgen_ls[mth] = pgen_ls[mth] * top * dop[mth];
+                Qgen_ls[mth] = pgen_ls[mth] * top[mth] * dop[mth];
                 Pgen_in[mth] = Pth_gen_out[mth] + Pel_gen_out[mth] + pgen_ls[mth];
-                Egen_in[mth] = double.IsNaN(Pgen_in[mth] * top * dop[mth]) ? 0 : Pgen_in[mth] * top * dop[mth] * FC_nea;
+                Egen_in[mth] = double.IsNaN(Pgen_in[mth] * top[mth] * dop[mth]) ? 0 : Pgen_in[mth] * top[mth] * dop[mth] * FC_nea;
 
                 if(FCElecHeat =="전기와 열")
                 {
-                    Qh_outg[mth] = Qh_outg[mth] - Eth_gen_out[mth];
+                    Qh_outg[mth] = Qh_outg[mth] - Eth_gen_out_h[mth];
+                    if (DHW1 != null) { DHW1.Qw_outg[mth] -= Eth_gen_out_w[mth]; }
                 }
             }
             Save_FC(ProjNum, DHWNum, FCNum, Eth_gen_out_h, Eth_gen_out_w); // 기존 설비를 사용하는 요소별 계산에도 메모리 결과 반영
@@ -1570,7 +1581,7 @@ namespace main
                 }
             }
         }
-        public void LoadCalc_Solar(string ProjNum)
+        public void LoadCalc_Solar(string ProjNum, string[][] DHWNum)
         {
             double qsol_HN_d, dtheta_korr;
             double[] qsol_HN_mth = new double[12], eta = new double[12], qsol_mth = new double[12], Qsol_mth = new double[12], Wh_gen = new double[12];
@@ -1583,11 +1594,20 @@ namespace main
                 if (Solarvalue.Length > 0)
                 {
                     Solar solar = new Solar(Solarvalue[0][0], Program.UTIL.ToDoubleOrZero(Solarvalue[0][1]), Program.UTIL.ToDoubleOrZero(Solarvalue[0][2]), Program.UTIL.ToDoubleOrZero(Solarvalue[0][3]), Program.UTIL.ToDoubleOrZero(Solarvalue[0][4]), Program.UTIL.ToDoubleOrZero(Solarvalue[0][5]), Program.UTIL.ToDoubleOrZero(Solarvalue[0][6]), Program.UTIL.ToDoubleOrZero(SolarNum_split[k]), SolarDirection_split[k].ToString(), SolarDegree_split[k].ToString());
-                    Calc_Solar(solar, ProjNum, SolarDirection_split[k].ToString(), SolarDegree_split[k].ToString());
+                    DHW DHW1 = null;
+                    for (int i = 0; i < DHWNum.Length; i++)
+                    {
+                        if (MainSystem != "태양열 융합 히트펌프" && CALC.DHWs[DHWNum[i][0]].SelectSolar_split.Contains(SelectSolar_split[k]))
+                        {
+                            DHW1 = CALC.DHWs[DHWNum[i][0]];
+                            break;
+                        }
+                    }
+                    Calc_Solar(solar, ProjNum, SolarDirection_split[k].ToString(), SolarDegree_split[k].ToString(), DHW1);
                 }
             }
         }
-        public void Calc_Solar(Solar solar, string ProjNum, string direction, string degree)
+        public void Calc_Solar(Solar solar, string ProjNum, string direction, string degree, DHW DHW1)
         {
             
 
@@ -1595,19 +1615,10 @@ namespace main
             double[] qsol_HN_mth = new double[12], eta = new double[12], qsol_mth = new double[12], Qsol_mth = new double[12],  Wh_gen = new double[12];
             string[][] Solarvalue;
             double Ac;
-            double[] Qw_outg = new double[12]; string DHNum = "";
-            string[][] DValue = Program.DB.querySQL(DB.type.ProjDB, "Select b.번호 From DHWSystem_Result as a Inner Join DHWSystem_Form as b on a.번호=b.번호 Where a.태양열번호='" + solar.Num + "'");
-            if(DValue.Length >0)
-            {
-                DHNum = DValue[0][0];
-            }
+            double[] Qw_outg = new double[12], Qw_sol = new double[12]; string DHNum = DHW1 == null ? "" : DHW1.DHWNum;
             for (int mth = 0; mth < 12; mth++)
             {
-                 DValue = Program.DB.querySQL(DB.type.ProjDB, "Select b.Qw_outg,b.번호 From DHWSystem_Result as a Inner Join DHWSystem_Form as b on a.번호=b.번호 Where a.태양열번호='" + solar.Num + "' and 월='" + mth + "월'");
-                if (DValue.Length > 0)
-                {
-                    Qw_outg[mth] = Program.UTIL.ToDoubleOrZero(DValue[0][0]);
-                }
+                if (DHW1 != null) { Qw_outg[mth] = DHW1.Qw_outg[mth]; }
 
                 string[][] value = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_전일사량", "일사량", "지역명 ='" + 지역[0][0] + "'and 방향='" + direction+ "' and 각도 ='" +degree + "' and 기간 ='" + (mth + 1) + "월'");
                 qsol_HN_d = Program.UTIL.ToDoubleOrZero(value[0][0]);
@@ -1630,7 +1641,11 @@ namespace main
                 qsol_mth[mth] = eta[mth] * qsol_HN_mth[mth];
                 Qsol_mth[mth] = qsol_mth[mth] * solar.M_Area() * solar.M_Count() / 1.03 / 1.03;
                 if (MainSystem != "태양열 융합 히트펌프")
-                { Qh_sol[mth] = Math.Min(Qsol_mth[mth], (Qh_outg[mth] + Qw_outg[mth])); }
+                {
+                    Qsol_mth[mth] = Math.Min(Qsol_mth[mth], Qh_outg[mth] + Qw_outg[mth]);
+                    Qh_sol[mth] = Qh_outg[mth] + Qw_outg[mth] > 0 ? Qsol_mth[mth] * Qh_outg[mth] / (Qh_outg[mth] + Qw_outg[mth]) : 0;
+                    Qw_sol[mth] = Qh_outg[mth] + Qw_outg[mth] > 0 ? Qsol_mth[mth] - Qh_sol[mth] : 0;
+                }
 
                 Wh_gen[mth] = 0.025 * Qh_sol[mth];
             }
@@ -1638,11 +1653,17 @@ namespace main
             {
                 Wh_g[mth] = Wh_g[mth] + Wh_gen[mth];
                 Qh_outg[mth] = Qh_outg[mth] - Qh_sol[mth];
+                if (DHW1 != null)
+                {
+                    DHW1.Qw_outg[mth] -= Qw_sol[mth];
+                    DHW1.Qw_sol[mth] += Qw_sol[mth];
+                    DHW1.Ww_g[mth] += 0.025 * Qw_sol[mth];
+                }
             }
 
-            Save_Solar (ProjNum, DHNum, solar.Num());
+            Save_Solar(ProjNum, DHNum, solar.Num(), Qw_sol);
         }
-        private void Save_Solar( string ProjNum, string DHWNum, string SolarNum)
+        private void Save_Solar( string ProjNum, string DHWNum, string SolarNum, double[] Qw_sol)
         {
             string RESystemNum = null;
 
@@ -1685,8 +1706,9 @@ namespace main
                 news.RE_DHW_Num = DHWNum;
                 news.RE_RESystem_Num = SolarNum;
                 news.RE_RESystem_Type = "태양열시스템";
-                news.RE_TotalE = Qh_sol;
+                for (int mth = 0; mth < 12; mth++) { news.RE_TotalE[mth] = Qh_sol[mth] + Qw_sol[mth]; }
                 news.RE_HeatingE = Qh_sol;
+                news.RE_DHWE = Qw_sol;
                 CALC.Register_RESystem(news);
             }
             {
@@ -1701,7 +1723,7 @@ namespace main
                 news.RE_RESystem_Type = "태양열시스템";
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    news.RE_TotalE[mth] = 0.025 * Qh_sol[mth];
+                    news.RE_TotalE[mth] = 0.025 * (Qh_sol[mth] + Qw_sol[mth]);
                 }
                 CALC.Register_RESystem(news);
             }
