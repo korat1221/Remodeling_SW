@@ -206,7 +206,6 @@ namespace main
                 }
             }
 
-            Save_Memory_PV();
         }
         public void Save_Memory_PV()
         {
@@ -391,9 +390,9 @@ namespace main
         ArrayList 풍속구간출력 = new ArrayList();
         string 적용유형, 풍속구간출력_nonsplit, 주변환경;
         double raw = 1.225;
-        public void WP_LoadData()
+        public void WP_LoadData(string ProjNum)
         {
-            string[][]  Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
+            string[][]  Value = Program.DB.getValue(ProjNum, "BuildingGeneral", "지역", "");
             if(Value.Length >0)
             {
                 지역 = Value[0][0];
@@ -414,7 +413,7 @@ namespace main
                     }
                 }
             }
-            Value= Program.DB.querySQL(DB.type.ProjDB, "Select  b.회전면적, b.허브높이, b.시동풍속, b.종단풍속, b.정격출력, b.정격출력풍속, b.적용유형, b.풍속구간별출력, a.주변환경,a.설치높이,a.설치대수 From  WindPower_Form as a inner join  User_WP as b on a.풍력=b.번호 Where a.번호='"+Num+"'");
+            Value= Program.DB.querySQL(ProjNum, "Select  b.회전면적, b.허브높이, b.시동풍속, b.종단풍속, b.정격출력, b.정격출력풍속, b.적용유형, b.풍속구간별출력, a.주변환경,a.설치높이,a.설치대수 From  WindPower_Form as a inner join  User_WP as b on a.풍력=b.번호 Where a.번호='"+Num+"'");
             if (Value.Length >0)
             {
                 회전면적 = Program.UTIL.ToDoubleOrZero(Value[0][0]);

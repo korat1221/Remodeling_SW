@@ -232,6 +232,8 @@ namespace main
             Final final1 = new Final(NowProjNum[0][0]);
             Cal_Qf(final1, NowProjNum[0][0]);
             RESystemCalc(NowProjNum[0][0]);
+            PV_Save(NowProjNum[0][0]);
+            WP_Save(NowProjNum[0][0]);
             Cal_Qf(null, NowProjNum[0][0]);
 
             Program.DB.saveProject();
@@ -1721,20 +1723,19 @@ namespace main
         public static bool RESystemCalc(string ProjNum)
         {
             PVCalc(ProjNum);
+            PV_Save_Memory(ProjNum);
             WPCalc(ProjNum);
-
-            
+            WP_Save_Memory(ProjNum);
             return true;
         }
         public static bool PVCalc(string ProjNum)
         {
+            PVs.Clear();
             string[][] PVNum = Program.DB.getValue(ProjNum, "PV_Form", "번호");
-            string[][] 프로젝트유형 = Program.DB.getValue(ProjNum, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
-            int i = -1;
-            String MTH;
-            while (++i < PVNum.Length)
+            for (int i = 0; i < PVNum.Length; i++)
             {
                 Cal_RESystem PV = new Cal_RESystem(PVNum[i][0]);
+                PVs[PVNum[i][0]] = PV;
                 PV.PVcalReady(ProjNum);
                 if (PV.PVdata[6] == "독립형")
                 {
@@ -1745,41 +1746,52 @@ namespace main
                     }
                 }
                 PV.PVcal();
-                PV.PVsave(ProjNum);
             }
             return true;
         }
+        public static void PV_Save_Memory(string ProjNum)
+        {
+            string[][] PVNum = Program.DB.getValue(ProjNum, "PV_Form", "번호");
+            for (int i = 0; i < PVNum.Length; i++) { PVs[PVNum[i][0]].Save_Memory_PV(); }
+        }
+        public static void PV_Save(string ProjNum)
+        {
+            string[][] PVNum = Program.DB.getValue(ProjNum, "PV_Form", "번호");
+            for (int i = 0; i < PVNum.Length; i++) { PVs[PVNum[i][0]].PVsave(ProjNum); }
+        }
         public static bool WPCalc(string ProjNum)
         {
-            string[][] 프로젝트유형 = Program.DB.getValue(ProjNum, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
-            int i = -1;
-            String MTH;
+            WPs.Clear();
             string[][] WPNum = Program.DB.getValue(ProjNum, "WindPower_Form", "번호");
-            while (++i < WPNum.Length)
+            for (int i = 0; i < WPNum.Length; i++)
             {
                 Cal_RESystem WP = new Cal_RESystem(WPNum[i][0]);
-                WP.WP_LoadData();
+                WPs[WPNum[i][0]] = WP;
+                WP.WP_LoadData(ProjNum);
                 WP.WP_Calc_V1();
                 WP.WP_Calc_V2();
                 WP.WP_Calc_t_wkn();
                 WP.WP_Calc_Qfwps();
-
-                for (int mth = 0; mth <= 11; mth++)
-                {
-                    MTH = (mth + 1).ToString() + "월";
-                    Program.DB.setValue(DB.type.ProjDB, "WindPower_Result", "프로젝트번호,프로젝트유형,번호," +
-                             "월," +
-                             "Qfwps",
-                             "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + WPNum[i][0] + "','" + MTH  + "','" + WP.Qfwps[mth]
-                              + "'", "번호,월"); ;
-
-
-                }
-                Program.DB.saveProject();
-                Save_Memory_WP(WPNum[i][0], WP.Qfwps);
             }
-
             return true;
+        }
+        public static void WP_Save_Memory(string ProjNum)
+        {
+            string[][] WPNum = Program.DB.getValue(ProjNum, "WindPower_Form", "번호");
+            for (int i = 0; i < WPNum.Length; i++) { Save_Memory_WP(WPNum[i][0], WPs[WPNum[i][0]].Qfwps); }
+        }
+        public static void WP_Save(string ProjNum)
+        {
+            string[][] 프로젝트유형 = Program.DB.getValue(ProjNum, "BuildingGeneral", "프로젝트유형번호,프로젝트번호");
+            string[][] WPNum = Program.DB.getValue(ProjNum, "WindPower_Form", "번호");
+            for (int i = 0; i < WPNum.Length; i++)
+            {
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    Program.DB.setValue(DB.type.ProjDB, "WindPower_Result", "프로젝트번호,프로젝트유형,번호,월,Qfwps", "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + WPNum[i][0] + "','" + (mth + 1) + "월','" + WPs[WPNum[i][0]].Qfwps[mth] + "'", "번호,월");
+                }
+            }
+            Program.DB.saveProject();
         }
         public static void Save_Memory_WP(string WPNum, double[] WP_Q)
         {
@@ -1914,6 +1926,8 @@ namespace main
         public static Dictionary<string, Cal_Cooling> Coolings = new Dictionary<string,Cal_Cooling >();
         public static Dictionary<string, AHU> AHUs = new Dictionary<string, AHU>();
         public static Dictionary<string, DHW> DHWs = new Dictionary<string, DHW>();
+        public static Dictionary<string, Cal_RESystem> PVs = new Dictionary<string, Cal_RESystem>();
+        public static Dictionary<string, Cal_RESystem> WPs = new Dictionary<string, Cal_RESystem>();
         public static Dictionary<string, Final> Finals = new Dictionary<string, Final>();
         public static Dictionary<string, RESystem> RESystems = new Dictionary<string, RESystem>();
         public static List<string> RESystemKeys = new List<string>();

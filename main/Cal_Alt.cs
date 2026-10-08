@@ -841,17 +841,23 @@ namespace main
             if (검토유형 == "태양광")
             {
                 CALC.PVCalc(NowProjNum[0][0]);
+                CALC.PV_Save_Memory(NowProjNum[0][0]);
                 CALC.WPCalc(PreProjNum[0][0]);
+                CALC.WP_Save_Memory(PreProjNum[0][0]);
             }
             else if (검토유형 == "풍력")
             {
                 CALC.PVCalc(PreProjNum[0][0]);
+                CALC.PV_Save_Memory(PreProjNum[0][0]);
                 CALC.WPCalc(NowProjNum[0][0]);
+                CALC.WP_Save_Memory(NowProjNum[0][0]);
             }
             else
             {
                 CALC.PVCalc(PreProjNum[0][0]);
+                CALC.PV_Save_Memory(PreProjNum[0][0]);
                 CALC.WPCalc(PreProjNum[0][0]);
+                CALC.WP_Save_Memory(PreProjNum[0][0]);
             }
             CALC.Final_Calc(final1, NowProjNum[0][0], true);
 
