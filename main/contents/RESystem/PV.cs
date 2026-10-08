@@ -458,14 +458,26 @@ namespace main.contents
             tabload("output");
             Cal_RESystem cal = new Cal_RESystem(Num);
             cal.PVcalReady();
-            cal.PVcal();
+            try
+            {
+                // 화면은 건물 소요량 보정 없이 순수 태양광 생산량을 표시
+                cal.PVcal();
+            }
+            catch (InvalidOperationException ex)
+            {
+                webView21.Visible = false;
+                allcapacity_textBox.Text = ex.Message;
+                averagecpacity_textBox.Text = "";
+                return;
+            }
+            webView21.Visible = true;
             LoadGraph(cal.Qfpvm_kWh, cal.Esol);
 
             allcapacity_textBox.Text = string.Format("{0:n0}", cal.Qfpva_kWh) + " kWh/년";
             double[] Qeff = new double[12];
             for (int i = 0; i < 12; i++)
             {
-                Qeff[i] = cal.Qfpvm_m2_kWh[i] / cal.Esol[i];
+                Qeff[i] = cal.Esol[i] > 0 ? cal.Qfpvm_m2_kWh[i] / cal.Esol[i] : 0;
             }
             averagecpacity_textBox.Text = string.Format("{0:F1}", Qeff.Average() * 100) + " %";
         }
@@ -568,18 +580,7 @@ namespace main.contents
                     OldPVSystem_ComboBox.Text = Value[0][17].ToString();
                 }
 
-                Cal_RESystem cal = new Cal_RESystem(Num);
-                cal.PVcalReady();
-                cal.PVcal();
-                LoadGraph(cal.Qfpvm_kWh, cal.Esol);
-
-                allcapacity_textBox.Text = string.Format("{0:n0}", cal.Qfpva_kWh) + " kWh/년";
-                double[] Qeff = new double[12];
-                for (int i = 0; i < 12; i++)
-                {
-                    Qeff[i] = cal.Qfpvm_m2_kWh[i] / cal.Esol[i];
-                }
-                averagecpacity_textBox.Text = string.Format("{0:F1}", Qeff.Average() * 100) + " %";
+                Calc();
             }
         }
 
