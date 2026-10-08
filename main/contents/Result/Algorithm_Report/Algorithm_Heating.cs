@@ -667,7 +667,7 @@ namespace main.contents.Result
                 string imageType = supply == "CAV유닛" || supply == "VAV유닛" || supply == "파워팬유닛"
                     ? "공조기" : supply;
                 AddDbImage("항목유형 = '공급설비' And 설비유형 = '" + imageType + "' And 설치유형 = '신규'",
-                    712, y, 190, 80);
+                    711, y, 182, 80);
             }
 
             string complex = form[0][0];
