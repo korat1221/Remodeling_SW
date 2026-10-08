@@ -288,12 +288,7 @@ namespace main.contents
 
                 
 
-                string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
-                if (Value.Length > 0)
-                {
-                    CALC.WPCalc(Value[0][0]);
-                    LoadGraph();
-                }
+                LoadGraph();
             }
         }
 
@@ -384,7 +379,7 @@ namespace main.contents
 
         private void LoadGraph()
         {
-            if (Name_textBox.Text != null)
+            if (Name_textBox.Text != null && !string.IsNullOrEmpty(Num))
             {
                 string s = "", s2 = ""; string v = "";
                 string[][] Location = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "지역", "");
@@ -394,15 +389,17 @@ namespace main.contents
                 double max2 = 0;
                 double sum = 0;
                 double[] v_mth = new double[12];
-                for (int mth = 0; mth <= 11; mth++)
+                Cal_RESystem cal = new Cal_RESystem(Num);
+                cal.WP_LoadData(Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호")[0][0]);
+                cal.WP_Calc_V1();
+                cal.WP_Calc_V2();
+                cal.WP_Calc_t_wkn();
+                cal.WP_Calc_Qfwps();
+                Qfwps = cal.Qfwps;
+                for (int mth = 0; mth < 12; mth++)
                 {
-                    string[][] Value = Program.DB.getValue(DB.type.ProjDB, "WindPower_Result", "h, Pwind, Pwps, Qfwps", "번호='" + Num + "' And 월 ='" + (mth + 1).ToString() + "월'");
-                    if (Value.Length > 0)
-                    {
-                        Qfwps[mth] = Program.UTIL.ToDoubleOrZero(Value[0][3]);
-                        sum += Qfwps[mth];
-                        s += Qfwps[mth] + ",";
-                    }
+                    sum += Qfwps[mth];
+                    s += Qfwps[mth] + ",";
                 }
                 annual_textBox.Text = sum.ToString("0.00") + " kWh/a";
 

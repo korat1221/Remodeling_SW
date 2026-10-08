@@ -382,6 +382,7 @@ namespace main.contents
             {
                 if (!string.IsNullOrEmpty(Num) && Save())
                 {
+                    tabload("output");
                     Calc();
                 }
             }
@@ -455,7 +456,6 @@ namespace main.contents
 
         private void Calc()
         {
-            tabload("output");
             Cal_RESystem cal = new Cal_RESystem(Num);
             cal.PVcalReady();
             try
