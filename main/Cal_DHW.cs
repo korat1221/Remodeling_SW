@@ -13,6 +13,7 @@ namespace main
         public String DHWNum, DHWName; String SelectZone_nonsplit;
         String SystemLocation;
         String PipeType, Complex, MainSystem, Sub1System, Sub2System;
+        string BoilerType = null;
         String SelectBoiler_nonsplit, BoilerNum_nonsplit;
         String SelectSolar_nonsplit, SolarNum_nonsplit, SolarDirection_nonsplit, SolarDegree_nonsplit; String SelectFC_nonsplit, FCNum_nonsplit, FCElecInstall_nonsplit, FCElecHeat_nonsplit;
         String SelectHP_nonsplit, HPNum_nonsplit, HPControl_nonsplit;
@@ -61,7 +62,6 @@ namespace main
                 for (int mth = 0; mth < 12; mth++)
                 {
                     theta_e[mth] = Program.UTIL.ToDoubleOrZero(외기온도[mth][0]);
-                    theta_u[mth] = theta_ih_avg[mth] - 0.8 * (theta_ih_avg[mth] - theta_e[mth]);
                 }
             }
         }
@@ -109,6 +109,28 @@ namespace main
                 DHWName = Value[0][0];
                 SelectZone_nonsplit = Value[0][1];
                 SelectZone_split = Split_(SelectZone_nonsplit);
+                if (!Now_Check)
+                {
+                    SelectZone_nonsplit = "";
+                    string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,기존존", "");
+                    for (int j = 0; j < PostZone.Length; j++)
+                    {
+                        ArrayList split = Split_(PostZone[j][1]);
+                        for (int m = 0; m < split.Count; m++)
+                        {
+                            if (SelectZone_split.Contains(split[m].ToString()))
+                            {
+                                if (SelectZone_nonsplit != "")
+                                {
+                                    SelectZone_nonsplit += "+";
+                                }
+                                SelectZone_nonsplit += PostZone[j][0];
+                                break;
+                            }
+                        }
+                    }
+                    SelectZone_split = Split_(SelectZone_nonsplit);
+                }
                 Qwb_mth = new double[SelectZone_split.Count, 12];
                 theta_ih = new double[SelectZone_split.Count, 12];
                 Qwb_a = new double[SelectZone_split.Count];
@@ -119,45 +141,15 @@ namespace main
                 for (int n = 0; n < SelectZone_split.Count; n++)
                 {
                     Zone zone = null; double Qwb_day = 0;
-                    if (Now_Check == true)
+                    zone = Program.CALC.getZone(SelectZone_split[n].ToString());
+                    string[][] kk = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적,일일급탕요구량,용도프로필", "존번호 = '" + zone.ZoneNum + "'");
+                    if (kk.Length > 0)
                     {
-                        zone = Program.CALC.getZone(SelectZone_split[n].ToString());
-                        string[][] kk = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적,일일급탕요구량,용도프로필", "존번호 = '" + zone.ZoneNum + "'");
-                        if (kk.Length > 0)
-                        { 
-                            ZoneArea += Program.UTIL.ToDoubleOrZero(kk[0][0]);
-                            Qwb_day += Program.UTIL.ToDoubleOrZero(kk[0][1]);
-                            string[][] Usage = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "급탕시간당비율", "용도명 = '" + kk[0][2] + "'");
-                            if (Usage.Length > 0)
-                            { Qmax += (Qwb_day * Program.UTIL.ToDoubleOrZero(Usage[0][0])); }
-                        }
-                    }
-                    else
-                    {
-                        string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,기존존", "");
-                        if (PostZone.Length > 0)
-                        {
-                            for (int j = 0; j < PostZone.Length; j++)
-                            {
-                                ArrayList split = Split_(PostZone[j][1]);
-                                for (int m = 0; m < split.Count; m++)
-                                {
-                                    if (split[m].ToString() == SelectZone_split[n].ToString())
-                                    {
-                                        zone = Program.CALC.getZone(PostZone[j][0]);
-                                        string[][] kk = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적,일일급탕요구량,용도프로필", "존번호 = '" + zone.ZoneNum + "'");
-                                        if (kk.Length > 0)
-                                        {
-                                            ZoneArea += Program.UTIL.ToDoubleOrZero(kk[0][0]);
-                                            Qwb_day += Program.UTIL.ToDoubleOrZero(kk[0][1]);
-                                            string[][] Usage = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "급탕시간당비율", "용도명 = '" + kk[0][2] + "'");
-                                            if (Usage.Length > 0)
-                                            { Qmax += (Qwb_day * Program.UTIL.ToDoubleOrZero(Usage[0][0])); }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        ZoneArea += Program.UTIL.ToDoubleOrZero(kk[0][0]);
+                        Qwb_day += Program.UTIL.ToDoubleOrZero(kk[0][1]);
+                        string[][] Usage = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "급탕시간당비율", "용도명 = '" + kk[0][2] + "'");
+                        if (Usage.Length > 0)
+                        { Qmax += (Qwb_day * Program.UTIL.ToDoubleOrZero(Usage[0][0])); }
                     }
 
                     if (zone != null)
@@ -205,6 +197,7 @@ namespace main
 
                     theta_ih_avg[mth] = theta_ih_avg[mth] / Qw_a_sum;
                     dop_mth_avg[mth] = dop_mth_avg[mth] / Qw_a_sum;
+                    theta_u[mth] = theta_ih_avg[mth] - 0.8 * (theta_ih_avg[mth] - theta_e[mth]);
                 }
             }
         }
@@ -241,6 +234,14 @@ namespace main
 
                 BoilerNum_nonsplit = Value[0][1];
                 BoilerNum_split = Split_(BoilerNum_nonsplit);
+                if (SelectBoiler_split.Count > 0)
+                {
+                    Value = Program.DB.getValue(ProjNum, "User_Boiler", "Type", "번호 = '" + SelectBoiler_split[0] + "'");
+                    if (Value.Length > 0)
+                    {
+                        BoilerType = Value[0][0];
+                    }
+                }
             }
         }
         public void Load_Solar_general(string ProjNum)
@@ -369,13 +370,6 @@ namespace main
             double[,] tw_calc = new double[12, 3]; //가동시간: 주배관, 수직배관, 분기관 순서
             
             
-            string BoilerType = null; //순간온수기인경우 다르게 적용
-            if (SelectBoiler_split.Count > 0)
-            { 
-                string[][] 보일러 = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "Type", "번호 = '" + SelectBoiler_split[0] + "'");
-                BoilerType = 보일러[0][0];
-            }
-
             //결과 변수
             double[] Qwd_V = new double[12], Qwd_S = new double[12], Qwd_A = new double[12];
 

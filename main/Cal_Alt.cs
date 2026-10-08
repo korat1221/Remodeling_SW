@@ -1589,14 +1589,7 @@ namespace main
                 }
             }
 
-            string[][] 프로젝트번호 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호");
-
             double[,] Qwb_mth; double[,] theta_ih; double[,] dop_mth; double[] th_op_day; double[] Qwb_a; double[] theta_i_h_set;
-            Boolean Now_Check = true;
-            if (ProjNum == 프로젝트번호[0][0])
-            { Now_Check = true; }
-            else
-            { Now_Check = false; }
 
             Qwb_mth = new double[DHW1.SelectZone_split.Count, 12];
             Qwb_a = new double[DHW1.SelectZone_split.Count];
@@ -1604,34 +1597,10 @@ namespace main
             for (int n = 0; n < DHW1.SelectZone_split.Count; n++)
             {
                 Zone zone = null; double Qwb_day = 0;
-                if (Now_Check == true)
-                {
-                    zone = Program.CALC.getZone(DHW1.SelectZone_split[n].ToString());
-                    string[][] kk = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "일일급탕요구량", "존번호 = '" + zone.ZoneNum + "'");
-                    if (kk.Length > 0)
-                    { Qwb_day += Program.UTIL.ToDoubleOrZero(kk[0][0]); }
-                }
-                else
-                {
-                    string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,기존존", "");
-                    if (PostZone.Length > 0)
-                    {
-                        for (int j = 0; j < PostZone.Length; j++)
-                        {
-                            ArrayList split = Split_(PostZone[j][1]);
-                            for (int m = 0; m < split.Count; m++)
-                            {
-                                if (split[m].ToString() == DHW1.SelectZone_split[n].ToString())
-                                {
-                                    zone = Program.CALC.getZone(PostZone[j][0]);
-                                    string[][] kk = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "일일급탕요구량", "존번호 = '" + zone.ZoneNum + "'");
-                                    if (kk.Length > 0)
-                                    { Qwb_day += Program.UTIL.ToDoubleOrZero(kk[0][0]); }
-                                }
-                            }
-                        }
-                    }
-                }
+                zone = Program.CALC.getZone(DHW1.SelectZone_split[n].ToString());
+                string[][] kk = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "일일급탕요구량", "존번호 = '" + zone.ZoneNum + "'");
+                if (kk.Length > 0)
+                { Qwb_day += Program.UTIL.ToDoubleOrZero(kk[0][0]); }
                 if (zone != null)
                 {
                     for (int mth = 0; mth < 12; mth++)
@@ -1653,49 +1622,20 @@ namespace main
             for (int n = 0; n < DHW1.SelectZone_split.Count; n++)
             {
                 Zone zone = null;
-                if (Now_Check == true)
+                string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "기존존", "존번호='" + DHW1.SelectZone_split[n].ToString() + "'");
+                if (PostZone.Length > 0)
                 {
-                    string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "기존존", "존번호='" + DHW1.SelectZone_split[n].ToString() + "'");
-                    if (PostZone.Length > 0)
+                    Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Result_Element", "검토유형,급탕시스템,기존존번호,계획존번호,연료,급탕소요량",
+                               "'" + 검토유형 + "','" + DHW1.DHWNum + "','" + PostZone[0][0] + "','" + DHW1.SelectZone_split[n].ToString() + "','" + "전기" + "','" + Qwf_elec / Qwb_a_sum * Qwb_a[n] + "'"
+                            , "검토유형,급탕시스템,기존존번호,계획존번호,연료");
+                    if (DHW1.Carrier != "전기")
                     {
                         Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Result_Element", "검토유형,급탕시스템,기존존번호,계획존번호,연료,급탕소요량",
-                                   "'" + 검토유형 + "','" + DHW1.DHWNum + "','" + PostZone[0][0] + "','" + DHW1.SelectZone_split[n].ToString() + "','" + "전기" + "','" + Qwf_elec / Qwb_a_sum * Qwb_a[n] + "'"
-                                , "검토유형,급탕시스템,기존존번호,계획존번호,연료");
-                        if (DHW1.Carrier != "전기")
-                        {
-                            Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Result_Element", "검토유형,급탕시스템,기존존번호,계획존번호,연료,급탕소요량",
-                                     "'" + 검토유형 + "','" + DHW1.DHWNum + "','" + PostZone[0][0] + "','" + DHW1.SelectZone_split[n].ToString() + "','" + DHW1.Carrier + "','" + Qwf_gas / Qwb_a_sum * Qwb_a[n] + "'"
-                                  , "검토유형,급탕시스템,기존존번호,계획존번호,연료");
-                        }
+                                 "'" + 검토유형 + "','" + DHW1.DHWNum + "','" + PostZone[0][0] + "','" + DHW1.SelectZone_split[n].ToString() + "','" + DHW1.Carrier + "','" + Qwf_gas / Qwb_a_sum * Qwb_a[n] + "'"
+                              , "검토유형,급탕시스템,기존존번호,계획존번호,연료");
                     }
                 }
-                else
-                {
-                    string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,기존존", "");
-                    if (PostZone.Length > 0)
-                    {
-                        for (int j = 0; j < PostZone.Length; j++)
-                        {
-                            ArrayList split = Split_(PostZone[j][1]);
-                            for (int m = 0; m < split.Count; m++)
-                            {
-                                if (split[m].ToString() == DHW1.SelectZone_split[n].ToString())
-                                {
-                                    zone = Program.CALC.getZone(PostZone[j][0]);
-                                    Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Result_Element", "검토유형,급탕시스템,기존존번호,계획존번호,연료,급탕소요량",
-                                                   "'" + 검토유형 + "','" + DHW1.DHWNum + "','" + PostZone[j][1] + "','" + zone.ZoneNum + "','" + "전기" + "','" + Qwf_elec / Qwb_a_sum * Qwb_a[n] + "'"
-                                                , "검토유형,급탕시스템,기존존번호,계획존번호,연료");
-                                    if (DHW1.Carrier != "전기")
-                                    {
-                                        Program.DB.setValue(DB.type.ProjDB, "DHWSystem_Result_Element", "검토유형,급탕시스템,기존존번호,계획존번호,연료,급탕소요량",
-                                                 "'" + 검토유형 + "','" + DHW1.DHWNum + "','" + PostZone[j][1] + "','" + zone.ZoneNum + "','" + DHW1.Carrier + "','" + Qwf_gas / Qwb_a_sum * Qwb_a[n] + "'"
-                                              , "검토유형,급탕시스템,기존존번호,계획존번호,연료");
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+
 
             }
         }
