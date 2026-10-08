@@ -1347,7 +1347,7 @@ namespace main
            
             for (int mth = 0; mth < 12; mth++)
             {
-                string[][] DValue = Program.DB.querySQL(ProjNum, "Select b.Qw_outg,b.번호 From DHWSystem_Result as a Inner Join DHWSystem_Form as b on a.번호=b.번호 Where a.연료전지번호='" + FCNum + "' and 월='" + mth + "월'");
+                string[][] DValue = Program.DB.querySQL(ProjNum, "Select a.Qw_outg,b.번호 From DHWSystem_Result as a Inner Join DHWSystem_Form as b on a.번호=b.번호 Where b.연료전지번호='" + FCNum + "' and a.월='" + (mth + 1) + "월'");
                 if (DValue.Length > 0)
                 {
                     Qw_outg[mth] = Program.UTIL.ToDoubleOrZero(DValue[0][0]);
