@@ -285,7 +285,7 @@ namespace main
                         system.RE_LightingE[mth] = l;  // 조명
                         system.RE_AHUE[mth] = v;  // 공조
 
-                        Qreg_elec_tot[mth] += h + c + w + l + v;
+                        Qreg_elec_tot[mth] += system.RE_TotalE[mth]; // 용도별 소요량이 없어도 실제 생산량은 보존
                         Qreg_elec_prod_h[mth] += h;
                         Qreg_elec_prod_c[mth] += c;
                         Qreg_elec_prod_w[mth] += w;
@@ -386,14 +386,14 @@ namespace main
                 e = b * b; //(시그마 x)^2
             }
 
-            beta = (12 * a - b * c) / (12 * d - e);
+            beta = 12 * d - e > 0 ? (12 * a - b * c) / (12 * d - e) : 0; // 난방소요량이 일정하면 평균 잔차를 기저로 사용
             alpha = c / 12 - beta * b / 12;
 
             for (int mth = 0; mth < 12; mth++)
             {
                 Qbase_elec[mth] = alpha + beta * x[mth];
 
-                if (double.IsNaN(Qbase_elec[mth]) || Qbase_elec[mth] < 0)
+                if (!double.IsFinite(Qbase_elec[mth]) || Qbase_elec[mth] < 0)
                 {
                     Qbase_elec[mth] = 0;
                 }
@@ -441,14 +441,14 @@ namespace main
                 e = b * b;
             }
 
-            beta = (12 * a - b * c) / (12 * d - e);
+            beta = 12 * d - e > 0 ? (12 * a - b * c) / (12 * d - e) : 0; // 난방소요량이 일정하면 평균 잔차를 기저로 사용
             alpha = c / 12 - beta * b / 12;
 
             for (int mth = 0; mth < 12; mth++)
             {
                 Qbase_gas[mth] = alpha + beta * x[mth];
 
-                if (double.IsNaN(Qbase_gas[mth]) || Qbase_gas[mth] < 0)
+                if (!double.IsFinite(Qbase_gas[mth]) || Qbase_gas[mth] < 0)
                 {
                     Qbase_gas[mth] = 0;
                 }
