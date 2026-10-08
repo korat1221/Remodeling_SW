@@ -57,7 +57,7 @@ namespace main.subcontents.RESystem_WP
             WP_dataGridView.Columns.Add("A4", "제조사");
             WP_dataGridView.Columns.Add("A5", "타입");
             WP_dataGridView.Columns.Add("A6", "세부타입");
-            WP_dataGridView.Columns.Add("A7", "정격출력.[Kw]");
+            WP_dataGridView.Columns.Add("A7", "정격출력.[W]");
             WP_dataGridView.Columns.Add("A8", "회전면적.[m" + Program.UTIL.Subscript(2, true) + "]");
             WP_dataGridView.Columns.Add("A9", "허브높이.[m]");
             WP_dataGridView.Columns.Add("A10", "시동풍속.[m/s]");
@@ -80,7 +80,7 @@ namespace main.subcontents.RESystem_WP
                 WP_dataGridView.Rows[n].Cells[4].Value = WP[n][3];
                 WP_dataGridView.Rows[n].Cells[5].Value = WP[n][4];
                 WP_dataGridView.Rows[n].Cells[6].Value = WP[n][5];
-                WP_dataGridView.Rows[n].Cells[7].Value = WP[n][6];
+                WP_dataGridView.Rows[n].Cells[7].Value = Program.UTIL.ToDoubleOrZero(WP[n][6]) * 1000; // 표준 DB의 kW를 화면 및 장비 입력 단위인 W로 변환
                 WP_dataGridView.Rows[n].Cells[8].Value = WP[n][7];
                 WP_dataGridView.Rows[n].Cells[9].Value = WP[n][8];
                 WP_dataGridView.Rows[n].Cells[10].Value = WP[n][9];
