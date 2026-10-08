@@ -1084,12 +1084,17 @@ namespace main
                             string[][] value = Program.DB.getValue(ProjNum, "Zone_52016_Result", "Qb_a", "난방_냉방='난방' and 월='1월' and 존번호='" + ce[a][8] + "'");
                             if (value.Length > 0)
                             {
-                                double loadRatio = Program.UTIL.ToDoubleOrZero(value[0][0]) * Program.UTIL.ToDoubleOrZero(ce[a][7]);
+                                double loadRatio = Program.UTIL.ToDoubleOrZero(value[0][0]) * Program.UTIL.ToDoubleOrZero(ce[a][7]) / loadRatioTotal;
                                 if (loadRatio > 0)
                                 {
+                                    value = Program.DB.getValue(DB.type.ProjDB, "Heating_ce_Form_Element", "부하율", "존번호='" + PostZone[k][0] + "' and 난방시스템='" + ce[a][4] + "' and 번호='" + ce[a][0] + "'");
+                                    if (value.Length > 0)
+                                    {
+                                        loadRatio += Program.UTIL.ToDoubleOrZero(value[0][0]);
+                                    }
                                     Program.DB.setValue(DB.type.ProjDB, "Heating_ce_Form_Element",
                                         "존번호,난방시스템,유형,구분,종류,번호,추가유형,가동시간,부하율",
-                                        "'" + ce[a][8] + "','" + ce[a][4] + "','" + ce[a][1] + "','" + ce[a][2] + "','" + ce[a][3] + "','" + ce[a][0] + "','" + ce[a][5] + "','" + ce[a][6] + "','" + (loadRatio / loadRatioTotal) + "'",
+                                        "'" + PostZone[k][0] + "','" + ce[a][4] + "','" + ce[a][1] + "','" + ce[a][2] + "','" + ce[a][3] + "','" + ce[a][0] + "','" + ce[a][5] + "','" + ce[a][6] + "','" + loadRatio + "'",
                                         "존번호,난방시스템,번호");
                                 }
                             }

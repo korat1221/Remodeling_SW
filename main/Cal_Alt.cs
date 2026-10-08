@@ -1290,33 +1290,11 @@ namespace main
                 for (int n = 0; n < Value_ce.Length; n++)
                 {
 
-                    if (Now_Check == true)
+                    zone = Program.CALC.getZone(Value_ce[n][1]);
+                    string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "기존존", "존번호='" + zone.ZoneNum + "'");
+                    if (PostZone.Length > 0)
                     {
-                        zone = Program.CALC.getZone(Value_ce[n][1]);
-                        string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "기존존", "존번호='" + zone.ZoneNum + "'");
-                        if (PostZone.Length > 0)
-                        {
-                            Qb_a_sum += Program.UTIL.ToDoubleOrZero(Value_ce[n][2]) * zone.Qb_a[0];
-                        }
-                    }
-                    else
-                    {
-                        string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,기존존", "");
-                        if (PostZone.Length > 0)
-                        {
-                            for (int j = 0; j < PostZone.Length; j++)
-                            {
-                                ArrayList split = Split_(PostZone[j][1]);
-                                for (int m = 0; m < split.Count; m++)
-                                {
-                                    if (split[m].ToString() == Value_ce[n][1])
-                                    {
-                                        zone = Program.CALC.getZone(PostZone[j][0]);
-                                        Qb_a_sum += Program.UTIL.ToDoubleOrZero(Value_ce[n][2]) * zone.Qb_a[0];
-                                    }
-                                }
-                            }
-                        }
+                        Qb_a_sum += Program.UTIL.ToDoubleOrZero(Value_ce[n][2]) * zone.Qb_a[0];
                     }
                 }
 
@@ -1327,51 +1305,20 @@ namespace main
 
                 for (int n = 0; n < Value_ce.Length; n++)
                 {
-                    if (Now_Check == true)
+                    zone = Program.CALC.getZone(Value_ce[n][1]);
+                    string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "기존존", "존번호='" + zone.ZoneNum + "'");
+                    if (PostZone.Length > 0)
                     {
-                        zone = Program.CALC.getZone(Value_ce[n][1]);
-                        string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "기존존", "존번호='" + zone.ZoneNum + "'");
-                        if (PostZone.Length > 0)
+                        Program.DB.setValue(DB.type.ProjDB, "Heating_Result_Element", "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료,난방소요량",
+                                   "'" + 검토유형 + "','" + Heating1.HeatingNum + "','" + PostZone[0][0] + "','" + zone.ZoneNum + "','" + Value_ce[n][0] + "','" + Value_ce[n][2] + "','" + "전기" + "','" + Qhf_elec / Qb_a_sum * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]) * zone.Qb_a[0] + "'"
+                                , "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료");
+                        if (Heating1.Carrier != "전기")
                         {
                             Program.DB.setValue(DB.type.ProjDB, "Heating_Result_Element", "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료,난방소요량",
-                                       "'" + 검토유형 + "','" + Heating1.HeatingNum + "','" + PostZone[0][0] + "','" + zone.ZoneNum + "','" + Value_ce[n][0] + "','" + Value_ce[n][2] + "','" + "전기" + "','" + Qhf_elec / Qb_a_sum * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]) * zone.Qb_a[0] + "'"
-                                    , "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료");
-                            if (Heating1.Carrier != "전기")
-                            {
-                                Program.DB.setValue(DB.type.ProjDB, "Heating_Result_Element", "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료,난방소요량",
-                                         "'" + 검토유형 + "','" + Heating1.HeatingNum + "','" + PostZone[0][0] + "','" + zone.ZoneNum + "','" + Value_ce[n][0] + "','" + Value_ce[n][2] + "','" + Heating1.Carrier + "','" + Qhf_gas / Qb_a_sum * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]) * zone.Qb_a[0] + "'"
-                                      , "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료");
-                            }
+                                     "'" + 검토유형 + "','" + Heating1.HeatingNum + "','" + PostZone[0][0] + "','" + zone.ZoneNum + "','" + Value_ce[n][0] + "','" + Value_ce[n][2] + "','" + Heating1.Carrier + "','" + Qhf_gas / Qb_a_sum * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]) * zone.Qb_a[0] + "'"
+                                  , "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료");
                         }
                     }
-                    else
-                    {
-                        string[][] PostZone = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,기존존", "");
-                        if (PostZone.Length > 0)
-                        {
-                            for (int j = 0; j < PostZone.Length; j++)
-                            {
-                                ArrayList split = Split_(PostZone[j][1]);
-                                for (int m = 0; m < split.Count; m++)
-                                {
-                                    if (split[m].ToString() == Value_ce[n][1])
-                                    {
-                                        zone = Program.CALC.getZone(PostZone[j][0]);
-                                        Program.DB.setValue(DB.type.ProjDB, "Heating_Result_Element", "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료,난방소요량",
-                                                       "'" + 검토유형 + "','" + Heating1.HeatingNum + "','" + PostZone[j][1] + "','" + zone.ZoneNum + "','" + Value_ce[n][0] + "','" + Value_ce[n][2] + "','" + "전기" + "','" + Qhf_elec / Qb_a_sum * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]) * zone.Qb_a[0] + "'"
-                                                    , "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료");
-                                        if (Heating1.Carrier != "전기")
-                                        {
-                                            Program.DB.setValue(DB.type.ProjDB, "Heating_Result_Element", "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료,난방소요량",
-                                                     "'" + 검토유형 + "','" + Heating1.HeatingNum + "','" + PostZone[j][1] + "','" + zone.ZoneNum + "','" + Value_ce[n][0] + "','" + Value_ce[n][2] + "','" + Heating1.Carrier + "','" + Qhf_gas / Qb_a_sum * Program.UTIL.ToDoubleOrZero(Value_ce[n][2]) * zone.Qb_a[0] + "'"
-                                                  , "검토유형,난방시스템,기존존번호,계획존번호,공급설비,부하율,연료");
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
                 }
             }
         }
