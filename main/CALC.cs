@@ -223,7 +223,7 @@ namespace main
 
             string[][] NowProjNum = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
 
-            RESystems.Clear();
+            Clear_RESystems();
             Cal_Qb();
             Cal_Qahu(NowProjNum[0][0]);
             Cal_Qfw(NowProjNum[0][0]);
@@ -1115,9 +1115,9 @@ namespace main
                 {
                     string[] token = nonSplit.Split('+');
                     split.Clear();
-                    foreach (var item in token)
+                    for (int i = 0; i < token.Length; i++)
                     {
-                        split.Add(item.ToString());
+                        split.Add(token[i]);
                     }
                 }
                 else
@@ -1585,7 +1585,6 @@ namespace main
             }
             else
             {
-                final1.reg_빼기(ProjNum);
                 string[][] res = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "기존프로젝트");
                 if (res.Length > 0 && res[0][0] != "")
                 {
@@ -1604,14 +1603,18 @@ namespace main
                         }
                     }                    
                 }
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    final1.Qf_elec_tot_mth[mth] = final1.Qf_elec_tot_mth[mth] + final1.Qbase_elec[mth] ;
-                    final1.Qf_gas_tot_mth[mth] = final1.Qf_gas_tot_mth[mth] + final1.Qbase_gas[mth];
-                }
-
             }
-            
+
+            if (check)
+            {
+                final1.reg_빼기(ProjNum);
+            }
+            for (int mth = 0; mth < 12; mth++)
+            {
+                final1.Qf_elec_tot_mth[mth] = Math.Max(0, final1.Qhf_elec[mth] + final1.Qcf_elec[mth] + final1.Qwf_elec[mth] + final1.Qlf_elec[mth] + final1.Qvf_elec[mth] + final1.Qbase_elec[mth]);
+                final1.Qf_gas_tot_mth[mth] = final1.Qhf_gas[mth] + final1.Qcf_gas[mth] + final1.Qwf_gas[mth] + final1.Qlf_gas[mth] + final1.Qvf_gas[mth] + final1.Qbase_gas[mth];
+            }
+            if (!check) { Finals[ProjNum] = final1; } // 태양광 계산에는 차감 전 결과를 전달
         }
 
         private static void Final_Save(Final final1)
@@ -1642,9 +1645,9 @@ namespace main
                 Qlf_elec_a += final1.Qlf_elec[mth];
                 Qvf_elec_a += final1.Qvf_elec[mth];
                 Qreg_elec_a += final1.Qreg_elec_tot[mth];
+                Qf_elec_tot_a += Math.Max(0, final1.Qf_elec_tot_mth[mth]);
                 Qbase_elec_a += final1.Qbase_elec[mth];
             }
-            Qf_elec_tot_a = Qhf_elec_a + Qcf_elec_a + Qwf_elec_a + Qlf_elec_a + Qvf_elec_a + Qbase_elec_a - Qreg_elec_a;
             Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
                      "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                      "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + "연간" + "','" + "전기" + "','" +
@@ -1656,6 +1659,18 @@ namespace main
             string Carrier = "";
             if (final1.Carrier_h != "" && final1.Carrier_h != null) { Carrier = final1.Carrier_h; } else if (final1.Carrier_w != "" && final1.Carrier_w != null) { Carrier = final1.Carrier_w; } else if (final1.Carrier_c != "" && final1.Carrier_c != null) { Carrier = final1.Carrier_c; }
             if (Carrier == "LNG" || Carrier == "LPG") { Carrier = "가스"; }
+            if (Carrier == "")
+            {
+                for (int reIndex = 0; reIndex < CALC.RESystemKeys.Count; reIndex++)
+                {
+                    RESystem system = Program.CALC.getRESystem(CALC.RESystemKeys[reIndex]);
+                    if (system.RE_Production_Consumption == "소비" && system.RE_Consumption_Carrier == "가스")
+                    {
+                        Carrier = "가스";
+                        break;
+                    }
+                }
+            }
             if (Carrier != "")
             {
                 for (int mth = 0; mth <= 11; mth++)
@@ -1679,8 +1694,8 @@ namespace main
                 Qlf_gas_a += final1.Qlf_gas[mth];
                 Qvf_gas_a += final1.Qvf_gas[mth];
                 Qbase_gas_a += final1.Qbase_gas[mth];
+                Qf_gas_tot_a += final1.Qf_gas_tot_mth[mth];
             }
-            Qf_gas_tot_a = Qhf_gas_a + Qcf_gas_a + Qwf_gas_a + Qbase_gas_a;
             Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
                      "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                      "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + "연간" + "','" + Carrier + "','" +
@@ -1693,20 +1708,10 @@ namespace main
             for (int mth = 0; mth <= 11; mth++)
             {
                 MTH = (mth + 1).ToString() + "월";
-                Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
-                    "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
-                    "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + MTH + "','" + "전체" + "','" +
-                    (final1.Qhf_elec[mth]+ final1.Qhf_gas[mth]) + "','" + (final1.Qcf_elec[mth]+final1.Qcf_gas[mth]) + "','" + (final1.Qwf_elec[mth]+final1.Qwf_gas[mth]) + "','" + final1.Qlf_elec[mth] + "','" +
-                    final1.Qvf_elec[mth] + "','" + (final1.Qbase_elec[mth]+final1.Qbase_gas[mth]) + "','" + final1.Qreg_elec_tot[mth]  + "','" + Math.Max((final1.Qf_elec_tot_mth[mth]+final1.Qf_gas_tot_mth[mth]),0)
-                    + "'", "번호,월,연료"); 
+                Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," + "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량", "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + MTH + "','" + "전체" + "','" + (final1.Qhf_elec[mth]+ final1.Qhf_gas[mth]) + "','" + (final1.Qcf_elec[mth]+final1.Qcf_gas[mth]) + "','" + (final1.Qwf_elec[mth]+final1.Qwf_gas[mth]) + "','" + (final1.Qlf_elec[mth] + final1.Qlf_gas[mth]) + "','" + (final1.Qvf_elec[mth] + final1.Qvf_gas[mth]) + "','" + (final1.Qbase_elec[mth]+final1.Qbase_gas[mth]) + "','" + final1.Qreg_elec_tot[mth]  + "','" + Math.Max((final1.Qf_elec_tot_mth[mth]+final1.Qf_gas_tot_mth[mth]),0) + "'", "번호,월,연료");
             }
 
-            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," +
-                   "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
-                   "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + "연간" + "','" + "전체" + "','" +
-                   (Qhf_elec_a+Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_gas_a) + "','" + Qlf_elec_a + "','" +
-                   Qvf_elec_a + "','" + (Qbase_elec_a + Qbase_gas_a) + "','" + Qreg_elec_a + "','" + Math.Max((Qf_elec_tot_a + Qf_gas_tot_a),0)
-                   + "'", "번호,월,연료");
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result", "프로젝트번호,프로젝트유형,번호,월,연료," + "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량", "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + PNum[0][0] + "','" + "연간" + "','" + "전체" + "','" + (Qhf_elec_a+Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_gas_a) + "','" + (Qlf_elec_a + Qlf_gas_a) + "','" + (Qvf_elec_a + Qvf_gas_a) + "','" + (Qbase_elec_a + Qbase_gas_a) + "','" + Qreg_elec_a + "','" + Math.Max((Qf_elec_tot_a + Qf_gas_tot_a),0) + "'", "번호,월,연료");
             #endregion
 
         }
@@ -1730,7 +1735,15 @@ namespace main
             while (++i < PVNum.Length)
             {
                 Cal_RESystem PV = new Cal_RESystem(PVNum[i][0]);
-                PV.PVcalReady();
+                PV.PVcalReady(ProjNum);
+                if (PV.PVdata[6] == "독립형")
+                {
+                    if (!Finals.ContainsKey(ProjNum)) { throw new InvalidOperationException("독립형 태양광 계산 전에 건물 전기소요량을 계산해야 합니다."); }
+                    for (int mth = 0; mth < 12; mth++)
+                    {
+                        PV.Qf_elec[mth] = Math.Max(0, Finals[ProjNum].Qf_elec_tot1[mth] + Finals[ProjNum].Qbase_elec[mth]);
+                    }
+                }
                 PV.PVcal();
                 PV.PVsave(ProjNum);
             }
@@ -1780,8 +1793,9 @@ namespace main
 
             ArrayList arr_renum = new ArrayList();
             int i = 0;
-            foreach (var system in CALC.RESystems.Values)
+            for (int reIndex = 0; reIndex < CALC.RESystemKeys.Count; reIndex++)
             {
+                RESystem system = Program.CALC.getRESystem(CALC.RESystemKeys[reIndex]);
                 if (!arr_renum.Contains(system.RE_Num))
                 {
                     arr_renum.Add(system.RE_Num);
@@ -1791,8 +1805,9 @@ namespace main
 
             RESystemNum = "RE0" + (i + 1);
 
-            foreach (var system in CALC.RESystems.Values)
+            for (int reIndex = 0; reIndex < CALC.RESystemKeys.Count; reIndex++)
             {
+                RESystem system = Program.CALC.getRESystem(CALC.RESystemKeys[reIndex]);
                 if (system != null && system.RESystem_Num() == WPNum)
                 {
                     RESystemNum = system.Num();
@@ -1806,22 +1821,15 @@ namespace main
             news.RE_RESystem_Num = WPNum;
             news.RE_RESystem_Type = "풍력시스템";
             news.RE_TotalE = WP_Q;
-            string[] sy = new string[4];
-            sy[0] = news.Num();
-            sy[1] = "생산";
-            sy[2] = "전기";
-            sy[3] = "";
-            if (news.Num() != "")
-            {
-                CALC.RESystems[sy] = news;
-            }
+            CALC.Register_RESystem(news);
         }
         public static void Save_RESystem(string ProjNum)
         {
 
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
-            foreach (var s in RESystems.Values)
+            for (int reIndex = 0; reIndex < CALC.RESystemKeys.Count; reIndex++)
             {
+                RESystem s = Program.CALC.getRESystem(CALC.RESystemKeys[reIndex]);
                 double[] tot, h, c, w, l, v = new double[12];
                 tot = s.TotalE();
                 h = s.HeatingE();
@@ -1878,7 +1886,6 @@ namespace main
                 {
                     for (int i = 0; i < ElementAlt.Length; i++)
                     {
-                        RESystems.Clear();
                         cal.Calc_Element(ElementAlt[i]);
                     }
                 }
@@ -1892,7 +1899,7 @@ namespace main
             Program.DB.initTable(DB.type.ProjDB, "FinalEnergy_Result_Rule");
             for (int i = 0; i < RuleAlt.Length; i++)
             {
-                RESystems.Clear();
+                Clear_RESystems();
                 cal.Calc_Rule(RuleAlt[i]);
             }
             return true;
@@ -1908,7 +1915,8 @@ namespace main
         public static Dictionary<string, AHU> AHUs = new Dictionary<string, AHU>();
         public static Dictionary<string, DHW> DHWs = new Dictionary<string, DHW>();
         public static Dictionary<string, Final> Finals = new Dictionary<string, Final>();
-        public static Dictionary<string[], RESystem> RESystems = new Dictionary<string[], RESystem>();        
+        public static Dictionary<string, RESystem> RESystems = new Dictionary<string, RESystem>();
+        public static List<string> RESystemKeys = new List<string>();
         public static string[] ElementAlt = { "조닝", "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀+열회수기", "난방", "냉방", "급탕", "조명", "공조", "태양광","풍력", "기밀" }; //기밀은 요소기술별 합계 계산 시 제외되어야 하므로 마지막 순서여야 함 
       //  public static string[] RuleAlt = { "기밀", "기밀+열회수기" };
         public static string[] RuleAlt = { "외벽", "지붕", "최하층바닥", "창호", "커튼월창", "외부출입문", "기밀", "기밀+열회수기", "조명", "보일러", "냉난방EHP", "냉방EHP", "공냉식냉동기", "수냉식냉동기", "냉난방GHP", "흡수식냉온수기", "태양광" };
@@ -1977,11 +1985,27 @@ namespace main
             }
             else return null;
         }
-        public RESystem getRESystem(string[] keys)
+        public static void Register_RESystem(RESystem system)
         {
-            if (RESystems.ContainsKey(keys))
+            string key = system.RESystem_Type() + "+" + system.RESystem_Num() + "+" + system.Heating_Num() + "+" + system.Cooling_Num() + "+" + system.DHW_Num() + "+" + system.Production_Consumption() + "+" + system.Production_Type() + "+" + system.Consumption_Carrier();
+            if (!RESystems.ContainsKey(key))
             {
-                return RESystems[keys];
+                RESystemKeys.Add(key);
+            }
+            RESystems[key] = system;
+        }
+
+        public static void Clear_RESystems()
+        {
+            RESystems.Clear();
+            RESystemKeys.Clear();
+        }
+
+        public RESystem getRESystem(string key)
+        {
+            if (RESystems.ContainsKey(key))
+            {
+                return RESystems[key];
             }
             else return null;
         }
@@ -1993,9 +2017,9 @@ namespace main
 
             Run_Climate();
 
-            foreach (string calc in calculations)
+            for (int i = 0; i < calculations.Length; i++)
             {
-                _calculations[calc].DynamicInvoke();
+                _calculations[calculations[i]].DynamicInvoke();
             }
 
             Program.DB.saveProject();

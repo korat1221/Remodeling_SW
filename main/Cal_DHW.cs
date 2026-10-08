@@ -75,9 +75,9 @@ namespace main
                 {
                     string[] token = nonSplit.Split('+');
                     split.Clear();
-                    foreach (var item in token)
+                    for (int i = 0; i < token.Length; i++)
                     {
-                        split.Add(item.ToString());
+                        split.Add(token[i]);
                     }
                 }
                 else
@@ -683,8 +683,9 @@ namespace main
 
             ArrayList arr_renum = new ArrayList();
             int i = 0;
-            foreach (var system in CALC.RESystems.Values)
+            for (int reIndex = 0; reIndex < CALC.RESystemKeys.Count; reIndex++)
             {
+                RESystem system = Program.CALC.getRESystem(CALC.RESystemKeys[reIndex]);
                 if (!arr_renum.Contains(system.RE_Num))
                 {
                     arr_renum.Add(system.RE_Num);
@@ -694,8 +695,9 @@ namespace main
 
             RESystemNum = "RE0" + (i + 1);
 
-            foreach (var system in CALC.RESystems.Values)
+            for (int reIndex = 0; reIndex < CALC.RESystemKeys.Count; reIndex++)
             {
+                RESystem system = Program.CALC.getRESystem(CALC.RESystemKeys[reIndex]);
                 if (system != null && system.RESystem_Num() == SolarNum)
                 {
                     RESystemNum = system.Num();
@@ -713,16 +715,7 @@ namespace main
                 news.RE_RESystem_Type = "태양열시스템";
                 news.RE_TotalE = Qw_sol;
                 news.RE_DHWE = Qw_sol;
-
-                string[] sy = new string[4];
-                sy[0] = news.Num();
-                sy[1] = "생산";
-                sy[2] = "열";
-                sy[3] = "";
-                if (news.Num() != "")
-                {
-                    CALC.RESystems[sy] = news;
-                }
+                CALC.Register_RESystem(news);
             }
             {
                 //전기소비
@@ -737,16 +730,7 @@ namespace main
                 {
                     news.RE_TotalE[mth] = 0.025 * Qw_sol[mth];
                 }
-
-                string[] sy = new string[4];
-                sy[0] = news.Num();
-                sy[1] = "소비";
-                sy[2] = "";
-                sy[3] = "전기";
-                if (news.Num() != "")
-                {
-                    CALC.RESystems[sy] = news;
-                }
+                CALC.Register_RESystem(news);
             }
 
         }
@@ -820,15 +804,8 @@ namespace main
                     Qw_outg[mth] = Qw_outg[mth] - Eth_gen_out[mth];
                 }
             }
-            Boolean Now_Check = true;
-            if (ProjNum == 프로젝트번호[0][0])
-            { Now_Check = true; }
-            else
-            { Now_Check = false; }
-            if (Now_Check)
-            {
-                Save_FC(ProjNum, FCNum, Eth_gen_out_h, Eth_gen_out_w);
-            }
+            Save_FC(ProjNum, FCNum, Eth_gen_out_h, Eth_gen_out_w); // 기존 설비를 사용하는 요소별 계산에도 메모리 결과 반영
+
         }
         private void Save_FC(string ProjNum,  string FCNum, double[] Eth_gen_out_h, double[] Eth_gen_out_w)
         {
@@ -842,8 +819,9 @@ namespace main
 
             ArrayList arr_renum = new ArrayList();
             int i = 0;
-            foreach (var system in CALC.RESystems.Values)
+            for (int reIndex = 0; reIndex < CALC.RESystemKeys.Count; reIndex++)
             {
+                RESystem system = Program.CALC.getRESystem(CALC.RESystemKeys[reIndex]);
                 if (!arr_renum.Contains(system.RE_Num))
                 {
                     arr_renum.Add(system.RE_Num);
@@ -853,8 +831,9 @@ namespace main
 
             RESystemNum = "RE0" + (i + 1);
 
-            foreach (var system in CALC.RESystems.Values)
+            for (int reIndex = 0; reIndex < CALC.RESystemKeys.Count; reIndex++)
             {
+                RESystem system = Program.CALC.getRESystem(CALC.RESystemKeys[reIndex]);
                 if (system != null && system.RESystem_Num() == FCNum)
                 {
                     RESystemNum = system.Num();
@@ -873,16 +852,7 @@ namespace main
                 news.RE_RESystem_Type = "연료전지";
                 news.RE_TotalE = Eth_gen_out;
                 news.RE_DHWE = Eth_gen_out_w;
-
-                string[] sy = new string[4];
-                sy[0] = news.Num();
-                sy[1] = "생산";
-                sy[2] = "열";
-                sy[3] = "";
-                if (news.Num() != "")
-                {
-                    CALC.RESystems[sy] = news;
-                }
+                CALC.Register_RESystem(news);
             }
             {
                 //전기생산
@@ -893,16 +863,7 @@ namespace main
                 news.RE_RESystem_Num = FCNum;
                 news.RE_RESystem_Type = "연료전지";
                 news.RE_TotalE = Eel_gen_out;
-
-                string[] sy = new string[4];
-                sy[0] = news.Num();
-                sy[1] = "생산";
-                sy[2] = "전기";
-                sy[3] = "";
-                if (news.Num() != "")
-                {
-                    CALC.RESystems[sy] = news;
-                }
+                CALC.Register_RESystem(news);
             }
             {
                 RESystem news = new RESystem(RESystemNum, "소비", "", "가스");
@@ -913,16 +874,7 @@ namespace main
                 news.RE_RESystem_Num = FCNum;
                 news.RE_RESystem_Type = "연료전지";
                 news.RE_TotalE = Egen_in;
-
-                string[] sy = new string[4];
-                sy[0] = news.Num();
-                sy[1] = "소비";
-                sy[2] = "";
-                sy[3] = "가스";
-                if (news.Num() != "")
-                {
-                    CALC.RESystems[sy] = news;
-                }
+                CALC.Register_RESystem(news);
             }
         }
         public void LoadCalc_Boiler(string ProjNum)

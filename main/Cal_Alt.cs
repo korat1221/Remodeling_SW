@@ -17,9 +17,9 @@ namespace main
                 {
                     string[] token = nonSplit.Split('+');
                     split.Clear();
-                    foreach (var item in token)
+                    for (int i = 0; i < token.Length; i++)
                     {
-                        split.Add(item.ToString());
+                        split.Add(token[i]);
                     }
                 }
                 else
@@ -49,8 +49,8 @@ namespace main
                 Qvf_elec_a += final1.Qvf_elec[mth];
                 Qbase_elec_a += final1.Qbase_elec[mth];
                 Qreg_elec_a += final1.Qreg_elec_tot[mth];
+                Qf_elec_tot_a += Math.Max(0, final1.Qf_elec_tot_mth[mth]);
             }
-            Qf_elec_tot_a = Qhf_elec_a + Qcf_elec_a + Qwf_elec_a + Qlf_elec_a + Qvf_elec_a + Qbase_elec_a - Qreg_elec_a;
             Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
                     "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + "전기" + "','" +
@@ -63,6 +63,18 @@ namespace main
             string Carrier = "";
             if (final1.Carrier_h != "" && final1.Carrier_h != null) { Carrier = final1.Carrier_h; } else if (final1.Carrier_w != "" && final1.Carrier_w != null) { Carrier = final1.Carrier_w; } else if (final1.Carrier_c != "" && final1.Carrier_c != null) { Carrier = final1.Carrier_c; }
             if (Carrier == "LNG" || Carrier == "LPG") { Carrier = "가스"; }
+            if (Carrier == "")
+            {
+                for (int reIndex = 0; reIndex < CALC.RESystemKeys.Count; reIndex++)
+                {
+                    RESystem system = Program.CALC.getRESystem(CALC.RESystemKeys[reIndex]);
+                    if (system.RE_Production_Consumption == "소비" && system.RE_Consumption_Carrier == "가스")
+                    {
+                        Carrier = "가스";
+                        break;
+                    }
+                }
+            }
 
             double Qhf_gas_a = 0, Qcf_gas_a = 0, Qwf_gas_a = 0, Qbase_gas_a = 0, Qf_gas_tot_a = 0;
             for (int mth = 0; mth < 12; mth++)
@@ -71,23 +83,13 @@ namespace main
                 Qcf_gas_a += final1.Qcf_gas[mth];
                 Qwf_gas_a += final1.Qwf_gas[mth];
                 Qbase_gas_a += final1.Qbase_gas[mth];
+                Qf_gas_tot_a += final1.Qf_gas_tot_mth[mth];
             }
-            Qf_gas_tot_a = Qhf_gas_a + Qcf_gas_a + Qwf_gas_a + Qbase_gas_a;
-            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
-                    "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
-                    "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + Carrier + "','" +
-                    Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_gas_a + "','" + "0" + "','" +
-                    "0" + "','" + Qbase_gas_a + "','" + Qf_gas_tot_a
-                    + "'", "검토유형,번호,월,연료");
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," + "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량", "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + Carrier + "','" + Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_gas_a + "','" + final1.Qlf_gas.Sum() + "','" + final1.Qvf_gas.Sum() + "','" + Qbase_gas_a + "','" + Qf_gas_tot_a + "'", "검토유형,번호,월,연료");
             #endregion
             #region 전체           
 
-            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
-                   "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
-                   "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + "전체" + "','" +
-                   (Qhf_elec_a + Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_gas_a) + "','" + Qlf_elec_a + "','" +
-                   Qvf_elec_a + "','" + (Qbase_elec_a + Qbase_gas_a) + "','" + Qreg_elec_a + "','" + (Qf_elec_tot_a + Qf_gas_tot_a)
-                   + "'", "검토유형,번호,월,연료");
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Element", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," + "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량", "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + "전체" + "','" + (Qhf_elec_a + Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_gas_a) + "','" + (Qlf_elec_a + final1.Qlf_gas.Sum()) + "','" + (Qvf_elec_a + final1.Qvf_gas.Sum()) + "','" + (Qbase_elec_a + Qbase_gas_a) + "','" + Qreg_elec_a + "','" + (Qf_elec_tot_a + Qf_gas_tot_a) + "'", "검토유형,번호,월,연료");
             #endregion
 
             Program.DB.saveProject();
@@ -749,6 +751,7 @@ namespace main
 
         private void Calc_System_element(string 검토유형)
         {
+            CALC.Clear_RESystems(); // 검토에 선택된 설비 결과만 집계
             if (검토유형 == "공조")
             {
                 Cal_AHU_Now(NowProjNum[0][0], 검토유형);
@@ -833,37 +836,24 @@ namespace main
                 final1.Load_AHU_Final(PreProjNum[0][0]);
             }
 
-            if (검토유형 == "태양광" )
+            CALC.Final_Calc(final1, NowProjNum[0][0], false);
+            CALC.Finals[PreProjNum[0][0]] = final1; // 기존 태양광도 이번 검토의 건물 소요량을 사용
+            if (검토유형 == "태양광")
             {
-                CALC.Final_Calc(final1, NowProjNum[0][0], false); //소요량 계산 > 신재생 계산 > 신재생분배 > 파이널 계산
                 CALC.PVCalc(NowProjNum[0][0]);
                 CALC.WPCalc(PreProjNum[0][0]);
-
-                final1 = new Final(NowProjNum[0][0]);
-                final1.Load_Heating_Final(PreProjNum[0][0]);
-                final1.Load_Cooling_Final(PreProjNum[0][0]);
-                final1.Load_DHW_Final(PreProjNum[0][0]);
-                final1.Load_AHU_Final(PreProjNum[0][0]);
-                CALC.Final_Calc(final1, NowProjNum[0][0], true);
             }
-            else if(검토유형 == "풍력")
+            else if (검토유형 == "풍력")
             {
-                CALC.Final_Calc(final1, NowProjNum[0][0], false); //소요량 계산 > 신재생 계산 > 신재생분배 > 파이널 계산
                 CALC.PVCalc(PreProjNum[0][0]);
                 CALC.WPCalc(NowProjNum[0][0]);
-
-                final1 = new Final(NowProjNum[0][0]);
-                final1.Load_Heating_Final(PreProjNum[0][0]);
-                final1.Load_Cooling_Final(PreProjNum[0][0]);
-                final1.Load_DHW_Final(PreProjNum[0][0]);
-                final1.Load_AHU_Final(PreProjNum[0][0]);
-                CALC.Final_Calc(final1, NowProjNum[0][0], true);
-
             }
             else
             {
-                CALC.Final_Calc(final1, PreProjNum[0][0], false);
+                CALC.PVCalc(PreProjNum[0][0]);
+                CALC.WPCalc(PreProjNum[0][0]);
             }
+            CALC.Final_Calc(final1, NowProjNum[0][0], true);
 
             Save_Alt(final1, 검토유형);
 

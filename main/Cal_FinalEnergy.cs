@@ -257,93 +257,80 @@ namespace main
 
         public void reg_분배(string ProjNum)
         {
-             ArrayList arr_renum = new ArrayList();
-            foreach (var system in CALC.RESystems.Values)
+            for (int reIndex = 0; reIndex < CALC.RESystemKeys.Count; reIndex++)
             {
-                if (!arr_renum.Contains(system.RE_Num))
+                RESystem system = Program.CALC.getRESystem(CALC.RESystemKeys[reIndex]);
+                for (int mth = 0; mth < 12; mth++)
                 {
-                    arr_renum.Add(system.RE_Num);
+                    if (system != null && system.RE_Production_Consumption == "생산" && system.RE_Production_Type == "전기")
+                    {
+                        // 각 변수에 대한 계산
+                        double h = Qf_elec_tot1[mth] > 0 ? system.RE_TotalE[mth] * Qhf_elec[mth] / Qf_elec_tot1[mth] : 0; // 난방 계산
+                        double c = Qf_elec_tot1[mth] > 0 ? system.RE_TotalE[mth] * Qcf_elec[mth] / Qf_elec_tot1[mth] : 0; // 냉방 계산
+                        double w = Qf_elec_tot1[mth] > 0 ? system.RE_TotalE[mth] * Qwf_elec[mth] / Qf_elec_tot1[mth] : 0; // 급탕 계산
+                        double l = Qf_elec_tot1[mth] > 0 ? system.RE_TotalE[mth] * Qlf_elec[mth] / Qf_elec_tot1[mth] : 0; // 조명 계산
+                        double v = Qf_elec_tot1[mth] > 0 ? system.RE_TotalE[mth] * Qvf_elec[mth] / Qf_elec_tot1[mth] : 0; // 공조 계산
+
+                        h = double.IsNaN(h) ? 0 : h;
+                        c = double.IsNaN(c) ? 0 : c;
+                        w = double.IsNaN(w) ? 0 : w;
+                        l = double.IsNaN(l) ? 0 : l;
+                        v = double.IsNaN(v) ? 0 : v;
+
+
+                        // 해당 system 객체의 속성에 값을 할당
+                        system.RE_HeatingE[mth] = h;  // 난방
+                        system.RE_CoolingE[mth] = c;  // 냉방
+                        system.RE_DHWE[mth] = w;  // 급탕
+                        system.RE_LightingE[mth] = l;  // 조명
+                        system.RE_AHUE[mth] = v;  // 공조
+
+                        Qreg_elec_tot[mth] += h + c + w + l + v;
+                        Qreg_elec_prod_h[mth] += h;
+                        Qreg_elec_prod_c[mth] += c;
+                        Qreg_elec_prod_w[mth] += w;
+                        Qreg_elec_prod_l[mth] += l;
+                        Qreg_elec_prod_v[mth] += v;
+                    }
                 }
             }
 
-            foreach (var system in CALC.RESystems.Values)
+
+            for (int reIndex = 0; reIndex < CALC.RESystemKeys.Count; reIndex++)
             {
+                RESystem system = Program.CALC.getRESystem(CALC.RESystemKeys[reIndex]);
                 for (int mth = 0; mth < 12; mth++)
                 {
-                    for(int i =0; i< arr_renum.Count; i++)
+                    if (system != null && system.RE_Production_Consumption == "소비" && system.RE_Consumption_Carrier == "가스")
                     {
-                        string renum = "RE0" + (i + 1);
-                        if (system != null && system.RE_Num == renum && system.RE_Production_Consumption == "생산" && system.RE_Production_Type == "전기")
-                        {
-                            // 각 변수에 대한 계산
-                            double h = system.RE_TotalE[mth] * Qhf_elec[mth] / Qf_elec_tot1[mth]; // 난방 계산
-                            double c = system.RE_TotalE[mth] * Qcf_elec[mth] / Qf_elec_tot1[mth]; // 냉방 계산
-                            double w = system.RE_TotalE[mth] * Qwf_elec[mth] / Qf_elec_tot1[mth]; // 급탕 계산
-                            double l = system.RE_TotalE[mth] * Qlf_elec[mth] / Qf_elec_tot1[mth]; // 조명 계산
-                            double v = system.RE_TotalE[mth] * Qvf_elec[mth] / Qf_elec_tot1[mth]; // 공조 계산
+                        // 각 변수에 대한 계산
+                        double h = Qf_elec_tot1[mth] > 0 ? system.RE_TotalE[mth] * Qhf_elec[mth] / Qf_elec_tot1[mth] : 0; // 난방 계산
+                        double c = Qf_elec_tot1[mth] > 0 ? system.RE_TotalE[mth] * Qcf_elec[mth] / Qf_elec_tot1[mth] : 0; // 냉방 계산
+                        double w = Qf_elec_tot1[mth] > 0 ? system.RE_TotalE[mth] * Qwf_elec[mth] / Qf_elec_tot1[mth] : 0; // 급탕 계산
+                        double l = Qf_elec_tot1[mth] > 0 ? system.RE_TotalE[mth] * Qlf_elec[mth] / Qf_elec_tot1[mth] : 0; // 조명 계산
+                        double v = Qf_elec_tot1[mth] > 0 ? system.RE_TotalE[mth] * Qvf_elec[mth] / Qf_elec_tot1[mth] : 0; // 공조 계산
 
-                            h = double.IsNaN(h) ? 0 : h;
-                            c = double.IsNaN(c) ? 0 : c;
-                            w = double.IsNaN(w) ? 0 : w;
-                            l = double.IsNaN(l) ? 0 : l;
-                            v = double.IsNaN(v) ? 0 : v;
+                        h = double.IsNaN(h) ? 0 : h;
+                        c = double.IsNaN(c) ? 0 : c;
+                        w = double.IsNaN(w) ? 0 : w;
+                        l = double.IsNaN(l) ? 0 : l;
+                        v = double.IsNaN(v) ? 0 : v;
 
+                        // 해당 system 객체의 속성에 값을 할당
+                        system.RE_HeatingE[mth] = h;  // 난방
+                        system.RE_CoolingE[mth] = c;  // 냉방
+                        system.RE_DHWE[mth] = w;  // 급탕
+                        system.RE_LightingE[mth] = l;  // 조명
+                        system.RE_AHUE[mth] = v;  // 공조
 
-                            // 해당 system 객체의 속성에 값을 할당
-                            system.RE_HeatingE[mth] = h;  // 난방
-                            system.RE_CoolingE[mth] = c;  // 냉방
-                            system.RE_DHWE[mth] = w;  // 급탕
-                            system.RE_LightingE[mth] = l;  // 조명
-                            system.RE_AHUE[mth] = v;  // 공조
-
-                            Qreg_elec_prod_h[mth] += h;
-                            Qreg_elec_prod_c[mth] += c;
-                            Qreg_elec_prod_w[mth] += w;
-                            Qreg_elec_prod_l[mth] += l;
-                            Qreg_elec_prod_v[mth] += v;
-                        }
+                        if (string.IsNullOrEmpty(Carrier_h) && string.IsNullOrEmpty(Carrier_w) && string.IsNullOrEmpty(Carrier_c)) { Carrier_h = "가스"; }
+                        Qreg_gas_cons_h[mth] += h;
+                        Qreg_gas_cons_c[mth] += c;
+                        Qreg_gas_cons_w[mth] += w;
+                        Qreg_gas_cons_l[mth] += l;
+                        Qreg_gas_cons_v[mth] += v;
                     }
-                   
-                }   
-            }
 
-
-            foreach (var system in CALC.RESystems.Values)
-            {
-                for (int mth = 0; mth < 12; mth++)
-                {
-                    for (int i = 0; i < arr_renum.Count; i++)
-                    {
-                        string renum = "RE0" + (i + 1);
-                        if (system != null && system.RE_Num == renum && system.RE_Production_Consumption == "소비" && system.RE_Consumption_Carrier == "가스")
-                        {
-                            // 각 변수에 대한 계산
-                            double h = system.RE_TotalE[mth] * Qhf_elec[mth] / Qf_elec_tot1[mth]; // 난방 계산
-                            double c = system.RE_TotalE[mth] * Qcf_elec[mth] / Qf_elec_tot1[mth]; // 냉방 계산
-                            double w = system.RE_TotalE[mth] * Qwf_elec[mth] / Qf_elec_tot1[mth]; // 급탕 계산
-                            double l = system.RE_TotalE[mth] * Qlf_elec[mth] / Qf_elec_tot1[mth]; // 조명 계산
-                            double v = system.RE_TotalE[mth] * Qvf_elec[mth] / Qf_elec_tot1[mth]; // 공조 계산
-
-                            h = double.IsNaN(h) ? 0 : h;
-                            c = double.IsNaN(c) ? 0 : c;
-                            w = double.IsNaN(w) ? 0 : w;
-                            l = double.IsNaN(l) ? 0 : l;
-                            v = double.IsNaN(v) ? 0 : v;
-
-                            // 해당 system 객체의 속성에 값을 할당
-                            system.RE_HeatingE[mth] = h;  // 난방
-                            system.RE_CoolingE[mth] = c;  // 냉방
-                            system.RE_DHWE[mth] = w;  // 급탕
-                            system.RE_LightingE[mth] = l;  // 조명
-                            system.RE_AHUE[mth] = v;  // 공조
-
-                            Qreg_gas_cons_h[mth] += h;
-                            Qreg_gas_cons_c[mth] += c;
-                            Qreg_gas_cons_w[mth] += w;
-                            Qreg_gas_cons_l[mth] += l;
-                            Qreg_gas_cons_v[mth] += v;
-                        }
-                    }
                 }
             }
         }

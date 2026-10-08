@@ -41,13 +41,14 @@ namespace main
         public Cal_RESystem(string Num) { this.Num = Num; }
 
         #region PV별 계산
-        public void PVcalReady( )
+        public void PVcalReady(string ProjNum = null)
         {
-            string[][] buildinginfo = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,프로젝트유형번호,지역", "");
+            if (ProjNum == null) { ProjNum = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호")[0][0]; }
+            string[][] buildinginfo = Program.DB.getValue(ProjNum, "BuildingGeneral", "프로젝트번호,프로젝트유형번호,지역", "");
             프로젝트번호 = buildinginfo[0][0].ToString();
             프로젝트유형 = buildinginfo[0][1].ToString();
             string ort = buildinginfo[0][2].ToString();
-            string[][] PVformdata = Program.DB.getValue(DB.type.ProjDB, "PV_Form", "방위,기울기,fperf,인버터효율,지형물거리,지형물높이,어레이높이,계통유형,면적,용량,배터리번호", "번호='" + Num +"'");
+            string[][] PVformdata = Program.DB.getValue(ProjNum, "PV_Form", "방위,기울기,fperf,인버터효율,지형물거리,지형물높이,어레이높이,계통유형,면적,용량,배터리번호", "번호='" + Num +"'");
             string orientation, slope;
             orientation = PVformdata[0][0].ToString();
             slope = PVformdata[0][1].ToString() + "˚";
@@ -94,7 +95,9 @@ namespace main
 
             PVType = PVdata[6];
             totalArea = Program.UTIL.ToDoubleOrZero(PVdata[7]);
-            Kpk = Program.UTIL.ToDoubleOrZero(PVdata[8]) / totalArea;
+            PVPpk_kW = Program.UTIL.ToDoubleOrZero(PVdata[8]);
+            if (totalArea <= 0 || PVPpk_kW <= 0 || !double.IsFinite(totalArea) || !double.IsFinite(PVPpk_kW)) { throw new InvalidOperationException("태양광 면적과 용량은 0보다 큰 값이어야 합니다."); }
+            Kpk = PVPpk_kW / totalArea;
 
             fPerf = fPerf - (1-InverterEff);
 
@@ -130,21 +133,22 @@ namespace main
                     Qfpvm_m2_kWh[b] = 0;
                     Qfpvm_kWh[b] = Esol[b] * Kpk * AreaC[b] * 0.9 * fPerf;
                     Qfpva_kWh += Qfpvm_kWh[b];
-                    Qfpvm_m2_kWh[b] = Esol[b] * Kpk * AreaC[b] * 0.9 * fPerf / totalArea;                    
+                    Qfpvm_m2_kWh[b] = Qfpvm_kWh[b] / totalArea;
                 }
             }
             else if(PVType == "독립형")
             {
                 string batteryType;
-                double Cnenm, ηDoD, ηBatt;
                 PVBatteryNumber = PVdata[9];
-                string[][] battery = Program.DB.getValue(DB.type.ProjDB, "User_PVBattery", "정격전력,배터리타입", "번호='" + PVBatteryNumber + "'");
+                string[][] battery = Program.DB.getValue(프로젝트번호, "User_PVBattery", "정격전력,배터리타입", "번호='" + PVBatteryNumber + "'");
 
+                if (battery.Length != 1) { throw new InvalidOperationException("독립형 태양광의 배터리를 선택해야 합니다."); }
                 Cnenm = Program.UTIL.ToDoubleOrZero(battery[0][0]);
                 batteryType = battery[0][1].ToString();
                 
                 string[][] Binfo = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광배터리계수", "최대방전깊이,시스템효율", "배터리타입 ='" + batteryType + "'");
 
+                if (Binfo.Length != 1) { throw new InvalidOperationException("선택한 배터리의 계산 계수가 없습니다."); }
                 ηDoD = Program.UTIL.ToDoubleOrZero(Binfo[0][0]);
                 ηBatt = Program.UTIL.ToDoubleOrZero(Binfo[0][1]);
                             
@@ -156,30 +160,23 @@ namespace main
                     Qfpvm_m2_kWh[b] = 0;
                     Qfpvm_kWh[b] = Esol[b] * Kpk * AreaC[b] * 0.9 * fPerf * fBatt[b];
                     Qfpva_kWh += Qfpvm_kWh[b];
-                    Qfpvm_m2_kWh[b] = Esol[b] * Kpk * AreaC[b] * 0.9 * fPerf / totalArea;
+                    Qfpvm_m2_kWh[b] = Qfpvm_kWh[b] / totalArea;
                 }
             }
         }
 
         public void Cal_Battery()
         {
-            for(int j=0; j < 12; j++)
-            {
-                Qf_elec[j] = 0;
-                string k = (j + 1).ToString() + "월";
-                string[][] value = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "총에너지소요량", "연료='전기' And 월='"+k+"'");
-                if (value.Length > 0)
-                {
-                    Qf_elec[j] = Program.UTIL.ToDoubleOrZero(value[0][0]);
-                }
-            }
-            
             Ceff = Cnenm * ηDoD;
+            if (Ceff <= 0 || PVPpk_kW <= 0 || !double.IsFinite(Ceff) || !double.IsFinite(PVPpk_kW)) { throw new InvalidOperationException("독립형 태양광의 배터리 유효용량과 태양광 출력을 확인해야 합니다."); }
             for (int mth = 0; mth < 12; mth++)
             {
+                if (!double.IsFinite(Qf_elec[mth]) || Qf_elec[mth] < 0) { throw new InvalidOperationException("독립형 태양광의 건물 전기소요량을 확인해야 합니다."); }
+                if (Qf_elec[mth] == 0) { fBatt[mth] = 1; continue; }
                 CQ[mth] = Ceff / Qf_elec[mth] * 100;
                 γQ[mth] = PVPpk_kW / Qf_elec[mth] * 100;
                 fBatt[mth] = Math.Max(1, (0.2 * Math.Log(γQ[mth], Math.E) + 1.85) * Math.Pow(CQ[mth], (0.1 * Math.Log(γQ[mth], Math.E) + 0.25)));
+                if (!double.IsFinite(fBatt[mth])) { throw new InvalidOperationException("독립형 태양광의 배터리 계수를 계산할 수 없습니다. 입력값을 확인해야 합니다."); }
             }
         }
 
@@ -223,8 +220,9 @@ namespace main
 
             ArrayList arr_renum = new ArrayList();
             int i = 0;
-            foreach (var system in CALC.RESystems.Values)
-            { 
+            for (int reIndex = 0; reIndex < CALC.RESystemKeys.Count; reIndex++)
+            {
+                RESystem system = Program.CALC.getRESystem(CALC.RESystemKeys[reIndex]);
                 if(!arr_renum.Contains(system.RE_Num))
                 {
                     arr_renum.Add(system.RE_Num);
@@ -234,8 +232,9 @@ namespace main
 
             RESystemNum = "RE0" + (i + 1);
             
-            foreach (var system in CALC.RESystems.Values)
+            for (int reIndex = 0; reIndex < CALC.RESystemKeys.Count; reIndex++)
             {
+                RESystem system = Program.CALC.getRESystem(CALC.RESystemKeys[reIndex]);
                 if (system != null && system.RESystem_Num() == Num)
                 {
                     RESystemNum = system.Num();
@@ -249,16 +248,7 @@ namespace main
             news.RE_RESystem_Num = Num;
             news.RE_RESystem_Type = "태양광시스템";
             news.RE_TotalE = Qfpvm_kWh;
-
-            string[] sy = new string[4];
-            sy[0] = news.Num();
-            sy[1] = "생산";
-            sy[2] = "전기";
-            sy[3] = "";
-            if (news.Num() != "")
-            {
-                CALC.RESystems[sy] = news;
-            }
+            CALC.Register_RESystem(news);
         }
         #endregion
 
@@ -431,7 +421,7 @@ namespace main
                 허브높이 = Program.UTIL.ToDoubleOrZero(Value[0][1]);
                 시동풍속 = Convert.ToInt32(Value[0][2]);
                 종단풍속 = Convert.ToInt32(Value[0][3]);
-                정격출력 = Program.UTIL.ToDoubleOrZero(Value[0][4]);
+                정격출력 = Program.UTIL.ToDoubleOrZero(Value[0][4]); // W
                 정격출력풍속 = Program.UTIL.ToDoubleOrZero(Value[0][5]);
                 적용유형 = Value[0][6];
                 풍속구간출력_nonsplit = Value[0][7];
@@ -585,7 +575,7 @@ namespace main
                 int a = 0;
                 for (int v= 시동풍속; v <= 종단풍속; v++ )
                 {
-                    Qfwps[mth] += t_wkn[mth, v] * Program.UTIL.ToDoubleOrZero(풍속구간출력[a]) /1000 * 설치대수;
+                    Qfwps[mth] += t_wkn[mth, v] * Program.UTIL.ToDoubleOrZero(풍속구간출력[a]) / 1000 * 설치대수; // 시간[h] × 출력[W] ÷ 1000 × 대수 = 발전량[kWh]
                     a++;
                 } 
             }
@@ -600,9 +590,9 @@ namespace main
                 {
                     string[] token = nonSplit.Split('+');
                     split.Clear();
-                    foreach (var item in token)
+                    for (int i = 0; i < token.Length; i++)
                     {
-                        split.Add(item.ToString());
+                        split.Add(token[i]);
                     }
                 }
                 else

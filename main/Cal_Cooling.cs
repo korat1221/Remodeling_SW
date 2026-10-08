@@ -1553,8 +1553,9 @@ namespace main
 
                     ArrayList arr_renum = new ArrayList();
                     int i = 0;
-                    foreach (var system in CALC.RESystems.Values)
+                    for (int reIndex = 0; reIndex < CALC.RESystemKeys.Count; reIndex++)
                     {
+                        RESystem system = Program.CALC.getRESystem(CALC.RESystemKeys[reIndex]);
                         if (!arr_renum.Contains(system.RE_Num))
                         {
                             arr_renum.Add(system.RE_Num);
@@ -1564,8 +1565,9 @@ namespace main
 
                     RESystemNum = "RE0" + (i + 1);
 
-                    foreach (var system in CALC.RESystems.Values)
+                    for (int reIndex = 0; reIndex < CALC.RESystemKeys.Count; reIndex++)
                     {
+                        RESystem system = Program.CALC.getRESystem(CALC.RESystemKeys[reIndex]);
                         if (system != null && system.RESystem_Num() == num[0][0])
                         {
                             RESystemNum = system.Num();
@@ -1583,15 +1585,7 @@ namespace main
                         news.RE_RESystem_Type = CG;
                         news.RE_TotalE = QC_out;
                         news.RE_CoolingE = QC_out;
-                        string[] sy = new string[4];
-                        sy[0] = news.Num();
-                        sy[1] = "생산";
-                        sy[2] = "열";
-                        sy[3] = "";
-                        if (news.Num() != "")
-                        {
-                            CALC.RESystems[sy] = news;
-                        }
+                        CALC.Register_RESystem(news);
                     }
                     {
                         //전기소비
@@ -1603,16 +1597,7 @@ namespace main
                         news.RE_RESystem_Num = num[0][0];
                         news.RE_RESystem_Type = CG;
                         news.RE_TotalE = QC_f;
-
-                        string[] sy = new string[4];
-                        sy[0] = news.Num();
-                        sy[1] = "소비";
-                        sy[2] = "";
-                        sy[3] = "전기";
-                        if (news.Num() != "")
-                        {
-                            CALC.RESystems[sy] = news;
-                        }
+                        CALC.Register_RESystem(news);
                     }
                 }
                     

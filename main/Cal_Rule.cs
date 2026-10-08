@@ -520,6 +520,7 @@ namespace main
         #region 소요량
         private void Calc_System_Rule(string 검토유형)
         {
+            CALC.Clear_RESystems();
             Cal_Qv_Now(NowProjNum[0][0], 검토유형);
 
             Cal_Qfh_Rule(NowProjNum[0][0], 검토유형);
@@ -528,7 +529,6 @@ namespace main
 
             Cal_Qfw_Rule(NowProjNum[0][0], 검토유형);
 
-           // CALC.RESystemCalc(NowProjNum[0][0]);
 
             #region 파이널계산
             Final final1;
@@ -547,17 +547,22 @@ namespace main
                     final1.Qbase_elec[mth] = Program.UTIL.ToDoubleOrZero(Final2[0][0]);
                 }
 
-                Final2 = Program.DB.querySQL(DB.type.ProjDB, "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 != '전기' and 월 = '" + (mth + 1).ToString() + "월'");
+                Final2 = Program.DB.querySQL(DB.type.ProjDB, "SELECT 기저에너지 FROM FinalEnergy_Result where 연료 != '전기' and 연료 != '전체' and 월 = '" + (mth + 1).ToString() + "월'");
                 if (Final2.Length > 0)
                 {
                     final1.Qbase_gas[mth] = Program.UTIL.ToDoubleOrZero(Final2[0][0]);
                 }
             }
 
+            CALC.Finals[NowProjNum[0][0]] = final1;
+            CALC.RESystemCalc(NowProjNum[0][0]);
+            final1.reg_분배(NowProjNum[0][0]);
+            final1.reg_빼기(NowProjNum[0][0]);
+
             for (int mth = 0; mth < 12; mth++)
             {
-                final1.Qf_elec_tot_mth[mth] = final1.Qhf_elec[mth] + final1.Qcf_elec[mth] + final1.Qwf_elec[mth] + final1.Qlf_elec[mth] + final1.Qvf_elec[mth] + final1.Qbase_elec[mth] - final1.Qreg_elec_tot[mth];
-                final1.Qf_gas_tot_mth[mth] = final1.Qhf_gas[mth] + final1.Qcf_gas[mth] + final1.Qwf_gas[mth] + final1.Qbase_gas[mth];
+                final1.Qf_elec_tot_mth[mth] = Math.Max(0, final1.Qhf_elec[mth] + final1.Qcf_elec[mth] + final1.Qwf_elec[mth] + final1.Qlf_elec[mth] + final1.Qvf_elec[mth] + final1.Qbase_elec[mth]);
+                final1.Qf_gas_tot_mth[mth] = final1.Qhf_gas[mth] + final1.Qcf_gas[mth] + final1.Qwf_gas[mth] + final1.Qlf_gas[mth] + final1.Qvf_gas[mth] + final1.Qbase_gas[mth];
             }
             
             Save_Alt(final1, 검토유형);
@@ -984,8 +989,8 @@ namespace main
                 Qvf_elec_a += final1.Qvf_elec[mth];
                 Qbase_elec_a += final1.Qbase_elec[mth];
                 Qreg_elec_a += final1.Qreg_elec_tot[mth];
+                Qf_elec_tot_a += Math.Max(0, final1.Qf_elec_tot_mth[mth]);
             }
-            Qf_elec_tot_a = Qhf_elec_a + Qcf_elec_a + Qwf_elec_a + Qlf_elec_a + Qvf_elec_a + Qbase_elec_a - Qreg_elec_a;
             Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Rule", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
                     "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
                     "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + "전기" + "','" +
@@ -998,6 +1003,18 @@ namespace main
             string Carrier = "";
             if (final1.Carrier_h != "" && final1.Carrier_h != null) { Carrier = final1.Carrier_h; } else if (final1.Carrier_w != "" && final1.Carrier_w != null) { Carrier = final1.Carrier_w; } else if (final1.Carrier_c != "" && final1.Carrier_c != null) { Carrier = final1.Carrier_c; }
             if (Carrier == "LNG" || Carrier == "LPG") { Carrier = "가스"; }
+            if (Carrier == "")
+            {
+                for (int reIndex = 0; reIndex < CALC.RESystemKeys.Count; reIndex++)
+                {
+                    RESystem system = Program.CALC.getRESystem(CALC.RESystemKeys[reIndex]);
+                    if (system.RE_Production_Consumption == "소비" && system.RE_Consumption_Carrier == "가스")
+                    {
+                        Carrier = "가스";
+                        break;
+                    }
+                }
+            }
 
             double Qhf_gas_a = 0, Qcf_gas_a = 0, Qwf_gas_a = 0, Qbase_gas_a = 0, Qf_gas_tot_a = 0;
             for (int mth = 0; mth < 12; mth++)
@@ -1006,23 +1023,13 @@ namespace main
                 Qcf_gas_a += final1.Qcf_gas[mth];
                 Qwf_gas_a += final1.Qwf_gas[mth];
                 Qbase_gas_a += final1.Qbase_gas[mth];
+                Qf_gas_tot_a += final1.Qf_gas_tot_mth[mth];
             }
-            Qf_gas_tot_a = Qhf_gas_a + Qcf_gas_a + Qwf_gas_a + Qbase_gas_a;
-            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Rule", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
-                    "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량",
-                    "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + Carrier + "','" +
-                    Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_gas_a + "','" + "0" + "','" +
-                    "0" + "','" + Qbase_gas_a + "','" + Qf_gas_tot_a
-                    + "'", "검토유형,번호,월,연료");
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Rule", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," + "난방,냉방,급탕,조명,공조,기저에너지,총에너지소요량", "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + Carrier + "','" + Qhf_gas_a + "','" + Qcf_gas_a + "','" + Qwf_gas_a + "','" + final1.Qlf_gas.Sum() + "','" + final1.Qvf_gas.Sum() + "','" + Qbase_gas_a + "','" + Qf_gas_tot_a + "'", "검토유형,번호,월,연료");
             #endregion
             #region 전체           
 
-            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Rule", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," +
-                   "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량",
-                   "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + "전체" + "','" +
-                   (Qhf_elec_a + Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_gas_a) + "','" + Qlf_elec_a + "','" +
-                   Qvf_elec_a + "','" + (Qbase_elec_a + Qbase_gas_a) + "','" + Qreg_elec_a + "','" + (Qf_elec_tot_a + Qf_gas_tot_a)
-                   + "'", "검토유형,번호,월,연료");
+            Program.DB.setValue(DB.type.ProjDB, "FinalEnergy_Result_Rule", "프로젝트번호,프로젝트유형,검토유형,번호,월,연료," + "난방,냉방,급탕,조명,공조,기저에너지,신재생에너지,총에너지소요량", "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + 검토유형 + "','" + PNum[0][0] + "','" + "연간" + "','" + "전체" + "','" + (Qhf_elec_a + Qhf_gas_a) + "','" + (Qcf_elec_a + Qcf_gas_a) + "','" + (Qwf_elec_a + Qwf_gas_a) + "','" + (Qlf_elec_a + final1.Qlf_gas.Sum()) + "','" + (Qvf_elec_a + final1.Qvf_gas.Sum()) + "','" + (Qbase_elec_a + Qbase_gas_a) + "','" + Qreg_elec_a + "','" + (Qf_elec_tot_a + Qf_gas_tot_a) + "'", "검토유형,번호,월,연료");
             #endregion
         }
 
