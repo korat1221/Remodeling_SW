@@ -41,6 +41,7 @@ namespace main
         public ArrayList SelectZone_split = new ArrayList();
         public double Vmin_tot, ANF_tot, Qc_a_tot, Qh_a_tot;
         public double[] tvmech_avg = new double[2];
+        double tstart, tend; // 예열 운전구간: 최초 시작시간 + 난방 가중평균 공조시간
         public double[,] dvmechmth_avg = new double[2, 12];
         public double[,] Qb_mth_tot = new double[2, 12];
         public double[] QDHU_mth_tot = new double[12]; //존 제습에너지요구량 합산 (기술서 3.3.1 VAV 냉방풍량식 분자용)
@@ -128,6 +129,8 @@ namespace main
             {
                 AHUOptions = AHUValue[0][0];
             }
+            tstart = 24;
+            tend = 24;
             SelectZone_split.Clear();
             string[][] value = Program.DB.getValue(ProjNum, "ZoneGeneral_Form", "존번호", "선택열회수기 = '" + AHUNum + "' and 환기유무='True'");
             if (value.Length > 0)
@@ -140,9 +143,12 @@ namespace main
 
             for (int n = 0; n < SelectZone_split.Count; n++)
             {
-                string[][] ZoneValue = Program.DB.getValue(ProjNum, "ZoneGeneral_form", "용도프로필,이용일환기량,순바닥면적,공조시간,냉방습도,난방습도", "존번호='" + SelectZone_split[n] + "'");
+                string[][] ZoneValue = Program.DB.getValue(ProjNum, "ZoneGeneral_form", "용도프로필,이용일환기량,순바닥면적,공조시간,냉방습도,난방습도,시작시간", "존번호='" + SelectZone_split[n] + "'");
                 if (ZoneValue.Length > 0)
                 {
+                    string[] StartTime = ZoneValue[0][6].Split(':');
+                    double t_start = Program.UTIL.ToDoubleOrZero(StartTime[0]) + Program.UTIL.ToDoubleOrZero(StartTime[1]) / 60;
+                    tstart = Math.Min(tstart, t_start);
                     Vmin_tot += Program.UTIL.ToDoubleOrZero(ZoneValue[0][1]);
                     ANF_tot += Program.UTIL.ToDoubleOrZero(ZoneValue[0][2]);
                     Zone zone = Program.CALC.getZone(SelectZone_split[n].ToString());
@@ -195,6 +201,7 @@ namespace main
                 theta_i_set[1] = Qc_a_tot > 0 ? theta_i_set[1] / Qc_a_tot : 0;
                 tvmech_avg[0] = Qh_a_tot > 0 ? tvmech_avg[0] / Qh_a_tot : 0;
                 tvmech_avg[1] = Qc_a_tot > 0 ? tvmech_avg[1] / Qc_a_tot : 0;
+                tend = tstart + tvmech_avg[0];
                 X_i_max = Qc_a_tot > 0 ? X_i_max / Qc_a_tot : 0;
                 X_i_min = Qh_a_tot > 0 ? X_i_min / Qh_a_tot : 0;
                 X_i_set[1] = X_i_max;
@@ -570,21 +577,27 @@ namespace main
                     int hourStart = MonthStartHour[mth];
                     int hourEnd = mth < 11 ? MonthStartHour[mth + 1] : 8760;
                     double sumTemperatureRise = 0;
-                    int count = 0;
+                    double count = 0;
                     for (int h = hourStart; h < hourEnd; h++)
                     {
+                        double hour = h % 24;
+                        double t_ci = Math.Max(0, Math.Min(hour + 1, tend) - Math.Max(hour, tstart));
+                        if (tend > 24) { t_ci += Math.Max(0, Math.Min(hour + 1, tend - 24) - hour); }
+                        if (t_ci <= 0) { continue; }
                         if (theta_e_hr[h] < theta_defrost)
                         {
                             double requiredTemperatureRise = theta_defrost - theta_e_hr[h];
-                            double maximumTemperatureRise = Vmin_tot > 0 ? preheaterCapacity / (rhoA * ca * Vmin_tot) : 0;
-                            sumTemperatureRise += Math.Min(requiredTemperatureRise, maximumTemperatureRise);
-                            count++;
+                            if (Vmin_tot <= 0 || preheaterCapacity <= 0) { continue; }
+                            double maximumTemperatureRise = preheaterCapacity / (rhoA * ca * Vmin_tot);
+                            if (PrehPrecOptions == "전기예열기" && requiredTemperatureRise > maximumTemperatureRise) { continue; }
+                            sumTemperatureRise += (PrehPrecOptions == "온수예열기" ? Math.Min(requiredTemperatureRise, maximumTemperatureRise) : requiredTemperatureRise) * t_ci;
+                            count += t_ci;
                         }
                     }
 
                     if (count > 0)
                     {
-                        // 정격용량으로 실제 가능한 시간별 상승온도의 월평균
+                        // 기술서 5.3: 실제 예열 가동시간의 상승온도를 월별 평균
                         dtheta_prh[mth] = sumTemperatureRise / count;
                     }
                     else
@@ -757,7 +770,7 @@ namespace main
 
             double[] dmth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-            // PrehPower는 W 입력이므로 kW로 변환하여 시간별 필요출력을 정격출력 이내로 제한함
+            // PrehPower는 W 입력이므로 kW로 변환. 결빙방지온도를 확보할 수 없는 구간은 OFF
             double prehPower_kW = Math.Max(0, PrehPower / 1000);
 
             for (int mth = 0; mth < 12; mth++)
@@ -767,11 +780,15 @@ namespace main
                 int hourEnd = mth < 11 ? MonthStartHour[mth + 1] : 8760;
                 for (int h = hourStart; h < hourEnd; h++)
                 {
+                    double hour = h % 24;
+                    double t_ci = Math.Max(0, Math.Min(hour + 1, tend) - Math.Max(hour, tstart));
+                    if (tend > 24) { t_ci += Math.Max(0, Math.Min(hour + 1, tend - 24) - hour); }
+                    if (t_ci <= 0) { continue; }
                     if (theta_e_hr[h] < theta_defrost && prehPower_kW > 0)
                     {
-                        // 시간별 필요출력이 정격출력을 초과하면 정격출력으로 운전
                         double requiredPower = rhoA * ca * Vmin_tot * (theta_defrost - theta_e_hr[h]);
-                        Wv_preh_el_all += Math.Min(requiredPower, prehPower_kW);
+                        if (Vmin_tot <= 0 || requiredPower > prehPower_kW) { continue; }
+                        Wv_preh_el_all += requiredPower * t_ci;
                     }
                 }
 
@@ -797,13 +814,17 @@ namespace main
                 int hourEnd = mth < 11 ? MonthStartHour[mth + 1] : 8760;
                 for (int h = hourStart; h < hourEnd; h++)
                 {
+                    double hour = h % 24;
+                    double t_ci = Math.Max(0, Math.Min(hour + 1, tend) - Math.Max(hour, tstart));
+                    if (tend > 24) { t_ci += Math.Max(0, Math.Min(hour + 1, tend - 24) - hour); }
+                    if (t_ci <= 0) { continue; }
                     if (theta_e_hr[h] < theta_defrost && prehCoilPower > 0)
                     {
                         // 시간별 필요열량이 코일 정격출력을 초과하면 정격출력으로 운전
                         double requiredPower = rhoA * ca * Vmin_tot * (theta_defrost - theta_e_hr[h]);
-                        Qpreh_th += Math.Min(requiredPower, prehCoilPower);
+                        Qpreh_th += Math.Min(requiredPower, prehCoilPower) * t_ci;
                         // ◯30 온수예열기 가동시간
-                        t_ci_preh_th += 1;
+                        t_ci_preh_th += t_ci;
                     }
                 }
 

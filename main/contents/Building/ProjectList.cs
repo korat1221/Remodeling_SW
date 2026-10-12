@@ -222,10 +222,6 @@ namespace main.contents
                     {
                         File.Copy(sourceFile, destinationFile, true); // 파일 덮어쓰기
                     }
-                    else
-                    {
-                        throw new FileNotFoundException($"Source file not found: {sourceFile}");
-                    }
 
                     sourceFile = Path.Combine(Program.gPath, "projects", pid0 + ".tree");
                     destinationFile = Path.Combine(Program.gPath, "projects", pid + ".tree");
@@ -234,12 +230,11 @@ namespace main.contents
                     {
                         File.Copy(sourceFile, destinationFile, true); // 파일 덮어쓰기
                     }
-                    else
-                    {
-                        throw new FileNotFoundException($"Source file not found: {sourceFile}");
-                    }
 
-                    CopyDirectory(Program.gPath + "\\projects\\" + pid0, Program.gPath + "\\projects\\" + pid, true);
+                    if (Directory.Exists(Path.Combine(Program.gPath, "projects", pid0)))
+                    {
+                        CopyDirectory(Program.gPath + "\\projects\\" + pid0, Program.gPath + "\\projects\\" + pid, true);
+                    }
                 }
 
                 drawList(ProjectType.ToString());
@@ -304,10 +299,6 @@ namespace main.contents
                         {
                             File.Copy(sourceFile, destinationFile, true); // 파일 덮어쓰기
                         }
-                        else
-                        {
-                            throw new FileNotFoundException($"Source file not found: {sourceFile}");
-                        }
 
                         sourceFile = Path.Combine(Program.gPath, "projects", pid0 + ".tree");
                         destinationFile = Path.Combine(Program.gPath, "projects", pid + ".tree");
@@ -316,12 +307,11 @@ namespace main.contents
                         {
                             File.Copy(sourceFile, destinationFile, true); // 파일 덮어쓰기
                         }
-                        else
-                        {
-                            throw new FileNotFoundException($"Source file not found: {sourceFile}");
-                        }
 
-                        CopyDirectory(Program.gPath + "\\projects\\" + pid0, Program.gPath + "\\projects\\" + pid, true);
+                        if (Directory.Exists(Path.Combine(Program.gPath, "projects", pid0)))
+                        {
+                            CopyDirectory(Program.gPath + "\\projects\\" + pid0, Program.gPath + "\\projects\\" + pid, true);
+                        }
                     }
 
                     drawList(ProjectType.ToString());
