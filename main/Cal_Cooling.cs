@@ -1540,7 +1540,7 @@ namespace main
         {
             if (CG == "지열히트펌프" || CG == "지하수히트펌프")
             {
-                string[][] num = Program.DB.getValue(DB.type.ProjDB, "CoolingSystem_Form", "냉방유닛", "번호='" + CoolingNum + "'");
+                string[][] num = Program.DB.getValue(ProjNum, "CoolingSystem_Form", "냉방유닛", "번호='" + CoolingNum + "'");
                 if(num.Length >0)
                 {
                     string RESystemNum = null;
