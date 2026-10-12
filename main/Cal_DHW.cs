@@ -755,8 +755,8 @@ namespace main
                     double eta_th = Program.UTIL.ToDoubleOrZero(Value[0][6]) / 100;
                     double eta_tot = eta_el + eta_th;
 
-                    double Pfc_th = power_th * FC_nea;
-                    double Pfc_el = power_el * FC_nea;
+                    double Pfc_th = power_th;
+                    double Pfc_el = power_el;
                     Calc_FC(ProjNum, SelectFC_split[n].ToString(), Pfc_th, Pfc_el, eta_th, eta_el, eta_tot, FCElecInstall_split[n].ToString(), FCElecHeat_split[n].ToString(), FC_nea);
                 }
             }
@@ -797,21 +797,29 @@ namespace main
                     top = 24;
                     dop = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
                 }
-                Pth_gen_out[mth] = Math.Min(Pfc_th, QCHW_gen_out[mth] / (top * dop[mth]));
-                Eth_gen_out[mth] = Pth_gen_out[mth] * top * dop[mth];
-                Eth_gen_out_w[mth] = double.IsNaN(Eth_gen_out[mth] * Qw_outg[mth] / QCHW_gen_out[mth]) ? 0 : Eth_gen_out[mth] * Qw_outg[mth] / QCHW_gen_out[mth];
+                Pth_gen_out[mth] = top * dop[mth] > 0 && FC_nea > 0 ? Math.Min(Pfc_th, QCHW_gen_out[mth] / (top * dop[mth] * FC_nea)) : 0;
+                if (FCElecHeat == "전기와 열")
+                {
+                    Eth_gen_out[mth] = Pth_gen_out[mth] * top * dop[mth] * FC_nea;
+                    Eth_gen_out_w[mth] = Eth_gen_out[mth];
+                }
+                else
+                {
+                    Eth_gen_out[mth] = 0;
+                    Eth_gen_out_w[mth] = 0;
+                }
             }
             for (int mth = 0; mth < 12; mth++)
             {
-                Pel_gen_out[mth] = Pel_out_sb + (Pfc_el - Pel_out_sb) * ((Pth_gen_out[mth] - Pth_sb) / (Pfc_th / FC_nea - Pth_sb));
-                Eel_gen_out[mth] = Pel_gen_out[mth] * top * dop[mth];
+                Pel_gen_out[mth] = Pel_out_sb + (Pfc_el - Pel_out_sb) * ((Pth_gen_out[mth] - Pth_sb) / (Pfc_th - Pth_sb));
+                Eel_gen_out[mth] = double.IsNaN(Pel_gen_out[mth] * top * dop[mth]) ? 0 : Pel_gen_out[mth] * top * dop[mth] * FC_nea;
                 Pgen_ls_sb = Pls_sb + Ppilot;
-                Pgen_in_chp = Pfc_th / FC_nea / eta_th;
+                Pgen_in_chp = Pfc_th / eta_th;
                 Pgen_ls_chp = (1 - eta_th - eta_el) * Pgen_in_chp;
-                pgen_ls[mth] = Pgen_ls_sb + (Pgen_ls_chp - Pgen_ls_sb) * ((Pth_gen_out[mth] - Pth_sb) / (Pfc_th / FC_nea - Pth_sb));
+                pgen_ls[mth] = Pgen_ls_sb + (Pgen_ls_chp - Pgen_ls_sb) * ((Pth_gen_out[mth] - Pth_sb) / (Pfc_th - Pth_sb));
                 Qgen_ls[mth] = pgen_ls[mth] * top * dop[mth];
                 Pgen_in[mth] = Pth_gen_out[mth] + Pel_gen_out[mth] + pgen_ls[mth];
-                Egen_in[mth] = Pgen_in[mth] * top * dop[mth];
+                Egen_in[mth] = double.IsNaN(Pgen_in[mth] * top * dop[mth]) ? 0 : Pgen_in[mth] * top * dop[mth] * FC_nea;
 
                 if (FCElecHeat == "전기와 열")
                 {
