@@ -992,9 +992,9 @@ namespace main.contents.Result.Building_Report
                 {
                     string[][] RES1 = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "생산유형='전기'and 생산소비='생산' and 월 ='" + (mth + 1).ToString() + "월'");
                     string[][] RES2 = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "생산유형='열' and 생산소비='생산' and 월 ='" + (mth + 1).ToString() + "월'");
-                    string[][] Fi1 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량,기저에너지", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
-                    string[][] Fi2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량,기저에너지", "(연료='가스' OR 연료='기름')  and 월 ='" + (mth + 1).ToString() + "월'");
-                    string[][] Fi3 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량,기저에너지", "연료='지역난방' and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] Fi1 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] Fi2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "(연료='가스' OR 연료='기름')  and 월 ='" + (mth + 1).ToString() + "월'");
+                    string[][] Fi3 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "연료='지역난방' and 월 ='" + (mth + 1).ToString() + "월'");
                     if (Fi1.Length > 0)
                     {
                         난방1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][0]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][0]) * 2.75;
@@ -1006,7 +1006,7 @@ namespace main.contents.Result.Building_Report
                         {
                             전기1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(RES1[0][0]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(RES1[0][0]) * 2.75;
                         }
-                        총소요1[mth] = double.IsNaN((Program.UTIL.ToDoubleOrZero(Fi1[0][6]) - Program.UTIL.ToDoubleOrZero(Fi1[0][7])) * 2.75) ? 0 : (Program.UTIL.ToDoubleOrZero(Fi1[0][6]) - Program.UTIL.ToDoubleOrZero(Fi1[0][7])) * 2.75;
+                        총소요1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][6]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][6]) * 2.75;
                     }
                     if (Fi2.Length > 0)
                     {
@@ -1019,7 +1019,7 @@ namespace main.contents.Result.Building_Report
                         {
                             열1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(RES2[0][0]) * 1.1) ? 0 : Program.UTIL.ToDoubleOrZero(RES2[0][0]) * 1.1;
                         }
-                        총소요1[mth] = double.IsNaN(총소요1[mth] + (Program.UTIL.ToDoubleOrZero(Fi2[0][6]) - Program.UTIL.ToDoubleOrZero(Fi2[0][7])) * 1.1) ?  0 : 총소요1[mth] + (Program.UTIL.ToDoubleOrZero(Fi2[0][6]) - Program.UTIL.ToDoubleOrZero(Fi2[0][7])) * 1.1;
+                        총소요1[mth] = double.IsNaN(총소요1[mth] + Program.UTIL.ToDoubleOrZero(Fi2[0][6]) * 1.1) ?  0 : 총소요1[mth] + Program.UTIL.ToDoubleOrZero(Fi2[0][6]) * 1.1;
                     }
                     if (Fi3.Length > 0)
                     {
@@ -1028,7 +1028,7 @@ namespace main.contents.Result.Building_Report
                         급탕1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][2]) *0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][2]) *0.728;
                         조명1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][3]) *0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][3]) *0.728;
                         공조1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][4]) *0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][4]) * 0.728;
-                        총소요1[mth] = double.IsNaN(총소요1[mth] + (Program.UTIL.ToDoubleOrZero(Fi3[0][6]) - Program.UTIL.ToDoubleOrZero(Fi3[0][7])) * 0.728) ?  0: 총소요1[mth] + (Program.UTIL.ToDoubleOrZero(Fi3[0][6]) - Program.UTIL.ToDoubleOrZero(Fi3[0][7])) * 0.728;
+                        총소요1[mth] = double.IsNaN(총소요1[mth] + Program.UTIL.ToDoubleOrZero(Fi3[0][6]) * 0.728) ?  0: 총소요1[mth] + Program.UTIL.ToDoubleOrZero(Fi3[0][6]) * 0.728;
                     }
                 }
 
@@ -2692,9 +2692,9 @@ namespace main.contents.Result.Building_Report
                         {
                             string[][] RES1 = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "생산유형='전기'and 생산소비='생산' and 월 ='" + (mth + 1).ToString() + "월'");
                             string[][] RES2 = Program.DB.getValue(DB.type.ProjDB, "RESystem_Result", "SUM(총에너지)", "생산유형='열'and 생산소비='생산' and 월 ='" + (mth + 1).ToString() + "월'");
-                            string[][] Fi1 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량,기저에너지", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
-                            string[][] Fi2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량,기저에너지", "(연료='가스' OR 연료='기름')  and 월 ='" + (mth + 1).ToString() + "월'");
-                            string[][] Fi3 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량,기저에너지", "연료='지역난방' and 월 ='" + (mth + 1).ToString() + "월'");
+                            string[][] Fi1 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
+                            string[][] Fi2 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "(연료='가스' OR 연료='기름')  and 월 ='" + (mth + 1).ToString() + "월'");
+                            string[][] Fi3 = Program.DB.getValue(DB.type.ProjDB, "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "연료='지역난방' and 월 ='" + (mth + 1).ToString() + "월'");
                             if (Fi1.Length > 0)
                             {
                                 난방1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][0]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][0]) * 2.75;
@@ -2706,7 +2706,7 @@ namespace main.contents.Result.Building_Report
                                 {
                                     전기1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(RES1[0][0]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(RES1[0][0]) * 2.75;
                                 }
-                                총소요1[mth] = double.IsNaN((Program.UTIL.ToDoubleOrZero(Fi1[0][6]) - Program.UTIL.ToDoubleOrZero(Fi1[0][7])) * 2.75) ? 0 : (Program.UTIL.ToDoubleOrZero(Fi1[0][6]) - Program.UTIL.ToDoubleOrZero(Fi1[0][7])) * 2.75;
+                                총소요1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][6]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][6]) * 2.75;
                             }
                             if (Fi2.Length > 0)
                             {
@@ -2719,7 +2719,7 @@ namespace main.contents.Result.Building_Report
                                 {
                                     열1[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(RES2[0][0]) * 1.1) ? 0 : Program.UTIL.ToDoubleOrZero(RES2[0][0]) * 1.1;
                                 }
-                                총소요1[mth] = double.IsNaN(총소요1[mth] + (Program.UTIL.ToDoubleOrZero(Fi2[0][6]) - Program.UTIL.ToDoubleOrZero(Fi2[0][7])) * 1.1) ? 0 : 총소요1[mth] + (Program.UTIL.ToDoubleOrZero(Fi2[0][6]) - Program.UTIL.ToDoubleOrZero(Fi2[0][7])) * 1.1;
+                                총소요1[mth] = double.IsNaN(총소요1[mth] + Program.UTIL.ToDoubleOrZero(Fi2[0][6]) * 1.1) ? 0 : 총소요1[mth] + Program.UTIL.ToDoubleOrZero(Fi2[0][6]) * 1.1;
                             }
                             if (Fi3.Length > 0)
                             {
@@ -2728,7 +2728,7 @@ namespace main.contents.Result.Building_Report
                                 급탕1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][2]) * 0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][2]) * 0.728;
                                 조명1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][3]) * 0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][3]) * 0.728;
                                 공조1[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][4]) * 0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][4]) * 0.728;
-                                총소요1[mth] = double.IsNaN(총소요1[mth] + (Program.UTIL.ToDoubleOrZero(Fi3[0][6]) - Program.UTIL.ToDoubleOrZero(Fi3[0][7])) * 0.728) ? 0 : 총소요1[mth] + (Program.UTIL.ToDoubleOrZero(Fi3[0][6]) - Program.UTIL.ToDoubleOrZero(Fi3[0][7])) * 0.728;
+                                총소요1[mth] = double.IsNaN(총소요1[mth] + Program.UTIL.ToDoubleOrZero(Fi3[0][6]) * 0.728) ? 0 : 총소요1[mth] + Program.UTIL.ToDoubleOrZero(Fi3[0][6]) * 0.728;
                             }
                         }
 
@@ -2956,9 +2956,9 @@ namespace main.contents.Result.Building_Report
                         {
                             string[][] RES1 = Program.DB.getValue(res[0][0], "RESystem_Result", "SUM(총에너지)", "생산유형='전기'and 생산소비='생산' and 월 ='" + (mth + 1).ToString() + "월'");
                             string[][] RES2 = Program.DB.getValue(res[0][0], "RESystem_Result", "SUM(총에너지)", "생산유형='열'and 생산소비='생산' and 월 ='" + (mth + 1).ToString() + "월'");
-                            string[][] Fi1 = Program.DB.getValue(res[0][0], "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량,기저에너지", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
-                            string[][] Fi2 = Program.DB.getValue(res[0][0], "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량,기저에너지", "(연료='가스' OR 연료='기름')  and 월 ='" + (mth + 1).ToString() + "월'");
-                            string[][] Fi3 = Program.DB.getValue(res[0][0], "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량,기저에너지", "연료='지역난방' and 월 ='" + (mth + 1).ToString() + "월'");
+                            string[][] Fi1 = Program.DB.getValue(res[0][0], "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "연료='전기' and 월 ='" + (mth + 1).ToString() + "월'");
+                            string[][] Fi2 = Program.DB.getValue(res[0][0], "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "(연료='가스' OR 연료='기름')  and 월 ='" + (mth + 1).ToString() + "월'");
+                            string[][] Fi3 = Program.DB.getValue(res[0][0], "FinalEnergy_Result", "난방,냉방,급탕,조명,공조,신재생에너지,총에너지소요량", "연료='지역난방' and 월 ='" + (mth + 1).ToString() + "월'");
                             if (Fi1.Length > 0)
                             {
                                 난방12[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][0]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][0]) * 2.75;
@@ -2970,7 +2970,7 @@ namespace main.contents.Result.Building_Report
                                 {
                                     전기12[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(RES1[0][0]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(RES1[0][0]) * 2.75;
                                 }
-                                총소요12[mth] = double.IsNaN((Program.UTIL.ToDoubleOrZero(Fi1[0][6]) - Program.UTIL.ToDoubleOrZero(Fi1[0][7])) * 2.75) ? 0 : (Program.UTIL.ToDoubleOrZero(Fi1[0][6]) - Program.UTIL.ToDoubleOrZero(Fi1[0][7])) * 2.75;
+                                총소요12[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi1[0][6]) * 2.75) ? 0 : Program.UTIL.ToDoubleOrZero(Fi1[0][6]) * 2.75;
                             }
                             if (Fi2.Length > 0)
                             {
@@ -2983,7 +2983,7 @@ namespace main.contents.Result.Building_Report
                                 {
                                     열12[mth] = double.IsNaN(Program.UTIL.ToDoubleOrZero(RES2[0][0]) * 1.1) ? 0 : Program.UTIL.ToDoubleOrZero(RES2[0][0]) * 1.1;
                                 }
-                                총소요12[mth] = double.IsNaN(총소요12[mth] + (Program.UTIL.ToDoubleOrZero(Fi2[0][6]) - Program.UTIL.ToDoubleOrZero(Fi2[0][7])) * 1.1) ? 0 : 총소요12[mth] + (Program.UTIL.ToDoubleOrZero(Fi2[0][6]) - Program.UTIL.ToDoubleOrZero(Fi2[0][7])) * 1.1;
+                                총소요12[mth] = double.IsNaN(총소요12[mth] + Program.UTIL.ToDoubleOrZero(Fi2[0][6]) * 1.1) ? 0 : 총소요12[mth] + Program.UTIL.ToDoubleOrZero(Fi2[0][6]) * 1.1;
                             }
                             if (Fi3.Length > 0)
                             {
@@ -2992,7 +2992,7 @@ namespace main.contents.Result.Building_Report
                                 급탕12[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][2]) * 0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][2]) * 0.728;
                                 조명12[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][3]) * 0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][3]) * 0.728;
                                 공조12[mth] += double.IsNaN(Program.UTIL.ToDoubleOrZero(Fi3[0][4]) * 0.728) ? 0 : Program.UTIL.ToDoubleOrZero(Fi3[0][4]) * 0.728;
-                                총소요12[mth] = double.IsNaN(총소요12[mth] + (Program.UTIL.ToDoubleOrZero(Fi3[0][6]) - Program.UTIL.ToDoubleOrZero(Fi3[0][7])) * 0.728) ? 0 : 총소요12[mth] + (Program.UTIL.ToDoubleOrZero(Fi3[0][6]) - Program.UTIL.ToDoubleOrZero(Fi3[0][7])) * 0.728;
+                                총소요12[mth] = double.IsNaN(총소요12[mth] + Program.UTIL.ToDoubleOrZero(Fi3[0][6]) * 0.728) ? 0 : 총소요12[mth] + Program.UTIL.ToDoubleOrZero(Fi3[0][6]) * 0.728;
                             }
                         }
 
