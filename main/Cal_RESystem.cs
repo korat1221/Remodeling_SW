@@ -122,7 +122,7 @@ namespace main
                 }
                 else hsh[c] = Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
 
-                AreaC[c] = (totalArea / Arrayheight) * (Arrayheight - hsh[c]);
+                AreaC[c] = Math.Max(0, (totalArea / Arrayheight) * (Arrayheight - hsh[c]));
             }
 
             if(PVType == "계통연계형")
@@ -520,11 +520,12 @@ namespace main
 
         public void WP_Calc_t_wkn()
         {
+            t_wkn = new double[12, Math.Max(17, 종단풍속 + 1)];
             for(int mth =0; mth < 12; mth ++)
             {
-                int[] count = new int[17];
+                int[] count = new int[t_wkn.GetLength(1)];
 
-                for(int v =0; v< 17; v++)
+                for(int v =0; v< count.Length; v++)
                 {
                     count[v] = 0;
                 }
@@ -539,8 +540,8 @@ namespace main
                 t_wkn[mth, 0] = count[0];
                 #endregion
 
-                #region 풍속 1~15인 구간
-                for (int v =1; v < 16; v ++)
+                #region 중간 풍속 구간
+                for (int v =1; v < count.Length - 1; v ++)
                 {
                     for (int i = 0; i < V2.GetLength(1); i++)
                     {
@@ -553,15 +554,15 @@ namespace main
                 }
                 #endregion
 
-                #region 풍속 16인 구간
+                #region 마지막 풍속 구간
                 for (int i = 0; i < V2.GetLength(1); i++)
                 {
-                    if (V2[mth, i] > 15.5)
+                    if (V2[mth, i] > count.Length - 1.5)
                     {
-                        count[16]++;
+                        count[count.Length - 1]++;
                     }
                 }
-                t_wkn[mth, 16] = count[16];
+                t_wkn[mth, count.Length - 1] = count[count.Length - 1];
                 #endregion 
             }
 

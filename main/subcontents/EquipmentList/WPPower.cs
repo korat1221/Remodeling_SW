@@ -61,21 +61,21 @@ namespace main.subcontents.EquipmentList
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-            Boolean check = false;
+            Boolean check = true;
             string Value = "";
             for (int a = 0; a < WPPower_dataGridView.Rows.Count -1; a++)
             { 
                 if (WPPower_dataGridView.Rows[a].Cells[1].Value != null && WPPower_dataGridView.Rows[a].Cells[1].Value.ToString() != "")
                 {
-                    check = true;
                     Value += WPPower_dataGridView.Rows[a].Cells[1].Value.ToString() + "+";
                 }
+                else { check = false; }
             }
             if (WPPower_dataGridView.Rows[WPPower_dataGridView.Rows.Count - 1].Cells[1].Value != null && WPPower_dataGridView.Rows[WPPower_dataGridView.Rows.Count - 1].Cells[1].Value.ToString() != "")
             {
-                check = true;
                 Value += WPPower_dataGridView.Rows[WPPower_dataGridView.Rows.Count - 1].Cells[1].Value.ToString() ;
             }
+            else { check = false; }
 
             if (check == true)
             {
