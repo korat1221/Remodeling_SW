@@ -35,7 +35,7 @@ namespace main.subcontents
         public Cooling_Zone(string Num, string Select_nonsplit, string selectType)
         {
 
-            SelectType = selectType; //Zone 와 Ahu 임
+            SelectType = selectType; //Zone 과 Ahu 임
             SystemNum = Num;
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
                         
@@ -70,6 +70,8 @@ namespace main.subcontents
                 CoolingZone_dataGridView.Columns.Add("A7", "면적.[m"+Program.UTIL.Subscript(2, true)+"]");
                 CoolingZone_dataGridView.Columns.Add("A8", "냉방설비.1");
                 CoolingZone_dataGridView.Columns.Add("A9", "냉방설비.2");
+                CoolingZone_dataGridView.Columns[0].Width = 40;
+                CoolingZone_dataGridView.Columns[2].Width = 60;
             }
             else 
             {
@@ -80,10 +82,10 @@ namespace main.subcontents
                 CoolingZone_dataGridView.Columns.Add("A6", "최대냉방부하.[kW]");
                 CoolingZone_dataGridView.Columns.Add("A7", "면적.[m"+Program.UTIL.Subscript(2, true)+"]");
                 CoolingZone_dataGridView.Columns[3].Visible = false;
-            }
-           
-            CoolingZone_dataGridView.Columns[0].Width = 40;
-            CoolingZone_dataGridView.Columns[2].Width = 60;
+                
+                CoolingZone_dataGridView.Columns[0].Width = 40;
+                CoolingZone_dataGridView.Columns[2].Width = 150;
+            }  
         }
 
         void load_table_DB()
@@ -151,7 +153,7 @@ namespace main.subcontents
                         for (int j = 0; j < 12; j++)
                         {
                             string mth = string.Format("{0}월", j+1);
-                            string[][] 요구량 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "AHUSystem_Result", "공조요구량, Qmax_tot", " 번호 ='" + Value[n][0] + "' And 난방_냉방 = '냉방' And 월 = '"+mth+"'");
+                            string[][] 요구량 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "AHUSystem_Result", "공조요구량", " 번호 ='" + Value[n][0] + "' And 난방_냉방 = '냉방' And 월 = '"+mth+"'");
                             double v = 0;
                             if (요구량.Length > 0)
                             {
@@ -185,9 +187,9 @@ namespace main.subcontents
                         CoolingZone_dataGridView.Rows[nRow].Cells[2].Value = string.Format("{0}외{1}개", SelectAhu_split[0], SelectAhu_split.Count-1);   //존개수
                         CoolingZone_dataGridView.Rows[nRow].Cells[3].Value = Value[n][1]; //공조기명칭
                         CoolingZone_dataGridView.Rows[nRow].Cells[4].Value = Value[n][2]; //유형
-                        CoolingZone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:F0}", need);
-                        CoolingZone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Power / 1000);
-                        CoolingZone_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F2}", area); //면적
+                        CoolingZone_dataGridView.Rows[nRow].Cells[5].Value = string.Format("{0:N0}", need);
+                        CoolingZone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:N2}", Power);
+                        CoolingZone_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:N2}", area); //면적
                     }
                 } 
             }
