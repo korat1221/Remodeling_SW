@@ -91,6 +91,7 @@ namespace main.contents.Result
                 #region 일반정보
                 string Num = 번호[i][0];
                 double area = 0, height = 0, volume = 0;
+                bool showHeating = true, showCooling = true;
                 double[] theta_e = new double[12];
                 items.Add("Algorithm_EnergyNeed.htm"); // 예시 코드: 메인 메뉴 동적 할당
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,지역");
@@ -100,13 +101,15 @@ namespace main.contents.Result
                 }
                 GeneralData[1].Add(new { idx = i, val = Num }); //그림번호
                 GeneralData[2].Add(new { idx = i, val = Num }); //번호
-                Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,순바닥면적,천장고","존번호='"+Num+"'");
+                Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,순바닥면적,천장고,냉난방유무","존번호='"+Num+"'");
                 if(Value.Length > 0)
                 {
                     GeneralData[3].Add(new { idx = i, val = Num + ". "+ Value[0][0]+" 존 에너지요구량 검토 보고서" }); //title
                     GeneralData[4].Add(new { idx = i, val = Value[0][0] }); //명칭
                     area = Program.UTIL.ToDoubleOrZero(Value[0][1]);
                     height = Program.UTIL.ToDoubleOrZero(Value[0][2]);
+                    showHeating = Value[0][3] != "냉방" && Value[0][3] != "비냉난방";
+                    showCooling = Value[0][3] != "난방" && Value[0][3] != "비냉난방";
                     volume = area * height;
                     GeneralData[5].Add(new { idx = i, val = Program.UTIL.doubleComa(area.ToString(), 1) }); //면적
                     GeneralData[6].Add(new { idx = i, val = Program.UTIL.doubleComa(volume.ToString(), 1) }); //체적
@@ -418,10 +421,10 @@ namespace main.contents.Result
                         Value = Program.DB.querySQL(DB.type.ProjDB, "Select QTsink_tot as total_1, QVsink_tot as total_2, QS_rad_tot as total_3, Qsink as total_4 From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
                        if(Value.Length >0)
                         {
-                            HeatingMthData[0].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
-                            HeatingMthData[1].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 0) });
-                            HeatingMthData[2].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][2], 0) });
-                            HeatingMthData[3].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][3], 0) });
+                            HeatingMthData[0].Add(new { idx = i * 12 + mth, val = showHeating ? Program.UTIL.doubleComa(Value[0][0], 0) : "" });
+                            HeatingMthData[1].Add(new { idx = i * 12 + mth, val = showHeating ? Program.UTIL.doubleComa(Value[0][1], 0) : "" });
+                            HeatingMthData[2].Add(new { idx = i * 12 + mth, val = showHeating ? Program.UTIL.doubleComa(Value[0][2], 0) : "" });
+                            HeatingMthData[3].Add(new { idx = i * 12 + mth, val = showHeating ? Program.UTIL.doubleComa(Value[0][3], 0) : "" });
                         }
                         
                     }
@@ -430,11 +433,11 @@ namespace main.contents.Result
                         Value = Program.DB.querySQL(DB.type.ProjDB, "Select QSopsource_tot, QStr_tot, QI_tot, Qsource, gamma From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
-                            HeatingMthData[8].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
-                            HeatingMthData[9].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 0) });
-                            HeatingMthData[10].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][4], 2) });
-                            HeatingMthData[11].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][2], 0) });
-                            HeatingMthData[12].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][3], 0) });
+                            HeatingMthData[8].Add(new { idx = i * 12 + mth, val = showHeating ? Program.UTIL.doubleComa(Value[0][0], 0) : "" });
+                            HeatingMthData[9].Add(new { idx = i * 12 + mth, val = showHeating ? Program.UTIL.doubleComa(Value[0][1], 0) : "" });
+                            HeatingMthData[10].Add(new { idx = i * 12 + mth, val = showHeating ? Program.UTIL.doubleComa(Value[0][4], 2) : "" });
+                            HeatingMthData[11].Add(new { idx = i * 12 + mth, val = showHeating ? Program.UTIL.doubleComa(Value[0][2], 0) : "" });
+                            HeatingMthData[12].Add(new { idx = i * 12 + mth, val = showHeating ? Program.UTIL.doubleComa(Value[0][3], 0) : "" });
                         }
                     }
                     for (int mth = 0; mth < 12; mth++)
@@ -442,8 +445,8 @@ namespace main.contents.Result
                         Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth, eta From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
-                            HeatingMthData[13].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
-                            HeatingMthData[14].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 2) });
+                            HeatingMthData[13].Add(new { idx = i * 12 + mth, val = showHeating ? Program.UTIL.doubleComa(Value[0][0], 0) : "" });
+                            HeatingMthData[14].Add(new { idx = i * 12 + mth, val = showHeating ? Program.UTIL.doubleComa(Value[0][1], 2) : "" });
                         }
                     }
                 }
@@ -456,10 +459,10 @@ namespace main.contents.Result
                         Value = Program.DB.querySQL(DB.type.ProjDB, "Select QTsink_tot as total_1, QVsink_tot as total_2, QS_rad_tot as total_3, Qsink as total_4 From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
-                            CoolingMthData[0].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
-                            CoolingMthData[1].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 0) });
-                            CoolingMthData[2].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][2], 0) });
-                            CoolingMthData[3].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][3], 0) });
+                            CoolingMthData[0].Add(new { idx = i * 12 + mth, val = showCooling ? Program.UTIL.doubleComa(Value[0][0], 0) : "" });
+                            CoolingMthData[1].Add(new { idx = i * 12 + mth, val = showCooling ? Program.UTIL.doubleComa(Value[0][1], 0) : "" });
+                            CoolingMthData[2].Add(new { idx = i * 12 + mth, val = showCooling ? Program.UTIL.doubleComa(Value[0][2], 0) : "" });
+                            CoolingMthData[3].Add(new { idx = i * 12 + mth, val = showCooling ? Program.UTIL.doubleComa(Value[0][3], 0) : "" });
                         }
 
                     }
@@ -468,11 +471,11 @@ namespace main.contents.Result
                         Value = Program.DB.querySQL(DB.type.ProjDB, "Select QSopsource_tot, QStr_tot, QI_tot, Qsource, gamma From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
-                            CoolingMthData[8].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
-                            CoolingMthData[9].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 0) });
-                            CoolingMthData[10].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][4], 2) });
-                            CoolingMthData[11].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][2], 0) });
-                            CoolingMthData[12].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][3], 0) });
+                            CoolingMthData[8].Add(new { idx = i * 12 + mth, val = showCooling ? Program.UTIL.doubleComa(Value[0][0], 0) : "" });
+                            CoolingMthData[9].Add(new { idx = i * 12 + mth, val = showCooling ? Program.UTIL.doubleComa(Value[0][1], 0) : "" });
+                            CoolingMthData[10].Add(new { idx = i * 12 + mth, val = showCooling ? Program.UTIL.doubleComa(Value[0][4], 2) : "" });
+                            CoolingMthData[11].Add(new { idx = i * 12 + mth, val = showCooling ? Program.UTIL.doubleComa(Value[0][2], 0) : "" });
+                            CoolingMthData[12].Add(new { idx = i * 12 + mth, val = showCooling ? Program.UTIL.doubleComa(Value[0][3], 0) : "" });
                         }
                     }
                     for (int mth = 0; mth < 12; mth++)
@@ -481,9 +484,9 @@ namespace main.contents.Result
                         Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth, eta, Q_DHU_tot as total_1 From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
                         if (Value.Length > 0)
                         {
-                            CoolingMthData[13].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) });
-                            CoolingMthData[14].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][1], 2) });
-                            CoolingMthData[15].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][2], 0) });
+                            CoolingMthData[13].Add(new { idx = i * 12 + mth, val = showCooling ? Program.UTIL.doubleComa(Value[0][0], 0) : "" });
+                            CoolingMthData[14].Add(new { idx = i * 12 + mth, val = showCooling ? Program.UTIL.doubleComa(Value[0][1], 2) : "" });
+                            CoolingMthData[15].Add(new { idx = i * 12 + mth, val = showCooling ? Program.UTIL.doubleComa(Value[0][2], 0) : "" });
                         }
                     }
                 }
@@ -495,14 +498,14 @@ namespace main.contents.Result
                     Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='난방' and 월='" + (mth + 1).ToString() + "월'");
                     if (Value.Length > 0)
                     {
-                        MthData[0].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) }); //난방
-                        MthData[1].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa((Program.UTIL.ToDoubleOrZero(Value[0][0]) / area).ToString(), 1) }); //단위면적당 난방
+                        MthData[0].Add(new { idx = i * 12 + mth, val = showHeating ? Program.UTIL.doubleComa(Value[0][0], 0) : "" }); //난방
+                        MthData[1].Add(new { idx = i * 12 + mth, val = showHeating ? Program.UTIL.doubleComa((Program.UTIL.ToDoubleOrZero(Value[0][0]) / area).ToString(), 1) : "" }); //단위면적당 난방
                     }
                     Value = Program.DB.querySQL(DB.type.ProjDB, "Select Qb_mth From Zone_52016_Result Where 존번호='" + Num + "' and 난방_냉방='냉방' and 월='" + (mth + 1).ToString() + "월'");
                     if (Value.Length > 0)
                     {
-                        MthData[2].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa(Value[0][0], 0) }); //냉방
-                        MthData[3].Add(new { idx = i * 12 + mth, val = Program.UTIL.doubleComa((Program.UTIL.ToDoubleOrZero(Value[0][0]) / area).ToString(), 1) }); //단위면적당 냉방
+                        MthData[2].Add(new { idx = i * 12 + mth, val = showCooling ? Program.UTIL.doubleComa(Value[0][0], 0) : "" }); //냉방
+                        MthData[3].Add(new { idx = i * 12 + mth, val = showCooling ? Program.UTIL.doubleComa((Program.UTIL.ToDoubleOrZero(Value[0][0]) / area).ToString(), 1) : "" }); //단위면적당 냉방
                     }
                     Value = Program.DB.querySQL(DB.type.ProjDB, "Select Final_kWh From Zone_LightResult Where 번호='" + Num + "'and 월='" + (mth + 1).ToString() + "월'");
                     if (Value.Length > 0)
@@ -694,10 +697,24 @@ namespace main.contents.Result
             }
 
             string[][] profile = Program.DB.getValue(DB.type.BaseDB_HCneed, "용도프로필", "난방설정온도,냉방설정온도,조도", "용도명 = '" + usage + "'");
-            if (profile.Length > 0)
+            if (hcType == "난방" || hcType == "비냉난방")
+            {
+                AddText("-", 248, 119, 39, 22, 9, true, "#696969", "left", false);
+            }
+            else if (profile.Length > 0)
             {
                 AddText(Program.UTIL.ToDoubleOrZero(profile[0][1]).ToString("0") + " ℃", 248, 119, 39, 22, 9, true, "#696969", "left", false);
+            }
+            if (hcType == "냉방" || hcType == "비냉난방")
+            {
+                AddText("-", 248, 145, 37, 22, 9, true, "#696969", "left", false);
+            }
+            else if (profile.Length > 0)
+            {
                 AddText(Program.UTIL.ToDoubleOrZero(profile[0][0]).ToString("0") + " ℃", 248, 145, 37, 22, 9, true, "#696969", "left", false);
+            }
+            if (profile.Length > 0)
+            {
                 AddText(Program.UTIL.ToDoubleOrZero(profile[0][2]).ToString("0") + " lx", 195, 198, 74, 22, 9, true, "#696969", "left", false);
             }
 
