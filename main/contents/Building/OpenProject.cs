@@ -289,13 +289,11 @@ namespace main.contents
                 string updateQuery = string.Format("UPDATE BuildingGeneral SET 프로젝트번호 = '{0}'", projectInfo["pnum"].Replace("'", "''"));
                 Program.DB.executeSQL(projectInfo["pnum"], updateQuery);
 
-                // 업데이트된 DB 내용 파일에 저장
-                string projectDbPath = Program.gPath + "projects\\" + projectInfo["pnum"] + ".sqlite";
-                Program.DB.saveProject(projectDbPath);
+                // executeSQL(string, string)이 가져온 프로젝트 DB를 저장한다. 현재 프로젝트 DB는 별도로 저장하지 않는다.
             }
             catch (Exception ex)
             {
-                MessageBox.Show("DB 추가 중 오류: " + ex.Message);
+                throw new InvalidOperationException("프로젝트 DB 등록 중 오류가 발생했습니다.", ex);
             }
         }
 
@@ -339,20 +337,24 @@ namespace main.contents
                             // ZFX 파일 압축 해제
                             ZipFile.ExtractToDirectory(zfxPath, tempFolder);
 
-                            // 압축 해제된 파일들 확인
+                            // DB는 필수이며, 내보내기 파일을 폴더째 압축한 경우도 지원한다.
                             string[] sqliteFiles = Directory.GetFiles(tempFolder, "*.sqlite");
-                            string[] jsonFiles = Directory.GetFiles(tempFolder, "*.json");
-                            string[] treeFiles = Directory.GetFiles(tempFolder, "*.tree");
-
-                            if (sqliteFiles.Length == 0 || jsonFiles.Length == 0)
+                            if (sqliteFiles.Length == 0) { sqliteFiles = Directory.GetFiles(tempFolder, "*.sqlite", SearchOption.AllDirectories); }
+                            if (sqliteFiles.Length != 1)
                             {
-                                MessageBox.Show("유효하지 않은 ZFX 파일입니다. 필수 파일이 없습니다.", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                string reason = sqliteFiles.Length == 0 ? "프로젝트 DB(.sqlite)가 없습니다. 원본 프로젝트에서 다시 저장해 주세요." : "프로젝트 DB(.sqlite)가 여러 개입니다. 프로젝트 하나만 포함된 파일을 선택해 주세요.";
+                                MessageBox.Show("유효하지 않은 ZFX 파일입니다. " + reason, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 return;
                             }
-
-                            // info.json 파일에서 프로젝트 정보 읽기
-                            string infoJsonPath = Path.Combine(tempFolder, "project_info.json");
+                            if (new FileInfo(sqliteFiles[0]).Length == 0) { throw new InvalidDataException("프로젝트 DB(.sqlite)가 비어 있습니다. 원본 프로젝트에서 다시 저장해 주세요."); }
+                            string sourceFolder = Path.GetDirectoryName(sqliteFiles[0]);
                             string originalProjectName = Path.GetFileNameWithoutExtension(sqliteFiles[0]);
+                            string projectJsonPath = Path.Combine(sourceFolder, originalProjectName + ".json");
+                            string projectTreePath = Path.Combine(sourceFolder, originalProjectName + ".tree");
+                            string[] jsonFiles = File.Exists(projectJsonPath) ? new string[] { projectJsonPath } : Array.Empty<string>();
+                            string[] treeFiles = File.Exists(projectTreePath) ? new string[] { projectTreePath } : Array.Empty<string>();
+                            string infoJsonPath = Path.Combine(sourceFolder, "project_info.json");
+                            if (!File.Exists(infoJsonPath)) { infoJsonPath = Path.Combine(tempFolder, "project_info.json"); }
 
                             // 기본값 설정
                             var projectInfo = new Dictionary<string, string>
@@ -383,7 +385,7 @@ namespace main.contents
                             }
 
                             // 고유한 프로젝트 이름 생성 (중복 처리)
-                            string uniqueProjectName = GenerateUniqueProjectName(projectInfo["pnum"]);
+                            string uniqueProjectName = GenerateUniqueProjectName(originalProjectName);
 
                             // 고유한 이름으로 업데이트
                             projectInfo["pnum"] = uniqueProjectName;
@@ -392,14 +394,16 @@ namespace main.contents
                             // 파일들을 projects 폴더로 복사
                             string projectsPath = Program.gPath + "projects\\";
 
-                            foreach (string sqliteFile in sqliteFiles)
+                            for (int i = 0; i < sqliteFiles.Length; i++)
                             {
+                                string sqliteFile = sqliteFiles[i];
                                 string destFile = Path.Combine(projectsPath, uniqueProjectName + ".sqlite");
                                 File.Copy(sqliteFile, destFile, true);
                             }
 
-                            foreach (string jsonFile in jsonFiles)
+                            for (int i = 0; i < jsonFiles.Length; i++)
                             {
+                                string jsonFile = jsonFiles[i];
                                 string fileName = Path.GetFileName(jsonFile);
                                 if (fileName != "project_info.json") // info.json은 제외
                                 {
@@ -408,21 +412,21 @@ namespace main.contents
                                 }
                             }
 
-                            foreach (string treeFile in treeFiles)
+                            for (int i = 0; i < treeFiles.Length; i++)
                             {
+                                string treeFile = treeFiles[i];
                                 string destFile = Path.Combine(projectsPath, uniqueProjectName + ".tree");
                                 File.Copy(treeFile, destFile, true);
                             }
 
                             // 프로젝트 폴더가 존재하면 같이 복사 (폴더 이름은 uniqueProjectName으로 변경)
-                            string[] tempDirectories = Directory.GetDirectories(tempFolder);
-                            foreach (string tempDir in tempDirectories)
+                            string[] tempDirectories = Directory.GetDirectories(sourceFolder);
+                            for (int i = 0; i < tempDirectories.Length; i++)
                             {
+                                string tempDir = tempDirectories[i];
                                 string dirName = Path.GetFileName(tempDir);
                                 // sqlite/json/tree 파일과 같은 이름의 폴더를 프로젝트 폴더로 간주
-                                if (File.Exists(Path.Combine(tempFolder, dirName + ".sqlite")) ||
-                                    File.Exists(Path.Combine(tempFolder, dirName + ".json")) ||
-                                    File.Exists(Path.Combine(tempFolder, dirName + ".tree")))
+                                if (dirName == originalProjectName)
                                 {
                                     string destProjectFolder = Path.Combine(projectsPath, uniqueProjectName);
                                     DirectoryCopy(tempDir, destProjectFolder, true);

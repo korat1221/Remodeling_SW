@@ -155,6 +155,9 @@ namespace main
         private void SaveButton_Click(object sender, EventArgs e)
         {
             string tempInfoPath = null;
+            string tempZipPath = null;
+            string tempDbPath = null;
+            string saveStage = "현재 화면 및 DB 저장";
             try
             {
                 // 현재 프로젝트 ID 확인
@@ -169,7 +172,10 @@ namespace main
                 MainContents.Instance?.SaveCurrentForm();
 
                 // 프로젝트 파일들이 있는 폴더 경로
-                string projectsPath = Program.gPath + "projects\\";
+                string projectsPath = Path.Combine(Program.gPath, "projects");
+                string projectDbPath = Path.Combine(projectsPath, ProjectList.CurProjID + ".sqlite");
+                if (!File.Exists(projectDbPath) || new FileInfo(projectDbPath).Length == 0) { throw new FileNotFoundException("프로젝트 DB가 없거나 비어 있어 백업을 저장할 수 없습니다.", projectDbPath); }
+                saveStage = "프로젝트 정보 준비";
 
                 // 현재 프로젝트 정보 가져오기 (OpenProject.cs 컨벤션에 맞춰서)
                 string[][] currentProject = Program.DB.querySQL(DB.type.ProjListDB, "SELECT ID, pnum, title, type, date FROM projects WHERE current = 1");
@@ -191,7 +197,7 @@ namespace main
                 string jsonContent = JsonSerializer.Serialize(projectInfo, new JsonSerializerOptions { WriteIndented = true });
 
                 // 임시 info.json 파일 생성
-                tempInfoPath = Path.Combine(Path.GetTempPath(), "project_info.json");
+                tempInfoPath = Path.Combine(Path.GetTempPath(), "project_info_" + Guid.NewGuid().ToString("N") + ".json");
                 File.WriteAllText(tempInfoPath, jsonContent);
 
                 // 압축할 파일들 찾기
@@ -203,8 +209,9 @@ namespace main
                 filesToZip.Add(tempInfoPath);
                 fileEntries.Add("project_info.json");
 
-                foreach (string ext in extensions)
+                for (int i = 0; i < extensions.Length; i++)
                 {
+                    string ext = extensions[i];
                     string filePath = Path.Combine(projectsPath, ProjectList.CurProjID + ext);
                     if (File.Exists(filePath))
                     {
@@ -218,8 +225,9 @@ namespace main
                 if (Directory.Exists(projectFolder))
                 {
                     string[] projectFiles = Directory.GetFiles(projectFolder, "*.*", SearchOption.AllDirectories);
-                    foreach (string file in projectFiles)
+                    for (int i = 0; i < projectFiles.Length; i++)
                     {
+                        string file = projectFiles[i];
                         filesToZip.Add(file);
                         // projects 폴더를 기준으로 한 상대 경로 생성
                         string relativePath = Path.GetRelativePath(projectsPath, file);
@@ -243,17 +251,29 @@ namespace main
                     if (saveFileDialog.ShowDialog() == DialogResult.OK)
                     {
                         string zipPath = saveFileDialog.FileName;
+                        saveStage = "프로젝트 DB 백업 사본 저장";
+                        tempDbPath = Path.Combine(projectsPath, "." + ProjectList.CurProjID + "." + Guid.NewGuid().ToString("N") + ".sqlite");
+                        Program.DB.SaveProjectCopy(tempDbPath);
+                        saveStage = "프로젝트 압축";
+                        tempZipPath = Path.Combine(Path.GetDirectoryName(zipPath), "." + Path.GetFileName(zipPath) + "." + Guid.NewGuid().ToString("N") + ".tmp");
 
                         // ZIP 파일 생성
-                        using (ZipArchive zip = ZipFile.Open(zipPath, ZipArchiveMode.Create))
+                        using (ZipArchive zip = ZipFile.Open(tempZipPath, ZipArchiveMode.Create))
                         {
                             for (int i = 0; i < filesToZip.Count; i++)
                             {
                                 string file = filesToZip[i];
                                 string entryName = fileEntries[i];
+                                // 사용 중인 원본 DB 대신 메모리 DB에서 저장한 사본을 압축한다.
+                                if (file == projectDbPath) { file = tempDbPath; }
                                 zip.CreateEntryFromFile(file, entryName);
                             }
                         }
+
+                        saveStage = "백업 파일 교체";
+                        if (File.Exists(zipPath)) { File.Replace(tempZipPath, zipPath, null); }
+                        else { File.Move(tempZipPath, zipPath); }
+                        tempZipPath = null;
 
                         MessageBox.Show($"프로젝트 파일이 성공적으로 저장되었습니다.\n저장 위치: {zipPath}", "완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -281,7 +301,26 @@ namespace main
                 }
                 catch { }
 
-                MessageBox.Show($"파일 압축 중 오류가 발생했습니다:\n{ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                string reason = ex.Message;
+                int errorCode = ex.HResult & 65535;
+                if (ex is UnauthorizedAccessException || (ex is IOException && errorCode == 5)) { reason = "폴더 또는 파일에 쓰기 권한이 없거나 읽기 전용입니다. 쓰기 가능한 위치를 선택하고 파일 속성을 확인해 주세요."; }
+                else if (ex is IOException && (errorCode == 32 || errorCode == 33)) { reason = "파일을 다른 프로그램에서 사용 중입니다. 해당 파일을 사용하는 프로그램을 닫거나 다른 파일명으로 저장해 주세요."; }
+                else if (ex is IOException && (errorCode == 112 || errorCode == 39)) { reason = "디스크 공간이 부족합니다. 프로젝트 폴더, 임시 폴더, 백업 저장 위치의 공간을 확인해 주세요."; }
+                else if (ex is DirectoryNotFoundException) { reason = "저장 폴더가 없거나 연결이 끊겼습니다. 폴더와 네트워크 또는 외장 디스크 연결을 확인해 주세요."; }
+                MessageBox.Show($"{saveStage} 중 오류가 발생했습니다:\n{reason}\n\n백업 완료 전에는 기존 ZFX를 삭제하지 않습니다.\n상세: {ex.Message}", "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // 한 임시 파일의 정리가 실패해도 나머지 임시 파일을 정리한다.
+                string[] temporaryPaths = { tempDbPath, tempZipPath, tempInfoPath };
+                for (int i = 0; i < temporaryPaths.Length; i++)
+                {
+                    try
+                    {
+                        if (temporaryPaths[i] != null && File.Exists(temporaryPaths[i])) { File.Delete(temporaryPaths[i]); }
+                    }
+                    catch (Exception cleanupError) { System.Diagnostics.Debug.WriteLine("백업 임시 파일 정리 오류: " + temporaryPaths[i] + " " + cleanupError.Message); }
+                }
             }
         }
     }

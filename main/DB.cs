@@ -282,6 +282,25 @@ namespace main
             }
         }
 
+        // 압축용 사본은 현재 메모리 DB에서 별도로 저장하여 사용 중인 원본 파일을 읽지 않는다.
+        public void SaveProjectCopy(string path)
+        {
+            string relativePath = Path.GetRelativePath(Program.gPath, path);
+            int result = SecureSQLite.SaveDB(relativePath, (int)type.ProjDB);
+            if (result != 0)
+            {
+                int errorCode = result & 255;
+                string reason = "프로젝트 DB 백업 사본을 저장하지 못했습니다.";
+                if (errorCode == 5 || errorCode == 6) { reason = "프로젝트 DB가 사용 중입니다. DB를 사용하는 다른 프로그램을 닫고 다시 저장해 주세요."; }
+                else if (errorCode == 8 || errorCode == 3) { reason = "프로젝트 폴더에 쓰기 권한이 없거나 읽기 전용입니다. 폴더 권한을 확인해 주세요."; }
+                else if (errorCode == 13) { reason = "프로젝트 DB 사본을 저장할 디스크 공간이 부족합니다. 공간을 확보한 뒤 다시 저장해 주세요."; }
+                else if (errorCode == 14) { reason = "프로젝트 DB 사본 파일을 열 수 없습니다. 프로젝트 폴더의 존재 여부와 쓰기 권한을 확인해 주세요."; }
+                else if (errorCode == 10) { reason = "프로젝트 DB 사본 저장 중 디스크 입출력 오류가 발생했습니다. 디스크 공간과 연결 상태를 확인해 주세요."; }
+                throw new IOException(reason + " SQLite 오류 코드: " + result);
+            }
+            if (!File.Exists(path) || new FileInfo(path).Length == 0) { throw new IOException("프로젝트 DB 백업 사본이 없거나 비어 있습니다."); }
+        }
+
         public void initTable (type dbType, string table)
         {
             try
