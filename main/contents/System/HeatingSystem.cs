@@ -2911,7 +2911,7 @@ namespace main.contents
                 if (result == DialogResult.OK)
                 {
                     Load_ce(ce2Type);
-                    Load_ce1Zone(ce2Type);
+                    Load_ce2Zone(ce2Type);
                 }
             }
             else //그외 경우
@@ -2921,7 +2921,7 @@ namespace main.contents
                 if (result == DialogResult.OK)
                 {
                     Load_ce(ce2Type);
-                    Load_ce1Zone(ce2Type);
+                    Load_ce2Zone(ce2Type);
                 }
             }
         }

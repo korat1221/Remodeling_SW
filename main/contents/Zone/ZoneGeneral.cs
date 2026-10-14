@@ -765,8 +765,8 @@ namespace main.contents
             {
                 double SA = Program.UTIL.ToDoubleOrZero(Value[0][0]);
                 double RA = Program.UTIL.ToDoubleOrZero(Value[0][1]);
-                SA_Volume_Label.Text = String.Format("{0:F1}", SA) + " m" + Program.UTIL.Subscript(3, true) + "/h";
-                RA_Volume_Label.Text = String.Format("{0:F1}", RA) + " m" + Program.UTIL.Subscript(3, true) + "/h";
+                SA_Volume_Label.Text = String.Format("{0:F0}", SA) + " m" + Program.UTIL.Subscript(3, true) + "/h";
+                RA_Volume_Label.Text = String.Format("{0:F0}", RA) + " m" + Program.UTIL.Subscript(3, true) + "/h";
             }
         }
 
@@ -1036,7 +1036,7 @@ namespace main.contents
                     Program.UTIL.textBox_doubleComa(DHWneed_textBox, true, 1);
                     DHWneed_textBox.Text += " kWh/d";
                     DHWneed_textBox.TextAlign = HorizontalAlignment.Left;
-                    DHWneed_image_Label.Text = string.Format("{0:F1}", (DHWneed)) + " kWh/d";
+                    DHWneed_image_Label.Text = string.Format("{0:F0}", (DHWneed)) + " kWh/d";
                 }
                 if (Value[0][14] != "")
                 {

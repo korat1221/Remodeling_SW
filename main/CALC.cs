@@ -606,8 +606,7 @@ namespace main
                         }
                         else
                         {
-                            dUtb[2] = 0;
-                            //dUtb[2] = 0.15;
+                            dUtb[2] = 0.15;
                             double Qwall = 0, Qroof = 0;
 
                             //외벽

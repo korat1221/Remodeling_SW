@@ -56,6 +56,7 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle25 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle26 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle27 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CoolingSystem));
             DataGridViewCellStyle dataGridViewCellStyle28 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle29 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle30 = new DataGridViewCellStyle();
@@ -139,6 +140,10 @@ namespace main.contents
             label13 = new Label();
             Pump1_label = new Label();
             tabPage4 = new TabPage();
+            hrvDiagramPanel2 = new main.subcontents.AHUSystem.HRVDiagramPanel();
+            label24 = new Label();
+            hrvDiagramPanel1 = new main.subcontents.AHUSystem.HRVDiagramPanel();
+            label16 = new Label();
             ce_Remove_button = new Button();
             ce_dataGridView = new DataGridView();
             ce2Text = new TextBox();
@@ -232,6 +237,8 @@ namespace main.contents
             Pipe_panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Pipe_dataGridView).BeginInit();
             tabPage4.SuspendLayout();
+            hrvDiagramPanel2.SuspendLayout();
+            hrvDiagramPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)ce_dataGridView).BeginInit();
             ImagePanel.SuspendLayout();
             panel4.SuspendLayout();
@@ -1201,8 +1208,6 @@ namespace main.contents
             Pipe_Length_button.UseVisualStyleBackColor = false;
             Pipe_Length_button.Click += Pipe_Length_button_Click;
             // 
-            // 
-            // 
             // Pipe_Length_Text
             // 
             Pipe_Length_Text.AutoSize = true;
@@ -1550,6 +1555,8 @@ namespace main.contents
             // tabPage4
             // 
             tabPage4.BackColor = Color.White;
+            tabPage4.Controls.Add(hrvDiagramPanel2);
+            tabPage4.Controls.Add(hrvDiagramPanel1);
             tabPage4.Controls.Add(ce_Remove_button);
             tabPage4.Controls.Add(ce_dataGridView);
             tabPage4.Controls.Add(ce2Text);
@@ -1568,6 +1575,66 @@ namespace main.contents
             tabPage4.Size = new Size(992, 275);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "공급";
+            // 
+            // hrvDiagramPanel2
+            // 
+            hrvDiagramPanel2.BackColor = SystemColors.GradientInactiveCaption;
+            hrvDiagramPanel2.Controls.Add(label24);
+            hrvDiagramPanel2.EquipmentTypeName = "열회수기";
+            hrvDiagramPanel2.ForeColor = SystemColors.ActiveCaptionText;
+            hrvDiagramPanel2.HRVName = "HRV01";
+            hrvDiagramPanel2.InputTotalRA = 0D;
+            hrvDiagramPanel2.InputTotalSA = 0D;
+            hrvDiagramPanel2.Location = new Point(499, 9);
+            hrvDiagramPanel2.Name = "hrvDiagramPanel2";
+            hrvDiagramPanel2.RatedRA = 0D;
+            hrvDiagramPanel2.RatedSA = 0D;
+            hrvDiagramPanel2.ShowAdjacentFlow = false;
+            hrvDiagramPanel2.Size = new Size(24, 24);
+            hrvDiagramPanel2.TabIndex = 208;
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.BackColor = Color.Transparent;
+            label24.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label24.ForeColor = Color.SteelBlue;
+            label24.Location = new Point(4, 5);
+            label24.Name = "label24";
+            label24.Size = new Size(15, 15);
+            label24.TabIndex = 205;
+            label24.Text = "2";
+            label24.TextAlign = ContentAlignment.TopRight;
+            // 
+            // hrvDiagramPanel1
+            // 
+            hrvDiagramPanel1.BackColor = SystemColors.GradientInactiveCaption;
+            hrvDiagramPanel1.Controls.Add(label16);
+            hrvDiagramPanel1.EquipmentTypeName = "열회수기";
+            hrvDiagramPanel1.ForeColor = SystemColors.ActiveCaptionText;
+            hrvDiagramPanel1.HRVName = "HRV01";
+            hrvDiagramPanel1.InputTotalRA = 0D;
+            hrvDiagramPanel1.InputTotalSA = 0D;
+            hrvDiagramPanel1.Location = new Point(3, 9);
+            hrvDiagramPanel1.Name = "hrvDiagramPanel1";
+            hrvDiagramPanel1.RatedRA = 0D;
+            hrvDiagramPanel1.RatedSA = 0D;
+            hrvDiagramPanel1.ShowAdjacentFlow = false;
+            hrvDiagramPanel1.Size = new Size(24, 24);
+            hrvDiagramPanel1.TabIndex = 207;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.BackColor = Color.Transparent;
+            label16.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
+            label16.ForeColor = Color.SteelBlue;
+            label16.Location = new Point(4, 5);
+            label16.Name = "label16";
+            label16.Size = new Size(19, 15);
+            label16.TabIndex = 205;
+            label16.Text = "１";
+            label16.TextAlign = ContentAlignment.TopRight;
             // 
             // ce_Remove_button
             // 
@@ -1634,7 +1701,7 @@ namespace main.contents
             ce2Text.Enabled = false;
             ce2Text.Font = new Font("나눔바른고딕", 9.75F);
             ce2Text.ForeColor = SystemColors.ControlDark;
-            ce2Text.Location = new Point(351, 34);
+            ce2Text.Location = new Point(819, 14);
             ce2Text.Name = "ce2Text";
             ce2Text.Size = new Size(160, 15);
             ce2Text.TabIndex = 204;
@@ -1645,7 +1712,7 @@ namespace main.contents
             ce2Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ce2Button.FlatStyle = FlatStyle.System;
             ce2Button.Font = new Font("나눔바른고딕", 12F, FontStyle.Bold);
-            ce2Button.Location = new Point(325, 30);
+            ce2Button.Location = new Point(793, 10);
             ce2Button.Margin = new Padding(0);
             ce2Button.Name = "ce2Button";
             ce2Button.Size = new Size(23, 23);
@@ -1658,32 +1725,31 @@ namespace main.contents
             // 
             ce2Label.AutoSize = true;
             ce2Label.Font = new Font("나눔바른고딕", 9.75F);
-            ce2Label.Location = new Point(260, 34);
+            ce2Label.Location = new Point(732, 14);
             ce2Label.Name = "ce2Label";
-            ce2Label.Size = new Size(46, 15);
+            ce2Label.Size = new Size(57, 15);
             ce2Label.TabIndex = 202;
-            ce2Label.Text = "공급 존";
+            ce2Label.Text = "공급AHU";
             // 
             // label15
             // 
             label15.AutoSize = true;
             label15.Font = new Font("나눔바른고딕", 9.75F);
-            label15.Location = new Point(35, 34);
+            label15.Location = new Point(525, 14);
             label15.Name = "label15";
-            label15.Size = new Size(90, 15);
+            label15.Size = new Size(82, 15);
             label15.TabIndex = 201;
-            label15.Text = "공급설비2 종류";
+            label15.Text = "공급설비 종류";
             // 
             // ce2Type_comboBox
             // 
             ce2Type_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             ce2Type_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             ce2Type_comboBox.FormattingEnabled = true;
-            ce2Type_comboBox.Location = new Point(131, 30);
+            ce2Type_comboBox.Location = new Point(610, 10);
             ce2Type_comboBox.Name = "ce2Type_comboBox";
             ce2Type_comboBox.Size = new Size(120, 23);
             ce2Type_comboBox.TabIndex = 200;
-            ce2Type_comboBox.DropDown += ce2Type_comboBox_DropDown;
             ce2Type_comboBox.SelectedIndexChanged += ce2Type_comboBox_SelectedIndexChanged;
             // 
             // ce1Text
@@ -1693,7 +1759,7 @@ namespace main.contents
             ce1Text.Enabled = false;
             ce1Text.Font = new Font("나눔바른고딕", 9.75F);
             ce1Text.ForeColor = SystemColors.ControlDark;
-            ce1Text.Location = new Point(351, 10);
+            ce1Text.Location = new Point(323, 14);
             ce1Text.Name = "ce1Text";
             ce1Text.Size = new Size(160, 15);
             ce1Text.TabIndex = 199;
@@ -1704,7 +1770,7 @@ namespace main.contents
             ce1Button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             ce1Button.FlatStyle = FlatStyle.System;
             ce1Button.Font = new Font("나눔바른고딕", 12F, FontStyle.Bold);
-            ce1Button.Location = new Point(325, 6);
+            ce1Button.Location = new Point(295, 10);
             ce1Button.Margin = new Padding(0);
             ce1Button.Name = "ce1Button";
             ce1Button.Size = new Size(23, 23);
@@ -1717,32 +1783,31 @@ namespace main.contents
             // 
             ce1Label.AutoSize = true;
             ce1Label.Font = new Font("나눔바른고딕", 9.75F);
-            ce1Label.Location = new Point(260, 10);
+            ce1Label.Location = new Point(235, 14);
             ce1Label.Name = "ce1Label";
-            ce1Label.Size = new Size(60, 15);
+            ce1Label.Size = new Size(57, 15);
             ce1Label.TabIndex = 197;
-            ce1Label.Text = "공급 AHU";
+            ce1Label.Text = "공급AHU";
             // 
             // label17
             // 
             label17.AutoSize = true;
             label17.Font = new Font("나눔바른고딕", 9.75F);
-            label17.Location = new Point(35, 10);
+            label17.Location = new Point(29, 14);
             label17.Name = "label17";
-            label17.Size = new Size(90, 15);
+            label17.Size = new Size(82, 15);
             label17.TabIndex = 196;
-            label17.Text = "공급설비1 종류";
+            label17.Text = "공급설비 종류";
             // 
             // ce1Type_comboBox
             // 
             ce1Type_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             ce1Type_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             ce1Type_comboBox.FormattingEnabled = true;
-            ce1Type_comboBox.Location = new Point(131, 6);
+            ce1Type_comboBox.Location = new Point(113, 10);
             ce1Type_comboBox.Name = "ce1Type_comboBox";
             ce1Type_comboBox.Size = new Size(120, 23);
             ce1Type_comboBox.TabIndex = 195;
-            ce1Type_comboBox.DropDown += ce1Type_comboBox_DropDown;
             ce1Type_comboBox.SelectedIndexChanged += ce1Type_comboBox_SelectedIndexChanged;
             // 
             // ZoneS_label
@@ -2288,8 +2353,6 @@ namespace main.contents
             PowerTotal_textBox.TabIndex = 149;
             PowerTotal_textBox.TextAlign = HorizontalAlignment.Right;
             // 
-            // 
-            // 
             // label32
             // 
             label32.AutoSize = true;
@@ -2351,8 +2414,6 @@ namespace main.contents
             label35.Size = new Size(59, 15);
             label35.TabIndex = 154;
             label35.Text = "설치대수:";
-            // 
-            // 
             // 
             // CTPower_Text
             // 
@@ -2451,6 +2512,10 @@ namespace main.contents
             ((System.ComponentModel.ISupportInitialize)Pipe_dataGridView).EndInit();
             tabPage4.ResumeLayout(false);
             tabPage4.PerformLayout();
+            hrvDiagramPanel2.ResumeLayout(false);
+            hrvDiagramPanel2.PerformLayout();
+            hrvDiagramPanel1.ResumeLayout(false);
+            hrvDiagramPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)ce_dataGridView).EndInit();
             ImagePanel.ResumeLayout(false);
             panel4.ResumeLayout(false);
@@ -2631,5 +2696,9 @@ namespace main.contents
         private ComboBox SoilWaterCoolerI_comboBox;
         private Label label23;
         private Button SoilWaterCooler_button;
+        private subcontents.AHUSystem.HRVDiagramPanel hrvDiagramPanel1;
+        private Label label16;
+        private subcontents.AHUSystem.HRVDiagramPanel hrvDiagramPanel2;
+        private Label label24;
     }
 }
