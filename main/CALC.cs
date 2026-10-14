@@ -1254,17 +1254,21 @@ namespace main
         #region 냉방 
         public static void Cooling_LoadData(Cal_Cooling cc1, string ProjNum)
         {
-            cc1.Generator_Check(ProjNum);
+            cc1.Load_Generator(ProjNum);
+            cc1.Load_StoragePump(ProjNum);
+            cc1.Load_공급설비(ProjNum);
+            
             cc1.Load_CoolingZone(ProjNum);
             cc1.Cooling_CE_Zone(ProjNum);
         }
         public static void Cooling_Calc(Cal_Cooling cc1, string ProjNum)
-        { //냉방 설비 만들기
-            cc1.Cooling_Generator(ProjNum);
+        { 
             //냉방 설비 종합
             cc1.Generator_Sum();
             //공급설비 기준 부하율 반영
-            cc1.Cal_CLRate();
+            cc1.Find_Climate();
+            //냉방존과 공조존을 합치기
+           
             //최대부하,연간요구량,일일작동시간, 면적
             cc1.Cal_ZoneAhu(ProjNum);
             //냉방존
@@ -1272,8 +1276,6 @@ namespace main
             //공조존         
             cc1.Cal_Ahu(ProjNum);
             //계산시작
-            cc1.Find_Climate();
-            //냉방존과 공조존을 합치기
             cc1.Cal_Load();
             //에너지소요량 계산
             cc1.Cal_CS(ProjNum);
@@ -1418,7 +1420,6 @@ namespace main
         }
 
 
-
         public static void Cooling_Save(Cal_Cooling cc1)
         {
             //설비정보와 보조설비정보는 따로따로
@@ -1448,7 +1449,7 @@ namespace main
                 mth[i] = (i+1).ToString() + "월";
 
                 Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "프로젝트유형,프로젝트번호, 번호, 명칭, 냉방설비, 냉방출력, 냉방성능, 대기전력, 설치대수, Fuel,월,열원설비",
-                "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + cc1.CoolingNum + "','" + cc1.CoolingName + "','" + cc1.CG + "','" + cc1.Power_f + "','" + cc1.EER_f + "','" + cc1.Pctrl_f + "','" + cc1.Number_f + "','" + cc1.Carrier + "','" + mth[i] + "','" + cc1.CSource + "'", "번호,월");
+                "'" + 프로젝트유형[0][1] + "','" + 프로젝트유형[0][0] + "','" + cc1.CoolingNum + "','" + cc1.CoolingName + "','" + cc1.CG + "','" + cc1.Power_f + "','" + cc1.EER_f + "','" + cc1.Pctrl_f + "','" + cc1.Number_f + "','" + cc1.Carrier + "','" + mth[i] + "','" + cc1.source + "'", "번호,월");
                 if (double.IsNaN(cc1.QCa_nd)) { cc1.QCa_nd = 0; }
                 if (double.IsNaN(cc1.QCa_ce)) { cc1.QCa_ce = 0; }
                 if (double.IsNaN(cc1.QCa_d)) { cc1.QCa_d = 0; }
@@ -1484,7 +1485,7 @@ namespace main
                     if (double.IsNaN(cc1.Qc_max_z)) { cc1.Qc_max_z = 0; }
                     if (double.IsNaN(cc1.A_z)) { cc1.A_z = 0; }
                     Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,개수_z,QCb_a_z,QC_Max_z,공급설비1_z,공급설비2_z,A_z",
-                           "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.ZoneNumber_f + "','" + cc1.QC_a_z + "','" + cc1.Qc_max_z + "','" + cc1.CE1_z + "','" + cc1.CE2_z + "','" + cc1.A_z + "'", "번호,월");
+                           "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.ZoneNumber_f + "','" + cc1.QC_a_z + "','" + cc1.Qc_max_z + "','" + cc1.ceType1 + "','" + cc1.ceType2 + "','" + cc1.A_z + "'", "번호,월");
 
                     if (double.IsNaN(cc1.QC_out_z[i])) { cc1.QC_out_z[i] = 0; }
                     if (double.IsNaN(cc1.QC_ce_z[i])) { cc1.QC_ce_z[i] = 0; }
@@ -1502,7 +1503,7 @@ namespace main
                     if (double.IsNaN(cc1.Qc_max_ahu)) { cc1.Qc_max_ahu = 0; }
                     if (double.IsNaN(cc1.A_ahu)) { cc1.A_ahu = 0; }
                     Program.DB.setValue(DB.type.ProjDB, "CoolingSystem_Result", "번호,월,개수_ahu,QCb_a_ahu,QC_Max_ahu,공급설비1_ahu,공급설비2_ahu,A_ahu",
-                           "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.AhuNumber_f + "','" + cc1.QC_a_ahu + "','" + cc1.Qc_max_ahu + "','" + cc1.CE1_ahu + "','" + cc1.CE2_ahu + "','" + cc1.A_ahu + "'", "번호,월");
+                           "'" + cc1.CoolingNum + "','" + mth[i] + "','" + cc1.AhuNumber_f + "','" + cc1.QC_a_ahu + "','" + cc1.Qc_max_ahu + "','" + cc1.ceType1 + "','" + cc1.ceType2 + "','" + cc1.A_ahu + "'", "번호,월");
 
                     if (double.IsNaN(cc1.QC_out_ahu[i])) { cc1.QC_out_ahu[i] = 0; }
                     if (double.IsNaN(cc1.QC_ce_ahu[i])) { cc1.QC_ce_ahu[i] = 0; }

@@ -755,9 +755,8 @@ namespace main
                     Cal_Cooling Cooling1 = new Cal_Cooling(CoolingNum[i][0]);
                     CALC.Coolings[CoolingNum[i][0]] = Cooling1;
                     CALC.Cooling_LoadData(Cooling1, ProjNum);
-                    Cooling1.Cooling_Generator(ProjNum);
                     Cooling1.Generator_Sum();
-                    Cooling1.Cal_CLRate();
+                    
                     Cooling1.Cal_ZoneAhu(ProjNum);
                     Cooling1.Cal_Zone(ProjNum);
                     Cooling1.Cal_Ahu(ProjNum);

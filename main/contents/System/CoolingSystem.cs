@@ -93,7 +93,7 @@ namespace main.contents
 
         //분배열손실 추가
         double PipeIns_Lamda;
-        string PipeIns, PipeD_SelectMode;
+        string PipeIns, PipeD_SelectMode, cwType;
 
         //생산설비 추가
         string CS_Surf, CS_SurfF, CS_Install; //열원설비 설치면, 설치면의 흡수율
@@ -593,6 +593,7 @@ namespace main.contents
                 tabControl2.SelectedTab = tabControl2.TabPages["AirCon_tabPage"];
                 CoolerTop_button.Visible = false;
                 CS_Surf_panel.Visible = true;
+                cwType = "직팽식";
             }
             else if (_CG == "공냉식냉동기")
             {
@@ -615,6 +616,7 @@ namespace main.contents
                 tabControl2.SelectedTab = tabControl2.TabPages["WaterCooler_tabPage"];
                 CoolerTop_button.Visible = true;
                 CS_Surf_panel.Visible = true;
+                cwType = "수방식";
             }
             else if (_CG == "흡수식냉동기")
             {
@@ -626,6 +628,7 @@ namespace main.contents
                 tabControl2.SelectedTab = tabControl2.TabPages["AbsorbCooler_tabPage"];
                 CoolerTop_button.Visible = true;
                 CS_Surf_panel.Visible = true;
+                cwType = "수방식";
             }
 
             else if (_CG == "지열히트펌프")
@@ -638,6 +641,7 @@ namespace main.contents
                 tabControl2.SelectedTab = tabControl2.TabPages["SoilCooler_tabPage"];
                 CoolerTop_button.Visible = false;
                 CS_Surf_panel.Visible = false;
+                cwType = "수방식";
             }
             else if (_CG == "수열히트펌프")
             {
@@ -649,6 +653,7 @@ namespace main.contents
                 tabControl2.SelectedTab = tabControl2.TabPages["SoilWaterCooler_tabPage"];
                 CoolerTop_button.Visible = false;
                 CS_Surf_panel.Visible = false;
+                cwType = "수방식";
             }
         }
 
@@ -1262,6 +1267,7 @@ namespace main.contents
                     check.Add(Value[0][10].ToString()); //수정
                     Power.Add(Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, i, 5, 1));
                     EER.Add(Program.UTIL.dataGridView_doubleComa(AirCooler_dataGridView, i, 6, 1));
+                    cwType = Value[0][7];
                 }
             }
             for (int h = 0; h < check.Count; h++)
@@ -4555,7 +4561,7 @@ namespace main.contents
                     Pipe_dataGridView.Visible = false;
                     Pipe_dataGridView.Rows.Clear();
                 }
-                else if (CG == "공냉식냉동기" && Stotype == "축냉탱크없음")
+                else if (CG == "공냉식냉동기" && cwType == "직팽식" && Stotype == "축열탱크없음")
                 {
                     Pipe_panel.Visible = false;
                     Pipe_dataGridView.Visible = false;
