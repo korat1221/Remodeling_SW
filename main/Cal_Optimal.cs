@@ -777,7 +777,7 @@ namespace main
                     Cooling1.Cal_ZoneAhu(ProjNum);
                     Cooling1.Cal_Zone(ProjNum);
                     Cooling1.Cal_Ahu(ProjNum);
-                    Cooling1.Find_Climate();
+                    Cooling1.Find_Climate(ProjNum);
                     Cooling1.Cal_Load();
                     if (검토유형 == "수냉식냉동기" && Cooling1.CG == "수냉식냉동기")
                     {

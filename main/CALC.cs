@@ -1266,7 +1266,7 @@ namespace main
             //냉방 설비 종합
             cc1.Generator_Sum();
             //공급설비 기준 부하율 반영
-            cc1.Find_Climate();
+            cc1.Find_Climate(ProjNum);
             //냉방존과 공조존을 합치기
            
             //최대부하,연간요구량,일일작동시간, 면적

@@ -139,6 +139,7 @@ namespace main
                 source = DefaultValue[0][6]; //열원설비
                 sourceInstall = DefaultValue[0][7]; //설치면유형
                 finishedType = DefaultValue[0][8]; //설치마감면
+                if (finishedType == "보통마감재") { finishedType = "보통색마감재"; }
             }
             for (int i = 0; i < SelectCG.Count; i++)
             {
@@ -1201,7 +1202,61 @@ namespace main
         }
         #endregion
 
-        public void Find_Climate()//기후데이터
+        private bool Find_ClimateTime(string ProjNum, out string TimeCondition)
+        {
+            TimeCondition = "";
+            List<string> TimeZoneNumbers = new List<string>();
+            for (int i = 0; i < SelectZone.Count; i++)
+            {
+                if (!string.IsNullOrWhiteSpace(SelectZone[i]) && !TimeZoneNumbers.Contains(SelectZone[i])) { TimeZoneNumbers.Add(SelectZone[i]); }
+            }
+            List<string> TimeAhuNumbers = new List<string>();
+            string[][] CoolingConnection = Program.DB.getValue(ProjNum, "CoolingSystem_Form", "공급AHU", "번호 = '" + CoolingNum + "'");
+            if (CoolingConnection.Length > 0) { Split(CoolingConnection[0][0], TimeAhuNumbers); }
+            for (int i = 0; i < TimeAhuNumbers.Count; i++)
+            {
+                if (string.IsNullOrWhiteSpace(TimeAhuNumbers[i])) { continue; }
+                string[][] AhuZones = Program.DB.getValue(ProjNum, "ZoneGeneral_Form", "존번호", "선택열회수기 = '" + TimeAhuNumbers[i].Replace("'", "''") + "' AND 환기유무 = 'True'");
+                for (int n = 0; n < AhuZones.Length; n++)
+                {
+                    if (!string.IsNullOrWhiteSpace(AhuZones[n][0]) && !TimeZoneNumbers.Contains(AhuZones[n][0])) { TimeZoneNumbers.Add(AhuZones[n][0]); }
+                }
+            }
+            string ZoneCondition = "";
+            for (int i = 0; i < TimeZoneNumbers.Count; i++)
+            {
+                if (ZoneCondition != "") { ZoneCondition += " OR "; }
+                ZoneCondition += "존번호 = '" + TimeZoneNumbers[i].Replace("'", "''") + "'";
+            }
+            string[][] ZoneTime = Array.Empty<string[]>();
+            if (ZoneCondition != "") { ZoneTime = Program.DB.getValue(ProjNum, "ZoneGeneral_Form", "시작시간,종료시간", ZoneCondition); }
+            double StartHour = 24, EndHour = 0;
+            for (int i = 0; i < ZoneTime.Length; i++)
+            {
+                if (!TimeSpan.TryParse(ZoneTime[i][0], out TimeSpan StartTime) || !TimeSpan.TryParse(ZoneTime[i][1], out TimeSpan EndTime)) { continue; }
+                double Start = StartTime.TotalHours, End = EndTime.TotalHours;
+                if (Start < 0 || Start >= 24 || End < 0 || End > 24) { continue; }
+                if (End <= Start) { End += 24; }
+                StartHour = Math.Min(StartHour, Start);
+                EndHour = Math.Max(EndHour, End);
+            }
+            if (StartHour < 24 && EndHour > StartHour)
+            {
+                if (EndHour - StartHour < 24)
+                {
+                    StartHour -= 1;
+                    EndHour += 1;
+                    bool Overnight = EndHour > 24;
+                    if (Overnight) { EndHour -= 24; }
+                    string Start = StartHour.ToString(System.Globalization.CultureInfo.InvariantCulture), End = EndHour.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                    TimeCondition = " AND (시 >= " + Start + (Overnight ? " OR " : " AND ") + "시 <= " + End + ")";
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public void Find_Climate(string ProjNum)//기후데이터
         {
             double Ref = 0.95;
             //double[] 외기온도 = new double[12];
@@ -1221,6 +1276,25 @@ namespace main
                 Theta_Around = Program.UTIL.ToDoubleOrZero(v[0][0]);
             }else Theta_Around = 0;
             
+            // 상당외기온도.xlsx: 일사는 해당 설비에 연결된 존 운전시간의 앞뒤 1시간 평균, 외기는 24시간 평균을 사용한다.
+            double Absorptivity = 0;
+            switch (finishedType)
+            {
+                case "열반사도료": Absorptivity = 0.3; break;
+                case "흰색마감재": Absorptivity = 0.4; break;
+                case "보통색마감재": Absorptivity = 0.6; break;
+                case "검은색마감재": Absorptivity = 0.9; break;
+            }
+            string[][] SolarRadiation = Array.Empty<string[]>();
+            if ((CG == nameof(_TYPE.실외기) || CG == nameof(_TYPE.공냉식냉동기)) && (source == "일사노출설치" || source == "그늘설치" || source == "건물내부설치") && (sourceInstall == "수평면" || sourceInstall == "수직면") && Absorptivity > 0)
+            {
+                if (Find_ClimateTime(ProjNum, out string TimeCondition))
+                {
+                    string SolarColumn = source == "일사노출설치" ? "수평면 전일사량" : "산란일사량";
+                    SolarRadiation = Program.DB.getValue(DB.type.BaseDB_RESystem, "시간별기후데이터", "AVG([" + SolarColumn + "])", "지역 = '" + 지역[0][0] + "'" + TimeCondition + " GROUP BY 월 ORDER BY 월");
+                }
+            }
+
             for (int j = 0; j < 12; j++)
             {
                 if (CG == nameof(_TYPE.지열히트펌프))
@@ -1230,6 +1304,11 @@ namespace main
                 else if (CG == nameof(_TYPE.수열히트펌프))
                 {
                     OutdoorTemperature[j] = 0.134 * theta_e[j] + 9.32;
+                }
+                else if (SolarRadiation.Length == 12 && !string.IsNullOrWhiteSpace(SolarRadiation[j][0]))
+                {
+                    double RadiationLoss = sourceInstall == "수평면" ? 93 : 0;
+                    OutdoorTemperature[j] = theta_e[j] + (Absorptivity * Program.UTIL.ToDoubleOrZero(SolarRadiation[j][0]) - 0.9 * RadiationLoss) / 17;
                 }
                 else OutdoorTemperature[j] = theta_e[j] + Theta_Around;
             } 
