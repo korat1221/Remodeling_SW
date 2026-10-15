@@ -156,9 +156,9 @@ namespace main
                             CG_Make.fuel = CG_find[0][0];
                             CG_Make.cwType = CG_find[0][1];
                             CG_Make.power = Program.UTIL.ToDoubleOrZero(CG_find[0][2]);
-                            CG_Make.cop = Program.UTIL.ToDoubleOrZero(CG_find[0][3]);
-                            CG_Make.ctrpower = Program.UTIL.ToDoubleOrZero(CG_find[0][4]);
                             CG_Make.install = CG_find[0][5];
+                            CG_Make.cop = Program.UTIL.ToDoubleOrZero(CG_find[0][3]) * (CG_Make.install == "기존" ? 0.9 : 1.0);
+                            CG_Make.ctrpower = Program.UTIL.ToDoubleOrZero(CG_find[0][4]);
                         }
                         break;
                     case nameof(_TYPE.공냉식냉동기):
@@ -168,38 +168,90 @@ namespace main
                             CG_Make.fuel = CG_find[0][0];
                             CG_Make.cwType = CG_find[0][1];
                             CG_Make.power = Program.UTIL.ToDoubleOrZero(CG_find[0][2]);
-                            CG_Make.cop = Program.UTIL.ToDoubleOrZero(CG_find[0][3]);
+                            CG_Make.install = CG_find[0][9];
+                            CG_Make.cop = Program.UTIL.ToDoubleOrZero(CG_find[0][3]) * (CG_Make.install == "기존" ? 0.9 : 1.0);
+                                                       
                             CG_Make.ctrpower = Program.UTIL.ToDoubleOrZero(CG_find[0][4]);
                             CG_Make.comp = CG_find[0][5];
                             CG_Make.cwin = Program.UTIL.ToDoubleOrZero(CG_find[0][6]);
                             CG_Make.cwout = Program.UTIL.ToDoubleOrZero(CG_find[0][7]);
                             CG_Make.fanpower = Program.UTIL.ToDoubleOrZero(CG_find[0][8]);
-                            CG_Make.install = CG_find[0][9];
                         }
                         break;
-                    case "수냉식냉동기":
+                    case nameof(_TYPE.수냉식냉동기):
                         CG_find = Program.DB.getValue(ProjNum, "User_WaterCooler", "연료,냉방출력,EER,대기전력,압축기,냉수입구온도,냉수출구온도,설치", "번호 = '" + CG_Make.num + "'");
                         if (CG_find.Length > 0)
                         {
                             CG_Make.fuel = CG_find[0][0];
                             CG_Make.cwType = "수방식";
                             CG_Make.power = Program.UTIL.ToDoubleOrZero(CG_find[0][1]);
-                            CG_Make.cop = Program.UTIL.ToDoubleOrZero(CG_find[0][2]);
+                            CG_Make.install = CG_find[0][7];
+                            
+                            CG_Make.cop = Program.UTIL.ToDoubleOrZero(CG_find[0][2]) * (CG_Make.install == "기존" ? 0.9 : 1.0);
+                           
                             CG_Make.ctrpower = Program.UTIL.ToDoubleOrZero(CG_find[0][3]);
                             CG_Make.comp = CG_find[0][4];
                             CG_Make.cwin = Program.UTIL.ToDoubleOrZero(CG_find[0][5]);
                             CG_Make.cwout = Program.UTIL.ToDoubleOrZero(CG_find[0][6]);
                             CG_Make.fanpower = 0;
-                            CG_Make.install = CG_find[0][7];
                             Load_냉각탑(ProjNum);
                         }
                         break;
-                    case "지열히트펌프":
+                    case nameof(_TYPE.지열히트펌프):
+                        CG_find = Program.DB.getValue(ProjNum, "User_GroundHP", "연료,공급유형,냉방용량,냉방EER,대기전력,압축기,냉수입구온도,냉수출구온도,설치", "번호 = '" + CG_Make.num + "'");
+                        if (CG_find.Length > 0)
+                        {
+                            CG_Make.fuel = CG_find[0][0];
+                            CG_Make.cwType = CG_find[0][1];
+                            CG_Make.power = Program.UTIL.ToDoubleOrZero(CG_find[0][2]);
+                            CG_Make.install = CG_find[0][8];
+
+                            CG_Make.cop = Program.UTIL.ToDoubleOrZero(CG_find[0][3]) * (CG_Make.install == "기존" ? 0.9 : 1.0);
+
+                            CG_Make.ctrpower = Program.UTIL.ToDoubleOrZero(CG_find[0][4]);
+                            CG_Make.comp = CG_find[0][5];
+                            CG_Make.cwin = Program.UTIL.ToDoubleOrZero(CG_find[0][6]);
+                            CG_Make.cwout = Program.UTIL.ToDoubleOrZero(CG_find[0][7]);
+                            CG_Make.fanpower = 0;
+                        }
                         break;
-                    case "수열냉동기":
+                    case nameof(_TYPE.수열히트펌프):
+                        CG_find = Program.DB.getValue(ProjNum, "User_GroundWHP", "연료,공급유형,냉방용량,냉방EER,대기전력,압축기,냉수입구온도,냉수출구온도,설치", "번호 = '" + CG_Make.num + "'");
+                        if (CG_find.Length > 0)
+                        {
+                            CG_Make.fuel = CG_find[0][0];
+                            CG_Make.cwType = CG_find[0][1];
+                            CG_Make.power = Program.UTIL.ToDoubleOrZero(CG_find[0][2]);
+                            CG_Make.install = CG_find[0][8];
+
+                            CG_Make.cop = Program.UTIL.ToDoubleOrZero(CG_find[0][3]) * (CG_Make.install == "기존" ? 0.9 : 1.0);
+
+                            CG_Make.ctrpower = Program.UTIL.ToDoubleOrZero(CG_find[0][4]);
+                            CG_Make.comp = CG_find[0][5];
+                            CG_Make.cwin = Program.UTIL.ToDoubleOrZero(CG_find[0][6]);
+                            CG_Make.cwout = Program.UTIL.ToDoubleOrZero(CG_find[0][7]);
+                            CG_Make.fanpower = 0;
+                        }
                         break;
-                    case "흡수식냉동기":
-                        break;
+                    case nameof(_TYPE.흡수식냉동기):
+                        CG_find = Program.DB.getValue(ProjNum, "User_ABS", "연료,냉방용량,냉방성능,대기전력,냉수입구온도,냉수출구온도,설치", "번호 = '" + CG_Make.num + "'");
+                        if (CG_find.Length > 0)
+                        {
+                            CG_Make.fuel = CG_find[0][0];
+                            CG_Make.cwType = "수방식";
+                            CG_Make.power = Program.UTIL.ToDoubleOrZero(CG_find[0][1]);
+                            CG_Make.install = CG_find[0][6];
+
+                            CG_Make.cop = Program.UTIL.ToDoubleOrZero(CG_find[0][2]) * (CG_Make.install == "기존" ? 0.9 : 1.0);
+
+                            CG_Make.ctrpower = Program.UTIL.ToDoubleOrZero(CG_find[0][3]);
+                            CG_Make.comp = null;
+                            CG_Make.cwin = Program.UTIL.ToDoubleOrZero(CG_find[0][4]);
+                            CG_Make.cwout = Program.UTIL.ToDoubleOrZero(CG_find[0][5]);
+                            CG_Make.fanpower = 0;
+                            Load_냉각탑(ProjNum);
+                        }
+                            break;
                     default:
                         break;
                 }
@@ -1261,7 +1313,6 @@ namespace main
                 }
             }
         }
-
         public void Cal_fPL(string Type) //부하율, 종류, 번호
         {
             string 공급유형 = null;
@@ -1496,7 +1547,6 @@ namespace main
             }
            
         }
-
         public void LoadCalc_DH()
         {
             if(CG == "흡수식냉동기")
