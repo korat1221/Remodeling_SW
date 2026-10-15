@@ -89,7 +89,7 @@ namespace main.contents.Result
                     FormData[0].Add(new { idx = i, val = Value[0][0] }); //프로젝트번호
                 }
                 
-                string titleName = Num + " 공조에너지요구량 검토보고서";
+                string titleName = Num + " 공조에너지소요량 검토보고서";
 
 
                 FormData[1].Add(new { idx = i, val = titleName }); //제목
@@ -225,7 +225,7 @@ namespace main.contents.Result
 
                     //존난방,냉방,제습요구량
 
-                    Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호", "선택열회수기 = '" + Num + "'");
+                    Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호", "선택열회수기 = '" + Num + "' and 환기유무='True'");
                     List<string> zonecheck = new List<string>();
                     double[] heat = new double[13], cool = new double[13], dehum = new double[13];
                     double[] heatduct = new double[13], coolduct = new double[13];
@@ -234,9 +234,9 @@ namespace main.contents.Result
                     double[] AHU_heat = new double[13], AHU_cool = new double[13], AHU_heat_use = new double[13], AHU_cool_use = new double[13];
                     double area = 0;
                     string zone;
-                    foreach (string[] k in Value)
+                    for (int k = 0; k < Value.Length; k++)
                     {
-                        zonecheck.Add(k[0]);
+                        zonecheck.Add(Value[k][0]);
                     }
                     for (int j = 0; j < 12; j++)
                     {
@@ -280,7 +280,7 @@ namespace main.contents.Result
 
                     }
 
-                    zone = zonecheck[0] + "외 " + (zonecheck.Count() - 1).ToString() + "개";
+                    zone = zonecheck.Count > 0 ? zonecheck[0] + "외 " + (zonecheck.Count - 1).ToString() + "개" : "-";
                     area = Cal_Qb(zonecheck, 1, "면적");
 
                     //존정보 및 설치 면적
@@ -288,13 +288,13 @@ namespace main.contents.Result
                     AnnualData[1].Add(new { idx = i, val = Program.UTIL.doubleComa(area.ToString(), 2) }); //면적 정보
                     AnnualData[2].Add(new { idx = i, val = Program.UTIL.doubleComa((AHU_heat[12]/area).ToString(), 0) }); //연간난방에너지요구량
                     AnnualData[3].Add(new { idx = i, val = Program.UTIL.doubleComa((AHU_cool[12]/area).ToString(), 0) }); //연간냉방에너지요구량
-                    AnnualData[4].Add(new { idx = i, val = Program.UTIL.doubleComa((dehum[12]/area).ToString(), 0) }); //연간제습에너지요구량
+                    AnnualData[4].Add(new { idx = i, val = Program.UTIL.doubleComa((area > 0 ? dehum[12] / area : 0).ToString(), 2) }); //연간제습에너지요구량
                     AnnualData[5].Add(new { idx = i, val = Program.UTIL.doubleComa((aux_total[12]/area).ToString(), 0) }); //연간보조에너지소요량
                     for (int mth = 0; mth < 13; mth++)
                     {
                         MthData[0].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(heat[mth].ToString(), 0) }); //난방
                         MthData[1].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(cool[mth].ToString(), 0) }); //냉방(제습제외)
-                        MthData[2].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(dehum[mth].ToString(), 0) }); //제습
+                        MthData[2].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(dehum[mth].ToString(), 1) }); //제습
                         MthData[5].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(heatduct[mth].ToString(), 0) }); //난방덕트절감량
                         MthData[6].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(coolduct[mth].ToString(), 0) }); //냉방덕트절갈량
                         MthData[7].Add(new { idx = i * 13 + mth, val = Program.UTIL.doubleComa(aux_total[mth].ToString(), 0) }); //총보조에너지
@@ -499,23 +499,25 @@ namespace main.contents.Result
                 for (int i = 0; i < SelectZone.Count; i++)
                 {
                     string[][] 난방 = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Qb_mth", "존번호 ='" + SelectZone[i] + "' AND 난방_냉방 = '난방' AND 월 = '" + mth + "'");
-                    Need += Program.UTIL.ToDoubleOrZero(난방[0][0]);
+                    if (난방.Length > 0) { Need += Program.UTIL.ToDoubleOrZero(난방[0][0]); }
                 }
             }
             else if (HC == "제습")
             {
                 for (int i = 0; i < SelectZone.Count; i++)
                 {
-                    string[][] 제습 = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Q_DHU_tot, dwd_mth", "존번호 ='" + SelectZone[i] + "' AND 난방_냉방 = '냉방' AND 월 = '" + mth + "'");
-                    Need += Program.UTIL.ToDoubleOrZero(제습[0][0]) * Program.UTIL.ToDoubleOrZero(제습[0][1]) / 1000;
+                    // Q_DHU_tot는 시간별 에너지를 월별 누적하고 이용일 보정까지 마친 kWh 값이다.
+                    string[][] 제습 = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Q_DHU_tot", "존번호 ='" + SelectZone[i] + "' AND 난방_냉방 = '냉방' AND 월 = '" + mth + "'");
+                    if (제습.Length > 0) { Need += Program.UTIL.ToDoubleOrZero(제습[0][0]); }
                 }
             }
             else if (HC == "냉방")
             {
                 for (int i = 0; i < SelectZone.Count; i++)
                 {
-                    string[][] 냉방 = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Qb_mth,Q_DHU_tot, dwd_mth", "존번호 ='" + SelectZone[i] + "' AND 난방_냉방 = '냉방' AND 월 = '" + mth + "'");
-                    Need += Program.UTIL.ToDoubleOrZero(냉방[0][0]) - Program.UTIL.ToDoubleOrZero(냉방[0][1]) * Program.UTIL.ToDoubleOrZero(냉방[0][2]) / 1000;
+                    // 존 냉방 Qb_mth는 제습을 제외한 현열 요구량이므로 제습량을 다시 차감하지 않는다.
+                    string[][] 냉방 = Program.DB.getValue(DB.type.ProjDB, "Zone_52016_Result", "Qb_mth", "존번호 ='" + SelectZone[i] + "' AND 난방_냉방 = '냉방' AND 월 = '" + mth + "'");
+                    if (냉방.Length > 0) { Need += Program.UTIL.ToDoubleOrZero(냉방[0][0]); }
                 }
             }
             else if (HC == "면적")
@@ -523,7 +525,7 @@ namespace main.contents.Result
                 for (int i = 0; i < SelectZone.Count; i++)
                 {
                     string[][] 면적 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호 = '" + SelectZone[i] + "'");
-                    Need += Program.UTIL.ToDoubleOrZero(면적[0][0].ToString());
+                    if (면적.Length > 0) { Need += Program.UTIL.ToDoubleOrZero(면적[0][0]); }
                 }
             }
             return Need;
