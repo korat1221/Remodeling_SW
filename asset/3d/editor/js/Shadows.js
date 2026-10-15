@@ -379,6 +379,10 @@ Shadows.prototype = {
 				while (++i < el.userData.children.length) {
 					let el2 = el.userData.children[i];
 
+					if (el2.type === 'CW3') {
+						el2.window_height = Math.max(el2.bbox[0].y, el2.bbox[1].y);
+					}
+
 					if (el2.type === 'CW' || el2.type === 'DR' || el2.type === 'WN') {
 						let edges = [];
 						let edges2 = [];

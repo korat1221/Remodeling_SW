@@ -537,12 +537,12 @@ namespace main.contents
             {
                 if (LightNumber.Contains("LP"))
                 {
-                    L5_textBox.Text = D_LightFi == "" ? "" : D_LightFi + " m";
+                    L5_textBox.Text = D_LightFi == "" ? "" : D_LightFi + " lm";
                     L6_textBox.Text = D_LightPi;
                 }
                 else
                 {
-                    L5_textBox.Text = U_LightFi.ToString() + " m";
+                    L5_textBox.Text = U_LightFi.ToString() + " lm";
                     L6_textBox.Text = U_LightPi.ToString();
                 }
             }
@@ -1352,12 +1352,12 @@ namespace main.contents
 
                 if (LightNumber.Contains("LP"))
                 {
-                    L5_textBox.Text = Load[0][7] == "" ? "" : Load[0][7] + " m";
+                    L5_textBox.Text = Load[0][7] == "" ? "" : Load[0][7] + " lm";
                     L6_textBox.Text = Load[0][8];
                 }
                 else
                 {
-                    L5_textBox.Text = Load[0][9] == "" ? "" : Load[0][9] + " m";
+                    L5_textBox.Text = Load[0][9] == "" ? "" : Load[0][9] + " lm";
                     L6_textBox.Text = Load[0][10];
                 }
 
@@ -1564,6 +1564,7 @@ namespace main.contents
         private void Calc_MainWindowData(string direction, bool isRoof)
         {
             Calc_RoomSize(direction);
+            hLi = hR;
 
             string SkylightCondition = isRoof ? "천창유무 = '천창있음'" : "천창유무 <> '천창있음'";
 
@@ -1591,7 +1592,8 @@ namespace main.contents
                     MaxIsWindow = Glazing[i][5] == "창호";
                     MainType_ID = Glazing[i][0];
                     Main_WinCW = Glazing[i][2];
-                    hLi = Math.Min(hR, Program.UTIL.ToDoubleOrZero(Glazing[i][4]) -0.1); //100은 중심선으로부터의 슬라브 두께 
+                    double LintelHeight = Program.UTIL.ToDoubleOrZero(Glazing[i][4]);
+                    hLi = LintelHeight > 0 ? Math.Min(hR, LintelHeight - 0.1) : hR; //100은 중심선으로부터의 슬라브 두께
                 }
             }
 
