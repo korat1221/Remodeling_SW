@@ -33,6 +33,7 @@ namespace main.contents
 
         private void onVisibleChanged(object sender, EventArgs e)
         {
+            if (!Visible || main.MainContents.selectInfo == null || main.MainContents.selectInfo.Length < 3) { return; }
             double R1, R2, L1, L2, S1, S2, T1, T2, uw, install;
             string Type, InstallType, FrameMaterial, SingleDoubleType, InstallName, UCWtype;
             double Area;
@@ -186,10 +187,11 @@ namespace main.contents
             else
             {
                 tabControl1.Visible = false;
+                return;
             }
 
             //차양정보 불러오기
-            String[][] BlindValue = Program.DB.querySQL(DB.type.ProjDB, "select a.제품명,a.종류,a.설치,a.투과수준,a.색깔,a.외부반사율,a.내부반사율,a.투과율,a.흡수율,a.제어방식1,a.제어방식2,b.방위,b.기울기 FROM ConstructionBlind AS  a INNER JOIN ZoneEnvelope_3D AS b ON a.번호 = b.차양적용 where b.아이디 = '" + rec[0][9] + "'");
+            String[][] BlindValue = Program.DB.querySQL(DB.type.ProjDB, "select a.제품명,a.종류,a.설치,a.투과수준,a.색깔,a.외부반사율,a.내부반사율,a.투과율,a.흡수율,a.제어방식1,a.제어방식2,b.방위,b.기울기 FROM ConstructionBlind AS  a INNER JOIN ZoneEnvelope_3D AS b ON a.번호 = b.차양적용 where b.번호 = '" + rec[0][9] + "'");
 
             if (BlindValue.Length > 0 && BlindValue[0][0] != "")
             {
@@ -203,7 +205,7 @@ namespace main.contents
                 BlindControl_textBox.Text = BlindValue[0][9];
                 LoadGraph(BlindValue[0][10], BlindValue[0][11], BlindValue[0][12]);
 
-                String[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "아이디 = '" + rec[0][9] + "'");
+                String[][] Blind = Program.DB.getValue(DB.type.ProjDB, "Blind_3D", "차양포함태양열취득률,차양포함빛투과율", "번호 = '" + rec[0][9] + "'");
                 if (Blind.Length > 0)
                 {
                     SHGC_on_textBox.Text = Program.UTIL.ToDoubleOrZero(Blind[0][0]).ToString("0.000");

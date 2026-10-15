@@ -33,7 +33,7 @@ class MainTree {
                 "EnergyUse" : {
                     "icon" : "cls-EnergyUse-icon"
                 },                
-                "CW" : {
+                "ConstructionCW" : {
                     "icon" : "cls-CW-icon"
                 },
                 "Wall" : {

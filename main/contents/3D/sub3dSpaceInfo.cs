@@ -8,11 +8,22 @@
         }
         private void onVisibleChanged(object sender, EventArgs e)
         {
+            if (!Visible || main.MainContents.selectInfo == null || main.MainContents.selectInfo.Length < 2) { return; }
             {
-                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름,용도프로필,순바닥면적,천장고", "존번호 = '" + main.MainContents.selectInfo[1] + "'");
+                string[][] rec = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,존이름,용도프로필,순바닥면적,천장고", "존번호 = '" + main.MainContents.selectInfo[1].Split('+')[0] + "'");
 
                 if (rec.Length > 0)
                 {
+                    Name_textBox.Visible = true;
+                    Name_textBox1.Visible = true;
+                    textBox2.Visible = true;
+                    Area_textBox.Visible = true;
+                    textBox1.Visible = true;
+                    label6.Visible = true;
+                    label14.Visible = true;
+                    label2.Visible = true;
+                    label1.Visible = true;
+                    label3.Visible = true;
                     Name_textBox.Text = rec[0][0];
                     Name_textBox1.Text = rec[0][1];
                     textBox2.Text = rec[0][2];
