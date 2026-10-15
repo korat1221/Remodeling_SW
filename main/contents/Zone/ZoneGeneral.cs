@@ -633,7 +633,7 @@ namespace main.contents
                     Program.UTIL.textBox_doubleComa(DHWneed_textBox, true, 1);
                     DHWneed_textBox.Text += " kWh/d";
                     DHWneed_textBox.TextAlign = HorizontalAlignment.Left;
-                    DHWneed_image_Label.Text = string.Format("{0:F1}", (DHWneed)) + " kWh/d";
+                    DHWneed_image_Label.Text = string.Format("{0:F0}", (DHWneed)) + " kWh/d";
                 }
             }
         }
