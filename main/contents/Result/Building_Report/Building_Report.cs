@@ -874,31 +874,72 @@ namespace main.contents.Result.Building_Report
                 data.Add(new { cname = "pv_eta_rule", data = __Edata[95] });
                 data.Add(new { cname = "pv_point", data = __Edata[96] });
                 #endregion
-                #region 연료전지정보
-                double FC_power = 0;
-                Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.연료전지번호,a.연료전지대수,b.열출력,b.전기출력 From HeatingSystem_Form as a inner Join User_FC as b on a.연료전지번호=b.번호 Where Not a.연료전지번호=''");
-                if(Value.Length >0)
+                #region 공조정보
                 {
+                    double AHU_volume = 0, AHU_recovery_volume = 0, AHU_eta = 0;
+                    bool AHU_eta_missing = false;
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.급기풍량,b.온도교환효율_난방,b.열회수유형 From AHUSystem_Form as a Inner Join User_AHU as b on a.번호=b.번호 Where a.유형='공조기' Union All Select b.팬풍량,b.온도교환효율_난방,b.열회수유형 From AHUSystem_Form as a Inner Join User_HRV as b on a.번호=b.번호 Where a.유형='열회수기'");
                     for (int a = 0; a < Value.Length; a++)
                     {
-                        FC_power += (Program.UTIL.ToDoubleOrZero(Value[a][2])+ Program.UTIL.ToDoubleOrZero(Value[a][3])) * Program.UTIL.ToDoubleOrZero(Value[a][1]);
+                        double volume = Program.UTIL.ToDoubleOrZero(Value[a][0]);
+                        if (volume <= 0) { continue; }
+                        AHU_volume += volume;
+                        if (string.IsNullOrEmpty(Value[a][2]) || Value[a][2] == "없음") { continue; }
+                        double efficiency;
+                        if (!double.TryParse(Value[a][1], out efficiency)) { AHU_eta_missing = true; continue; }
+                        AHU_recovery_volume += volume;
+                        AHU_eta += volume * efficiency;
                     }
-                    __Edata[200].Add(new { idx = i, val = FC_power.ToString("0.0") }); //용량
+                    __Edata[204].Add(new { idx = i, val = AHU_volume > 0 ? AHU_volume.ToString("#,##0") : "-" });
+                    __Edata[205].Add(new { idx = i, val = AHU_recovery_volume > 0 && !AHU_eta_missing ? (AHU_eta / AHU_recovery_volume).ToString("0.0") : "-" });
+                    data.Add(new { cname = "ahu_volume", data = __Edata[204] });
+                    data.Add(new { cname = "ahu_eta", data = __Edata[205] });
                 }
-                data.Add(new { cname = "fc_power", data = __Edata[200] });
                 #endregion
                 #region 풍력정보
-                double WP_power = 0;
-                Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.번호,a.설치대수,b.정격출력 From WindPower_Form as a inner Join User_WP as b on a.풍력=b.번호");
-                if (Value.Length > 0)
                 {
+                    double WP_power = 0;
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.설치대수,b.정격출력 From WindPower_Form as a Inner Join User_WP as b on a.풍력=b.번호");
                     for (int a = 0; a < Value.Length; a++)
                     {
-                        WP_power += Program.UTIL.ToDoubleOrZero(Value[a][1])  * Program.UTIL.ToDoubleOrZero(Value[a][2])/1000;
+                        WP_power += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value[a][1]) / 1000;
                     }
-                    __Edata[201].Add(new { idx = i, val = WP_power.ToString("0.0") }); //용량
+                    __Edata[201].Add(new { idx = i, val = WP_power > 0 ? WP_power.ToString("#,##0.0") : "-" });
+                    __Edata[203].Add(new { idx = i, val = "-" });
+                    data.Add(new { cname = "wp_power", data = __Edata[201] });
+                    data.Add(new { cname = "wp_eta", data = __Edata[203] });
                 }
-                data.Add(new { cname = "wp_power", data = __Edata[201] });
+                #endregion
+                #region 연료전지정보
+                {
+                    double FC_power = 0, FC_fuel = 0;
+                    bool FC_eta_missing = false;
+                    ArrayList FC_Num = new ArrayList();
+                    // 기존 계산 순서대로 난방을 먼저 읽고 공유 급탕 설비는 중복 집계하지 않는다.
+                    Value = Program.DB.querySQL(DB.type.ProjDB, "Select 연료전지번호,연료전지대수 From HeatingSystem_Form Where 주요설비='연료전지' Or 보조설비1='연료전지' Or 보조설비2='연료전지' Union All Select 연료전지번호,연료전지대수 From DHWSystem_Form Where 주요설비='연료전지' Or 보조설비1='연료전지' Or 보조설비2='연료전지'");
+                    for (int a = 0; a < Value.Length; a++)
+                    {
+                        string[] FC_numbers = Value[a][0].Split('+');
+                        string[] FC_counts = Value[a][1].Split('+');
+                        for (int fcIndex = 0; fcIndex < FC_numbers.Length && fcIndex < FC_counts.Length; fcIndex++)
+                        {
+                            if (string.IsNullOrEmpty(FC_numbers[fcIndex]) || FC_Num.Contains(FC_numbers[fcIndex])) { continue; }
+                            FC_Num.Add(FC_numbers[fcIndex]);
+                            string[][] FCValue = Program.DB.getValue(DB.type.ProjDB, "User_FC", "전기출력,전기효율", "번호='" + FC_numbers[fcIndex].Replace("'", "''") + "'");
+                            if (FCValue.Length == 0) { continue; }
+                            double power = Program.UTIL.ToDoubleOrZero(FCValue[0][0]) * Program.UTIL.ToDoubleOrZero(FC_counts[fcIndex]);
+                            if (power <= 0) { continue; }
+                            FC_power += power;
+                            double eta = Program.UTIL.ToDoubleOrZero(FCValue[0][1]);
+                            if (eta <= 0) { FC_eta_missing = true; continue; }
+                            FC_fuel += power / (eta / 100);
+                        }
+                    }
+                    __Edata[200].Add(new { idx = i, val = FC_power > 0 ? FC_power.ToString("#,##0.0") : "-" });
+                    __Edata[202].Add(new { idx = i, val = FC_fuel > 0 && !FC_eta_missing ? (FC_power / FC_fuel * 100).ToString("0.0") : "-" });
+                    data.Add(new { cname = "fc_power", data = __Edata[200] });
+                    data.Add(new { cname = "fc_eta", data = __Edata[202] });
+                }
                 #endregion
 
                 #region 소요량
@@ -2600,6 +2641,141 @@ namespace main.contents.Result.Building_Report
                         data.Add(new { cname = "pv_power2", data = __Edata2[92] });
                         data.Add(new { cname = "pv_eta_avg2", data = __Edata2[94] });
                         data.Add(new { cname = "pv_eta_rule2", data = __Edata2[95] });
+                    }
+                    #endregion
+
+                    #region 공조정보
+                    {
+                        //리모델링 후
+                        double AHU_volume = 0, AHU_recovery_volume = 0, AHU_eta = 0;
+                        bool AHU_eta_missing = false;
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select b.급기풍량,b.온도교환효율_난방,b.열회수유형 From AHUSystem_Form as a Inner Join User_AHU as b on a.번호=b.번호 Where a.유형='공조기' Union All Select b.팬풍량,b.온도교환효율_난방,b.열회수유형 From AHUSystem_Form as a Inner Join User_HRV as b on a.번호=b.번호 Where a.유형='열회수기'");
+                        for (int a = 0; a < Value.Length; a++)
+                        {
+                            double volume = Program.UTIL.ToDoubleOrZero(Value[a][0]);
+                            if (volume <= 0) { continue; }
+                            AHU_volume += volume;
+                            if (string.IsNullOrEmpty(Value[a][2]) || Value[a][2] == "없음") { continue; }
+                            double efficiency;
+                            if (!double.TryParse(Value[a][1], out efficiency)) { AHU_eta_missing = true; continue; }
+                            AHU_recovery_volume += volume;
+                            AHU_eta += volume * efficiency;
+                        }
+                        __Edata[204].Add(new { idx = i, val = AHU_volume > 0 ? AHU_volume.ToString("#,##0") : "-" });
+                        __Edata[205].Add(new { idx = i, val = AHU_recovery_volume > 0 && !AHU_eta_missing ? (AHU_eta / AHU_recovery_volume).ToString("0.0") : "-" });
+                        data.Add(new { cname = "ahu_volume", data = __Edata[204] });
+                        data.Add(new { cname = "ahu_eta", data = __Edata[205] });
+                    }
+                    {
+                        //리모델링 전
+                        double AHU_volume = 0, AHU_recovery_volume = 0, AHU_eta = 0;
+                        bool AHU_eta_missing = false;
+                        Value = Program.DB.querySQL(res[0][0], "Select b.급기풍량,b.온도교환효율_난방,b.열회수유형 From AHUSystem_Form as a Inner Join User_AHU as b on a.번호=b.번호 Where a.유형='공조기' Union All Select b.팬풍량,b.온도교환효율_난방,b.열회수유형 From AHUSystem_Form as a Inner Join User_HRV as b on a.번호=b.번호 Where a.유형='열회수기'");
+                        for (int a = 0; a < Value.Length; a++)
+                        {
+                            double volume = Program.UTIL.ToDoubleOrZero(Value[a][0]);
+                            if (volume <= 0) { continue; }
+                            AHU_volume += volume;
+                            if (string.IsNullOrEmpty(Value[a][2]) || Value[a][2] == "없음") { continue; }
+                            double efficiency;
+                            if (!double.TryParse(Value[a][1], out efficiency)) { AHU_eta_missing = true; continue; }
+                            AHU_recovery_volume += volume;
+                            AHU_eta += volume * efficiency;
+                        }
+                        __Edata2[204].Add(new { idx = i, val = AHU_volume > 0 ? AHU_volume.ToString("#,##0.0") : "-" });
+                        __Edata2[205].Add(new { idx = i, val = AHU_recovery_volume > 0 && !AHU_eta_missing ? (AHU_eta / AHU_recovery_volume).ToString("0.0") : "-" });
+                        data.Add(new { cname = "ahu_volume2", data = __Edata2[204] });
+                        data.Add(new { cname = "ahu_eta2", data = __Edata2[205] });
+                    }
+                    #endregion
+                    #region 풍력정보
+                    {
+                        //리모델링 후
+                        double WP_power = 0;
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select a.설치대수,b.정격출력 From WindPower_Form as a Inner Join User_WP as b on a.풍력=b.번호");
+                        for (int a = 0; a < Value.Length; a++)
+                        {
+                            WP_power += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value[a][1]) / 1000;
+                        }
+                        __Edata[201].Add(new { idx = i, val = WP_power > 0 ? WP_power.ToString("#,##0.0") : "-" });
+                        __Edata[203].Add(new { idx = i, val = "-" });
+                        data.Add(new { cname = "wp_power", data = __Edata[201] });
+                        data.Add(new { cname = "wp_eta", data = __Edata[203] });
+                    }
+                    {
+                        //리모델링 전
+                        double WP_power = 0;
+                        Value = Program.DB.querySQL(res[0][0], "Select a.설치대수,b.정격출력 From WindPower_Form as a Inner Join User_WP as b on a.풍력=b.번호");
+                        for (int a = 0; a < Value.Length; a++)
+                        {
+                            WP_power += Program.UTIL.ToDoubleOrZero(Value[a][0]) * Program.UTIL.ToDoubleOrZero(Value[a][1]) / 1000;
+                        }
+                        __Edata2[201].Add(new { idx = i, val = WP_power > 0 ? WP_power.ToString("#,##0.0") : "-" });
+                        __Edata2[203].Add(new { idx = i, val = "-" });
+                        data.Add(new { cname = "wp_power2", data = __Edata2[201] });
+                        data.Add(new { cname = "wp_eta2", data = __Edata2[203] });
+                    }
+                    #endregion
+                    #region 연료전지정보
+                    {
+                        //리모델링 후
+                        double FC_power = 0, FC_fuel = 0;
+                        bool FC_eta_missing = false;
+                        ArrayList FC_Num = new ArrayList();
+                        // 기존 계산 순서대로 난방을 먼저 읽고 공유 급탕 설비는 중복 집계하지 않는다.
+                        Value = Program.DB.querySQL(DB.type.ProjDB, "Select 연료전지번호,연료전지대수 From HeatingSystem_Form Where 주요설비='연료전지' Or 보조설비1='연료전지' Or 보조설비2='연료전지' Union All Select 연료전지번호,연료전지대수 From DHWSystem_Form Where 주요설비='연료전지' Or 보조설비1='연료전지' Or 보조설비2='연료전지'");
+                        for (int a = 0; a < Value.Length; a++)
+                        {
+                            string[] FC_numbers = Value[a][0].Split('+');
+                            string[] FC_counts = Value[a][1].Split('+');
+                            for (int fcIndex = 0; fcIndex < FC_numbers.Length && fcIndex < FC_counts.Length; fcIndex++)
+                            {
+                                if (string.IsNullOrEmpty(FC_numbers[fcIndex]) || FC_Num.Contains(FC_numbers[fcIndex])) { continue; }
+                                FC_Num.Add(FC_numbers[fcIndex]);
+                                string[][] FCValue = Program.DB.getValue(DB.type.ProjDB, "User_FC", "전기출력,전기효율", "번호='" + FC_numbers[fcIndex].Replace("'", "''") + "'");
+                                if (FCValue.Length == 0) { continue; }
+                                double power = Program.UTIL.ToDoubleOrZero(FCValue[0][0]) * Program.UTIL.ToDoubleOrZero(FC_counts[fcIndex]);
+                                if (power <= 0) { continue; }
+                                FC_power += power;
+                                double eta = Program.UTIL.ToDoubleOrZero(FCValue[0][1]);
+                                if (eta <= 0) { FC_eta_missing = true; continue; }
+                                FC_fuel += power / (eta / 100);
+                            }
+                        }
+                        __Edata[200].Add(new { idx = i, val = FC_power > 0 ? FC_power.ToString("#,##0.0") : "-" });
+                        __Edata[202].Add(new { idx = i, val = FC_fuel > 0 && !FC_eta_missing ? (FC_power / FC_fuel * 100).ToString("0.0") : "-" });
+                        data.Add(new { cname = "fc_power", data = __Edata[200] });
+                        data.Add(new { cname = "fc_eta", data = __Edata[202] });
+                    }
+                    {
+                        //리모델링 전
+                        double FC_power = 0, FC_fuel = 0;
+                        bool FC_eta_missing = false;
+                        ArrayList FC_Num = new ArrayList();
+                        // 기존 계산 순서대로 난방을 먼저 읽고 공유 급탕 설비는 중복 집계하지 않는다.
+                        Value = Program.DB.querySQL(res[0][0], "Select 연료전지번호,연료전지대수 From HeatingSystem_Form Where 주요설비='연료전지' Or 보조설비1='연료전지' Or 보조설비2='연료전지' Union All Select 연료전지번호,연료전지대수 From DHWSystem_Form Where 주요설비='연료전지' Or 보조설비1='연료전지' Or 보조설비2='연료전지'");
+                        for (int a = 0; a < Value.Length; a++)
+                        {
+                            string[] FC_numbers = Value[a][0].Split('+');
+                            string[] FC_counts = Value[a][1].Split('+');
+                            for (int fcIndex = 0; fcIndex < FC_numbers.Length && fcIndex < FC_counts.Length; fcIndex++)
+                            {
+                                if (string.IsNullOrEmpty(FC_numbers[fcIndex]) || FC_Num.Contains(FC_numbers[fcIndex])) { continue; }
+                                FC_Num.Add(FC_numbers[fcIndex]);
+                                string[][] FCValue = Program.DB.getValue(res[0][0], "User_FC", "전기출력,전기효율", "번호='" + FC_numbers[fcIndex].Replace("'", "''") + "'");
+                                if (FCValue.Length == 0) { continue; }
+                                double power = Program.UTIL.ToDoubleOrZero(FCValue[0][0]) * Program.UTIL.ToDoubleOrZero(FC_counts[fcIndex]);
+                                if (power <= 0) { continue; }
+                                FC_power += power;
+                                double eta = Program.UTIL.ToDoubleOrZero(FCValue[0][1]);
+                                if (eta <= 0) { FC_eta_missing = true; continue; }
+                                FC_fuel += power / (eta / 100);
+                            }
+                        }
+                        __Edata2[200].Add(new { idx = i, val = FC_power > 0 ? FC_power.ToString("#,##0.0") : "-" });
+                        __Edata2[202].Add(new { idx = i, val = FC_fuel > 0 && !FC_eta_missing ? (FC_power / FC_fuel * 100).ToString("0.0") : "-" });
+                        data.Add(new { cname = "fc_power2", data = __Edata2[200] });
+                        data.Add(new { cname = "fc_eta2", data = __Edata2[202] });
                     }
                     #endregion
 
