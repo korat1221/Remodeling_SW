@@ -520,8 +520,8 @@ namespace main.contents.Result.Building_Report
                     }
                     CMH = n50 * Volume;
                     CMH_rule = 0.6 * Volume;
-                    __Edata[44].Add(new { idx = i, val = CMH.ToString("0") }); 
-                    __Edata[45].Add(new { idx = i, val = CMH_rule.ToString("0") });
+                    __Edata[44].Add(new { idx = i, val = CMH.ToString("#,##0") });
+                    __Edata[45].Add(new { idx = i, val = CMH_rule.ToString("#,##0") });
                 }
                 d = 0.6 / n50 * 100; if (d >= 100) { d = 100; }
                 if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 205) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
@@ -570,6 +570,9 @@ namespace main.contents.Result.Building_Report
                 else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 205) / 100) + "px'></div>"; }
                 sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
                 __Edata[49].Add(new { idx = i, val = sp }); //0.1 W/m2k
+                Value = Program.DB.getValue(DB.type.ProjDB, "ThermalBridge_3D", "Sum(열교길이)");
+                data.Add(new { cname = "tb_length", data = new[] { new { idx = i, val = Program.UTIL.doubleComa(Value.Length > 0 ? Value[0][0] : "0", 1) } } });
+                data.Add(new { cname = "tb_length2", data = new[] { new { idx = i, val = Program.UTIL.doubleComa(Value.Length > 0 ? Value[0][0] : "0", 1) } } });
                 data.Add(new { cname = "utb", data = __Edata[47] });
                 data.Add(new { cname = "utb_rule", data = __Edata[48] });
                 data.Add(new { cname = "utb_rulevalue_point", data = __Edata[49] });
@@ -791,7 +794,7 @@ namespace main.contents.Result.Building_Report
                 }
                 #endregion
                 #region 조명정보   
-                string light_count; double light_density = 0; double light_eta_avg = 0; double light_eta_rule = 0; double light_point = 0; double light_area = 0;
+                string light_count; double light_density = 0; double light_eta_avg = 0; double light_eta_rule = 0; double light_point = 0; double light_area = 0; double light_density_area = 0;
                 Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneLighting_form", "조명번호");
                 if (Value.Length > 0)
                 {
@@ -804,12 +807,13 @@ namespace main.contents.Result.Building_Report
                             for (int aa = 0; aa < 조명존.Length; aa++)
                             {
                                 light_area = Program.UTIL.ToDoubleOrZero(조명존[aa][1]);
-                                light_density = Program.UTIL.ToDoubleOrZero(조명존[aa][1]) * Program.UTIL.ToDoubleOrZero(조명존[aa][2]);
+                                light_density += Program.UTIL.ToDoubleOrZero(조명존[aa][1]) * Program.UTIL.ToDoubleOrZero(조명존[aa][2]);
+                                light_density_area += Program.UTIL.ToDoubleOrZero(조명존[aa][1]);
                                 light_eta_avg = Program.UTIL.ToDoubleOrZero(조명존[aa][1]) * Program.UTIL.ToDoubleOrZero(조명존[aa][4]);
                             }
                         }
                     }
-                    //light_density = light_density / light_area;
+                    light_density = light_density_area > 0 ? light_density / light_density_area : 0;
                     light_eta_avg = light_eta_avg / light_area;
                     light_eta_rule = 70;
                     light_point = Math.Min(100, light_eta_avg / light_eta_rule * 100);
@@ -1148,7 +1152,7 @@ namespace main.contents.Result.Building_Report
                 #endregion
 
 
-                items.Add("buildingform_one.html");
+                items.Add("MainReport_Before.html");
                 s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
                 s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
                 System.Text.Json.JsonSerializer.Serialize(__data[10].ToArray());
@@ -1923,8 +1927,8 @@ namespace main.contents.Result.Building_Report
                             }
                             CMH = n50 * Volume;
                             CMH_rule = 0.6 * Volume;
-                            __Edata[44].Add(new { idx = i, val = CMH.ToString("0") });
-                            __Edata[45].Add(new { idx = i, val = CMH_rule.ToString("0") });
+                            __Edata[44].Add(new { idx = i, val = CMH.ToString("#,##0") });
+                            __Edata[45].Add(new { idx = i, val = CMH_rule.ToString("#,##0") });
                         }
                         d = 0.6 / n50 * 100; if (d >= 100) { d = 100; }
                         if (d >= 100) { sp = "<div class='cls-sparkline-blue' style='width:" + (int)((d * 205) / 100) + "px'></div>"; }//성능 수준 중 가장 큰 값을을 100로 가정, 235는 픽셀 최대 크기
@@ -1960,8 +1964,8 @@ namespace main.contents.Result.Building_Report
                             }
                             CMH = n50 * Volume;
                             CMH_rule = 0.6 * Volume;
-                            __Edata2[44].Add(new { idx = i, val = CMH.ToString("0") });
-                            __Edata2[45].Add(new { idx = i, val = CMH_rule.ToString("0") });
+                            __Edata2[44].Add(new { idx = i, val = CMH.ToString("#,##0") });
+                            __Edata2[45].Add(new { idx = i, val = CMH_rule.ToString("#,##0") });
                         }
                         data.Add(new { cname = "n502", data = __Edata2[42] });
                         data.Add(new { cname = "n50_rule2", data = __Edata2[43] });
@@ -2004,6 +2008,8 @@ namespace main.contents.Result.Building_Report
                         else { sp = "<div class='cls-sparkline' style='width:" + (int)((d * 205) / 100) + "px'></div>"; }
                         sp += "<div class='cls-sparkline-text'>" + d.ToString("0") + " 점</div>";
                         __Edata[49].Add(new { idx = i, val = sp }); //0.1 W/m2k
+                        Value = Program.DB.getValue(DB.type.ProjDB, "ThermalBridge_3D", "Sum(열교길이)");
+                        data.Add(new { cname = "tb_length", data = new[] { new { idx = i, val = Program.UTIL.doubleComa(Value.Length > 0 ? Value[0][0] : "0", 1) } } });
                         data.Add(new { cname = "utb", data = __Edata[47] });
                         data.Add(new { cname = "utb_rule", data = __Edata[48] });
                         data.Add(new { cname = "utb_rulevalue_point", data = __Edata[49] });
@@ -2036,6 +2042,8 @@ namespace main.contents.Result.Building_Report
                             __Edata2[47].Add(new { idx = i, val = utb.ToString("0.00") });
                             __Edata2[48].Add(new { idx = i, val = (0.1).ToString("0.00") });
                         }
+                        Value = Program.DB.getValue(res[0][0], "ThermalBridge_3D", "Sum(열교길이)");
+                        data.Add(new { cname = "tb_length2", data = new[] { new { idx = i, val = Program.UTIL.doubleComa(Value.Length > 0 ? Value[0][0] : "0", 1) } } });
                         data.Add(new { cname = "utb2", data = __Edata2[47] });
                         data.Add(new { cname = "utb_rule2", data = __Edata2[48] });
                     }
@@ -2449,7 +2457,7 @@ namespace main.contents.Result.Building_Report
                     #region 조명정보   
                     { 
                         //리모델링 후 
-                    string light_count; double light_density = 0; double light_eta_avg = 0; double light_eta_rule = 0; double light_point = 0; double light_area = 0;
+                    string light_count; double light_density = 0; double light_eta_avg = 0; double light_eta_rule = 0; double light_point = 0; double light_area = 0; double light_density_area = 0;
                     Value = Program.DB.getValue_SameCheck(DB.type.ProjDB, "ZoneLighting_form", "조명번호");
                         if (Value.Length > 0)
                         {
@@ -2462,12 +2470,13 @@ namespace main.contents.Result.Building_Report
                                     for (int aa = 0; aa < 조명존.Length; aa++)
                                     {
                                         light_area = Program.UTIL.ToDoubleOrZero(조명존[aa][1]);
-                                        light_density = Program.UTIL.ToDoubleOrZero(조명존[aa][1]) * Program.UTIL.ToDoubleOrZero(조명존[aa][2]);
+                                        light_density += Program.UTIL.ToDoubleOrZero(조명존[aa][1]) * Program.UTIL.ToDoubleOrZero(조명존[aa][2]);
+                                        light_density_area += Program.UTIL.ToDoubleOrZero(조명존[aa][1]);
                                         light_eta_avg = Program.UTIL.ToDoubleOrZero(조명존[aa][1]) * Program.UTIL.ToDoubleOrZero(조명존[aa][4]);
                                     }
                                 }
                             }
-                            //light_density = light_density / light_area;
+                            light_density = light_density_area > 0 ? light_density / light_density_area : 0;
                             light_eta_avg = light_eta_avg / light_area;
                             light_eta_rule = 70;
                             light_point = Math.Min(100, light_eta_avg / light_eta_rule * 100);
@@ -2492,7 +2501,7 @@ namespace main.contents.Result.Building_Report
                     }
                     {
                         //리모델링 전 
-                        string light_count; double light_density = 0; double light_eta_avg = 0; double light_eta_rule = 0; double light_point = 0; double light_area = 0;
+                        string light_count; double light_density = 0; double light_eta_avg = 0; double light_eta_rule = 0; double light_point = 0; double light_area = 0; double light_density_area = 0;
                         Value = Program.DB.getValue_SameCheck(res[0][0], "ZoneLighting_form", "조명번호");
                         if (Value.Length > 0)
                         {
@@ -2505,12 +2514,13 @@ namespace main.contents.Result.Building_Report
                                     for (int aa = 0; aa < 조명존.Length; aa++)
                                     {
                                         light_area = Program.UTIL.ToDoubleOrZero(조명존[aa][1]);
-                                        light_density = Program.UTIL.ToDoubleOrZero(조명존[aa][1]) * Program.UTIL.ToDoubleOrZero(조명존[aa][2]);
+                                        light_density += Program.UTIL.ToDoubleOrZero(조명존[aa][1]) * Program.UTIL.ToDoubleOrZero(조명존[aa][2]);
+                                        light_density_area += Program.UTIL.ToDoubleOrZero(조명존[aa][1]);
                                         light_eta_avg = Program.UTIL.ToDoubleOrZero(조명존[aa][1]) * Program.UTIL.ToDoubleOrZero(조명존[aa][4]);
                                     }
                                 }
                             }
-                            //light_density = light_density / light_area;
+                            light_density = light_density_area > 0 ? light_density / light_density_area : 0;
                             light_eta_avg = light_eta_avg / light_area;
                             light_eta_rule = 70;
                             light_point = Math.Min(100, light_eta_avg / light_eta_rule * 100);
@@ -3102,7 +3112,7 @@ namespace main.contents.Result.Building_Report
                     data.Add(new { cname = "rer_plus", data = __saving[11] }); //자립률
 
                     #endregion 
-                    items.Add("buildingform.htm");
+                    items.Add("MainReport_After.html");
                     s = System.Text.Json.JsonSerializer.Serialize(items.ToArray());
                     s2 = System.Text.Json.JsonSerializer.Serialize(data.ToArray());
                     System.Text.Json.JsonSerializer.Serialize(__data[10].ToArray());

@@ -112,7 +112,7 @@ namespace main.contents.Result
                 FormData[2].Add(new { idx = i, val = Num }); //번호
                 HeatingLayersData.Add(new { idx = i, val = BuildHeatingImageLayers(Num) });
                 #region 주요정보
-                Value = Program.DB.querySQL(DB.type.ProjDB, "Select 명칭,주요설비,보조설비1,보조설비2,공급환수온도  From HeatingSystem_Form Where 번호='" + Num + "'");
+                Value = Program.DB.querySQL(DB.type.ProjDB, "Select 명칭,주요설비,보조설비1,보조설비2,공급온도,환수온도 From HeatingSystem_Form Where 번호='" + Num + "'");
                 if (Value.Length > 0)
                 {
                     FormData[3].Add(new { idx = i, val = Value[0][0] });
@@ -122,7 +122,7 @@ namespace main.contents.Result
                     FormData[5].Add(new { idx = i, val = sub1 });
                     sub2 = Value[0][3] != "" ? Value[0][3] : "-";
                     FormData[6].Add(new { idx = i, val = sub2 });
-                    FormData[7].Add(new { idx = i, val = Value[0][4] });
+                    FormData[7].Add(new { idx = i, val = Value[0][4] + "/" + Value[0][5] });
                     double PipeLength = 0;
                     string[][] 배관 = Program.DB.getValue(DB.type.ProjDB, "Distribution_Form", "배관길이", "번호 = '" + Num + "' and 설비유형='난방'");
                     for (int p = 0; p < 배관.Length; p++)
