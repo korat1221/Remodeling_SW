@@ -33,7 +33,7 @@ namespace main
                 if (e.Item is ToolStripButton)
                 {
                     Rectangle textRectangle = e.TextRectangle;
-                    textRectangle.Offset(0, 4);
+                    textRectangle.Offset(0, 8);
                     e.TextRectangle = textRectangle;
                 }
                 if (!e.Item.Enabled) { e.TextColor = SystemColors.GrayText; }
