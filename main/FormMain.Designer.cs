@@ -65,7 +65,7 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.AutoScroll = true;
-            splitContainer1.Size = new Size(1664, 709);
+            splitContainer1.Size = new Size(1664, 691);
             splitContainer1.SplitterDistance = 360;
             splitContainer1.TabIndex = 0;
             splitContainer1.Resize += OnResize;
@@ -77,7 +77,7 @@
             // toolStripContainer1.ContentPanel
             // 
             toolStripContainer1.ContentPanel.Controls.Add(splitContainer1);
-            toolStripContainer1.ContentPanel.Size = new Size(1664, 709);
+            toolStripContainer1.ContentPanel.Size = new Size(1664, 691);
             toolStripContainer1.Dock = DockStyle.Fill;
             toolStripContainer1.LeftToolStripPanelVisible = false;
             toolStripContainer1.Location = new Point(0, 0);
@@ -96,120 +96,148 @@
             // toolStrip1
             // 
             toolStrip1.BackColor = Color.Transparent;
+            toolStrip1.ForeColor = Color.FromArgb(218, 229, 239);
             toolStrip1.Dock = DockStyle.None;
             toolStrip1.ImageScalingSize = new Size(35, 35);
             toolStrip1.Items.AddRange(new ToolStripItem[] { New, toolStripSeparator2, ProjectOpen, toolStripSeparator1, SaveButton, toolStripSeparator6, EnergyNeed_Sim, toolStripSeparator3, AHUNeed_Sim, toolStripSeparator5, FinalEnergy_Sim, toolStripSeparator4, Element_Sim });
             toolStrip1.Location = new Point(3, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(492, 62);
+            toolStrip1.Size = new Size(581, 80);
             toolStrip1.TabIndex = 0;
             // 
             // New
             // 
-            New.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            New.AutoSize = false;
+            New.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             New.Image = (Image)resources.GetObject("New.Image");
             New.ImageTransparentColor = Color.Magenta;
+            New.Margin = new Padding(2);
             New.Name = "New";
-            New.Padding = new Padding(0, 0, 20, 20);
-            New.Size = new Size(59, 59);
-            New.Text = "Home";
+            New.Padding = new Padding(6);
+            New.Size = new Size(72, 76);
+            New.Text = "신규";
+            New.TextImageRelation = TextImageRelation.ImageAboveText;
+            New.ToolTipText = "새 프로젝트";
             New.Click += toolStripButton1_Click;
             // 
             // toolStripSeparator2
             // 
             toolStripSeparator2.Name = "toolStripSeparator2";
-            toolStripSeparator2.Size = new Size(6, 62);
+            toolStripSeparator2.Size = new Size(6, 80);
             // 
             // ProjectOpen
             // 
-            ProjectOpen.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            ProjectOpen.AutoSize = false;
+            ProjectOpen.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             ProjectOpen.Image = (Image)resources.GetObject("ProjectOpen.Image");
             ProjectOpen.ImageTransparentColor = Color.Magenta;
+            ProjectOpen.Margin = new Padding(2);
             ProjectOpen.Name = "ProjectOpen";
-            ProjectOpen.Padding = new Padding(0, 0, 20, 20);
-            ProjectOpen.Size = new Size(59, 59);
-            ProjectOpen.Text = "ProjectOpen";
-            ProjectOpen.ToolTipText = "ProjectOpen";
+            ProjectOpen.Padding = new Padding(6);
+            ProjectOpen.Size = new Size(72, 76);
+            ProjectOpen.Text = "열기";
+            ProjectOpen.TextImageRelation = TextImageRelation.ImageAboveText;
+            ProjectOpen.ToolTipText = "프로젝트 열기";
             ProjectOpen.Click += ProjectOpen_Click;
             // 
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(6, 62);
+            toolStripSeparator1.Size = new Size(6, 80);
             // 
             // SaveButton
             // 
-            SaveButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            SaveButton.AutoSize = false;
+            SaveButton.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             SaveButton.Image = (Image)resources.GetObject("SaveButton.Image");
             SaveButton.ImageTransparentColor = Color.Magenta;
+            SaveButton.Margin = new Padding(2);
             SaveButton.Name = "SaveButton";
-            SaveButton.Padding = new Padding(0, 0, 20, 20);
-            SaveButton.Size = new Size(59, 59);
-            SaveButton.Text = "toolStripButton2";
+            SaveButton.Padding = new Padding(6);
+            SaveButton.Size = new Size(72, 76);
+            SaveButton.Text = "저장";
+            SaveButton.TextImageRelation = TextImageRelation.ImageAboveText;
+            SaveButton.ToolTipText = "프로젝트 저장";
             SaveButton.Click += SaveButton_Click;
             // 
             // toolStripSeparator6
             // 
             toolStripSeparator6.Name = "toolStripSeparator6";
-            toolStripSeparator6.Size = new Size(6, 62);
+            toolStripSeparator6.Size = new Size(6, 80);
             // 
             // EnergyNeed_Sim
             // 
-            EnergyNeed_Sim.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            EnergyNeed_Sim.AutoSize = false;
+            EnergyNeed_Sim.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             EnergyNeed_Sim.Image = (Image)resources.GetObject("EnergyNeed_Sim.Image");
             EnergyNeed_Sim.ImageTransparentColor = Color.Magenta;
+            EnergyNeed_Sim.Margin = new Padding(2);
             EnergyNeed_Sim.Name = "EnergyNeed_Sim";
-            EnergyNeed_Sim.Padding = new Padding(0, 0, 20, 20);
-            EnergyNeed_Sim.Size = new Size(59, 59);
-            EnergyNeed_Sim.Text = "Energy needs";
+            EnergyNeed_Sim.Padding = new Padding(6);
+            EnergyNeed_Sim.Size = new Size(72, 76);
+            EnergyNeed_Sim.Text = "요구량";
+            EnergyNeed_Sim.TextImageRelation = TextImageRelation.ImageAboveText;
+            EnergyNeed_Sim.ToolTipText = "에너지요구량 계산";
             EnergyNeed_Sim.Click += EnergyNeed_Sim_Click;
             // 
             // toolStripSeparator3
             // 
             toolStripSeparator3.Name = "toolStripSeparator3";
-            toolStripSeparator3.Size = new Size(6, 62);
+            toolStripSeparator3.Size = new Size(6, 80);
             // 
             // AHUNeed_Sim
             // 
-            AHUNeed_Sim.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            AHUNeed_Sim.AutoSize = false;
+            AHUNeed_Sim.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             AHUNeed_Sim.Image = (Image)resources.GetObject("AHUNeed_Sim.Image");
             AHUNeed_Sim.ImageTransparentColor = Color.Magenta;
+            AHUNeed_Sim.Margin = new Padding(2);
             AHUNeed_Sim.Name = "AHUNeed_Sim";
-            AHUNeed_Sim.Padding = new Padding(0, 0, 20, 20);
-            AHUNeed_Sim.Size = new Size(59, 59);
-            AHUNeed_Sim.Text = "AHU Energy needs";
+            AHUNeed_Sim.Padding = new Padding(6);
+            AHUNeed_Sim.Size = new Size(72, 76);
+            AHUNeed_Sim.Text = "공조";
+            AHUNeed_Sim.TextImageRelation = TextImageRelation.ImageAboveText;
+            AHUNeed_Sim.ToolTipText = "공조 계산";
             AHUNeed_Sim.Click += AHUNeed_Sim_Click;
             // 
             // toolStripSeparator5
             // 
             toolStripSeparator5.Name = "toolStripSeparator5";
-            toolStripSeparator5.Size = new Size(6, 62);
+            toolStripSeparator5.Size = new Size(6, 80);
             // 
             // FinalEnergy_Sim
             // 
-            FinalEnergy_Sim.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            FinalEnergy_Sim.AutoSize = false;
+            FinalEnergy_Sim.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             FinalEnergy_Sim.Image = (Image)resources.GetObject("FinalEnergy_Sim.Image");
             FinalEnergy_Sim.ImageTransparentColor = Color.Magenta;
+            FinalEnergy_Sim.Margin = new Padding(2);
             FinalEnergy_Sim.Name = "FinalEnergy_Sim";
-            FinalEnergy_Sim.Padding = new Padding(0, 0, 20, 20);
-            FinalEnergy_Sim.Size = new Size(59, 59);
-            FinalEnergy_Sim.Text = "Final Energy";
+            FinalEnergy_Sim.Padding = new Padding(6);
+            FinalEnergy_Sim.Size = new Size(72, 76);
+            FinalEnergy_Sim.Text = "소요량";
+            FinalEnergy_Sim.TextImageRelation = TextImageRelation.ImageAboveText;
+            FinalEnergy_Sim.ToolTipText = "에너지소요량 계산";
             FinalEnergy_Sim.Click += FinalEnergy_Sim_Click;
             // 
             // toolStripSeparator4
             // 
             toolStripSeparator4.Name = "toolStripSeparator4";
-            toolStripSeparator4.Size = new Size(6, 62);
+            toolStripSeparator4.Size = new Size(6, 80);
             // 
             // Element_Sim
             // 
-            Element_Sim.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            Element_Sim.AutoSize = false;
+            Element_Sim.DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
             Element_Sim.Image = (Image)resources.GetObject("Element_Sim.Image");
             Element_Sim.ImageTransparentColor = Color.Magenta;
+            Element_Sim.Margin = new Padding(2);
             Element_Sim.Name = "Element_Sim";
-            Element_Sim.Padding = new Padding(0, 0, 20, 20);
-            Element_Sim.Size = new Size(59, 59);
-            Element_Sim.Text = "Components result";
+            Element_Sim.Padding = new Padding(6);
+            Element_Sim.Size = new Size(72, 76);
+            Element_Sim.Text = "요소기술";
+            Element_Sim.TextImageRelation = TextImageRelation.ImageAboveText;
+            Element_Sim.ToolTipText = "요소기술 계산";
             Element_Sim.Click += Element_Sim_Click;
             // 
             // FormMain

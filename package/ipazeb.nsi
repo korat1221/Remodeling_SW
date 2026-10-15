@@ -5,7 +5,10 @@
 ;--------------------------------
 ;Include Modern UI
 
+  Unicode true
   !include "MUI2.nsh"
+  !include "WinMessages.nsh"
+  !include "x64.nsh"
 
 ;--------------------------------
 ;General
@@ -154,6 +157,8 @@ Section "Dummy Section" SecDummy
 ;	false3:
 ;	next3:
 
+  Call InstallNanumBarunGothic
+
   ExecWait '"$INSTDIR\installer.exe" init'
 
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
@@ -169,6 +174,63 @@ SectionEnd
 
 ;--------------------------------
 ;Installer Functions
+
+; Install the bundled font for Windows controls that use the font family name.
+; Existing font installations are preserved. The uninstaller does not remove this shared font.
+Function InstallNanumBarunGothic
+  Push $0
+  Push $1
+
+  ${If} ${RunningX64}
+    SetRegView 64
+  ${EndIf}
+  ReadRegStr $0 HKLM "SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" "NanumBarunGothic (TrueType)"
+  ${If} $0 == ""
+    ReadRegStr $0 HKLM "SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" "나눔바른고딕 (TrueType)"
+  ${EndIf}
+  ${If} $0 == ""
+    ReadRegStr $0 HKCU "SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" "NanumBarunGothic (TrueType)"
+  ${EndIf}
+  ${If} $0 == ""
+    ReadRegStr $0 HKCU "SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" "나눔바른고딕 (TrueType)"
+  ${EndIf}
+  ${If} $0 != ""
+    IfFileExists "$0" font_installed 0
+    IfFileExists "$FONTS\$0" font_installed 0
+  ${EndIf}
+
+  SetOutPath "$FONTS"
+  SetOverwrite off
+  ClearErrors
+  File /oname=NanumBarunGothic.ttf "..\main\Resources\NanumBarunGothic.ttf"
+  IfErrors font_install_failed
+  System::Call 'gdi32::AddFontResourceW(w "$FONTS\NanumBarunGothic.ttf") i .r1'
+  ${If} $1 == 0
+    Goto font_install_failed
+  ${EndIf}
+  ClearErrors
+  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts" "NanumBarunGothic (TrueType)" "NanumBarunGothic.ttf"
+  IfErrors font_install_failed
+  SendMessage ${HWND_BROADCAST} ${WM_FONTCHANGE} 0 0 /TIMEOUT=5000
+  DetailPrint "NanumBarunGothic installed."
+  Goto font_installed
+
+font_install_failed:
+  MessageBox MB_OK|MB_ICONSTOP "나눔바른고딕 폰트를 설치하지 못했습니다. 글꼴 폴더의 쓰기 권한과 디스크 공간을 확인한 후 설치를 다시 실행해 주세요."
+  SetRegView 32
+  SetOverwrite try
+  SetOutPath "$INSTDIR"
+  Pop $1
+  Pop $0
+  Abort
+
+font_installed:
+  SetRegView 32
+  SetOverwrite try
+  SetOutPath "$INSTDIR"
+  Pop $1
+  Pop $0
+FunctionEnd
 
 Function .onInit
 

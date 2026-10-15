@@ -20,7 +20,27 @@ namespace main
         public FormMain()
         {
             InitializeComponent();
+            toolStrip1.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
+            toolStrip1.Renderer = new MainToolStripRenderer();
             this.FormClosing += FormMain_FormClosing;
+        }
+
+        // 밝은 선택 배경에서는 진한 글자색을 사용한다. 마우스 및 키보드 선택에 동일하게 적용한다.
+        private sealed class MainToolStripRenderer : ToolStripProfessionalRenderer
+        {
+            protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
+            {
+                if (e.Item is ToolStripButton)
+                {
+                    Rectangle textRectangle = e.TextRectangle;
+                    textRectangle.Offset(0, 4);
+                    e.TextRectangle = textRectangle;
+                }
+                if (!e.Item.Enabled) { e.TextColor = SystemColors.GrayText; }
+                else if (e.Item.Selected || e.Item.Pressed) { e.TextColor = Color.FromArgb(35, 61, 82); }
+                else { e.TextColor = e.Item.ForeColor; }
+                base.OnRenderItemText(e);
+            }
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
