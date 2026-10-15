@@ -869,7 +869,7 @@ namespace main.contents
                     {
                         if (Type == "기존지붕" )
                         {
-                            Uvalue = 1 / (0.13 + 0 + 150 / 1000 / 2.3);
+                            Uvalue = 1 / (0.13 + 0 + 150.0 / 1000 / 2.3);
                         }
                         else
                         {

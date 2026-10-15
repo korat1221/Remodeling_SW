@@ -562,15 +562,15 @@ namespace main.contents
             switch (Install)
             {
                 case "외부측":
-                    SHGC_on = Alpha * SHGC + Trans * Math.Pow(1 / Ug + 1 / 5 + 1 / 10, -1) / 10 + Alpha * (1 - SHGC) * Math.Pow(1 / Ug + 1 / 5 + 1 / 10, -1) / 5;
+                    SHGC_on = Alpha * SHGC + Trans * Math.Pow(1 / Ug + 1.0 / 5 + 1.0 / 10, -1) / 10 + Alpha * (1 - SHGC) * Math.Pow(1 / Ug + 1.0 / 5 + 1.0 / 10, -1) / 5;
                     break;
 
                 case "중간":
-                    SHGC_on = SHGC * Alpha + (Trans + (1 - SHGC) * Ex) * Math.Pow(1 / Ug + 1 / 3, -1) / 3;
+                    SHGC_on = SHGC * Alpha + (Trans + (1 - SHGC) * Ex) * Math.Pow(1 / Ug + 1.0 / 3, -1) / 3;
                     break;
 
                 case "내부측":
-                    SHGC_on = SHGC * (1 - SHGC * Ex - Trans * Math.Pow(1 / Ug + 1 / 30, -1) / 30);
+                    SHGC_on = SHGC * (1 - SHGC * Ex - Trans * Math.Pow(1 / Ug + 1.0 / 30, -1) / 30);
                     break; ;
             }
             return SHGC_on;

@@ -923,7 +923,7 @@ namespace main.contents.Construction
                     {
                         if (Type == "기존바닥" && DiIndi == "지면" && Frost == "단열없음")
                         {
-                            Uvalue = 1 / (0.13 + 0 + 200 / 1000 / 2.3);
+                            Uvalue = 1 / (0.13 + 0 + 200.0 / 1000 / 2.3);
                         }
                         else
                         {

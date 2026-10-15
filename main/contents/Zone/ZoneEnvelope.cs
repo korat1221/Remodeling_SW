@@ -250,7 +250,16 @@ namespace main.contents
                     if (Value.Length > 0)
                     { Construction_UeffSum[5] += (Program.UTIL.ToDoubleOrZero(Value[0][0]) * Program.UTIL.ToDoubleOrZero(ZoneE[i][3])); }
                 }
-                else { }
+                else if (ZoneE[i][1] == "내벽")
+                {
+                    double U = 1 / ((0.1 / 2.3) + 0.13 + 0.13);
+                    Construction_UeffSum[6] += U * Program.UTIL.ToDoubleOrZero(ZoneE[i][3]);
+                }
+                else if (ZoneE[i][1] == "층간바닥")
+                {
+                    double U = 1 / ((0.15 / 2.3) + (30.0 / 1000 / 0.035) + 0.13 + 0.13);
+                    Construction_UeffSum[7] += U * Program.UTIL.ToDoubleOrZero(ZoneE[i][3]);
+                }
             }
 
             for (int k = 0; k < ConstructionType.Length; k++)
@@ -304,18 +313,19 @@ namespace main.contents
             dataGridView2.Columns.Add("A0", "구분");
             dataGridView2.Columns.Add("A1", "번호");
             dataGridView2.Columns.Add("A2", "명칭");
-            dataGridView2.Columns.Add("A3", "A.[m2]");
+            dataGridView2.Columns.Add("A3", "A.[m" + Program.UTIL.Subscript(2, true) + "]");
             dataGridView2.Columns.Add("A4", "방위");
             dataGridView2.Columns.Add("A5", "기울기");
-            dataGridView2.Columns.Add("A6", "Ueff.[W/m2K]");
+            dataGridView2.Columns.Add("A6", "유효열관류율.[W/m" + Program.UTIL.Subscript(2, true) + "·K]");
             if (선택구조체 == "커튼월창" || 선택구조체 == "창호")
             {
-                dataGridView2.Columns.Add("A7", "g.[-]");
+                dataGridView2.Columns.Add("A7", "태양열취득률.[-]");
             }
             else
             {
-                dataGridView2.Columns.Add("A7", "α.[-]");
+                dataGridView2.Columns.Add("A7", "흡수율.[-]");
             }
+            dataGridView2.Columns[4].Visible = 선택구조체 != "내벽" && 선택구조체 != "층간바닥";
             dataGridView2.Columns[0].Width = 30;
             dataGridView2.Columns[2].Width = 100;
             string[][] Value;
@@ -325,6 +335,22 @@ namespace main.contents
             {
                 for (int n = 0; n < ZoneE_Select.Length; n++)
                 {
+                    if (ZoneE_Select[n][1] == "내벽" || ZoneE_Select[n][1] == "층간바닥")
+                    {
+                        double U = 1 / ((0.1 / 2.3) + 0.13 + 0.13);
+                        if (ZoneE_Select[n][1] == "층간바닥")
+                        {
+                            U = 1 / ((0.15 / 2.3) + (30.0 / 1000 / 0.035) + 0.13 + 0.13);
+                        }
+                        int nRow = dataGridView2.Rows.Add();
+                        dataGridView2.Rows[nRow].Cells[0].Value = (n + 1).ToString();
+                        dataGridView2.Rows[nRow].Cells[1].Value = ZoneE_Select[n][6];
+                        dataGridView2.Rows[nRow].Cells[2].Value = ZoneE_Select[n][5];
+                        dataGridView2.Rows[nRow].Cells[3].Value = Program.UTIL.ToDoubleOrZero(ZoneE_Select[n][2]).ToString("0.00");
+                        dataGridView2.Rows[nRow].Cells[5].Value = ZoneE_Select[n][4];
+                        dataGridView2.Rows[nRow].Cells[6].Value = U.ToString("0.00");
+                        continue;
+                    }
                     if (ZoneE_Select[n][1] == "커튼월창")
                     {
                         Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionCW", "커튼월창유효열관류율,태양열취득률", "번호='" + ZoneE_Select[n][6] + "'");
