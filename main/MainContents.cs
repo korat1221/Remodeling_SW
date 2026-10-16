@@ -1083,6 +1083,8 @@ namespace main
 
             forms[idx].Show();
             
+            // 직접 화면 전환(+/복사 등) 후에도 같은 트리 메뉴로 돌아갈 수 있도록 이전 클릭 기록을 지운다.
+            selID_old = "";
             // Show 작업 이후에 이전 페이지 정보 저장 (새 페이지가 로딩된 후)
             previousForm = currentForm;
             
