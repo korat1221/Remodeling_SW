@@ -371,7 +371,7 @@ Zoning.prototype = {
                     while (++i < el.userData.walls.length) {
                         let el2 = el.userData.walls[i];
 
-                        if (el2.area > 0.1 && po.area > 0.1 && _counterCardi(po.cardi, el2.cardi) && _isInterscect(el2.pos, po.pos)) {
+                        if (el2.area > 0.1 && po.area > 0.1 && _counterCardi(po.cardi, el2.cardi) && (_isInterscect(el2.pos, po.pos) || _isInterscect(po.pos, el2.pos))) {
                             po.near = id;
                             el2.near = id0;
 
