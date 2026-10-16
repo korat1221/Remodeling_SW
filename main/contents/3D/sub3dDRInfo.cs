@@ -19,6 +19,7 @@ namespace main.contents
         }
         private void onVisibleChanged(object sender, EventArgs e)
         {
+            if (!Visible || main.MainContents.selectInfo == null || main.MainContents.selectInfo.Length < 3) { return; }
             String[][] RES = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호", "아이디 = '" + main.MainContents.selectInfo[2] + "'");
             string 번호 = null;
             if (RES.Length > 0)

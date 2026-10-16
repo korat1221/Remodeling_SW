@@ -51,17 +51,21 @@
     let gDefaultSelect = ["0", "3", "8", "12","17", "16", "56", "59"];
     let first = true; // 앱 시작 직후 데이터 새로고침이 화면을 강제로 다른 메뉴로 이동시키는 것을 막는 용도
 
+    let menuRevision = 0;
+
     function setObjInfo(pid) {
         if (d3Flag) {
+            const revision = menuRevision;
             $.ajax({
 	            url: "http://localhost:3000/projects/" + pid + ".tree",
 	            type: 'GET',
 	            dataType : 'json',
 	            async: true,
 	            success: function (o) {
+                    if (revision !== menuRevision) return;
 	                gTreeData[2][1].children = o[0];
 	                gTreeData[2][2].children = o[1];
-	                load(2, true);
+	                load(2, true, 0, false);
 	            },
                 error: function () {
                 }
@@ -82,8 +86,9 @@
         }
     }
 
-    function load(menuID, isMain = false, subsel = 0) {
-        gMainTree.load(gTreeData[menuID], isMain, subsel);
+    function load(menuID, isMain = false, subsel = 0, notifySelection = true) {
+        menuRevision++;
+        gMainTree.load(gTreeData[menuID], isMain, subsel, notifySelection);
 
         let icons = [
             { "normal": "url(images/1sticon/1.Building.png)", "active": "url(images/1sticon/1.Building_on2.png)" },

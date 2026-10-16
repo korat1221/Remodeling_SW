@@ -683,11 +683,19 @@ namespace main
             timer1.Enabled = false; // 타이머 중지
             timer1.Tick -= Timer1_JSMessage_Tick; // 이벤트 핸들러 제거
             
-            // 비동기 처리 실행
-            _ = ProcessJSMessageAsync(selID, Environment.TickCount);
+            try
+            {
+                ProcessJSMessage(selID, Environment.TickCount);
+            }
+            catch (Exception ex)
+            {
+                selID_old = "";
+                System.Diagnostics.Debug.WriteLine(ex);
+                MessageBox.Show("화면 전환 중 오류가 발생했습니다.\r\n" + ex.ToString(), "화면 전환 오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private async Task ProcessJSMessageAsync(string message, int tick)
+        private void ProcessJSMessage(string message, int tick)
         {
             if (message == "{\"formID\":99999991}") // 3D 파일 열기
             {

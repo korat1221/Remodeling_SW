@@ -34,6 +34,7 @@ namespace main.contents
         }
         private void onVisibleChanged(object sender, EventArgs e)
         {
+            if (!Visible) { return; }
             if (main.MainContents.selID != sid)
             {
                 this.panel1.Show();

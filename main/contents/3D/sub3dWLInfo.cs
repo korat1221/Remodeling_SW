@@ -44,6 +44,7 @@ namespace main.contents
 
         private void onVisibleChanged(object sender, EventArgs e)
         {
+            if (!Visible || main.MainContents.selectInfo == null || main.MainContents.selectInfo.Length < 3) { return; }
             string[][] value1 = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "구조체번호,면적,번호", "아이디 = '" + main.MainContents.selectInfo[2] + "'");
 
             if (value1.Length > 0)

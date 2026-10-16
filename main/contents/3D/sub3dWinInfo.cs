@@ -47,6 +47,7 @@ namespace main.contents
         }
         private void onVisibleChanged(object sender, EventArgs e)
         {
+            if (!Visible || main.MainContents.selectInfo == null || main.MainContents.selectInfo.Length < 3) { return; }
             double R1, R2, L1, L2, S1, S2, T1, T2, uw, install;
             string Type, InstallType, FrameMaterial, SingleDoubleType, InstallName;
             double Area;

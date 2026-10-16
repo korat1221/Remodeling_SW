@@ -166,8 +166,8 @@ namespace main.contents
             }
             catch (Exception ex)
             {
-                // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
-                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex}");
+                MessageBox.Show("3D 정보 저장 중 오류가 발생하여 화면을 전환하지 못했습니다.\r\n" + ex.Message, "3D 정보 저장 오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -195,7 +195,7 @@ namespace main.contents
 
                     f.resetSID();
 
-                  
+
                     return;
                 }
             }

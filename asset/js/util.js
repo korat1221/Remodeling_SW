@@ -5,12 +5,17 @@ class MainTree {
         this.onSelect = selProc;
         this.loading = true;
     }
-    load(data, isMain = false, subsel = 0) {
+    load(data, isMain = false, subsel = 0, notifySelection = true) {
         let that = this;
         let sel = data[subsel].id;
 
         if (isMain && sel.indexOf('{\"formID\":49}') >= 0) {
             sel = '{\"formID\":16}'; // 
+        }
+
+        if (!notifySelection && this.tree) {
+            const selected = this.tree.jstree(true).get_selected();
+            if (selected.length > 0) sel = selected[0];
         }
 
         this.loading = true;
@@ -130,16 +135,14 @@ class MainTree {
                 that.onSelect(id);
             }
         }).on('loaded.jstree', function() {
+            if (!$(this).jstree(true).get_node(sel)) sel = data[subsel].id;
             $(this).jstree('select_node', sel);
             $(this).jstree('open_node', sel);
 
             d3Flag = !!(sel.indexOf('"dummy":true') >= 0);
 
-            that.onSelect(sel);
-
-            setTimeout(() => {
-                that.loading = false;
-            }, 500);
+            that.loading = false;
+            if (notifySelection && that.onSelect) that.onSelect(sel);
         });
     }
     unselectAll() {
