@@ -3043,6 +3043,16 @@ namespace main.contents
         }
         private void Pipe_Save()
         {
+            bool hasPipeData = false;
+            for (int i = 0; i < Pipe_dataGridView.Rows.Count; i++)
+            {
+                if (!Pipe_dataGridView.Rows[i].IsNewRow && !string.IsNullOrWhiteSpace(Pipe_dataGridView.Rows[i].Cells[0].Value?.ToString()))
+                {
+                    hasPipeData = true;
+                    break;
+                }
+            }
+            if (!hasPipeData) { return; }
             if (!string.IsNullOrWhiteSpace(PipeD_ComboBox.Text))
             {
                 PipeD_SelectMode = PipeD_ComboBox.Text;
