@@ -249,25 +249,42 @@ namespace main.subcontents.RESystem_PV
 
         private void PVModule_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (DefaultUse == "기본DB 적용")
+            // 헤더 행이면 무시
+            if (e.RowIndex < 0) return;
+
+            // 1) 기본DB 적용 시 Cells[9] 계산
+            if (DefaultUse == "기본DB 적용" && (e.ColumnIndex == 7 || e.ColumnIndex == 8))
             {
-                if (e.ColumnIndex == 7 || e.ColumnIndex == 8)
+                var row = PVModule_dataGridView.Rows[e.RowIndex];
+                string aa = row.Cells[7].Value?.ToString();
+                string bb = row.Cells[8].Value?.ToString();
+
+                if (double.TryParse(aa, out double a) && double.TryParse(bb, out double b))
                 {
-                    double a = 0, b = 0;
-                    string aa = null;
-                    string bb = null;
-                    if (PVModule_dataGridView.Rows[e.RowIndex].Cells[7].Value != null) aa = PVModule_dataGridView.Rows[e.RowIndex].Cells[7].Value.ToString();
-                    if (PVModule_dataGridView.Rows[e.RowIndex].Cells[8].Value != null) bb = PVModule_dataGridView.Rows[e.RowIndex].Cells[8].Value.ToString();
-
-                    if (double.TryParse(aa, out a) && double.TryParse(bb, out b) && aa != null && bb != null)
-                    {
-                        double c = Program.UTIL.ToDoubleOrZero(PVModule_dataGridView.Rows[e.RowIndex].Cells[6].Value) / (a * b * 1000);
-                        PVModule_dataGridView.Rows[e.RowIndex].Cells[9].Value = string.Format("{0:F3}", c);
-                    }
-
+                    double c = Program.UTIL.ToDoubleOrZero(row.Cells[6].Value) / (a * b * 1000);
+                    row.Cells[9].Value = string.Format("{0:F3}", c);
                 }
             }
 
+            // 2) 체크박스 열(0번): 하나만 선택되도록 나머지 해제
+            if (e.ColumnIndex != 0) return;
+
+            bool isChecked = Convert.ToBoolean(PVModule_dataGridView.Rows[e.RowIndex].Cells[0].Value);
+            if (!isChecked) return;
+
+            PVModule_dataGridView.CellValueChanged -= PVModule_dataGridView_CellValueChanged;
+            try
+            {
+                foreach (DataGridViewRow row in PVModule_dataGridView.Rows)
+                {
+                    if (row.Index == e.RowIndex) continue;
+                    row.Cells[0].Value = false;
+                }
+            }
+            finally
+            {
+                PVModule_dataGridView.CellValueChanged += PVModule_dataGridView_CellValueChanged;
+            }
         }
 
         private void infoPVdb_Click(object sender, EventArgs e)
