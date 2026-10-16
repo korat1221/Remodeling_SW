@@ -680,8 +680,10 @@ namespace main.contents
                     missing.Add("작성자");
                 }
 
-                // 안내(막지 않음) + 미입력 목록을 '+'로 이어 DB에 저장한다.
-                if (missing.Count > 0)
+                if (Climate_comboBox.SelectedItem == null) { missing.Add("지역"); }
+
+                // 자동저장에서는 미입력 상태를 기록하고, 직접 저장할 때만 안내한다.
+                if (isManualSave && missing.Count > 0)
                 {
                     MessageBox.Show(string.Join(", ", missing) + " 항목이 비어 있습니다.");
                 }
@@ -720,7 +722,7 @@ namespace main.contents
             {
                 AboveGround = AboveGround_comboBox.Text;
             }
-            else
+            else if (isManualSave)
             {
                 try
                 {
@@ -737,7 +739,7 @@ namespace main.contents
             {
                 UnderGround = UnderGround_comboBox.Text;
             }
-            else
+            else if (isManualSave)
             {
                 try
                 {
@@ -751,6 +753,8 @@ namespace main.contents
             }
 
             string[][] 번호 = Program.DB.querySQL(DB.type.ProjListDB, "Select pnum from projects where current = '1'");
+            if (번호.Length == 0 || string.IsNullOrWhiteSpace(번호[0][0])) { return; }
+            string ClimateIndex = Climate_comboBox.SelectedItem?.ToString() ?? "";
             Program.DB.setValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트번호,프로젝트명,프로젝트유형,프로젝트유형번호,기존프로젝트," +
                 "건물대상,건물용도,건물명,주소,위도,경도,지역인덱스,지역,지역구분," +
                 "준공연도,준공월," +
@@ -759,7 +763,7 @@ namespace main.contents
                 "지상층수,지하층수," +
                 "작성자,작성자주소,작성자회사,작성연도,작성월,작성시기,미입력항목",
             "'" + 번호[0][0] + "','" + ProjectName + "','" + ProjectType + "','" + ProjectTypeNum + "','" + OldProject + "','" +
-            BuildingCategory + "','" + BuildingUse + "','" + BuildingName + "','" + BuildingLocation + "','" + Latitude + "','" + Longitude + "','" + Climate_comboBox.SelectedItem.ToString() + "','" + Climate + "','" + BylawClimate + "','" +
+            BuildingCategory + "','" + BuildingUse + "','" + BuildingName + "','" + BuildingLocation + "','" + Latitude + "','" + Longitude + "','" + ClimateIndex + "','" + Climate + "','" + BylawClimate + "','" +
             Year + "','" + Month + "','" +
             ConstrucitonDate.ToString() + "','" + BylawDate.ToString() + "','" +
             GrossArea.ToString() + "','" + BuildingArea.ToString() + "','" +
@@ -785,11 +789,15 @@ namespace main.contents
 
             
 
-            CALC.Run_Climate();
+            if (ClimateIndex != "" && !string.IsNullOrWhiteSpace(Climate)) { CALC.Run_Climate(); }
         }
 
         private void reset()
         {
+            Climate_comboBox.SelectedIndex = -1;
+            Climate = null;
+            BylawClimate = null;
+            ByRawClimate_textBox.Text = "";
             ProjectName = null;
             ProjectName_textBox.Text = null;
 
