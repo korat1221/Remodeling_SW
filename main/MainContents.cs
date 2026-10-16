@@ -642,27 +642,19 @@ namespace main
         private void timer1_3DModel_Tick(object sender, EventArgs e)
         {
             timer1.Enabled = false;
-            timer1.Tick -= timer1_3DModel_Tick; // 이벤트 핸들러 제거
-            
-            if (!ticked)
+            timer1.Tick -= timer1_3DModel_Tick;
+            if (selID != "{\"formID\":99999991}" || currentForm != FormID.Model || ticked) { return; }
+            ticked = true;
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                ticked = true;
-
-                if (MessageBox.Show("모델을 다시 로드 할 경우, 입력 정보 전체 삭제됩니다. 계속하시겠습니까 ?", "YesOrNo", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    using (OpenFileDialog openFileDialog = new OpenFileDialog())
-                    {
-                        openFileDialog.Filter = "obj 파일 (*.obj)|*.obj";
-                        openFileDialog.FilterIndex = 2;
-                        openFileDialog.RestoreDirectory = true;
-
-                        if (openFileDialog.ShowDialog() == DialogResult.OK)
-                        {
-                            //Get the path of specified file
-                            Program.UTIL.load3DModel(openFileDialog.FileName);
-                        }
-                    }
-                }
+                openFileDialog.Filter = "obj 파일 (*.obj)|*.obj";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
+                if (openFileDialog.ShowDialog() != DialogResult.OK) { return; }
+                bool hasModelData = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호").Length > 0 || Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "아이디").Length > 0;
+                if (hasModelData && MessageBox.Show("모델을 교체하면 기존 존·외피·조명·차양·열교 정보가 삭제됩니다. 계속하시겠습니까?", "모델 교체", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) != DialogResult.Yes) { return; }
+                Program.UTIL.load3DModel(openFileDialog.FileName);
             }
         }
 
@@ -671,7 +663,9 @@ namespace main
             int tick = Environment.TickCount;
             selID = args.TryGetWebMessageAsString();
 
-            // 타이머를 사용한 지연 실행 (기존 timer1 재사용)
+            // 새 메뉴 메시지가 오면 이전 모델 열기 예약을 취소한다.
+            timer1.Enabled = false;
+            timer1.Tick -= timer1_3DModel_Tick;
             timer1.Interval = 1; // 1ms 지연
             timer1.Tick -= Timer1_JSMessage_Tick; // 기존 이벤트 핸들러 제거
             timer1.Tick += Timer1_JSMessage_Tick; // 새 이벤트 핸들러 추가
@@ -699,6 +693,7 @@ namespace main
         {
             if (message == "{\"formID\":99999991}") // 3D 파일 열기
             {
+                formParam = new FormParam { formID = 8, ID = "0" };
                 DoLoadForm(8, OnLoadProc);
 
                 ticked = false;
