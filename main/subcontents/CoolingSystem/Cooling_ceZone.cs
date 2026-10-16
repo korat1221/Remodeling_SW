@@ -26,7 +26,7 @@ namespace main.subcontents.CoolingSystem
 
             Icon_pictureBox.Load(Program.gPath + "images/1sticon/4.Zone_on3.png");
             Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            if (SelectZone_nonsplit != null&&ceType =="공조형")//공조형인경우
+            if (!string.IsNullOrWhiteSpace(SelectZone_nonsplit) && ceType == "공조형")//공조형인경우
             {
                 string[] token = SelectZone_nonsplit.Split('+');
                 SelectAHU_split.Clear();
@@ -43,7 +43,7 @@ namespace main.subcontents.CoolingSystem
                     }
                 }
             }
-            else//실내냉방인경우
+            else if (!string.IsNullOrWhiteSpace(SelectZone_nonsplit))//실내냉방인경우
             {
                 string[] token = SelectZone_nonsplit.Split('+');
                 SelectZone_split.Clear();
@@ -53,7 +53,7 @@ namespace main.subcontents.CoolingSystem
                 }
             }
             load_table_DB();
-            Load_SaveValue();
+            if (ceZone_dataGridView.Rows.Count > 0) { Load_SaveValue(); }
         }
 
         void load_table_DB()
@@ -191,6 +191,11 @@ namespace main.subcontents.CoolingSystem
 
         private void Save_button_Click(object sender, EventArgs e)
         {
+            if (ceZone_dataGridView.Rows.Count == 0)
+            {
+                MessageBox.Show("공급존 정보가 없어 저장하지 않았습니다. 공급존 또는 공급 공조기를 확인해 주세요.");
+                return;
+            }
             String[][] Size = Program.DB.getValue(DB.type.ProjDB, "Cooling_ce_Form", "존번호", "냉방시스템 = '" + SystemNum + "' And 구분 = '" + ceType + "'");
             if (Size.Length > 0)
             {

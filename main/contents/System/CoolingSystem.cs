@@ -674,18 +674,10 @@ namespace main.contents
         }
         private void Install_comboBox_SelectedIndexChanged(object sender, EventArgs e)  // 2.열원설비 이미지_1
         {
-
-            if (Program.UTIL.ffCode)
+            if (Program.UTIL.ffCode) { return; }
+            CSource = Install_comboBox.Text;
+            if (!string.IsNullOrWhiteSpace(Install_f) && !string.IsNullOrWhiteSpace(CSource))
             {
-                return;
-            }
-            if (Install_f == "" || Install_f == null)
-            {
-                MessageBox.Show("냉방설비를 먼저 선택해 주세요.", "주의", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                CSource = Install_comboBox.Text;
                 Image_CS(CSource, Install_f);
             }
         }
@@ -1010,6 +1002,7 @@ namespace main.contents
         }
         private void AirCon_ReList()//로드시리스트작성하기
         {
+            if (string.IsNullOrWhiteSpace(SelectCG_nonsplit)) { return; }
             Program.UTIL.ffCode = true;
             try
             {
@@ -1044,11 +1037,6 @@ namespace main.contents
                         row.Cells[4].Value = SelectCGN_split[i]; //설치대수
                     }
                 }
-            }
-            else
-            {
-                MessageBox.Show("냉방설비 정보가 없습니다.", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
             }
 
             Image_CG(CG, Install_f);
@@ -1295,6 +1283,7 @@ namespace main.contents
         }
         private void AirCooler_ReList()//로드시리스트작성하기
         {
+            if (string.IsNullOrWhiteSpace(SelectCG_nonsplit)) { return; }
             StorageList_comboBox.Text = Stotype;
             StorageType_comboBox.Text = StoSource;
             //축열 그림넣기
@@ -1319,11 +1308,6 @@ namespace main.contents
                         row.Cells[4].Value = SelectCGN_split[i]; //설치대수
                     }
                 }
-            }
-            else
-            {
-                MessageBox.Show("냉방설비 정보가 없습니다.", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
             }
 
 
@@ -1589,6 +1573,7 @@ namespace main.contents
 
         private void WaterCooler_ReList()
         {
+            if (string.IsNullOrWhiteSpace(SelectCG_nonsplit)) { return; }
             StorageList_comboBox.Text = Stotype;
             StorageType_comboBox.Text = StoSource;
             Load_StoType(Stotype, Install_f);
@@ -1625,11 +1610,6 @@ namespace main.contents
                     }
                 }
 
-            }
-            else
-            {
-                MessageBox.Show("냉방설비 정보가 없습니다.", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
             }
 
             //그림작성
@@ -1900,6 +1880,7 @@ namespace main.contents
         }
         private void SoilCooler_ReList()
         {
+            if (string.IsNullOrWhiteSpace(SelectCG_nonsplit)) { return; }
             if (SelectCG_nonsplit != null)
             {
                 Split(SelectCG_nonsplit, SelectCG_split);
@@ -1920,11 +1901,6 @@ namespace main.contents
                         row.Cells[5].Value = SelectCGN_split[i];
                     }
                 }
-            }
-            else
-            {
-                MessageBox.Show("냉방설비가 로드되지않았습니다.", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
             }
 
             StorageList_comboBox.Text = Stotype;
@@ -2195,6 +2171,7 @@ namespace main.contents
 
         private void SoilWaterCooler_ReList()
         {
+            if (string.IsNullOrWhiteSpace(SelectCG_nonsplit)) { return; }
             if (SelectCG_nonsplit != null)
             {
                 Split(SelectCG_nonsplit, SelectCG_split);
@@ -2214,11 +2191,6 @@ namespace main.contents
                         row.Cells[5].Value = SelectCGN_split[i];
                     }
                 }
-            }
-            else
-            {
-                MessageBox.Show("냉방설비가 로드되지않았습니다.", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
             }
 
             StorageList_comboBox.Text = Stotype;
@@ -2460,6 +2432,7 @@ namespace main.contents
 
         private void AbsorbCooler_ReList()
         {
+            if (string.IsNullOrWhiteSpace(SelectCG_nonsplit)) { return; }
             StorageList_comboBox.Text = Stotype;
             StorageType_comboBox.Text = StoSource;
             Load_StoType(Stotype, Install_f);
@@ -2493,11 +2466,6 @@ namespace main.contents
                         row.Cells[2].Value = SelectCTN_split[i]; //2설치대수
                     }
                 }
-            }
-            else
-            {
-                MessageBox.Show("냉방설비 정보가 없습니다.", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
             }
 
             //그림작성
@@ -3233,6 +3201,16 @@ namespace main.contents
 
         private void ce1Button_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(ce1Type))
+            {
+                MessageBox.Show("공급설비 종류를 먼저 선택해 주세요.");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(ce1Type == "공조형" ? SelectAHU_nonsplit : SelectZone_nonsplit))
+            {
+                MessageBox.Show(ce1Type == "공조형" ? "공급 공조기를 먼저 지정해 주세요." : "공급존을 먼저 지정해 주세요.");
+                return;
+            }
             if (ce_dataGridView.Columns.Count == 0)
             {
                 Create_ce_Table();
@@ -3277,6 +3255,16 @@ namespace main.contents
         }
         private void ce2Button_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(ce2Type))
+            {
+                MessageBox.Show("공급설비 종류를 먼저 선택해 주세요.");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(ce2Type == "공조형" ? SelectAHU_nonsplit : SelectZone_nonsplit))
+            {
+                MessageBox.Show(ce2Type == "공조형" ? "공급 공조기를 먼저 지정해 주세요." : "공급존을 먼저 지정해 주세요.");
+                return;
+            }
             if (ce_dataGridView.Columns.Count == 0)
             {
                 Create_ce_Table();
@@ -3770,17 +3758,24 @@ namespace main.contents
                 {
                     SelectedAhuText.Visible = false;
                 }
-                if (DataValue[0][4] != "" || DataValue[0][4] != null)
+                if (!string.IsNullOrWhiteSpace(DataValue[0][4]))
                 {
                     CG = DataValue[0][4]; //냉방설비(실외기, 공냉식냉동기...)
                     CG_Select_comboBox.Text = CG;
 
                     CSource = DataValue[0][5]; //열원설비
 
-                    Program.UTIL.ffCode = true; //내용 추가
-                    Install_comboBox.Text = CSource;
+                    Program.UTIL.ffCode = true;
+                    try
+                    {
+                        Install_comboBox.Text = CSource;
+                    }
+                    finally
+                    {
+                        Program.UTIL.ffCode = false;
+                    }
                 }
-                if (DataValue[0][6] != "" || DataValue[0][6] != null)
+                if (!string.IsNullOrWhiteSpace(DataValue[0][6]))
                 {
                     SelectCG_nonsplit = DataValue[0][6]; //냉방유닛(사용자  냉방설비 번호)
                     SelectCGC_nonsplit = DataValue[0][7]; //제어유형
