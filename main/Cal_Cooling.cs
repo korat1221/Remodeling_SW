@@ -388,11 +388,13 @@ namespace main
             SelectZone.Clear();
             string[][] DefaultValue = Program.DB.getValue(ProjNum, "CoolingSystem_Form",
               "공급존", "번호 = '" + CoolingNum + "'");
-            if (DefaultValue.Length > 0)
+            if (DefaultValue.Length > 0 && !string.IsNullOrWhiteSpace(DefaultValue[0][0]))
             {
-                  SelectZone_nonsplit = DefaultValue[0][0];
-                  Split(SelectZone_nonsplit, SelectZone);
+                SelectZone_nonsplit = DefaultValue[0][0];
+                Split(SelectZone_nonsplit, SelectZone);
+                ZoneNumber_f = SelectZone.Count;
             }
+            else ZoneNumber_f = 0;
             if (SelectZone.Count == 1) SCZoneType_z = "단일존";
             else if (SelectZone.Count > 1) SCZoneType_z = "멀티존";
             else SCZoneType_z = null;
@@ -402,11 +404,13 @@ namespace main
             SelectAhu.Clear();
             string[][] DefaultValue = Program.DB.getValue(ProjNum, "CoolingSystem_Form",
               "공급AHU", "번호 = '" + CoolingNum + "'");
-            if (DefaultValue.Length > 0)
+            if (DefaultValue.Length > 0 && !string.IsNullOrWhiteSpace(DefaultValue[0][0]))
             {
                 SelectAhu_nonsplit = DefaultValue[0][0];
                 Split(SelectAhu_nonsplit, SelectAhu);
+                AhuNumber_f = SelectAhu.Count;
             }
+            else AhuNumber_f = 0;
             if (SelectAhu.Count == 1) SCZoneType_ahu = "단일존";
             else if (SelectAhu.Count > 1) SCZoneType_ahu = "멀티존";
             else SCZoneType_ahu = null;
@@ -641,8 +645,8 @@ namespace main
                 }
                 foreach (AHU value in AhuNameList)
                 {
-                    Qc_max_ahu += value.Qmax_tot[1] / 1000;
-                    top_ahu += value.tvmech_avg[1] * value.Qmax_tot[1] / 1000;
+                    Qc_max_ahu += value.Qmax_tot[1];
+                    top_ahu += value.tvmech_avg[1] * value.Qmax_tot[1];
                     A_ahu += value.ANF_tot;
                 }
                 top_ahu = top_ahu / Qc_max_ahu; //가동시간을 최대부하가중
@@ -704,11 +708,11 @@ namespace main
                     string[][] v2;
                     if (Now_Check == true)
                     {
-                        v2 = Program.DB.getValue(DB.type.ProjDB, "Cooling_ce_Form", "부하율", " 존번호 = '" + value.ZoneNum + "' AND 냉방시스템 = '" + CoolingNum + "' and (Not 공급설비종류='CAV유닛' and Not 공급설비종류='VAV유닛') ");
+                        v2 = Program.DB.getValue(DB.type.ProjDB, "Cooling_ce_Form", "부하율", " 존번호 = '" + value.ZoneNum + "' AND 냉방시스템 = '" + CoolingNum + "' AND ( 구분 <> '공조형' or 구분 IS NULL )");
                     }
                     else
                     {
-                        v2 = Program.DB.getValue(DB.type.ProjDB, "Cooling_ce_Form_Element", "부하율", " 존번호 = '" + PreZoneNameList[pre] + "' AND 냉방시스템 = '" + CoolingNum + "' and (Not 공급설비종류='CAV유닛' and Not 공급설비종류='VAV유닛') ");
+                        v2 = Program.DB.getValue(DB.type.ProjDB, "Cooling_ce_Form_Element", "부하율", " 존번호 = '" + PreZoneNameList[pre] + "' AND 냉방시스템 = '" + CoolingNum + "' AND ( 구분 <> '공조형' or 구분 IS NULL )");
                     }
 
                     for (int k = 0; k < v2.Length; k++)
@@ -943,11 +947,11 @@ namespace main
                     string[][] v2;
                     if (Now_Check == true)
                     {
-                        v2 = Program.DB.querySQL(DB.type.ProjDB, "Select a.부하율, b.존번호 From Cooling_ce_Form as a Inner Join ZoneGeneral_Form as b on a.존번호=b.존번호 Where b.선택열회수기 = '" + ahu.AHUNum + "' AND a.냉방시스템 = '" + CoolingNum + "' and (a.공급설비종류='CAV유닛' or a.공급설비종류='VAV유닛' or a.공급설비종류='파워팬유닛') ");
+                        v2 = Program.DB.querySQL(DB.type.ProjDB, "Select a.부하율, b.존번호 From Cooling_ce_Form as a Inner Join ZoneGeneral_Form as b on a.존번호=b.존번호 Where b.선택열회수기 = '" + ahu.AHUNum + "' AND a.냉방시스템 = '" + CoolingNum + "' and a.구분='공조형'");
                     }
                     else
                     {
-                        v2 = Program.DB.querySQL(DB.type.ProjDB, "Select a.부하율, b.존번호 From Cooling_ce_Form_Element as a Inner Join ZoneGeneral_Form as b on a.존번호=b.존번호 Where b.선택열회수기 = '" + ahu.AHUNum + "' AND 냉방시스템 = '" + CoolingNum + "' and (a.공급설비종류='CAV유닛' or a.공급설비종류='VAV유닛' or a.공급설비종류='파워팬유닛') ");
+                        v2 = Program.DB.querySQL(DB.type.ProjDB, "Select a.부하율, b.존번호 From Cooling_ce_Form_Element as a Inner Join ZoneGeneral_Form as b on a.존번호=b.존번호 Where b.선택열회수기 = '" + ahu.AHUNum + "' AND 냉방시스템 = '" + CoolingNum + "' and a.구분='공조형'");
                     }
 
                     for (int k = 0; k < v2.Length; k++)
@@ -1698,12 +1702,12 @@ namespace main
                     {
                         if (source == "패시브쿨링DEC")
                         {
-                            Tempin[i] = 273 + Theta_IC[i];
+                            Tempin[i] = 273 + Math.Max(22, Theta_IC[i]);
                             Tempout[i] = 273 + WetTemperature[i] + Theta_Around;
                         }
                         else
                         {
-                            Tempin[i] = 273 + Theta_IC[i];
+                            Tempin[i] = 273 + Math.Max(22, Theta_IC[i]);
                             Tempout[i] = 273 + OutdoorTemperature[i]; //상승온도는 이미 반영하였슴
                         }
                     }
@@ -1730,12 +1734,12 @@ namespace main
                         {
                             if (source == "패시브쿨링DEC")
                             {
-                                Tempin[i] = 273 + Theta_IC[i];
+                                Tempin[i] = 273 + Math.Max(22, Theta_IC[i]);
                                 Tempout[i] = 273 + WetTemperature[i] + Theta_Around;
                             }
                             else
                             {
-                                Tempin[i] = 273 + Theta_IC[i];
+                                Tempin[i] = 273 + Math.Max(22, Theta_IC[i]);
                                 Tempout[i] = 273 + OutdoorTemperature[i];//상승온도는 이미 반영하였슴
                             }
                         } 

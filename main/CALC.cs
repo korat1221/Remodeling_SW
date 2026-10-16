@@ -1259,6 +1259,7 @@ namespace main
             cc1.Load_공급설비(ProjNum);
             
             cc1.Load_CoolingZone(ProjNum);
+            cc1.Load_CoolingAHU(ProjNum);
             cc1.Cooling_CE_Zone(ProjNum);
         }
         public static void Cooling_Calc(Cal_Cooling cc1, string ProjNum)
