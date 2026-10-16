@@ -34,6 +34,7 @@
             PVModule_textBox = new TextBox();
             PVMainPanel = new Panel();
             panel4 = new Panel();
+            infoPV = new Button();
             OldPVSystem_ComboBox = new CustomComboBox();
             radioButton4 = new RadioButton();
             radioButton2 = new RadioButton();
@@ -59,6 +60,8 @@
             allcapacity_textBox = new TextBox();
             label27 = new Label();
             panel2 = new Panel();
+            Slope_pictureBox = new PictureBox();
+            Direction_pictureBox = new PictureBox();
             PVMoudle_textBox = new TextBox();
             PVType_ComboBox = new CustomComboBox();
             BatteryDB_button = new Button();
@@ -85,11 +88,12 @@
             label24 = new Label();
             webView21 = new Microsoft.Web.WebView2.WinForms.WebView2();
             panel1 = new Panel();
-            infoPV = new Button();
             PVMainPanel.SuspendLayout();
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)Slope_pictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Direction_pictureBox).BeginInit();
             ((System.ComponentModel.ISupportInitialize)PV_dataGridView).BeginInit();
             tabControl1.SuspendLayout();
             PVinstall_tabPage.SuspendLayout();
@@ -146,6 +150,21 @@
             panel4.Name = "panel4";
             panel4.Size = new Size(528, 80);
             panel4.TabIndex = 135;
+            // 
+            // infoPV
+            // 
+            infoPV.BackColor = SystemColors.ControlLight;
+            infoPV.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            infoPV.FlatStyle = FlatStyle.System;
+            infoPV.Font = new Font("Microsoft Sans Serif", 9.75F);
+            infoPV.Location = new Point(498, 5);
+            infoPV.Margin = new Padding(0);
+            infoPV.Name = "infoPV";
+            infoPV.Size = new Size(23, 23);
+            infoPV.TabIndex = 196;
+            infoPV.Text = "?";
+            infoPV.UseVisualStyleBackColor = false;
+            infoPV.Click += infoPV_Click;
             // 
             // OldPVSystem_ComboBox
             // 
@@ -377,7 +396,7 @@
             Save_button.Text = "SAVE";
             Save_button.UseVisualStyleBackColor = true;
             Save_button.Click += Save_button_Click;
-            //
+            // 
             // averagecpacity_textBox
             // 
             averagecpacity_textBox.BackColor = SystemColors.InactiveBorder;
@@ -399,7 +418,7 @@
             label29.Size = new Size(58, 15);
             label29.TabIndex = 128;
             label29.Text = "평균 효율";
-            //
+            // 
             // allcapacity_textBox
             // 
             allcapacity_textBox.BackColor = SystemColors.InactiveBorder;
@@ -425,6 +444,8 @@
             // panel2
             // 
             panel2.BackColor = Color.White;
+            panel2.Controls.Add(Slope_pictureBox);
+            panel2.Controls.Add(Direction_pictureBox);
             panel2.Controls.Add(PVMoudle_textBox);
             panel2.Controls.Add(PVType_ComboBox);
             panel2.Controls.Add(BatteryDB_button);
@@ -442,6 +463,23 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(1000, 230);
             panel2.TabIndex = 139;
+            // 
+            // Slope_pictureBox
+            // 
+            Slope_pictureBox.Location = new Point(721, 19);
+            Slope_pictureBox.Name = "Slope_pictureBox";
+            Slope_pictureBox.Size = new Size(155, 108);
+            Slope_pictureBox.TabIndex = 197;
+            Slope_pictureBox.TabStop = false;
+           
+            // 
+            // Direction_pictureBox
+            // 
+            Direction_pictureBox.Location = new Point(561, 19);
+            Direction_pictureBox.Name = "Direction_pictureBox";
+            Direction_pictureBox.Size = new Size(123, 108);
+            Direction_pictureBox.TabIndex = 196;
+            Direction_pictureBox.TabStop = false;
             // 
             // PVMoudle_textBox
             // 
@@ -781,21 +819,6 @@
             panel1.Size = new Size(1000, 350);
             panel1.TabIndex = 141;
             // 
-            // infoPV
-            // 
-            infoPV.BackColor = SystemColors.ControlLight;
-            infoPV.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            infoPV.FlatStyle = FlatStyle.System;
-            infoPV.Font = new Font("Microsoft Sans Serif", 9.75F);
-            infoPV.Location = new Point(498, 5);
-            infoPV.Margin = new Padding(0);
-            infoPV.Name = "infoPV";
-            infoPV.Size = new Size(23, 23);
-            infoPV.TabIndex = 196;
-            infoPV.Text = "?";
-            infoPV.UseVisualStyleBackColor = false;
-            infoPV.Click += infoPV_Click;
-            // 
             // PV
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -820,6 +843,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)Slope_pictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Direction_pictureBox).EndInit();
             ((System.ComponentModel.ISupportInitialize)PV_dataGridView).EndInit();
             tabControl1.ResumeLayout(false);
             PVinstall_tabPage.ResumeLayout(false);
@@ -898,5 +923,7 @@
         private Label BatteryEff_textbox;
         private Label batterypower;
         private Button infoPV;
+        private PictureBox Slope_pictureBox;
+        private PictureBox Direction_pictureBox;
     }
 }

@@ -56,6 +56,19 @@ namespace main.contents
                 pictureBox1.Load(Program.gPath + Image[0][0]);
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             }
+            string[][] ImageDirection = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광타입별이미지", "이미지", "대분류 ='direction'");
+            if (ImageDirection.Length > 0)
+            {
+                Direction_pictureBox.Load(Program.gPath + ImageDirection[0][0]);
+                Direction_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+            string[][] ImageSlope = Program.DB.getValue(DB.type.BaseDB_RESystem, "태양광타입별이미지", "이미지", "대분류 ='slope'");
+            if (ImageSlope.Length > 0)
+            {
+                Slope_pictureBox.Load(Program.gPath + ImageSlope[0][0]);
+                Slope_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            }
+
             string[][] value = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
             if (value.Length > 0)
             {
@@ -91,15 +104,18 @@ namespace main.contents
             PV_dataGridView.Columns.Add("A1", "개수");
             PV_dataGridView.Columns.Add("A2", "면적.[m2]");
 
-            DataGridViewComboBoxColumn direction = new DataGridViewComboBoxColumn();
-            direction.HeaderText = "설치정보.방위";
-            direction.Items.AddRange(new string[] { "수평", "남", "남동", "남서", "동", "서", "북서", "북동", "북" });
-            PV_dataGridView.Columns.Add(direction);
 
-            DataGridViewComboBoxColumn slope = new DataGridViewComboBoxColumn();
-            slope.HeaderText = "설치정보.기울기";
-            slope.Items.AddRange(new string[] { "0", "30", "45", "60", "90" });
-            PV_dataGridView.Columns.Add(slope);
+            PV_dataGridView.Columns.Add("A3", "설치정보.방위[°]"); 
+            PV_dataGridView.Columns.Add("A4", "설치정보.기울기[°]");
+            //DataGridViewComboBoxColumn direction = new DataGridViewComboBoxColumn();
+            //direction.HeaderText = "설치정보.방위";
+            //direction.Items.AddRange(new string[] { "수평", "남", "남동", "남서", "동", "서", "북서", "북동", "북" });
+            //PV_dataGridView.Columns.Add(direction);
+
+            //DataGridViewComboBoxColumn slope = new DataGridViewComboBoxColumn();
+            //slope.HeaderText = "설치정보.기울기";
+            //slope.Items.AddRange(new string[] { "0", "30", "45", "60", "90" });
+            //PV_dataGridView.Columns.Add(slope);
 
             DataGridViewComboBoxColumn type = new DataGridViewComboBoxColumn();
             type.HeaderText = "설치정보.후면유형";
@@ -318,8 +334,15 @@ namespace main.contents
 
             if (e.ColumnIndex == 4 && PV_dataGridView.Rows[e.RowIndex].Cells[4].Value != null)
             {
+                int _slope = Convert.ToInt32(PV_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString());
                 slope = PV_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString() + "˚";
-                PVimage(PV_dataGridView.Rows[e.RowIndex].Cells[4].Value.ToString());
+                string slopeType;
+                if (_slope <= 15) slopeType = "0";
+                else if(_slope <= 38) slopeType = "30";
+                else if (_slope <= 53) slopeType = "45";
+                else if (_slope <= 75) slopeType = "60";
+                else slopeType = "90";
+                PVimage(slopeType);
             }
 
             if (e.ColumnIndex == 3 && PV_dataGridView.Rows[e.RowIndex].Cells[3].Value != null)
@@ -450,7 +473,7 @@ namespace main.contents
             }
             Program.DB.setValue(DB.type.ProjDB, "PV_Form", "번호,개수,면적, 방위,기울기,통풍유무,지형물거리,지형물높이,어레이높이,설치,기존PV,fperf", "'" + Num + "','" + val[1] + "','" + val[2] + "'," +
                 "'" + val[3] + "','" + val[4] + "','" + val[5] + "','" + val[6] + "','" + val[7] + "','" + val[8] + "','" + Ins + "','" + beforePV + "','" + fperf + "'", "번호");
-            
+
             return true;
         }
 
@@ -701,5 +724,6 @@ namespace main.contents
                 MessageBox.Show("The folder path does not exist.");
             }
         }
+
     }
 }

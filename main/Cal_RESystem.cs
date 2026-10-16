@@ -1,8 +1,11 @@
 using main.subcontents.CoolingSystem;
 using main.subcontents.HeatingSystem;
+using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections;
+using System.Reflection.Metadata;
 using System.Security.Cryptography;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace main
 {
@@ -49,26 +52,47 @@ namespace main
             프로젝트유형 = buildinginfo[0][1].ToString();
             string ort = buildinginfo[0][2].ToString();
             string[][] PVformdata = Program.DB.getValue(ProjNum, "PV_Form", "방위,기울기,fperf,인버터효율,지형물거리,지형물높이,어레이높이,계통유형,면적,용량,배터리번호", "번호='" + Num +"'");
-            string orientation, slope;
-            orientation = PVformdata[0][0].ToString();
-            slope = PVformdata[0][1].ToString() + "˚";
-            double[] dmth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
-            if (slope == "0˚" || orientation == "수평")
+            string orientationType, slopeType;
+            int orientation, slope;
+            orientation = (int)Math.Round(Convert.ToInt32(PVformdata[0][1].ToString()) / 45.0) * 45;
+            slope = Convert.ToInt32(PVformdata[0][1].ToString());
+
+            if (orientation == 180) orientation = -180;
+            switch (orientation)
             {
-                orientation = "수평";
-                slope = "0˚";
+                case 0: orientationType = "남"; break;
+                case 45:  orientationType = "남동"; break;
+                case 90:  orientationType= "동";break;
+                case 135:  orientationType= "남서";break;
+                case -180:  orientationType="북";break;
+                case -135:  orientationType= "북서";break;
+                case -90:  orientationType= "서";break;
+                case -45:  orientationType= "남서";break;
+                default:  orientationType= null;break;
             }
 
-            int pvDegree = (int)Program.UTIL.ToDoubleOrZero(slope.Replace("˚", ""));
-            int pvDirection = CALC.ConvertDirectionWord(orientation);
+            if (slope <= 15)
+            { 
+                slopeType = "0"+ "˚";
+                orientationType = "수평";
+            }
+            else if (slope <= 38) slopeType = "30" + "˚";
+            else if (slope <= 53) slopeType = "45" + "˚";
+            else if (slope <= 75) slopeType = "60" + "˚";
+            else slopeType = "90" + "˚";
+
+            double[] dmth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+            int pvDegree = (int)Program.UTIL.ToDoubleOrZero(PVformdata[0][1].ToString());
+            int pvDirection = (int)Program.UTIL.ToDoubleOrZero(PVformdata[0][0].ToString());
             CALC.Run_Climate_RESystem(pvDegree, pvDirection);
             double[] pvItot = CALC.Itot_mth.GetValueOrDefault((pvDegree, pvDirection));
 
             for (int mth = 0; mth < 12; mth++)
             {
                 //태양고도각 불러오기
-                 string[][] token3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_고도각", "고도각", "지역명 ='" + ort + "' AND 방향 ='" + orientation + "' AND  각도 = '" + slope + "' and 기간 ='" + (mth + 1).ToString() + "월'");
+                 string[][] token3 = Program.DB.getValue(DB.type.BaseDB_HCneed, "기후데이터_고도각", "고도각", "지역명 ='" + ort + "' AND 방향 ='" + orientationType+ "' AND  각도 = '" + slopeType + "' and 기간 ='" + (mth + 1).ToString() + "월'");
                  Esol[mth] = (pvItot != null ? pvItot[mth] : 0) * 0.024 * dmth[mth];
                  PVαsol[mth] = Program.UTIL.ToDoubleOrZero(token3[0][0]);
             }
