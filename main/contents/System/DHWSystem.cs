@@ -1753,6 +1753,7 @@ namespace main.contents
             StoragePump_dataGridView.Columns.Add("A6", "유량.[CMH]");
             StoragePump_dataGridView.Columns.Add("A7", "동력.[kW]");
             StoragePump_dataGridView.Columns.Add("A8", "양정.[m]");
+            StoragePump_dataGridView.Columns[5].Visible = false;
             StoragePump_dataGridView.Columns[0].Width = 70;
             StoragePump_dataGridView.Columns[1].Width = 50;
 

@@ -2238,6 +2238,7 @@ namespace main.contents
             StoragePump_dataGridView.Columns.Add("A3", "종류");
             StoragePump_dataGridView.Columns.Add("A4", "B효율.[%]");
             StoragePump_dataGridView.Columns.Add("A5", "동력.[kW]");
+            StoragePump_dataGridView.Columns[4].Visible = false;
             StoragePump_dataGridView.Columns[0].Width = 70;
             StoragePump_dataGridView.Columns[1].Width = 50;
 

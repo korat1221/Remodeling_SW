@@ -58,6 +58,7 @@ namespace main.subcontents.DHWSystem
             Pump_dataGridView.Columns.Add("A7", " .동력.[kW]");
             Pump_dataGridView.Columns.Add("A8", " .양정.[m]");
             Pump_dataGridView.Columns[4].Visible = false;
+            Pump_dataGridView.Columns[5].Visible = false;
             Pump_dataGridView.Columns[6].Visible = false;
             Pump_dataGridView.Columns[8].Visible = false;
 
