@@ -41,6 +41,11 @@ namespace main.contents
         {
             Program.DB.initTables(DB.type.ProjDB);
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
+            comboBox1.DropDown += comboBox_DropDown;
+            comboBox2.DropDown += comboBox_DropDown;
+            comboBox3.DropDown += comboBox_DropDown;
+            comboBox4.DropDown += comboBox_DropDown;
+            comboBox5.DropDown += comboBox_DropDown;
             Program.UTIL.IgnoreGridError(this);
             create_datagridview1();
             create_datagridview2();
@@ -244,8 +249,8 @@ namespace main.contents
             comboBox2.Add("All");
             comboBox3.Add("All");
             comboBox4.Add("All");
-            comboBox5.Add("");
             comboBox5.Add("All");
+            comboBox5.Add("");
 
             while (++i < rec.Length)
             {
@@ -323,7 +328,7 @@ namespace main.contents
 
                 while (++i < rec.Length)
                 {
-                    if (comboBox1.IsChecked(rec[i][1]) && comboBox2.IsChecked(rec[i][2]) && comboBox3.IsChecked(rec[i][3]) && comboBox4.IsChecked(rec[i][7]) && comboBox5.IsChecked(rec[i][11]))
+                    if ((comboBox1.CheckedItems.Count == comboBox1.Items.Count || comboBox1.IsChecked(rec[i][1])) && (comboBox2.CheckedItems.Count == comboBox2.Items.Count || comboBox2.IsChecked(rec[i][2])) && (comboBox3.CheckedItems.Count == comboBox3.Items.Count || comboBox3.IsChecked(rec[i][3])) && (comboBox4.CheckedItems.Count == comboBox4.Items.Count || comboBox4.IsChecked(rec[i][7])) && (comboBox5.CheckedItems.Count == comboBox5.Items.Count || comboBox5.IsChecked(rec[i][11])))
                     {
                         idx = dataGridView1.Rows.Add(null, rec[i][0], rec[i][1], rec[i][2], null, null, rec[i][6], _fixed(rec[i][5]), rec[i][7], _fixed(rec[i][8]), null);
 
@@ -740,58 +745,21 @@ namespace main.contents
 
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
-            if (e.RowIndex == 0)
+            if (e.RowIndex != -1 || e.ColumnIndex < 0) { return; }
+            CheckedComboBox Filter;
+            switch (e.ColumnIndex)
             {
-                int cellX = dataGridView1.Location.X + e.CellBounds.X;
-                int cellY = dataGridView1.Location.Y + e.CellBounds.Y;
-                if (e.ColumnIndex == 2)
-                {
-                    if (!comboBox1.Visible)
-                    {
-                        comboBox1.Location = new Point(cellX, cellY);
-                        comboBox1.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
-                        comboBox1.Show();
-                    }
-                }
-                else if (e.ColumnIndex == 3)
-                {
-                    if (!comboBox2.Visible)
-                    {
-                        comboBox2.Location = new Point(cellX, cellY);
-                        comboBox2.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
-                        comboBox2.Show();
-                    }
-                }
-                else if (e.ColumnIndex == 4)
-                {
-                    if (!comboBox3.Visible)
-                    {
-                        comboBox3.Location = new Point(cellX, cellY);
-                        comboBox3.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
-                        comboBox3.Show();
-                    }
-                }
-                else if (e.ColumnIndex == 8)
-                {
-                    if (!comboBox4.Visible)
-                    {
-                        comboBox4.Location = new Point(cellX, cellY);
-                        comboBox4.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
-                        comboBox4.Show();
-                    }
-
-                }
-                else if (e.ColumnIndex == 10)
-                {
-                    if (!comboBox5.Visible)
-                    {
-                        comboBox5.Location = new Point(cellX, cellY);
-                        comboBox5.Size = new Size(e.CellBounds.Width, e.CellBounds.Height);
-                        comboBox5.Show();
-                    }
-
-                }
+                case 2: Filter = comboBox1; break;
+                case 3: Filter = comboBox2; break;
+                case 4: Filter = comboBox3; break;
+                case 8: Filter = comboBox4; break;
+                case 10: Filter = comboBox5; break;
+                default: return;
             }
+            if (Filter.Parent != dataGridView1) { Filter.Parent = dataGridView1; }
+            Filter.SetBounds(e.CellBounds.X, e.CellBounds.Bottom - Filter.PreferredHeight, e.CellBounds.Width, Filter.PreferredHeight);
+            Filter.Show();
+            Filter.BringToFront();
         }
 
         private void sub3dZoneInfo_Deactivate(object sender, EventArgs e)
@@ -801,6 +769,38 @@ namespace main.contents
             comboBox3.Hide();
             comboBox4.Hide();
             comboBox5.Hide();
+        }
+
+        private void comboBox_DropDown(object sender, EventArgs e)
+        {
+            CheckedComboBox[] Filters = { comboBox1, comboBox2, comboBox3, comboBox4, comboBox5 };
+            CheckedComboBox Filter = (CheckedComboBox)sender;
+            int FilterIndex = Array.IndexOf(Filters, Filter);
+            bool AllChecked = Filter.CheckedItems.Count == Filter.Items.Count;
+            List<string> SelectedValues = new List<string>();
+            for (int i = 0; i < Filter.Items.Count; i++)
+            {
+                if (Filter.GetItemChecked(i)) { SelectedValues.Add(Filter.Items[i].ToString()); }
+            }
+            string[][] Values = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "층,존,외피유형,방위,구조체", "1=1 ORDER BY 존");
+            List<string> Candidates = new List<string>();
+            for (int i = 0; i < Values.Length; i++)
+            {
+                bool Match = true;
+                for (int n = 0; n < Filters.Length; n++)
+                {
+                    if (n != FilterIndex && Filters[n].CheckedItems.Count != Filters[n].Items.Count && !Filters[n].IsChecked(Values[i][n])) { Match = false; break; }
+                }
+                if (Match && !Candidates.Contains(Values[i][FilterIndex])) { Candidates.Add(Values[i][FilterIndex]); }
+            }
+            Filter.Items.Clear();
+            Filter.Add("All");
+            if (!AllChecked) { Filter.SetItemChecked(0, false); }
+            for (int i = 0; i < Candidates.Count; i++)
+            {
+                Filter.Add(Candidates[i]);
+                if (!AllChecked && !SelectedValues.Contains(Candidates[i])) { Filter.SetItemChecked(Filter.Items.Count - 1, false); }
+            }
         }
 
         private void comboBox_DropDownClosed(object sender, EventArgs e)
