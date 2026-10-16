@@ -45,7 +45,6 @@ namespace main.subcontents.EquipmentList
             label2 = new Label();
             Power_textBox = new TextBox();
             dPanel_label = new Label();
-            dPanel_label2 = new Label();
             label4 = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -70,7 +69,6 @@ namespace main.subcontents.EquipmentList
             GeneralPanel.Controls.Add(label2);
             GeneralPanel.Controls.Add(Power_textBox);
             GeneralPanel.Controls.Add(dPanel_label);
-            GeneralPanel.Controls.Add(dPanel_label2);
             GeneralPanel.Controls.Add(label4);
             GeneralPanel.Location = new Point(-1, -1);
             GeneralPanel.Name = "GeneralPanel";
@@ -80,18 +78,18 @@ namespace main.subcontents.EquipmentList
             // Fan_comboBox
             // 
             Fan_comboBox.FormattingEnabled = true;
-            Fan_comboBox.Location = new Point(126, 56);
+            Fan_comboBox.Location = new Point(108, 57);
             Fan_comboBox.Name = "Fan_comboBox";
-            Fan_comboBox.Size = new Size(120, 23);
+            Fan_comboBox.Size = new Size(138, 23);
             Fan_comboBox.TabIndex = 147;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new System.Drawing.Font(UTIL.Families[0], 12F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.Location = new Point(38, 57);
+            label3.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            label3.Location = new Point(38, 61);
             label3.Name = "label3";
-            label3.Size = new Size(49, 20);
+            label3.Size = new Size(46, 15);
             label3.TabIndex = 146;
             label3.Text = "팬 종류";
             label3.TextAlign = ContentAlignment.MiddleRight;
@@ -112,10 +110,10 @@ namespace main.subcontents.EquipmentList
             // 
             fluid.AutoSize = true;
             fluid.BackColor = Color.Transparent;
-            fluid.Font = new System.Drawing.Font(UTIL.Families[0], 12F, FontStyle.Italic, GraphicsUnit.Point);
-            fluid.Location = new Point(211, 271);
+            fluid.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Italic);
+            fluid.Location = new Point(211, 273);
             fluid.Name = "fluid";
-            fluid.Size = new Size(41, 21);
+            fluid.Size = new Size(33, 15);
             fluid.TabIndex = 145;
             fluid.Text = "fluid";
             // 
@@ -123,10 +121,10 @@ namespace main.subcontents.EquipmentList
             // 
             ctpower.AutoSize = true;
             ctpower.BackColor = Color.Transparent;
-            ctpower.Font = new System.Drawing.Font(UTIL.Families[0], 12F, FontStyle.Italic, GraphicsUnit.Point);
-            ctpower.Location = new Point(211, 230);
+            ctpower.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Italic);
+            ctpower.Location = new Point(211, 239);
             ctpower.Name = "ctpower";
-            ctpower.Size = new Size(65, 21);
+            ctpower.Size = new Size(56, 15);
             ctpower.TabIndex = 143;
             ctpower.Text = "ctpower";
             // 
@@ -134,10 +132,10 @@ namespace main.subcontents.EquipmentList
             // 
             intemp.AutoSize = true;
             intemp.BackColor = Color.Transparent;
-            intemp.Font = new System.Drawing.Font(UTIL.Families[0], 12F, FontStyle.Italic, GraphicsUnit.Point);
-            intemp.Location = new Point(211, 159);
+            intemp.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Italic);
+            intemp.Location = new Point(211, 161);
             intemp.Name = "intemp";
-            intemp.Size = new Size(59, 21);
+            intemp.Size = new Size(50, 15);
             intemp.TabIndex = 142;
             intemp.Text = "intemp";
             // 
@@ -145,16 +143,16 @@ namespace main.subcontents.EquipmentList
             // 
             outtemp.AutoSize = true;
             outtemp.BackColor = Color.Transparent;
-            outtemp.Font = new System.Drawing.Font(UTIL.Families[0], 12F, FontStyle.Italic, GraphicsUnit.Point);
-            outtemp.Location = new Point(211, 109);
+            outtemp.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Italic);
+            outtemp.Location = new Point(211, 116);
             outtemp.Name = "outtemp";
-            outtemp.Size = new Size(69, 21);
+            outtemp.Size = new Size(60, 15);
             outtemp.TabIndex = 141;
             outtemp.Text = "outtemp";
             // 
             // calButton
             // 
-            calButton.Location = new Point(333, 56);
+            calButton.Location = new Point(333, 57);
             calButton.Name = "calButton";
             calButton.Size = new Size(109, 23);
             calButton.TabIndex = 140;
@@ -173,9 +171,9 @@ namespace main.subcontents.EquipmentList
             // CG_comboBox
             // 
             CG_comboBox.FormattingEnabled = true;
-            CG_comboBox.Location = new Point(126, 33);
+            CG_comboBox.Location = new Point(108, 32);
             CG_comboBox.Name = "CG_comboBox";
-            CG_comboBox.Size = new Size(120, 23);
+            CG_comboBox.Size = new Size(138, 23);
             CG_comboBox.TabIndex = 138;
             CG_comboBox.SelectedIndexChanged += CG_comboBox_SelectedIndexChanged;
             // 
@@ -191,10 +189,10 @@ namespace main.subcontents.EquipmentList
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new System.Drawing.Font(UTIL.Families[0], 12F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(276, 33);
+            label1.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            label1.Location = new Point(276, 36);
             label1.Name = "label1";
-            label1.Size = new Size(57, 20);
+            label1.Size = new Size(55, 15);
             label1.TabIndex = 129;
             label1.Text = "냉방출력";
             label1.TextAlign = ContentAlignment.MiddleRight;
@@ -202,18 +200,18 @@ namespace main.subcontents.EquipmentList
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new System.Drawing.Font(UTIL.Families[0], 9.75F,FontStyle.Regular, GraphicsUnit.Point);
+            label2.Font = new Font("나눔바른고딕", 9.75F);
             label2.ForeColor = SystemColors.ControlDark;
             label2.Location = new Point(444, 36);
             label2.Name = "label2";
-            label2.Size = new Size(27, 16);
+            label2.Size = new Size(27, 15);
             label2.TabIndex = 128;
             label2.Text = "kW";
             // 
             // Power_textBox
             // 
             Power_textBox.BorderStyle = BorderStyle.FixedSingle;
-            Power_textBox.Location = new Point(333, 33);
+            Power_textBox.Location = new Point(333, 32);
             Power_textBox.Name = "Power_textBox";
             Power_textBox.Size = new Size(109, 23);
             Power_textBox.TabIndex = 127;
@@ -222,32 +220,21 @@ namespace main.subcontents.EquipmentList
             // dPanel_label
             // 
             dPanel_label.AutoSize = true;
-            dPanel_label.Font = new System.Drawing.Font(UTIL.Families[0], 12F, FontStyle.Regular, GraphicsUnit.Point);
-            dPanel_label.Location = new Point(38, 33);
+            dPanel_label.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 129);
+            dPanel_label.Location = new Point(38, 36);
             dPanel_label.Name = "dPanel_label";
-            dPanel_label.Size = new Size(73, 20);
+            dPanel_label.Size = new Size(70, 15);
             dPanel_label.TabIndex = 126;
             dPanel_label.Text = "냉동기 종류";
             dPanel_label.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // dPanel_label2
-            // 
-            dPanel_label2.AutoSize = true;
-            dPanel_label2.Font = new System.Drawing.Font(UTIL.Families[0], 12F, FontStyle.Regular, GraphicsUnit.Point);
-            dPanel_label2.ForeColor = SystemColors.ControlDark;
-            dPanel_label2.Location = new Point(248, 33);
-            dPanel_label2.Name = "dPanel_label2";
-            dPanel_label2.Size = new Size(22, 20);
-            dPanel_label2.TabIndex = 125;
-            dPanel_label2.Text = "m";
-            // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Font =  new Font(UTIL.Families[0], 9.75F, FontStyle.Bold, GraphicsUnit.Point);
+            label4.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             label4.Location = new Point(13, 10);
             label4.Name = "label4";
-            label4.Size = new Size(71, 15);
+            label4.Size = new Size(70, 15);
             label4.TabIndex = 95;
             label4.Text = "냉각탑 계산";
             // 
@@ -275,7 +262,6 @@ namespace main.subcontents.EquipmentList
         private Label label2;
         private TextBox Power_textBox;
         private Label dPanel_label;
-        private Label dPanel_label2;
         private Label label4;
         private PictureBox pictureBox2;
         private Label outtemp;
