@@ -5693,37 +5693,180 @@ namespace main.contents
 
         public bool ValidateAndSave(bool isManualSave = false)
         {
+            string errors = "";
             try
             {
-                Boiler_Save(isManualSave);
-                ABS_Save(isManualSave);
-                DH_Save(isManualSave);
-                PV_Save(isManualSave);
-                FC_Save(isManualSave);
-                WP_Save(isManualSave);
-                AirHP_Save(isManualSave);
-                GWHP_Save(isManualSave);
-                GroundHP_Save(isManualSave);
-                Pump_Save(isManualSave);
-                AirCooler_Save(isManualSave);
-                WaterCooler_Save(isManualSave);
-                Solar_Save(isManualSave);
-                AHU_Save(isManualSave);
-                HRV_Save(isManualSave);
-                CoolingTop_Save(isManualSave);
-                DWHP_Save(isManualSave);
-                Fan_Save(isManualSave);
-                ce_Save(isManualSave);
-
-                return true;
+                프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
+                if (프로젝트유형.Length == 0 || 프로젝트유형[0].Length == 0)
+                {
+                    MessageBox.Show("프로젝트 정보를 읽지 못해 장비일람표를 저장하지 못했습니다.");
+                    return false;
+                }
             }
             catch (Exception ex)
             {
-                // 디버깅 중단점 방지를 위해 예외를 무시하거나 로그만 남김
-                // 저장 중 예외가 나도 화면 전환은 막지 않는다.
-                System.Diagnostics.Debug.WriteLine($"ValidateAndSave 오류: {ex.Message}");
-                return true;
+                MessageBox.Show("프로젝트 정보를 읽지 못해 장비일람표를 저장하지 못했습니다.\r\n" + ex.Message);
+                return false;
             }
+            try
+            {
+                Boiler_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "보일러: " + ex.Message + "\r\n";
+            }
+            try
+            {
+                ABS_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "흡수식 냉온수기: " + ex.Message + "\r\n";
+            }
+            try
+            {
+                DH_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "지역난방: " + ex.Message + "\r\n";
+            }
+            try
+            {
+                PV_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "태양광: " + ex.Message + "\r\n";
+            }
+            try
+            {
+                FC_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "연료전지: " + ex.Message + "\r\n";
+            }
+            try
+            {
+                WP_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "풍력: " + ex.Message + "\r\n";
+            }
+            try
+            {
+                AirHP_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "공기열 히트펌프: " + ex.Message + "\r\n";
+            }
+            try
+            {
+                GWHP_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "지하수열 히트펌프: " + ex.Message + "\r\n";
+            }
+            try
+            {
+                GroundHP_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "지열 히트펌프: " + ex.Message + "\r\n";
+            }
+            try
+            {
+                Pump_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "펌프: " + ex.Message + "\r\n";
+            }
+            try
+            {
+                AirCooler_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "공냉식 냉동기: " + ex.Message + "\r\n";
+            }
+            try
+            {
+                WaterCooler_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "수냉식 냉동기: " + ex.Message + "\r\n";
+            }
+            try
+            {
+                Solar_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "태양열: " + ex.Message + "\r\n";
+            }
+            try
+            {
+                AHU_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "공조기: " + ex.Message + "\r\n";
+            }
+            try
+            {
+                HRV_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "열회수기: " + ex.Message + "\r\n";
+            }
+            try
+            {
+                CoolingTop_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "냉각탑: " + ex.Message + "\r\n";
+            }
+            try
+            {
+                DWHP_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "급탕 히트펌프: " + ex.Message + "\r\n";
+            }
+            try
+            {
+                Fan_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "배기팬: " + ex.Message + "\r\n";
+            }
+            try
+            {
+                ce_Save(isManualSave);
+            }
+            catch (Exception ex)
+            {
+                errors += "공급설비: " + ex.Message + "\r\n";
+            }
+            if (errors != "")
+            {
+                System.Diagnostics.Debug.WriteLine(errors);
+                MessageBox.Show("다음 장비는 저장하지 못했습니다. 나머지 장비의 저장은 진행했습니다.\r\n" + errors);
+                return false;
+            }
+            return true;
         }
     }
 }
