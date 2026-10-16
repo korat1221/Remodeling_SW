@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -32,14 +33,19 @@ namespace main.subcontents.EquipmentList
 
         private void Qmax_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (Qmax_textBox.Text != null)
+            if (double.TryParse(Qmax_textBox.Text, NumberStyles.Float,
+                         CultureInfo.InvariantCulture, out double parsed))
             {
                 Qmax = Program.UTIL.textBox_doubleComa(Qmax_textBox, false, 1);
                 Volume = Qmax * 3.6 / (5 * 4.18);
                 Volume_textBox.Text = Volume.ToString("#,0.#") + " CMH";
+                double lnX = Math.Log(Volume*1000);
+                eta = -1.403 * lnX * lnX + 26.35 * lnX + -61.3;
+                eta_textBox.Text = eta.ToString("#,0.#");
                 Clac_Power();
             }
         }
+      
         private void eta_textBox_TextChanged(object sender, EventArgs e)
         {
             if (eta_textBox.Text != null)

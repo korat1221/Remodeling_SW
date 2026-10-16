@@ -65,6 +65,9 @@ namespace main.subcontents.EquipmentList
             label21 = new Label();
             label19 = new Label();
             PumpPower_textBox = new TextBox();
+            label9 = new Label();
+            label12 = new Label();
+            label17 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             GeneralPanel.SuspendLayout();
             panel2.SuspendLayout();
@@ -132,6 +135,7 @@ namespace main.subcontents.EquipmentList
             label2.Size = new Size(19, 15);
             label2.TabIndex = 128;
             label2.Text = "m";
+            label2.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label1
             // 
@@ -194,6 +198,7 @@ namespace main.subcontents.EquipmentList
             label7.Size = new Size(23, 15);
             label7.TabIndex = 134;
             label7.Text = "EA";
+            label7.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // label6
             // 
@@ -239,6 +244,9 @@ namespace main.subcontents.EquipmentList
             // GeneralPanel
             // 
             GeneralPanel.BackColor = Color.White;
+            GeneralPanel.Controls.Add(label17);
+            GeneralPanel.Controls.Add(label12);
+            GeneralPanel.Controls.Add(label9);
             GeneralPanel.Controls.Add(label22);
             GeneralPanel.Controls.Add(eta_textBox);
             GeneralPanel.Controls.Add(panel2);
@@ -322,8 +330,6 @@ namespace main.subcontents.EquipmentList
             label16.TabIndex = 143;
             label16.Text = "유량";
             // 
-            // 
-            // 
             // Volume_textBox
             // 
             Volume_textBox.BackColor = SystemColors.InactiveBorder;
@@ -395,8 +401,6 @@ namespace main.subcontents.EquipmentList
             PumpNum_textBox.TabIndex = 138;
             PumpNum_textBox.TextAlign = HorizontalAlignment.Right;
             // 
-            // 
-            // 
             // PumpHead_textBox
             // 
             PumpHead_textBox.BackColor = Color.White;
@@ -416,8 +420,6 @@ namespace main.subcontents.EquipmentList
             label10.Size = new Size(106, 15);
             label10.TabIndex = 137;
             label10.Text = "분배영역 직관길이";
-            // 
-            // 
             // 
             // Lmax_textBox
             // 
@@ -460,8 +462,6 @@ namespace main.subcontents.EquipmentList
             label19.TabIndex = 146;
             label19.Text = "동력";
             // 
-            // 
-            // 
             // PumpPower_textBox
             // 
             PumpPower_textBox.BackColor = SystemColors.GradientInactiveCaption;
@@ -471,6 +471,42 @@ namespace main.subcontents.EquipmentList
             PumpPower_textBox.Size = new Size(120, 16);
             PumpPower_textBox.TabIndex = 144;
             PumpPower_textBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Font = new Font("나눔바른고딕", 9.75F);
+            label9.ForeColor = SystemColors.ControlDark;
+            label9.Location = new Point(751, 126);
+            label9.Name = "label9";
+            label9.Size = new Size(19, 15);
+            label9.TabIndex = 143;
+            label9.Text = "%";
+            label9.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Font = new Font("나눔바른고딕", 9.75F);
+            label12.ForeColor = SystemColors.ControlDark;
+            label12.Location = new Point(751, 277);
+            label12.Name = "label12";
+            label12.Size = new Size(19, 15);
+            label12.TabIndex = 144;
+            label12.Text = "m";
+            label12.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Font = new Font("나눔바른고딕", 9.75F);
+            label17.ForeColor = SystemColors.ControlDark;
+            label17.Location = new Point(751, 304);
+            label17.Name = "label17";
+            label17.Size = new Size(19, 15);
+            label17.TabIndex = 145;
+            label17.Text = "m";
+            label17.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // PumpPower
             // 
@@ -532,5 +568,8 @@ namespace main.subcontents.EquipmentList
         private Label label22;
         private TextBox textBox1;
         private TextBox eta_textBox;
+        private Label label17;
+        private Label label12;
+        private Label label9;
     }
 }
