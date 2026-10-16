@@ -548,6 +548,13 @@ namespace main.subcontents.Alt
                     TB_textBox.Text = "열교없음";
                     pictureBox1.Visible = false;
                     pictureBox2.Visible = false;
+                    string[][] Image = Program.DB.getValue(DB.type.BaseDB_HCneed, "외벽점형열교이미지", "이미지_고정유형", "제품명 = '" + TBName + "'");
+                    if (Image.Length > 0)
+                    {
+                        pictureBox2.Load(Program.gPath + Image[0][0]);
+                        pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+                        pictureBox2.Visible = true;
+                    }
                 }
                 else { TB_textBox.Text = TB_Type + "_" + TBName; }
                 dU_textBox.Text = "열교가산치 : " + dU.ToString("0.00") + " W/m"+Program.UTIL.Subscript(2, true)+"·K";

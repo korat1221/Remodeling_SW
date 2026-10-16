@@ -32,6 +32,15 @@ namespace main.subcontents
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
             Program.UTIL.IgnoreGridError(this);
+            rsi = 0.13;
+            if(DiIndi =="직접외기")
+            {
+                rse = 0.04;
+            }
+            else
+            {
+                rse = 0.13;
+            }
             Create_Table();
             if (Select[0] != null)
             {
@@ -46,15 +55,6 @@ namespace main.subcontents
                     Door_dataGridView.Rows[nRow].Cells[a + 3].Value = Select[a];
                 }
 
-                rsi = 0.13;
-                if(DiIndi =="직접외기")
-                {
-                    rse = 0.04;
-                }
-                else
-                {
-                    rse = 0.13;
-                }
             }
 
             // LoadData(DoorNum);
@@ -169,10 +169,11 @@ namespace main.subcontents
             {
                 if (e.ColumnIndex == 3)
                 {
-                    if (Door_dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString() == "기본")
+                    if (Door_dataGridView.Rows[e.RowIndex].Cells[2].Value?.ToString() == "기본")
                     {
                         DoorDefault doordefault = new DoorDefault();
                         DialogResult result = doordefault.ShowDialog();
+                        if (result != DialogResult.OK) { return; }
                         Door_dataGridView.Rows[nRow].Cells[6].Value = doordefault.문틀내부;
                         Door_dataGridView.Rows[nRow].Cells[7].Value = doordefault.문틀상부;
                         Door_dataGridView.Rows[nRow].Cells[8].Value = doordefault.문틀하부;
@@ -211,10 +212,11 @@ namespace main.subcontents
             {
                 if (e.ColumnIndex == 12)
                 {
-                    if (Door_dataGridView.Rows[nRow].Cells[10].Value.ToString() == "단열재")
+                    if (Door_dataGridView.Rows[nRow].Cells[10].Value?.ToString() == "단열재")
                     {
                         MaterialDB material = new MaterialDB();
                         DialogResult result = material.ShowDialog();
+                        if (result != DialogResult.OK) { return; }
                         Door_dataGridView.Rows[e.RowIndex].Cells[11].Value = material.Select[1];
                     }
                     else { }
@@ -228,7 +230,7 @@ namespace main.subcontents
             {
                 if (e.ColumnIndex == 2)
                 {
-                    if (Door_dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString() == "도면")
+                    if (Door_dataGridView.Rows[e.RowIndex].Cells[2].Value?.ToString() == "도면")
                     {
                         Door_dataGridView.Rows[e.RowIndex].Cells[11].Value = "-";
                         Door_dataGridView.Rows[e.RowIndex].Cells[13].Value = "-";
@@ -243,7 +245,7 @@ namespace main.subcontents
                         Door_dataGridView.Rows[e.RowIndex].Cells[8].Value = null;
 
                     }
-                    else if (Door_dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString() == "기본")
+                    else if (Door_dataGridView.Rows[e.RowIndex].Cells[2].Value?.ToString() == "기본")
                     {
                         DataGridViewButtonCell default_ButtonCell = new DataGridViewButtonCell();
                         Door_dataGridView.Rows[nRow].Cells[3] = default_ButtonCell;
@@ -252,11 +254,11 @@ namespace main.subcontents
                         Door_dataGridView.Rows[e.RowIndex].Cells[16].Value = null;
                     }
                 }
-                if (Door_dataGridView.Rows[e.RowIndex].Cells[2].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[2].Value.ToString() == "기본")
+                if (Door_dataGridView.Rows[e.RowIndex].Cells[2].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[2].Value?.ToString() == "기본")
                 {
-                    if (Door_dataGridView.Rows[e.RowIndex].Cells[13].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[13].Value.ToString() != "-")
+                    d = Program.UTIL.ToDoubleOrZero(Door_dataGridView.Rows[e.RowIndex].Cells[13].Value);
+                    if (d > 0)
                     {
-                        d = Program.UTIL.ToDoubleOrZero(Door_dataGridView.Rows[e.RowIndex].Cells[13].Value);
                         if (열전도율 > 0 && d > 0)
                         {
                             R = d / 1000 / 열전도율;
@@ -281,7 +283,7 @@ namespace main.subcontents
 
                     if (Door_dataGridView.Rows[e.RowIndex].Cells[11].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[11].Value.ToString() != "-")
                     {
-                        if (Door_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[10].Value.ToString() == "단열재")
+                        if (Door_dataGridView.Rows[e.RowIndex].Cells[10].Value != null && Door_dataGridView.Rows[e.RowIndex].Cells[10].Value?.ToString() == "단열재")
                         {
                             string[][] Value;
 
@@ -366,9 +368,15 @@ namespace main.subcontents
                 i++;
             }
 
-            if (i == 0 || i == x.Length)
+            if (xi == x[0])
             {
-                throw new Exception("xi is out of range");
+                yi = y[0];
+                return yi;
+            }
+            if (i == 0 || i == x.Length || double.IsNaN(xi))
+            {
+                yi = double.NaN;
+                return yi;
             }
 
             double x0 = x[i - 1];
@@ -385,6 +393,11 @@ namespace main.subcontents
 
         private void Calc_U(int nRow)
         {
+            if (d <= 0 || double.IsNaN(d) || double.IsInfinity(d))
+            {
+                Door_dataGridView.Rows[nRow].Cells[16].Value = null;
+                return;
+            }
             if (Door_dataGridView.Rows[nRow].Cells[11].Value != null && Door_dataGridView.Rows[nRow].Cells[11].Value.ToString() != "")
             {
                 //문짝내부가 단열재인 경우
@@ -411,6 +424,12 @@ namespace main.subcontents
                     }
                 }
 
+                if (double.IsNaN(U_basic) || double.IsInfinity(U_basic))
+                {
+                    Door_dataGridView.Rows[nRow].Cells[16].Value = null;
+                    return;
+                }
+
                U =  U_basic +(psiHeight * Height * 1 + psiHeight * Width * 2 + psiWidth * Height) / (Width * Height);
 
                 Door_dataGridView.Rows[nRow].Cells[16].Value = string.Format("{0:F3}", U);
@@ -421,6 +440,11 @@ namespace main.subcontents
 
         private void Save_button_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(Door_dataGridView.Rows[nRow].Cells[2].Value?.ToString()))
+            {
+                MessageBox.Show("DB유형을 선택해 주세요.");
+                return;
+            }
             Select_Door[0] = Door_dataGridView.Rows[nRow].Cells[1].Value.ToString();//번호
             Select_Door[1] = Door_dataGridView.Rows[nRow].Cells[2].Value.ToString();//DB유형
             for (int i = 2; i < 12; i++)

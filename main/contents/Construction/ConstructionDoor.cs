@@ -501,9 +501,9 @@ namespace main.contents
         //유리 치수 정보
         private void GlassH_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (glass_checkBox.Checked == true && GlassH_textBox.Text != "")
+            if (glass_checkBox.Checked)
             {
-                GlassH = double.Parse(GlassH_textBox.Text);
+                if (!double.TryParse(GlassH_textBox.Text, out GlassH) || double.IsNaN(GlassH) || double.IsInfinity(GlassH) || GlassH < 0) { GlassH = 0; }
                 GlassArea = GlassH * GlassL;
                 GlassArea_textBox.Text = String.Format("{0:F3}", GlassArea / 1000000) + " m" + Program.UTIL.Subscript(2, true);
                 GlassArea2_textBox.Text = String.Format("{0:F3}", GlassArea / 1000000) + " m" + Program.UTIL.Subscript(2, true);
@@ -512,9 +512,9 @@ namespace main.contents
 
         private void GlassL_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (glass_checkBox.Checked == true && GlassL_textBox.Text != "")
+            if (glass_checkBox.Checked)
             {
-                GlassL = double.Parse(GlassL_textBox.Text);
+                if (!double.TryParse(GlassL_textBox.Text, out GlassL) || double.IsNaN(GlassL) || double.IsInfinity(GlassL) || GlassL < 0) { GlassL = 0; }
                 GlassArea = GlassH * GlassL;
                 GlassArea_textBox.Text = String.Format("{0:F3}", GlassArea / 1000000) + " m" + Program.UTIL.Subscript(2, true);
                 GlassArea2_textBox.Text = String.Format("{0:F3}", GlassArea / 1000000) + " m" + Program.UTIL.Subscript(2, true);

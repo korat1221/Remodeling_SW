@@ -228,7 +228,20 @@ namespace main.subcontents.ConstructionDoor
 
         private void Save_button_Click(object sender, EventArgs e)
         {
-            DataGridViewRow row = Install_dataGridView.Rows[SelectRow];
+            if (Install_dataGridView.CurrentRow == null || Install_dataGridView.CurrentRow.IsNewRow)
+            {
+                MessageBox.Show("설치열교 항목을 선택해 주세요.");
+                return;
+            }
+            DataGridViewRow row = Install_dataGridView.CurrentRow;
+            for (int i = 1; i < row.Cells.Count - 2; i++)
+            {
+                if (string.IsNullOrWhiteSpace(row.Cells[i + 2].Value?.ToString()))
+                {
+                    MessageBox.Show("설치열교 항목의 정보를 확인해 주세요.");
+                    return;
+                }
+            }
             for (int i = 1; i < row.Cells.Count - 2; i++)
             {
                 Select_DoorInstall[i] = row.Cells[i + 2].Value.ToString();

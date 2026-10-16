@@ -760,9 +760,9 @@ namespace main.contents
 
         private void DeleteMaterial_button_Click(object sender, EventArgs e)
         {
-            if (Ucalc_dataGridView.Rows.Count > 0)
+            if (Ucalc_dataGridView.Rows.Count > 0 && Ucalc_dataGridView.CurrentRow != null && !Ucalc_dataGridView.CurrentRow.IsNewRow)
             {
-                Ucalc_dataGridView.Rows.Remove(Ucalc_dataGridView.Rows[SelectRow]);
+                Ucalc_dataGridView.Rows.Remove(Ucalc_dataGridView.CurrentRow);
                 Load_Material_Num();
                 Calc_dins();
                 Array.Clear(Material, 0, 10);
@@ -774,7 +774,7 @@ namespace main.contents
             }
             else
             {
-                MessageBox.Show("우선 재료를 입력해 주세요.");
+                MessageBox.Show("삭제할 재료를 선택해 주세요.");
             }
         }
 

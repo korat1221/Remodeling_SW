@@ -88,6 +88,12 @@ namespace main.subcontents.HeatingSystem
                 }
             }
 
+            if (string.IsNullOrEmpty(문짝종류))
+            {
+                MessageBox.Show("문 제품을 선택해 주세요.");
+                return;
+            }
+
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
