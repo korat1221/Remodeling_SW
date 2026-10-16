@@ -219,9 +219,7 @@ public class CheckedComboBox : System.Windows.Forms.ComboBox {
             dropdownClosed = true;
             // Set the focus to our parent CheckedComboBox and hide the dropdown check list.
             ccbParent.Focus();
-            this.Size = new Size(0, 0);
-
-//            this.Hide();
+            this.Hide();
             // Notify CheckedComboBox that its dropdown is closed. (NOTE: it does not matter which parameters we pass to
             // OnDropDownClosed() as long as the argument is CCBoxEventArgs so that the method knows the notification has
             // come from our code and not from the framework).
