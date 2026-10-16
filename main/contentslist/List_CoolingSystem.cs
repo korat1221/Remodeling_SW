@@ -83,8 +83,28 @@ namespace main.contentslist
 
 
 
+        private Boolean datagridviewDesign(DataGridViewCell cell, int column, int row)
+        {
+            if (row % 2 == 1)
+            {
+                cell.Style.BackColor = SystemColors.InactiveBorder;
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = SystemColors.InactiveBorder;
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+            else
+            {
+                cell.Style.BackColor = Color.FromArgb(255, 255, 255);
+                cell.Style.ForeColor = Color.Black;
+                cell.Style.SelectionBackColor = Color.FromArgb(255, 255, 255);
+                cell.Style.SelectionForeColor = Color.Black;
+                return true;
+            }
+        }
         public void Create_Table()
         {
+            new StackedHeaderDecorator(dataGridView1, DataGridViewAutoSizeColumnsMode.Fill, datagridviewDesign);
             dataGridView1.Columns.Clear();
             checkBoxColumn.HeaderText = "선택";
             checkBoxColumn.Name = "check";
@@ -97,7 +117,9 @@ namespace main.contentslist
             dataGridView1.DataSource = List;
 
 
-            dataGridView1.Columns[0].Width = 80;
+            dataGridView1.Columns[0].Width = 40;
+            dataGridView1.Columns[4].HeaderText = "냉방출력.[kW]";
+            dataGridView1.Columns[5].HeaderText = "냉방성능.[W/W]";
         }
 
         public void load_List()
