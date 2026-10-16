@@ -100,7 +100,6 @@ namespace main.subcontents
                     {
                         string[][] 층 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", "층", "존번호 ='" + Value[n][0] + "'");
                         string[][] 부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_52016_Result", "Qb_a,Q_max", "존번호 ='" + Value[n][0] + "' AND 난방_냉방 = '냉방'");
-                        string[][] 설비 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Cooling_ce_Form", "냉방시스템,공급설비종류", "존번호 ='" + Value[n][0] + "'");
 
                         CoolingZone_dataGridView.Rows.Add();
                         int nRow = CoolingZone_dataGridView.Rows.Count - 1;
@@ -112,15 +111,13 @@ namespace main.subcontents
                         CoolingZone_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Program.UTIL.ToDoubleOrZero(부하[0][1]) / 1000);
                         CoolingZone_dataGridView.Rows[nRow].Cells[7].Value = string.Format("{0:F1}", Program.UTIL.ToDoubleOrZero(Value[n][3]));
                         
+                        string[][] 설비 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Cooling_ce_Form", "냉방시스템", "존번호 ='" + Value[n][0] + "'");
                         if (설비.Length > 0)
                         {
                             List<string> check = new List<string>();
                             for (int i = 0; i < 설비.Length; i++)
                             {
-                                if (설비[i][1] != "VAV유닛" && 설비[i][1] != "CAV유닛" && 설비[i][1] != "팬파워유닛")
-                                {
-                                    check.Add(설비[i][0]);
-                                }
+                                check.Add(설비[i][0]);
                             }
                             if (check.Count == 1)
                             {
