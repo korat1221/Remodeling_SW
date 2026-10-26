@@ -1066,7 +1066,7 @@ namespace main.contents
             label15.AutoSize = true;
             label15.Font = new Font("나눔바른고딕", 9.75F);
             label15.ForeColor = SystemColors.ControlDark;
-            label15.Location = new Point(1005, 276);
+            label15.Location = new Point(1004, 276);
             label15.Name = "label15";
             label15.Size = new Size(79, 15);
             label15.TabIndex = 98;
@@ -1079,10 +1079,10 @@ namespace main.contents
             Ueff2_textBox.Enabled = false;
             Ueff2_textBox.Font = new Font("나눔바른고딕", 9.75F);
             Ueff2_textBox.ForeColor = SystemColors.ControlDark;
-            Ueff2_textBox.Location = new Point(1080, 276);
+            Ueff2_textBox.Location = new Point(1084, 276);
             Ueff2_textBox.Name = "Ueff2_textBox";
             Ueff2_textBox.ReadOnly = true;
-            Ueff2_textBox.Size = new Size(66, 15);
+            Ueff2_textBox.Size = new Size(116, 15);
             Ueff2_textBox.TabIndex = 110;
             Ueff2_textBox.TextAlign = HorizontalAlignment.Center;
             // 

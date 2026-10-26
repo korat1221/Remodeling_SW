@@ -1050,10 +1050,10 @@ namespace main.contents
             Ueff2_textBox.Enabled = false;
             Ueff2_textBox.Font = new Font("나눔바른고딕", 9.75F);
             Ueff2_textBox.ForeColor = SystemColors.ControlDark;
-            Ueff2_textBox.Location = new Point(1079, 248);
+            Ueff2_textBox.Location = new Point(1084, 248);
             Ueff2_textBox.Name = "Ueff2_textBox";
             Ueff2_textBox.ReadOnly = true;
-            Ueff2_textBox.Size = new Size(66, 15);
+            Ueff2_textBox.Size = new Size(116, 15);
             Ueff2_textBox.TabIndex = 137;
             Ueff2_textBox.TextAlign = HorizontalAlignment.Center;
             // 

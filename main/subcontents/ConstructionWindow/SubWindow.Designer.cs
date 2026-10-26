@@ -1682,10 +1682,10 @@ namespace main.subcontents.ConstructionWindow
             Uw_inst2_textBox.Enabled = false;
             Uw_inst2_textBox.Font = new Font("나눔바른고딕", 9.75F);
             Uw_inst2_textBox.ForeColor = SystemColors.ControlDark;
-            Uw_inst2_textBox.Location = new Point(1086, 283);
+            Uw_inst2_textBox.Location = new Point(1084, 283);
             Uw_inst2_textBox.Name = "Uw_inst2_textBox";
             Uw_inst2_textBox.ReadOnly = true;
-            Uw_inst2_textBox.Size = new Size(66, 15);
+            Uw_inst2_textBox.Size = new Size(116, 15);
             Uw_inst2_textBox.TabIndex = 149;
             Uw_inst2_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -1696,7 +1696,7 @@ namespace main.subcontents.ConstructionWindow
             Uw3_label.AutoSize = true;
             Uw3_label.Font = new Font("나눔바른고딕", 9.75F);
             Uw3_label.ForeColor = SystemColors.ControlDark;
-            Uw3_label.Location = new Point(1011, 283);
+            Uw3_label.Location = new Point(1004, 283);
             Uw3_label.Name = "Uw3_label";
             Uw3_label.Size = new Size(79, 15);
             Uw3_label.TabIndex = 148;

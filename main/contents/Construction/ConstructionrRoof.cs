@@ -1407,6 +1407,7 @@ namespace main.contents
                             Ucalc_dataGridView.Rows[i].Cells[5].Value = Material_d[i];
                             Ucalc_dataGridView.Rows[i].Cells[2].Value = Material[i];
                             Ucalc_dataGridView.Rows[i].Cells[3].Value = Material[i];
+                            Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "FFFFFF";
                             Calc_Air_Layer(i, Material_d[i]);
                         }
                         else if (Material[i] != "")
