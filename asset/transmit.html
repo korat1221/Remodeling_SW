@@ -163,23 +163,13 @@
         if (type === "roof" || type === "floor") {
           var height = 152;
           var html = '<table style="width:100%;border-spacing: 0;height:' + height + 'px">';
-          if (type === "roof") {
-            lines.push((10 + 20) * 6.2);
-          }
-          else {
-            lines.push((10 - 5) * 6.2);
-          }
-          lines.push(152);
-
           arr.forEach((el, idx) => {
 
               m = el.width / 4.9;
               html += '<tr><td style="width:100%;background-color:#' + el.bgcolor + ' !important;background:' + el.image + ';height:' + m + 'px;background-size:contain"></td></tr>';
 
               height -= m;
-              n += m + 1;
-              lines.push((10 + el.temper) * 6.2);
-              lines.push(152 - n);
+
           });
 
           if (height > 0) {
@@ -220,6 +210,18 @@
         }
 
         $('#tbl-wall').html(html);
+        if (type === "roof" || type === "floor") {
+          const origin = document.getElementById('cvs-wall').getBoundingClientRect();
+          const cells = document.querySelectorAll('#tbl-wall td');
+          lines = [];
+          if (arr.length > 0) {
+            lines.push((10 + (type === "roof" ? 20 : -5)) * 6.2, cells[0].getBoundingClientRect().bottom - origin.top);
+            for (let i = 0; i < arr.length; i++) {
+              lines.push((10 + arr[i].temper) * 6.2, cells[i].getBoundingClientRect().top - origin.top);
+            }
+          }
+        }
+
 
         var layer = new Konva.Layer();
         

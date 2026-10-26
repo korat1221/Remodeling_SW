@@ -855,7 +855,7 @@ namespace main.contents.Construction
         {
             if (e.RowIndex >= 0)
             {
-                if (e.ColumnIndex == 5)
+                if (e.ColumnIndex == 5 && Ucalc_dataGridView.Rows[e.RowIndex].Cells[2].Value?.ToString() != "기존바닥")
                 {
                     if (Ucalc_dataGridView.Rows[e.RowIndex].Cells[5].Value != null)
                     {
@@ -1012,34 +1012,31 @@ namespace main.contents.Construction
 
                 for (int k = 0; k < Ucalc_dataGridView.RowCount; k++)
                 {
-                    if (Ucalc_dataGridView.Rows[k].Cells[4].Value != null && Ucalc_dataGridView.Rows[k].Cells[5].Value != null && Ucalc_dataGridView.Rows[k].Cells[6].Value != null)
+                    if (Ucalc_dataGridView.Rows[k].Cells[3].Value != null)
                     {
-
-                        if (Ucalc_dataGridView.Rows[k].Cells[3].Value != null)
-                        {
-                            Material[k] = Ucalc_dataGridView.Rows[k].Cells[3].Value.ToString();
-                        }
-                        else { }
-                        Material_d[k] = !string.IsNullOrWhiteSpace(Ucalc_dataGridView.Rows[k].Cells[5].Value?.ToString()) ? Program.UTIL.ToDoubleOrZero(Ucalc_dataGridView.Rows[k].Cells[5].Value) : 0;
-                        Material_λ[k] = !string.IsNullOrWhiteSpace(Ucalc_dataGridView.Rows[k].Cells[4].Value?.ToString()) ? Program.UTIL.ToDoubleOrZero(Ucalc_dataGridView.Rows[k].Cells[4].Value) : 0;
-                        Material_R[k] = !string.IsNullOrWhiteSpace(Ucalc_dataGridView.Rows[k].Cells[6].Value?.ToString()) ? Program.UTIL.ToDoubleOrZero(Ucalc_dataGridView.Rows[k].Cells[6].Value) : 0;
-                        dtot += Material_d[k];
-                        Rtot += Material_R[k];
+                        Material[k] = Ucalc_dataGridView.Rows[k].Cells[3].Value.ToString();
                     }
                     else { }
+                    Material_d[k] = !string.IsNullOrWhiteSpace(Ucalc_dataGridView.Rows[k].Cells[5].Value?.ToString()) ? Program.UTIL.ToDoubleOrZero(Ucalc_dataGridView.Rows[k].Cells[5].Value) : 0;
+                    Material_λ[k] = !string.IsNullOrWhiteSpace(Ucalc_dataGridView.Rows[k].Cells[4].Value?.ToString()) ? Program.UTIL.ToDoubleOrZero(Ucalc_dataGridView.Rows[k].Cells[4].Value) : 0;
+                    Material_R[k] = !string.IsNullOrWhiteSpace(Ucalc_dataGridView.Rows[k].Cells[6].Value?.ToString()) ? Program.UTIL.ToDoubleOrZero(Ucalc_dataGridView.Rows[k].Cells[6].Value) : 0;
+                    dtot += Material_d[k];
+                    Rtot += Material_R[k];
                 }
                 Rtot = Rsi + Rse + Rtot;
+                if (Rtot <= 0 || !double.IsFinite(Rtot))
+                {
+                    runScript("drawWall([])");
+                    return;
+                }
                 double Q = (20 - (-5)) / Rtot;
 
-                // Material_T[0] = (20 - Q * Rsi);
-                Material_T[0] = 20;
+                Material_T[0] = 20 - Q * Rsi;
                 for (int k = 1; k < Ucalc_dataGridView.RowCount + 1; k++)
                 {
                     Material_T[k] = (Material_T[k - 1] - Q * Material_R[k - 1]);
                 }
-                //Material_T[Ucalc_dataGridView.RowCount + 1] = Material_T[Ucalc_dataGridView.RowCount] - Q * Rse;
-                Material_T[Ucalc_dataGridView.RowCount + 1] = -5;
-                Material_T[Ucalc_dataGridView.RowCount] = -5;
+                Material_T[Ucalc_dataGridView.RowCount + 1] = Material_T[Ucalc_dataGridView.RowCount] - Q * Rse;
 
 
                 Material_dtot_textBox.Text = String.Format("{0:F0}", dtot) + " mm";
@@ -1049,7 +1046,7 @@ namespace main.contents.Construction
 
                 int i = 0;
                 int count = Ucalc_dataGridView.RowCount + 1;
-                string s = "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 50,\"temper\":  " + Material_T[count] + "},";
+                string s = "{\"cate\":\"---\",\"bgcolor\":\"FFFFFF\",\"width\": 50,\"temper\":  " + Material_T[Ucalc_dataGridView.RowCount] + "},";
                 while (++i < count)
                 {
                     var cate = Ucalc_dataGridView.Rows[-i + count - 1].Cells[2].Value != null ? Ucalc_dataGridView.Rows[-i + count - 1].Cells[2].Value.ToString() : "---";
@@ -1426,126 +1423,134 @@ namespace main.contents.Construction
 
 
 
-                Ucalc_dataGridView.Rows.Clear();
-                for (int i = 0; i < 10; i++)
+                Ucalc_dataGridView.CellValueChanged -= dataGridView1_CellValueChanged;
+                try
                 {
-                    Material[i] = Load[0][(2 * i + 22)];
-                    Material_d[i] = Program.UTIL.ToDoubleOrZero(Load[0][(2 * i + 23)]);
-                }
-
-
-                for (int i = 0; i < 10; i++)
-                {
-                    if (Material[i] == "공기층")
+                    Ucalc_dataGridView.Rows.Clear();
+                    for (int i = 0; i < 10; i++)
                     {
-                        int nRow = Ucalc_dataGridView.Rows.Add();
-                        Ucalc_dataGridView.Rows[i].Cells[5].Value = Material_d[i];
-                        Ucalc_dataGridView.Rows[i].Cells[2].Value = Material[i];
-                        Ucalc_dataGridView.Rows[i].Cells[3].Value = Material[i];
-                        Calc_Air_Layer(i, Material_d[i]);
+                        Material[i] = Load[0][(2 * i + 22)];
+                        Material_d[i] = Program.UTIL.ToDoubleOrZero(Load[0][(2 * i + 23)]);
                     }
-                    else if (Material[i] != null && Material[i] != "")
+
+
+                    for (int i = 0; i < 10; i++)
                     {
-                        string[][] Value;
-                        string[][] OldFloor_U;
-                        int nRow = Ucalc_dataGridView.Rows.Add();
-                        Value = Program.DB.getValue(DB.type.ProjDB, "User_Material", "구분,열전도율", "재료명 = '" + Material[i] + "'");
-                        if (Value.Length == 0)
+                        if (Material[i] == "공기층")
                         {
-                            Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "구분,열전도율,색상", "재료명 = '" + Material[i] + "'");
+                            int nRow = Ucalc_dataGridView.Rows.Add();
+                            Ucalc_dataGridView.Rows[i].Cells[5].Value = Material_d[i];
+                            Ucalc_dataGridView.Rows[i].Cells[2].Value = Material[i];
+                            Ucalc_dataGridView.Rows[i].Cells[3].Value = Material[i];
+                            Calc_Air_Layer(i, Material_d[i]);
                         }
-                        if (Value.Length == 0)
+                        else if (Material[i] != null && Material[i] != "")
                         {
-                            OldFloor_U = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "열관류율", "명칭 = '" + Material[i] + "'");
-                            if (OldFloor_U.Length > 0)
+                            string[][] Value;
+                            string[][] OldFloor_U;
+                            int nRow = Ucalc_dataGridView.Rows.Add();
+                            Value = Program.DB.getValue(DB.type.ProjDB, "User_Material", "구분,열전도율", "재료명 = '" + Material[i] + "'");
+                            if (Value.Length == 0)
                             {
-                                OldFloor_R = 1 / Program.UTIL.ToDoubleOrZero(OldFloor_U[0][0]);
-                                Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "기존바닥";
-                                Ucalc_dataGridView.Rows[nRow].Cells[3].Value = OldFloor;
-                                string[][] value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "두께합계", "명칭 ='" + OldFloor + "'");
-                                if (value.Length > 0)
-                                {
-                                    Ucalc_dataGridView.Rows[nRow].Cells[5].Value = Program.UTIL.ToDoubleOrZero(value[0][0]).ToString("0");
-                                }
-                                Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldFloor_R);
-                                Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "6e6e6e";
+                                Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "구분,열전도율,색상", "재료명 = '" + Material[i] + "'");
                             }
-                        }
-                        else
-                        {
-                            Material_λ[i] = Program.UTIL.ToDoubleOrZero(Value[0][1]);
-                            Material_R[i] = Program.UTIL.ToDoubleOrZero(Load[0][(2 * i + 23)]) / 1000 / Material_λ[i];
-                            Ucalc_dataGridView.Rows[nRow].Cells[2].Value = Value[0][0];
-                            Ucalc_dataGridView.Rows[nRow].Cells[3].Value = Material[i];
-                            Ucalc_dataGridView.Rows[nRow].Cells[4].Value = Value[0][1];
-                            Ucalc_dataGridView.Rows[nRow].Cells[5].Value = Load[0][(2 * i + 23)];
-                            Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Material_R[i]);
-                            try
-                            { Ucalc_dataGridView.Rows[nRow].Cells[7].Value = Value[0][2]; }
-                            catch { }
-                        }
-
-
-                        if (Ucalc_dataGridView.Rows[nRow].Cells[2].Value != null)
-                        {
-                            if (Ucalc_dataGridView.Rows[nRow].Cells[7].Value == null)
+                            if (Value.Length == 0)
                             {
-                                switch (Ucalc_dataGridView.Rows[nRow].Cells[2].Value.ToString())
+                                OldFloor_U = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "열관류율", "명칭 = '" + Material[i] + "'");
+                                if (OldFloor_U.Length > 0)
                                 {
-                                    case "기존외벽":
-                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "6e6e6e";
-                                        break;
-                                    case "기존지붕":
-                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "6e6e6e";
-                                        break;
-                                    case "기존바닥":
-                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "6e6e6e";
-                                        break; ;
-                                    case "덧댐커튼월":
-                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "99CCFF";
-                                        break; ;
-                                    case "공기층":
-                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "FFFFFF";
-                                        break; ;
-                                    case "단열재":
-                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "FAEB78";
-                                        break; ;
-                                    case "시멘트모르타르/콘크리트":
-                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "b4b4b4";
-                                        break; ;
-                                    case "벽돌/타일":
-                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "D2691E";
-                                        break; ;
-                                    case "석재":
-                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "A98B59";
-                                        break; ;
-                                    case "보드":
-                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "497649";
-                                        break; ;
-                                    case "목재":
-                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "A06641";
-                                        break; ;
-                                    case "바닥재":
-                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "828282";
-                                        break; ;
-                                    case "방습재료":
-                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "a0a0a0";
-                                        break; ;
-                                    case "벽지":
-                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "497649";
-                                        break; ;
-                                    case "금속계":
-                                        Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "C8D7FF";
-                                        break; ;
+                                    OldFloor_R = 1 / Program.UTIL.ToDoubleOrZero(OldFloor_U[0][0]);
+                                    Ucalc_dataGridView.Rows[nRow].Cells[2].Value = "기존바닥";
+                                    Ucalc_dataGridView.Rows[nRow].Cells[3].Value = OldFloor;
+                                    string[][] value = Program.DB.getValue(DB.type.ProjDB, "ConstructionFloor", "두께합계", "명칭 ='" + OldFloor + "'");
+                                    if (value.Length > 0)
+                                    {
+                                        Ucalc_dataGridView.Rows[nRow].Cells[5].Value = Program.UTIL.ToDoubleOrZero(value[0][0]).ToString("0");
+                                    }
+                                    Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", OldFloor_R);
+                                    Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "6e6e6e";
                                 }
                             }
+                            else
+                            {
+                                Material_λ[i] = Program.UTIL.ToDoubleOrZero(Value[0][1]);
+                                Material_R[i] = Program.UTIL.ToDoubleOrZero(Load[0][(2 * i + 23)]) / 1000 / Material_λ[i];
+                                Ucalc_dataGridView.Rows[nRow].Cells[2].Value = Value[0][0];
+                                Ucalc_dataGridView.Rows[nRow].Cells[3].Value = Material[i];
+                                Ucalc_dataGridView.Rows[nRow].Cells[4].Value = Value[0][1];
+                                Ucalc_dataGridView.Rows[nRow].Cells[5].Value = Load[0][(2 * i + 23)];
+                                Ucalc_dataGridView.Rows[nRow].Cells[6].Value = string.Format("{0:F2}", Material_R[i]);
+                                try
+                                { Ucalc_dataGridView.Rows[nRow].Cells[7].Value = Value[0][2]; }
+                                catch { }
+                            }
+
+
+                            if (Ucalc_dataGridView.Rows[nRow].Cells[2].Value != null)
+                            {
+                                if (Ucalc_dataGridView.Rows[nRow].Cells[7].Value == null)
+                                {
+                                    switch (Ucalc_dataGridView.Rows[nRow].Cells[2].Value.ToString())
+                                    {
+                                        case "기존외벽":
+                                            Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "6e6e6e";
+                                            break;
+                                        case "기존지붕":
+                                            Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "6e6e6e";
+                                            break;
+                                        case "기존바닥":
+                                            Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "6e6e6e";
+                                            break; ;
+                                        case "덧댐커튼월":
+                                            Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "99CCFF";
+                                            break; ;
+                                        case "공기층":
+                                            Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "FFFFFF";
+                                            break; ;
+                                        case "단열재":
+                                            Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "FAEB78";
+                                            break; ;
+                                        case "시멘트모르타르/콘크리트":
+                                            Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "b4b4b4";
+                                            break; ;
+                                        case "벽돌/타일":
+                                            Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "D2691E";
+                                            break; ;
+                                        case "석재":
+                                            Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "A98B59";
+                                            break; ;
+                                        case "보드":
+                                            Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "497649";
+                                            break; ;
+                                        case "목재":
+                                            Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "A06641";
+                                            break; ;
+                                        case "바닥재":
+                                            Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "828282";
+                                            break; ;
+                                        case "방습재료":
+                                            Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "a0a0a0";
+                                            break; ;
+                                        case "벽지":
+                                            Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "497649";
+                                            break; ;
+                                        case "금속계":
+                                            Ucalc_dataGridView.Rows[nRow].Cells[7].Value = "C8D7FF";
+                                            break; ;
+                                    }
+                                }
+                            }
                         }
+                        else { }
                     }
-                    else { }
+
+                    Load_Material_Num();
+
                 }
-
-                Load_Material_Num();
-
+                finally
+                {
+                    Ucalc_dataGridView.CellValueChanged += dataGridView1_CellValueChanged;
+                }
                 dU = Program.UTIL.ToDoubleOrZero(Load[0][43]);
                 dU_textBox.Text = string.Format("{0:F3}", dU) + " W/(m" + Program.UTIL.Subscript(2, true) + "∙K)";
 
@@ -1568,6 +1573,11 @@ namespace main.contents.Construction
                 {
                     Icon_pictureBox.Load(Program.gPath + Image[0][0]);
                     Icon_pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+                if (UMethod == "계산")
+                {
+                    Calc_U();
+                    Calc_Ueff();
                 }
                 Load_FloorType_image(Type, Base);
                 Load_TB_Image();
