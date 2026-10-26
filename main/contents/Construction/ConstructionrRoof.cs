@@ -348,6 +348,9 @@ namespace main.contents
 
         private void Act_UcWMethod()
         {
+            U_textBox.ReadOnly = UMethod != "진단";
+            Material_dtot_textBox.Visible = UMethod == "계산";
+            Material_Rtot_textBox.Visible = UMethod == "계산";
             if (UMethod == "계산")
             {
                 tabControl1.SelectedTab = tabControl1.TabPages["Ucalc_tabPage"];
@@ -371,20 +374,31 @@ namespace main.contents
             else if (UMethod == "진단")
             {
                 U_textBox.Enabled = true;
+                U_textBox.Text = "";
                 U_textBox.BorderStyle = BorderStyle.FixedSingle;
                 DiIndi_comboBox.Visible = true;
                 Ucalc_dataGridView.Hide();
                 Ucalc_tabPage.Enabled = false;
                 webView21.Visible = false;
+                U_textBox_TextChanged(U_textBox, EventArgs.Empty);
             }
         }
 
 
         private void U_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (UMethod == "진단" && U_textBox.Text != string.Empty)
+            if (UMethod == "진단")
             {
                 Uvalue = Program.UTIL.ToDoubleOrZero(U_textBox.Text);
+                if (Uvalue <= 0 || !double.IsFinite(Uvalue))
+                {
+                    Uvalue = 0;
+                    dins = 0;
+                    Ueff = 0;
+                    Ueff_textBox.Text = "";
+                    Ueff2_textBox.Text = "";
+                    return;
+                }
                 dins = (1 / Uvalue) * 0.04 * 1000;
                 Calc_dU();
                 Calc_Ueff();
@@ -952,6 +966,7 @@ namespace main.contents
         }
         private void Calc_U()
         {
+            if (UMethod != "계산") { return; }
             if (Ucalc_dataGridView.RowCount > 0)
             {
                 dtot = 0;
@@ -1014,6 +1029,7 @@ namespace main.contents
 
         private void Calc_dins()
         {
+            if (UMethod != "계산") { return; }
             dins = 0;
             for (int k = 0; k < Ucalc_dataGridView.RowCount; k++)
             {
@@ -1527,6 +1543,10 @@ namespace main.contents
                 {
                     Calc_U();
                     Calc_Ueff();
+                }
+                else if (UMethod == "진단")
+                {
+                    U_textBox_TextChanged(U_textBox, EventArgs.Empty);
                 }
                 Load_RoofType_image(Type);
                 Load_TB_Image();
