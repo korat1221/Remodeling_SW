@@ -32,6 +32,7 @@
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             GeneralPanel = new Panel();
+            info = new Button();
             label7 = new Label();
             TB_Type_comboBox = new CustomComboBox();
             StructureType_textBox = new TextBox();
@@ -58,7 +59,6 @@
             panel2 = new Panel();
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
-            info = new Button();
             GeneralPanel.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)TB_dataGridView).BeginInit();
@@ -81,6 +81,21 @@
             GeneralPanel.Name = "GeneralPanel";
             GeneralPanel.Size = new Size(800, 47);
             GeneralPanel.TabIndex = 18;
+            // 
+            // info
+            // 
+            info.BackColor = SystemColors.ControlLight;
+            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
+            info.FlatStyle = FlatStyle.System;
+            info.Font = new Font("나눔바른고딕", 9.75F);
+            info.Location = new Point(765, 11);
+            info.Margin = new Padding(0);
+            info.Name = "info";
+            info.Size = new Size(23, 23);
+            info.TabIndex = 153;
+            info.Text = "?";
+            info.UseVisualStyleBackColor = false;
+            info.Click += info_Click;
             // 
             // label7
             // 
@@ -215,7 +230,7 @@
             TBName_textBox.Enabled = false;
             TBName_textBox.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             TBName_textBox.ForeColor = SystemColors.ControlDark;
-            TBName_textBox.Location = new Point(309, 7);
+            TBName_textBox.Location = new Point(429, 8);
             TBName_textBox.Name = "TBName_textBox";
             TBName_textBox.ShortcutsEnabled = false;
             TBName_textBox.Size = new Size(120, 15);
@@ -229,9 +244,9 @@
             dU_textBox.Enabled = false;
             dU_textBox.Font = new Font("나눔바른고딕", 9.75F, FontStyle.Bold);
             dU_textBox.ForeColor = Color.Black;
-            dU_textBox.Location = new Point(458, 7);
+            dU_textBox.Location = new Point(292, 8);
             dU_textBox.Name = "dU_textBox";
-            dU_textBox.Size = new Size(75, 15);
+            dU_textBox.Size = new Size(125, 15);
             dU_textBox.TabIndex = 134;
             dU_textBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -426,21 +441,6 @@
             pictureBox1.Size = new Size(202, 215);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
-            // 
-            // info
-            // 
-            info.BackColor = SystemColors.ControlLight;
-            info.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            info.FlatStyle = FlatStyle.System;
-            info.Font = new Font("나눔바른고딕", 9.75F);
-            info.Location = new Point(765, 11);
-            info.Margin = new Padding(0);
-            info.Name = "info";
-            info.Size = new Size(23, 23);
-            info.TabIndex = 153;
-            info.Text = "?";
-            info.UseVisualStyleBackColor = false;
-            info.Click += info_Click;
             // 
             // Floor_TB
             // 
