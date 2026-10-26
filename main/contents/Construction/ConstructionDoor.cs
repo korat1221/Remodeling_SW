@@ -1126,8 +1126,7 @@ namespace main.contents
                 d_InstallSide_textBox.Text = Load[0][27] == "" ? "" : Load[0][27] + " m";
                 d_InstallBottom_textBox.Text = Load[0][28] == "" ? "" : Load[0][28] + " m";
 
-                DoorUDinsGlass = Program.UTIL.ToDoubleOrZero(Load[0][29]);
-                dUinst_textBox.Text = String.Format("{0:F3}", DoorUDinsGlass) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
+                dUinst_textBox.Text = String.Format("{0:F3}", Program.UTIL.ToDoubleOrZero(Load[0][29])) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 Load_DoorType_image2();
                 Load_DoorType_image3();
                 Load_DoorType_image4();
@@ -1176,6 +1175,7 @@ namespace main.contents
                     UD2_textBox.Text = String.Format("{0:F3}", DoorUDGlass) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
                 }
             }
+            if (!string.IsNullOrWhiteSpace(dUinst_textBox.Text)) { UDinstall_Glass(); }
         }
 
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
