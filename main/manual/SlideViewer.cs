@@ -88,8 +88,16 @@ namespace main.info
 
         private void LoadSlidesFromFolder(string folderPath)
         {
-            currentSlides = Directory.GetFiles(folderPath, "*.html").ToList();
-            currentSlides.Sort(); // 정렬
+            string[] pdfFiles = Directory.GetFiles(folderPath, "*.pdf");
+            if (pdfFiles.Length > 0)
+            {
+                currentSlides = new List<string>(pdfFiles);
+            }
+            else
+            {
+                currentSlides = Directory.GetFiles(folderPath, "*.html").ToList();
+            }
+            currentSlides.Sort();
             currentSlideIndex = 0;
 
             if (currentSlides.Count > 0)
@@ -102,7 +110,13 @@ namespace main.info
         {
             if (index >= 0 && index < currentSlides.Count)
             {
-                webView.Source = new Uri($"file:///{currentSlides[index].Replace("\\", "/")}");
+                bool isPdf = string.Equals(Path.GetExtension(currentSlides[index]), ".pdf", StringComparison.OrdinalIgnoreCase);
+                string documentUrl = new Uri(Path.GetFullPath(currentSlides[index])).AbsoluteUri;
+                if (isPdf)
+                {
+                    documentUrl += "#toolbar=0&navpanes=0&view=Fit";
+                }
+                webView.Source = new Uri(documentUrl);
 
                 btnPrevious.Enabled = index > 0;
                 btnNext.Enabled = index < currentSlides.Count - 1;
@@ -133,9 +147,12 @@ namespace main.info
 
         public SlideViewer(string basePath)
         {
-            this.Text = "HTML Slides Viewer";
-            this.Width = 980;
-            this.Height = 860;
+            this.Text = "ZEROFIX Manual";
+            this.StartPosition = FormStartPosition.CenterScreen;
+            Rectangle workingArea = Screen.FromControl(this).WorkingArea;
+            // Manual PDF pages are 720 x 540 points (4:3); allow space for both button panels and PDF margins.
+            int pageWidth = Math.Min(960, Math.Min(workingArea.Width - (this.Width - this.ClientSize.Width) - 36, (workingArea.Height - (this.Height - this.ClientSize.Height) - 136) * 4 / 3));
+            this.ClientSize = new Size(pageWidth + 16, pageWidth * 3 / 4 + 116);
 
             FlowLayoutPanel folderPanel = new FlowLayoutPanel();
             folderPanel.Dock = DockStyle.Top;
@@ -148,11 +165,7 @@ namespace main.info
             this.Controls.Add(folderPanel);
 
             WebView2 webView = new WebView2();
-            webView.Top = folderPanel.Bottom;
-            webView.Left = 0;
-            webView.Width = this.ClientSize.Width;
-            webView.Height = this.ClientSize.Height - webView.Top - 50;
-            webView.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+            webView.Dock = DockStyle.Fill;
             this.Controls.Add(webView);
 
             var panel = new Panel();
@@ -174,6 +187,7 @@ namespace main.info
             panel.Controls.Add(btnPrevious);
             panel.Controls.Add(btnNext);
             this.Controls.Add(panel);
+            webView.BringToFront();
 
             slideLoader = new SlideLoader(webView, folderPanel, btnNext, btnPrevious);
 
