@@ -525,6 +525,7 @@ namespace main
             CALC.Cal_Qfh_Prepare(NowProjNum[0][0]);
             CALC.Cal_Qfw_Prepare(NowProjNum[0][0]);
             CALC.Heating_DHW_RECalc(NowProjNum[0][0], NowProjNum[0][0]);
+            CALC.Heating_DHW_BoilerConnect(NowProjNum[0][0], NowProjNum[0][0]);
 
             Cal_Qfh_Rule(NowProjNum[0][0], 검토유형);
 
@@ -676,7 +677,7 @@ namespace main
                     String Combi = Value[0][1];
                     Heating1.Carrier = Value[0][2];
                     String Type = Value[0][3];
-                    double Power = Program.UTIL.ToDoubleOrZero(Value[0][4]) * Program.UTIL.ToDoubleOrZero(Heating1.BoilerNum_split[n]);
+                    double Power = Program.UTIL.ToDoubleOrZero(Value[0][4]);
                     double eta_Pn = Rule/ 100;
                     double eta_Pint = Rule / 100;
                     double W = Program.UTIL.ToDoubleOrZero(Value[0][7]);

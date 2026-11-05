@@ -15,6 +15,7 @@ namespace main
     internal class Heating
     {
         public String HeatingNum;
+        public Dictionary<string, DHW> BoilerDHWs = new Dictionary<string, DHW>();
         public string HeatingName; public String SelectZone_nonsplit; String SelectAHU_nonsplit;
         public String SystemLoacation, SLRL, Complex, MainSystem, Sub1System, Sub2System;
         public String SelectBoiler_nonsplit, BoilerNum_nonsplit;
@@ -1293,20 +1294,52 @@ namespace main
                 }
             }
         }
-        public void Calc_beta_gen()
+        public void Calc_beta_gen(string ProjNum)
         {
+            // 생산 부하율과 생산수온은 선택된 생산설비의 합산 정격출력[kW]을 기준으로 계산한다.
+            // 태양열과 연료전지는 Qh_outg에서 먼저 차감하므로 잔여부하를 담당하는 설비 용량만 합산한다.
+            double Power = 0;
+            for (int n = 0; n < SelectBoiler_split.Count; n++)
+            {
+                string[][] Value = Program.DB.getValue(ProjNum, "User_Boiler", "용량", "번호 = '" + SelectBoiler_split[n] + "'");
+                if (Value.Length > 0) { Power += Program.UTIL.ToDoubleOrZero(Value[0][0]) * Program.UTIL.ToDoubleOrZero(BoilerNum_split[n]); }
+            }
+            for (int n = 0; n < SelectAirHP_split.Count; n++)
+            {
+                string[][] Value = Program.DB.getValue(ProjNum, "User_AirHP", "난방정격용량", "번호 = '" + SelectAirHP_split[n] + "'");
+                if (Value.Length > 0) { Power += Program.UTIL.ToDoubleOrZero(Value[0][0]) * Program.UTIL.ToDoubleOrZero(AirHPNum_split[n]); }
+            }
+            for (int n = 0; n < SelectGroundHP_split.Count; n++)
+            {
+                string[][] Value = Program.DB.getValue(ProjNum, "User_GroundHP", "난방정격용량", "번호 = '" + SelectGroundHP_split[n] + "'");
+                if (Value.Length > 0) { Power += Program.UTIL.ToDoubleOrZero(Value[0][0]) * Program.UTIL.ToDoubleOrZero(GroundHPNum_split[n]); }
+            }
+            for (int n = 0; n < SelectGWHP_split.Count; n++)
+            {
+                string[][] Value = Program.DB.getValue(ProjNum, "User_GroundWHP", "난방정격용량", "번호 = '" + SelectGWHP_split[n] + "'");
+                if (Value.Length > 0) { Power += Program.UTIL.ToDoubleOrZero(Value[0][0]) * Program.UTIL.ToDoubleOrZero(GWHPNum_split[n]); }
+            }
+            for (int n = 0; n < SelectABS_split.Count; n++)
+            {
+                string[][] Value = Program.DB.getValue(ProjNum, "User_ABS", "난방용량", "번호 = '" + SelectABS_split[n] + "'");
+                if (Value.Length > 0) { Power += Program.UTIL.ToDoubleOrZero(Value[0][0]) * Program.UTIL.ToDoubleOrZero(ABSNum_split[n]); }
+            }
+            for (int n = 0; n < SelectDH_split.Count; n++)
+            {
+                string[][] Value = Program.DB.getValue(ProjNum, "User_DH", "용량", "번호 = '" + SelectDH_split[n] + "'");
+                if (Value.Length > 0) { Power += Program.UTIL.ToDoubleOrZero(Value[0][0]); }
+            }
             double[] theta_w_flw_beta = new double[12], theta_w_ret_beta = new double[12];
 
             for (int mth = 0; mth < 12; mth++)
             {
-                beta_h_gen[mth] = (Qhb_mth_sum[mth] + Qh_ce[mth] + Qh_d[mth] + Qh_s[mth]) / (Qh_max_sum / 1000 * th_avg[mth]);
+                beta_h_gen[mth] = Power > 0 && th_avg[mth] > 0 ? Qh_outg[mth] / (Power * th_avg[mth]) : 0;
                 if (double.IsNaN(beta_h_gen[mth])) { beta_h_gen[mth] = 0; }
-                theta_w_flw_beta[mth] = (theta_w_flw - theta_i_h_set_avg) * Math.Pow(beta_h_s[mth], 1 / 1.3) + theta_i_h_set_avg;
-                theta_w_ret_beta[mth] = (theta_w_ret - theta_i_h_set_avg) * Math.Pow(beta_h_s[mth], 1 / 1.3) + theta_i_h_set_avg;
+                theta_w_flw_beta[mth] = (theta_w_flw - theta_i_h_set_avg) * Math.Pow(beta_h_gen[mth], 1 / 1.3) + theta_i_h_set_avg;
+                theta_w_ret_beta[mth] = (theta_w_ret - theta_i_h_set_avg) * Math.Pow(beta_h_gen[mth], 1 / 1.3) + theta_i_h_set_avg;
 
                 dtheta_gen[mth] = theta_w_flw_beta[mth] - theta_w_ret_beta[mth];
                 theta_av_gen[mth] = 0.5 * (theta_w_flw_beta[mth] + theta_w_ret_beta[mth]);
-                Qh_outg[mth] = Qhb_mth_sum[mth] + Qh_ce[mth] + Qh_d[mth] + Qh_s[mth];
                 if (double.IsNaN(dtheta_gen[mth])) { dtheta_gen[mth] = 0; }
                 if (double.IsNaN(theta_av_gen[mth])) { theta_av_gen[mth] = 0; }
                 if (double.IsNaN(Qh_outg[mth])) { Qh_outg[mth] = 0; }
@@ -1497,16 +1530,9 @@ namespace main
                     String Combi = Value[0][1];
                     Carrier = Value[0][2];
                     String Type = Value[0][3];
-                    double Power = Program.UTIL.ToDoubleOrZero(Value[0][4]) * Program.UTIL.ToDoubleOrZero(BoilerNum_split[n]);
-                    string[][] 기존신규 = Program.DB.getValue(ProjNum, "HeatingSystem_Form", "프로젝트유형", "번호 = '" + HeatingNum + "'");
+                    double Power = Program.UTIL.ToDoubleOrZero(Value[0][4]);
                     double eta_Pn = Program.UTIL.ToDoubleOrZero(Value[0][5]) / 100;
                     double eta_Pint = Program.UTIL.ToDoubleOrZero(Value[0][6]) / 100;
-                    if (기존신규[0][0] == "1")
-                    {
-                        eta_Pn = eta_Pn * 0.95;
-                        eta_Pint = eta_Pint * 0.95;
-                    }
-
                     double W = Program.UTIL.ToDoubleOrZero(Value[0][7]);
                     double W_0 = Program.UTIL.ToDoubleOrZero(Value[0][8]);
                     double count = Program.UTIL.ToDoubleOrZero(BoilerNum_split[n]);
@@ -1528,55 +1554,75 @@ namespace main
             double H_Pint = Program.UTIL.ToDoubleOrZero(Value[0][8]);
             double n_Pint = Program.UTIL.ToDoubleOrZero(Value[0][9]);
             Boiler boiler = new Boiler(Num, Combi, Carrier, Type, Power, eta_Pn, eta_Pint, W, W_0, count, K, L, E, F, G_Pn, H_Pn, n_Pn, G_Pint, H_Pint, n_Pint);
-            double theta_pn, theta_pint, theta_con;
-            theta_pn = (80 + 60) / 2;
-            theta_pint = (80 + 30) / 2;
-            theta_con = (50 + 30) / 2;
+            double theta_pn = 70;
+            double theta_pint = Type.Contains("펠릿") || Type.Contains("전기") ? 70 : Type.Contains("콘덴싱") ? 30 : Type.Contains("저온") ? 40 : 50;
             Value = Program.DB.getValue(DB.type.BaseDB_Heating, "연소난방비", "연소난방비", "연료 = '" + Carrier + "'");
             double fHN_HI = Program.UTIL.ToDoubleOrZero(Value[0][0]);
+            // 국내 제품효율은 총발열량 기준이며, 온도보정 전에 순발열량 기준으로 환산한다.
+            eta_Pn *= fHN_HI;
+            eta_Pint *= fHN_HI;
+            if (Power <= 0 || count <= 0 || eta_Pn <= 0 || eta_Pint <= 0) { return; }
             double qP0_70 = E * Math.Pow(Power, F) / 100;
-            double tw_Pn_day = 1; //나중에 급탕과 연결 해야 함 
-            double[] Pd_in = new double[12];
+            double[] tw_Pn_day = new double[12];
+            DHW DHW1 = BoilerDHWs.ContainsKey(Num) ? BoilerDHWs[Num] : null;
             double beta_gen_pint = 0.3, qp0_theta;
             double[] Qh_gen_mth = new double[12];
 
             for (int mth = 0; mth < 12; mth++)
             {
-                Pd_in[mth] = Qh_outg[mth] /Math.Max(1, th_avg[mth]);
+                tw_Pn_day[mth] = DHW1 == null ? 0 : DHW1.Calc_Boiler_OperatingTime(mth);
+                double theta_brm = SystemLoacation == "외기" ? theta_e[mth] : SystemLoacation == "단열외피 외부" ? 13 : 20;
+                // 기술서의 정격 성능점 손실은 월평균 출력이 아닌 제품 정격출력으로 산정한다.
+                // 운전 부하율과 생산수온도 합산 정격출력 기준으로 사전에 계산한다.
 
                 eta_gen_Pn[mth] = eta_Pn + K * (theta_pn - theta_av_gen[mth]);
-                Pgen_Pn[mth] = Math.Max((fHN_HI - eta_gen_Pn[mth]) / eta_gen_Pn[mth] * Pd_in[mth], 0);
+                double Pgen_Pn_i = Math.Max((fHN_HI - eta_gen_Pn[mth]) / eta_gen_Pn[mth] * Power, 0) * count;
 
                 eta_gen_Pint[mth] = eta_Pint + L * (theta_pint - theta_av_gen[mth]);
-                Pgen_Pint[mth] = Math.Max((fHN_HI - eta_gen_Pint[mth]) / eta_gen_Pint[mth] * beta_gen_pint * Pd_in[mth], 0);
+                double Pgen_Pint_i = Math.Max((fHN_HI - eta_gen_Pint[mth]) / eta_gen_Pint[mth] * beta_gen_pint * Power, 0) * count;
 
-                qp0_theta = Math.Max(qP0_70 * (theta_av_gen[mth] - theta_ih_avg[mth]) / 50, 0);
-                Pgen_P0[mth] = qp0_theta * Pd_in[mth] / eta_Pn * fHN_HI;
+                qp0_theta = qP0_70 * Math.Pow(Math.Max((theta_av_gen[mth] - theta_brm) / 50, 0), 1.25);
+                double Pgen_P0_i = qp0_theta * Power / eta_Pn * fHN_HI * count;
+                double Qh_gen_day_i;
                 if (beta_h_gen[mth] <= beta_gen_pint)
                 {
-                    Qh_gen_day[mth] = (beta_h_gen[mth] / beta_gen_pint * (Pgen_Pint[mth] - Pgen_P0[mth]) + Pgen_P0[mth]) * (thrL_day[mth] - tw_Pn_day);
+                    Qh_gen_day_i = (beta_h_gen[mth] / beta_gen_pint * (Pgen_Pint_i - Pgen_P0_i) + Pgen_P0_i) * Math.Max(thrL_day[mth] - tw_Pn_day[mth], 0);
                 }
                 else
                 {
-                    Qh_gen_day[mth] = ((beta_h_gen[mth] - beta_gen_pint) / (1 - beta_gen_pint) * (Pgen_Pn[mth] - Pgen_Pint[mth]) + Pgen_Pint[mth]) * (thrL_day[mth] - tw_Pn_day);
+                    Qh_gen_day_i = ((beta_h_gen[mth] - beta_gen_pint) / (1 - beta_gen_pint) * (Pgen_Pn_i - Pgen_Pint_i) + Pgen_Pint_i) * Math.Max(thrL_day[mth] - tw_Pn_day[mth], 0);
                 }
 
-                Qh_gen_mth[mth] = Qh_gen_day[mth] * dhrB[mth];
+                Pgen_Pn[mth] += Pgen_Pn_i;
+                Pgen_Pint[mth] += Pgen_Pint_i;
+                Pgen_P0[mth] += Pgen_P0_i;
+                Qh_gen_day[mth] += Qh_gen_day_i;
+                Qh_gen_mth[mth] = Qh_gen_day_i * dhrB[mth];
                 Qh_gen[mth] += Qh_gen_mth[mth];
                 Qh_f[mth] = Qh_outg[mth] + Qh_gen[mth];
             }
 
+            // 정격출력과 소비전력 제한은 한 대 기준으로 적용한 뒤 대수를 합산한다.
+            W_0 *= count;
             double Paux_Pn, Paux_Pint;
-            Paux_Pn = Math.Min((G_Pn + H_Pn * Math.Pow(Power, n_Pn)) / 1000, W / 1000);
-            Paux_Pint = Math.Min((G_Pint + H_Pint * Math.Pow(Power, n_Pint)) / 1000, W / 1000);
+            Paux_Pn = Math.Min((G_Pn + H_Pn * Math.Pow(Power, n_Pn)) / 1000, W / 1000) * count;
+            Paux_Pint = Math.Min((G_Pint + H_Pint * Math.Pow(Power, n_Pint)) / 1000, W / 1000) * count;
             double[] Ph_gen_aux = new double[12], Wh_g_i = new double[12];
             for (int mth = 0; mth < 12; mth++)
             {
                 if (Qhb_mth_sum[mth] > 0)
                 {
-                    Ph_gen_aux[mth] = (beta_h_gen[mth] / beta_gen_pint * (Paux_Pint - W_0 / 1000) + W_0 / 1000);
-                    Ph_gen_aux[mth] = ((beta_h_gen[mth] - beta_gen_pint) / (1 - beta_gen_pint) * (Paux_Pn - Paux_Pint) + Paux_Pint);
-                    Wh_g_i[mth] = Ph_gen_aux[mth] * (thrL[mth] - tw_Pn_day * dop_mth_avg[mth]) + W_0 / 1000 * Math.Max(0,(24 * dmth[mth] - thrL[mth]));
+                    if (beta_h_gen[mth] <= beta_gen_pint)
+                    {
+                        Ph_gen_aux[mth] = beta_h_gen[mth] / beta_gen_pint * (Paux_Pint - W_0 / 1000) + W_0 / 1000;
+                    }
+                    else
+                    {
+                        Ph_gen_aux[mth] = (beta_h_gen[mth] - beta_gen_pint) / (1 - beta_gen_pint) * (Paux_Pn - Paux_Pint) + Paux_Pint;
+                    }
+                    // 급탕에서 반영하는 비난방일의 대기전력은 난방에서 다시 더하지 않는다.
+                    double dhw_standby_days = DHW1 == null ? 0 : Math.Max(DHW1.dop_mth_avg[mth] - dhrB[mth], 0);
+                    Wh_g_i[mth] = Ph_gen_aux[mth] * Math.Max(thrL[mth] - tw_Pn_day[mth] * dhrB[mth], 0) + W_0 / 1000 * Math.Max(24 * dmth[mth] - thrL[mth] - 24 * dhw_standby_days, 0);
                     Wh_g[mth] += Wh_g_i[mth];
                 }
             }

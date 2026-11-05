@@ -230,6 +230,7 @@ namespace main
             Cal_Qfh_Prepare(NowProjNum[0][0]);
             Cal_Qfw_Prepare(NowProjNum[0][0]);
             Heating_DHW_RECalc(NowProjNum[0][0], NowProjNum[0][0]);
+            Heating_DHW_BoilerConnect(NowProjNum[0][0], NowProjNum[0][0]);
             Cal_Qfh(NowProjNum[0][0]);
             Cal_Qfw(NowProjNum[0][0]);
             Cal_Qfc(NowProjNum[0][0]);
@@ -342,7 +343,12 @@ namespace main
                 Heating1.Calc_Qd(ProjNum);
                 Heating1.Calc_beta_s();
                 Heating1.Calc_Qh_s(ProjNum);
-                Heating1.Calc_beta_gen();
+                // 생산설비 계산 전에 신재생에서 사용할 공급요구량만 준비한다.
+                for (int mth = 0; mth < 12; mth++)
+                {
+                    Heating1.Qh_outg[mth] = Heating1.Qhb_mth_sum[mth] + Heating1.Qh_ce[mth] + Heating1.Qh_d[mth] + Heating1.Qh_s[mth];
+                    if (double.IsNaN(Heating1.Qh_outg[mth])) { Heating1.Qh_outg[mth] = 0; }
+                }
             }
         }
         public static void Cal_Qfw_Prepare(string ProjNum)
@@ -369,6 +375,32 @@ namespace main
             // 모든 태양열을 차감한 부하로 연료전지를 계산한다.
             for (int i = 0; i < HeatingNum.Length; i++) { Heatings[HeatingNum[i][0]].LoadCalc_FC(HeatingProjNum, DHWNum); }
             for (int i = 0; i < DHWNum.Length; i++) { DHWs[DHWNum[i][0]].LoadCalc_FC(DHWProjNum); }
+            // 모든 신재생을 차감한 잔여부하로 생산 부하율과 수온을 확정한다. DB 저장 시에는 재계산하지 않는다.
+            for (int i = 0; i < HeatingNum.Length; i++) { Heatings[HeatingNum[i][0]].Calc_beta_gen(HeatingProjNum); }
+        }
+        public static void Heating_DHW_BoilerConnect(string HeatingProjNum, string DHWProjNum)
+        {
+            string[][] HeatingNum = Program.DB.getValue(HeatingProjNum, "HeatingSystem_Form", "번호");
+            string[][] DHWNum = Program.DB.getValue(DHWProjNum, "DHWSystem_Form", "번호");
+            // 연료전지와 같이 설비번호로 겸용 보일러를 연결한다. 계산 결과나 DB 저장에는 관여하지 않는다.
+            for (int i = 0; i < HeatingNum.Length; i++)
+            {
+                Heating Heating1 = Heatings[HeatingNum[i][0]];
+                for (int n = 0; n < Heating1.SelectBoiler_split.Count; n++)
+                {
+                    string BoilerNum = Heating1.SelectBoiler_split[n].ToString();
+                    for (int k = 0; k < DHWNum.Length; k++)
+                    {
+                        DHW DHW1 = DHWs[DHWNum[k][0]];
+                        if (DHW1.SelectBoiler_split.Contains(BoilerNum) && !DHW1.BoilerHeatings.ContainsKey(BoilerNum))
+                        {
+                            Heating1.BoilerDHWs[BoilerNum] = DHW1;
+                            DHW1.BoilerHeatings[BoilerNum] = Heating1;
+                            break;
+                        }
+                    }
+                }
+            }
         }
         public static void Cal_Qfh(string ProjNum)
         {
