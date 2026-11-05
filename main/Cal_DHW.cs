@@ -11,8 +11,6 @@ namespace main
     internal class DHW
     {
         public String DHWNum, DHWName; String SelectZone_nonsplit;
-        public Dictionary<string, Heating> BoilerHeatings = new Dictionary<string, Heating>();
-        double BoilerPower;
         String SystemLocation;
         String PipeType, Complex, MainSystem, Sub1System, Sub2System;
         string BoilerType = null;
@@ -236,12 +234,6 @@ namespace main
 
                 BoilerNum_nonsplit = Value[0][1];
                 BoilerNum_split = Split_(BoilerNum_nonsplit);
-                BoilerPower = 0;
-                for (int n = 0; n < SelectBoiler_split.Count; n++)
-                {
-                    string[][] BoilerValue = Program.DB.getValue(ProjNum, "User_Boiler", "용량", "번호 = '" + SelectBoiler_split[n] + "'");
-                    if (BoilerValue.Length > 0) { BoilerPower += Program.UTIL.ToDoubleOrZero(BoilerValue[0][0]) * Program.UTIL.ToDoubleOrZero(BoilerNum_split[n]); }
-                }
                 if (SelectBoiler_split.Count > 0)
                 {
                     Value = Program.DB.getValue(ProjNum, "User_Boiler", "Type", "번호 = '" + SelectBoiler_split[0] + "'");
@@ -913,12 +905,6 @@ namespace main
                 CALC.Register_RESystem(news);
             }
         }
-        // 정격용량 비례 배분: 모든 보일러가 같은 시간 운전하며, 신재생 차감 후 남은 급탕 부하를 담당한다.
-        public double Calc_Boiler_OperatingTime(int mth)
-        {
-            if (BoilerPower <= 0 || dop_mth_avg[mth] <= 0 || Qw_outg[mth] <= 0) { return 0; }
-            return Qw_outg[mth] / (BoilerPower * dop_mth_avg[mth]);
-        }
         public void LoadCalc_Boiler(string ProjNum)
         {
             for (int n = 0; n < SelectBoiler_split.Count; n++)
@@ -942,6 +928,15 @@ namespace main
         }
         public void Calc_Qh_gen_Boiler(String Num, String Combi, String Type, double Power, double eta_Pn, double eta_Pint, double W, double W_0, double count)
         {
+            Heating Heating1 = null;
+            foreach (Heating system in CALC.Heatings.Values)
+            {
+                if (system.SelectBoiler_split.Contains(Num))
+                {
+                    Heating1 = system;
+                    break;
+                }
+            }
             string[][] Value = Program.DB.getValue(DB.type.BaseDB_Heating, "보일러", "온도보정계수K,온도보정계수L,대기상태열손실E,대기상태열손실F,보조설비G_Pn,보조설비H_Pn,보조설비n_Pn,보조설비G_Pint,보조설비H_Pint,보조설비n_Pint", "종류 = '" + Type + "'");
             if (Value.Length > 0)
             {
@@ -963,37 +958,34 @@ namespace main
                 // 국내 제품효율을 순발열량 기준으로 환산한 뒤 온도보정한다.
                 eta_Pn *= fHN_HI;
                 eta_Pint *= fHN_HI;
-                if (Power <= 0 || count <= 0 || eta_Pn <= 0) { return; }
+                if (Power <= 0 || eta_Pn <= 0) { return; }
                 double qP0_70 = E * Math.Pow(Power, F) / 100;
                 double[] tw_Pn_day = new double[12];
-                double[] standby_days = new double[12];
-                Heating Heating1 = BoilerHeatings.ContainsKey(Num) ? BoilerHeatings[Num] : null;
                 double qp0_theta;
 
                 for (int mth = 0; mth < 12; mth++)
                 {
+                    tw_Pn_day[mth] = dop_mth_avg[mth] > 0 && Qw_outg[mth] > 0 ? Qw_outg[mth] / (Power * dop_mth_avg[mth]) : 0;
                     eta_pn_w[mth] = eta_Pn + K * (theta_pn - theta_wc);
                     double theta_brm = SystemLocation == "외기" ? theta_e[mth] : SystemLocation == "단열외피 외부" ? 13 : 20;
                     qp0_theta = qP0_70 * Math.Pow(Math.Max((theta_wc - theta_brm) / 50, 0), 1.25);
-                    tw_Pn_day[mth] = Calc_Boiler_OperatingTime(mth);
-                    // 겸용 보일러의 난방 가동일에는 난방에서 대기손실을 반영하므로 급탕에서 중복 합산하지 않는다.
-                    standby_days[mth] = Math.Max(dop_mth_avg[mth] - (Heating1 == null ? 0 : Heating1.dhrB[mth]), 0);
-                    double Qw_gen_day_i = Math.Max((fHN_HI - eta_pn_w[mth]) / eta_pn_w[mth] * Power, 0) * count;
-                    double Qw_gen_p0_day_i = qp0_theta * Power / eta_Pn * fHN_HI * Math.Max(th_op_day_avg - tw_Pn_day[mth], 0) * count;
-                    Qw_gen_day[mth] += Qw_gen_day_i;
-                    Qw_gen_p0_day[mth] += Qw_gen_p0_day_i;
-                    Qw_gen[mth] += Qw_gen_day_i * tw_Pn_day[mth] * dop_mth_avg[mth] + Qw_gen_p0_day_i * standby_days[mth];
+                    double Qw_gen_day_i = Math.Max((fHN_HI - eta_pn_w[mth]) / eta_pn_w[mth] * Power, 0);
+                    // 급탕 대기열손실의 일일 적용시간은 급탕 가동시간과 같게 본다.
+                    double Qw_gen_p0_day_i = qp0_theta * Power / eta_Pn * fHN_HI * tw_Pn_day[mth];
+                    Qw_gen_day[mth] = Qw_gen_day_i;
+                    Qw_gen_p0_day[mth] = Qw_gen_p0_day_i;
+                    Qw_gen[mth] = (Qw_gen_day_i * tw_Pn_day[mth] + Qw_gen_p0_day_i) * dop_mth_avg[mth];
                     Qw_f[mth] = Qw_outg[mth] + Qw_gen[mth];
                 }
 
                 double Paux_Pn, Paux_Pint;
-                Paux_Pn = Math.Min((G_Pn + H_Pn * Math.Pow(Power, n_Pn)) / 1000, W / 1000) * count;
+                Paux_Pn = Math.Min((G_Pn + H_Pn * Math.Pow(Power, n_Pn)) / 1000, W / 1000);
                 Paux_Pint = Math.Min((G_Pint + H_Pint * Math.Pow(Power, n_Pint)) / 1000, W / 1000);
                 double[] Ph_gen_aux = new double[12], Wh_g_i = new double[12];
                 for (int mth = 0; mth < 12; mth++)
                 {
 
-                    Wh_g_i[mth] = Paux_Pn * tw_Pn_day[mth] * dop_mth_avg[mth] + W_0 / 1000 * count * Math.Max(24 - tw_Pn_day[mth], 0) * standby_days[mth];
+                    Wh_g_i[mth] = Paux_Pn * tw_Pn_day[mth] * dop_mth_avg[mth] + W_0 / 1000 * Math.Max(24 - tw_Pn_day[mth], 0) * Math.Max(dop_mth_avg[mth] - (Heating1 == null ? 0 : Heating1.dhrB[mth]), 0);
                     Ww_g[mth] += Wh_g_i[mth];
                 }
             }

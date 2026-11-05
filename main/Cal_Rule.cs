@@ -525,7 +525,6 @@ namespace main
             CALC.Cal_Qfh_Prepare(NowProjNum[0][0]);
             CALC.Cal_Qfw_Prepare(NowProjNum[0][0]);
             CALC.Heating_DHW_RECalc(NowProjNum[0][0], NowProjNum[0][0]);
-            CALC.Heating_DHW_BoilerConnect(NowProjNum[0][0], NowProjNum[0][0]);
 
             Cal_Qfw_Rule(NowProjNum[0][0], 검토유형);
 
@@ -895,9 +894,9 @@ namespace main
                     DHW dhw1 = CALC.DHWs[DHWNum[i][0]];
                     dhw1.LoadCalc_DH(ProjNum);
 
-                    if (검토유형 != "보일러")
-                    { dhw1.LoadCalc_Boiler(ProjNum); }
-                    else { LoadCalc_Boiler_DHW(dhw1); }
+                    if (검토유형 == "보일러")
+                    { LoadCalc_Boiler_DHW(dhw1); }
+                    else { dhw1.LoadCalc_Boiler(ProjNum); }
 
                     dhw1.LoadCalc_HP(ProjNum);
                     dhw1.nan();
@@ -906,7 +905,7 @@ namespace main
         }
         public void LoadCalc_Boiler_DHW(DHW dhw1)
         {
-            double Rule = 90.0 / 100.0;
+            const double BoilerComparisonEfficiency = 0.90;
             for (int n = 0; n < dhw1.SelectBoiler_split.Count; n++)
             {
                 string[][] Value = Program.DB.getValue(DB.type.ProjDB, "User_Boiler", "번호,난방급탕,연료,Type,용량,전부하효율,부분부하효율,소비전력,대기전력", "번호 = '" + dhw1.SelectBoiler_split[n] + "'");
@@ -917,8 +916,8 @@ namespace main
                     dhw1.Carrier = Value[0][2];
                     String Type = Value[0][3];
                     double Power = Program.UTIL.ToDoubleOrZero(Value[0][4]);
-                    double eta_Pn = Rule;
-                    double eta_Pint = Rule;
+                    double eta_Pn = BoilerComparisonEfficiency;
+                    double eta_Pint = BoilerComparisonEfficiency;
                     double W = Program.UTIL.ToDoubleOrZero(Value[0][7]);
                     double W_0 = Program.UTIL.ToDoubleOrZero(Value[0][8]);
                     double count = Program.UTIL.ToDoubleOrZero(dhw1.BoilerNum_split[n]);
