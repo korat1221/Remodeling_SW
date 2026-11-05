@@ -1090,7 +1090,7 @@ namespace main
 
             for (int mth = 0; mth < 12; mth++)
             {
-                Qh_gen_DH[mth] = H_DS * Qw_outg[mth] / Qh_outg_a * (theta_DS - theta_i[mth]);
+                Qh_gen_DH[mth] = H_DS * dmth[mth]/365 * (theta_DS - theta_i[mth]);
             }
             for (int mth = 0; mth < 12; mth++)
             {
