@@ -4534,7 +4534,7 @@ namespace main.contents
 
                     Lv_pipe = GetPipeOuterDiameter(lvWW, "주배관").ToString();
                     Ls_pipe = Lv_pipe;
-                    La_pipe = GetPipeOuterDiameter(laWW, "분기관").ToString();
+                    La_pipe = Math.Min(GetPipeOuterDiameter(laWW, "분기관"), GetPipeOuterDiameter(lvWW, "주배관")).ToString();
 
                     Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','난방','주배관', '" + Lv_pipe + "','" + PipeIns + "','" + PipeIns_Ramda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
                     Program.DB.setValue(DB.type.ProjDB, "Distribution_Form", "번호,설비유형,배관유형,배관외경,단열재,열전도율,적용방법", "'" + Num + "','난방','수직배관', '" + Ls_pipe + "','" + PipeIns + "','" + PipeIns_Ramda_textBox.Text + "','" + PipeD_SelectMode + "'", "번호,배관유형");
