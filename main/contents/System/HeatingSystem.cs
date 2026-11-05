@@ -40,6 +40,7 @@ namespace main.contents
         String[] SelectHP_nonsplit = new String[3], HPNum_nonsplit = new String[3], HPSupply_nonsplit = new String[3], HPControl_nonsplit = new String[3]; //외기/지열/지하수 순 
         String PumpUse, PumpMethod, Pump1, Pump2, Pump1Valve, Pump2Valve, Pump1Control, Pump2Control; double Pump1Num, Pump2Num, Pump1Head, Pump2Head, Pump1Volume, Pump2Volume;
         String GPumpUse, GPumpMethod, GPump1, GPump2, GPump1Valve, GPump2Valve, GPump1Control, GPump2Control; double GPump1Num, GPump2Num, GPump1Head, GPump2Head, GPump1Volume, GPump2Volume;
+        double MaxPipeLength;
         String ce1Type, ce2Type; int ce_SelectRow; int Boiler_SelectRow; int HP_SelectRow; int AS_SelectRow; int DH_SelectRow; int Solar_SelectRow; int FC_SelectRow;
         String StorageUse, StoragePumpUse, StoragePump; double Vs;
         String[] SystemType = { "보일러", "외기 히트펌프", "지열 히트펌프", "지하수 히트펌프", "태양열 융합 히트펌프", "흡수식온수기", "지역난방", "태양열시스템", "연료전지" };
@@ -2289,9 +2290,6 @@ namespace main.contents
                 PumpUse = PumpUse_comboBox.SelectedItem.ToString();
                 if (PumpUse == "펌프 있음")
                 {
-                    PumpHead_label.Visible = false;
-                    PumpHead_button.Visible = false;
-                    PumpHead_textBox.Visible = false;
                     PumpMethod_label.Visible = true;
                     PumpMethod_comboBox.Visible = true;
                     if ((MainSystem == "지열 히트펌프" || MainSystem == "지하수 히트펌프") || (Sub1System == "지열 히트펌프" || Sub1System == "지하수 히트펌프") || (Sub2System == "지열 히트펌프" || Sub2System == "지하수 히트펌프"))
@@ -2305,9 +2303,6 @@ namespace main.contents
                 {
                     if (MainSystem == "보일러")
                     {
-                        PumpHead_label.Visible = true;
-                        PumpHead_button.Visible = true;
-                        PumpHead_textBox.Visible = true;
                         double Max = AHU_Qmax_textBox.Text == null || AHU_Qmax_textBox.Text.ToString() == "" ? 0 : Program.UTIL.ToDoubleOrZero(AHU_Qmax_textBox.Text.ToString());
                         Max = Zone_Qmax_textBox.Text == null || Zone_Qmax_textBox.Text.ToString() == "" ? Max + 0 : Max + Program.UTIL.ToDoubleOrZero(Zone_Qmax_textBox.Text.ToString());
 
@@ -2318,13 +2313,6 @@ namespace main.contents
                             dtheta = Program.UTIL.ToDoubleOrZero(v[0][0]) - Program.UTIL.ToDoubleOrZero(v[0][1]);
                         }
                         Pump1Volume = Max * 3600 / (dtheta * 4.18); //kg/h
-                    }
-                    else
-                    {
-                        PumpHead_label.Visible = false;
-                        PumpHead_button.Visible = false;
-                        PumpHead_textBox.Visible = false;
-
                     }
                     PumpMethod_label.Visible = false;
                     PumpMethod_comboBox.Visible = false;
@@ -2344,16 +2332,6 @@ namespace main.contents
             }
             Dispump();
 
-        }
-        private void PumpHead_button_Click(object sender, EventArgs e)
-        {
-            PumpCal pumppower_form = new PumpCal();
-            DialogResult result = pumppower_form.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                Pump1Head = pumppower_form.PumpHead;
-                PumpHead_textBox.Text = Pump1Head.ToString("0.00");
-            }
         }
         private void PumpMethod_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -3390,8 +3368,19 @@ namespace main.contents
                 return false;
             }
         }
+        private void Cal_PumpHead()
+        {
+            double floorLoss = ce1Type == "구조체일체형" || ce2Type == "구조체일체형" ? 4.5 : 0;
+            double radiatorLoss = ce1Type == "방열기형" || ce2Type == "방열기형" ? 2 : 0;
+            Pump1Head = 0.13 * MaxPipeLength + floorLoss + 1 + 10 + radiatorLoss;
+        }
+
         private void Save(bool isManualSave = false)
         {
+            if (PumpUse == "펌프 없음(설비 내장)" && MaxPipeLength > 0)
+            {
+                Cal_PumpHead();
+            }
             remove_gen();
             BoilerNum_nonsplit = "";
             SolarNum_nonsplit = ""; SolarDirection_nonsplit = ""; SolarDegree_nonsplit = "";
@@ -3429,7 +3418,7 @@ namespace main.contents
             }
             else
             {
-                Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수,펌프1유량,펌프2유량,펌프1양정,펌프2양정", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PumpUse + "','" + PumpMethod + "','" + Pump1 + "','" + Pump2 + "','" + Pump1Valve + "','" + Pump2Valve + "','" + Pump1Control + "','" + Pump2Control + "','" + Pump1Num.ToString() + "','" + Pump2Num.ToString() + "','" + Pump1Volume.ToString() + "','" + Pump2Volume.ToString() + "','" + Pump1Head.ToString() + "','" + Pump2Head.ToString() + "'", "번호");
+                Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,펌프유무,펌프방식,펌프1종류,펌프2종류,펌프1밸브,펌프2밸브,펌프1제어,펌프2제어,펌프1대수,펌프2대수,펌프1유량,펌프2유량,펌프1양정,펌프2양정,내장펌프최대배관길이", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + PumpUse + "','" + PumpMethod + "','" + Pump1 + "','" + Pump2 + "','" + Pump1Valve + "','" + Pump2Valve + "','" + Pump1Control + "','" + Pump2Control + "','" + Pump1Num.ToString() + "','" + Pump2Num.ToString() + "','" + Pump1Volume.ToString() + "','" + Pump2Volume.ToString() + "','" + Pump1Head.ToString() + "','" + Pump2Head.ToString() + "','" + MaxPipeLength.ToString() + "'", "번호");
             }
 
         }
@@ -3616,6 +3605,7 @@ namespace main.contents
             HPControl_nonsplit[0] = null; HPControl_nonsplit[1] = null; HPControl_nonsplit[2] = null;
             PumpUse = null; PumpMethod = null; Pump1 = null; Pump2 = null; Pump1Valve = null; Pump2Valve = null; Pump1Control = null; Pump2Control = null; Pump1Num = 0; Pump2Num = 0;
             GPump1 = null; GPump2 = null; GPump1Valve = null; GPump2Valve = null; GPump1Control = null; GPump2Control = null; GPump1Num = 0; GPump2Num = 0;
+            MaxPipeLength = 0;
             Pump1Head = 0; Pump2Head = 0; Pump1Volume = 0; Pump2Volume = 0; GPump1Head = 0; GPump2Head = 0; GPump1Volume = 0; GPump2Volume = 0;
             ce1Type = null; ce2Type = null;
             roomauto1 = null; roomauto2 = null;
@@ -3667,7 +3657,6 @@ namespace main.contents
             PumpMethod_comboBox.SelectedItem = null;
             Pump1_textBox.Text = null;
             Pump2_textBox.Text = null;
-            PumpHead_textBox.Text = null;
             Pump_dataGridView.Columns.Clear();
             Pump_dataGridView.Rows.Clear();
 
@@ -4046,21 +4035,12 @@ namespace main.contents
                 }
                 else
                 {
+                    Pump1Head = Program.UTIL.ToDoubleOrZero(Value[0][12]);
+                    string[][] maxPipeLength = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "내장펌프최대배관길이", "번호 = '" + ID + "'");
+                    MaxPipeLength = maxPipeLength.Length > 0 ? Program.UTIL.ToDoubleOrZero(maxPipeLength[0][0]) : 0;
                     if (MainSystem == "보일러")
                     {
-                        PumpHead_label.Visible = true;
-                        PumpHead_button.Visible = true;
-                        PumpHead_textBox.Visible = true;
                         Pump1Volume = Program.UTIL.ToDoubleOrZero(Value[0][10]);
-                        Pump1Head = Program.UTIL.ToDoubleOrZero(Value[0][12]);
-                        PumpHead_textBox.Text = Pump1Head.ToString("0.00");
-                    }
-                    else
-                    {
-                        PumpHead_label.Visible = false;
-                        PumpHead_button.Visible = false;
-                        PumpHead_textBox.Visible = false;
-
                     }
                     PumpMethod_label.Visible = false;
                     PumpMethod_comboBox.Visible = false;
@@ -4364,11 +4344,15 @@ namespace main.contents
                 return;
             }
 
-            Pipe_Length PL = new Pipe_Length(Num, "난방");
+            Pipe_Length PL = new Pipe_Length(Num, "난방", hasBuiltInPump: PumpUse == "펌프 없음(설비 내장)");
             DialogResult result = PL.ShowDialog();
 
             if (result == DialogResult.OK)
             {
+                if (PL.MaxPipeLength > 0)
+                {
+                    MaxPipeLength = PL.MaxPipeLength;
+                }
                 Create_Pipe_Table();
             }
         }

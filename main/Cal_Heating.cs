@@ -548,7 +548,7 @@ namespace main
                 else
                 {
                     Pump1Volume = Program.UTIL.ToDoubleOrZero(Value[0][10]);
-                    Pump1Head = Program.UTIL.ToDoubleOrZero(Value[0][12]); 
+                    Pump1Head = Program.UTIL.ToDoubleOrZero(Value[0][12]);
                 }
             }
         }
@@ -1213,11 +1213,12 @@ namespace main
                 Pump.Clear();
                 if (PumpUse != "펌프 있음")
                 {
-                    double dPrad = 0;
-                    if (ce1Type == "방열기형" || ce2Type == "방열기형") { dPrad = 2; }
-                    double dP = 0.13 * Pump1Head + 4.5 + 1 + 10 + dPrad;
-                    double eta = Math.Max(20, -1.403 * Math.Pow(Math.Log(Pump1Volume / 60 * 1000), 2) + 26.35 * Math.Log(Pump1Volume / 60 * 1000) - 61.3) /100;
-                    double Phydr = dP * Pump1Volume / 3600;
+                    double heatingPower = HeatingNominalPower > 0 ? HeatingNominalPower : Qh_max_sum;
+                    double volume = Math.Max(0, heatingPower) / (1.15 * 5); // m³/h
+                    double pumpFlow = volume * 1000 / 60; // L/min
+                    double Phydr = Pump1Head * volume / 3.6; // W
+                    double logFlow = Math.Log(pumpFlow);
+                    double eta = Math.Max(20, -1.403 * Math.Pow(logFlow, 2) + 26.35 * logFlow - 61.3) / 100;
                     double power = Phydr / eta;
                     Cal_Pump("내장형 펌프", "유량밸런스없음", "정속펌프(제어없음)", 1, power);
                 }

@@ -6,7 +6,6 @@ using System.Data;
 using System.Data.Entity.Core.Common.CommandTrees;
 using System.Drawing;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -23,9 +22,11 @@ namespace main.subcontents.CoolingSystem
         string Num, System, DHWPipeType;
         CheckBox DHWSameRoom_checkBox;
         double QC_max;
+        readonly bool HasBuiltInPump;
+        public double MaxPipeLength { get; private set; }
 
 
-        public Pipe_Length(string num, string system, string pipeType = null)
+        public Pipe_Length(string num, string system, string pipeType = null, bool hasBuiltInPump = false)
         {
             InitializeComponent();
             this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
@@ -49,6 +50,8 @@ namespace main.subcontents.CoolingSystem
             Num = num; //냉방설비번호
             System = system; //설비유형(냉방,난방,급탕)
             DHWPipeType = pipeType;
+
+            HasBuiltInPump = hasBuiltInPump;
            
            
             //글자보여주기
@@ -67,17 +70,9 @@ namespace main.subcontents.CoolingSystem
             if (System == "급탕")
             {
                 label1.Text = "급탕 배관은 서비스 영역을 기준으로 산정합니다.";
-                //label3.Text = "분기관 공급경로";
                 ps_ComboBox.Width = 200;
                 ps_ComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-                //ps_ComboBox.Items.AddRange(new object[] { "공용벽·샤프트", "그 외" });
                 ps_ComboBox.Items.AddRange(new object[] { "외벽포함", "건물내부" , "생산·공급설비 동일 실" });
-                //DHWSameRoom_checkBox = new CheckBox();
-                //DHWSameRoom_checkBox.Text = "생산·공급설비 동일 실";
-                //DHWSameRoom_checkBox.AutoSize = true;
-                //DHWSameRoom_checkBox.Location = new Point(Pipe_Length_pictureBox.Right + 12, Cal_button.Top + 3);
-                //DHWSameRoom_checkBox.Visible = false;
-                //GeneralPanel.Controls.Add(DHWSameRoom_checkBox);
             }
             else
             {
@@ -102,7 +97,6 @@ namespace main.subcontents.CoolingSystem
                 label5.Visible = false;
                 label6.Visible = false;
                 Cal_button.Visible = false;
-                //if (System == "급탕") DHWSameRoom_checkBox.Visible = false;
                 MessageBox.Show("배관 관련 아래 표에 직접 입력하세요");
                 Load_Pipe_Table();
             }
@@ -118,7 +112,6 @@ namespace main.subcontents.CoolingSystem
                 label5.Visible = true;
                 label6.Visible = true;
                 Cal_button.Visible = true;
-               // if (System == "급탕") DHWSameRoom_checkBox.Visible = true;
             }
         }
 
@@ -130,7 +123,7 @@ namespace main.subcontents.CoolingSystem
             Pipe_dataGridView.Columns.Add("A1", "배관길이.[m]"); //위에서 직접입력 또는 표준값 적용하면 작성되도록 이벤트 발생
         }
 
-        private void Load_Pipe_Table()
+        private void Load_Pipe_Table(double? maxPipeLength = null)
         {
             Create_Pipe_Table();
 
@@ -166,26 +159,11 @@ namespace main.subcontents.CoolingSystem
 
                 }
 
-                    //Pipe_dataGridView.Rows[i].Cells[3].Value = PipeIns;
-                    //Pipe_dataGridView.Rows[i].Cells[4].Value = string.Format("{0:F3}", PipeIns_Ramda);
-
-                    ////2,4,5
-                    //if (!double.TryParse(Pipe_dataGridView.Rows[i].Cells[2].Value?.ToString(), out double di)) continue;
-                    //if (!double.TryParse(Pipe_dataGridView.Rows[i].Cells[4].Value?.ToString(), out double lamda)) continue;
-                    //if (!double.TryParse(Pipe_dataGridView.Rows[i].Cells[5].Value?.ToString(), out double t)) continue;
-
-                    //// mm → m 변환
-                    //double d_i = di / 10000;
-                    //double d_a = (t * 2 + di) / 1000.0;
-
-                    //// 선형열관류율 계산
-                    //double psi = Math.PI /
-                    //     (1 / (2 * lamda) * Math.Log(d_a / d_i)
-                    //      + 1 / (8 * d_a));
-
-                    //// 결과 저장 (Cells[6]에 출력)
-                    //Pipe_dataGridView.Rows[i].Cells[6].Value = psi.ToString("F3");
-                
+            }
+            if (HasBuiltInPump)
+            {
+                int row = Pipe_dataGridView.Rows.Add("최대 배관길이(양정 계산용)", maxPipeLength?.ToString("F2"));
+                Pipe_dataGridView.Rows[row].Cells[1].ReadOnly = maxPipeLength.HasValue;
             }
         }
 
@@ -272,38 +250,18 @@ namespace main.subcontents.CoolingSystem
                 La = 0.55 * ll * lw * nf;
             }
 
-            Load_Pipe_Table();
+            Load_Pipe_Table(HasBuiltInPump ? 2 * (ll + lw / 2 + hf * nf + (ll + lw)) : null);
         }
         
-        //private void Pipe_dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    if (e.RowIndex >= 0)
-        //    {
-        //        try
-        //        {
-        //            if (e.ColumnIndex == 5)
-        //            {
-        //                if (double.TryParse(Pipe_dataGridView.Rows[e.RowIndex].Cells[2].Value?.ToString(), out double di) &&
-        //                    double.TryParse(Pipe_dataGridView.Rows[e.RowIndex].Cells[4].Value?.ToString(), out double lamda) &&
-        //                    double.TryParse(Pipe_dataGridView.Rows[e.RowIndex].Cells[5].Value?.ToString(), out double da))
-        //                {
-        //                    double _di = di / 1000;
-        //                    double _da = 2 * (da / 1000) + _di;
-        //                    double term1 = (1.0 / (2.0 * lamda)) * Math.Log(_da / _di);
-        //                    double term2 = 1.0 / (8 * _da);
-        //                    Pipe_dataGridView.Rows[e.RowIndex].Cells[6].Value = (Math.PI / (term1 + term2)).ToString("0.000");
-        //                }
-        //                else Pipe_dataGridView.Rows[e.RowIndex].Cells[6].Value = "";
-        //            }
-        //        }
-        //        catch { }
-
-        //    }
-        //}
         private bool dataGridView_Check()
         {
             foreach (DataGridViewRow selectrow in Pipe_dataGridView.Rows)
             {
+                if (selectrow.Index == 3 && (!double.TryParse(selectrow.Cells[1].Value?.ToString(), out double maxPipeLength) || !double.IsFinite(maxPipeLength) || maxPipeLength <= 0))
+                {
+                    MessageBox.Show("최대 배관길이를 0보다 큰 값으로 입력해 주세요.");
+                    return false;
+                }
                 if (!double.TryParse(selectrow.Cells[1].Value?.ToString(), out double di))
                 {
                     MessageBox.Show("배관 길이를 입력해주세요.", "Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -315,8 +273,9 @@ namespace main.subcontents.CoolingSystem
         private void Save()
         {
             string 배관유형, 배관길이;
-            foreach (DataGridViewRow selectrow in Pipe_dataGridView.Rows)
+            for (int i = 0; i < 3 && i < Pipe_dataGridView.Rows.Count; i++)
             {
+                DataGridViewRow selectrow = Pipe_dataGridView.Rows[i];
                 배관유형 = selectrow.Cells[0].Value.ToString();
                 배관길이 = selectrow.Cells[1].Value.ToString();
                               
@@ -331,6 +290,10 @@ namespace main.subcontents.CoolingSystem
             if (dataGridView_Check() == false)
             {
                 return;
+            }
+            if (HasBuiltInPump && Pipe_dataGridView.Rows.Count > 3)
+            {
+                MaxPipeLength = Program.UTIL.ToDoubleOrZero(Pipe_dataGridView.Rows[3].Cells[1].Value.ToString());
             }
             Save();
             this.DialogResult = DialogResult.OK;
@@ -371,6 +334,14 @@ namespace main.subcontents.CoolingSystem
                         {
                             Pipe_dataGridView.Rows[k].Cells[i].Value = 배관[0][i].ToString();
                         }
+                    }
+                }
+                if (HasBuiltInPump)
+                {
+                    string[][] maxPipeLength = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "내장펌프최대배관길이", "번호 = '" + Num + "'");
+                    if (maxPipeLength.Length > 0 && Program.UTIL.ToDoubleOrZero(maxPipeLength[0][0]) > 0)
+                    {
+                        Pipe_dataGridView.Rows.Add("최대 배관길이(양정 계산용)", maxPipeLength[0][0]);
                     }
                 }
             }

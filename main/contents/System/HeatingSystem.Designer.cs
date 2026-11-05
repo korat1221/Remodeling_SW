@@ -166,9 +166,6 @@ namespace main.contents
             PipeIns_button = new Button();
             PipeIns_Ramda_label2 = new Label();
             Pipe_dataGridView = new DataGridView();
-            PumpHead_label = new Label();
-            PumpHead_textBox = new TextBox();
-            PumpHead_button = new Button();
             GPump2_textBox = new TextBox();
             GPump1_label = new Label();
             GPump2_button = new Button();
@@ -1660,9 +1657,6 @@ namespace main.contents
             Qhd_tabPage.Controls.Add(Pump_dataGridView);
             Qhd_tabPage.Controls.Add(Pipe_panel);
             Qhd_tabPage.Controls.Add(Pipe_dataGridView);
-            Qhd_tabPage.Controls.Add(PumpHead_label);
-            Qhd_tabPage.Controls.Add(PumpHead_textBox);
-            Qhd_tabPage.Controls.Add(PumpHead_button);
             Qhd_tabPage.Controls.Add(GPump2_textBox);
             Qhd_tabPage.Controls.Add(GPump1_label);
             Qhd_tabPage.Controls.Add(GPump2_button);
@@ -1911,47 +1905,7 @@ namespace main.contents
             Pipe_dataGridView.Size = new Size(986, 90);
             Pipe_dataGridView.TabIndex = 217;
             Pipe_dataGridView.CellValueChanged += Pipe_dataGridView_CellValueChanged;
-            // 
-            // PumpHead_label
-            // 
-            PumpHead_label.AutoSize = true;
-            PumpHead_label.Font = new Font("나눔바른고딕", 9.75F);
-            PumpHead_label.Location = new Point(34, 38);
-            PumpHead_label.Name = "PumpHead_label";
-            PumpHead_label.Size = new Size(31, 15);
-            PumpHead_label.TabIndex = 215;
-            PumpHead_label.Text = "양정";
-            PumpHead_label.Visible = false;
-            // 
-            // PumpHead_textBox
-            // 
-            PumpHead_textBox.BackColor = Color.White;
-            PumpHead_textBox.BorderStyle = BorderStyle.FixedSingle;
-            PumpHead_textBox.Font = new Font("나눔바른고딕", 9.75F);
-            PumpHead_textBox.ForeColor = SystemColors.ControlText;
-            PumpHead_textBox.Location = new Point(94, 34);
-            PumpHead_textBox.Name = "PumpHead_textBox";
-            PumpHead_textBox.Size = new Size(120, 22);
-            PumpHead_textBox.TabIndex = 214;
-            PumpHead_textBox.TextAlign = HorizontalAlignment.Center;
-            PumpHead_textBox.Visible = false;
-            // 
-            // PumpHead_button
-            // 
-            PumpHead_button.BackColor = SystemColors.ControlLight;
-            PumpHead_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
-            PumpHead_button.FlatStyle = FlatStyle.System;
-            PumpHead_button.Font = new Font("나눔바른고딕", 12F, FontStyle.Bold);
-            PumpHead_button.Location = new Point(68, 34);
-            PumpHead_button.Margin = new Padding(0);
-            PumpHead_button.Name = "PumpHead_button";
-            PumpHead_button.Size = new Size(23, 23);
-            PumpHead_button.TabIndex = 213;
-            PumpHead_button.Text = "+";
-            PumpHead_button.UseVisualStyleBackColor = false;
-            PumpHead_button.Visible = false;
-            PumpHead_button.Click += PumpHead_button_Click;
-            // 
+            //
             // GPump2_textBox
             // 
             GPump2_textBox.BackColor = Color.White;
@@ -2929,9 +2883,6 @@ namespace main.contents
         private PictureBox SubDist2pictureBox;
         private PictureBox stopumppictureBox;
         private Button infoHeating;
-        private Button PumpHead_button;
-        private Label PumpHead_label;
-        private TextBox PumpHead_textBox;
         private Panel Pipe_panel;
         private Button Pipe_Length_button;
         private Label label17;
