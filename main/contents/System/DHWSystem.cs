@@ -2935,7 +2935,7 @@ namespace main.contents
                 return;
             }
 
-            Pipe_Length PL = new Pipe_Length(Num, "급탕");
+            Pipe_Length PL = new Pipe_Length(Num, "급탕", PipeType);
             DialogResult result = PL.ShowDialog();
 
             if (result == DialogResult.OK)

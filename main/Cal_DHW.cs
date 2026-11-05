@@ -428,7 +428,7 @@ namespace main
             {
                 theta_w_mean[0] = theta_w_flw;
                 theta_w_mean[1] = theta_w_flw;
-                theta_w_mean[2] = PsiA > 0 ? 25 * Math.Pow(PsiA, -0.2) : 0;
+                theta_w_mean[2] = PsiA > 0 ? (BoilerType == "순간온수기" ? 20 : 25) * Math.Pow(PsiA, -0.2) : 0;
             }
 
             //theta_w_mean_off 계산
@@ -515,6 +515,12 @@ namespace main
                     Qwd_A[mth] = Math.Max(0.001 * PsiA * LA * (theta_w_mean[2] - theta_amb[mth, 2]) * tw_calc[mth, 2], 0);
                 }
                    
+                // 급탕 기술서 V6 12쪽: 순환배관의 주·수직배관 길이는 열손실 계산에 50%만 반영.
+                if (PipeType == "순환배관")
+                {
+                    Qwd_V[mth] *= 0.5;
+                    Qwd_S[mth] *= 0.5;
+                }
                 Qw_d[mth] = Qwd_V[mth] + Qwd_S[mth] + Qwd_A[mth];
             }
         }

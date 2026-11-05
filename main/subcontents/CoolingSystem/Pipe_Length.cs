@@ -20,11 +20,12 @@ namespace main.subcontents.CoolingSystem
         double Lv_pipe, Ls_pipe, La_pipe; //외경
         double Lv_insul, Ls_insul, La_insul; //단열두께
         String PipeIns = "보온재"; double PipeIns_Ramda = 0.035;
-        string Num, System;
+        string Num, System, DHWPipeType;
+        CheckBox DHWSameRoom_checkBox;
         double QC_max;
 
 
-        public Pipe_Length(string num, string system)
+        public Pipe_Length(string num, string system, string pipeType = null)
         {
             InitializeComponent();
             this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
@@ -47,6 +48,7 @@ namespace main.subcontents.CoolingSystem
 
             Num = num; //냉방설비번호
             System = system; //설비유형(냉방,난방,급탕)
+            DHWPipeType = pipeType;
            
            
             //글자보여주기
@@ -62,7 +64,24 @@ namespace main.subcontents.CoolingSystem
             Cal_button.Visible = false;
 
             Pipe_Length_ComboBox.Items.AddRange(new object[] { "직접입력", "표준값" });
-            ps_ComboBox.Items.AddRange(new object[] { "외벽포함", "건물내부" });
+            if (System == "급탕")
+            {
+                label1.Text = "급탕 배관은 서비스 영역을 기준으로 산정합니다.";
+                label3.Text = "분기관 공급경로";
+                ps_ComboBox.Width = 100;
+                ps_ComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+                ps_ComboBox.Items.AddRange(new object[] { "공용벽·샤프트", "그 외" });
+                DHWSameRoom_checkBox = new CheckBox();
+                DHWSameRoom_checkBox.Text = "생산·공급설비 동일 실";
+                DHWSameRoom_checkBox.AutoSize = true;
+                DHWSameRoom_checkBox.Location = new Point(Pipe_Length_pictureBox.Right + 12, Cal_button.Top + 3);
+                DHWSameRoom_checkBox.Visible = false;
+                GeneralPanel.Controls.Add(DHWSameRoom_checkBox);
+            }
+            else
+            {
+                ps_ComboBox.Items.AddRange(new object[] { "외벽포함", "건물내부" });
+            }
 
             Load_SaveValue();
 
@@ -82,6 +101,7 @@ namespace main.subcontents.CoolingSystem
                 label5.Visible = false;
                 label6.Visible = false;
                 Cal_button.Visible = false;
+                if (System == "급탕") DHWSameRoom_checkBox.Visible = false;
                 MessageBox.Show("배관 관련 아래 표에 직접 입력하세요");
                 Load_Pipe_Table();
             }
@@ -97,6 +117,7 @@ namespace main.subcontents.CoolingSystem
                 label5.Visible = true;
                 label6.Visible = true;
                 Cal_button.Visible = true;
+                if (System == "급탕") DHWSameRoom_checkBox.Visible = true;
             }
         }
 
@@ -196,22 +217,62 @@ namespace main.subcontents.CoolingSystem
                 return;
             }
 
-            if (ps_ComboBox.Text == "외벽포함")
+            if (System == "급탕")
             {
-                Lv = 2 * ll + 0.016525 * ll * lw * lw;
-            }
-            else if (ps_ComboBox.Text == "건물내부")
-            {
-                Lv = 2 * ll + 0.0325 * ll * lw + 6;
+                if (DHWPipeType != "단일배관" && DHWPipeType != "순환배관")
+                {
+                    MessageBox.Show("급탕설비에서 배관유형을 먼저 선택해 주세요.");
+                    return;
+                }
+                // 급탕 기술서 V6 10쪽: 급탕 서비스 영역과 배관유형별 표준 길이.
+                if (DHWPipeType == "단일배관")
+                {
+                    Lv = ll + 0.0625 * ll * lw;
+                    Ls = 0.038 * ll * lw * hf * nf;
+                }
+                else
+                {
+                    Lv = 2 * ll + 0.0125 * ll * lw;
+                    Ls = 0.075 * ll * lw * hf * nf;
+                }
+                if (ps_ComboBox.Text == "공용벽·샤프트")
+                {
+                    La = 0.05 * ll * lw * nf;
+                }
+                else if (ps_ComboBox.Text == "그 외")
+                {
+                    La = 0.075 * ll * lw * nf;
+                }
+                else
+                {
+                    MessageBox.Show("분기관 공급경로를 선택해 주세요.");
+                    return;
+                }
+                if (DHWSameRoom_checkBox.Checked)
+                {
+                    Lv = 0;
+                    Ls = 0;
+                }
             }
             else
             {
-                MessageBox.Show("PS 설치유형을 선택해 주세요.");
-                return;
-            }
+                if (ps_ComboBox.Text == "외벽포함")
+                {
+                    Lv = 2 * ll + 0.016525 * ll * lw * lw;
+                }
+                else if (ps_ComboBox.Text == "건물내부")
+                {
+                    Lv = 2 * ll + 0.0325 * ll * lw + 6;
+                }
+                else
+                {
+                    MessageBox.Show("PS 설치유형을 선택해 주세요.");
+                    return;
+                }
 
-            Ls = 0.025 * ll * lw * hf * nf;
-            La = 0.55 * ll * lw * nf;
+                Ls = 0.025 * ll * lw * hf * nf;
+                La = 0.55 * ll * lw * nf;
+            }
 
             Load_Pipe_Table();
         }
