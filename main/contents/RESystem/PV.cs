@@ -370,18 +370,18 @@ namespace main.contents
                 }
             }
 
-            if (e.ColumnIndex == 6 || e.ColumnIndex == 7)
+            if (e.ColumnIndex == 6 || e.ColumnIndex == 7 || e.ColumnIndex == 8)
             {
-                Program.UTIL.dataGridView_doubleComa(PV_dataGridView, e.RowIndex, e.ColumnIndex, 1);
+                Program.UTIL.dataGridView_doubleComa(PV_dataGridView, e.RowIndex, e.ColumnIndex, 2);
             }
-            if (e.ColumnIndex == 8)
-            {
-                double k = Program.UTIL.dataGridView_doubleComa(PV_dataGridView, e.RowIndex, e.ColumnIndex, 2);
-                if (k <= 0)
-                {
-                    MessageBox.Show("어레이길이는 0보다 커야합니다.");
-                }
-            }
+            //if (e.ColumnIndex == 8)
+            //{
+            //    double k = Program.UTIL.dataGridView_doubleComa(PV_dataGridView, e.RowIndex, e.ColumnIndex, 2);
+            //    if (k <= 0)
+            //    {
+            //        MessageBox.Show("어레이길이는 0보다 커야합니다.");
+            //    }
+            //}
         }
         private void OldPVSystem_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
