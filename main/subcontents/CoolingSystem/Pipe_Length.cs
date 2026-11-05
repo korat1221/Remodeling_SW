@@ -67,16 +67,17 @@ namespace main.subcontents.CoolingSystem
             if (System == "급탕")
             {
                 label1.Text = "급탕 배관은 서비스 영역을 기준으로 산정합니다.";
-                label3.Text = "분기관 공급경로";
-                ps_ComboBox.Width = 100;
+                //label3.Text = "분기관 공급경로";
+                ps_ComboBox.Width = 200;
                 ps_ComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-                ps_ComboBox.Items.AddRange(new object[] { "공용벽·샤프트", "그 외" });
-                DHWSameRoom_checkBox = new CheckBox();
-                DHWSameRoom_checkBox.Text = "생산·공급설비 동일 실";
-                DHWSameRoom_checkBox.AutoSize = true;
-                DHWSameRoom_checkBox.Location = new Point(Pipe_Length_pictureBox.Right + 12, Cal_button.Top + 3);
-                DHWSameRoom_checkBox.Visible = false;
-                GeneralPanel.Controls.Add(DHWSameRoom_checkBox);
+                //ps_ComboBox.Items.AddRange(new object[] { "공용벽·샤프트", "그 외" });
+                ps_ComboBox.Items.AddRange(new object[] { "외벽포함", "건물내부" , "생산·공급설비 동일 실" });
+                //DHWSameRoom_checkBox = new CheckBox();
+                //DHWSameRoom_checkBox.Text = "생산·공급설비 동일 실";
+                //DHWSameRoom_checkBox.AutoSize = true;
+                //DHWSameRoom_checkBox.Location = new Point(Pipe_Length_pictureBox.Right + 12, Cal_button.Top + 3);
+                //DHWSameRoom_checkBox.Visible = false;
+                //GeneralPanel.Controls.Add(DHWSameRoom_checkBox);
             }
             else
             {
@@ -101,7 +102,7 @@ namespace main.subcontents.CoolingSystem
                 label5.Visible = false;
                 label6.Visible = false;
                 Cal_button.Visible = false;
-                if (System == "급탕") DHWSameRoom_checkBox.Visible = false;
+                //if (System == "급탕") DHWSameRoom_checkBox.Visible = false;
                 MessageBox.Show("배관 관련 아래 표에 직접 입력하세요");
                 Load_Pipe_Table();
             }
@@ -117,7 +118,7 @@ namespace main.subcontents.CoolingSystem
                 label5.Visible = true;
                 label6.Visible = true;
                 Cal_button.Visible = true;
-                if (System == "급탕") DHWSameRoom_checkBox.Visible = true;
+               // if (System == "급탕") DHWSameRoom_checkBox.Visible = true;
             }
         }
 
@@ -235,24 +236,21 @@ namespace main.subcontents.CoolingSystem
                     Lv = 2 * ll + 0.0125 * ll * lw;
                     Ls = 0.075 * ll * lw * hf * nf;
                 }
-                if (ps_ComboBox.Text == "공용벽·샤프트")
+                if (ps_ComboBox.Text == "외벽포함")
                 {
                     La = 0.05 * ll * lw * nf;
                 }
-                else if (ps_ComboBox.Text == "그 외")
+                else if (ps_ComboBox.Text == "건물내부")
                 {
                     La = 0.075 * ll * lw * nf;
                 }
-                else
-                {
-                    MessageBox.Show("분기관 공급경로를 선택해 주세요.");
-                    return;
-                }
-                if (DHWSameRoom_checkBox.Checked)
+                else if (ps_ComboBox.Text == "생산·공급설비 동일 실")
                 {
                     Lv = 0;
                     Ls = 0;
+                    La = 0.075 * ll * lw * nf;
                 }
+                else { }
             }
             else
             {
