@@ -231,8 +231,8 @@ namespace main
             Cal_Qfw_Prepare(NowProjNum[0][0]);
             Heating_DHW_RECalc(NowProjNum[0][0], NowProjNum[0][0]);
             Heating_DHW_BoilerConnect(NowProjNum[0][0], NowProjNum[0][0]);
-            Cal_Qfh(NowProjNum[0][0]);
             Cal_Qfw(NowProjNum[0][0]);
+            Cal_Qfh(NowProjNum[0][0]);
             Cal_Qfc(NowProjNum[0][0]);
             Final final1 = new Final(NowProjNum[0][0]);
             Cal_Qf(final1, NowProjNum[0][0]);

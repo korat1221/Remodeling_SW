@@ -545,11 +545,11 @@ namespace main
             CALC.Heating_DHW_RECalc(NowProjNum[0][0], NowProjNum[0][0]);
             CALC.Heating_DHW_BoilerConnect(NowProjNum[0][0], NowProjNum[0][0]);
 
+            Cal_Qfw_Optimal(NowProjNum[0][0], 검토유형);
+
             Cal_Qfh_Optimal(NowProjNum[0][0], 검토유형);
 
             Cal_Qfc_Optimal(NowProjNum[0][0], 검토유형);
-
-            Cal_Qfw_Optimal(NowProjNum[0][0], 검토유형);
 
 
             #region 파이널계산

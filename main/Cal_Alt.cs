@@ -768,6 +768,10 @@ namespace main
             CALC.Cal_Qfw_Prepare(검토유형 == "급탕" ? NowProjNum[0][0] : PreProjNum[0][0]);
             CALC.Heating_DHW_RECalc(검토유형 == "난방" ? NowProjNum[0][0] : PreProjNum[0][0], 검토유형 == "급탕" ? NowProjNum[0][0] : PreProjNum[0][0]);
 
+            if (검토유형 != "급탕")
+            { Cal_Qfw(PreProjNum[0][0], 검토유형); }
+            else { Cal_Qfw(NowProjNum[0][0], 검토유형); }
+
             if (검토유형 != "난방")
             { Cal_Qfh_Pre(PreProjNum[0][0], 검토유형); }
             else { Cal_Qfh_Now(NowProjNum[0][0], 검토유형); }
@@ -776,10 +780,6 @@ namespace main
             if (검토유형 != "냉방")
             { Cal_Qfc_Pre(PreProjNum[0][0], 검토유형); }
             else { Cal_Qfc_Now(NowProjNum[0][0], 검토유형); }
-
-            if (검토유형 != "급탕")
-            { Cal_Qfw(PreProjNum[0][0], 검토유형); }
-            else { Cal_Qfw(NowProjNum[0][0], 검토유형); }
 
            
 
