@@ -10,17 +10,16 @@ function Zoning(editor) {
         "RF": { color: 0xBFA691, opacity: 0.9 },
         "FL": { color: 0x63544C, opacity: 0.9 },
         "SL": { color: 0xaaaaaa, opacity: 0.9 },
-        "WN": { color: 0x315b7d, opacity: 0.7, duplicate: true },
-        "CW1": { color: 0x505edb, opacity: 0.7, duplicate: true },
-        "CW2": { color: 0xd8bfd8, opacity: 0.7, duplicate: true },
-        "CW3": { color: 0x0014be, opacity: 0.7, duplicate: true },
-        "DR": { color: 0x553830, opacity: 0.7, duplicate: true },
+        "WN": { color: 0x315b7d, opacity: 0.7, offset: true },
+        "CW1": { color: 0x505edb, opacity: 0.7, offset: true },
+        "CW2": { color: 0xd8bfd8, opacity: 0.7, offset: true },
+        "CW3": { color: 0x0014be, opacity: 0.7, offset: true },
+        "DR": { color: 0x553830, opacity: 0.7, offset: true },
     };
 }
 
 Zoning.prototype = {
     calc: function (obj) {
-        const dup_offset = 0.007;
         let _asSlope = (x, y, z) => {
             return (Math.acos(y / Math.sqrt(x * x + y * y + z * z)) * 180) / Math.PI;
         };
@@ -255,16 +254,13 @@ Zoning.prototype = {
         let _addMeshObject = (pos, opt, pid, wired) => {
             let _pos = [].concat(pos);
 
-
-            if (opt.duplicate && _pos.length > 2) {
-                let pos2 = [], i = -1;
-                let n = _getNormal([_pos[0], _pos[1], _pos[2]]);
-
-                while (++i < _pos.length) {
-                    pos2.push(new Vector3(_pos[i].x + n.x * dup_offset, _pos[i].y + n.y * dup_offset, _pos[i].z + n.z * dup_offset));
-                    _pos[i] = (new Vector3(_pos[i].x - n.x * dup_offset, _pos[i].y - n.y * dup_offset, _pos[i].z - n.z * dup_offset));
-                }
-                _pos = _pos.concat(pos2);
+            // 앞+뒤로 띄운 두 겹을 그리면 반투명+양면 렌더링이 겹쳐서 보는 각도에 따라
+            // 이중으로 블렌딩되어(같은 타입인데 어떤 창호는 진하게, 어떤 건 연하게) 색이
+            // 달라 보였다. 벽 구멍 여백 확보 목적은 유지하되 한 겹만 앞으로 띄워서
+            // 항상 동일한 밝기로 보이게 함.
+            if (opt.offset && _pos.length > 2) {
+                const n = _getNormal([_pos[0], _pos[1], _pos[2]]);
+                _pos = _pos.map((p) => new Vector3(p.x + n.x * 0.007, p.y + n.y * 0.007, p.z + n.z * 0.007));
             }
 
             let mesh = new THREE.Mesh(new THREE.BufferGeometry().setFromPoints(_pos), new THREE.MeshBasicMaterial({
@@ -371,6 +367,10 @@ Zoning.prototype = {
                     while (++i < el.userData.walls.length) {
                         let el2 = el.userData.walls[i];
 
+                        // _isInterscect는 "한쪽 면의 중심이 다른 쪽 면 안에 들어있는가"만 보는 단방향 검사라,
+                        // 큰 면(예: 위층 바닥 12.41㎡)과 그 일부에만 걸치는 작은 조각(예: 아래층 천장 0.91㎡)은
+                        // 큰 쪽 중심이 작은 조각 밖에 있어서 작은 조각 입장에선 짝을 못 찾고(SL → RF로 남음),
+                        // 위의 type 초기화가 큰 쪽이 먼저 찍어준 SL까지 지워버렸다. 양방향으로 검사.
                         if (el2.area > 0.1 && po.area > 0.1 && _counterCardi(po.cardi, el2.cardi) && (_isInterscect(el2.pos, po.pos) || _isInterscect(po.pos, el2.pos))) {
                             po.near = id;
                             el2.near = id0;
@@ -1496,7 +1496,7 @@ Zoning.prototype = {
                     }
                 }
             }
-            
+
             for (const [id, el] of Object.entries(zones)) {
                 j = -1;
                 while (++j < el.userData.walls.length) {
@@ -1624,7 +1624,7 @@ Zoning.prototype = {
             }
 
             for (const [id, el] of Object.entries(zones)) {
-                if (el.userData.children) {
+                if (el.userData.walls) {
                     i = -1;
 
                     while (++i < el.userData.walls.length) {
