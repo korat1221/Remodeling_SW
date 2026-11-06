@@ -127,7 +127,8 @@ namespace main.contents
             //펌프 유무 콤보박스 
             PumpUse_comboBox.Items.Clear();
             PumpUse_comboBox.Items.Add("펌프 있음");
-            PumpUse_comboBox.Items.Add("펌프 없음(설비 내장)");
+            PumpUse_comboBox.Items.Add("설비내장_유량밸런스적용");
+            PumpUse_comboBox.Items.Add("설비내장_유량밸런스미적용");
             PumpUse_comboBox.SelectedIndex = 1;
             //펌프 방식 콤보박스
             PumpMethod_comboBox.Items.Clear();
@@ -169,6 +170,8 @@ namespace main.contents
             ce3_pictureBox.Parent = DistpictureBox;
             //분배열손실 추가항목
             PipeInsD_ComboBox.Items.AddRange(new string[] { "표준", "직접" });
+            controllabel.Visible = false;
+            controlComboBox.Visible = false;
         }
         private string[] Load_UserCE()
         {
@@ -334,7 +337,7 @@ namespace main.contents
                         //    Qh_max = Qmax;
                         //}=
                         string[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적,존번호", "선택열회수기 ='" + SelectAHU_split[a].ToString() + "'");
-                        for(int k = 0; k<Value.Length;k++)
+                        for (int k = 0; k < Value.Length; k++)
                         {
                             string[][] 부하 = Program.DB.getValue_SameCheck(DB.type.ProjDB, "Zone_52016_Result", "Q_max", "존번호 ='" + Value[k][1].ToString() + "' AND 난방_냉방 = '난방'");
                             if (부하.Length > 0)
@@ -2290,6 +2293,9 @@ namespace main.contents
                 PumpUse = PumpUse_comboBox.SelectedItem.ToString();
                 if (PumpUse == "펌프 있음")
                 {
+                    controllabel.Visible = false;
+                    controlComboBox.Visible = false;
+
                     PumpMethod_label.Visible = true;
                     PumpMethod_comboBox.Visible = true;
                     if ((MainSystem == "지열 히트펌프" || MainSystem == "지하수 히트펌프") || (Sub1System == "지열 히트펌프" || Sub1System == "지하수 히트펌프") || (Sub2System == "지열 히트펌프" || Sub2System == "지하수 히트펌프"))
@@ -2299,10 +2305,19 @@ namespace main.contents
                     }
                     Create_Pump_Table();
                 }
-                else
+                else if (PumpUse != null)
                 {
                     if (MainSystem == "보일러")
                     {
+                        controllabel.Visible = true;
+                        controlComboBox.Visible = true;
+
+                        controlComboBox.Items.Clear();
+                        controlComboBox.Items.Add("정속펌프(제어없음)");
+                        controlComboBox.Items.Add("변속펌프(일정차압제어)");
+                        controlComboBox.Items.Add("변속펌프(유량보상차압제어)");
+                        controlComboBox.SelectedIndex = 1;
+
                         double Max = AHU_Qmax_textBox.Text == null || AHU_Qmax_textBox.Text.ToString() == "" ? 0 : Program.UTIL.ToDoubleOrZero(AHU_Qmax_textBox.Text.ToString());
                         Max = Zone_Qmax_textBox.Text == null || Zone_Qmax_textBox.Text.ToString() == "" ? Max + 0 : Max + Program.UTIL.ToDoubleOrZero(Zone_Qmax_textBox.Text.ToString());
 
@@ -2333,6 +2348,16 @@ namespace main.contents
             Dispump();
 
         }
+        private void controlComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (PumpUse != null && PumpUse != "펌프 있음" && controlComboBox.SelectedItem != null)
+            {
+                PumpUse = PumpUse + "+" + controlComboBox.SelectedItem;
+            }
+        }
+
+
+
         private void PumpMethod_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (PumpMethod_comboBox.SelectedItem != null)
@@ -2929,7 +2954,7 @@ namespace main.contents
         }
         private void ce_Remove_button_Click(object sender, EventArgs e)
         {
-            for(int i = ce_dataGridView.Rows.Count-1; i>=0; i--)
+            for (int i = ce_dataGridView.Rows.Count - 1; i >= 0; i--)
             {
                 if (Convert.ToBoolean(ce_dataGridView.Rows[i].Cells[0].Value))
                 {
@@ -2982,7 +3007,7 @@ namespace main.contents
                     ce_dataGridView.Rows[nRow].Cells[2].Value = Value[n][1];//유형
                     ce_dataGridView.Rows[nRow].Cells[3].Value = Value[n][2];//구분
                     ce_dataGridView.Rows[nRow].Cells[4].Value = Value[n][3];//종류
-                    
+
                     string[][] 존정보 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호", "존번호 = '" + Value[n][4] + "'");
                     if (존정보.Length > 0)
                     {
@@ -3243,7 +3268,6 @@ namespace main.contents
                 pumppictureBox.Size = new System.Drawing.Size(22, 38);
                 pumppictureBox.Load(Program.gPath + stoimage[0][0]);
                 pumppictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-
             }
             else
             {
@@ -3377,7 +3401,7 @@ namespace main.contents
 
         private void Save(bool isManualSave = false)
         {
-            if (PumpUse == "펌프 없음(설비 내장)" && MaxPipeLength > 0)
+            if (PumpUse != "펌프 있음" && MaxPipeLength > 0)
             {
                 Cal_PumpHead();
             }
@@ -3407,7 +3431,7 @@ namespace main.contents
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,흡수식온수기번호,흡수식온수기대수", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectAS_nonsplit + "','" + ASNum_nonsplit + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,지역난방번호", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectDH_nonsplit + "'", "번호");
 
-            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,공급설비1종류,공급설비2종류,생산설비1제어,생산설비2제어,유량밸런스1,유량밸런스2", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + ce1Type + "','" + ce2Type + "','" + roomauto1 + "','" + roomauto2 + "','"+hydr1+"','"+hydr2+"'", "번호");
+            Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,공급설비1종류,공급설비2종류,생산설비1제어,생산설비2제어,유량밸런스1,유량밸런스2", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + ce1Type + "','" + ce2Type + "','" + roomauto1 + "','" + roomauto2 + "','" + hydr1 + "','" + hydr2 + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,축열유무,축열펌프유무,축열펌프,축열용량", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + StorageUse + "','" + StoragePumpUse + "','" + StoragePump + "','" + Vs.ToString() + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,공급온도,환수온도", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + theta_flw.ToString() + "','" + theta_ret.ToString() + "'", "번호");
             Program.DB.setValue(DB.type.ProjDB, "HeatingSystem_Form", "번호,프로젝트유형,연료전지번호,연료전지대수,연료전지설치유형,연료전지생산유형", "'" + Num_textBox.Text + "','" + 프로젝트유형[0][0] + "','" + SelectFC_nonsplit + "','" + FCNum_nonsplit + "','" + FCElecInstall_nonsplit + "','" + FCElecHeat_nonsplit + "'", "번호");
@@ -3654,6 +3678,7 @@ namespace main.contents
             DH_dataGridView.Visible = false;
 
             PumpUse_comboBox.SelectedItem = null;
+            controlComboBox.SelectedItem = null;
             PumpMethod_comboBox.SelectedItem = null;
             Pump1_textBox.Text = null;
             Pump2_textBox.Text = null;
@@ -3878,10 +3903,12 @@ namespace main.contents
             if (Value.Length > 0)
             {
 
-                PumpUse_comboBox.SelectedItem = Value[0][0];
                 PumpUse = Value[0][0];
                 if (PumpUse == "펌프 있음")
                 {
+                    PumpUse_comboBox.SelectedItem = PumpUse;
+                    controllabel.Visible = false;
+                    controlComboBox.Visible = false;
                     Pump_dataGridView.Visible = true;
                     ArrayList arr = new ArrayList();
                     arr = Split_(Value[0][1]);
@@ -4033,8 +4060,17 @@ namespace main.contents
                         Program.UTIL.dataGridView_doubleComa(Pump_dataGridView, Pump_dataGridView.Rows.Count - 1, 11, 0);
                     }
                 }
-                else
+                else if(PumpUse != null && PumpUse != "펌프없음")
                 {
+                    string[] parts = Value[0][0].Split('+');
+                    PumpUse = parts[0].Trim();                                  // "펌프"
+                    string PumpControl = parts.Length > 1 ? parts[1].Trim() : "";
+                    //PumpUse = 
+                    PumpUse_comboBox.SelectedItem = PumpUse;
+                    controllabel.Visible = true;
+                    controlComboBox.Visible = true;
+                    controlComboBox.SelectedItem = PumpControl;
+
                     Pump1Head = Program.UTIL.ToDoubleOrZero(Value[0][12]);
                     string[][] maxPipeLength = Program.DB.getValue(DB.type.ProjDB, "HeatingSystem_Form", "내장펌프최대배관길이", "번호 = '" + ID + "'");
                     MaxPipeLength = maxPipeLength.Length > 0 ? Program.UTIL.ToDoubleOrZero(maxPipeLength[0][0]) : 0;
@@ -4099,7 +4135,7 @@ namespace main.contents
                     roomauto2 = Value[0][3];
                     roomauto2_ComboBox.SelectedItem = roomauto2;
                     hydr2 = Value[0][5];
-                    hydr2_ComboBox.SelectedItem= hydr2;
+                    hydr2_ComboBox.SelectedItem = hydr2;
 
                     Load_ce(ce2Type);
                     Load_ce2Zone(ce2Type);
@@ -4344,7 +4380,7 @@ namespace main.contents
                 return;
             }
 
-            Pipe_Length PL = new Pipe_Length(Num, "난방", hasBuiltInPump: PumpUse == "펌프 없음(설비 내장)");
+            Pipe_Length PL = new Pipe_Length(Num, "난방", hasBuiltInPump: PumpUse == "설비내장_유량밸런스적용" || PumpUse == "설비내장_유량밸런스미적용");
             DialogResult result = PL.ShowDialog();
 
             if (result == DialogResult.OK)
