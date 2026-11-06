@@ -106,7 +106,7 @@
             ps_ComboBox.DrawMode = DrawMode.OwnerDrawFixed;
             ps_ComboBox.Font = new Font("나눔바른고딕", 9.75F);
             ps_ComboBox.FormattingEnabled = true;
-            ps_ComboBox.Location = new Point(494, 194);
+            ps_ComboBox.Location = new Point(494, 153);
             ps_ComboBox.Name = "ps_ComboBox";
             ps_ComboBox.Size = new Size(100, 23);
             ps_ComboBox.TabIndex = 215;
@@ -115,7 +115,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("나눔바른고딕", 9.75F);
-            label3.Location = new Point(371, 197);
+            label3.Location = new Point(371, 156);
             label3.Name = "label3";
             label3.Size = new Size(74, 15);
             label3.TabIndex = 214;
@@ -123,7 +123,7 @@
             // 
             // Cal_button
             // 
-            Cal_button.Location = new Point(494, 351);
+            Cal_button.Location = new Point(494, 310);
             Cal_button.Name = "Cal_button";
             Cal_button.Size = new Size(100, 24);
             Cal_button.TabIndex = 213;
@@ -157,7 +157,7 @@
             Pipe_Length_ComboBox.DrawMode = DrawMode.OwnerDrawFixed;
             Pipe_Length_ComboBox.Font = new Font("나눔바른고딕", 9.75F);
             Pipe_Length_ComboBox.FormattingEnabled = true;
-            Pipe_Length_ComboBox.Location = new Point(493, 165);
+            Pipe_Length_ComboBox.Location = new Point(493, 124);
             Pipe_Length_ComboBox.Name = "Pipe_Length_ComboBox";
             Pipe_Length_ComboBox.Size = new Size(100, 23);
             Pipe_Length_ComboBox.TabIndex = 211;
@@ -167,7 +167,7 @@
             // 
             Pipe_Length_Text.AutoSize = true;
             Pipe_Length_Text.Font = new Font("나눔바른고딕", 9.75F);
-            Pipe_Length_Text.Location = new Point(371, 168);
+            Pipe_Length_Text.Location = new Point(371, 127);
             Pipe_Length_Text.Name = "Pipe_Length_Text";
             Pipe_Length_Text.Size = new Size(58, 15);
             Pipe_Length_Text.TabIndex = 210;
@@ -193,7 +193,7 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             Pipe_dataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             Pipe_dataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            Pipe_dataGridView.Location = new Point(323, 381);
+            Pipe_dataGridView.Location = new Point(323, 369);
             Pipe_dataGridView.Name = "Pipe_dataGridView";
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Control;
@@ -211,9 +211,8 @@
             dataGridViewCellStyle3.SelectionBackColor = SystemColors.GradientInactiveCaption;
             dataGridViewCellStyle3.SelectionForeColor = Color.Black;
             Pipe_dataGridView.RowsDefaultCellStyle = dataGridViewCellStyle3;
-            Pipe_dataGridView.Size = new Size(389, 120);
+            Pipe_dataGridView.Size = new Size(389, 132);
             Pipe_dataGridView.TabIndex = 207;
-           
             // 
             // label13
             // 
@@ -259,7 +258,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("나눔바른고딕", 9.75F);
-            label5.Location = new Point(600, 255);
+            label5.Location = new Point(600, 214);
             label5.Name = "label5";
             label5.Size = new Size(19, 15);
             label5.TabIndex = 12;
@@ -269,7 +268,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("나눔바른고딕", 9.75F);
-            label6.Location = new Point(600, 284);
+            label6.Location = new Point(600, 243);
             label6.Name = "label6";
             label6.Size = new Size(19, 15);
             label6.TabIndex = 11;
@@ -279,7 +278,7 @@
             // 
             nf_label.AutoSize = true;
             nf_label.Font = new Font("나눔바른고딕", 9.75F);
-            nf_label.Location = new Point(371, 313);
+            nf_label.Location = new Point(371, 272);
             nf_label.Name = "nf_label";
             nf_label.Size = new Size(50, 15);
             nf_label.TabIndex = 10;
@@ -289,7 +288,7 @@
             // 
             Hf_label.AutoSize = true;
             Hf_label.Font = new Font("나눔바른고딕", 9.75F);
-            Hf_label.Location = new Point(371, 284);
+            Hf_label.Location = new Point(371, 243);
             Hf_label.Name = "Hf_label";
             Hf_label.Size = new Size(78, 15);
             Hf_label.TabIndex = 9;
@@ -299,7 +298,7 @@
             // 
             LW_label.AutoSize = true;
             LW_label.Font = new Font("나눔바른고딕", 9.75F);
-            LW_label.Location = new Point(371, 255);
+            LW_label.Location = new Point(371, 214);
             LW_label.Name = "LW_label";
             LW_label.Size = new Size(120, 15);
             LW_label.TabIndex = 8;
@@ -309,7 +308,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("나눔바른고딕", 9.75F);
-            label4.Location = new Point(600, 226);
+            label4.Location = new Point(600, 185);
             label4.Name = "label4";
             label4.Size = new Size(19, 15);
             label4.TabIndex = 7;
@@ -319,7 +318,7 @@
             // 
             LL_label.AutoSize = true;
             LL_label.Font = new Font("나눔바른고딕", 9.75F);
-            LL_label.Location = new Point(371, 226);
+            LL_label.Location = new Point(371, 185);
             LL_label.Name = "LL_label";
             LL_label.Size = new Size(103, 15);
             LL_label.TabIndex = 5;
@@ -327,7 +326,7 @@
             // 
             // nf_textBox
             // 
-            nf_textBox.Location = new Point(494, 310);
+            nf_textBox.Location = new Point(494, 269);
             nf_textBox.Name = "nf_textBox";
             nf_textBox.Size = new Size(100, 23);
             nf_textBox.TabIndex = 6;
@@ -335,7 +334,7 @@
             // 
             // Hf_textBox
             // 
-            Hf_textBox.Location = new Point(494, 281);
+            Hf_textBox.Location = new Point(494, 240);
             Hf_textBox.Name = "Hf_textBox";
             Hf_textBox.Size = new Size(100, 23);
             Hf_textBox.TabIndex = 5;
@@ -343,7 +342,7 @@
             // 
             // LW_textBox
             // 
-            LW_textBox.Location = new Point(494, 252);
+            LW_textBox.Location = new Point(494, 211);
             LW_textBox.Name = "LW_textBox";
             LW_textBox.Size = new Size(100, 23);
             LW_textBox.TabIndex = 4;
@@ -351,7 +350,7 @@
             // 
             // LL_textBox
             // 
-            LL_textBox.Location = new Point(494, 223);
+            LL_textBox.Location = new Point(494, 182);
             LL_textBox.Name = "LL_textBox";
             LL_textBox.Size = new Size(100, 23);
             LL_textBox.TabIndex = 3;
