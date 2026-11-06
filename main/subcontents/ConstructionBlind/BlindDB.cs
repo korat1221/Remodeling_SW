@@ -285,6 +285,23 @@ namespace main.subcontents.ConstructionBlind
             {
                 Blind_dataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
                 SelectRowIndex = e.RowIndex;
+                
+                if (e.ColumnIndex == 0)
+                {
+                    bool isChecked = Convert.ToBoolean(Blind_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+
+                    if (isChecked)
+                    {
+                        // 다른 행의 체크를 모두 해제
+                        foreach (DataGridViewRow row in Blind_dataGridView.Rows)
+                        {
+                            if (row.Index != e.RowIndex)
+                            {
+                                row.Cells[0].Value = false;
+                            }
+                        }
+                    }
+                }
             }
         }
 

@@ -568,18 +568,25 @@ namespace main.contents
         private double Calc_Blind_SHGC(double SHGC, double Ex, double Trans, double Alpha, double Ug, string Install)
         {
             double SHGC_on = 0;
+            double G = 0, G1 = 0, G2 = 0;
             switch (Install)
             {
                 case "외부측":
-                    SHGC_on = Alpha * SHGC + Trans * Math.Pow(1 / Ug + 1.0 / 5 + 1.0 / 10, -1) / 10 + Alpha * (1 - SHGC) * Math.Pow(1 / Ug + 1.0 / 5 + 1.0 / 10, -1) / 5;
+                    G1 = 5; G2 = 10;//EN 13363-1<식1>
+                    G = Math.Pow(1.0 / Ug + 1.0 / G1 + 1.0 / G2, -1);
+                    SHGC_on = Math.Round(Trans*SHGC + Alpha * G/G2 + Trans * (1-SHGC)*G/G1,3);
                     break;
 
                 case "중간":
-                    SHGC_on = SHGC * Alpha + (Trans + (1 - SHGC) * Ex) * Math.Pow(1 / Ug + 1.0 / 3, -1) / 3;
+                    G2 = 3;
+                    G = Math.Pow(1.0 / Ug + 1.0 / G2, -1);
+                    SHGC_on =Math.Round( SHGC * Trans + SHGC*(Alpha + (1 - SHGC) * Ex) * G/G2,3);
                     break;
 
                 case "내부측":
-                    SHGC_on = SHGC * (1 - SHGC * Ex - Trans * Math.Pow(1 / Ug + 1.0 / 30, -1) / 30);
+                    G2 = 30; //EN 13363-1<식2>
+                    G = Math.Pow( 1.0 / Ug + 1.0 / G2, -1);
+                    SHGC_on =Math.Round( SHGC * (1 - SHGC * Ex - Alpha * G/G2),3);
                     break; ;
             }
             return SHGC_on;
@@ -590,15 +597,15 @@ namespace main.contents
             switch (Install)
             {
                 case "외부측":
-                    Tao_on = Tao * Trans / (1 - Glass_Ex * Ex);
+                    Tao_on = Math.Round(Tao * Trans / (1 - Glass_Ex * Ex),3);
                     break;
 
                 case "중간":
-                    Tao_on = (Tao * Trans / (1 - Glass_Ex * Ex) + Tao * Trans / (1 - Glass_In * Ex) + Tao) / 3;
+                    Tao_on = Math.Round((Tao * Trans / (1 - Glass_Ex * Ex) + Tao * Trans / (1 - Glass_In * Ex) + Tao) / 3, 3);
                     break;
 
                 case "내부측":
-                    Tao_on = Tao * Trans / (1 - Glass_In * Ex);
+                    Tao_on = Math.Round(Tao * Trans / (1 - Glass_In * Ex),3);
                     break; ;
             }
             return Tao_on;
