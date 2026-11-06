@@ -2018,7 +2018,6 @@ namespace main
             double[] 지열순환펌프1 = new double[12], 지열순환펌프2 = new double[12];
             double[] 지하수순환펌프1 = new double[12], 지하수순환펌프2 = new double[12];
             double num1, num2, num3, num4;
-            string pumptype;
             
             if (SelectPump1_nonsplit != null)
             {
@@ -2053,8 +2052,7 @@ namespace main
             //냉각수펌프,지열펌프,지하수펌프
             if (SelectSPump1_nonsplit != null)
             {
-                pumptype = SPump1.종류;
-                냉각수펌프1 = PumpCalc(SPump1, pumptype, ProjNum);
+                냉각수펌프1 = PumpCalc(SPump1, "열원", ProjNum);
                 num3 = SPump1._number;
                 SP1power = SPump1.동력 * num3;
                 SPumpControl = SPump1._control;
@@ -2070,8 +2068,7 @@ namespace main
 
             if (SelectSPump2_nonsplit != null)
             {
-                pumptype = SPump2.종류;
-                냉각수펌프2 = PumpCalc(SPump2, pumptype, ProjNum);
+                냉각수펌프2 = PumpCalc(SPump2, "열원", ProjNum);
                 num4 = SPump2._number;
                 SP2power = SPump2.동력 * num4;
             }
@@ -2108,15 +2105,29 @@ namespace main
             fHydr = Program.UTIL.ToDoubleOrZero(pumpfactor[0][2]);
             for (int i = 0;i < 12 ;i++)
             {
-                if (QC_out[i] == 0)
+                if (!(QC_out[i] > 0 && tC_op[i] > 0 && Power_f > 0))
                 {
                     W_d[i] = 0;
                 }
                 else 
                 {
-                    Beta[i] = QC_out[i] / (tC_op_z[i] * Power_f);
+                    Beta[i] = QC_out[i] / (tC_op[i] * Power_f);
                     ed[i] =1 * (CP11 + CP21 / Beta[i]);
-                    Wd_hydr[i] = _pump.동력 / 1000 * tC_op[i] * Beta[i] * fHydr;
+                    double beta = Beta[i];
+                    if (type == "열원")
+                    {
+                        // 존·공조기 생산 부하율을 정격출력 × 냉방이용시간으로 가중한다.
+                        double Pt_z = QC_p_z * tmth_z[i];
+                        double Pt_ahu = QC_p_ahu * tmth_ahu[i];
+                        double Q_z = 0, Q_ahu = 0;
+                        if (double.IsFinite(Pt_z) && Pt_z > 0 && double.IsFinite(BC_z[i])) { Q_z = BC_z[i] * Pt_z; }
+                        else { Pt_z = 0; }
+                        if (double.IsFinite(Pt_ahu) && Pt_ahu > 0 && double.IsFinite(BC_ahu[i])) { Q_ahu = BC_ahu[i] * Pt_ahu; }
+                        else { Pt_ahu = 0; }
+                        double Pt = Pt_z + Pt_ahu;
+                        beta = Pt > 0 ? (Q_z + Q_ahu) / Pt : 0;
+                    }
+                    Wd_hydr[i] = _pump.동력 / 1000 * tC_op[i] * beta * fHydr;
                     W_d[i] = Wd_hydr[i] * ed[i] * _pump._number; //설치대수까지 포함
                 }
             }

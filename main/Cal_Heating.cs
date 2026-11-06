@@ -1220,26 +1220,30 @@ namespace main
                     double logFlow = Math.Log(pumpFlow);
                     double eta = Math.Max(20, -1.403 * Math.Pow(logFlow, 2) + 26.35 * logFlow - 61.3) / 100;
                     double power = Phydr / eta;
-                    Cal_Pump("내장형 펌프", "유량밸런스없음", "정속펌프(제어없음)", 1, power);
+                    Cal_Pump("내장형 펌프", "유량밸런스있음", "변속펌프(일정차압제어)", 1, power, beta_h_d);
                 }
                 else
                 {
                     string[][] Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + Pump1 + "'");
                     if (Value.Length > 0)
-                    { Cal_Pump(Pump1, Pump1Valve, Pump1Control, Pump1Count, Program.UTIL.ToDoubleOrZero(Value[0][0])); }
+                    { Cal_Pump(Pump1, Pump1Valve, Pump1Control, Pump1Count, Program.UTIL.ToDoubleOrZero(Value[0][0]), beta_h_d); }
                     Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + Pump2 + "'");
                     if (Value.Length > 0)
-                    { Cal_Pump(Pump2, Pump2Valve, Pump2Control, Pump2Count, Program.UTIL.ToDoubleOrZero(Value[0][0])); }
-                    Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + GPump1 + "'");
-                    if (Value.Length > 0)
-                    { Cal_Pump(GPump1, GPump1Valve, GPump1Control, GPump1Count, Program.UTIL.ToDoubleOrZero(Value[0][0])); }
-                    Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + GPump2 + "'");
-                    if (Value.Length > 0)
-                    { Cal_Pump(GPump2, GPump2Valve, GPump2Control, GPump2Count, Program.UTIL.ToDoubleOrZero(Value[0][0])); }
+                    { Cal_Pump(Pump2, Pump2Valve, Pump2Control, Pump2Count, Program.UTIL.ToDoubleOrZero(Value[0][0]), beta_h_d); }
                 }
             }
         }
-        private void Cal_Pump( string Pump, string PumpValve, string PumpControl, int PumpCount, double PumpPower)
+        public void Calc_SourcePumps(string ProjNum)
+        {
+            if (PumpUse != "펌프 있음") { return; }
+            string[][] Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + GPump1 + "'");
+            if (Value.Length > 0)
+            { Cal_Pump(GPump1, GPump1Valve, GPump1Control, GPump1Count, Program.UTIL.ToDoubleOrZero(Value[0][0]), beta_h_gen); }
+            Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + GPump2 + "'");
+            if (Value.Length > 0)
+            { Cal_Pump(GPump2, GPump2Valve, GPump2Control, GPump2Count, Program.UTIL.ToDoubleOrZero(Value[0][0]), beta_h_gen); }
+        }
+        private void Cal_Pump( string Pump, string PumpValve, string PumpControl, int PumpCount, double PumpPower, double[] partLoadRatio)
         {
             String Num_pump; 
             double Cp1, Cp2, Ppump, fhydr = 1;
@@ -1261,10 +1265,10 @@ namespace main
             }
             for (int mth = 0; mth < 12; mth++)
             {
-                if (beta_h_d[mth] > 0 && PumpPower > 0 && PumpCount > 0)
+                if (partLoadRatio[mth] > 0 && PumpPower > 0 && PumpCount > 0)
                 {
-                    e_hydr[mth] = Cp1 + Cp2 / beta_h_d[mth];
-                    Wh_hydr[mth] = PumpPower / 1000 * beta_h_d[mth] * th_avg[mth] * fhydr;
+                    e_hydr[mth] = Cp1 + Cp2 / partLoadRatio[mth];
+                    Wh_hydr[mth] = PumpPower / 1000 * partLoadRatio[mth] * th_avg[mth] * fhydr;
                     double pumpEnergy = Wh_hydr[mth] * e_hydr[mth] * PumpCount;
                     if (double.IsFinite(pumpEnergy) && pumpEnergy > 0)
                     {

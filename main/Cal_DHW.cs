@@ -526,38 +526,56 @@ namespace main
         }
         public void LoadCalc_Pump(string ProjNum)
         {
-            //펌프
             Pump.Clear();
+            Array.Clear(Ww_d, 0, Ww_d.Length);
+
+            double ratedPower = 0;
+            for (int n = 0; n < SelectBoiler_split.Count; n++)
+            {
+                string[][] capacity = Program.DB.getValue(ProjNum, "User_Boiler", "용량", "번호 = '" + SelectBoiler_split[n] + "'");
+                if (capacity.Length > 0) { ratedPower += Program.UTIL.ToDoubleOrZero(capacity[0][0]) * Program.UTIL.ToDoubleOrZero(BoilerNum_split[n]); }
+            }
+            for (int n = 0; n < SelectHP_split.Count; n++)
+            {
+                string[][] capacity = Program.DB.getValue(ProjNum, "User_DHWHP", "급탕정격용량", "번호 = '" + SelectHP_split[n] + "'");
+                if (capacity.Length > 0) { ratedPower += Program.UTIL.ToDoubleOrZero(capacity[0][0]) * Program.UTIL.ToDoubleOrZero(HPNum_split[n]); }
+            }
+            for (int n = 0; n < SelectDH_split.Count; n++)
+            {
+                string[][] capacity = Program.DB.getValue(ProjNum, "User_DH", "용량", "번호 = '" + SelectDH_split[n] + "'");
+                if (capacity.Length > 0) { ratedPower += Program.UTIL.ToDoubleOrZero(capacity[0][0]); }
+            }
+            if (ratedPower <= 0) { ratedPower = Qmax; }
+
+            string[][] buildingType = Program.DB.getValue(ProjNum, "BuildingGeneral", "건물용도");
+            bool residential = buildingType.Length > 0 && (buildingType[0][0] == "단독주택" || buildingType[0][0] == "공동주택");
+            double dailyOperatingHours = th_op_day_avg;
+            if (residential && ZoneArea > 0) { dailyOperatingHours = 10 + 1 / (0.07 + 50 / ZoneArea); }
+
             string[][] Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + Pump1 + "'");
             if (Value.Length > 0)
-            { Cal_Pump(Pump1, Pump1Valve, Pump1Control, Pump1Count, Program.UTIL.ToDoubleOrZero(Value[0][0])); }
+            { Cal_Pump(Pump1, Pump1Valve, Pump1Control, Pump1Count, Program.UTIL.ToDoubleOrZero(Value[0][0]), ratedPower, dailyOperatingHours); }
             Value = Program.DB.getValue(ProjNum, "User_Pump", "동력", "번호 = '" + Pump2 + "'");
             if (Value.Length > 0)
-            { Cal_Pump(Pump2, Pump2Valve, Pump2Control, Pump2Count, Program.UTIL.ToDoubleOrZero(Value[0][0])); }
+            { Cal_Pump(Pump2, Pump2Valve, Pump2Control, Pump2Count, Program.UTIL.ToDoubleOrZero(Value[0][0]), ratedPower, dailyOperatingHours); }
         }
-        private void Cal_Pump(string Pump, string PumpValve, string PumpControl, int PumpCount, double PumpPower)
+        private void Cal_Pump(string Pump, string PumpValve, string PumpControl, int PumpCount, double PumpPower, double ratedPower, double dailyOperatingHours)
         {
-            double Cp1, Cp2, fhydr = 1;
-            double[] e_hydr = new double[12], Wh_hydr = new double[12];
             DHW_Pump pump1 = new DHW_Pump(Pump, PumpPower, PumpCount, PumpValve, PumpControl);
             this.Pump.Add(pump1);
             string[][] Value_Control = Program.DB.getValue(DB.type.BaseDB_Heating, "펌프제어_급탕", "Cp1,Cp2", "펌프제어 = '" + PumpControl + "'");
-            Cp1 = Program.UTIL.ToDoubleOrZero(Value_Control[0][0]);
-            Cp2 = Program.UTIL.ToDoubleOrZero(Value_Control[0][1]);
-            if (PumpValve == "유량밸런스있음")
-            {
-                fhydr = 1;
-            }
-            else
-            {
-                fhydr = 1.15;
-            }
+            double Cp1 = Program.UTIL.ToDoubleOrZero(Value_Control[0][0]);
+            double Cp2 = Program.UTIL.ToDoubleOrZero(Value_Control[0][1]);
+            double fhydr = PipeType == "순환배관" && PumpValve != "유량밸런스있음" ? 1.15 : 1;
             for (int mth = 0; mth < 12; mth++)
             {
-                e_hydr[mth] = Cp1 + Cp2;
-                double beta_wd = Qmax > 0 ? Qwb_mth_sum[mth] / (Qmax * dop_mth_avg[mth] * th_op_day_avg) : 0;
-                Wh_hydr[mth] = PumpPower / 1000 * beta_wd * dop_mth_avg[mth] * th_op_day_avg * fhydr;
-                Ww_d[mth] += Wh_hydr[mth] * e_hydr[mth] * PumpCount;
+                double operatingHours = dop_mth_avg[mth] * dailyOperatingHours;
+                if (ratedPower <= 0 || operatingHours <= 0 || Qw_outg[mth] <= 0 || PumpPower <= 0 || PumpCount <= 0) { continue; }
+                double beta_wd = Qw_outg[mth] / (ratedPower * operatingHours);
+                double e_hydr = Cp1 + Cp2 / beta_wd;
+                double Wh_hydr = PumpPower / 1000 * beta_wd * operatingHours * fhydr;
+                double pumpEnergy = Wh_hydr * e_hydr * PumpCount;
+                if (double.IsFinite(pumpEnergy) && pumpEnergy > 0) { Ww_d[mth] += pumpEnergy; }
             }
         }
         public void Calc_Qs(string ProjNum)

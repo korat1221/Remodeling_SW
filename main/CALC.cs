@@ -1207,6 +1207,7 @@ namespace main
             Heating1.LoadCalc_GWHP(ProjNum);
             Heating1.LoadCalc_ABS(ProjNum);
             Heating1.LoadCalc_DH(ProjNum);
+            Heating1.Calc_SourcePumps(ProjNum);
             Heating1.nan();
         }
         public static void Heating_Save(Heating Heating1)
