@@ -254,6 +254,7 @@ Zoning.prototype = {
         let _addMeshObject = (pos, opt, pid, wired) => {
             let _pos = [].concat(pos);
 
+
             // 앞+뒤로 띄운 두 겹을 그리면 반투명+양면 렌더링이 겹쳐서 보는 각도에 따라
             // 이중으로 블렌딩되어(같은 타입인데 어떤 창호는 진하게, 어떤 건 연하게) 색이
             // 달라 보였다. 벽 구멍 여백 확보 목적은 유지하되 한 겹만 앞으로 띄워서
@@ -367,10 +368,6 @@ Zoning.prototype = {
                     while (++i < el.userData.walls.length) {
                         let el2 = el.userData.walls[i];
 
-                        // _isInterscect는 "한쪽 면의 중심이 다른 쪽 면 안에 들어있는가"만 보는 단방향 검사라,
-                        // 큰 면(예: 위층 바닥 12.41㎡)과 그 일부에만 걸치는 작은 조각(예: 아래층 천장 0.91㎡)은
-                        // 큰 쪽 중심이 작은 조각 밖에 있어서 작은 조각 입장에선 짝을 못 찾고(SL → RF로 남음),
-                        // 위의 type 초기화가 큰 쪽이 먼저 찍어준 SL까지 지워버렸다. 양방향으로 검사.
                         if (el2.area > 0.1 && po.area > 0.1 && _counterCardi(po.cardi, el2.cardi) && (_isInterscect(el2.pos, po.pos) || _isInterscect(po.pos, el2.pos))) {
                             po.near = id;
                             el2.near = id0;
@@ -392,6 +389,19 @@ Zoning.prototype = {
                 }
             }
         };
+        // 같은 직선 위에 있는 두 선분 a, b가 실제로 겹치는 길이(m). 겹치지 않으면 0 이하.
+        // 모델링 오차로 끝점이 1mm쯤 어긋난 채 "끝점만 닿은" 이웃 벽을 접합부로 잘못 잡지 않도록,
+        // 연결 판정(_collectLinks)에서 1cm보다 많이 겹칠 때만 이웃으로 본다.
+        let _overlapLength = (a, b) => {
+            let len = a[0].distanceTo(a[1]);
+            if (len < 0.000001) return 0;
+
+            let u = new Vector3().subVectors(a[1], a[0]).divideScalar(len);
+            let t0 = new Vector3().subVectors(b[0], a[0]).dot(u);
+            let t1 = new Vector3().subVectors(b[1], a[0]).dot(u);
+
+            return Math.min(len, Math.max(t0, t1)) - Math.max(0, Math.min(t0, t1));
+        };
         let _collectLinks = (id0, idx, idx2) => {
             let edge = zones[id0].userData.walls[idx].edges[idx2];
             let links = [], i, j;
@@ -406,8 +416,13 @@ Zoning.prototype = {
                             let edge2 = el.userData.walls[i].edges[j];
 
                             if ((id0 !== id || i !== idx || j !== idx2) &&
-                             (_equalLine(edge, edge2) || _intersectedLine(edge, edge2, true, true))) {
-                                links.push(el.userData.walls[i]);
+                             (_equalLine(edge, edge2) || (_intersectedLine(edge, edge2, true, true) && _overlapLength(edge, edge2) > 0.01))) {
+                                // 같은 벽의 모서리가 여러 개 이 선과 겹쳐도 그 벽은 한 번만 넣는다.
+                                // 중복되면 Bridges의 층간슬라브 검사(같은 방향 외벽 둘)가 한 벽을 둘로 세어,
+                                // 아래가 내벽인 탑 바닥 선도 층간슬라브+외벽으로 분류됐다.
+                                if (links.indexOf(el.userData.walls[i]) < 0) {
+                                    links.push(el.userData.walls[i]);
+                                }
                             }
                         }
                     }
@@ -1496,7 +1511,7 @@ Zoning.prototype = {
                     }
                 }
             }
-
+            
             for (const [id, el] of Object.entries(zones)) {
                 j = -1;
                 while (++j < el.userData.walls.length) {
