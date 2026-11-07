@@ -188,7 +188,7 @@ namespace main.subcontents
                 UserDBFramedC_textBox.Text = String.Format("{0:F2}", UserDB_FramedC);
             }
             //간봉리스트
-            Load_SpacerList(SingleDoubleType, UserDB_FrameMaterial);
+            Load_SpacerList(SingleDoubleType, UserDB_FrameMaterial_orgin);
             Calc_Uf();
             Load_FrameImage();
         }
@@ -210,72 +210,83 @@ namespace main.subcontents
                 UserDB_Ug = Program.UTIL.ToDoubleOrZero(WinGlass[0][3]);
                 UserDB_Ug_textBox.Text = String.Format("{0:F3}", UserDB_Ug) + " W/m" + Program.UTIL.Subscript(2, true) + "·K";
             }
+            Load_SpacerValue();
             Calc_Uf();
         }
 
         private void UserDBSpacer_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UserDBSpacer = UserDBSpacer_comboBox.SelectedItem.ToString();
+            Load_SpacerValue();
+            Calc_Uf();
+        }
 
-            string[][] User_WinSpacer = Program.DB.getValue(DB.type.ProjDB, "User_WindowSpacer", "번호,제품명,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "제품명 = '" + UserDBSpacer + "'AND 구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + UserDB_FrameMaterial + "'");
-
-            if (User_WinSpacer.Length > 0)
+        private void Load_SpacerValue()
+        {
+            UserDBSpacer = null;
+            UserDB_PsiFix = 0;
+            UserDB_PsiOpen = 0;
+            UserDB_PsiFix_textBox.Text = "";
+            UserDB_PsiOpen_textBox.Text = "";
+            int n = UserDBSpacer_comboBox.SelectedIndex;
+            if (n < 0 || n >= SpacerList.Count || UserDB_LE_CL_V == null)
             {
-                if (UserDB_LE_CL_V.Contains("LE"))
-                {
-                    UserDB_PsiFix = Program.UTIL.ToDoubleOrZero(User_WinSpacer[0][4]);
-                    UserDB_PsiOpen = Program.UTIL.ToDoubleOrZero(User_WinSpacer[0][5]);
-                }
-                else
-                {
-                    UserDB_PsiFix = Program.UTIL.ToDoubleOrZero(User_WinSpacer[0][2]);
-                    UserDB_PsiOpen = Program.UTIL.ToDoubleOrZero(User_WinSpacer[0][3]);
-                }
-                UserDB_PsiFix_textBox.Text = String.Format("{0:F3}", UserDB_PsiFix) + " W/m·K";
-                UserDB_PsiOpen_textBox.Text = String.Format("{0:F3}", UserDB_PsiOpen) + " W/m·K";
+                return;
             }
-            string[][] WinSpacer = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호간봉", "번호,제품명,고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "구분1 = '" + UserDBSpacer + "'AND 구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + UserDB_FrameMaterial + "'");
+
+            UserDBSpacer = SpacerList[n];
+            string[] token = UserDBSpacer.Split('+');
+            string[][] WinSpacer;
+            if (token[0] == "사용자")
+            {
+                WinSpacer = Program.DB.getValue(DB.type.ProjDB, "User_WindowSpacer", "고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "번호 = '" + token[1] + "'");
+            }
+            else
+            {
+                WinSpacer = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호간봉", "고정유리_CL_선형열관류율,개폐유리_CL_선형열관류율,고정유리_LE_선형열관류율,개폐유리_LE_선형열관류율", "번호 = '" + token[1] + "'");
+            }
             if (WinSpacer.Length > 0)
             {
-
                 if (UserDB_LE_CL_V.Contains("LE"))
-                {
-                    UserDB_PsiFix = Program.UTIL.ToDoubleOrZero(WinSpacer[0][4]);
-                    UserDB_PsiOpen = Program.UTIL.ToDoubleOrZero(WinSpacer[0][5]);
-                }
-                else
                 {
                     UserDB_PsiFix = Program.UTIL.ToDoubleOrZero(WinSpacer[0][2]);
                     UserDB_PsiOpen = Program.UTIL.ToDoubleOrZero(WinSpacer[0][3]);
                 }
+                else
+                {
+                    UserDB_PsiFix = Program.UTIL.ToDoubleOrZero(WinSpacer[0][0]);
+                    UserDB_PsiOpen = Program.UTIL.ToDoubleOrZero(WinSpacer[0][1]);
+                }
                 UserDB_PsiFix_textBox.Text = String.Format("{0:F3}", UserDB_PsiFix) + " W/m·K";
                 UserDB_PsiOpen_textBox.Text = String.Format("{0:F3}", UserDB_PsiOpen) + " W/m·K";
             }
-            Calc_Uf();
         }
 
         private void Load_SpacerList(String SingleDoubleType, String UserDB_FrameMaterial)
-        { //간봉 콤보박스 
+        {
+            UserDBSpacer_comboBox.Items.Clear();
+            SpacerList.Clear();
+            Load_SpacerValue();
             if (SingleDoubleType != null && UserDB_FrameMaterial != null)
             {
-
-                string[][] User_WinSpacer = Program.DB.getValue(DB.type.ProjDB, "User_WindowSpacer", "번호,제품명,구분1", "구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + UserDB_FrameMaterial + "'");
-                if (User_WinSpacer.Length > 0)
+                string[][] WinSpacer = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호간봉", "번호,DB유형,제품명,구분1", "구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + UserDB_FrameMaterial + "'");
+                for (int n = 0; n < WinSpacer.Length; n++)
                 {
-                    for (int n = 0; n < User_WinSpacer.Length; n++)
-                    { SpacerList.Add(User_WinSpacer[n][1]); }
+                    SpacerList.Add("기본+" + WinSpacer[n][0]);
+                    if (WinSpacer[n][1] == "표준")
+                    {
+                        UserDBSpacer_comboBox.Items.Add(WinSpacer[n][3]);
+                    }
+                    else
+                    {
+                        UserDBSpacer_comboBox.Items.Add(WinSpacer[n][2]);
+                    }
                 }
 
-                string[][] WinSpacer = Program.DB.getValue(DB.type.BaseDB_HCneed, "창호간봉", "번호,제품명,구분1", "구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + UserDB_FrameMaterial + "'");
-                if (WinSpacer.Length > 0)
+                string[][] User_WinSpacer = Program.DB.getValue(DB.type.ProjDB, "User_WindowSpacer", "번호,제품명", "구분2 = '" + SingleDoubleType + "'AND 구분3 ='" + UserDB_FrameMaterial + "'");
+                for (int n = 0; n < User_WinSpacer.Length; n++)
                 {
-                    for (int n = 0; n < WinSpacer.Length; n++)
-                    {
-                        SpacerList.Add(WinSpacer[n][2]);
-                    }
-                    string[] SpacerArray = SpacerList.ToArray();
-                    UserDBSpacer_comboBox.Items.Clear();
-                    UserDBSpacer_comboBox.Items.AddRange(SpacerArray);
+                    SpacerList.Add("사용자+" + User_WinSpacer[n][0]);
+                    UserDBSpacer_comboBox.Items.Add(User_WinSpacer[n][1]);
                 }
             }
         }
@@ -316,6 +327,7 @@ namespace main.subcontents
 
         private void Calc_Uf()
         {
+            UserDB_Uf = 0;
             switch (UserDB_FrameShape)
             {
                 case "기본형":
@@ -363,7 +375,7 @@ namespace main.subcontents
             if (UserDB_Uw > 0 && UserDB_Ug > 0 && UserDB_Ag > 0 && UserDB_PsiOpen > 0)
             {
                 // UserDB_Uf = (UserDB_Uw * 4 - UserDB_Ug * UserDB_Ag - UserDB_PsiOpen * UserDB_Lopen - UserDB_PsiFix * UserDB_Lfix) / UserDB_Af;
-                UserDB_Uf = (UserDB_Uw * 4 - UserDB_Ug * UserDB_Ag) / UserDB_Af;
+                UserDB_Uf = (UserDB_Uw * 4 - UserDB_Ug * UserDB_Ag- UserDB_PsiOpen * UserDB_Lopen- UserDB_PsiFix * UserDB_Lfix) / UserDB_Af;
             }
 
             if (UserDB_Uf > 0.65)

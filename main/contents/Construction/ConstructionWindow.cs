@@ -1066,15 +1066,20 @@ namespace main.contents
         }
         private void Calc_Uw2by2()
         {
-            double width = 2; double height = 2; double percent_open = 0.5; double n_hori = 2; double n_ver = 1;
-            double Af_open = ((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2) * percent_open / 100 * df_open;
-            double Af_fix = ((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2) * (1 - percent_open / 100) * df_btw;
-            double Af_btw = ((n_hori - 1) * height + (n_ver - 1) * width) * df_btw;
+            double width = 2; double height = 2;
+            double percent_open = 50;   // ← 0.5 → 50 (아래에서 /100 하므로 % 단위로)
+            double n_hori = 2; double n_ver = 1;
+            double L_edge = (width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2;      // 테두리
+            double L_btw = (n_hori - 1) * height + (n_ver - 1) * width;               // 중간바 길이
+            double Af_open = L_edge * percent_open / 100 * df_open;
+            double Af_fix = L_edge * (1 - percent_open / 100) * df_fix;               // ← df_btw → df_fix
+            double Af_btw = L_btw * df_btw;
             double Area = width * height;
             double Ag_fix = Math.Max((Area - (Af_open + Af_fix + Af_btw)) * (1 - percent_open / 100), 0);
             double Ag_open = Math.Max(Area - (Af_open + Af_fix + Af_btw + Ag_fix), 0);
-            double Lg_fix = ((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2 + ((n_hori - 1) * height + (n_ver - 1) * width)) * (1 - percent_open / 100);
-            double Lg_open = ((width - 2 * df_fix) * 2 + (height - 2 * df_fix) * 2 + ((n_hori - 1) * height + (n_ver - 1) * width)) * (percent_open / 100);
+            double Lg_total = L_edge + 2 * L_btw;                                      // ← 중간바는 양쪽 유리라 ×2
+            double Lg_fix = Lg_total * (1 - percent_open / 100);
+            double Lg_open = Lg_total * (percent_open / 100);
             double Uwcalc;
             if (UwMethod == "계산" && Ug != 0 && Uf_fix != 0 && Psi_g_fix != 0)
             {
