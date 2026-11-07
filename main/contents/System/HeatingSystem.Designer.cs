@@ -30,8 +30,6 @@ namespace main.contents
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            Label label30;
-            Label label27;
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
@@ -63,6 +61,8 @@ namespace main.contents
             DataGridViewCellStyle dataGridViewCellStyle28 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle29 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle30 = new DataGridViewCellStyle();
+            label30 = new Label();
+            label27 = new Label();
             GeneralPanel = new Panel();
             infoHeating = new Button();
             label20 = new Label();
@@ -153,6 +153,8 @@ namespace main.contents
             label11 = new Label();
             StorageUse_comboBox = new CustomComboBox();
             Qhd_tabPage = new TabPage();
+            controllabel = new Label();
+            controlComboBox = new CustomComboBox();
             Pump_dataGridView = new DataGridView();
             Pipe_panel = new Panel();
             PipeInsD_ComboBox = new CustomComboBox();
@@ -225,8 +227,6 @@ namespace main.contents
             panel5 = new Panel();
             panel6 = new Panel();
             contextMenuStrip1 = new ContextMenuStrip(components);
-            label30 = new Label();
-            label27 = new Label();
             GeneralPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)Icon_pictureBox).BeginInit();
             tabControl1.SuspendLayout();
@@ -1654,6 +1654,8 @@ namespace main.contents
             // Qhd_tabPage
             // 
             Qhd_tabPage.BackColor = Color.White;
+            Qhd_tabPage.Controls.Add(controllabel);
+            Qhd_tabPage.Controls.Add(controlComboBox);
             Qhd_tabPage.Controls.Add(Pump_dataGridView);
             Qhd_tabPage.Controls.Add(Pipe_panel);
             Qhd_tabPage.Controls.Add(Pipe_dataGridView);
@@ -1681,6 +1683,29 @@ namespace main.contents
             Qhd_tabPage.Size = new Size(992, 275);
             Qhd_tabPage.TabIndex = 3;
             Qhd_tabPage.Text = "분배";
+            // 
+            // controllabel
+            // 
+            controllabel.AutoSize = true;
+            controllabel.Font = new Font("나눔바른고딕", 9.75F);
+            controllabel.Location = new Point(32, 38);
+            controllabel.Name = "controllabel";
+            controllabel.Size = new Size(58, 15);
+            controllabel.TabIndex = 219;
+            controllabel.Text = "제어 유형";
+            controllabel.Visible = false;
+            // 
+            // controlComboBox
+            // 
+            controlComboBox.DrawMode = DrawMode.OwnerDrawFixed;
+            controlComboBox.Font = new Font("나눔바른고딕", 9.75F);
+            controlComboBox.FormattingEnabled = true;
+            controlComboBox.Location = new Point(94, 32);
+            controlComboBox.Name = "controlComboBox";
+            controlComboBox.Size = new Size(180, 23);
+            controlComboBox.TabIndex = 218;
+            controlComboBox.Visible = false;
+            controlComboBox.SelectedIndexChanged += controlComboBox_SelectedIndexChanged;
             // 
             // Pump_dataGridView
             // 
@@ -1905,7 +1930,7 @@ namespace main.contents
             Pipe_dataGridView.Size = new Size(986, 90);
             Pipe_dataGridView.TabIndex = 217;
             Pipe_dataGridView.CellValueChanged += Pipe_dataGridView_CellValueChanged;
-            //
+            // 
             // GPump2_textBox
             // 
             GPump2_textBox.BackColor = Color.White;
@@ -1913,7 +1938,7 @@ namespace main.contents
             GPump2_textBox.Enabled = false;
             GPump2_textBox.Font = new Font("나눔바른고딕", 9.75F);
             GPump2_textBox.ForeColor = SystemColors.ControlDark;
-            GPump2_textBox.Location = new Point(765, 38);
+            GPump2_textBox.Location = new Point(801, 38);
             GPump2_textBox.Name = "GPump2_textBox";
             GPump2_textBox.Size = new Size(120, 15);
             GPump2_textBox.TabIndex = 212;
@@ -1924,7 +1949,7 @@ namespace main.contents
             // 
             GPump1_label.AutoSize = true;
             GPump1_label.Font = new Font("나눔바른고딕", 9.75F);
-            GPump1_label.Location = new Point(473, 38);
+            GPump1_label.Location = new Point(509, 38);
             GPump1_label.Name = "GPump1_label";
             GPump1_label.Size = new Size(51, 15);
             GPump1_label.TabIndex = 207;
@@ -1937,7 +1962,7 @@ namespace main.contents
             GPump2_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             GPump2_button.FlatStyle = FlatStyle.System;
             GPump2_button.Font = new Font("나눔바른고딕", 12F, FontStyle.Bold);
-            GPump2_button.Location = new Point(740, 34);
+            GPump2_button.Location = new Point(776, 34);
             GPump2_button.Margin = new Padding(0);
             GPump2_button.Name = "GPump2_button";
             GPump2_button.Size = new Size(23, 23);
@@ -1952,7 +1977,7 @@ namespace main.contents
             GPump1_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             GPump1_button.FlatStyle = FlatStyle.System;
             GPump1_button.Font = new Font("나눔바른고딕", 12F, FontStyle.Bold);
-            GPump1_button.Location = new Point(540, 34);
+            GPump1_button.Location = new Point(576, 34);
             GPump1_button.Margin = new Padding(0);
             GPump1_button.Name = "GPump1_button";
             GPump1_button.Size = new Size(23, 23);
@@ -1966,7 +1991,7 @@ namespace main.contents
             // 
             GPump2_label.AutoSize = true;
             GPump2_label.Font = new Font("나눔바른고딕", 9.75F);
-            GPump2_label.Location = new Point(687, 38);
+            GPump2_label.Location = new Point(723, 38);
             GPump2_label.Name = "GPump2_label";
             GPump2_label.Size = new Size(51, 15);
             GPump2_label.TabIndex = 210;
@@ -1980,7 +2005,7 @@ namespace main.contents
             GPump1_textBox.Enabled = false;
             GPump1_textBox.Font = new Font("나눔바른고딕", 9.75F);
             GPump1_textBox.ForeColor = SystemColors.ControlDark;
-            GPump1_textBox.Location = new Point(563, 38);
+            GPump1_textBox.Location = new Point(599, 38);
             GPump1_textBox.Name = "GPump1_textBox";
             GPump1_textBox.Size = new Size(120, 15);
             GPump1_textBox.TabIndex = 209;
@@ -1992,7 +2017,7 @@ namespace main.contents
             GPumpMethod_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             GPumpMethod_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             GPumpMethod_comboBox.FormattingEnabled = true;
-            GPumpMethod_comboBox.Location = new Point(339, 34);
+            GPumpMethod_comboBox.Location = new Point(375, 34);
             GPumpMethod_comboBox.Name = "GPumpMethod_comboBox";
             GPumpMethod_comboBox.Size = new Size(120, 23);
             GPumpMethod_comboBox.TabIndex = 206;
@@ -2004,7 +2029,7 @@ namespace main.contents
             GPumpMethod_label.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             GPumpMethod_label.AutoSize = true;
             GPumpMethod_label.Font = new Font("나눔바른고딕", 9.75F);
-            GPumpMethod_label.Location = new Point(256, 38);
+            GPumpMethod_label.Location = new Point(292, 38);
             GPumpMethod_label.Name = "GPumpMethod_label";
             GPumpMethod_label.Size = new Size(58, 15);
             GPumpMethod_label.TabIndex = 205;
@@ -2019,7 +2044,7 @@ namespace main.contents
             Pump2_textBox.Enabled = false;
             Pump2_textBox.Font = new Font("나눔바른고딕", 9.75F);
             Pump2_textBox.ForeColor = SystemColors.ControlDark;
-            Pump2_textBox.Location = new Point(765, 9);
+            Pump2_textBox.Location = new Point(801, 9);
             Pump2_textBox.Name = "Pump2_textBox";
             Pump2_textBox.Size = new Size(120, 15);
             Pump2_textBox.TabIndex = 184;
@@ -2031,7 +2056,7 @@ namespace main.contents
             Pump2_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Pump2_button.FlatStyle = FlatStyle.System;
             Pump2_button.Font = new Font("나눔바른고딕", 12F, FontStyle.Bold);
-            Pump2_button.Location = new Point(740, 5);
+            Pump2_button.Location = new Point(776, 5);
             Pump2_button.Margin = new Padding(0);
             Pump2_button.Name = "Pump2_button";
             Pump2_button.Size = new Size(23, 23);
@@ -2044,7 +2069,7 @@ namespace main.contents
             // 
             Pump2_label.AutoSize = true;
             Pump2_label.Font = new Font("나눔바른고딕", 9.75F);
-            Pump2_label.Location = new Point(687, 9);
+            Pump2_label.Location = new Point(723, 9);
             Pump2_label.Name = "Pump2_label";
             Pump2_label.Size = new Size(51, 15);
             Pump2_label.TabIndex = 182;
@@ -2054,7 +2079,7 @@ namespace main.contents
             // 
             PumpMethod_label.AutoSize = true;
             PumpMethod_label.Font = new Font("나눔바른고딕", 9.75F);
-            PumpMethod_label.Location = new Point(256, 9);
+            PumpMethod_label.Location = new Point(292, 9);
             PumpMethod_label.Name = "PumpMethod_label";
             PumpMethod_label.Size = new Size(58, 15);
             PumpMethod_label.TabIndex = 179;
@@ -2065,7 +2090,7 @@ namespace main.contents
             PumpMethod_comboBox.DrawMode = DrawMode.OwnerDrawFixed;
             PumpMethod_comboBox.Font = new Font("나눔바른고딕", 9.75F);
             PumpMethod_comboBox.FormattingEnabled = true;
-            PumpMethod_comboBox.Location = new Point(339, 4);
+            PumpMethod_comboBox.Location = new Point(375, 4);
             PumpMethod_comboBox.Name = "PumpMethod_comboBox";
             PumpMethod_comboBox.Size = new Size(120, 23);
             PumpMethod_comboBox.TabIndex = 178;
@@ -2088,7 +2113,7 @@ namespace main.contents
             PumpUse_comboBox.FormattingEnabled = true;
             PumpUse_comboBox.Location = new Point(94, 3);
             PumpUse_comboBox.Name = "PumpUse_comboBox";
-            PumpUse_comboBox.Size = new Size(120, 23);
+            PumpUse_comboBox.Size = new Size(180, 23);
             PumpUse_comboBox.TabIndex = 174;
             PumpUse_comboBox.SelectedIndexChanged += PumpUse_comboBox_SelectedIndexChanged;
             // 
@@ -2099,7 +2124,7 @@ namespace main.contents
             Pump1_textBox.Enabled = false;
             Pump1_textBox.Font = new Font("나눔바른고딕", 9.75F);
             Pump1_textBox.ForeColor = SystemColors.ControlDark;
-            Pump1_textBox.Location = new Point(563, 9);
+            Pump1_textBox.Location = new Point(599, 9);
             Pump1_textBox.Name = "Pump1_textBox";
             Pump1_textBox.Size = new Size(120, 15);
             Pump1_textBox.TabIndex = 167;
@@ -2111,7 +2136,7 @@ namespace main.contents
             Pump1_button.FlatAppearance.BorderColor = SystemColors.ActiveCaption;
             Pump1_button.FlatStyle = FlatStyle.System;
             Pump1_button.Font = new Font("나눔바른고딕", 12F, FontStyle.Bold);
-            Pump1_button.Location = new Point(540, 5);
+            Pump1_button.Location = new Point(576, 5);
             Pump1_button.Margin = new Padding(0);
             Pump1_button.Name = "Pump1_button";
             Pump1_button.Size = new Size(23, 23);
@@ -2124,7 +2149,7 @@ namespace main.contents
             // 
             Pump1_label.AutoSize = true;
             Pump1_label.Font = new Font("나눔바른고딕", 9.75F);
-            Pump1_label.Location = new Point(473, 8);
+            Pump1_label.Location = new Point(509, 8);
             Pump1_label.Name = "Pump1_label";
             Pump1_label.Size = new Size(51, 15);
             Pump1_label.TabIndex = 165;
@@ -2906,5 +2931,9 @@ namespace main.contents
         private ContextMenuStrip contextMenuStrip1;
         private Label label28;
         private CustomComboBox hydr2_ComboBox;
+        private Label label30;
+        private Label label27;
+        private Label controllabel;
+        private CustomComboBox controlComboBox;
     }
 }

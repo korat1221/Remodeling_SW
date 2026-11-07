@@ -1213,6 +1213,14 @@ namespace main
                 Pump.Clear();
                 if (PumpUse != "펌프 있음")
                 {
+                    string[] parts = PumpUse.Split('+');
+                    string control, Vbalance;
+
+                    PumpUse = parts[0].Trim();
+                    if (PumpUse == "설비내장_유량밸런스적용") Vbalance = "유량밸런스있음";
+                    else Vbalance = "유량밸런스없음";
+                    control = parts.Length > 1 ? parts[1].Trim() : "";
+
                     double heatingPower = HeatingNominalPower > 0 ? HeatingNominalPower : Qh_max_sum;
                     double volume = Math.Max(0, heatingPower) / (1.15 * 5); // m³/h
                     double pumpFlow = volume * 1000 / 60; // L/min
@@ -1220,7 +1228,7 @@ namespace main
                     double logFlow = Math.Log(pumpFlow);
                     double eta = Math.Max(20, -1.403 * Math.Pow(logFlow, 2) + 26.35 * logFlow - 61.3) / 100;
                     double power = Phydr / eta;
-                    Cal_Pump("내장형 펌프", "유량밸런스있음", "변속펌프(일정차압제어)", 1, power, beta_h_d);
+                    Cal_Pump("내장형 펌프", Vbalance, control, 1, power, beta_h_d);
                 }
                 else
                 {
