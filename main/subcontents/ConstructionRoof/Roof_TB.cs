@@ -431,13 +431,13 @@ namespace main.subcontents.ConstructionRoof
 
         private void dx_textBox_TextChanged(object sender, EventArgs e)
         {
-            dx = Program.UTIL.textBox_doubleComa(dx_textBox, false, 1);
+            dx = Program.UTIL.textBox_doubleComa(dx_textBox, false, 3);
             Calc_PerArea();
         }
 
         private void dy_textBox_TextChanged(object sender, EventArgs e)
         {
-            dy = Program.UTIL.textBox_doubleComa(dy_textBox, false, 1);
+            dy = Program.UTIL.textBox_doubleComa(dy_textBox, false, 3);
             Calc_PerArea();
         }
 
