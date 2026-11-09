@@ -441,28 +441,29 @@ namespace main.contents
         }
 
         //축열 계산을 위한 면적 계산 
-        void Calc_A(String ZoneNum)
+        void Calc_A()
         {
+            Area_Ceiling = Construction_AreaSum[2];
+            Area_Wall = Construction_AreaSum[1];
+            Area_InWall = Construction_AreaSum[6];
+            Area_Slab = Construction_AreaSum[3];
 
-            if (Construction_AreaSum[2] == 0) //최상층 아닐 경우 천장 면적
+            for (int i = 0; i < ZoneE.Length; i++)
             {
-                Area_Ceiling = Construction_AreaSum[7];
-            }
-            else //최상층일 경우 천장 면적
-            {
-                Area_Ceiling = Construction_AreaSum[2];
-            }
+                if (ZoneE[i][1] != "층간바닥" || !double.TryParse(ZoneE[i][7], out double slope))
+                {
+                    continue;
+                }
 
-            Area_Wall = Construction_AreaSum[1]; //외벽 면적
-            Area_InWall = Construction_AreaSum[6]; //내벽 면적
-
-            if (Construction_AreaSum[3] == 0) //최하층 아닐 경우 바닥 면적
-            {
-                Area_Slab = Construction_AreaSum[7];
-            }
-            else //최하층일 경우 내벽 면적 
-            {
-                Area_Slab = Construction_AreaSum[3];
+                double area = Program.UTIL.ToDoubleOrZero(ZoneE[i][3]);
+                if (slope == 0)
+                {
+                    Area_Ceiling += area;
+                }
+                else if (slope == 180)
+                {
+                    Area_Slab += area;
+                }
             }
         }
 
@@ -611,6 +612,7 @@ namespace main.contents
         private void reset()
         {
             ZoneName_textBox.Text = "";
+            ZoneE = Array.Empty<string[]>();
 
             for (int k = 0; k < 8; k++)
             {
@@ -645,7 +647,13 @@ namespace main.contents
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             reset();
+            ZoneNum = ID;
+            Num_textBox.Text = ID;
             Load_OtherFormData();
+            if (ZoneE.Length > 0)
+            {
+                Calc_A();
+            }
             String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form",
                 "천장축열선택,외벽축열선택,내벽축열선택,바닥축열선택," +
                 "천장축열,외벽축열,내벽축열,바닥축열," +
@@ -662,41 +670,45 @@ namespace main.contents
                 Slab_index = Value[0][3];
                 SlabCwirk_comboBox.SelectedItem = Slab_index;
 
-                if (Value[0][4] != "")
+                // 3D 외피가 없는 기존 존은 저장된 축열 면적을 사용한다.
+                if (ZoneE.Length == 0)
                 {
-                    Cwirk_Ceiling = Program.UTIL.ToDoubleOrZero(Value[0][4]);
-                }
-                if (Value[0][5] != "")
-                {
-                    Cwirk_Wall = Program.UTIL.ToDoubleOrZero(Value[0][5]);
-                }
-                if (Value[0][6] != "")
-                {
-                    Cwirk_InWall = Program.UTIL.ToDoubleOrZero(Value[0][6]);
-                }
-                if (Value[0][7] != "")
-                {
-                    Cwirk_Slab = Program.UTIL.ToDoubleOrZero(Value[0][7]);
-                }
-                if (Value[0][8] != "")
-                {
-                    Area_Ceiling = Program.UTIL.ToDoubleOrZero(Value[0][8]);
-                }
-                if (Value[0][9] != "")
-                {
-                    Area_Wall = Program.UTIL.ToDoubleOrZero(Value[0][9]);
-                }
-                if (Value[0][10] != "")
-                {
-                    Area_InWall = Program.UTIL.ToDoubleOrZero(Value[0][10]);
-                }
-                if (Value[0][11] != "")
-                {
-                    Area_Slab = Program.UTIL.ToDoubleOrZero(Value[0][11]);
-                }
-                if (Value[0][12] != "")
-                {
-                    Cwirk_total = Program.UTIL.ToDoubleOrZero(Value[0][12]);
+                    if (Value[0][4] != "")
+                    {
+                        Cwirk_Ceiling = Program.UTIL.ToDoubleOrZero(Value[0][4]);
+                    }
+                    if (Value[0][5] != "")
+                    {
+                        Cwirk_Wall = Program.UTIL.ToDoubleOrZero(Value[0][5]);
+                    }
+                    if (Value[0][6] != "")
+                    {
+                        Cwirk_InWall = Program.UTIL.ToDoubleOrZero(Value[0][6]);
+                    }
+                    if (Value[0][7] != "")
+                    {
+                        Cwirk_Slab = Program.UTIL.ToDoubleOrZero(Value[0][7]);
+                    }
+                    if (Value[0][8] != "")
+                    {
+                        Area_Ceiling = Program.UTIL.ToDoubleOrZero(Value[0][8]);
+                    }
+                    if (Value[0][9] != "")
+                    {
+                        Area_Wall = Program.UTIL.ToDoubleOrZero(Value[0][9]);
+                    }
+                    if (Value[0][10] != "")
+                    {
+                        Area_InWall = Program.UTIL.ToDoubleOrZero(Value[0][10]);
+                    }
+                    if (Value[0][11] != "")
+                    {
+                        Area_Slab = Program.UTIL.ToDoubleOrZero(Value[0][11]);
+                    }
+                    if (Value[0][12] != "")
+                    {
+                        Cwirk_total = Program.UTIL.ToDoubleOrZero(Value[0][12]);
+                    }
                 }
                 Calc_Cwirk_all();
                 Cwirk_textBox.Text = Cwirk_total.ToString();
@@ -718,7 +730,6 @@ namespace main.contents
                 Num_textBox.Text = ID;
                 ZoneNum = ID;
                 LoadData(ZoneNum);
-                Calc_A(ZoneNum);
                 ZoneType = Calc_ZoneType();
                 Check_radioButton(ZoneType);
                 Show_ZoneN50();
@@ -840,7 +851,7 @@ namespace main.contents
             try
             {
                 //존외피정보 불러오기
-                ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,외피유형,커튼월부위,면적,구조체,구조체번호,층", "존='" + ZoneNum + "'");
+                ZoneE = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "번호,외피유형,커튼월부위,면적,구조체,구조체번호,층,기울기", "존='" + ZoneNum + "'");
                 if (ZoneE.Length > 0)
                 {
                     Layer = ZoneE[0][6];
