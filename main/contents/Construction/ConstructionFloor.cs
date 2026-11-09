@@ -973,7 +973,7 @@ namespace main.contents.Construction
 
         private void Calc_Air_Layer(int nRow, double d)
         {
-            string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "공기층열저항", "두께,대류열저항", "구조체 = '외벽'");
+            string[][] Value = Program.DB.getValue(DB.type.BaseDB_HCneed, "공기층열저항", "두께,대류열저항", "구조체 = '바닥'");
             double[,] arr_Value = new double[Value.Length, 2];
             double R_up = 0, R_down = 0, d_up = 0, d_down = 0;
             double ha, hr, Ramda_air;
