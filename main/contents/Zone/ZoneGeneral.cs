@@ -505,20 +505,21 @@ namespace main.contents
         }
         private void NetArea_textBox_TextChanged(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(NetArea_textBox.Text) == false)
+            NetArea = string.IsNullOrEmpty(NetArea_textBox.Text) ? 0 : Program.UTIL.textBox_doubleComa(NetArea_textBox, false, 2);
+            if (!double.IsFinite(NetArea) || NetArea <= 0)
             {
-                NetArea = Program.UTIL.textBox_doubleComa(NetArea_textBox, false, 2);
-                OccupancyDensity_Cal(PersonNum, NetArea);
-                PersonIHG_Cal(PersonIHG, UseTime);
-                NetVolume = NetArea * CeilingHeight;
-
-                NetVolume_textBox.Text = NetVolume.ToString();
-                Program.UTIL.textBox_doubleComa(NetVolume_textBox, true, 1);
-                NetVolume_textBox.Text += " m" + Program.UTIL.Subscript(3, true);
-                NetVolume_textBox.TextAlign = HorizontalAlignment.Left;
-
-                Calc_VentilationVolume(NetArea, NetVolume, VA, VA_we);
+                NetArea = 0;
             }
+            OccupancyDensity_Cal(PersonNum, NetArea);
+            PersonIHG_Cal(PersonIHG, UseTime);
+            NetVolume = NetArea * CeilingHeight;
+
+            NetVolume_textBox.Text = NetVolume.ToString();
+            Program.UTIL.textBox_doubleComa(NetVolume_textBox, true, 1);
+            NetVolume_textBox.Text += " m" + Program.UTIL.Subscript(3, true);
+            NetVolume_textBox.TextAlign = HorizontalAlignment.Left;
+
+            Calc_VentilationVolume(NetArea, NetVolume, VA, VA_we);
         }
 
         private void CeilingHeight_textBox_TextChanged(object sender, EventArgs e)
@@ -640,7 +641,7 @@ namespace main.contents
 
         private void OccupancyDensity_Cal(double PersonNum, double Area)
         {
-            if (PersonNum != 0 && String.IsNullOrEmpty(NetArea_textBox.Text) == false)
+            if (PersonNum != 0 && Area > 0)
             {
                 OccupancyDensity = Area / PersonNum;
                 OccupancyDensity_textBox.Text = OccupancyDensity.ToString();
@@ -648,7 +649,7 @@ namespace main.contents
                 OccupancyDensity_textBox.Text += " m" + Program.UTIL.Subscript(2, true) + "/인";
                 OccupancyDensity_textBox.TextAlign = HorizontalAlignment.Left;
             }
-            else if (PersonNum == 0)
+            else
             {
                 OccupancyDensity = 0;
                 OccupancyDensity_textBox.Text = OccupancyDensity.ToString();
@@ -657,7 +658,7 @@ namespace main.contents
                 OccupancyDensity_textBox.TextAlign = HorizontalAlignment.Left;
             }
 
-            if (String.IsNullOrEmpty(PersonNum_textBox.Text) == false && String.IsNullOrEmpty(NetArea_textBox.Text) == false && Usage_comboBox.SelectedItem != null)
+            if (String.IsNullOrEmpty(PersonNum_textBox.Text) == false && Area > 0 && Usage_comboBox.SelectedItem != null)
             {
                 if (OccupancyDensity_High <= OccupancyDensity && OccupancyDensity <= OccupancyDensity_Low)
                 { OccupancyDensity_index = "보통"; }
@@ -681,7 +682,12 @@ namespace main.contents
                 }
                 OccupancyDensity_index_textBox.Text = OccupancyDensity_index;
             }
-
+            else if (Area <= 0)
+            {
+                OccupancyDensity_index = "";
+                OccupancyDensity_index_textBox.Text = "";
+                PersonIHG = 0;
+            }
         }
 
         private void PersonIHG_Cal(double PersonIHG, double UseTime)
@@ -690,7 +696,7 @@ namespace main.contents
             double 일일이용시간 = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "일일이용시간"));
             double 사람일일이용시간 = Program.UTIL.ToDoubleOrZero(Program.UTIL.GetValue_BySelectComboBox(Usage_comboBox, "용도프로필", "용도명", "사람일일이용시간"));
 
-            PersonIHG_1day = PersonIHG * UseTime * 사람일일이용시간 / 일일이용시간;
+            PersonIHG_1day = 일일이용시간 > 0 ? PersonIHG * UseTime * 사람일일이용시간 / 일일이용시간 : 0;
             PersonIHG_textBox.Text = string.Format("{0:F1}", PersonIHG_1day) + " Wh/m" + Program.UTIL.Subscript(2, true) + "d";
             PersonIHG_textBox.TextAlign = HorizontalAlignment.Left;
             PersonIHG_image_Label.Text = string.Format("{0:F0}", PersonIHG_1day) + " Wh/m" + Program.UTIL.Subscript(2, true) + "d";
@@ -794,6 +800,10 @@ namespace main.contents
                 {
                     missing.Add("용도프로필");
                 }
+                if (NetArea <= 0)
+                {
+                    missing.Add("순바닥면적");
+                }
                 if (CeilingHeight == 0)
                 {
                     missing.Add("천장고");
@@ -834,17 +844,6 @@ namespace main.contents
             //건물정보, 3D정보는 저장 안함
             string[][] 프로젝트유형 = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "프로젝트유형번호");
 
-            // 순바닥면적이 0/음수면 외피 미지정 등으로 재계산이 안 된 상태이므로
-            // 엉터리값을 덮어쓰지 말고 기존 저장값을 유지한다.
-            string 순바닥면적저장값 = NetArea.ToString();
-            if (NetArea <= 0)
-            {
-                string[][] 기존 = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "순바닥면적", "존번호 = '" + ZoneNum + "'");
-                if (기존.Length > 0 && 기존[0][0] != "")
-                {
-                    순바닥면적저장값 = 기존[0][0];
-                }
-            }
             Program.DB.setValue(DB.type.ProjDB, "ZoneGeneral_Form", "존번호,프로젝트유형,존이름,실제어방식,냉난방유무,환기유무,환기방식," +
                 "용도프로필,천장고,시작시간,종료시간,주이용일,야간운전모드,주말운전모드,재실자수,기기발열수준," +
                 "일일급탕요구량,냉난방시간,사용시간,공조시간,연이용일수,재실밀도,재실수준,일일인체발열,면적당인체발열,일일기기발열,면적당기기발열," +
@@ -854,7 +853,7 @@ namespace main.contents
             + DHWneed.ToString() + "','" + HCTime.ToString() + "','" + UseTime.ToString() + "','" + AHUTime.ToString() + "','" + AnnualUseDay.ToString() + "','"
             + OccupancyDensity.ToString() + "','" + OccupancyDensity_index + "','" + PersonIHG_1day.ToString() + "','" + PersonIHG.ToString() + "','" + EquipIHG_1day.ToString() + "','" + EquipIHG.ToString() + "','"
             + NetVolume.ToString() + "','" + VentilationRate.ToString() + "','" + Volume_wd.ToString() + "','" + Volume_we.ToString() + "','"
-            + 순바닥면적저장값 + "','" + SelectHRV + "','" + SelectPreZone_nonsplit + "','" + 증축여부 + "','" + HumidC_index + "','" + HumidH_index + "','" + missingItems + "'", "존번호");
+            + NetArea.ToString() + "','" + SelectHRV + "','" + SelectPreZone_nonsplit + "','" + 증축여부 + "','" + HumidC_index + "','" + HumidH_index + "','" + missingItems + "'", "존번호");
 
                         
         }
@@ -865,7 +864,7 @@ namespace main.contents
             DHWneed_1p = 0; DHWneed = 0; UseTime = 0; HCTime = 0; AHUTime = 0; PersonNum = 0; CeilingHeight = 0; NetArea = 0; NetVolume = 0; VentilationRate = 0; Volume_wd = 0; //AnnualUseDay = 0;// WeekUseDay = 0;
             PersonIHG_1day = 0; PersonIHG = 0; PersonIHG_Low = 0; PersonIHG_Medium = 0; PersonIHG_High = 0; //PersonIHG 단위 : W/m2
             EquipIHG_1day = 0; EquipIHG = 0; EquipIHG_Low = 0; EquipIHG_Medium = 0; EquipIHG_High = 0;  //EquipIHG 단위 : W/m2
-            theta_i_h_set = 0; theta_i_c_set = 0; Em = 0; VA = 0;
+            theta_i_h_set = 0; theta_i_c_set = 0; Em = 0; VA = 0; VA_we = 0;
             OccupancyDensity = 0; OccupancyDensity_Low = 0; OccupancyDensity_Medium = 0; OccupancyDensity_High = 0;
             AHU_comboBox.SelectedItem = null;
             AHUType = "";
@@ -924,12 +923,15 @@ namespace main.contents
         public void LoadData(String ID)            // 리스트에서 항목 더블 클릭시 - 뷰를 ID 의 getValue 값으로 채우기
         {
             reset();
-            Load_OtherFormData();
-
+            ZoneNum = ID;
+            Num_textBox.Text = ID;
             String[][] Value = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_Form", "존이름,실제어방식,냉난방유무,환기유무,환기방식,선택열회수기," +
                 "용도프로필,천장고,시작시간,종료시간,주이용일,재실자수,기기발열수준," +
                 "일일급탕요구량,냉난방시간,사용시간,공조시간,연이용일수,재실밀도,재실수준,일일인체발열,면적당인체발열,일일기기발열,면적당기기발열," +
                 "순체적,환기횟수,이용일환기량,비이용일환기량,순바닥면적,냉방습도,난방습도", "존번호 = '" + ZoneNum + "'");
+            double savedNetArea = Value.Length > 0 ? Program.UTIL.ToDoubleOrZero(Value[0][28]) : 0;
+            bool hasSavedNetArea = double.IsFinite(savedNetArea) && savedNetArea > 0;
+            Load_OtherFormData(!hasSavedNetArea);
             if (Value.Length > 0)
             {
                 ZoneName = Value[0][0];
@@ -979,11 +981,9 @@ namespace main.contents
                 {
                     Usage = item.Row.ItemArray[0].ToString();
                 }
-                // 저장된 순바닥면적이 0/음수면 엉터리값(외피 미지정 상태에서 자동저장된 것)이므로
-                // 무시하고 GetValue_ZoneEnvelope()의 3D 재계산값을 그대로 둔다.
-                if (Program.UTIL.ToDoubleOrZero(Value[0][28]) > 0)
+                if (hasSavedNetArea)
                 {
-                    NetArea = Program.UTIL.ToDoubleOrZero(Value[0][28]);
+                    NetArea = savedNetArea;
                     NetArea_textBox.Text = NetArea.ToString();
                     Program.UTIL.textBox_doubleComa(NetArea_textBox, true, 2);
                 }
@@ -1154,10 +1154,24 @@ namespace main.contents
             }
 
             Calc_Time();
+            if (!hasSavedNetArea)
+            {
+                OccupancyDensity_Cal(PersonNum, NetArea);
+                PersonIHG_Cal(PersonIHG, UseTime);
+                NetVolume = NetArea * CeilingHeight;
+
+                NetVolume_textBox.Text = NetVolume.ToString();
+                Program.UTIL.textBox_doubleComa(NetVolume_textBox, true, 1);
+                NetVolume_textBox.Text += " m" + Program.UTIL.Subscript(3, true);
+                NetVolume_textBox.TextAlign = HorizontalAlignment.Left;
+
+                Calc_VentilationVolume(NetArea, NetVolume, VA, VA_we);
+            }
         }
 
         public void ResetForm(String ID) // 리스트에서 추가 버튼 클릭시 - 뷰 초기화
         {
+            reset();
             Num_textBox.Text = ID;
             ZoneNum = ID;
             Load_OtherFormData();
@@ -1180,7 +1194,7 @@ namespace main.contents
                 LoadData(ZoneNum);
             }
         }
-        private void Load_OtherFormData()
+        private void Load_OtherFormData(bool calculateNetArea = true)
         {
             //건물대상,용도
             String[][] BuildingValue = Program.DB.getValue(DB.type.ProjDB, "BuildingGeneral", "건물대상,건물용도,프로젝트유형번호", "");
@@ -1281,20 +1295,32 @@ namespace main.contents
 
                 ZoneName = General_3D[0][3];
                 ZoneName_textBox.Text = ZoneName;
-                /////////////////////////////// //순바닥면적계산/////////////////////////////////////////////////////
+                if (!calculateNetArea)
+                {
+                    return;
+                }
 
+                double grossArea = Program.UTIL.ToDoubleOrZero(General_3D[0][2]);
+                if (!double.IsFinite(grossArea) || grossArea <= 0)
+                {
+                    return;
+                }
 
                 String[][] Wall = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이,구조체번호", "존 = '" + ZoneNum + "' And 외피유형 = '외벽'");
                 double Area_WallInWall = 0;
+                bool missingWallConstruction = false;
                 if (Wall.Length > 0)
                 {
-                    if (Wall[0][1] == "" || Wall[0][1] == null)
-                    {
-                        MessageBox.Show("3D 모델 화면에서 외피 구조체종류부터 입력해주세요.");
-                    }
                     for (int j = 0; j < Wall.Length; j++)
                     {
-                        double Wall_d = 0, Wall_A;
+                        if (!double.TryParse(Wall[j][0], out double wallLength) || !double.IsFinite(wallLength) || wallLength <= 0)
+                        {
+                            // 외벽 길이가 없는 모델은 기존 추정식을 사용한다.
+                            NetArea_textBox.Text = string.Format("{0:F2}", grossArea * 0.85);
+                            return;
+                        }
+
+                        double Wall_d = 0;
                         String[][] Wall_Value = Program.DB.getValue(DB.type.ProjDB, "ConstructionWall",
                          "U적용방법, 두께합계,단열재두께,구조유형,열관류율," +
                          "재료1종류,재료1두께," +
@@ -1308,66 +1334,67 @@ namespace main.contents
                          "재료9종류,재료9두께," +
                          "재료10종류,재료10두께", "번호 = '" + Wall[j][1] + "'");
 
-                        if (Wall_Value.Length > 0)
+                        if (Wall_Value.Length == 0)
                         {
-                            if (Wall_Value[0][3] == "콘크리트조")
-                            {
-                                if (Wall_Value[0][0] == "계산")
-                                {
-                                    Wall_d = 0;
+                            missingWallConstruction = true;
+                            continue;
+                        }
 
-                                    for (int k = 0; k < 10; k++)
+                        if (Wall_Value[0][3] == "콘크리트조")
+                        {
+                            if (Wall_Value[0][0] == "계산")
+                            {
+                                // 외벽 재료는 실내에서 실외 순으로 저장한다.
+                                bool foundConcreteCore = false;
+                                for (int k = 0; k < 10; k++)
+                                {
+                                    string materialName = Wall_Value[0][2 * k + 5];
+                                    if (string.IsNullOrEmpty(materialName))
                                     {
-                                        if (Wall_Value[0][2 * k + 5] != "")
-                                        {
-                                            String[][] Material = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "구분", "재료명 = '" + Wall_Value[0][2 * k + 5] + "'");
-                                            if (Material.Length > 0)
-                                            {
-                                                if (Material[0][0] != "콘크리트")
-                                                {
-                                                    Wall_d += Program.UTIL.ToDoubleOrZero(Wall_Value[0][2 * k + 6]) / 1000;
-                                                }
-                                                else
-                                                {
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                        else
-                                        {
-                                            break;
-                                        }
+                                        break;
+                                    }
+
+                                    double thickness = Program.UTIL.ToDoubleOrZero(Wall_Value[0][2 * k + 6]) / 1000;
+                                    string materialCondition = "재료명 = '" + materialName.Replace("'", "''") + "'";
+                                    String[][] Material = Program.DB.getValue(DB.type.ProjDB, "User_Material", "구분", materialCondition);
+                                    if (Material.Length == 0)
+                                    {
+                                        Material = Program.DB.getValue(DB.type.BaseDB_HCneed, "열전도율", "구분", materialCondition);
+                                    }
+
+                                    string materialGroup = Material.Length > 0 ? Material[0][0] : "";
+                                    foundConcreteCore = materialGroup == "콘크리트" || (materialGroup == "시멘트모르타르/콘크리트" && materialName.Contains("콘크리트"));
+                                    // 구조체 중심선에서 안목면까지는 실내측 재료 전부와 콘크리트 구조층 절반이다.
+                                    Wall_d += foundConcreteCore ? thickness / 2 : thickness;
+                                    if (foundConcreteCore)
+                                    {
+                                        break;
                                     }
                                 }
-                                else
+                                if (!foundConcreteCore)
                                 {
-                                    Wall_d = 0.075 + Program.UTIL.ToDoubleOrZero(Wall_Value[0][2]) / 1000; //내단열로 가정함
+                                    missingWallConstruction = true;
+                                    continue;
                                 }
                             }
                             else
                             {
-
-                                // Wall_d = 0.015 + Program.UTIL.ToDoubleOrZero(Wall[j][2]) / 2;
-                                Wall_d = 0.015 + Program.UTIL.ToDoubleOrZero(Wall_Value[0][2]) / 1000;
+                                Wall_d = 0.075 + Program.UTIL.ToDoubleOrZero(Wall_Value[0][2]) / 1000; //내단열로 가정함
                             }
-                        }
-
-                        double value;
-                        if (double.TryParse(Wall[j][0], out value))
-                        {
-                            Wall_A = Wall_d * Program.UTIL.ToDoubleOrZero(Wall[j][0]);
-                            Area_WallInWall += Wall_A;
                         }
                         else
                         {
-                            string[][] floor = Program.DB.getValue(DB.type.ProjDB, "ZoneGeneral_3D", "바닥면적", "존번호='" + ZoneNum + "'");
-                            if (floor.Length > 0)
-                            {
-                                NetArea = Program.UTIL.ToDoubleOrZero(floor[0][0]) * 0.85;
-                                goto _goto;
-                            }
+                            Wall_d = 0.015 + Program.UTIL.ToDoubleOrZero(Wall_Value[0][2]) / 1000;
                         }
+
+                        Area_WallInWall += Wall_d * wallLength;
                     }
+                }
+
+                if (missingWallConstruction)
+                {
+                    MessageBox.Show("3D 모델의 외벽 구조체 지정과 콘크리트 구조층 입력을 확인해주세요.");
+                    return;
                 }
 
                 String[][] InWall = Program.DB.getValue(DB.type.ProjDB, "ZoneEnvelope_3D", "벽체길이", "존 = '" + ZoneNum + "' And 외피유형 = '내벽'");
@@ -1375,17 +1402,19 @@ namespace main.contents
                 {
                     for (int j = 0; j < InWall.Length; j++)
                     {
-                        double InWall_d, InWall_A;
-                        InWall_d = 0.05;
-                        InWall_A = InWall_d * Program.UTIL.ToDoubleOrZero(InWall[j][0]);
-                        Area_WallInWall += InWall_A;
+                        if (!double.TryParse(InWall[j][0], out double wallLength) || !double.IsFinite(wallLength) || wallLength <= 0)
+                        {
+                            return;
+                        }
+                        Area_WallInWall += 0.05 * wallLength;
                     }
                 }
 
-                NetArea = Program.UTIL.ToDoubleOrZero(General_3D[0][2]) - Area_WallInWall;
-
-            _goto:
-                NetArea_textBox.Text = string.Format("{0:F2}", NetArea);
+                double calculatedNetArea = Math.Round(grossArea - Area_WallInWall, 2);
+                if (double.IsFinite(calculatedNetArea) && calculatedNetArea > 0)
+                {
+                    NetArea_textBox.Text = string.Format("{0:F2}", calculatedNetArea);
+                }
             }
         }
 
