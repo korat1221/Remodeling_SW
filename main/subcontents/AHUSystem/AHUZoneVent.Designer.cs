@@ -62,6 +62,7 @@ namespace main.subcontents.AHUSystem
             //
             // GeneralPanel
             //
+            GeneralPanel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             GeneralPanel.BackColor = Color.AliceBlue;
             GeneralPanel.Controls.Add(Title_label);
             GeneralPanel.Controls.Add(AddZone_label);
@@ -157,6 +158,7 @@ namespace main.subcontents.AHUSystem
             //
             // Save_button
             //
+            Save_button.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             Save_button.BackColor = SystemColors.ButtonHighlight;
             Save_button.ForeColor = Color.Black;
             Save_button.Location = new Point(845, 665);
@@ -169,6 +171,7 @@ namespace main.subcontents.AHUSystem
             //
             // Content_panel
             //
+            Content_panel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             Content_panel.Controls.Add(DiagramScroll_panel);
             Content_panel.Controls.Add(tabControl1);
             Content_panel.Location = new Point(0, 45);
@@ -178,7 +181,7 @@ namespace main.subcontents.AHUSystem
             //
             // DiagramScroll_panel
             //
-            // 존 개수가 많아 계통도(Diagram_panel)가 뷰포트보다 커지면 세로 스크롤바가 생김(폼 크기는 고정 유지)
+            // 존 개수가 많아 계통도(Diagram_panel)가 뷰포트보다 커지면 세로 스크롤바가 생김
             DiagramScroll_panel.AutoScroll = true;
             DiagramScroll_panel.BorderStyle = BorderStyle.FixedSingle;
             DiagramScroll_panel.Controls.Add(Diagram_panel);
@@ -345,7 +348,7 @@ namespace main.subcontents.AHUSystem
             Controls.Add(Content_panel);
             Controls.Add(Save_button);
             Controls.Add(GeneralPanel);
-            FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            FormBorderStyle = FormBorderStyle.SizableToolWindow;
             Name = "AHUZoneVent";
             Text = "존별 급배기량 입력";
             GeneralPanel.ResumeLayout(false);

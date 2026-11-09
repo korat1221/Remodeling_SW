@@ -11,6 +11,7 @@ namespace main.subcontents.AHUSystem
     {
         // 이 설비 번호 — Save_button_Click에서 저장 시 사용
         private string Num;
+        internal const string FlowFormat = "#,##0.##";
 
         // 미연결 존 헤더/박스 배경색 — HRVDiagramPanel.ZoneBgUnconnected와 동일 색 유지
         private static readonly Color UnconnectedColor = Color.FromArgb(235, 228, 248);
@@ -18,6 +19,7 @@ namespace main.subcontents.AHUSystem
         public AHUZoneVent(string AHUOptions, string Num)
         {
             InitializeComponent(); this.Font = new Font(UTIL.Families[0], 9.75F, FontStyle.Regular);
+            MinimumSize = Size;
             this.Num = Num;
             Load_ZoneList(Num);
             Load_EquipmentRating(AHUOptions, Num);
@@ -189,6 +191,10 @@ namespace main.subcontents.AHUSystem
             Zone_dataGridView.Columns.Add("A3", "필요환기량");
             Zone_dataGridView.Columns.Add("A4", "급기량");
             Zone_dataGridView.Columns.Add("A5", "배기량");
+            for (int column = 2; column <= 4; column++)
+            {
+                Zone_dataGridView.Columns[column].DefaultCellStyle.Format = FlowFormat;
+            }
             // 헤더 클릭 정렬 금지 — 합계 행(zoneTotalsRowIndex) 위치가 고정 인덱스를 전제함
             foreach (DataGridViewColumn col in Zone_dataGridView.Columns)
             {
@@ -210,8 +216,8 @@ namespace main.subcontents.AHUSystem
                     int nRow = Zone_dataGridView.Rows.Add();
                     Zone_dataGridView.Rows[nRow].Cells[0].Value = Value[n][0];
                     Zone_dataGridView.Rows[nRow].Cells[1].Value = Value[n][1];
-                    Zone_dataGridView.Rows[nRow].Cells[2].Value = Value[n][2];
-                    Program.UTIL.dataGridView_doubleComa(Zone_dataGridView, nRow, 2, 0);
+                    double.TryParse(Value[n][2], out double requiredVent);
+                    Zone_dataGridView.Rows[nRow].Cells[2].Value = requiredVent;
 
                     // 저장된 급기량/배기량이 있으면 불러옴 (AHUZoneVent_Form은 존당 여러 행에 걸쳐 중복 저장되므로 하나만 읽으면 됨)
                     double savedSA = 0, savedRA = 0;
@@ -220,11 +226,10 @@ namespace main.subcontents.AHUSystem
                     {
                         savedSA = Program.UTIL.ToDoubleOrZero(Saved[0][0]);
                         savedRA = Program.UTIL.ToDoubleOrZero(Saved[0][1]);
-                        Zone_dataGridView.Rows[nRow].Cells[3].Value = savedSA.ToString("#,##0");
-                        Zone_dataGridView.Rows[nRow].Cells[4].Value = savedRA.ToString("#,##0");
+                        Zone_dataGridView.Rows[nRow].Cells[3].Value = savedSA;
+                        Zone_dataGridView.Rows[nRow].Cells[4].Value = savedRA;
                     }
 
-                    double.TryParse(Value[n][2], out double requiredVent);
                     Diagram_panel.Zones.Add(new HRVZoneFlow
                     {
                         ZoneNum = Value[n][0],
@@ -304,8 +309,8 @@ namespace main.subcontents.AHUSystem
                 sumRA += z.RA;
             }
 
-            Zone_dataGridView.Rows[zoneTotalsRowIndex].Cells[3].Value = sumSA.ToString("#,##0");
-            Zone_dataGridView.Rows[zoneTotalsRowIndex].Cells[4].Value = sumRA.ToString("#,##0");
+            Zone_dataGridView.Rows[zoneTotalsRowIndex].Cells[3].Value = sumSA;
+            Zone_dataGridView.Rows[zoneTotalsRowIndex].Cells[4].Value = sumRA;
 
             // 정격풍량 초과 시 빨간 글씨로 경고(저장은 막지 않음) — RatedSA/RA=0(미입력)이면 비교 스킵
             bool saOverCapacity = Diagram_panel.RatedSA > 0 && sumSA > Diagram_panel.RatedSA;
@@ -322,31 +327,28 @@ namespace main.subcontents.AHUSystem
         {
             if (e.ColumnIndex == 3 || e.ColumnIndex == 4)
             {
-                if (Zone_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                double value = ReadEditedFlow(Zone_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex]) ?? 0;
+
+                // 행 인덱스 대신 존번호(컬럼0)로 찾음 — 나중에 정렬이 생겨도 안전하게
+                string zoneNum = Zone_dataGridView.Rows[e.RowIndex].Cells[0].Value.ToString();
+                HRVZoneFlow editedZone = Diagram_panel.Zones.Find(z => z.ZoneNum == zoneNum);
+                if (editedZone != null)
                 {
-                    double value = Program.UTIL.dataGridView_doubleComa(Zone_dataGridView, e.RowIndex, e.ColumnIndex, 0);
-
-                    // 행 인덱스 대신 존번호(컬럼0)로 찾음 — 나중에 정렬이 생겨도 안전하게
-                    string zoneNum = Zone_dataGridView.Rows[e.RowIndex].Cells[0].Value.ToString();
-                    HRVZoneFlow editedZone = Diagram_panel.Zones.Find(z => z.ZoneNum == zoneNum);
-                    if (editedZone != null)
+                    if (e.ColumnIndex == 3)
                     {
-                        if (e.ColumnIndex == 3)
-                        {
-                            editedZone.SA = value;
-                            Diagram_panel.PulseZoneFlow(zoneNum, true);
-                        }
-                        else
-                        {
-                            editedZone.RA = value;
-                            Diagram_panel.PulseZoneFlow(zoneNum, false);
-                        }
-                        RefreshZoneTotalsRow();
-
-                        AutoFillRows(editedZone.ZoneNum, editedZone.RA - editedZone.SA);
-                        RefreshHeaders();
-                        RefreshDiagram();
+                        editedZone.SA = value;
+                        Diagram_panel.PulseZoneFlow(zoneNum, true);
                     }
+                    else
+                    {
+                        editedZone.RA = value;
+                        Diagram_panel.PulseZoneFlow(zoneNum, false);
+                    }
+                    RefreshZoneTotalsRow();
+
+                    AutoFillRows(editedZone.ZoneNum, editedZone.RA - editedZone.SA);
+                    RefreshHeaders();
+                    RefreshDiagram();
                 }
             }
         }
@@ -414,6 +416,7 @@ namespace main.subcontents.AHUSystem
             AdjacentZone_dataGridView.Columns.Add("B1", "존(기계환기량)");
             AdjacentZone_dataGridView.Columns.Add("B2", "인접존");
             AdjacentZone_dataGridView.Columns.Add("B3", "인접존 환기량");
+            AdjacentZone_dataGridView.Columns["B3"].DefaultCellStyle.Format = FlowFormat;
             // 헤더 클릭 정렬 금지 — 딕셔너리들이 전부 행 인덱스로 매핑돼 있어 정렬되면 깨짐
             foreach (DataGridViewColumn col in AdjacentZone_dataGridView.Columns)
             {
@@ -471,7 +474,7 @@ namespace main.subcontents.AHUSystem
                     if (SavedAdj.Length > 0)
                     {
                         double savedValue = Program.UTIL.ToDoubleOrZero(SavedAdj[0][0]);
-                        AdjacentZone_dataGridView.Rows[subRow].Cells[2].Value = savedValue.ToString("#,##0");
+                        AdjacentZone_dataGridView.Rows[subRow].Cells[2].Value = savedValue;
                         if (savedValue != 0)
                         {
                             protectedRows.Add(subRow);
@@ -501,7 +504,7 @@ namespace main.subcontents.AHUSystem
                 if (entry.Value == receiverZoneNum)
                 {
                     object cellValue = AdjacentZone_dataGridView.Rows[entry.Key].Cells[2].Value;
-                    if (cellValue != null && double.TryParse(cellValue.ToString().Replace(",", ""), out double v))
+                    if (cellValue != null && double.TryParse(cellValue.ToString(), out double v))
                     {
                         sum += v;
                     }
@@ -514,7 +517,7 @@ namespace main.subcontents.AHUSystem
         private void SetHeaderRow(int rowIndex, HRVZoneFlow zone)
         {
             string connLabel = zone.IsEquipmentConnected ? "" : " (기계환기 미설치)";
-            AdjacentZone_dataGridView.Rows[rowIndex].Cells[0].Value = zone.ZoneNum + connLabel + " : 급기 " + zone.SA.ToString("0") + " CMH, 배기 " + zone.RA.ToString("0") + " CMH";
+            AdjacentZone_dataGridView.Rows[rowIndex].Cells[0].Value = zone.ZoneNum + connLabel + " : 급기 " + zone.SA.ToString(FlowFormat) + " CMH, 배기 " + zone.RA.ToString(FlowFormat) + " CMH";
             AdjacentZone_dataGridView.Rows[rowIndex].Cells[2].Value = null;
             AdjacentZone_dataGridView.InvalidateRow(rowIndex);
         }
@@ -551,17 +554,8 @@ namespace main.subcontents.AHUSystem
         {
             if (e.ColumnIndex == 2)
             {
-                object rawValue = AdjacentZone_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-                if (rawValue != null && rawValue.ToString().Trim() != "" &&
-                    (!double.TryParse(rawValue.ToString().Replace(",", ""), out double rawNum) || rawNum < 0))
+                if (ReadEditedFlow(AdjacentZone_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex]).HasValue)
                 {
-                    MessageBox.Show("0 이상의 숫자를 입력하세요.");
-                    AdjacentZone_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = null;
-                }
-
-                if (AdjacentZone_dataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
-                {
-                    Program.UTIL.dataGridView_doubleComa(AdjacentZone_dataGridView, e.RowIndex, e.ColumnIndex, 0);
                     protectedRows.Add(e.RowIndex); // 실제 값을 입력함 — 이후 자동갱신(AutoFillRows)이 건드리지 않음
                 }
                 else if (protectedRows.Remove(e.RowIndex))
@@ -578,6 +572,27 @@ namespace main.subcontents.AHUSystem
             }
         }
 
+        private static double? ReadEditedFlow(DataGridViewCell cell)
+        {
+            string text = cell.Value?.ToString();
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                cell.Value = null;
+                return null;
+            }
+
+            if (!double.TryParse(text, out double value) || !double.IsFinite(value) || value < 0)
+            {
+                MessageBox.Show("0 이상의 숫자를 입력하세요.");
+                cell.Value = null;
+                return null;
+            }
+
+            value = Math.Round(value, 2);
+            cell.Value = value;
+            return value;
+        }
+
         // 입력값을 계통도 화살표로 반영 — 헤더(보내는 존)→인접존(받는 존) 방향
         private void RefreshDiagram()
         {
@@ -589,7 +604,7 @@ namespace main.subcontents.AHUSystem
                 string receiverZoneNum = rowReceiver[rowIndex];
 
                 object cellValue = AdjacentZone_dataGridView.Rows[rowIndex].Cells[2].Value;
-                if (cellValue != null && double.TryParse(cellValue.ToString().Replace(",", ""), out double amount) && amount > 0)
+                if (cellValue != null && double.TryParse(cellValue.ToString(), out double amount) && amount > 0)
                 {
                     Diagram_panel.AdjacentFlows.Add(new AdjacentZoneFlow
                     {
@@ -614,7 +629,7 @@ namespace main.subcontents.AHUSystem
                 {
                     blankRows.Add(rowIndex);
                 }
-                else if (!double.TryParse(cellValue.ToString().Replace(",", ""), out double v) || v < 0)
+                else if (!double.TryParse(cellValue.ToString(), out double v) || v < 0)
                 {
                     MessageBox.Show("0 이상의 숫자를 입력하세요.");
                     return false;
@@ -638,7 +653,7 @@ namespace main.subcontents.AHUSystem
                 double shortfall = needed - inputSum;
                 if (shortfall > 0.5) // 반올림 오차 허용
                 {
-                    MessageBox.Show(zone.ZoneNum + "의 급배기 밸런스량은 " + shortfall.ToString("0") + "CMH 입니다. 인접존 환기량을 확인하세요.");
+                    MessageBox.Show(zone.ZoneNum + "의 급배기 밸런스량은 " + shortfall.ToString(FlowFormat) + "CMH 입니다. 인접존 환기량을 확인하세요.");
                     return false;
                 }
             }
@@ -672,7 +687,7 @@ namespace main.subcontents.AHUSystem
                         double adjExhaust = 0;
                         if (cellValue != null)
                         {
-                            double.TryParse(cellValue.ToString().Replace(",", ""), out adjExhaust);
+                            double.TryParse(cellValue.ToString(), out adjExhaust);
                         }
 
                         Program.DB.setValue(DB.type.ProjDB, "AHUZoneVent_Form",
@@ -859,13 +874,13 @@ namespace main.subcontents.AHUSystem
             using var saLabelBgBrush = new SolidBrush(Color.FromArgb(210, 235, 250));
             g.FillRectangle(saLabelBgBrush,
                 hrvX + 8, saLabelY, hrvW - 16, 18);
-            DrawCenteredString(g, "SA → " + RatedSA.ToString("0") + "CMH", fNorm, SAColor,
+            DrawCenteredString(g, "SA → " + RatedSA.ToString(AHUZoneVent.FlowFormat) + "CMH", fNorm, SAColor,
                 new Rectangle(hrvX + 8, saLabelY, hrvW - 16, 18));
 
             using var raLabelBgBrush = new SolidBrush(Color.FromArgb(250, 235, 210));
             g.FillRectangle(raLabelBgBrush,
                 hrvX + 8, raLabelY, hrvW - 16, 18);
-            DrawCenteredString(g, "RA ← " + RatedRA.ToString("0") + "CMH", fNorm, RAColor,
+            DrawCenteredString(g, "RA ← " + RatedRA.ToString(AHUZoneVent.FlowFormat) + "CMH", fNorm, RAColor,
                 new Rectangle(hrvX + 8, raLabelY, hrvW - 16, 18));
 
             // ── OA / EA 박스 ────────────────────────────────────
@@ -905,8 +920,8 @@ namespace main.subcontents.AHUSystem
             using (var fTrunk = new Font("맑은 고딕", 8f))
             {
                 int trunkLabelX = hrvX + hrvW + 6;
-                g.DrawString(InputTotalSA.ToString("0") + " m³/h", fTrunk, saBrush, trunkLabelX, saCenterY - 14);
-                g.DrawString(InputTotalRA.ToString("0") + " m³/h", fTrunk, raBrush, trunkLabelX, raCenterY + 2);
+                g.DrawString(InputTotalSA.ToString(AHUZoneVent.FlowFormat) + " m³/h", fTrunk, saBrush, trunkLabelX, saCenterY - 14);
+                g.DrawString(InputTotalRA.ToString(AHUZoneVent.FlowFormat) + " m³/h", fTrunk, raBrush, trunkLabelX, raCenterY + 2);
             }
 
             for (int i = 0; i < n; i++)
@@ -921,7 +936,7 @@ namespace main.subcontents.AHUSystem
                     new Rectangle(zoneX, zMidY - 24, zoneW, 18));
                 DrawCenteredString(g, z.ZoneName + (z.IsEquipmentConnected ? "" : " (미연결)"), fNorm, TextMuted,
                     new Rectangle(zoneX, zMidY - 6, zoneW, 16));
-                DrawCenteredString(g, "필요환기량 " + z.RequiredVent.ToString("0") + "CMH", fNorm, TextMuted,
+                DrawCenteredString(g, "필요환기량 " + z.RequiredVent.ToString(AHUZoneVent.FlowFormat) + "CMH", fNorm, TextMuted,
                     new Rectangle(zoneX, zMidY + 10, zoneW, 16));
 
                 // 밸런스 불균형/추가필요량 안내 박스 — 인접존 환기량 탭에서만, 조건에 걸리는 존만 그림(둘 다 걸리면 밸런스 우선)
@@ -939,8 +954,8 @@ namespace main.subcontents.AHUSystem
                     double additionalNeed = z.RequiredVent - (z.SA + incoming);
 
                     string infoText = null;
-                    if (balanceGap > 0.5) { infoText = "밸런스 불균형량 : " + balanceGap.ToString("0") + "CMH"; }
-                    else if (additionalNeed > 0.5) { infoText = additionalNeed.ToString("0") + "CMH 추가 필요"; }
+                    if (balanceGap > 0.5) { infoText = "밸런스 불균형량 : " + balanceGap.ToString(AHUZoneVent.FlowFormat) + "CMH"; }
+                    else if (additionalNeed > 0.5) { infoText = additionalNeed.ToString(AHUZoneVent.FlowFormat) + "CMH 추가 필요"; }
 
                     if (infoText != null)
                     {
@@ -981,8 +996,8 @@ namespace main.subcontents.AHUSystem
                     using var fRA = new Font("맑은 고딕", raPulsing ? PulseSize : NormalSize, raPulsing ? FontStyle.Bold : FontStyle.Regular);
 
                     // 존 박스에 바짝 붙여(labelGap) 우측 정렬 — 자릿수/폰트 크기와 무관하게 항상 박스 바로 옆에 위치
-                    string saText = $"SA {z.SA:0} m³/h";
-                    string raText = $"RA {z.RA:0} m³/h";
+                    string saText = $"SA {z.SA.ToString(AHUZoneVent.FlowFormat)} m³/h";
+                    string raText = $"RA {z.RA.ToString(AHUZoneVent.FlowFormat)} m³/h";
                     float saTextW = g.MeasureString(saText, fSA).Width;
                     float raTextW = g.MeasureString(raText, fRA).Width;
                     int labelGap = 2;
@@ -1018,7 +1033,7 @@ namespace main.subcontents.AHUSystem
                     g.DrawBezier(penAdj, p0, p1, p2, p3);
                     DrawArrowHead(g, p3.X + 8, p3.Y, AdjacentColor, true); // 받는 존 쪽으로 화살표
 
-                    g.DrawString(flow.Amount.ToString("0"), fAdj, adjacentBrush,
+                    g.DrawString(flow.Amount.ToString(AHUZoneVent.FlowFormat), fAdj, adjacentBrush,
                         zoneX + zoneW + bulge + 8, (yFrom + yTo) / 2 - 8);
                 }
             }
